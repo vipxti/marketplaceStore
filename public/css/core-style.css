@@ -419,13 +419,12 @@ img {
 }
 
 .header-right-side-menu > a {
-    width: 60px;
+    width: 30px;
     display: block;
-    height: 60px;
+    height: 30px;
     text-align: center;
-    line-height: 60px;
-    font-size: 24px;
-    background-color: #3a3a3a;
+    line-height: 30px;
+    background-color: #e6c843;
     color: #fff;
     border-radius: 50%;
 }

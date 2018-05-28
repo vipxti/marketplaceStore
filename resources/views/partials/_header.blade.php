@@ -57,6 +57,7 @@
 
                                     </li>
 
+
                                     <li>
 
                                         <a href="#" class="image">
@@ -95,6 +96,9 @@
                                     </ul>
 
                                 </div>
+                            <div class="header-right-side-menu ml-15">
+                                <a href="#" id="sideMenuBtn"><i class="fa fa-user" aria-hidden="true"></i></a>
+                            </div>
 
                             </div>
 
