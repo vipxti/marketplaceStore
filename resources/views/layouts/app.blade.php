@@ -16,6 +16,8 @@
 
             @yield('contentindex')
 
+            @include('partials._footer')
+
         </div>
 
         @include('partials._scripts')
