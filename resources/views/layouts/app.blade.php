@@ -16,11 +16,7 @@
 
         </div>
 
-        <div class="container">
-
-            @yield('corpo')
-
-        </div>
+        @yield('content')
 
         @include('partials._scripts')
 
