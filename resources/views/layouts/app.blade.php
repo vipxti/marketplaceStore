@@ -13,9 +13,9 @@
         <div id="wrapper">
 
             @include('partials._header')
-
-            @yield('contentindex')
-
+            
+            @yield('content')
+            
             @include('partials._footer')
 
         </div>
