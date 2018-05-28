@@ -14,9 +14,9 @@
 
             @include('partials._header')
 
-        </div>
+            @yield('contentindex')
 
-        @yield('content')
+        </div>
 
         @include('partials._scripts')
 
