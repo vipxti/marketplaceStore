@@ -333,8 +333,8 @@ img {
 .karl-btn:focus {
     font-weight: 700;
     color: #fff;
-    background-color: #ff084e;
-    border-color: #ff084e;
+    background-color: #e6c843;
+    border-color: #e6c843;
 }
 
 /* -------------------
@@ -539,7 +539,7 @@ img {
     width: auto;
     height: 35px;
     padding: 0 30px;
-    background-color: #3a3a3a;
+    background-color: #e6c843;
     color: #fff;
     display: block;
     line-height: 35px;
@@ -1234,7 +1234,7 @@ img {
 }
 
 .offer-product-price h3 {
-    color: #ff084e;
+    color: #e6c843;
 }
 
 .offer-product-price h3 span {
@@ -1403,7 +1403,7 @@ img {
 }
 
 .subscribtion_form .submit:hover {
-    background-color: #ff084e;
+    background-color: #e6c843;
     color: #fff;
 }
 

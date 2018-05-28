@@ -10,7 +10,7 @@
                         </div>
                         <div class="copywrite_text d-flex align-items-center">
                             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">VipX Marketplace</a>
+                                <script>document.write(new Date().getFullYear());</script> &copy; Todos os direitos reservados <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">VipX Marketplace</a>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                         </div>
                     </div>
@@ -46,8 +46,8 @@
                         </div>
                         <div class="subscribtion_form">
                             <form action="#" method="post">
-                                <input type="email" name="mail" class="mail" placeholder="Your email here">
-                                <button type="submit" class="submit">Subscribe</button>
+                                <input type="email" name="mail" class="mail" placeholder="Digite seu email aqui">
+                                <button type="submit" class="submit">Se inscrever</button>
                             </form>
                         </div>
                     </div>

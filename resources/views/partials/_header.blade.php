@@ -127,15 +127,11 @@
 
                         <div class="header-social-area">
 
-                            <a href="#"><span class="karl-level">Share</span>
-                                <i class="fa fa-pinterest" aria-hidden="true"></i>
+                            <a href="#"><span class="karl-level">Compartilhar</span>
+                                <i class="fa fa-instagram" aria-hidden="true"></i>
                             </a>
 
                             <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-
-                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
 
                         </div>
 
@@ -151,7 +147,7 @@
 
                                     <ul class="navbar-nav animated" id="nav">
 
-                                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                                        <li class="nav-item active"><a class="nav-link" href="index.html">Início</a></li>
 
                                         <li class="nav-item dropdown">
 
@@ -173,11 +169,11 @@
 
                                         </li>
 
-                                        <li class="nav-item"><a class="nav-link" href="#">Dresses</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Vestidos</a></li>
 
-                                        <li class="nav-item"><a class="nav-link" href="#"><span class="karl-level">hot</span> Shoes</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#"><span class="karl-level">Novo</span> Sapatos</a></li>
 
-                                        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
 
                                     </ul>
 
@@ -191,7 +187,7 @@
 
                         <div class="help-line">
 
-                            <a href="tel:+346573556778"><i class="ti-headphone-alt"></i> +34 657 3556 778</a>
+                            <a href="tel:+346573556778"><i class="ti-headphone-alt"></i> (13) 98858-6788</a>
 
                         </div>
 
