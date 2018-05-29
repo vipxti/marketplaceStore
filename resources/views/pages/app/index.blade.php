@@ -58,17 +58,17 @@
         <!-- Single Catagory -->
         <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-2.jpg);">
             <div class="catagory-content">
-                <h6>On Accesories</h6>
-                <h2>Sale 30%</h2>
-                <a href="#" class="btn karl-btn">SHOP NOW</a>
+                <h6>Acessórios</h6>
+                <h2>Vendas 30%</h2>
+                <a href="#" class="btn karl-btn">Compre Agora</a>
             </div>
         </div>
         <!-- Single Catagory -->
         <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-3.jpg);">
             <div class="catagory-content">
-                <h6>in Bags excepting the new collection</h6>
-                <h2>Designer bags</h2>
-                <a href="#" class="btn karl-btn">SHOP NOW</a>
+                <h6>Os melhores designer</h6>
+                <h2>Moda Feminina</h2>
+                <a href="#" class="btn karl-btn">Compre Agora</a>
             </div>
         </div>
     </section>
@@ -182,7 +182,7 @@
                         <h4 class="product-price">R$39.90</h4>
                         <p>Jeans midi cocktail dress</p>
                         <!-- Add to Cart -->
-                        <a href="#" class="add-to-cart-btn">ADD AO CARRINHO</a>
+                        <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
                     </div>
                 </div>
 
@@ -200,7 +200,7 @@
                         <h4 class="product-price">R$39.90</h4>
                         <p>Jeans midi cocktail dress</p>
                         <!-- Add to Cart -->
-                        <a href="#" class="add-to-cart-btn">ADD AO CARRINHO</a>
+                        <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
                     </div>
                 </div>
 
@@ -218,7 +218,7 @@
                         <h4 class="product-price">R$39.90</h4>
                         <p>Jeans midi cocktail dress</p>
                         <!-- Add to Cart -->
-                        <a href="#" class="add-to-cart-btn">ADD AO CARRINHO</a>
+                        <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
                     </div>
                 </div>
 
@@ -236,7 +236,7 @@
                         <h4 class="product-price">R$39.90</h4>
                         <p>Jeans midi cocktail dress</p>
                         <!-- Add to Cart -->
-                        <a href="#" class="add-to-cart-btn">ADD AO CARRINHO</a>
+                        <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
                     </div>
                 </div>
 
@@ -254,7 +254,7 @@
                         <h4 class="product-price">R$39.90</h4>
                         <p>Jeans midi cocktail dress</p>
                         <!-- Add to Cart -->
-                        <a href="#" class="add-to-cart-btn">ADD AO CARRINHO</a>
+                        <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
                     </div>
                 </div>
 
@@ -272,7 +272,7 @@
                         <h4 class="product-price">R$39.90</h4>
                         <p>Jeans midi cocktail dress</p>
                         <!-- Add to Cart -->
-                        <a href="#" class="add-to-cart-btn">ADD AO CARRINHO</a>
+                        <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
                     </div>
                 </div>
             </div>
@@ -291,7 +291,7 @@
                         <div class="offer-product-price">
                             <h3><span class="regular-price">R$25.90</span> R$15.90</h3>
                         </div>
-                        <a href="#" class="btn karl-btn mt-30">Shop Now</a>
+                        <a href="#" class="btn karl-btn mt-30">Compre Agora</a>
                     </div>
                 </div>
             </div>
@@ -366,6 +366,4 @@
         </div>
     </section>
     <!-- ****** Popular Brands Area End ****** -->
-
-
 @stop
