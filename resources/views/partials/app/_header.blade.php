@@ -17,7 +17,7 @@
 
                         <div class="top_logo">
 
-                            <a href="#"><img src="img/core-img/logo.png" alt=""></a>
+                            <a href="#"><img src="{{ asset('img/app/core-img/logo.png') }}" alt=""></a>
 
                         </div>
 
@@ -37,7 +37,7 @@
 
                                     <li>
 
-                                        <a href="#" class="image"><img src="img/product-img/product-10.jpg" class="cart-thumb" alt=""></a>
+                                        <a href="#" class="image"><img src="{{ asset('img/app/product-img/product-10.jpg') }}" class="cart-thumb" alt=""></a>
 
                                         <div class="cart-item-desc">
 
@@ -61,7 +61,7 @@
                                     <li>
 
                                         <a href="#" class="image">
-                                            <img src="img/product-img/product-11.jpg" class="cart-thumb" alt=""></a>
+                                            <img src="{{ asset('img/app/product-img/product-11.jpg') }}" class="cart-thumb" alt=""></a>
 
                                             <div class="cart-item-desc">
 

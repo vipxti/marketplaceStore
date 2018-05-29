@@ -4,7 +4,7 @@
 
     <head>
 
-        @include('partials._head')
+        @include('partials.app._head')
 
     </head>
 
@@ -12,15 +12,15 @@
 
         <div id="wrapper">
 
-            @include('partials._header')
+            @include('partials.app._header')
             
             @yield('content')
             
-            @include('partials._footer')
+            @include('partials.app._footer')
 
         </div>
 
-        @include('partials._scripts')
+        @include('partials.app._scripts')
 
     </body>
 

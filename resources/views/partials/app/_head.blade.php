@@ -6,6 +6,6 @@
 <title>Celestial</title>
 
 <!-- Favicon  -->
-<link rel="icon" href="{{ asset('img/core-img/favicon.ico') }}">
+<link rel="icon" href="{{ asset('img/app/core-img/favicon.ico') }}">
 
-@include('partials._styles')
+@include('partials.app._styles')

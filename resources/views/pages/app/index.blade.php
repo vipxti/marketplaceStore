@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app.app')
 
 @section('content')
 
@@ -6,7 +6,7 @@
     <section class="welcome_area">
         <div class="welcome_slides owl-carousel">
             <!-- Single Slide Start -->
-            <div class="single_slide height-800 bg-img background-overlay" style="background-image: url(img/bg-img/bg-1.jpg);">
+            <div class="single_slide height-800 bg-img background-overlay" style="background-image: url(img/app/bg-img/bg-1.jpg);">
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                         <div class="col-12">
@@ -21,7 +21,7 @@
             </div>
 
             <!-- Single Slide Start -->
-            <div class="single_slide height-800 bg-img background-overlay" style="background-image: url(img/bg-img/bg-4.jpg);">
+            <div class="single_slide height-800 bg-img background-overlay" style="background-image: url(img/app/bg-img/bg-4.jpg);">
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                         <div class="col-12">
@@ -36,7 +36,7 @@
             </div>
 
             <!-- Single Slide Start -->
-            <div class="single_slide height-800 bg-img background-overlay" style="background-image: url(img/bg-img/bg-2.jpg);">
+            <div class="single_slide height-800 bg-img background-overlay" style="background-image: url(img/app/bg-img/bg-2.jpg);">
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                         <div class="col-12">
@@ -56,7 +56,7 @@
     <!-- ****** Top Catagory Area Start ****** -->
     <section class="top_catagory_area d-md-flex clearfix">
         <!-- Single Catagory -->
-        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/bg-img/bg-2.jpg);">
+        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-2.jpg);">
             <div class="catagory-content">
                 <h6>On Accesories</h6>
                 <h2>Sale 30%</h2>
@@ -64,7 +64,7 @@
             </div>
         </div>
         <!-- Single Catagory -->
-        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/bg-img/bg-3.jpg);">
+        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-3.jpg);">
             <div class="catagory-content">
                 <h6>in Bags excepting the new collection</h6>
                 <h2>Designer bags</h2>
@@ -88,7 +88,7 @@
                             <div class="row">
                                 <div class="col-12 col-lg-5">
                                     <div class="quickview_pro_img">
-                                        <img src="img/product-img/product-1.jpg" alt="">
+                                        <img src="{{ asset('img/app/product-img/product-1.jpg') }}" alt="">
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-7">
@@ -174,7 +174,7 @@
                 <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s">
                     <!-- Product Image -->
                     <div class="product-img">
-                        <img src="img/product-img/product-1.jpg" alt="">
+                    <img src="{{ asset('img/app/product-img/product-1.jpg') }}" alt="">
                         <div class="product-quicview">
                             <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                         </div>
@@ -192,7 +192,7 @@
                 <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.3s">
                     <!-- Product Image -->
                     <div class="product-img">
-                        <img src="img/product-img/product-2.jpg" alt="">
+                        <img src="{{ asset('img/app/product-img/product-2.jpg') }}" alt="">
                         <div class="product-quicview">
                             <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                         </div>
@@ -210,7 +210,7 @@
                 <div class="col-12 col-sm-6 col-md-4 single_gallery_item access wow fadeInUpBig" data-wow-delay="0.4s">
                     <!-- Product Image -->
                     <div class="product-img">
-                        <img src="img/product-img/product-3.jpg" alt="">
+                        <img src="{{ asset('img/app/product-img/product-3.jpg')}}" alt="">
                         <div class="product-quicview">
                             <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                         </div>
@@ -228,7 +228,7 @@
                 <div class="col-12 col-sm-6 col-md-4 single_gallery_item shoes wow fadeInUpBig" data-wow-delay="0.5s">
                     <!-- Product Image -->
                     <div class="product-img">
-                        <img src="img/product-img/product-4.jpg" alt="">
+                        <img src="{{ asset('img/app/product-img/product-4.jpg') }}" alt="">
                         <div class="product-quicview">
                             <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                         </div>
@@ -246,7 +246,7 @@
                 <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.6s">
                     <!-- Product Image -->
                     <div class="product-img">
-                        <img src="img/product-img/product-5.jpg" alt="">
+                        <img src="{{ asset('img/app/product-img/product-5.jpg') }}" alt="">
                         <div class="product-quicview">
                             <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                         </div>
@@ -264,7 +264,7 @@
                 <div class="col-12 col-sm-6 col-md-4 single_gallery_item kids man wow fadeInUpBig" data-wow-delay="0.7s">
                     <!-- Product Image -->
                     <div class="product-img">
-                        <img src="img/product-img/product-6.jpg" alt="">
+                        <img src="{{ asset('img/app/product-img/product-6.jpg') }}" alt="">
                         <div class="product-quicview">
                             <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                         </div>
@@ -283,7 +283,7 @@
     <!-- ****** New Arrivals Area End ****** -->
 
     <!-- ****** Offer Area Start ****** -->
-    <section class="offer_area height-700 section_padding_100 bg-img" style="background-image: url(img/bg-img/bg-5.jpg);">
+    <section class="offer_area height-700 section_padding_100 bg-img" style="background-image: url(img/app/bg-img/bg-5.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-end justify-content-end">
                 <div class="col-12 col-md-8 col-lg-6">
@@ -322,7 +322,7 @@
                             <h6>Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. Aliquam finibus nulla quam, a iaculis justo finibus non. Suspendisse in fermentum nunc.Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. </h6>
                             <div class="testimonial-info d-flex align-items-center justify-content-center">
                                 <div class="tes-thumbnail">
-                                    <img src="img/bg-img/tes-1.jpg" alt="">
+                                    <img src="{{ asset('img/app/bg-img/tes-1.jpg') }}" alt="">
                                 </div>
                                 <div class="testi-data">
                                     <p>Michelle Williams</p>
@@ -337,7 +337,7 @@
                             <h6>Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. Aliquam finibus nulla quam, a iaculis justo finibus non. Suspendisse in fermentum nunc.Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. </h6>
                             <div class="testimonial-info d-flex align-items-center justify-content-center">
                                 <div class="tes-thumbnail">
-                                    <img src="img/bg-img/tes-1.jpg" alt="">
+                                    <img src="{{ asset('img/app/bg-img/tes-1.jpg') }}" alt="">
                                 </div>
                                 <div class="testi-data">
                                     <p>Michelle Williams</p>
@@ -352,7 +352,7 @@
                             <h6>Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. Aliquam finibus nulla quam, a iaculis justo finibus non. Suspendisse in fermentum nunc.Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. </h6>
                             <div class="testimonial-info d-flex align-items-center justify-content-center">
                                 <div class="tes-thumbnail">
-                                    <img src="img/bg-img/tes-1.jpg" alt="">
+                                    <img src="{{ asset('img/app/bg-img/tes-1.jpg') }}" alt="">
                                 </div>
                                 <div class="testi-data">
                                     <p>Michelle Williams</p>
