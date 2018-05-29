@@ -15,4 +15,13 @@ class PagesController extends Controller
     {
         return view('pages.admin.index');
     }
+    public function login()
+    {
+        return view('pages.admin.login');
+    }
+    public function register()
+    {
+        return view('pages.admin.register');
+    }
+
 }

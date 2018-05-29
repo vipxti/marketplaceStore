@@ -14,3 +14,7 @@
 Route::get('/', 'PagesController@index');
 
 Route::get('/admin', 'PagesController@admin');
+
+Route::get('/login', 'PagesController@login')->name('login');
+
+Route::get('/register', 'PagesController@register')->name('register');

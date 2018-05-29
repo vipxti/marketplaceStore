@@ -49,6 +49,7 @@ mix.styles([
     'public/css/admin/jquery-jvectormap.css',
     'public/css/admin/AdminLTE.min.css',
     'public/css/admin/_all-skins.min.css',
+    'public/css/admin/blue.css',
 ], 'public/css/admin-styles.css');
 
 //Compiled js files for app
@@ -62,6 +63,8 @@ mix.scripts([
     'public/js/admin/jquery-jvectormap-world-mill-en.js',
     'public/js/admin/jquery.slimscroll.min.js',
     'public/js/admin/Chart.js',
+    'public/js/admin/icheck.min.js',
+
 
     /*
     'public/js/admin/abstract-element.js',
