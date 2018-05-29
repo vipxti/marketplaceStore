@@ -29,15 +29,17 @@
 
                             <div class="cart">
 
-                                <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">2</span> <i class="fa fa-shopping-cart"></i> Carrinho R$20,00</a>
-
+                                <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">2</span> <i
+                                            class="fa fa-shopping-cart"></i> Carrinho R$20,00</a>
                                 <!-- Cart List Area Start -->
 
                                 <ul class="cart-list">
 
                                     <li>
 
-                                        <a href="#" class="image"><img src="{{ asset('img/app/product-img/product-10.jpg') }}" class="cart-thumb" alt=""></a>
+                                        <a href="#" class="image"><img
+                                                    src="{{ asset('img/app/product-img/product-10.jpg') }}"
+                                                    class="cart-thumb" alt=""></a>
 
                                         <div class="cart-item-desc">
 
@@ -61,45 +63,44 @@
                                     <li>
 
                                         <a href="#" class="image">
-                                            <img src="{{ asset('img/app/product-img/product-11.jpg') }}" class="cart-thumb" alt=""></a>
+                                            <img src="{{ asset('img/app/product-img/product-11.jpg') }}"
+                                                 class="cart-thumb" alt=""></a>
 
-                                            <div class="cart-item-desc">
+                                        <div class="cart-item-desc">
 
-                                                <h6>
-                                                    <a href="#">
-                                                        Womens Fashion
-                                                    </a>
-                                                </h6>
+                                            <h6>
+                                                <a href="#">
+                                                    Womens Fashion
+                                                </a>
+                                            </h6>
 
-                                                <p>1x - <span class="price">R$10</span></p>
+                                            <p>1x - <span class="price">R$10</span></p>
 
-                                            </div>
+                                        </div>
 
-                                            <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
+                                        <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
 
-                                        </li>
+                                    </li>
 
-                                        <li class="total">
+                                    <li class="total">
 
-                                            <span class="pull-right">Total: R$20.00</span>
+                                        <span class="pull-right">Total: R$20.00</span>
 
-                                            <a href="cart.html" class="btn btn-sm btn-cart">
-                                                Carrinho
-                                            </a>
+                                        <a href="cart.html" class="btn btn-sm btn-cart">
+                                            Carrinho
+                                        </a>
 
-                                            <a href="checkout-1.html" class="btn btn-sm btn-checkout">
-                                                Conferir
-                                            </a>
+                                        <a href="checkout-1.html" class="btn btn-sm btn-checkout">
+                                            Conferir
+                                        </a>
 
-                                        </li>
+                                    </li>
 
-                                    </ul>
+                                </ul>
 
-                                </div>
+                            </div>
                             <div class="header-right-side-menu ml-15">
-                                <a href="#" id="sideMenuBtn"><i class="fa fa-user" aria-hidden="true"></i></a>
-                            </div>
-
+                                <a href="{{route('login')}}"><i class="fa fa-user" aria-hidden="true"></i></a>
                             </div>
 
                         </div>
@@ -112,84 +113,91 @@
 
         </div>
 
+    </div>
 
-        <!-- Top Header Area End -->
 
-        <div class="main_header_area">
+    <!-- Top Header Area End -->
 
-            <div class="container h-100">
+    <div class="main_header_area">
 
-                <div class="row h-100">
+        <div class="container h-100">
 
-                    <div class="col-12 d-md-flex justify-content-between">
+            <div class="row h-100">
 
-                        <!-- Header Social Area -->
+                <div class="col-12 d-md-flex justify-content-between">
 
-                        <div class="header-social-area">
+                    <!-- Header Social Area -->
 
-                            <a href="https://www.instagram.com/celestial_moda_evangelica/?hl=pt-br"><span class="karl-level">Compartilhar</span>
-                                <i class="fa fa-instagram" aria-hidden="true"></i>
-                            </a>
+                    <div class="header-social-area">
 
-                            <a href="https://www.facebook.com/Celestial-Moda-Evang%C3%A9lica-480913635394202/"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/celestial_moda_evangelica/?hl=pt-br"><span
+                                    class="karl-level">Compartilhar</span>
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </a>
 
-                        </div>
+                        <a href="https://www.facebook.com/Celestial-Moda-Evang%C3%A9lica-480913635394202/"><i
+                                    class="fa fa-facebook" aria-hidden="true"></i></a>
 
-                        <!-- Menu Area -->
+                    </div>
 
-                        <div class="main-menu-area">
+                    <!-- Menu Area -->
 
-                            <nav class="navbar navbar-expand-lg align-items-start">
+                    <div class="main-menu-area">
 
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#karl-navbar" aria-controls="karl-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"><i class="ti-menu"></i></span></button>
+                        <nav class="navbar navbar-expand-lg align-items-start">
 
-                                <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                    data-target="#karl-navbar" aria-controls="karl-navbar" aria-expanded="false"
+                                    aria-label="Toggle navigation"><span class="navbar-toggler-icon"><i
+                                            class="ti-menu"></i></span></button>
 
-                                    <ul class="navbar-nav animated" id="nav">
+                            <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
 
-                                        <li class="nav-item active"><a class="nav-link" href="index.html">Início</a></li>
+                                <ul class="navbar-nav animated" id="nav">
 
-                                        <li class="nav-item dropdown">
+                                    <li class="nav-item active"><a class="nav-link" href="index.html">Início</a></li>
 
-                                            <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                                    <li class="nav-item dropdown">
 
-                                            <div class="dropdown-menu" aria-labelledby="karlDropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
 
-                                                <a class="dropdown-item" href="index.html">Início</a>
+                                        <div class="dropdown-menu" aria-labelledby="karlDropdown">
 
-                                                <a class="dropdown-item" href="shop.html">Shop</a>
+                                            <a class="dropdown-item" href="index.html">Início</a>
 
-                                                <a class="dropdown-item" href="product-details.html">Produtos em Destaque</a>
+                                            <a class="dropdown-item" href="shop.html">Shop</a>
 
-                                                <a class="dropdown-item" href="cart.html">Carrinho</a>
+                                            <a class="dropdown-item" href="product-details.html">Produtos em
+                                                Destaque</a>
 
-                                                <a class="dropdown-item" href="checkout.html">Checkout</a>
+                                            <a class="dropdown-item" href="cart.html">Carrinho</a>
 
-                                            </div>
+                                            <a class="dropdown-item" href="checkout.html">Checkout</a>
 
-                                        </li>
+                                        </div>
 
-                                        <li class="nav-item"><a class="nav-link" href="#">Vestidos</a></li>
+                                    </li>
 
-                                        <li class="nav-item"><a class="nav-link" href="#">Sapatos</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Vestidos</a></li>
 
-                                        <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Sapatos</a></li>
 
-                                    </ul>
+                                    <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
 
-                                </div>
+                                </ul>
 
-                            </nav>
+                            </div>
 
-                        </div>
+                        </nav>
 
-                        <!-- Help Line -->
+                    </div>
 
-                        <div class="help-line">
+                    <!-- Help Line -->
 
-                            <a href="tel:+346573556778"><i class="fa fa-whatsapp"></i>&nbsp &nbsp(13) 98858-6788</a>
+                    <div class="help-line">
 
-                        </div>
+                        <a href="tel:+346573556778"><i class="fa fa-whatsapp"></i>&nbsp &nbsp(13) 98858-6788</a>
 
                     </div>
 
@@ -198,6 +206,8 @@
             </div>
 
         </div>
+
+    </div>
 
     </div>
 

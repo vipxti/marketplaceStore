@@ -422,7 +422,7 @@ img {
     height: 20px;
     line-height: 20px;
     position: absolute;
-    left: -10px;
+    left: -5px;
     text-align: center;
     top: 5px;
     width: 20px;
@@ -549,7 +549,7 @@ img {
 .header-social-area a {
     display: inline-block;
     padding: 0 10px;
-    font-size: 20px;
+    font-size: 14px;
     position: relative;
     z-index: 1;
 }
@@ -1182,7 +1182,7 @@ img {
 }
 
 .product-description .add-to-cart-btn {
-    margin-top: 6px;
+    margin-top: 50px;
     font-size: 12px;
     font-weight: 700;
     color: #e6c843;
@@ -1191,10 +1191,6 @@ img {
 
 .product-description .add-to-cart-btn:hover {
     color: #2a2a2a;
-}
-
-.fa fa-shopping-cart{
-    font-size: 18px;
 }
 
 /* -------------------
