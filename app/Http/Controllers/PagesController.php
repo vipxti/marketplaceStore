@@ -10,4 +10,9 @@ class PagesController extends Controller
     {
         return view('pages.app.index');
     }
+
+    public function admin()
+    {
+        return view('pages.admin.index');
+    }
 }

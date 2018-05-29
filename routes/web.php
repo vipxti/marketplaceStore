@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'PagesController@index');
+
+Route::get('/admin', 'PagesController@admin');
