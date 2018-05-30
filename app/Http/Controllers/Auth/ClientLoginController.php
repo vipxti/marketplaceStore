@@ -10,7 +10,7 @@ class ClientLoginController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('clientLogout', 'userLogout');
     }
 
     public function showClientLoginForm()
@@ -31,8 +31,15 @@ class ClientLoginController extends Controller
             //Redireciona o cliente caso consiga logar
             return redirect()->intended(route('admin.dashboard'));
         }
-        
+
         //Retorna para a tela de login com o campo email preenchido
         return redirect()->back()->withInput($request->only('nm_email', 'remember'));
+    }
+
+    public function clientLogout()
+    {
+        Auth::guard('web')->logout();
+
+        return redirect()->route('index');
     }
 }

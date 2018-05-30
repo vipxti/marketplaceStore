@@ -17,7 +17,14 @@ Route::get('/', 'HomeController@showIndexPage')->name('index');
 Route::prefix('admin')->group(function () {
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
-    Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('register');
+    Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
     Route::get('/cadProd', function (){return view('pages.admin.cadProduto');})->name('admin.cadProd');
     Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard');
+    Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');
+
+    //Resetar senha
+    Route::post('/password/email', 'Auth\UserForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
+    Route::get('/password/reset', 'Auth\UserForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+    Route::post('/password/reset', 'Auth\UserResetPasswordController@reset');
+    Route::get('/password/reset/{token}', 'Auth\UserResetPasswordController@showResetForm')->name('admin.password.reset');
 });

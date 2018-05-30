@@ -33,8 +33,8 @@
             </div>
             <!-- /.social-auth-links -->
 
-            <a href="#">Esqueci a minha senha</a><br>
-            <a href="{{route('register')}}" class="text-center">Registre uma nova senha</a>
+            <a href="{{ route('admin.password.request') }}">Esqueci a minha senha</a><br>
+            <a href="{{ route('admin.register' )}}" class="text-center">Registre uma nova conta</a>
 
         </div>
         <!-- /.login-box-body -->

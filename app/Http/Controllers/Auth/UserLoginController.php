@@ -10,7 +10,7 @@ class UserLoginController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest:usuario')->except('logout');
+        $this->middleware('guest:usuario')->except('userLogout');
     }
 
     public function showAdminLoginForm()
@@ -34,5 +34,12 @@ class UserLoginController extends Controller
         
         //Retorna para a tela de login com o campo email preenchido
         return redirect()->back()->withInput($request->only('nm_email', 'remember'));
+    }
+
+    public function userLogout()
+    {
+        Auth::guard('usuario')->logout();
+
+        return redirect()->route('admin.login');
     }
 }
