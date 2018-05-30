@@ -18,5 +18,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
     Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('register');
+    Route::get('/cadProd', function (){return view('pages.admin.cadProduto');})->name('admin.cadProd');
     Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard');
 });
