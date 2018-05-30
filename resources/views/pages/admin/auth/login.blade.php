@@ -3,7 +3,7 @@
     <!--login-box -->
     <div class="login-box">
         <div class="top_logo" align="center">
-            <a href="#"><img src="http://localhost/celestialmodaevangelica/public/img/app/core-img/logo.png" alt=""></a>
+            <a href="#"><img src="{{asset('img/app/core-img/logo.png')}}" alt=""></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
