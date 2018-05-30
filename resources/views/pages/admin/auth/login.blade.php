@@ -2,10 +2,7 @@
 @section('content')
     <!--login-box -->
     <div class="login-box">
-        <div class="top_logo" align="center">
-            <a href="#"><img src="{{asset('img/app/core-img/logo.png')}}" alt=""></a>
-        </div>
-        <!-- /.login-logo -->
+    <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Entre para iniciar sua sessão</p>
 

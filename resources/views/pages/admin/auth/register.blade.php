@@ -39,7 +39,7 @@
                 <p>- OU -</p>
                 <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>Inscreva-se usando o Facebook</a>
             </div>
-            <a href="login.html" class="text-center">Eu já tenho uma conta</a>
+            <a href="{{route('admin.login')}}" class="text-center">Eu já tenho uma conta</a>
         </div>
         <!-- /.form-box -->
     </div>

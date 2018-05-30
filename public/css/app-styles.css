@@ -1360,13 +1360,13 @@ img {
 .footer_social_area > a {
     display: inline-block;
     font-size: 26px;
-    padding: 0 30px;
+    padding: 0 20px;
 }
 
 .footer_social_area > a:hover {
     -webkit-transform: translateY(-5px);
     transform: translateY(-5px);
-    color: #ff084e;
+    color: #e3c547;
 }
 
 .footer_widget_menu a {
