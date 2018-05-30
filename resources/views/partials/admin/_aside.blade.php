@@ -30,7 +30,7 @@
             </li>
 
 
-            <li class="active treeview menu-open">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-shopping-bag"></i>
                     <span>Produtos</span>
@@ -39,7 +39,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-plus-square"></i>Cadastro</a></li>
+                    <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-plus-square"></i>Cadastrar</a></li>
                 </ul>
             </li>
 
@@ -52,7 +52,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i>#</a></li>
+                    <li><a href="{{route('admin.cadCatego')}}"><i class="fa fa-tag"></i>Categoria/Sub-Categoria</a></li>
                 </ul>
             </li>
 
