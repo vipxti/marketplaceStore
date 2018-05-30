@@ -49,7 +49,7 @@ mix.styles([
     'public/css/admin/jquery-jvectormap.css',
     'public/css/admin/AdminLTE.min.css',
     'public/css/admin/_all-skins.min.css',
-    'public/css/admin/blue.css',
+    'public/css/admin/_all.css',
 ], 'public/css/admin-styles.css');
 
 //Compiled js files for app
