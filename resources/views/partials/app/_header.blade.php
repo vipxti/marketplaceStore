@@ -100,7 +100,9 @@
 
                             </div>
                             <div class="header-right-side-menu ml-15">
-                                <a href="{{route('login')}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                <a href="{{ route('admin.login') }}">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </a>
                             </div>
 
                         </div>

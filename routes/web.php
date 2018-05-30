@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,10 +12,11 @@
 |
 */
 
-Route::get('/', 'PagesController@index');
+Route::get('/', 'HomeController@showIndexPage')->name('index');
 
-Route::get('/admin', 'PagesController@admin');
-
-Route::get('/login', 'PagesController@login')->name('login');
-
-Route::get('/register', 'PagesController@register')->name('register');
+Route::prefix('admin')->group(function () {
+    Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
+    Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
+    Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('register');
+    Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard');
+});
