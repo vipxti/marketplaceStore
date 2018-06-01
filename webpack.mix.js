@@ -50,6 +50,7 @@ mix.styles([
     'public/css/admin/AdminLTE.min.css',
     'public/css/admin/_all-skins.min.css',
     'public/css/admin/_all.css',
+    'public/css/app/select2.min.css'
 ], 'public/css/admin-styles.css');
 
 //Compiled js files for app
@@ -64,6 +65,7 @@ mix.scripts([
     'public/js/admin/jquery.slimscroll.min.js',
     'public/js/admin/Chart.js',
     'public/js/admin/icheck.min.js',
+    'public/js/admin/select2.full.min.js',
 
 
     /*

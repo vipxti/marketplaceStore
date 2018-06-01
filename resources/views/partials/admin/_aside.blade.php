@@ -20,8 +20,6 @@
 
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MENU</li>
-
-
             <li>
                 <a href="{{route('admin.dashboard')}}">
                     <i class="fa fa-dashboard"></i>
@@ -92,7 +90,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i>#</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>#</a></li>
                 </ul>
             </li>
 
