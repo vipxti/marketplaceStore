@@ -43,25 +43,26 @@
                                              </div>
 
                                             <form id="fCat" class="form-horizontal" action="#" method="post">
+
                                                 <div class="col-md-6">
                                                     <label>Alterar Categoria</label>
                                                     <input class="form-control" type="hidden" id="catId" name="catId">
                                                     <input type="text" class="form-control" id="catName" name="catName" maxlength="35">
                                                 </div>
+                                                <div>&nbsp;</div>
 
-                                                <p><p><p>
-                                                <div class="col-md-6">
-                                                    <label>Sub-Categoria</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon">
-                                                            <i class="fa fa-tags"></i>
-                                                        </div>
-                                                        <input type="text" class="form-control">
-                                                    </div>
-
-                                                </div>
-                                                <button type="submit" class="btn btn-success pull-right" style="margin-top: 5% !important;">Salvar</button>
+                                                <button type="submit" class="btn btn-success pull-right">&nbsp;&nbsp;Salvar</button>
                                             </form>
+
+                                            <div class="col-md-6">
+                                                <label>Sub-Categoria</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-tags"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
 
                                         </div>
                                     </div>
