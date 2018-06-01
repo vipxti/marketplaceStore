@@ -106,7 +106,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('admin.cadUsuario')}}"><i class="fa fa-user-plus"></i>Cadastrar Usuário</a></li>
+                    <li><a href="{{route('usuario.dados')}}"><i class="fa fa-user-plus"></i>Cadastrar Usuário</a></li>
                 </ul>
             </li>
 
