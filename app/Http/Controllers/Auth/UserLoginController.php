@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserLoginController extends Controller
 {
@@ -25,10 +26,10 @@ class UserLoginController extends Controller
     public function login(LoginRequest $request)
     {
 
-        //dd($request->all());
+        //dd(Auth::guard('admin')->attempt(['nm_email' => $request->email, 'password' => $request->password], $request->filled('remember')));
 
         //Faz o login do usuário
-        if (Auth::guard('admin')->attempt(['nm_email' => $request->nm_email, 'password' => $request->password], $request->filled('remember'))) {
+        if (Auth::guard('admin')->attempt(['nm_email' => $request->email, 'password' => $request->password], $request->filled('remember'))) {
 
             //Redireciona o usuário caso consiga logar
             return redirect()->intended(route('admin.dashboard'));

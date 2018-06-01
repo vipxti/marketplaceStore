@@ -22,6 +22,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/cadProd', function (){return view('pages.admin.cadProduto');})->name('admin.cadProd');
     Route::get('/cadCatego', function (){return view('pages.admin.cadCatego');})->name('admin.cadCatego');
     Route::get('/cadUsuario', function (){return view('pages.admin.cadUsuario');})->name('usuario.dados');
+    Route::get('/aparencia', function (){return view('pages.admin.indexAparencia');})->name('admin.aparencia');
     Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');
 

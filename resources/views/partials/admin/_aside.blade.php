@@ -117,7 +117,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('admin.indexAparencia')}}"><i class="fa fa-paint-brush"></i>Aparência</a></li>
+                    <li><a href="{{route('admin.aparencia')}}"><i class="fa fa-paint-brush"></i>Aparência</a></li>
                 </ul>
             </li>
 
