@@ -20,7 +20,7 @@ class UserRegisterController extends Controller
 
     public function showRegisterForm()
     {
-        return view('pages.admin.cadUsuario');
+        return view('pages.admin.auth.register');
     }
 
     /**
@@ -38,21 +38,40 @@ class UserRegisterController extends Controller
      */
     protected function create(UserRequest $request)
     {
+
+        //dd($request->all());
+
         Contact::create([
-            'cd_celular1' => $request->celular1,
-            'cd_celular2' => $request->celular2
+            'cd_celular2' => null
         ]);
 
         $lastIdTel = Contact::orderBy('cd_telefone','DESC')->first();
 
-        User::create([
-            'cd_cpf_cnpj' => '',
-            'nm_usuario' => '',
-            'nm_email' => $request->nm_email,
-            'ds_senha' => $request->ds_senha,
-            'ic_adm' => 0,
-            'ds_img' => $request->ds_img,
-            'cd_telefone' => $lastIdTel
-        ]);
+        $user = User::create([
+                'cd_cpf_cnpj' => $request->cd_cpf_cnpj,
+                'nm_usuario' => $request->nm_usuario,
+                'nm_email' => $request->nm_email,
+                'ds_senha' => $request->ds_senha,
+                'ic_adm' => '',
+                'ds_img' => null,
+                'cd_telefone' => $lastIdTel
+            ]);
+
+        if ($user) {
+
+            auth()->login($user);
+            $userName = Auth::user()->nome;
+            session()->flash('Mensagem', ' Seja Bem-Vindo'. ' ' .$userName );
+            return redirect()->route('usuario.dados');
+
+        }
+        else
+        {
+
+            return redirect()->back()->withErrors('Houve um problema ao cadastrar o usuário');
+
+        }
+
+
     }
 }

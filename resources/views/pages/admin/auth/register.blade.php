@@ -3,10 +3,15 @@
     <div class="register-box">
         <div class="register-box-body">
             <p class="login-box-msg">Registre uma nova conta</p>
-            <form action="../../index.html" method="post">
+            <form action="{{ route('admin.register.submit') }}" method="post">
+                {{ csrf_field() }}
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" name="nm_usuario" placeholder="Nome Completo">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="number" class="form-control" name="cd_cpf_cnpj" placeholder="CPF/CNPJ" required maxlength="15">
+                    <span class="glyphicon glyphicon-credit-card form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
                     <input type="email" class="form-control" name="nm_email" placeholder="Email">
@@ -16,10 +21,10 @@
                     <input type="password" class="form-control" name="ds_senha" placeholder="Senha">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
-                <div class="form-group has-feedback">
+                {{--<div class="form-group has-feedback">
                     <input type="password" class="form-control" name="conf_senha" placeholder="Confirmar senha">
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-                </div>
+                </div>--}}
                 <div class="row">
                     <div class="col-xs-8">
                         <div class="checkbox icheck">

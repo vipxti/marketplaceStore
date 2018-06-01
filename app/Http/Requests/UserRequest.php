@@ -27,11 +27,7 @@ class UserRequest extends FormRequest
             'cd_cpf_cnpj' => 'required',
             'nm_usuario' => 'required|string',
             'nm_email' => 'required|email',
-            'ds_senha' => 'required|',
-            'ic_adm' => 'required',
-            'ds_img' => 'required|string',
-            'cd_telefone' => 'required',
-            'cd_celular1' => 'required',
+            'ds_senha' => 'required|'
         ];
     }
 }

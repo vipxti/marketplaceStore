@@ -21,8 +21,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/register', 'Auth\UserRegisterController@create')->name('admin.register.submit');
     Route::get('/cadProd', function (){return view('pages.admin.cadProduto');})->name('admin.cadProd');
     Route::get('/cadCatego', function (){return view('pages.admin.cadCatego');})->name('admin.cadCatego');
-    Route::get('/cadUsuario', function (){return view('pages.admin.cadUsuario');})->name('admin.cadUsuario');
-    Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard');
+    Route::get('/cadUsuario', function (){return view('pages.admin.cadUsuario');})->name('usuario.dados');
+    Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');
 
     //Resetar senha
