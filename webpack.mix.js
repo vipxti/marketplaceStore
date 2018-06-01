@@ -53,7 +53,7 @@ mix.styles([
     'public/css/app/select2.min.css'
 ], 'public/css/admin-styles.css');
 
-//Compiled js files for app
+//Compiled js files for admin page
 mix.scripts([
     'public/js/admin/jquery.min.js',
     'public/js/admin/bootstrap.min.js',

@@ -30,77 +30,76 @@
                 <div class="box-body">
                     <form action="{{ route('product.save') }}" method="post">
                         {{ csrf_field() }}
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Ean</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                    <input type="text" class="form-control" name="cd_ean">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Produto</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                    <input type="text" class="form-control" name="nm_produto">
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Descrição</label>
-                                <div class="input-group">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Ean</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                        <input type="text" class="form-control" name="cd_ean">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Produto</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                                        <input type="text" class="form-control" name="nm_produto">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Descrição</label>
+                                    <div class="input-group">
                                     <textarea id="bold" name="ds_produto" rows="2" cols="138%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px;">
                                     </textarea>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Preço</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">R$</span>
-                                    <input type="number" class="form-control" name="vl_produto">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Preço</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">R$</span>
+                                        <input type="number" class="form-control" name="vl_produto">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label>Categoria</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                <select class="form-control select2" style="width: 100%;" name="cd_categoria" >
-                                    <option selected="selected" value="1">Alabama</option>
-                                    <option value="2">Alaska</option>
-                                    <option value="3">California</option>
-                                    <option value="4">Delaware</option>
-                                    <option value="5">Tennessee</option>
-                                    <option value="6">Texas</option>
-                                    <option value="7">Washington</option>
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Multiple</label>
+                            <div class="col-md-3">
+                                <label>Categoria</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-outdent"></i></span>
-                                    <select class="form-control select2" multiple="multiple" style="width: 100%;" name="subcatProduto">
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
+                                    <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                    <select class="form-control select2" style="width: 100%;" name="cd_categoria" >
+                                        <option selected="selected" value="1">Alabama</option>
+                                        <option value="2">Alaska</option>
+                                        <option value="3">California</option>
+                                        <option value="4">Delaware</option>
+                                        <option value="5">Tennessee</option>
+                                        <option value="6">Texas</option>
+                                        <option value="7">Washington</option>
                                     </select>
                                 </div>
                             </div>
-                    </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Sub-Categoria</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-outdent"></i></span>
+                                        <select class="form-control select2" multiple="multiple" style="width: 100%;" name="subcatProduto">
+                                            <option>Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="col-md-4">
                                 <label>Cor</label>
@@ -116,7 +115,6 @@
                                         <option value="6">Vinho</option>
                                     </select>
                                 </div>
-
                             </div>
                             <div class="col-md-4">
                                 <label>Tamanho</label>
@@ -132,8 +130,36 @@
                                         <option>XG</option>
                                     </select>
                                 </div>
-
                             </div>
+                        </div>
+                        <div>&nbsp;</div>
+                        <div class="col-md-8">
+                            <div class="col-md-3">
+                                <label>Largura</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                                    <input type="number" name="width">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Altura</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
+                                    <input type="number" name="heigth">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Peso</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
+                                    <input type="number" name="peso">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div>&nbsp;</div>
+                            <div>&nbsp;</div>
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Imagens</label>
@@ -154,6 +180,9 @@
                                 </div>
                             </div>
                         </div>
+
+
+
                         <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                     </form>
                 </div>
