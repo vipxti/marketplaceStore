@@ -55,7 +55,7 @@ class UserRegisterController extends Controller
                 'cd_cpf_cnpj' => $request->cd_cpf_cnpj,
                 'nm_usuario' => $request->nm_usuario,
                 'nm_email' => $request->nm_email,
-                'ds_senha' => $request->ds_senha,
+                'ds_senha' => Hash::make($request->ds_senha),
                 'ic_adm' => 0,
                 'ds_img' => 0,
                 'cd_telefone' => $lastIdTel->cd_telefone
