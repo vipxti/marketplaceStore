@@ -59,6 +59,19 @@
 
             <li class="treeview">
                 <a href="#">
+                    <i class="fa fa-credit-card"></i> <span>Formas de Pagamento</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i>#</a></li>
+                </ul>
+            </li>
+
+
+            <li class="treeview">
+                <a href="#">
                     <i class="fa fa-truck"></i>
                     <span>Pedidos</span>
                     <span class="pull-right-container">
@@ -69,7 +82,6 @@
                     <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i>#</a></li>
                 </ul>
             </li>
-
 
 
             <li class="treeview">
