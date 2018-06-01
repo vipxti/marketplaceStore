@@ -20,7 +20,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
     Route::get('/cadProd', function (){return view('pages.admin.cadProduto');})->name('admin.cadProd');
     Route::get('/cadCatego', function (){return view('pages.admin.cadCatego');})->name('admin.cadCatego');
-    Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
+    Route::get('/cadUsuario', function (){return view('pages.admin.cadUsuario');})->name('admin.cadUsuario');
+    Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard');
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');
 
     //Resetar senha
