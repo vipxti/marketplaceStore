@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Contact;
+use App\Http\Requests\UserRequest;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +20,7 @@ class UserRegisterController extends Controller
 
     public function showRegisterForm()
     {
-        return view('pages.admin.auth.register');
+        return view('pages.admin.cadUsuario');
     }
 
     /**
@@ -29,39 +31,28 @@ class UserRegisterController extends Controller
     protected $redirectTo = '/admin';
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-    }
-
-    /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(UserRequest $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+        Contact::create([
+            'cd_celular1' => $request->celular1,
+            'cd_celular2' => $request->celular2
+        ]);
+
+        $lastIdTel = Contact::orderBy('cd_telefone','DESC')->first();
+
+        User::create([
+            'cd_cpf_cnpj' => '',
+            'nm_usuario' => '',
+            'nm_email' => $request->nm_email,
+            'ds_senha' => $request->ds_senha,
+            'ic_adm' => 0,
+            'ds_img' => $request->ds_img,
+            'cd_telefone' => $lastIdTel
         ]);
     }
 }

@@ -22,9 +22,4 @@ class User extends Authenticatable
     protected $hidden = [
         'ds_senha'
     ];
-
-    public function getAuthPassword()
-    {
-        return $this->ds_senha;
-    }
 }

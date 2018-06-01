@@ -36,23 +36,23 @@
 
                      <div class="col-md-12">
 
-                        <div class="col-md-5">
+                        {{--<div class="col-md-5">
                             <div class="form-group">
                                 <label>Nome completo</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-ellipsis-h"></i></span>
-                                    <input type="text" class="form-control" name="nm_usuario">
+                                    <input type="text" class="form-control" name="nm_usuario" required>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
 
 
-                        <div class="col-md-5">
+                       {{-- <div class="col-md-5">
                             <div class="form-group">
                                 <label>Email</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-at"></i></span>
-                                    <input type="text" class="form-control" name="nm_email">
+                                    <input type="text" class="form-control" name="nm_email" required>
                                 </div>
                             </div>
                         </div>
@@ -63,22 +63,32 @@
                                 <label>Senha</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-                                    <input type="password" class="form-control" name="ds_senha" ">
+                                    <input type="password" class="form-control" name="ds_senha" required>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
 
 
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Telefone</label>
+                                <label>Celular 1</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="number" class="form-control" name="cd_telefone" ">
+                                    <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+                                    <input type="number" class="form-control" name="cd_celular1" required maxlength="11">
                                 </div>
                             </div>
                         </div>
+
+                         <div class="col-md-3">
+                             <div class="form-group">
+                                 <label>Celular 2</label>
+                                 <div class="input-group">
+                                     <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+                                     <input type="number" class="form-control" name="cd_celular2" maxlength="11">
+                                 </div>
+                             </div>
+                         </div>
                      </div>
 
 
