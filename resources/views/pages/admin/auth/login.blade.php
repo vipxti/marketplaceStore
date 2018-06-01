@@ -6,18 +6,23 @@
         <div class="login-box-body">
             <p class="login-box-msg">Entre para iniciar sua sessão</p>
 
-            <form action="../../index2.html" method="post">
+            <form action="{{ route('admin.login.submit') }}" method="post">
+                {{ csrf_field() }}
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control" placeholder="Email">
+                    <input type="email" class="form-control" name="nm_email" placeholder="Email">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Senha">
+                    <input type="password" class="form-control" name="password" placeholder="Senha">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-8">
-
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" name="remember"> Lembrar de mim
+                            </label>
+                        </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
@@ -39,6 +44,16 @@
         </div>
         <!-- /.login-box-body -->
     </div>
+
+    <script>
+        () => {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '30%' /* optional */
+            });
+        };
+    </script>
     <!-- /.login-box -->
 @stop
 

@@ -13,7 +13,7 @@ class UserRegisterController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:usuario');
+        $this->middleware('guest:admin');
     }
 
     public function showRegisterForm()
@@ -26,7 +26,7 @@ class UserRegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.

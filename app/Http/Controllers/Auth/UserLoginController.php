@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserLoginController extends Controller
 {
+    //use AuthenticatesUsers;
+
     public function __construct()
     {
-        $this->middleware('guest:usuario')->except('userLogout');
+        $this->middleware('guest:admin')->except('userLogout');
     }
 
     public function showAdminLoginForm()
@@ -18,27 +22,27 @@ class UserLoginController extends Controller
         return view('pages.admin.auth.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        //Validar o form
-        $this->validate($request, [
-            '' => 'required|email',
-            '' => 'required|min:6'
-        ]);
+
+        //dd($request->all());
 
         //Faz o login do usuário
-        if (Auth::guard('usuario')->attempt(['' => $request->nm_email, '' => $request->ds_senha], $request->remember)) {
+        if (Auth::guard('admin')->attempt(['nm_email' => $request->nm_email, 'password' => $request->password], $request->filled('remember'))) {
+
             //Redireciona o usuário caso consiga logar
             return redirect()->intended(route('admin.dashboard'));
+
         }
         
         //Retorna para a tela de login com o campo email preenchido
-        return redirect()->back()->withInput($request->only('nm_email', 'remember'));
+        return redirect()->back()->withInput($request->only('nm_email'));
+
     }
 
     public function userLogout()
     {
-        Auth::guard('usuario')->logout();
+        Auth::guard('admin')->logout();
 
         return redirect()->route('admin.login');
     }

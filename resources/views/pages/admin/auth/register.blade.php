@@ -5,26 +5,26 @@
             <p class="login-box-msg">Registre uma nova conta</p>
             <form action="../../index.html" method="post">
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" placeholder="Nome Completo">
+                    <input type="text" class="form-control" name="nm_usuario" placeholder="Nome Completo">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control" placeholder="Email">
+                    <input type="email" class="form-control" name="nm_email" placeholder="Email">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Senha">
+                    <input type="password" class="form-control" name="ds_senha" placeholder="Senha">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Confirmar senha">
+                    <input type="password" class="form-control" name="conf_senha" placeholder="Confirmar senha">
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox">Estou de acordo com <a href="#">termos</a>
+                                <input type="checkbox">Estou de acordo com os <a href="#">termos</a>
                             </label>
                         </div>
                     </div>

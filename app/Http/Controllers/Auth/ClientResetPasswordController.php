@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class ClientResetPasswordController extends Controller
 {
@@ -25,7 +27,7 @@ class ClientResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -44,6 +46,6 @@ class ClientResetPasswordController extends Controller
 
     protected function broker()
     {
-        return Password::broker('clientes');
+        return Password::broker('users');
     }
 }

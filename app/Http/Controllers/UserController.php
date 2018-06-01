@@ -8,6 +8,6 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:usuario');
+        $this->middleware('auth:admin');
     }
 }

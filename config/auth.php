@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'clientes',
+        'passwords' => 'users',
     ],
 
     /*
@@ -38,17 +38,22 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'clientes',
+            'provider' => 'users',
         ],
 
-        'usuario' => [
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'usuarios',
+            'provider' => 'admins',
         ],
 
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
+        ],
+
+        'admin-api' => [
+            'driver' => 'token',
+            'provider' => 'admins',
         ],
     ],
 
@@ -70,14 +75,14 @@ return [
     */
 
     'providers' => [
-        'usuarios' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
-        ],
-
-        'clientes' => [
+        'users' => [
             'driver' => 'eloquent',
             'model' => App\Client::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\User::class,
         ],
 
         // 'users' => [
@@ -102,15 +107,15 @@ return [
     */
 
     'passwords' => [
-        'clientes' => [
-            'provider' => 'clientes',
-            'table' => 'password_resets',
+        'users' => [
+            'provider' => 'users',
+            'table' => 'expiracao_senhas',
             'expire' => 45,
         ],
 
-        'usuarios' => [
-            'provider' => 'usuarios',
-            'table' => 'password_resets',
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'expiracao_senhas',
             'expire' => 15,
         ],
     ],

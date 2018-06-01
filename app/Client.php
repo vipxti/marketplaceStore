@@ -9,7 +9,6 @@ class Client extends Authenticatable
 {
     use Notifiable;
 
-    protected $guard = 'web';
     protected $table = 'cliente';
     protected $primaryKey = 'cd_cliente';
 

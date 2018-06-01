@@ -61,7 +61,7 @@
           </li>
           <!-- Control Sidebar Toggle Button -->
           <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-sign-out"></i></a>
+            <a href="{{ route('admin.logout') }}"><i class="fa fa-sign-out"></i></a>
           </li>
         </ul>
       </div>

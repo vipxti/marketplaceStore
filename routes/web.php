@@ -20,7 +20,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
     Route::get('/cadProd', function (){return view('pages.admin.cadProduto');})->name('admin.cadProd');
     Route::get('/cadCatego', function (){return view('pages.admin.cadCatego');})->name('admin.cadCatego');
-    Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard');
+    Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');
 
     //Resetar senha
@@ -29,3 +29,5 @@ Route::prefix('admin')->group(function () {
     Route::post('/password/reset', 'Auth\UserResetPasswordController@reset');
     Route::get('/password/reset/{token}', 'Auth\UserResetPasswordController@showResetForm')->name('admin.password.reset');
 });
+
+Route::post('/product', 'ProductController@createProduct')->name('product.save');

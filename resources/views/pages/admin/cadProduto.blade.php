@@ -28,13 +28,15 @@
 
                 </div>
                 <div class="box-body">
-                    <form>
+                    <form action="{{ route('product.save') }}" method="post">
+                        {{ csrf_field() }}
+
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Ean</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                    <input type="text" class="form-control" name="eanProduto">
+                                    <input type="text" class="form-control" name="cd_ean">
                                 </div>
                             </div>
                         </div>
@@ -44,7 +46,7 @@
                                 <label>Produto</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                    <input type="text" class="form-control" name="nProduto">
+                                    <input type="text" class="form-control" name="nm_produto">
                                 </div>
                             </div>
                         </div>
@@ -52,7 +54,7 @@
                             <div class="form-group">
                                 <label>Descrição</label>
                                 <div class="input-group">
-                                    <textarea id="bold" name="descProduto" rows="2" cols="138%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px;">
+                                    <textarea id="bold" name="ds_produto" rows="2" cols="138%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px;">
                                     </textarea>
                                 </div>
                             </div>
@@ -62,7 +64,7 @@
                                 <label>Preço</label>
                                 <div class="input-group">
                                     <span class="input-group-addon">R$</span>
-                                    <input type="number" class="form-control"  name="precoProduto">
+                                    <input type="number" class="form-control" name="vl_produto">
                                 </div>
                             </div>
                         </div>
@@ -70,14 +72,14 @@
                             <label>Categoria</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                <select class="form-control select2" style="width: 100%;" name="catProduto" >
-                                    <option selected="selected">Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>California</option>
-                                    <option>Delaware</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Washington</option>
+                                <select class="form-control select2" style="width: 100%;" name="cd_categoria" >
+                                    <option selected="selected" value="1">Alabama</option>
+                                    <option value="2">Alaska</option>
+                                    <option value="3">California</option>
+                                    <option value="4">Delaware</option>
+                                    <option value="5">Tennessee</option>
+                                    <option value="6">Texas</option>
+                                    <option value="7">Washington</option>
                                 </select>
                             </div>
 
@@ -104,14 +106,14 @@
                                 <label>Cor</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
-                                    <select class="form-control select2" style="width: 100%;" name="catProduto" >
-                                        <option selected="selected"></option>
-                                        <option>Azul</option>
-                                        <option>Branco</option>
-                                        <option>Preto</option>
-                                        <option>Nude</option>
-                                        <option>Rosa</option>
-                                        <option>Vinho</option>
+                                    <select class="form-control select2" style="width: 100%;" name="cd_cor" >
+                                        <option selected="selected" value="0"></option>
+                                        <option value="1">Azul</option>
+                                        <option value="2">Branco</option>
+                                        <option value="3">Preto</option>
+                                        <option value="4">Nude</option>
+                                        <option value="5">Rosa</option>
+                                        <option value="6">Vinho</option>
                                     </select>
                                 </div>
 
@@ -120,7 +122,7 @@
                                 <label>Tamanho</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                    <select class="form-control select2" style="width: 100%;" name="catProduto" >
+                                    <select class="form-control select2" style="width: 100%;" name="cd_tamanho" >
                                         <option selected="selected"></option>
                                         <option>PP</option>
                                         <option>P</option>

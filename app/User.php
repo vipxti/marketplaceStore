@@ -7,17 +7,24 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    protected $guard = 'usuario';
+    use Notifiable;
+
+    protected $guard = 'admin';
     protected $table = 'usuario';
     protected $primaryKey = 'cd_usuario';
 
-    use Notifiable;
+    public $timestamps = false;
 
     protected $fillable = [
         'cd_cpf_cnpj', 'nm_usuario', 'nm_email', 'ds_senha', 'ic_adm', 'ds_img', 'cd_telefone',
     ];
 
     protected $hidden = [
-        'ds_senha', 'remember_token',
+        'ds_senha'
     ];
+
+    public function getAuthPassword()
+    {
+        return $this->ds_senha;
+    }
 }

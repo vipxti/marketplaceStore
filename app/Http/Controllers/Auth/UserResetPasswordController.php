@@ -37,23 +37,23 @@ class UserResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:usuario');
+        $this->middleware('guest:admin');
     }
 
     protected function guard()
     {
-        return Auth::guard('usuario');
+        return Auth::guard('admin');
     }
 
     protected function broker()
     {
-        return Password::broker('usuarios');
+        return Password::broker('admin');
     }
 
     public function showResetForm(Request $request, $token = null)
     {
         return view('pages.admin.auth.passwords.reset')->with(
-            ['token' => $token, 'email' => 'teste@email.com']
+            ['token' => $token, 'email' => $request->nm_email]
         );
     }
 }
