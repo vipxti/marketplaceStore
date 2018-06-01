@@ -98,7 +98,7 @@
 
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-user"></i> <span>Usuários</span>
+                    <i class="fa fa-user"></i><span>Usuários</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -107,6 +107,22 @@
                     <li><a href="{{route('usuario.dados')}}"><i class="fa fa-user-plus"></i>Cadastrar Usuário</a></li>
                 </ul>
             </li>
+
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-sliders"></i><span>Configurações</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{route('admin.indexAparencia')}}"><i class="fa fa-paint-brush"></i>Aparência</a></li>
+                </ul>
+            </li>
+
+
+
 
 
         </ul>
