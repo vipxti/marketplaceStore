@@ -37,7 +37,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-plus-square"></i>Cadastrar Produto</a></li>
+                    <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-barcode"></i>Cadastrar Produto</a></li>
                     <li><a href="{{route('admin.cadTamanho')}}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanho</a></li>
                     <li><a href="{{route('admin.cadCor')}}"><i class="fa fa-paint-brush"></i>Cadastrar Cor</a></li>
                 </ul>

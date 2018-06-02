@@ -54,16 +54,6 @@
                                                 <button type="submit" class="btn btn-success pull-right">&nbsp;&nbsp;Salvar</button>
                                             </form>
 
-                                            <div class="col-md-6">
-                                                <label>Sub-Categoria</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-tags"></i>
-                                                    </div>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -110,6 +100,72 @@
                                 </div>
                             </div>
                         </div>
+
+
+
+
+                        <div class="col-md-12">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                         <form id="fCat" class="form-horizontal" action="#" method="post">
+
+
+
+                                                 <div class="col-md-6">
+                                                     <label>Categoria</label>
+                                                     <div class="input-group">
+                                                         <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
+                                                         <select class="form-control select2" style="width: 100%;" name="cd_cor" >
+                                                             <option selected="selected" value="0"></option>
+                                                             <option value="1">Azul</option>
+                                                             <option value="2">Branco</option>
+                                                             <option value="3">Preto</option>
+                                                             <option value="4">Nude</option>
+                                                             <option value="5">Rosa</option>
+                                                             <option value="6">Vinho</option>
+                                                         </select>
+                                                     </div>
+                                                 </div>
+
+
+                                                 <div class="col-md-6">
+                                                     <label>Sub-Categoria</label>
+                                                     <div class="input-group">
+                                                         <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                                         <select class="form-control select2" style="width: 100%;" name="cd_tamanho" >
+                                                             <option selected="selected"></option>
+                                                             <option>PP</option>
+                                                             <option>P</option>
+                                                             <option>M</option>
+                                                             <option>G</option>
+                                                             <option>GG</option>
+                                                             <option>XG</option>
+                                                         </select>
+                                                     </div>
+                                                 </div>
+
+
+                                             <div>&nbsp;</div>
+
+                                                <div class="col-md-12">
+                                                    <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                                </div>
+
+                                         </form>
+
+
+                                    </div>
+                                </div>
+                                <div class="box-footer box-info"></div>
+                            </div>
+                        </div>
+
 
                     </section>
               </div>
