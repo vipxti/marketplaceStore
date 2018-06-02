@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label>Cor</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
                                         <input type="text" maxlength="" class="form-control" name="nm_cor">
                                     </div>
                                 </div>

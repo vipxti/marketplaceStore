@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label>Tamanho</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
                                         <input type="number" class="form-control" name="nm_tamanho">
                                     </div>
                                 </div>
