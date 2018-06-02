@@ -6,15 +6,12 @@ use App\Contact;
 use App\Http\Requests\UserRequest;
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use function Psy\debug;
 
 class UserRegisterController extends Controller
 {
-    use RegistersUsers;
+    //use RegistersUsers;
 
     public function __construct()
     {
@@ -56,7 +53,7 @@ class UserRegisterController extends Controller
                 'cd_cpf_cnpj' => $request->cd_cpf_cnpj,
                 'nm_usuario' => $request->nm_usuario,
                 'nm_email' => $request->nm_email,
-                'ds_senha' => Hash::make($request->ds_senha),
+                'ds_senha' => bcrypt($request->ds_senha),
                 'ic_adm' => 0,
                 'ds_img' => 0,
                 'cd_telefone' => $lastIdTel->cd_telefone

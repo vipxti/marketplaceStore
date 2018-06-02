@@ -72,13 +72,13 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-list"></i></span>
                                     <select class="form-control select2" style="width: 100%;" name="cd_categoria" >
-                                        <option selected="selected" value="1">Alabama</option>
-                                        <option value="2">Alaska</option>
-                                        <option value="3">California</option>
-                                        <option value="4">Delaware</option>
-                                        <option value="5">Tennessee</option>
-                                        <option value="6">Texas</option>
-                                        <option value="7">Washington</option>
+
+                                        @foreach($categorias as $categoria)
+
+                                            <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
+
+                                            @endforeach
+
                                     </select>
                                 </div>
                             </div>
@@ -86,15 +86,15 @@
                                 <div class="form-group">
                                     <label>Sub-Categoria</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-outdent"></i></span>
-                                        <select class="form-control select2" multiple="multiple" style="width: 100%;" name="subcatProduto">
-                                            <option>Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
+                                        <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                        <select class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+
+                                            @foreach($categorias as $categoria)
+
+                                                <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
+
+                                            @endforeach
+
                                         </select>
                                     </div>
                                 </div>
@@ -106,13 +106,11 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
                                     <select class="form-control select2" style="width: 100%;" name="cd_cor" >
-                                        <option selected="selected" value="0"></option>
-                                        <option value="1">Azul</option>
-                                        <option value="2">Branco</option>
-                                        <option value="3">Preto</option>
-                                        <option value="4">Nude</option>
-                                        <option value="5">Rosa</option>
-                                        <option value="6">Vinho</option>
+                                        @foreach($cores as $cor)
+
+                                            <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
+
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -121,13 +119,11 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-list"></i></span>
                                     <select class="form-control select2" style="width: 100%;" name="cd_tamanho" >
-                                        <option selected="selected"></option>
-                                        <option>PP</option>
-                                        <option>P</option>
-                                        <option>M</option>
-                                        <option>G</option>
-                                        <option>GG</option>
-                                        <option>XG</option>
+                                        @foreach($tamanhos as $tamanho)
+
+                                            <option value="{{ $tamanho->cd_tamanho }}">{{ $tamanho->nm_tamanho }}</option>
+
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -138,21 +134,21 @@
                                 <label>Largura</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                    <input type="number" name="width">
+                                    <input type="number" name="ds_largura">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <label>Altura</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                    <input type="number" name="heigth">
+                                    <input type="number" name="ds_altura">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <label>Peso</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                    <input type="number" name="peso">
+                                    <input type="number" name="ds_peso">
                                 </div>
                             </div>
                         </div>
@@ -174,7 +170,7 @@
                                 <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <input type="checkbox" class="flat-red" checked>
+                                        <input type="checkbox" class="flat-red" name="status" checked>
                                         <label class="">Status</label>
                                     </div>
                                 </div>

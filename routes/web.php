@@ -19,7 +19,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
     Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
     Route::post('/register', 'Auth\UserRegisterController@create')->name('admin.register.submit');
-    Route::get('/cadProd', function (){return view('pages.admin.cadProduto');})->name('admin.cadProd');
+    Route::get('/cadProd', 'ProductController@getComboFields')->name('admin.cadProd');
     Route::get('/cadCatego', function (){return view('pages.admin.cadCatego');})->name('admin.cadCatego');
     Route::get('/cadTamanho', function (){return view('pages.admin.cadTamanho');})->name('admin.cadTamanho');
     Route::get('/cadCor', function (){return view('pages.admin.cadCor');})->name('admin.cadCor');
@@ -35,4 +35,4 @@ Route::prefix('admin')->group(function () {
     Route::get('/password/reset/{token}', 'Auth\UserResetPasswordController@showResetForm')->name('admin.password.reset');
 });
 
-Route::post('/product', 'ProductController@createProduct')->name('product.save');
+Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');

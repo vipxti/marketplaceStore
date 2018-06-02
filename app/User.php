@@ -20,6 +20,6 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
-        'ds_senha'
+        'ds_senha', 'remember_token'
     ];
 }
