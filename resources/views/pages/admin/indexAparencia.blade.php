@@ -5,209 +5,108 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-
         <section class="content-header">
-            <h1>Menu</h1>
+            <h1>Hot Post</h1>
             <ol class="breadcrumb">
-                <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li><a href="{{route('admin.dashboard')}}">Configurações</a></li>
-                <li><a class="active">Aparência</a></li>
+                <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li><a href="#">Configuração</a></li>
+                <li class="active">Hot Post</li>
             </ol>
         </section>
 
-        <section id="content" class="content">
-
-            <!--MENU-->
-
-
-            <div class="col-md-6">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
-                    </div>
+        <!-- Main content -->
+        <section class="content">
 
 
-                    <div class="box-body">
-                        <div class="row">
-
-                            <div class="col-md-12">
-
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Sub-Manu</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-tags"></i>
-                                            </div>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <form id="fSubCat" class="form-horizontal" action="#" method="post">
-
-                                    <div class="col-md-6">
-                                        <div class="form-group has-success">
-                                            <label><br></label>
-                                            <input class="form-control" type="hidden" id="subCatId" name="subCatId">
-                                            <input type="text" class="form-control" id="subCatName" name="subCatName" maxlength="35">
-                                            <label class="control-label" hidden for="inputSuccess"><i class="fa fa-check"></i></label>
-                                        </div>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!--SUB-MENU-->
-
-            <div class="col-md-6">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
-                    </div>
-
-
-                    <div class="box-body">
-                        <div class="row">
-
-                            <div class="col-md-12">
-
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Sub-Manu</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-tags"></i>
-                                            </div>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <form id="fSubCat" class="form-horizontal" action="#" method="post">
-
-                                    <div class="col-md-6">
-                                        <div class="form-group has-success">
-                                            <label><br></label>
-                                            <input class="form-control" type="hidden" id="subCatId" name="subCatId">
-                                            <input type="text" class="form-control" id="subCatName" name="subCatName" maxlength="35">
-                                            <label class="control-label" hidden for="inputSuccess"><i class="fa fa-check"></i></label>
-                                        </div>
-                                    </div>
-
-                                   <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-header">
-            <h1>Banner Primário</h1>
-        </section>
-
-        <!--MENU-->
-
-
-        <div class="col-md-12">
+            <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
+                    <h3 class="box-title">Hot Post</h3>
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
                     </div>
                 </div>
+
+
+
 
 
                 <div class="box-body">
-                    <div class="row">
+                    <form action="{{ route('product.save') }}" method="post">
+                        {{ csrf_field() }}
 
-                        <div class="col-md-8">
-
-                            <div class="col-md-8">
+                    <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Texto 1</label>
+                                    <label>Titulo</label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-photo"></i>
-                                        </div>
-                                        <input type="text" class="form-control">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" maxlength="9" class="form-control" name="cd_cep"">
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Banner 1</label>
+                                    <label>Descrição</label>
                                     <div class="input-group">
-                                        <div class="file-loading">
-                                            <input id="input-41" name="input41[]" type="file" multiple>
-                                        </div>
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" maxlength="9" class="form-control" name="cd_cep"">
                                     </div>
                                 </div>
                             </div>
 
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Preço Falso</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                        <input type="number" class="form-control" name="ds_endereco">
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Preço Verdadeiro</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                    <input type="number" class="form-control" name="ds_endereco">
+                                </div>
+                            </div>
                         </div>
 
+                        <div>&nbsp;</div>
 
-
-
-                        <div class="col-md-8">
-
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label>Texto 2</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-photo"></i>
-                                        </div>
-                                        <input type="text" class="form-control">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Hot Banner</label>
+                                <div class="input-group">
+                                    <div class="file-loading">
+                                        <input id="input-41" name="input41[]" type="file" multiple>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Banner 2</label>
-                                    <div class="input-group">
-                                        <div class="file-loading">
-                                            <input id="input-41" name="input41[]" type="file" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
+
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                         </div>
 
-
-                    </div>
-
-                    </div>
+                    </form>
                 </div>
+                <!--<div class="box-footer">
+                    Footer
+                </div>-->
+                <!-- /.box-footer-->
             </div>
-        </div>
-
-
-
-
+        </section>
     </div>
-
-
-
 @stop
