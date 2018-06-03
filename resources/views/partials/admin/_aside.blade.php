@@ -52,7 +52,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('admin.cadCatego')}}"><i class="fa fa-tag"></i>Categoria/Sub-Categoria</a></li>
+                    <li><a href="{{route('admin.cadCatego')}}"><i class="fa fa-tag"></i>Cadastrar Categorias</a></li>
                 </ul>
             </li>
 

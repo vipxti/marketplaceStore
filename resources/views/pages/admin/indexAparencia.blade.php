@@ -14,11 +14,12 @@
             </ol>
         </section>
 
-        <!-- Main content -->
+
+
+
+        <!-- ALTERAÇÃO DO HOTPOST -->
+
         <section class="content">
-
-
-            <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Hot Post</h3>
@@ -28,10 +29,6 @@
                         </button>
                     </div>
                 </div>
-
-
-
-
 
                 <div class="box-body">
                     <form action="{{ route('product.save') }}" method="post">
@@ -94,19 +91,75 @@
                         </div>
                     </div>
 
+                       <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                       </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ALTERAÇÃO DO MENU -->
+
+        <section class="content">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Menu</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <form action="{{ route('product.save') }}" method="post">
+                    {{ csrf_field() }}
+
+
+
+
+
+
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </section>
+
+
+        <!-- ALTERAÇÃO DO FOOTER -->
+
+        <section class="content">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Menu</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <form action="{{ route('product.save') }}" method="post">
+                        {{ csrf_field() }}
+
+
+
+
 
 
                         <div class="col-md-12 text-right">
                             <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                         </div>
-
                     </form>
                 </div>
-                <!--<div class="box-footer">
-                    Footer
-                </div>-->
-                <!-- /.box-footer-->
             </div>
         </section>
+
     </div>
 @stop

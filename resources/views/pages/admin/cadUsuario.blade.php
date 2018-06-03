@@ -14,11 +14,9 @@
             </ol>
         </section>
 
-        <!-- Main content -->
+        <!-- CADASTRO USUARIO -->
+
         <section class="content">
-
-
-            <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Cadastrar</h3>
@@ -29,47 +27,11 @@
                     </div>
                 </div>
 
-
                 <div class="box-body">
                     <form action="{{ route('product.save') }}" method="post">
                         {{ csrf_field() }}
 
                      <div class="col-md-12">
-
-                        {{--<div class="col-md-5">
-                            <div class="form-group">
-                                <label>Nome completo</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-ellipsis-h"></i></span>
-                                    <input type="text" class="form-control" name="nm_usuario" required>
-                                </div>
-                            </div>
-                        </div>--}}
-
-
-                       {{-- <div class="col-md-5">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-at"></i></span>
-                                    <input type="text" class="form-control" name="nm_email" required>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Senha</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-                                    <input type="password" class="form-control" name="ds_senha" required>
-                                </div>
-                            </div>
-                        </div>--}}
-
-
-
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Celular 1</label>
@@ -92,8 +54,7 @@
                      </div>
 
 
-                        <div class="col-md-12">
-
+                     <div class="col-md-12">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>CEP</label>
@@ -131,9 +92,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                     </div>
 
-                        <div class="col-md-12">
+                     <div class="col-md-12">
 
                             <div class="col-md-3">
                                 <label>Bairro</label>
@@ -167,7 +128,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                     </div>
 
                         <div>&nbsp;</div>
 
@@ -187,10 +148,6 @@
 
                     </form>
                 </div>
-                <!--<div class="box-footer">
-                    Footer
-                </div>-->
-                <!-- /.box-footer-->
             </div>
         </section>
     </div>
