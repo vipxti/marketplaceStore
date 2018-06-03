@@ -4,6 +4,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        @include('partials.admin._alerts')
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Cadastrar Usuário</h1>
@@ -99,7 +100,7 @@
                                     <label>CEP</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="text" maxlength="9" class="form-control" name="cd_cep"">
+                                        <input type="text" maxlength="9" class="form-control" name="cd_cep">
                                     </div>
                                 </div>
                             </div>

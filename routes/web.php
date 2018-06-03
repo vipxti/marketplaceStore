@@ -19,13 +19,28 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
     Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
     Route::post('/register', 'Auth\UserRegisterController@create')->name('admin.register.submit');
+
+    //Preenche combobox do form cadastro de produtos
     Route::get('/cadProd', 'ProductController@getComboFields')->name('admin.cadProd');
-    Route::get('/cadCatego', function (){return view('pages.admin.cadCatego');})->name('admin.cadCatego');
-    Route::get('/cadTamanho', function (){return view('pages.admin.cadTamanho');})->name('admin.cadTamanho');
-    Route::get('/cadCor', function (){return view('pages.admin.cadCor');})->name('admin.cadCor');
-    Route::get('/cadUsuario', function (){return view('pages.admin.cadUsuario');})->name('usuario.dados');
+
+    //Form categoria/subcategoria e cadastro
+    Route::get('/cadCatego', 'CategoryController@showCategoryForm')->name('admin.cadCatego');
+    Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory');
+
+    //Form tamanho e cadastro
+    Route::get('/cadTamanho', 'SizeController@showSizeForm')->name('admin.cadTamanho');
+    Route::post('/tamanho', 'SizeController@cadastrarNovoTamanho')->name('size.save');
+
+    //Form cor e cadastro
+    Route::get('/cadCor', 'ColorController@showColorForm')->name('admin.cadCor');
+    Route::post('/cor', 'ColorController@cadastrarNovaCor')->name('color.save');
+
+    Route::get('/cadUsuario', 'UserController@showUserForm')->name('usuario.dados');
+
     Route::get('/aparencia', function (){return view('pages.admin.indexAparencia');})->name('admin.aparencia');
     Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')/*->middleware('auth:admin')*/;
+
+    //Faz o logout do usuário
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');
 
     //Resetar senha

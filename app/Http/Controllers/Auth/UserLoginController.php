@@ -26,10 +26,10 @@ class UserLoginController extends Controller
     public function login(LoginRequest $request)
     {
 
-        dd(Auth::attempt(['nm_email' => $request->nm_email, 'password' => $request->password], $request->filled('remember')));
+        //dd(Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember')));
 
         //Faz o login do usuário
-        if (Auth::guard('admin')->attempt(['nm_email' => $request->nm_email, 'password' => $request->password], $request->filled('remember'))) {
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'))) {
 
             //Redireciona o usuário caso consiga logar
             return redirect()->intended(route('admin.dashboard'));
@@ -37,7 +37,7 @@ class UserLoginController extends Controller
         }
         
         //Retorna para a tela de login com o campo email preenchido
-        return redirect()->back()->withInput($request->only('nm_email'));
+        return redirect()->back()->withInput($request->only('email'));
 
     }
 

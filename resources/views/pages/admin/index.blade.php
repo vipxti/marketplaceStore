@@ -7,8 +7,8 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Blank page
-                <small>it all starts here</small>
+                Painel Administrativo
+                <small>(Celestial Moda Evangélica)</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -22,7 +22,7 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Title</h3>
+                    <h3 class="box-title">Página Inicial</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                                 title="Collapse">
@@ -33,11 +33,40 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    Start creating your amazing application!
+
+                    <table class="table table-striped">
+
+                        <thead>
+
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Preço</th>
+                        </tr>
+
+                        </thead>
+                        <tbody>
+
+                        @foreach($produtos as $produto)
+
+                            <tr>
+                                <td>{{ $produto->cd_produto }} </td>
+                                <td>{{ $produto->nm_produto }} </td>
+                                <td>{{ $produto->ds_produto }} </td>
+                                <td>{{ $produto->vl_produto }} </td>
+                            </tr>
+
+                        @endforeach
+
+                        </tbody>
+
+                    </table>
+
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer">
-                    Footer
+                <div class="box-footer hidden">
+
                 </div>
                 <!-- /.box-footer-->
             </div>

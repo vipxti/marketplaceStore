@@ -16,10 +16,10 @@ class User extends Authenticatable
     public $timestamps = false;
 
     protected $fillable = [
-        'cd_cpf_cnpj', 'nm_usuario', 'nm_email', 'ds_senha', 'ic_adm', 'ds_img', 'cd_telefone',
+        'cd_cpf_cnpj', 'nm_usuario', 'email', 'password', 'ic_adm', 'ds_img', 'cd_telefone',
     ];
 
     protected $hidden = [
-        'ds_senha', 'remember_token'
+        'password', 'remember_token'
     ];
 }

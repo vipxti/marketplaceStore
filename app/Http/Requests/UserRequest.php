@@ -26,8 +26,8 @@ class UserRequest extends FormRequest
         return [
             'cd_cpf_cnpj' => 'required',
             'nm_usuario' => 'required|string',
-            'nm_email' => 'required|email',
-            'ds_senha' => 'required|'
+            'email' => 'required|string',
+            'password' => 'required|string'
         ];
     }
 }

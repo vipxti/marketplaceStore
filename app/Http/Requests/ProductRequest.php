@@ -23,6 +23,7 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'cd_ean' => 'required',
             'nm_produto' => 'required',
@@ -33,7 +34,9 @@ class ProductRequest extends FormRequest
             'ds_altura' => 'required',
             'ds_largura' => 'required',
             'ds_peso' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'images.*' => 'required|image|mimes:jpeg,bmp,png'
         ];
+
     }
 }

@@ -4,6 +4,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        @include('partials.admin._alerts')
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Cadastrar Tamanho</h1>
@@ -30,9 +31,8 @@
 
 
                 <div class="box-body">
-                    <form action="{{ route('product.save') }}" method="post">
+                    <form action="{{ route('size.save') }}" method="post">
                         {{ csrf_field() }}
-
 
                     <div class="col-md-12">
                             <div class="col-md-3">

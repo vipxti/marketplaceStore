@@ -4,13 +4,14 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        @include('partials.admin._alerts')
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Cadastrar Cor</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="#">Produto</a></li>
-                <li class="active">Cadastrar Produto</li>
+                <li class="active">Cadastrar Cor</li>
             </ol>
         </section>
 
@@ -30,7 +31,7 @@
 
 
                 <div class="box-body">
-                    <form action="{{ route('product.save') }}" method="post">
+                    <form action="{{ route('color.save') }}" method="post">
                         {{ csrf_field() }}
 
 

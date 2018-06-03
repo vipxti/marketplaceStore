@@ -1,5 +1,9 @@
 @extends('layouts.admin.panel')
+
 @section('content')
+
+    @include('partials.admin._alerts')
+
     <!--login-box -->
     <div class="login-box">
     <!-- /.login-logo -->
@@ -9,7 +13,7 @@
             <form action="{{ route('admin.login.submit') }}" method="post">
                 {{ csrf_field() }}
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control" name="nm_email" placeholder="Email" required>
+                    <input type="email" class="form-control" name="email" placeholder="Email" required>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">

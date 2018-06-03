@@ -12,4 +12,8 @@ class UserController extends Controller
     {
         $this->middleware('auth:admin');
     }
+
+    public function showUserForm() {
+        return view('pages.admin.cadUsuario');
+    }
 }

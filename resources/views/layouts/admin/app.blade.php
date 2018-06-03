@@ -23,8 +23,6 @@
     </div>
     <!-- ./wrapper -->
 
-    @include('partials.admin._scripts')
-
   </body>
 
 </html>

@@ -52,8 +52,8 @@ class UserRegisterController extends Controller
         $user = User::create([
                 'cd_cpf_cnpj' => $request->cd_cpf_cnpj,
                 'nm_usuario' => $request->nm_usuario,
-                'nm_email' => $request->nm_email,
-                'ds_senha' => bcrypt($request->ds_senha),
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
                 'ic_adm' => 0,
                 'ds_img' => 0,
                 'cd_telefone' => $lastIdTel->cd_telefone
@@ -62,7 +62,7 @@ class UserRegisterController extends Controller
         if ($user) {
 
             auth()->login($user);
-            $userName = Auth::user()->nome;
+            $userName = Auth::user()->nm_usuario;
             session()->flash('Mensagem', ' Seja Bem-Vindo'. ' ' .$userName );
             return redirect()->route('usuario.dados');
 

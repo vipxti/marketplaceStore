@@ -1,5 +1,8 @@
 @extends('layouts.admin.panel')
 @section('content')
+
+    @include('partials.admin._alerts')
+
     <div class="register-box">
         <div class="register-box-body">
             <p class="login-box-msg">Registre uma nova conta</p>
@@ -14,11 +17,11 @@
                     <span class="glyphicon glyphicon-credit-card form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control" name="nm_email" placeholder="Email">
+                    <input type="email" class="form-control" name="email" placeholder="Email">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" name="ds_senha" placeholder="Senha">
+                    <input type="password" class="form-control" name="password" placeholder="Senha">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 {{--<div class="form-group has-feedback">

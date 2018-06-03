@@ -4,6 +4,9 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
+        @include('partials.admin._alerts')
+
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Produto</h1>
@@ -28,7 +31,7 @@
 
                 </div>
                 <div class="box-body">
-                    <form action="{{ route('product.save') }}" method="post">
+                    <form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="col-md-4">
@@ -71,7 +74,8 @@
                                 <label>Categoria</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                    <select class="form-control select2" style="width: 100%;" name="cd_categoria" >
+                                    <select id="categorias" class="form-control select2" style="width: 100%;" name="cd_categoria">
+                                        <option value=""></option>
 
                                         @foreach($categorias as $categoria)
 
@@ -87,14 +91,7 @@
                                     <label>Sub-Categoria</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                        <select class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
-
-                                            @foreach($categorias as $categoria)
-
-                                                <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
-
-                                            @endforeach
-
+                                        <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
                                         </select>
                                     </div>
                                 </div>
@@ -106,6 +103,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
                                     <select class="form-control select2" style="width: 100%;" name="cd_cor" >
+                                        <option value=""></option>
                                         @foreach($cores as $cor)
 
                                             <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
@@ -118,7 +116,8 @@
                                 <label>Tamanho</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                    <select class="form-control select2" style="width: 100%;" name="cd_tamanho" >
+                                    <select class="form-control select2" style="width: 100%;" name="cd_tamanho">
+                                        <option value=""></option>
                                         @foreach($tamanhos as $tamanho)
 
                                             <option value="{{ $tamanho->cd_tamanho }}">{{ $tamanho->nm_tamanho }}</option>
@@ -161,7 +160,7 @@
                                     <label>Imagens</label>
                                     <div class="input-group">
                                         <div class="file-loading">
-                                            <input id="input-41" name="input41[]" type="file" multiple>
+                                            <input id="input-41" name="images[]" type="file" accept="image/*" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -189,4 +188,35 @@
             </div>
         </section>
     </div>
+
+    <script>
+
+        $('#categorias').change(function (e) {
+            e.preventDefault();
+
+            $cd_categoria = $(this).val();
+
+            $.ajax({
+
+                url: '{{ url('/admin/subcat') }}/' + $cd_categoria,
+                type: 'GET',
+                success: function (data) {
+
+                    $('#subcategorias').empty();
+
+                    $.each(data.subcat, function(index, subcategoria) {
+
+                        $('#subcategorias').append(`<option value="` + subcategoria.cd_sub_categoria + `">` + subcategoria.nm_sub_categoria + `</option>`);
+                    })
+
+                }
+
+            })
+
+        });
+
+    </script>
+
 @stop
+
+

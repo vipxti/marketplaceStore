@@ -38,7 +38,7 @@ mix.scripts([
     'public/js/app/active.js',
     'public/js/app/plugins.js',
     'public/js/app/popper.min.js',
-    'public/js/app/web-animations.min.js',
+    'public/js/app/web-animations.min.js'
 ], 'public/js/app-js.js');
 
 //Compiled styles for admin page
@@ -65,8 +65,7 @@ mix.scripts([
     'public/js/admin/jquery.slimscroll.min.js',
     'public/js/admin/Chart.js',
     'public/js/admin/icheck.min.js',
-    'public/js/admin/select2.full.min.js',
-
+    'public/js/admin/select2.full.min.js'
 
     /*
     'public/js/admin/abstract-element.js',
