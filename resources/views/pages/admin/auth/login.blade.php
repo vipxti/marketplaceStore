@@ -39,6 +39,7 @@
             <div class="social-auth-links text-center">
                 <p>- OU -</p>
                 <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>Entre usando o Facebook</a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
             </div>
             <!-- /.social-auth-links -->
 
