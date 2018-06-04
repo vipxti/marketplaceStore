@@ -34,7 +34,16 @@
                         <div class="col-md-12">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Ean</label>
+                                    <label>Produto</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                                        <input type="text" class="form-control" name="nm_produto">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Código (Ean)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                         <input type="text" class="form-control" name="cd_ean">
@@ -43,10 +52,10 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Produto</label>
+                                    <label>Código (SKU)</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                        <input type="text" class="form-control" name="nm_produto">
+                                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                        <input type="text" class="form-control" name="cd_ean">
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +63,7 @@
                                 <div class="form-group">
                                     <label>Descrição</label>
                                     <div class="input-group">
-                                    <textarea id="bold" name="ds_produto" rows="2" cols="138%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px;">
+                                    <textarea id="bold" name="ds_produto" rows="2" cols="107%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px;">
                                     </textarea>
                                     </div>
                                 </div>
@@ -126,26 +135,37 @@
                             </div>
                         </div>
                         <div>&nbsp;</div>
-                        <div class="col-md-8">
+
+                        <div class="col-md-12">
+
+
                             <div class="col-md-3">
-                                <label>Largura</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                    <input type="number" name="ds_largura">
+                                <div class="form-group">
+                                    <label>Largura</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                                        <input type="number" class="form-control" name="ds_largura">
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
-                                <label>Altura</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                    <input type="number" name="ds_altura">
+                                <div class="form-group">
+                                    <label>Altura</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
+                                        <input type="number" class="form-control" name="ds_altura">
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
-                                <label>Peso</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                    <input type="number" name="ds_peso">
+                                <div class="form-group">
+                                    <label>Peso</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
+                                        <input type="number" class="form-control" name="ds_peso">
+                                    </div>
                                 </div>
                             </div>
                         </div>
