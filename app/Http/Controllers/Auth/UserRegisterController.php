@@ -63,7 +63,8 @@ class UserRegisterController extends Controller
 
             auth()->login($user);
             $userName = Auth::user()->nm_usuario;
-            session()->flash('Mensagem', ' Seja Bem-Vindo'. ' ' .$userName );
+            //$request->session()->flash('msg.level', 'success');
+            //$request->session()->flash('msg.content', 'Bem vindo '. $userName);
             return redirect()->route('usuario.dados');
 
         }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Color;
 use App\Http\Requests\ColorRequest;
-use Illuminate\Http\Request;
 
 class ColorController extends Controller
 {
@@ -19,7 +18,15 @@ class ColorController extends Controller
         ]);
 
         if ($cor) {
+            session()->flash('Mensagem', 'Cor cadastrada com sucesso');
             return redirect()->route('admin.cadCor');
+
+        }
+        else
+        {
+
+            return redirect()->back()->withErrors('Houve um problema ao cadastrar a cor');
+
         }
     }
 }

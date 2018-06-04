@@ -38,7 +38,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/cadUsuario', 'UserController@showUserForm')->name('usuario.dados');
 
     Route::get('/aparencia', function (){return view('pages.admin.indexAparencia');})->name('admin.aparencia');
-    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')/*->middleware('auth:admin')*/;
+    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
 
     //Faz o logout do usuário
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');

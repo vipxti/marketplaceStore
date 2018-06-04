@@ -5,8 +5,6 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('partials.admin._alerts')
-
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Produto</h1>

@@ -31,6 +31,9 @@ class UserLoginController extends Controller
         //Faz o login do usuário
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'))) {
 
+            $request->session()->flash('msg.level', 'success');
+            $request->session()->flash('msg.content', 'Logado');
+
             //Redireciona o usuário caso consiga logar
             return redirect()->intended(route('admin.dashboard'));
 

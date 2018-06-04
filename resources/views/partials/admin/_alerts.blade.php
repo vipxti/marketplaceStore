@@ -1,8 +1,8 @@
-@if($flash = session('Mensagem'))
+@if(session()->has('msg.level'))
 
-    <div class="alert alert-success flash" role="alert">
+    <div class="alert alert-{{ session('msg.level') }} flash" role="alert">
 
-        {{ $flash }}
+        {{ session('msg.content') }}
 
     </div>
 
@@ -34,7 +34,7 @@
 
     setTimeout(function() {
 
-        $('#flash').fadeOut('slow');
+        $('.flash').fadeOut('slow');
 
         }, 5000);
 
