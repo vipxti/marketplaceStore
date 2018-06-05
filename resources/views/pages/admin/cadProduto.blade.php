@@ -39,7 +39,6 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                         <input id="campo_ean" type="text" class="form-control" name="cd_ean" maxlength="13">
-
                                     </div>
                                     <p class="msg_ean"></p>
                                 </div>
@@ -49,8 +48,10 @@
                                     <label>Código (SKU)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input type="text" class="form-control" name="cd_ean">
+                                        <input id="campo_sku" type="text" class="form-control" name="cd_ean" maxlength="20" pattern="^[a-zA-Z0-9]+$"
+                                               oninvalid="this.setCustomValidity('Proibido caracteres especiais (@$%&..)')">
                                     </div>
+                                    <p class="msg_sku"></p>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -202,9 +203,6 @@
 
     <script>
 
-        $(document).ready(function(){
-
-        });
 
         $('#categorias').change(function (e) {
             e.preventDefault();
@@ -245,12 +243,11 @@
                 $('.msg_ean').html("Campo deve ser numérico").css("color", "red");
             }
 
-
-
-
-
-
         });
+
+
+
+
 
     /*
         function contadorPalavras() {

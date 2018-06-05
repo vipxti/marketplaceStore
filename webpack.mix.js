@@ -65,6 +65,12 @@ mix.scripts([
     'public/js/admin/jquery.slimscroll.min.js',
     'public/js/admin/Chart.js',
     'public/js/admin/icheck.min.js',
+    'public/js/admin/inputmask.date.extensions.js',
+    'public/js/admin/inputmask.extensions.js',
+    'public/js/admin/inputmask.js',
+    'public/js/admin/inputmask.numeric.extensions.js',
+    'public/js/admin/inputmask.phone.extensions.js',
+    'public/js/admin/jquery.inputmask.js',
     'public/js/admin/select2.full.min.js'
 
     /*

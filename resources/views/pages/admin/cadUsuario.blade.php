@@ -38,7 +38,7 @@
                                 <label>Celular 1</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-                                    <input type="number" id="campo_cel1" class="form-control" name="cd_celular1" required maxlength="11">
+                                    <input type="text" id="campo_cel1" class="form-control" name="cd_celular1" required maxlength="11">
                                 </div>
                             </div>
                         </div>
@@ -156,8 +156,8 @@
     <script>
         //$('#campo_cel1').mask("(00) 00000-0000");
         $(document).ready(function(){
-           $('#campo_cel1').({
-               mask: ["(99) 9999-9999", "(99) 99999-9999", ],
+           $('#campo_cel1').inputmask({
+               mask: ["(99) 9999-9999", "(99) 99999-9999"],
                keepStatic: true
            })
         });
