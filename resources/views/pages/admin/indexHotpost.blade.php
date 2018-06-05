@@ -22,7 +22,7 @@
         <section class="content">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Banner Principal</h3>
+                    <h3 class="box-title">Hot Post</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                             <i class="fa fa-minus"></i>
@@ -50,17 +50,38 @@
                                 <div class="form-group">
                                     <label>Descrição</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-info"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                         <input type="text" maxlength="9" class="form-control" name="cd_cep">
                                     </div>
                                 </div>
                             </div>
 
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Preço Falso</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                        <input type="number" class="form-control" name="ds_endereco">
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Preço Verdadeiro</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                    <input type="number" class="form-control" name="ds_endereco">
+                                </div>
+                            </div>
+                        </div>
+
                         <div>&nbsp;</div>
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Banner</label>
+                                <label>Hot Banner</label>
                                 <div class="input-group">
                                     <div class="file-loading">
                                         <input id="input-41" name="input41[]" type="file" multiple>

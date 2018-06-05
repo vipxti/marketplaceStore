@@ -19,12 +19,15 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
     Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
     Route::post('/register', 'Auth\UserRegisterController@create')->name('admin.register.submit');
+    Route::get('/register/{cpf_cnpj}', 'Auth\UserRegisterController@verificaCpfCnpj');
 
     //Preenche combobox do form cadastro de produtos
     Route::get('/cadProd', 'ProductController@getComboFields')->name('admin.cadProd');
 
     //Form categoria/subcategoria e cadastro
     Route::get('/cadCatego', 'CategoryController@showCategoryForm')->name('admin.cadCatego');
+    Route::post('/category', 'CategoryController@cadastrarCategoria')->name('category.save');
+    Route::post('/subcategory', 'CategoryController@cadastrarSubCategoria')->name('subcategory.save');
     Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory');
 
     //Form tamanho e cadastro
@@ -37,7 +40,10 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/cadUsuario', 'UserController@showUserForm')->name('usuario.dados');
 
-    Route::get('/aparencia', function (){return view('pages.admin.indexAparencia');})->name('admin.aparencia');
+    Route::get('/indexHotpost', function (){return view('pages.admin.indexHotpost');})->name('admin.indexHotpost');
+    Route::get('/indexBanner', function (){return view('pages.admin.indexBanner');})->name('admin.indexBanner');
+    Route::get('/indexMenu', function (){return view('pages.admin.indexMenu');})->name('admin.indexMenu');
+    Route::get('/indexAparencia', function (){return view('pages.admin.indexAparencia');})->name('admin.indexAparencia');
     Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
 
     //Faz o logout do usuário

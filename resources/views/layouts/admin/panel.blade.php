@@ -19,7 +19,7 @@
         @yield('content')
 
         <!-- jQuery 3 -->
-        <script src="{{asset('js/admin-js.js')}}"></script>
+
 
     </body>
 

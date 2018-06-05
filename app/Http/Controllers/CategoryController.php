@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\SubCategoryRequest;
+use App\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,6 +27,34 @@ class CategoryController extends Controller
                         ->get();
 
         return response()->json([ 'subcat' => $subCategorias ]);
+
+    }
+
+    public function cadastrarCategoria(CategoryRequest $request) {
+
+        //dd($request->all());
+
+        $cat = Category::create([
+            'nm_categoria' => $request->nm_categoria
+        ]);
+
+        if ($cat) {
+            return redirect()->route('admin.cadCatego');
+        }
+
+    }
+
+    public function cadastrarSubCategoria(SubCategoryRequest $request) {
+
+        //dd($request->all());
+
+        $subcat = SubCategory::create([
+            'nm_sub_categoria' => $request->nm_sub_categoria
+        ]);
+
+        if ($subcat) {
+            return redirect()->route('admin.cadCatego');
+        }
 
     }
 

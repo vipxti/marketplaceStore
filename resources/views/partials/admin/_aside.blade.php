@@ -119,14 +119,12 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('admin.aparencia')}}"><i class="fa fa-paint-brush"></i>Aparência</a></li>
+                    <!--<li><a href="{{route('admin.indexAparencia')}}"><i class="fa fa-paint-brush"></i>Aparência</a></li>-->
+                    <li><a href="{{route('admin.indexMenu')}}"><i class="fa fa-th-list"></i>Menu</a></li>
+                    <li><a href="{{route('admin.indexBanner')}}"><i class="fa fa-picture-o"></i>Banner</a></li>
+                    <li><a href="{{route('admin.indexHotpost')}}"><i class="fa fa-newspaper-o"></i>Hot Post</a></li>
                 </ul>
             </li>
-
-
-
-
-
         </ul>
     </section>
 <!-- /.sidebar -->
