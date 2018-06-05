@@ -27,6 +27,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/cadCatego', 'CategoryController@showCategoryForm')->name('admin.cadCatego');
     Route::post('/category', 'CategoryController@cadastrarCategoria')->name('category.save');
     Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory');
+    Route::post('/subcategory', 'CategoryController@cadastrarSubCategoria')->name('subcategory.save');
+
+    //Associa categoria/subcategoria
+    Route::post('/catsubcat', 'CategoryController@associarCategoriaSubCategoria')->name('catsubcat.associate');
 
     //Form tamanho e cadastro
     Route::get('/cadTamanho', 'SizeController@showSizeForm')->name('admin.cadTamanho');

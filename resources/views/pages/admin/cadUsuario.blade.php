@@ -21,19 +21,16 @@
 
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Perfil</h3>
+                    <h3 class="box-title">Alterar</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
-
                 <div class="box-body">
                     <form action="{{ route('product.save') }}" method="post">
                         {{ csrf_field() }}
-
-
                         <div class="col-md-12">
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -45,7 +42,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-12">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -74,15 +70,12 @@
 
                     </form>
                 </div>
-
             </div>
         </section>
 
-
         <!-- CADASTRO USUARIO -->
-
         <section class="content">
-            <div class="box box-primary">
+            <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Cadastrar</h3>
                     <div class="box-tools pull-right">
@@ -91,13 +84,10 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="box-body">
                     <form action="{{ route('product.save') }}" method="post">
                         {{ csrf_field() }}
-
-
-                     <div class="col-md-12">
+                        <div class="col-md-12">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Celular 1</label>
@@ -107,7 +97,6 @@
                                 </div>
                             </div>
                         </div>
-
                          <div class="col-md-3">
                              <div class="form-group">
                                  <label>Celular 2</label>
@@ -118,9 +107,7 @@
                              </div>
                          </div>
                      </div>
-
-
-                     <div class="col-md-12">
+                        <div class="col-md-12">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>CEP</label>
@@ -130,28 +117,14 @@
                                     </div>
                                     <p class="msg-cpf"></p>
                                 </div>
-
                             </div>
-
-
                             <div class="col-md-3">
                                 <label>Cidade</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa  fa-map-signs"></i></span>
                                     <input type="text" id="cidade" class="form-control" name="nm_cidade" maxlength="50">
-                                    <!--<select class="form-control select2" name="nm_cidade" >
-                                        <option selected="selected" value="1">Alabama</option>
-                                        <option value="2">Alaska</option>
-                                        <option value="3">California</option>
-                                        <option value="4">Delaware</option>
-                                        <option value="5">Tennessee</option>
-                                        <option value="6">Texas</option>
-                                        <option value="7">Washington</option>
-                                    </select>-->
                                 </div>
                             </div>
-
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Rua</label>
@@ -162,7 +135,6 @@
                                 </div>
                             </div>
                      </div>
-
                         <div class="col-md-12">
                          <div class="col-md-3">
                              <div class="form-group">
@@ -195,47 +167,23 @@
                              </div>
                          </div>
                      </div>
-
-                     <div class="col-md-12">
-
+                        <div class="col-md-12">
                             <div class="col-md-3">
                                 <label>Bairro</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-street-view"></i></span>
                                     <input type="text" id="bairro" class="form-control" name="nm_bairro" maxlength="50">
-                                    <!--<select class="form-control select2" name="nm_bairro" >
-                                        <option selected="selected" value="1">Alabama</option>
-                                        <option value="2">Alaska</option>
-                                        <option value="3">California</option>
-                                        <option value="4">Delaware</option>
-                                        <option value="5">Tennessee</option>
-                                        <option value="6">Texas</option>
-                                        <option value="7">Washington</option>
-                                    </select>-->
                                 </div>
                             </div>
-
-
                             <div class="col-md-3">
                                 <label>País</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-map"></i></span>
                                     <input type="text" id="pais" class="form-control" name="nm_pais" maxlength="30">
-                                    <!--<select class="form-control select2" name="nm_pais" >
-                                        <option selected="selected" value="1">Alabama</option>
-                                        <option value="2">Alaska</option>
-                                        <option value="3">California</option>
-                                        <option value="4">Delaware</option>
-                                        <option value="5">Tennessee</option>
-                                        <option value="6">Texas</option>
-                                        <option value="7">Washington</option>
-                                    </select>-->
                                 </div>
                             </div>
-                     </div>
-
+                         </div>
                         <div>&nbsp;</div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Foto Usuário</label>
@@ -245,11 +193,9 @@
                                 </div>
                             </div>
                         </div>
-
                        <div class="col-md-12 text-right">
-                       <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                           <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                        </div>
-
                     </form>
                 </div>
             </div>

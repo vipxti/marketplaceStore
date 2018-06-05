@@ -116,7 +116,7 @@ return [
         'admins' => [
             'provider' => 'admins',
             'table' => 'expiracao_senhas',
-            'expire' => 15,
+            'expire' => 30,
         ],
     ],
 

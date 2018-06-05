@@ -56,18 +56,26 @@
                                         <label>Categoria</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-                                            <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+                                            <select id="categorias" class="form-control select2" style="width: 100%;" name="cd_categoria" >
+                                                <option value=""></option>
+
+                                                @foreach($categorias as $categoria)
+
+                                                    <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
+
+                                                @endforeach
+
                                             </select>
                                         </div>
                                     </div>
                                 </div>
 
-                                <form id="fCat" class="form-horizontal" action="#" method="post">
+                                <form id="fCat" class="form-horizontal" action="{{ route('category.save') }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="col-md-6">
                                         <label>Alterar Categoria</label>
                                         <input class="form-control" type="hidden" id="catId" name="catId">
-                                        <input type="text" class="form-control" id="catName" name="catName" maxlength="35">
+                                        <input type="text" class="form-control" id="catName" name="nm_categoria" maxlength="35">
                                     </div>
                                     <div>&nbsp;</div>
                                     <div>&nbsp;</div>
@@ -104,23 +112,19 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-tags"></i></span>
                                             <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+                                                <option value=""></option>
+
                                             </select>
                                         </div>
                                     </div>
                                 </div>
 
-                                <form id="fCat" class="form-horizontal" action="#" method="post">
+                                <form id="fCat" class="form-horizontal" action="{{ route('subcategory.save') }}" method="post">
                                     {{ csrf_field() }}
 
                                     <div class="col-md-6" id="subcategoria">
                                         <label>&nbsp;</label>
-                                        <input class="form-control" type="hidden" name="catId">
-
-                                        <input type="text" class="form-control" name="catName" maxlength="35">
-                                        <div class="text-right">
-                                            <img src="{{ asset('img/admin/add.png') }}" style="cursor: pointer; height: 15px; width: 15px" onclick="duplicarCampos();">
-                                            <img src="{{ asset('img/admin/remover.png') }}" style="cursor: pointer; height: 15px; width: 15px" onclick="removerCampos(this);">
-                                        </div>
+                                        <input type="text" class="form-control" id="subCatName" name="nm_sub_category" maxlength="35">
                                     </div>
 
                                     <div id="destino">
@@ -154,23 +158,39 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-6">
-                                    <label>Principal</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-tag"></i>
-                                        </div>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
 
-                                <form id="fCat" class="form-horizontal" action="#" method="post">
+                                <form id="fCat" class="form-horizontal" action="{{ route('catsubcat.associate') }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="col-md-6">
-                                        <label>Alterar Categoria</label>
-                                        <input class="form-control" type="hidden" id="catId" name="catId">
-                                        <input type="text" class="form-control" id="catName" name="catName" maxlength="35">
+                                        <label>Principal</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                                            <select id="categorias" class="form-control select2" style="width: 100%;" name="cd_categoria" >
+
+                                                @foreach($categorias as $categoria)
+
+                                                    <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
+
+                                                @endforeach
+
+                                            </select>
+                                        </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <label>Associar Sub-Categoria</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                                            <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+
+                                                @foreach($subcategorias as $subcategoria)
+
+                                                    <option value="{{ $subcategoria->cd_sub_categoria }}">{{ $subcategoria->nm_sub_categoria }}</option>
+
+                                                @endforeach
+
+                                            </select>
+                                        </div>
                                     <div>&nbsp;</div>
 
                                     <div class="col-md-12 text-right" >

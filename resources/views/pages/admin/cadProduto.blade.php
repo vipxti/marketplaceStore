@@ -32,17 +32,6 @@
                     <form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="col-md-12">
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Código (Ean)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_ean" type="text" class="form-control" name="cd_ean" maxlength="13">
-                                    </div>
-                                    <p class="msg_ean"></p>
-                                </div>
-                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Código (SKU)</label>
@@ -56,7 +45,17 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Produto</label>
+                                    <label>Código (Ean)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                        <input id="campo_ean" type="text" class="form-control" name="cd_ean" maxlength="13">
+                                    </div>
+                                    <p class="msg_ean"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Nome do Produto</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
                                         <input type="text" class="form-control" name="nm_produto" maxlength="50">
@@ -65,7 +64,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Descrição</label>
+                                    <label>Descrição do Produto</label>
                                     <div class="input-group">
                                     <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="107%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="1500">
                                     </textarea>
@@ -90,11 +89,8 @@
                                         <option value=""></option>
 
                                         @foreach($categorias as $categoria)
-
                                             <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
-
-                                            @endforeach
-
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -117,9 +113,7 @@
                                     <select class="form-control select2" style="width: 100%;" name="cd_cor" >
                                         <option value=""></option>
                                         @foreach($cores as $cor)
-
                                             <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
-
                                         @endforeach
                                     </select>
                                 </div>
@@ -131,9 +125,7 @@
                                     <select class="form-control select2" style="width: 100%;" name="cd_tamanho">
                                         <option value=""></option>
                                         @foreach($tamanhos as $tamanho)
-
                                             <option value="{{ $tamanho->cd_tamanho }}">{{ $tamanho->nm_tamanho }}</option>
-
                                         @endforeach
                                     </select>
                                 </div>

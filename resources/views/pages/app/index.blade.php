@@ -148,7 +148,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section_heading text-center">
-                        <h2>Novos Loocks</h2>
+                        <h2>Novos Looks</h2>
                     </div>
                 </div>
             </div>
@@ -168,23 +168,30 @@
         <div class="container">
             <div class="row karl-new-arrivals">
 
-                <!-- Single gallery Item Start -->
-                <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s">
-                    <!-- Product Image -->
-                    <div class="product-img">
-                    <img src="{{ asset('img/app/product-img/product-1.jpg') }}" alt="">
-                        <div class="product-quicview">
-                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
+                @foreach($produtos as $produto)
+
+                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="{{ asset('img/app/product-img/product-1.jpg') }}" alt="">
+                            <div class="product-quicview">
+                                <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
+                            </div>
+                        </div>
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <h4 class="product-price">R$39.90</h4>
+                            <p>Jeans midi cocktail dress</p>
+                            <!-- Add to Cart -->
+                            <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
                         </div>
                     </div>
-                    <!-- Product Description -->
-                    <div class="product-description">
-                        <h4 class="product-price">R$39.90</h4>
-                        <p>Jeans midi cocktail dress</p>
-                        <!-- Add to Cart -->
-                        <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
-                    </div>
-                </div>
+
+                @endforeach
+
+
+                <!-- Single gallery Item Start -->
+
 
                 <!-- Single gallery Item Start -->
                 <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.3s">
