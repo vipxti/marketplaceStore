@@ -27,6 +27,7 @@ Route::prefix('admin')->group(function () {
     //Form categoria/subcategoria e cadastro
     Route::get('/cadCatego', 'CategoryController@showCategoryForm')->name('admin.cadCatego');
     Route::post('/category', 'CategoryController@cadastrarCategoria')->name('category.save');
+    Route::post('/subcategory', 'CategoryController@cadastrarSubCategoria')->name('subcategory.save');
     Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory');
 
     //Form tamanho e cadastro
