@@ -48,7 +48,7 @@
                                     <label>Código (SKU)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_sku" type="text" class="form-control" name="cd_sku" maxlength="20" pattern="^[a-zA-Z0-9]+$"
+                                        <input id="campo_sku" type="text" class="form-control" name="cd_ean" maxlength="20" pattern="^[a-zA-Z0-9]+$"
                                                oninvalid="this.setCustomValidity('Proibido caracteres especiais (@$%&..)')">
                                     </div>
                                     <p class="msg_sku"></p>
@@ -67,7 +67,7 @@
                                 <div class="form-group">
                                     <label>Descrição</label>
                                     <div class="input-group">
-                                    <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="108%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="100">
+                                    <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="107%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="1500">
                                     </textarea>
                                         <p><span class="qtd_palavras">1500</span> palavras</p>
                                     </div>
@@ -104,7 +104,6 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-list"></i></span>
                                         <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
-                                            <option value=""></option>
                                         </select>
                                     </div>
                                 </div>
@@ -204,6 +203,11 @@
 
     <script>
 
+        //Chama a funcção de contagem de palavras ao carregar a página
+        $(document).ready(function(){
+           contadorPalavras();
+        });
+
         $('#categorias').change(function (e) {
             e.preventDefault();
 
@@ -229,6 +233,7 @@
         });
 
 
+        //Validação do campo EAN
         $('#campo_ean').blur(function(){
 
             var campo = $('#campo_ean').val();
@@ -245,19 +250,22 @@
 
         });
 
-    /*
+
+        //Contagem de palavras na TextArea da Descrição
         function contadorPalavras() {
+
+            $('.campo_desc').text("");
+
             $('.campo_desc').on("input", function () {
                 var conteudo = $('.campo_desc').val();
-                var total = $('.qtd_palavras').text();
-                var qtdPalavras = (conteudo.length - 1) - total;
+                var qtdCaracter = 1500 - conteudo.length;
 
 
-                $('.qtd_palavras').text(qtdPalavras);
+                $('.qtd_palavras').text(qtdCaracter);
 
             });
         }
-*/
+
 
     </script>
 
