@@ -32,13 +32,24 @@
                     <form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="col-md-12">
+
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Ean</label>
+                                    <label>Código (Ean)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                         <input id="campo_ean" type="text" class="form-control" name="cd_ean" maxlength="13">
-                                        <p class="msg_ean"></p>
+
+                                    </div>
+                                    <p class="msg_ean"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Código (SKU)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                        <input type="text" class="form-control" name="cd_ean">
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +66,7 @@
                                 <div class="form-group">
                                     <label>Descrição</label>
                                     <div class="input-group">
-                                    <textarea id="bold" class="campo_desc" name="ds_produto" rows="2" cols="138%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px;" maxlength="100">
+                                    <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="108%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="100">
                                     </textarea>
                                         <p><span class="qtd_palavras">1500</span> palavras</p>
                                     </div>

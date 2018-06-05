@@ -38,7 +38,7 @@
                                 <label>Celular 1</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-                                    <input type="number" class="form-control" name="cd_celular1" required maxlength="11">
+                                    <input type="number" id="campo_cel1" class="form-control" name="cd_celular1" required maxlength="11">
                                 </div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                  <label>Celular 2</label>
                                  <div class="input-group">
                                      <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-                                     <input type="number" class="form-control" name="cd_celular2" maxlength="11">
+                                     <input type="number" id="campo_cel2" class="form-control" name="cd_celular2" maxlength="11">
                                  </div>
                              </div>
                          </div>
@@ -61,7 +61,7 @@
                                     <label>CEP</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                        <input type="text" id="campo_cep" maxlength="9" class="form-control" name="cd_cep">
                                     </div>
                                 </div>
                             </div>
@@ -154,6 +154,13 @@
     </div>
 
     <script>
+        //$('#campo_cel1').mask("(00) 00000-0000");
+        $(document).ready(function(){
+           $('#campo_cel1').({
+               mask: ["(99) 9999-9999", "(99) 99999-9999", ],
+               keepStatic: true
+           })
+        });
 
     </script>
 @stop
