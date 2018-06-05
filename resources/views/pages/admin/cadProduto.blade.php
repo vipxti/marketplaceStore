@@ -37,7 +37,8 @@
                                     <label>Ean</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input type="text" class="form-control" name="cd_ean">
+                                        <input id="campo_ean" type="text" class="form-control" name="cd_ean" maxlength="13">
+                                        <p class="msg_ean"></p>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +47,7 @@
                                     <label>Produto</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                        <input type="text" class="form-control" name="nm_produto">
+                                        <input type="text" class="form-control" name="nm_produto" maxlength="50">
                                     </div>
                                 </div>
                             </div>
@@ -54,8 +55,9 @@
                                 <div class="form-group">
                                     <label>Descrição</label>
                                     <div class="input-group">
-                                    <textarea id="bold" name="ds_produto" rows="2" cols="138%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px;">
+                                    <textarea id="bold" class="campo_desc" name="ds_produto" rows="2" cols="138%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px;" maxlength="100">
                                     </textarea>
+                                        <p><span class="qtd_palavras">1500</span> palavras</p>
                                     </div>
                                 </div>
                             </div>
@@ -189,6 +191,10 @@
 
     <script>
 
+        $(document).ready(function(){
+
+        });
+
         $('#categorias').change(function (e) {
             e.preventDefault();
 
@@ -212,6 +218,42 @@
             })
 
         });
+
+
+        $('#campo_ean').blur(function(){
+
+            var campo = $('#campo_ean').val();
+            var regra = /^[0-9]+$/;
+
+            $('.msg_ean').html("");
+
+            if(campo.length < 13) {
+                $('.msg_ean').html("Campo deve conter 13 caracteres.").css("color", "red");
+            }
+            else if(!campo.match(regra)){
+                $('.msg_ean').html("Campo deve ser numérico").css("color", "red");
+            }
+
+
+
+
+
+
+        });
+
+    /*
+        function contadorPalavras() {
+            $('.campo_desc').on("input", function () {
+                var conteudo = $('.campo_desc').val();
+                var total = $('.qtd_palavras').text();
+                var qtdPalavras = (conteudo.length - 1) - total;
+
+
+                $('.qtd_palavras').text(qtdPalavras);
+
+            });
+        }
+*/
 
     </script>
 

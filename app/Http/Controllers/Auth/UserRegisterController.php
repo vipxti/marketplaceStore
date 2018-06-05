@@ -8,6 +8,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 
 class UserRegisterController extends Controller
 {
@@ -74,6 +75,18 @@ class UserRegisterController extends Controller
             return redirect()->back()->withErrors('Houve um problema ao cadastrar o usuário');
 
         }
+
+
+    }
+
+    public function verificaCpfCnpj($cpf_cnpj){
+
+        $cpf_cpnj_achado = DB::table('usuario')
+                            ->select('cd_cpf_cnpj')
+                            ->where('cd_cpf_cnpj', '=', $cpf_cnpj)
+                            ->get();
+
+        return response()->json([ 'cpf_cnpj' => $cpf_cpnj_achado ]);
 
 
     }
