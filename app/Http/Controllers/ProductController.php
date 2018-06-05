@@ -46,7 +46,7 @@ class ProductController extends Controller
 
                 $this->saveImageFile($imageName, $realPath);
 
-                $localImagesPath[$key] = public_path('img/products/') . $imageName;
+                $localImagesPath[$key] = public_path('img/products/') . $category . '/' . $imageName;
 
             }
 
