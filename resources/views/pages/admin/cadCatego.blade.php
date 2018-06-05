@@ -70,6 +70,8 @@
                                         <input type="text" class="form-control" id="catName" name="catName" maxlength="35">
                                     </div>
                                     <div>&nbsp;</div>
+                                    <div>&nbsp;</div>
+
 
                                     <div class="col-md-12 text-right" >
                                         <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>

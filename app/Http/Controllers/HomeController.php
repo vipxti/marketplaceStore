@@ -9,7 +9,9 @@ class HomeController extends Controller
 {
     public function showIndexPage()
     {
-        return view('pages.app.index');
+        $produtos = Product::where('cd_status_produto', '=', 0)->paginate(6);
+
+        return view('pages.app.index', compact('produtos'));
     }
 
     public function showIndexAdminPage()

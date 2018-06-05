@@ -19,8 +19,6 @@ class ProductController extends Controller
 
         //dd($request->all());
 
-        $category = Category::findOrFail($request->cd_categoria);
-
         if ($request->filled('status') == 'on') {
 
             $status = 1;
@@ -33,8 +31,46 @@ class ProductController extends Controller
 
         }
 
-        $images = $request->images;
+        //Procura no banco a categoria e subcategoria baseado no id
+        $category = Category::findOrFail($request->cd_categoria);
+        $subcategory = DB::table('categoria')
+            ->join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+            ->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+            ->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $request->cd_subcategoria)
+            ->first();
 
+        //Seleciona o id correspondente dos forms categoria e subcategoria na tabela categoria_subcat
+        $prod_cat_subcat = DB::table('categoria_subcat')
+                            ->select('cd_categoria_subcat')
+                            ->where('cd_categoria', '=', $request->cd_categoria)
+                            ->where('cd_sub_categoria', '=', $request->cd_subcategoria)
+                            ->first();
+
+        //Salva o produto no banco
+        Product::create([
+
+            'cd_ean' => $request->cd_ean,
+            'nm_produto' => $request->nm_produto,
+            'ds_produto' => $request->ds_produto,
+            'vl_produto' => $request->vl_produto,
+            'cd_status_produto' => $status
+
+        ]);
+
+        //Pega o último id do produto cadastrado
+        $produto = Product::orderBy('cd_produto', 'DESC')->first();
+
+        //Insere os ids do produto e id da tabela de ligação de categoria/subcategoria
+        DB::table('produto_categoria_subcat')->insert([
+            'cd_produto' => $produto->cd_produto,
+            'cd_categoria_subcat' => $prod_cat_subcat->cd_categoria_subcat
+        ]);
+
+        //Cria o caminho físico das imagens
+        $images = $request->images;
+        $imagePath = $this->pastaProduto($category->nm_categoria, $subcategory->nm_sub_categoria);
+
+        //Salva fisicamente a imagem e seta o caminho para ser salvo no banco
         if ($request->hasFile('images')) {
 
             foreach ($images as $key => $image) {
@@ -44,26 +80,13 @@ class ProductController extends Controller
 
                 $realPath = $image->getRealPath();
 
-                $this->saveImageFile($imageName, $realPath);
+                $this->saveImageFile($imagePath, $imageName, $realPath);
 
-                $localImagesPath[$key] = public_path('img/products/') . $category . '/' . $imageName;
+                $localImagesPath[$key] = $imagePath . '/' . $imageName;
 
             }
 
         }
-
-        Product::create([
-
-            'cd_ean' => $request->cd_ean,
-            'nm_produto' => $request->nm_produto,
-            'ds_produto' => $request->ds_produto,
-            'vl_produto' => $request->vl_produto,
-            'cd_status_produto' => $status,
-            'cd_categoria' => $request->cd_categoria
-
-        ]);
-
-        $produto = Product::orderBy('cd_produto', 'DESC')->first();
 
         DB::table('produto_sku')->insert([
             'cd_nr_sku' => $request->cd_sku,
@@ -128,9 +151,42 @@ class ProductController extends Controller
 
     }
 
-    public function saveImageFile($imagename, $realPath) {
+    public function saveImageFile($imagePath, $imageName, $realPath) {
 
-        Image::make($realPath)->save(public_path('img/products/') . $imagename);
+        Image::make($realPath)->save($imagePath . '/' . $imageName);
+
+    }
+
+    public function pastaProduto($categoria, $subcategoria) {
+
+        $rootProductsPath = public_path('img/products/');
+
+        if (!file_exists($rootProductsPath . $categoria)) {
+
+            mkdir($rootProductsPath . $categoria, 0775, true);
+            $p1 = $rootProductsPath . $categoria;
+
+        }
+        else
+        {
+
+            $p1 = $rootProductsPath . $categoria;
+
+        }
+
+        if (!file_exists($p1 . '/' . $subcategoria)) {
+
+            mkdir($p1 . '/' . $subcategoria, 0775, true);
+            $path = $p1 . '/' . $subcategoria;
+
+        }
+        else {
+
+            $path = $p1 . '/' . $subcategoria;
+
+        }
+
+        return $path;
 
     }
 

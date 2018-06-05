@@ -48,7 +48,7 @@
                                     <label>Código (SKU)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_sku" type="text" class="form-control" name="cd_ean" maxlength="20" pattern="^[a-zA-Z0-9]+$"
+                                        <input id="campo_sku" type="text" class="form-control" name="cd_sku" maxlength="20" pattern="^[a-zA-Z0-9]+$"
                                                oninvalid="this.setCustomValidity('Proibido caracteres especiais (@$%&..)')">
                                     </div>
                                     <p class="msg_sku"></p>
@@ -104,6 +104,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-list"></i></span>
                                         <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+                                            <option value=""></option>
                                         </select>
                                     </div>
                                 </div>
@@ -203,7 +204,6 @@
 
     <script>
 
-
         $('#categorias').change(function (e) {
             e.preventDefault();
 
@@ -244,10 +244,6 @@
             }
 
         });
-
-
-
-
 
     /*
         function contadorPalavras() {

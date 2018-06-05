@@ -33,6 +33,7 @@ class ProductRequest extends FormRequest
             'cd_categoria' => 'required',
             'cd_subcategoria' => 'required',
             'cd_cor' => 'required',
+            'cd_tamanho' => 'required',
             'ds_altura' => 'required',
             'ds_largura' => 'required',
             'ds_peso' => 'required',
