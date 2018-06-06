@@ -233,12 +233,35 @@
 
             $('.msg_ean').html("");
 
-            if(campo.length < 13) {
-                $('.msg_ean').html("Campo deve conter 13 caracteres.").css("color", "red");
-            }
-            else if(!campo.match(regra)){
+            if(!campo.match(regra) && campo.length > 0){
                 $('.msg_ean').html("Campo deve ser numérico").css("color", "red");
             }
+            else if(campo.length < 13 && campo.length > 0) {
+                $('.msg_ean').html("Campo deve conter 0 ou 13 caracteres.").css("color", "red");
+            }
+
+
+        });
+
+
+        //Validação do campo SKU
+        $('#campo_sku').blur(function() {
+
+            var campo = $('#campo_sku').val();
+            var regra = /^[a-zA-Z0-9]+$/;
+
+            $('.msg_sku').html("");
+
+            if (campo.length == 0) {
+                $('.msg_sku').html("Campo obrigatório.").css("color", "red");
+            }
+            else if (!regra.exec(campo)) {
+                $('.msg_sku').html("Proibido caracteres especiais.").css("color", "red");
+            }
+
+        });
+
+        $('#campo_sku').on("input", function(){
 
         });
 
