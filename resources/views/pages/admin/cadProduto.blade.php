@@ -132,7 +132,7 @@
                             </div>
                         </div>
                         <div>&nbsp;</div>
-                        <div class="col-md-8">
+                        <div class="col-md-10">
                             <div class="col-md-3">
                                 <label>Largura</label>
                                 <div class="input-group">

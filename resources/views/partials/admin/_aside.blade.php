@@ -37,6 +37,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                   <li><a href="{{route('admin.listProd')}}"><i class="fa fa-list-alt"></i>Listar Produtos</a></li>
                     <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-barcode"></i>Cadastrar Produto</a></li>
                     <li><a href="{{route('admin.cadTamanho')}}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanho</a></li>
                     <li><a href="{{route('admin.cadCor')}}"><i class="fa fa-paint-brush"></i>Cadastrar Cor</a></li>
@@ -119,9 +120,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <!--<li><a href="{{route('admin.indexAparencia')}}"><i class="fa fa-paint-brush"></i>Aparência</a></li>-->
                     <li><a href="{{route('admin.indexMenu')}}"><i class="fa fa-th-list"></i>Menu</a></li>
                     <li><a href="{{route('admin.indexBanner')}}"><i class="fa fa-picture-o"></i>Banner</a></li>
+                    <li><a href="{{route('admin.indexConfigproduto')}}"><i class="fa fa-th-large"></i>Configuração Produto</a></li>
                     <li><a href="{{route('admin.indexHotpost')}}"><i class="fa fa-newspaper-o"></i>Hot Post</a></li>
                 </ul>
             </li>

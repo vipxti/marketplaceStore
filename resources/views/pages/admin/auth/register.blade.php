@@ -80,6 +80,7 @@
                     }
                     else if(data.cpf_cnpj.length > 0){
                         $('#status_cpf_cnpj').addClass('has-error');
+
                         $('.msg-erro').html("CPF/CNPJ já existente.").css("color", "red");
 
                     }

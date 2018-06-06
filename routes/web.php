@@ -19,6 +19,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
     Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
     Route::post('/register', 'Auth\UserRegisterController@create')->name('admin.register.submit');
+    Route::get('/register/{cpf_cnpj}', 'Auth\UserRegisterController@verificaCpfCnpj');
 
     //Preenche combobox do form cadastro de produtos
     Route::get('/cadProd', 'ProductController@getComboFields')->name('admin.cadProd');
@@ -45,8 +46,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/indexHotpost', function (){return view('pages.admin.indexHotpost');})->name('admin.indexHotpost');
     Route::get('/indexBanner', function (){return view('pages.admin.indexBanner');})->name('admin.indexBanner');
     Route::get('/indexMenu', function (){return view('pages.admin.indexMenu');})->name('admin.indexMenu');
-    Route::get('/indexAparencia', function (){return view('pages.admin.indexAparencia');})->name('admin.indexAparencia');
+    Route::get('/indexConfigproduto', function (){return view('pages.admin.indexConfigproduto');})->name('admin.indexConfigproduto');
     Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')/*->middleware('auth:admin')*/;
+    Route::get('/listProd', 'ProductController@listaProduto')->name('admin.listProd');
 
     //Faz o logout do usuário
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');

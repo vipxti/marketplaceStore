@@ -15,6 +15,20 @@ use App\Image as Img;
 class ProductController extends Controller
 {
 
+    public function paginaProduto() {
+
+        return view('pages.app.produto');
+
+    }
+    public function listaProduto() {
+
+        $produtos = Product::all();
+
+        return view('pages.admin.listProd', compact('produtos'));
+
+    }
+
+
     public function cadastrarProduto(ProductRequest $request) {
 
         //dd($request->all());

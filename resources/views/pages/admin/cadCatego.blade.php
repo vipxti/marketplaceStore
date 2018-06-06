@@ -2,22 +2,6 @@
 
 @section('content')
 
-    <script type="text/javascript">
-
-        function duplicarCampos(){
-            var clone = document.getElementById('subcategoria').cloneNode(true);
-            var destino = document.getElementById('destino');
-            destino.appendChild (clone);
-            var camposClonados = clone.getElementsByTagName('input');
-            for(i=0; i<camposClonados.length;i++){
-                camposClonados[i].value = '';
-            }
-        }
-        function removerCampos(id){
-            var node1 = document.getElementById('destino');
-            node1.removeChild(node1.childNodes[0]);
-        }
-    </script>
 
 
     <!-- Content Wrapper. Contains page content -->
@@ -124,10 +108,20 @@
 
                                     <div class="col-md-6" id="subcategoria">
                                         <label>&nbsp;</label>
-                                        <input type="text" class="form-control" id="subCatName" name="nm_sub_category" maxlength="35">
-                                    </div>
+                                        <input class="form-control" type="hidden" name="catId">
 
-                                    <div id="destino">
+                                        <input type="text" class="form-control" name="catName" maxlength="35">
+                                        <div class="text-right">
+
+                                            <div class="icon-tamanho">
+                                                <button  type="submit" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                                                <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                                            </div>
+
+                                            {{--<img src="{{ asset('img/admin/add.png') }}" style="cursor: pointer; height: 15px; width: 15px" onclick="duplicarCampos();">
+                                            <img src="{{ asset('img/admin/remover.png') }}" style="cursor: pointer; height: 15px; width: 15px" onclick="removerCampos(this);">--}}
+                                            {{--<i class="fa fa-remove" style=""></i>--}}
+                                        </div>
                                     </div>
                                     <div>&nbsp;</div>
 
@@ -175,8 +169,12 @@
 
                                             </select>
                                         </div>
+                                        <input type="text" class="form-control">
                                     </div>
+                                </div>
 
+                                <form id="fCat" class="form-horizontal" action="#" method="post">
+                                    {{ csrf_field() }}
                                     <div class="col-md-6">
                                         <label>Associar Sub-Categoria</label>
                                         <div class="input-group">

@@ -37,13 +37,23 @@
                     <div class="col-md-12">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Tamanho</label>
+                                    <label>Tamanho (Número)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
                                         <input type="number" class="form-control" name="nm_tamanho">
                                     </div>
                                 </div>
                             </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Tamanho (Letra)</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
+                                    <input type="text" class="form-control" name="nm_tamanho">
+                                </div>
+                            </div>
+                        </div>
 
                         <div>&nbsp;</div>
                     </div>
