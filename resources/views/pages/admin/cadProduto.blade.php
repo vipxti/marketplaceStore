@@ -32,6 +32,16 @@
                     <form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="col-md-12">
+
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label>Nome do Produto</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                                        <input type="text" class="form-control" name="nm_produto" maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Código (SKU)</label>
@@ -53,15 +63,7 @@
                                     <p class="msg_ean"></p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Nome do Produto</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                        <input type="text" class="form-control" name="nm_produto" maxlength="50">
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Descrição do Produto</label>

@@ -1,0 +1,9 @@
+.btn-default.btn-on.active {
+    background-color: #5BB75B;color: white;
+}
+.btn-default.btn-off.active {
+    background-color: #DA4F49;color: white;
+}
+.pagination>li>a, .pagination>li>span {
+    border-radius: 50% !important;margin: 0 5px;
+}
