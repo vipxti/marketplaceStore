@@ -34,14 +34,15 @@
 
             <!-- Botão pesquisar -->
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div style="padding-left: 70%">
+                        <div>
                             <input type="search" id="search" value="" class="form-control">
                         </div>
                     </div>
+                    <div>&nbsp;</div>
 
-                    <div class="col-md-12">
-                        <div class="dataTables_length" id="example1_length">
+
+                        <div class="dataTables_length" style="padding-left: 90%" id="example1_length">
                             <select name="example1_length" aria-controls="example1" class="form-control form-control-sm">
                                 <option value="10">10</option>
                                 <option value="25">25</option>
@@ -49,7 +50,6 @@
                                 <option value="100">100</option>
                             </select>
                         </div>
-                    </div>
 
             <!-- lista de produtos -->
 
@@ -75,32 +75,7 @@
                                         <td>{{ $produto->nm_produto }} </td>
                                         <td>{{ $produto->ds_produto }} </td>
                                         <td>{{ $produto->vl_produto }} </td>
-                                        <td>
-                                            <div class="material-button-anim">
-                                                <ul class="list-inline" id="options">
-                                                    <li class="option">
-                                                        <button class="material-button option1" type="button">
-                                                            <span class="fa fa-phone" aria-hidden="true"></span>
-                                                        </button>
-                                                    </li>
-                                                    <li class="option">
-                                                        <button class="material-button option2" type="button">
-                                                            <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                                                        </button>
-                                                    </li>
-                                                    <li class="option">
-                                                        <button class="material-button option3" type="button">
-                                                            <span class="fa fa-pencil" aria-hidden="true"></span>
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                                <button class="material-button material-button-toggle" type="button">
-                                                    <span class="fa fa-plus" aria-hidden="true"></span>
-                                                </button>
-
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        <td>#</tr>
 
                                 @endforeach
                                 </tbody>
@@ -158,26 +133,7 @@
     <script src="../../dist/js/demo.js"></script>
     <!-- page script -->
 
-    <script>
-        $(function () {
-            $("#example1").DataTable();
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
-            });
-        });
 
-        $(document).ready(function(){
-            $('.material-button-toggle').on("click", function () {
-                $(this).toggleClass('open');
-                $('.option').toggleClass('scale-on');
-            });
-        });
-    </script>
 
 @stop
 

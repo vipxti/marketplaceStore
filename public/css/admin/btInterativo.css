@@ -1,9 +1,8 @@
 
 .material-button-anim {
     position: relative;
-    padding: 127px 15px 27px;
     text-align: center;
-    max-width: 320px;
+    max-width: 180px;
     margin: 0 auto 20px;
 }
 
@@ -11,9 +10,9 @@
     position: relative;
     top: 0;
     z-index: 1;
-    width: 70px;
-    height: 70px;
-    font-size: 1.5em;
+    width: 25px;
+    height: 25px;
+    font-size: 0.7em;
     color: #fff;
     background: #2C98DE;
     border: none;
@@ -23,8 +22,8 @@
 }
 .material-button-toggle {
     z-index: 3;
-    width: 50px;
-    height: 50px;
+    width: 20px;
+    height: 20px;
     margin: 0 auto;
 }
 .material-button-toggle span {
@@ -47,7 +46,7 @@
 }
 
 #options {
-    height: 70px;
+    height: 0px;
 }
 .option {
     position: relative;
@@ -62,15 +61,15 @@
 }
 .option .option1 {
     -webkit-transform: translate3d(90px,90px,0) scale(.8,.8);
-    transform:         translate3d(90px,90px,0) scale(.8,.8);
+    transform:         translate3d(38px,42px,10) scale(.10,.10);
 }
 .option .option2 {
     -webkit-transform: translate3d(0,90px,0) scale(.8,.8);
-    transform:         translate3d(0,90px,0) scale(.8,.8);
+    transform:         translate3d(0,5px,0) scale(.10,.10);
 }
 .option .option3 {
     -webkit-transform: translate3d(-90px,90px,0) scale(.8,.8);
-    transform:         translate3d(-90px,90px,0) scale(.8,.8);
+    transform:         translate3d(-0px,0px,0) scale(.10,.10);
 }
 .option.scale-on .option1,
 .option.scale-on .option2,
