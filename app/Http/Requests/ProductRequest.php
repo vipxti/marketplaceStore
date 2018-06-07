@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     public function rules()
     {
 
-        return [
+        $rules =  [
             'cd_ean' => 'required',
             'cd_sku' => 'required',
             'nm_produto' => 'required',
@@ -33,13 +33,16 @@ class ProductRequest extends FormRequest
             'cd_categoria' => 'required',
             'cd_subcategoria' => 'required',
             'cd_cor' => 'required',
-            'cd_tamanho' => 'required',
             'ds_altura' => 'required',
             'ds_largura' => 'required',
             'ds_peso' => 'required',
             'status' => 'required',
             'images.*' => 'required|image|mimes:jpeg,bmp,png'
         ];
+
+        //dd($rules);
+
+        return $rules;
 
     }
 }

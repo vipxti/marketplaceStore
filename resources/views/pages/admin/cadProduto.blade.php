@@ -37,8 +37,7 @@
                                     <label>Código (SKU)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_sku" type="text" class="form-control" name="cd_ean" maxlength="20" pattern="^[a-zA-Z0-9]+$"
-                                               oninvalid="this.setCustomValidity('Proibido caracteres especiais (@$%&..)')">
+                                        <input id="campo_sku" type="text" class="form-control" name="cd_sku" maxlength="20" pattern="^[a-zA-Z0-9]+$" oninvalid="this.setCustomValidity('Proibido caracteres especiais (@$%&..)')">
                                     </div>
                                     <p class="msg_sku"></p>
                                 </div>
@@ -68,7 +67,7 @@
                                     <div class="input-group">
                                     <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="107%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="1500">
                                     </textarea>
-                                        <p><span class="qtd_palavras">1500</span> palavras</p>
+                                        <p><span class="qtd_palavras">1500</span> caracteres</p>
                                     </div>
                                 </div>
                             </div>
@@ -100,6 +99,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-list"></i></span>
                                         <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+                                            <option value=""></option>
                                         </select>
                                     </div>
                                 </div>
@@ -119,13 +119,25 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Tamanho</label>
+                                <label>Tamanho (Letra)</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                    <select class="form-control select2" style="width: 100%;" name="cd_tamanho">
+                                    <select class="form-control select2" style="width: 100%;" name="cd_tamanho_letra">
                                         <option value=""></option>
-                                        @foreach($tamanhos as $tamanho)
-                                            <option value="{{ $tamanho->cd_tamanho }}">{{ $tamanho->nm_tamanho }}</option>
+                                        @foreach($tamanhosLetras as $tamanhoLetra)
+                                            <option value="{{ $tamanhoLetra->cd_tamanho_letra }}">{{ $tamanhoLetra->nm_tamanho_letra }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Tamanho (Número)</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                    <select class="form-control select2" style="width: 100%;" name="cd_tamanho_num">
+                                        <option value=""></option>
+                                        @foreach($tamanhosNumeros as $tamanhoNumero)
+                                        <option value="{{ $tamanhoNumero->cd_tamanho_num }}">{{ $tamanhoNumero->nm_tamanho_num }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -276,7 +288,7 @@
                 var qtdCaracter = 1500 - conteudo.length;
 
 
-                $('.qtd_palavras').text(qtdCaracter);
+                $('.qtd_palavras').innerHTML(qtdCaracter);
 
             });
         }

@@ -64,12 +64,16 @@ class CategoryController extends Controller
 
         //dd($request->all());
 
-        DB::table('categoria_subcat')->insert([
+        $assocCatSubcat = DB::table('categoria_subcat')->insert([
 
-            'cd_categoria' => $request->cd_categoria,
-            'cd_sub_categoria' => $request->cd_subcategoria
+                'cd_categoria' => $request->cd_categoria,
+                'cd_sub_categoria' => $request->cd_subcategoria
 
         ]);
+
+        if ($assocCatSubcat) {
+            return redirect()->route('admin.cadCatego');
+        }
 
     }
 

@@ -10,20 +10,24 @@ class HomeController extends Controller
 {
     public function showIndexPage()
     {
-        $produtos = DB::table('produto')
-            ->join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
-            ->join('sku_produto_img', 'produto_sku.cd_nr_sku', '=', 'sku_produto_img.cd_sku')
-            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
-            ->select('img_produto.im_produto')
-            ->where('cd_status_produto', '=', 0)
-            ->first();
+        $produtos = Product::where('cd_status_produto', '=', 1);
+        $prodPaginate = $produtos->paginate(6);
 
+        $imagemProduto = Product::join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
+                            ->join('sku_produto_img', 'produto_sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+                            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+                            ->select('sku_produto_img.cd_sku','img_produto.im_produto')
+                            ->where('produto.cd_status_produto', '=', 1)
+                            ->where('sku_produto_img.cd_sku', '=', 2)
+                            ->first();
 
-        $produtos = Product::where()->paginate(6);
+        //dd($imagemProduto->all());
 
-        dd($produtos);
+        //$primeiraImagem = $imagemProduto->where($imagemProduto->cd_sku, '=', 2)->first();
 
-        return view('pages.app.index', compact('produtos'));
+        //dd($primeiraImagem);
+
+        return view('pages.app.index', compact('prodPaginate', 'imagemProduto'));
     }
 
     public function showIndexAdminPage()

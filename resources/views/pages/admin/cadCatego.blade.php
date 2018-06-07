@@ -98,6 +98,12 @@
                                             <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
                                                 <option value=""></option>
 
+                                                @foreach($subcategorias as $subcategoria)
+
+                                                    <option value="{{ $subcategoria->cd_sub_categoria }}">{{ $subcategoria->nm_sub_categoria }}</option>
+
+                                                @endforeach
+
                                             </select>
                                         </div>
                                     </div>
@@ -110,22 +116,19 @@
                                         <label>&nbsp;</label>
                                         <input class="form-control" type="hidden" name="catId">
 
-                                        <input type="text" class="form-control" name="catName" maxlength="35">
+                                        <input type="text" class="form-control" name="nm_sub_category" maxlength="35">
                                         <div class="text-right">
 
-                                            <div class="icon-tamanho">
-                                                <button  type="submit" class="btn btn-danger"><i class="fa fa-remove"></i></button>
-                                                <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                                            </div>
+                                            {{--<div class="icon-tamanho">--}}
+                                                {{--<button  type="submit" class="btn btn-danger"><i class="fa fa-remove"></i></button>--}}
+                                                {{--<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>--}}
+                                            {{--</div>--}}
 
-                                            {{--<img src="{{ asset('img/admin/add.png') }}" style="cursor: pointer; height: 15px; width: 15px" onclick="duplicarCampos();">
-                                            <img src="{{ asset('img/admin/remover.png') }}" style="cursor: pointer; height: 15px; width: 15px" onclick="removerCampos(this);">--}}
-                                            {{--<i class="fa fa-remove" style=""></i>--}}
                                         </div>
                                     </div>
                                     <div>&nbsp;</div>
 
-                                    <div class="col-md-12 text-right" >
+                                    <div class="col-md-12" >
                                         <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                     </div>
                                 </form>
@@ -169,11 +172,11 @@
 
                                             </select>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <p>&nbsp;</p>
                                     </div>
                                 </div>
 
-                                <form id="fCat" class="form-horizontal" action="#" method="post">
+                                <form id="fCat" class="form-horizontal" action="{{ route('catsubcat.associate') }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="col-md-6">
                                         <label>Associar Sub-Categoria</label>
@@ -189,16 +192,15 @@
 
                                             </select>
                                         </div>
-                                    <div>&nbsp;</div>
-
-                                    <div class="col-md-12 text-right" >
-                                        <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                        <div>&nbsp;</div>
+                                        <div class="col-md-12 text-right" >
+                                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                        </div>
                                     </div>
                                 </form>
 
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
 

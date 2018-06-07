@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SizeRequest;
-use App\Size;
+use App\Http\Requests\LetterSizeRequest;
+use App\Http\Requests\NumberSizeRequest;
+use App\LetterSize;
+use App\NumberSize;
 
 class SizeController extends Controller
 {
@@ -11,9 +13,19 @@ class SizeController extends Controller
         return view('pages.admin.cadTamanho');
     }
 
-    public function cadastrarNovoTamanho(SizeRequest $request) {
-        $tamanho = Size::create([
-            'nm_tamanho' => $request->nm_tamanho
+    public function cadastrarNovoTamanhoLetra(LetterSizeRequest $request) {
+        $tamanho = LetterSize::create([
+            'nm_tamanho_letra' => $request->nm_tamanho_letra
+        ]);
+
+        if ($tamanho) {
+            return redirect()->route('admin.cadTamanho');
+        }
+    }
+
+    public function cadastrarNovoTamanhoNumero(NumberSizeRequest $request) {
+        $tamanho = NumberSize::create([
+            'nm_tamanho_num' => $request->nm_tamanho_num
         ]);
 
         if ($tamanho) {

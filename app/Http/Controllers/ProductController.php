@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Color;
 use App\Http\Requests\ProductRequest;
+use App\LetterSize;
 use App\Package;
 use App\Product;
-use App\Size;
+use App\NumberSize;
 use Illuminate\Support\Facades\DB;
 use Image;
 use App\Image as Img;
@@ -28,8 +29,8 @@ class ProductController extends Controller
 
     }
 
-
-    public function cadastrarProduto(ProductRequest $request) {
+    public function cadastrarProduto(ProductRequest $request)
+    {
 
         //dd($request->all());
 
@@ -37,9 +38,7 @@ class ProductController extends Controller
 
             $status = 1;
 
-        }
-        else
-        {
+        } else {
 
             $status = 0;
 
@@ -55,10 +54,10 @@ class ProductController extends Controller
 
         //Seleciona o id correspondente dos forms categoria e subcategoria na tabela categoria_subcat
         $prod_cat_subcat = DB::table('categoria_subcat')
-                            ->select('cd_categoria_subcat')
-                            ->where('cd_categoria', '=', $request->cd_categoria)
-                            ->where('cd_sub_categoria', '=', $request->cd_subcategoria)
-                            ->first();
+            ->select('cd_categoria_subcat')
+            ->where('cd_categoria', '=', $request->cd_categoria)
+            ->where('cd_sub_categoria', '=', $request->cd_subcategoria)
+            ->first();
 
         //Salva o produto no banco
         Product::create([
@@ -127,10 +126,23 @@ class ProductController extends Controller
             'cd_cor' => $request->cd_cor
         ]);
 
-        DB::table('produto_tamanho')->insert([
-            'cd_sku' => $SKU->cd_sku,
-            'cd_tamanho' => $request->cd_tamanho
-        ]);
+        if ($request->cd_tamanho_num == null) {
+
+            DB::table('produto_tamanho_letra')->insert([
+                'cd_sku' => $SKU->cd_sku,
+                'cd_tamanho_letra' => $request->cd_tamanho_letra
+            ]);
+
+        }
+        else
+        {
+
+            DB::table('produto_tamanho_num')->insert([
+                'cd_sku' => $SKU->cd_sku,
+                'cd_tamanho_num' => $request->cd_tamanho_num
+            ]);
+
+        }
 
         foreach ($localImagesPath as $key => $dbImage) {
 
@@ -155,13 +167,14 @@ class ProductController extends Controller
 
     }
 
-    public function getComboFields() {
+    public function showProductPage() {
 
         $categorias = Category::all();
         $cores = Color::all();
-        $tamanhos = Size::all();
+        $tamanhosLetras = LetterSize::all();
+        $tamanhosNumeros = NumberSize::all();
 
-        return view('pages.admin.cadProduto', compact('categorias', 'cores', 'tamanhos'));
+        return view('pages.admin.cadProduto', compact('categorias', 'cores', 'tamanhosLetras', 'tamanhosNumeros'));
 
     }
 

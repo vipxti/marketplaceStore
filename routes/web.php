@@ -22,7 +22,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/register/{cpf_cnpj}', 'Auth\UserRegisterController@verificaCpfCnpj');
 
     //Preenche combobox do form cadastro de produtos
-    Route::get('/cadProd', 'ProductController@getComboFields')->name('admin.cadProd');
+    Route::get('/cadProd', 'ProductController@showProductPage')->name('admin.cadProd');
 
     //Form categoria/subcategoria e cadastro
     Route::get('/cadCatego', 'CategoryController@showCategoryForm')->name('admin.cadCatego');
@@ -35,7 +35,8 @@ Route::prefix('admin')->group(function () {
 
     //Form tamanho e cadastro
     Route::get('/cadTamanho', 'SizeController@showSizeForm')->name('admin.cadTamanho');
-    Route::post('/tamanho', 'SizeController@cadastrarNovoTamanho')->name('size.save');
+    Route::post('/tamanholetra', 'SizeController@cadastrarNovoTamanhoLetra')->name('lettersize.save');
+    Route::post('/tamanhonumero', 'SizeController@cadastrarNovoTamanhoNumero')->name('numbersize.save');
 
     //Form cor e cadastro
     Route::get('/cadCor', 'ColorController@showColorForm')->name('admin.cadCor');
@@ -43,10 +44,10 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/cadUsuario', 'UserController@showUserForm')->name('usuario.dados');
 
-    Route::get('/indexHotpost', function (){return view('pages.admin.indexHotpost');})->name('admin.indexHotpost');
-    Route::get('/indexBanner', function (){return view('pages.admin.indexBanner');})->name('admin.indexBanner');
-    Route::get('/indexMenu', function (){return view('pages.admin.indexMenu');})->name('admin.indexMenu');
-    Route::get('/indexConfigproduto', function (){return view('pages.admin.indexConfigproduto');})->name('admin.indexConfigproduto');
+    Route::get('/indexHotpost', 'PageController@showHotPostPage')->name('admin.indexHotpost');
+    Route::get('/indexBanner', 'PageController@showBannerPage')->name('admin.indexBanner');
+    Route::get('/indexMenu', 'PageController@showMenuPage')->name('admin.indexMenu');
+    Route::get('/indexConfigproduto', 'PageController@showConfigProductPage')->name('admin.indexConfigproduto');
     Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')/*->middleware('auth:admin')*/;
     Route::get('/listProd', 'ProductController@listaProduto')->name('admin.listProd');
 
@@ -58,6 +59,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/password/reset', 'Auth\UserForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
     Route::post('/password/reset', 'Auth\UserResetPasswordController@reset');
     Route::get('/password/reset/{token}', 'Auth\UserResetPasswordController@showResetForm')->name('admin.password.reset');
+    //----------------
 });
 
 Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');

@@ -18,7 +18,46 @@
         <!-- Main content -->
         <section class="content">
 
+            <!-- Default box -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
 
+
+                <div class="box-body">
+                    <form action="{{ route('numbersize.save') }}" method="post">
+                        {{ csrf_field() }}
+
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Tamanho (Número)</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
+                                    <input type="number" class="form-control" name="nm_tamanho_num">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                    </div>
+
+                    </form>
+                </div>
+                <!--<div class="box-footer">
+                    Footer
+                </div>-->
+                <!-- /.box-footer-->
+            </div>
+        </section>
+
+        <section class="content">
             <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -29,36 +68,24 @@
                     </div>
                 </div>
 
-
                 <div class="box-body">
-                    <form action="{{ route('size.save') }}" method="post">
+                    <form action="{{ route('lettersize.save') }}" method="post">
                         {{ csrf_field() }}
 
-                    <div class="col-md-12">
+                        <div class="col-md-12">
+
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Tamanho (Número)</label>
+                                    <label>Tamanho (Letra)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
-                                        <input type="number" class="form-control" name="nm_tamanho">
+                                        <input type="text" class="form-control" name="nm_tamanho_letra">
                                     </div>
                                 </div>
                             </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Tamanho (Letra)</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
-                                    <input type="text" class="form-control" name="nm_tamanho">
-                                </div>
-                            </div>
+                            <div>&nbsp;</div>
                         </div>
-
-                        <div>&nbsp;</div>
-                    </div>
-
-
 
                         <div class="col-md-12 text-right">
                             <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
