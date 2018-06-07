@@ -68,7 +68,7 @@
                                 <div class="form-group">
                                     <label>Descrição do Produto</label>
                                     <div class="input-group">
-                                    <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="107%" style="font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="1500">
+                                    <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="107%" style="font-size: 14px; line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="1500">
                                     </textarea>
                                         <p><span class="qtd_palavras">1500</span> caracteres</p>
                                     </div>
@@ -195,9 +195,15 @@
                             </div>
                         </div>
 
+                      <div class="col-md-12">
+                        <div class="col-md-1">
+                           <button type="submit" class="btn btn-success pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Atributos</button>
+                        </div>
+                        <div class="col-md-1">
+                           <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                         </div>
+                      </div>
 
-
-                        <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                     </form>
                 </div>
                 <!--<div class="box-footer">

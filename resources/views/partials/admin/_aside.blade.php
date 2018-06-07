@@ -37,16 +37,23 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                   <li><a href="{{route('admin.listProd')}}"><i class="fa fa-list-alt"></i>Listar Produtos</a></li>
-                    <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-barcode"></i>Cadastrar Produto</a>
-                    <li><a href="{{route('admin.cadTamanho')}}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanho</a></li>
-                    <li><a href="{{route('admin.cadCor')}}"><i class="fa fa-paint-brush"></i>Cadastrar Cor</a></li>
+                   <li><a href="{{route('admin.listProd')}}"><i class="fa fa-list-alt"></i>Lista de Produtos</a></li>
+                    <li class="treeview">
+                        <a href="{{route('admin.cadProd')}}"><i class="fa fa-diamond"></i>Produtos
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-barcode"></i>Cadastrar Produtos</a></li>
+                            <li><a href="{{route('admin.cadCatego')}}"><i class="fa fa-tag"></i>Cadastrar Categorias</a></li>
+                            <li><a href="{{route('admin.cadTamanho')}}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanhos</a></li>
+                            <li><a href="{{route('admin.cadCor')}}"><i class="fa fa-paint-brush"></i>Cadastrar Cors</a></li>
+                        </ul>
                     </li>
-
                 </ul>
-            </li>
 
-            <li class="treeview">
+           {{-- <li class="treeview">
                 <a href="#">
                     <i class="fa fa-tags"></i>
                     <span>Categorias</span>
@@ -55,9 +62,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('admin.cadCatego')}}"><i class="fa fa-tag"></i>Cadastrar Categorias</a></li>
+
                 </ul>
-            </li>
+            </li>--}}
 
 
             <li class="treeview">
@@ -103,7 +110,7 @@
 
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-user"></i><span>Usuários</span>
+                    <i class="fa fa-user-circle-o"></i><span>Usuários</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
