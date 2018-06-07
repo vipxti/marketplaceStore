@@ -108,72 +108,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-md-4">
-                                <label>Cor</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
-                                    <select class="form-control select2" style="width: 100%;" name="cd_cor" >
-                                        <option value=""></option>
-                                        @foreach($cores as $cor)
-                                            <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Tamanho (Letra)</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                    <select class="form-control select2" style="width: 100%;" name="cd_tamanho_letra">
-                                        <option value=""></option>
-                                        @foreach($tamanhosLetras as $tamanhoLetra)
-                                            <option value="{{ $tamanhoLetra->cd_tamanho_letra }}">{{ $tamanhoLetra->nm_tamanho_letra }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Tamanho (Número)</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                    <select class="form-control select2" style="width: 100%;" name="cd_tamanho_num">
-                                        <option value=""></option>
-                                        @foreach($tamanhosNumeros as $tamanhoNumero)
-                                        <option value="{{ $tamanhoNumero->cd_tamanho_num }}">{{ $tamanhoNumero->nm_tamanho_num }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div>&nbsp;</div>
-                        <div class="col-md-10">
-                            <div class="col-md-3">
-                                <label>Largura</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                    <input type="number" name="ds_largura">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Altura</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                    <input type="number" name="ds_altura">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Peso</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                    <input type="number" name="ds_peso">
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div class="col-md-12">
                             <div>&nbsp;</div>
-                            <div>&nbsp;</div>
+
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Imagens</label>
@@ -184,7 +123,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
                                 <div class="box-body">
                                     <div class="form-group">
@@ -196,34 +135,35 @@
                         </div>
 
                       <div class="col-md-12">
-                        <div class="col-md-1">
-                           <button type="submit" id="btn_atributos" class="btn btn-success pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Atributos</button>
-                                <div class='modal fade' id='myModal'>
-                                    <div class='modal-dialog'>
-                                        <div class='modal-content'>
-                                            <div class='modal-header'>
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class='modal-title'>
-                                                    <strong>INSERIR ATRIBUTOS</strong>
-                                                </h4>
-                                            </div>
-                                            <!-- / modal-header -->
-                                            <div class='modal-body'>
-                                                <!-- COLOCAR AQUI OS CAMPOS PARA FICAR DENTRO DO MODAL -->
-                                                <label>Nome</label>
-                                                <input type="text">
-                                            </div>
-                                            <!-- / modal-body -->
-                                        </div>
-                                        <!-- / modal-content -->
-                                    </div>
-                                    <!--/ modal-dialog -->
-                                </div>
-                                <!-- / modal -->
-                        </div>
-                        <div class="col-md-1">
+                        <div>
                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                          </div>
+
+                          <div style="padding-right: 90px">
+                              <button type="submit" id="btn_atributos" class="btn btn-primary pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Atributos</button>
+                              <div class='modal fade' id='myModal'>
+                                  <div class='modal-dialog'>
+                                      <div class='modal-content'>
+                                          <div class='modal-header'>
+                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                              <h4 class='modal-title'>
+                                                  <strong>INSERIR ATRIBUTOS</strong>
+                                              </h4>
+                                          </div>
+                                          <!-- / modal-header -->
+                                          <div class='modal-body'>
+                                              <!-- COLOCAR AQUI OS CAMPOS PARA FICAR DENTRO DO MODAL -->
+                                              <label>Nome</label>
+                                              <input type="text">
+                                          </div>
+                                          <!-- / modal-body -->
+                                      </div>
+                                      <!-- / modal-content -->
+                                  </div>
+                                  <!--/ modal-dialog -->
+                              </div>
+                              <!-- / modal -->
+                          </div>
                       </div>
 
                     </form>
