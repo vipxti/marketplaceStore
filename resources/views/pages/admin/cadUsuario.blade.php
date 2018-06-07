@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <form action="{{ route('product.save') }}" method="post">
+                    <form action="#" method="post">
                         {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="col-md-8">
@@ -37,7 +37,7 @@
                                     <label>Nome</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input type="text" id="campo_nome" class="form-control" name="nm_usuario" maxlength="40">
+                                        <input type="text" id="campo_nome" class="form-control" name="nm_usuario" maxlength="40" value="{{ Auth::user()->nm_usuario }}">
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                                     <label>Email</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-at"></i></span>
-                                        <input type="text" id="campo_email" class="form-control" name="nm_email" maxlength="35">
+                                        <input type="text" id="campo_email" class="form-control" name="nm_email" maxlength="35" value="{{ Auth::user()->email }}">
                                     </div>
                                 </div>
                             </div>

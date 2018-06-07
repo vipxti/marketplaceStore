@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     public function rules()
     {
 
-        $rules =  [
+        $rules = [
             'cd_ean' => 'required',
             'cd_sku' => 'required',
             'nm_produto' => 'required',
@@ -39,6 +39,19 @@ class ProductRequest extends FormRequest
             'status' => 'required',
             'images.*' => 'required|image|mimes:jpeg,bmp,png'
         ];
+
+
+        if ($this->cd_tamanho_num == null) {
+
+            $rules['cd_tamanho_letra'] = 'required';
+
+        }
+
+        if ($this->cd_tamanho_letra == null) {
+
+            $rules['cd_tamanho_num'] = 'required';
+
+        }
 
         //dd($rules);
 

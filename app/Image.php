@@ -12,6 +12,6 @@ class Image extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'im_produto'
+        'im_produto', 'ic_img_principal'
     ];
 }

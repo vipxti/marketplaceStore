@@ -168,23 +168,23 @@
         <div class="container">
             <div class="row karl-new-arrivals">
 
-                @foreach($prodPaginate as $produto)
+                @foreach($prodPaginate as $key => $produto)
 
                     <!-- Single gallery Item Start -->
                     <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s">
                         <!-- Product Image -->
                         <div class="product-img">
-                            <img src="{{ URL::asset('img/products' . '/' . $produto->im_produto)  }}" alt="">
+                            <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="">
                             <div class="product-quicview">
                                 <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                             </div>
                         </div>
                         <!-- Product Description -->
                         <div class="product-description">
-                            <h4 class="product-price">{{ $produto->vl_produto }}</h4>
+                            <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
                             <p>{{ $produto->nm_produto }}</p>
                             <!-- Add to Cart -->
-                            <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
+                            <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp COMPRAR</a>
                         </div>
                     </div>
 

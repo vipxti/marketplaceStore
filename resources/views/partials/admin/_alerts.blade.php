@@ -1,6 +1,6 @@
 @if(session()->has('msg.level'))
 
-    <div class="alert alert-{{ session('msg.level') }} flash" role="alert">
+    <div class="alert alert-{{ session('msg.level') }}" role="alert">
 
         {{ session('msg.content') }}
 
@@ -10,7 +10,7 @@
 
 @if (count($errors))
 
-    <div class="form-group flash">
+    <div class="form-group">
 
         <div class="alert alert-danger">
 

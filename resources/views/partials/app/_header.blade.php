@@ -181,7 +181,7 @@
 
                                     </li>
 
-                                    <li class="nav-item"><a class="nav-link" href=" {{ route('admin.indexConfigproduto') }}">Vestidos</a></li>
+                                    <li class="nav-item"><a class="nav-link" href=" {{ route('products.page') }}">Vestidos</a></li>
 
                                     <li class="nav-item"><a class="nav-link" href="#">Sapatos</a></li>
 

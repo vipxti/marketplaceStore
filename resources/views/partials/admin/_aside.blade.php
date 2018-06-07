@@ -15,7 +15,6 @@
         </div>
         <!-- /.search form -->
 
-
         <!-- sidebar menu: : style can be found in sidebar.less -->
 
         <ul class="sidebar-menu" data-widget="tree">
@@ -27,7 +26,6 @@
                 </a>
             </li>
 
-
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-shopping-bag"></i>
@@ -37,37 +35,23 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-plus-square"></i>Cadastrar</a></li>
+                    <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-edit"></i>Alterar</a></li>
                    <li><a href="{{route('admin.listProd')}}"><i class="fa fa-list-alt"></i>Lista de Produtos</a></li>
                     <li class="treeview">
-                        <a href="{{route('admin.cadProd')}}"><i class="fa fa-diamond"></i>Produtos
-                            <span class="pull-right-container">
+                        <a href="{{route('admin.cadProd')}}"><i class="fa fa-diamond">
+                            </i>Atributos<span class="pull-right-container">
                               <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-barcode"></i>Cadastrar Produtos</a></li>
                             <li><a href="{{route('admin.cadCatego')}}"><i class="fa fa-tag"></i>Cadastrar Categorias</a></li>
-                            <li><a href="{{route('admin.cadTamanho')}}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanhos</a></li>
                             <li><a href="{{route('admin.cadCor')}}"><i class="fa fa-paint-brush"></i>Cadastrar Cors</a></li>
+                            <li><a href="{{route('admin.cadTamanho')}}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanhos</a></li>
                         </ul>
                     </li>
                 </ul>
-
-           {{-- <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-tags"></i>
-                    <span>Categorias</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-
-                </ul>
-            </li>--}}
-
-
-            <li class="treeview">
+                <li class="treeview">
                 <a href="#">
                     <i class="fa fa-credit-card"></i> <span>Formas de Pagamento</span>
                     <span class="pull-right-container">
@@ -75,7 +59,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i>#</a></li>
+                    <li><a href="#"><i class="fa fa-plus-square"></i>Cadastrar</a></li>
+                    <li><a href="#"><i class="fa fa-edit"></i>Alterar</a></li>
                 </ul>
             </li>
 
@@ -89,11 +74,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i>#</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>#</a></li>
                 </ul>
             </li>
-
-
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-users"></i> <span>Clientes</span>
@@ -105,9 +88,6 @@
                     <li><a href="#"><i class="fa fa-circle-o"></i>#</a></li>
                 </ul>
             </li>
-
-
-
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-user-circle-o"></i><span>Usuários</span>
@@ -116,14 +96,12 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('usuario.dados')}}"><i class="fa fa-user-plus"></i>Cadastrar Usuário</a></li>
+                    <li><a href="{{route('usuario.dados')}}"><i class="fa fa-edit"></i>Alterar Dados do Usuário</a></li>
                 </ul>
             </li>
-
-
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-sliders"></i><span>Configurações</span>
+                    <i class="fa fa-home"></i><span>Configuração Home</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -131,7 +109,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{route('admin.indexMenu')}}"><i class="fa fa-th-list"></i>Menu</a></li>
                     <li><a href="{{route('admin.indexBanner')}}"><i class="fa fa-picture-o"></i>Banner</a></li>
-                    <li><a href="{{route('admin.indexConfigproduto')}}"><i class="fa fa-th-large"></i>Configuração Produto</a></li>
+                    <li><a href="{{route('admin.indexConfigproduto')}}"><i class="fa fa-th-large"></i>Produto Home</a></li>
                     <li><a href="{{route('admin.indexHotpost')}}"><i class="fa fa-newspaper-o"></i>Hot Post</a></li>
                 </ul>
             </li>

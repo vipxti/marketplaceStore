@@ -16,11 +16,25 @@ use App\Image as Img;
 class ProductController extends Controller
 {
 
-    public function paginaProduto() {
+    public function paginaProduto()
+    {
 
-        return view('pages.app.produto');
+        $produtos = Product::where('cd_status_produto', '=', 1);
+        $prodPaginate = $produtos->paginate(6);
+
+        $imagemPrincipal = Product::join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
+            ->join('sku_produto_img', 'produto_sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+            ->select('img_produto.im_produto')
+            ->where('img_produto.ic_img_principal', '=', 1)
+            ->orderBy('sku_produto_img.cd_img')
+            ->get();
+
+
+        return view('pages.app.produto', compact('prodPaginate', 'imagemPrincipal'));
 
     }
+
     public function listaProduto() {
 
         $produtos = Product::all();
@@ -31,8 +45,6 @@ class ProductController extends Controller
 
     public function cadastrarProduto(ProductRequest $request)
     {
-
-        //dd($request->all());
 
         if ($request->filled('status') == 'on') {
 
@@ -82,6 +94,7 @@ class ProductController extends Controller
         //Cria o caminho físico das imagens
         $images = $request->images;
         $imagePath = $this->pastaProduto($category->nm_categoria, $subcategory->nm_sub_categoria);
+        $dbPath = $category->nm_categoria . '/' . $subcategory->nm_sub_categoria;
 
         //Salva fisicamente a imagem e seta o caminho para ser salvo no banco
         if ($request->hasFile('images')) {
@@ -95,7 +108,7 @@ class ProductController extends Controller
 
                 $this->saveImageFile($imagePath, $imageName, $realPath);
 
-                $localImagesPath[$key] = $imagePath . '/' . $imageName;
+                $localImagesPath[$key] = $dbPath . '/' . $imageName;
 
             }
 
@@ -126,16 +139,7 @@ class ProductController extends Controller
             'cd_cor' => $request->cd_cor
         ]);
 
-        if ($request->cd_tamanho_num == null) {
-
-            DB::table('produto_tamanho_letra')->insert([
-                'cd_sku' => $SKU->cd_sku,
-                'cd_tamanho_letra' => $request->cd_tamanho_letra
-            ]);
-
-        }
-        else
-        {
+        if ($request->cd_tamanho_letra == null) {
 
             DB::table('produto_tamanho_num')->insert([
                 'cd_sku' => $SKU->cd_sku,
@@ -143,12 +147,34 @@ class ProductController extends Controller
             ]);
 
         }
+        else {
+
+            DB::table('produto_tamanho_letra')->insert([
+                'cd_sku' => $SKU->cd_sku,
+                'cd_tamanho_letra' => $request->cd_tamanho_letra
+            ]);
+
+        }
 
         foreach ($localImagesPath as $key => $dbImage) {
 
-            Img::create([
-                'im_produto' => $dbImage
-            ]);
+            if ($key == 0) {
+
+                Img::create([
+                    'im_produto' => $dbImage,
+                    'ic_img_principal' => 1
+                ]);
+
+            }
+            else
+            {
+
+                Img::create([
+                    'im_produto' => $dbImage,
+                    'ic_img_principal' => 0
+                ]);
+
+            }
 
             $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
 

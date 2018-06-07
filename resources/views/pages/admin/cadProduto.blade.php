@@ -8,6 +8,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Produto</h1>
+            @include('partials.admin._alerts')
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
                 <li class="active">Produto</li>
@@ -47,7 +48,7 @@
                                     <label>Código (SKU)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_sku" type="text" class="form-control" name="cd_ean" maxlength="20" style="text-transform: uppercase">
+                                        <input id="campo_sku" type="text" class="form-control" name="cd_sku" maxlength="20" required style="text-transform: uppercase">
 
                                     </div>
                                     <p class="msg_sku"></p>
@@ -108,7 +109,68 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <label>Cor</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
+                                    <select class="form-control select2" style="width: 100%;" name="cd_cor" >
+                                        <option value=""></option>
+                                        @foreach($cores as $cor)
+                                            <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Tamanho (Letra)</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                    <select class="form-control select2" id="sl_tamanho_letra" style="width: 100%;" name="cd_tamanho_letra">
+                                        <option value=""></option>
+                                        @foreach($tamanhosLetras as $tamanhoLetra)
+                                            <option value="{{ $tamanhoLetra->cd_tamanho_letra }}">{{ $tamanhoLetra->nm_tamanho_letra }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Tamanho (Número)</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                    <select class="form-control select2" id="sl_tamanho_num" style="width: 100%;" name="cd_tamanho_num">
+                                        <option value=""></option>
+                                        @foreach($tamanhosNumeros as $tamanhoNumero)
+                                        <option value="{{ $tamanhoNumero->cd_tamanho_num }}">{{ $tamanhoNumero->nm_tamanho_num }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div>&nbsp;</div>
+                        <div class="col-md-10">
+                            <div class="col-md-3">
+                                <label>Largura</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                                    <input type="number" name="ds_largura">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Altura</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
+                                    <input type="number" name="ds_altura">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Peso</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
+                                    <input type="number" name="ds_peso">
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-md-12">
                             <div>&nbsp;</div>
@@ -176,10 +238,9 @@
         </section>
     </div>
 
-    <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
     <script>
 
-        //Chama a funcção de contagem de palavras ao carregar a página
+        //Chama a função de contagem de palavras ao carregar a página
         $(document).ready(function(){
            contadorPalavras();
         });
@@ -223,6 +284,8 @@
             else if(campo.length < 13 && campo.length > 0) {
                 $('.msg_ean').html("Campo deve conter 0 ou 13 caracteres.").css("color", "red");
             }
+
+
         });
 
 
@@ -243,6 +306,10 @@
 
         });
 
+        $('#campo_sku').on("input", function(){
+
+        });
+
 
         //Contagem de palavras na TextArea da Descrição
         function contadorPalavras() {
@@ -254,10 +321,38 @@
                 var qtdCaracter = 1500 - conteudo.length;
 
 
-                $('.qtd_palavras').html(qtdCaracter);
+                $('.qtd_palavras').innerHTML = qtdCaracter;
 
             });
-        }
+        };
+
+        $('#sl_tamanho_letra').change(function (e) {
+
+            e.preventDefault();
+
+            $selValue = $(this).val();
+
+            if ($selValue != "") {
+
+                $('#sl_tamanho_num').val("");
+
+            }
+
+        });
+
+        $('#sl_tamanho_num').change(function (e) {
+
+            e.preventDefault();
+
+            $selValue = $(this).val();
+
+            if ($selValue != "") {
+
+                $('#sl_tamanho_letra').val("");
+
+            }
+
+        });
 
         //Abrir o modal ao clicar no botão alterar
         $('#btn_atributos').click(function(e){

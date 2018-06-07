@@ -13,15 +13,15 @@ class HomeController extends Controller
         $produtos = Product::where('cd_status_produto', '=', 1);
         $prodPaginate = $produtos->paginate(6);
 
-        $imagemProduto = Product::join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
+        $imagemPrincipal = Product::join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
                             ->join('sku_produto_img', 'produto_sku.cd_sku', '=', 'sku_produto_img.cd_sku')
                             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
-                            ->select('sku_produto_img.cd_sku','img_produto.im_produto')
-                            ->where('produto.cd_status_produto', '=', 1)
-                            ->where('sku_produto_img.cd_sku', '=', 2)
-                            ->first();
+                            ->select('img_produto.im_produto')
+                            ->where('img_produto.ic_img_principal', '=', 1)
+                            ->orderBy('sku_produto_img.cd_img')
+                            ->get();
 
-        return view('pages.app.index', compact('prodPaginate', 'imagemProduto'));
+        return view('pages.app.index', compact('prodPaginate', 'imagemPrincipal'));
     }
 
     public function showIndexAdminPage()
