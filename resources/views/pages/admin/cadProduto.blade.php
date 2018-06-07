@@ -320,7 +320,8 @@
         }
 
         //Abrir o modal ao clicar no botão alterar
-        $('#btn_atributos').click(function(){
+        $('#btn_atributos').click(function(e){
+            e.preventDefault();
 
             var my_cookie = $.cookie($('.modal-check').attr('name'));
             if (my_cookie && my_cookie == "true") {
