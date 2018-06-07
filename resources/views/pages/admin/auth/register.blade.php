@@ -14,7 +14,7 @@
                 </div>
                 <div id ="status_cpf_cnpj" class="form-group has-feedback">
 
-                    <input type="number" id="cpf_cnpj" class="form-control " name="cd_cpf_cnpj" placeholder="CPF/CNPJ" required max="15" min="11">
+                    <input type="number" id="cpf_cnpj" class="form-control " name="cd_cpf_cnpj" placeholder="CPF/CNPJ" required>
                     <span class="glyphicon glyphicon-credit-card form-control-feedback"></span>
                     <p class="msg-erro"></p>
                 </div>
@@ -104,21 +104,16 @@
 
 
 
-        /*$('#verifica_senha').blur(function(e){
-            e.preventDefault();
-            //var reg = /.([A-Z]?)[a-z0-9]\.+([A-Z])/;
-            var reg = /^(?=(?:.*?[A-Z]){1})([a-z])/;
-            var senha = $('#verifica_senha').val;
+        $('#verifica_senha').blur(function(){
+            var campo = $('#verifica_senha').val();
+            var reg = new RegExp("^(?=.*[A-Z])(?=.{6,})");
 
-            if(reg.exec(senha))
-            {
-                $('.msg-senha').html("Senha Correta");
-            }
-            else {
-                $('.msg-senha').html("Senha deve conter caracter maiusculo.");
-            }
+            $('.msg-senha').html("");
 
-        });*/
+            if(!reg.exec(campo))
+                $('.msg-senha').html("Senha deve conter no mínimo 1 caracter maiúsculo.").css("color", "red");
+
+        });
 
 
 

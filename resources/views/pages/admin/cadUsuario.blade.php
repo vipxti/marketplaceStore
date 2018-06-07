@@ -93,7 +93,9 @@
                                 <label>Celular 1</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-                                    <input type="number" id="campo_cel1" class="form-control" name="cd_celular1" required maxlength="11">
+                                   <!-- <input type="text" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>-->
+                                    <input type="text" id="campo_cel1" class="form-control" name="cd_celular1" required
+                                    data-inputmask='"mask": "(99) 99999-9999"' data-mask >
                                 </div>
                             </div>
                         </div>
@@ -102,7 +104,8 @@
                                  <label>Celular 2</label>
                                  <div class="input-group">
                                      <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-                                     <input type="number" id="campo_cel2" class="form-control" name="cd_celular2" maxlength="11">
+                                     <input type="text" id="campo_cel2" class="form-control" name="cd_celular2"
+                                     data-inputmask='"mask": "(99) 99999-9999"' data-mask>
                                  </div>
                              </div>
                          </div>
@@ -113,7 +116,8 @@
                                     <label>CEP</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="text" id="campo_cep" maxlength="9" class="form-control" name="cd_cep">
+                                        <input type="text" id="campo_cep" maxlength="9" class="form-control" name="cd_cep"
+                                        data-inputmask='"mask": "99999-999"' data-mask>
                                     </div>
                                     <p class="msg-cpf"></p>
                                 </div>
@@ -202,15 +206,11 @@
         </section>
     </div>
 
-    <script>
-        //$('#campo_cel1').mask("(00) 00000-0000");
-        $(document).ready(function(){
-           /*$('#campo_cel1').inputmask({
-               mask: ["(99) 9999-9999", "(99) 99999-9999"],
-               keepStatic: true
-           });*/
+    <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
 
-            function limpa_formulário_cep() {
+    <script>
+
+            function limpa_formulario_cep() {
                 // Limpa valores do formulário de cep.
                 $("#rua").val("");
                 $("#bairro").val("");
@@ -249,25 +249,31 @@
                             } //end if.
                             else {
                                 //CEP pesquisado não foi encontrado.
-                                limpa_formulário_cep();
+                                limpa_formulario_cep();
                                 $(".msg-cpf").html("CEP não encontrado.").css("color", "red");
                             }
                         });
                     } //end if.
                     else {
                         //cep é inválido.
-                        limpa_formulário_cep();
+                        limpa_formulario_cep();
                         $(".msg-cpf").html("Formato de CEP inválido.").css("color", "red");
                     }
                 } //end if.
                 else {
                     //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
+                    limpa_formulario_cep();
                 }
             });
 
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
 
-        });
+            //Money Euro
+            $('[data-mask]').inputmask()
+
+        })
 
 
 

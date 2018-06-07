@@ -14,9 +14,6 @@
             </ol>
         </section>
 
-
-
-
         <!-- ALTERAÇÃO DO HOTPOST -->
 
         <section class="content">
@@ -35,53 +32,76 @@
                         {{ csrf_field() }}
 
                     <div class="col-md-12">
+
+                        <div class="col-md-12">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Menu 1</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-cube"></i></span>
-                                        <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                        <input type="text" maxlength="9" class="form-control" name="nm_menu">
                                     </div>
                                 </div>
                             </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Sub-Manu</label>
+                                <label>Sub-Menu</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-tags"></i></span>
-                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                    <select class="form-control select2" multiple="multiple" name="nm_submenu">
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                    <!--<input type="text" maxlength="9" class="form-control" name="cd_cep">-->
                                 </div>
                             </div>
                         </div>
+                        </div>
 
+                        <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Menu 2</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-cube"></i></span>
-                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                    <input type="text" maxlength="9" class="form-control" name="nm_menu">
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Sub-Manu</label>
+                                <label>Sub-Menu</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-tags"></i></span>
-                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                    <select class="form-control select2" multiple="multiple" name="nm_submenu">
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                   <!-- <input type="text" maxlength="9" class="form-control" name="cd_cep">-->
                                 </div>
                             </div>
                         </div>
+                        </div>
 
-
+                        <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Menu 3</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-cube"></i></span>
-                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                    <input type="text" maxlength="9" class="form-control" name="nm_menu">
                                 </div>
                             </div>
                         </div>
@@ -89,54 +109,106 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Sub-Manu</label>
+                                <label>Sub-Menu</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-tags"></i></span>
-                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                    <select class="form-control select2" multiple="multiple" name="nm_submenu">
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                    <!--<input type="text" maxlength="9" class="form-control" name="cd_cep">-->
                                 </div>
                             </div>
                         </div>
+                        </div>
 
-
+                        <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Menu 4</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-cube"></i></span>
-                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                    <input type="text" maxlength="9" class="form-control" name="nm_menu">
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Sub-Manu</label>
+                                <label>Sub-Menu</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-tags"></i></span>
-                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                    <select class="form-control select2" multiple="multiple" name="nm_submenu">
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                    <!--<input type="text" maxlength="9" class="form-control" name="cd_cep">-->
                                 </div>
                             </div>
                         </div>
+                        </div>
 
+                        <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Menu 5</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-cube"></i></span>
-                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                    <input type="text" maxlength="9" class="form-control" name="nm_menu">
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Sub-Manu</label>
+                                <label>Sub-Menu</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-tags"></i></span>
-                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                    <select class="form-control select2" multiple="multiple" name="nm_submenu">
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                   <!-- <input type="text" maxlength="9" class="form-control" name="cd_cep"> -->
                                 </div>
                             </div>
                         </div>
+                        </div>
+
+                        <!--<div class="col-md-6">
+                            <div class="form-group">
+                                <label>Sub-Manu</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-tags"></i></span>
+                                    <select class="form-control select2" multiple="multiple"data-placeholder="Select a State"
+                                            style="width: 100%;">
+
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>-->
 
                         <div>&nbsp;</div>
 
@@ -150,4 +222,16 @@
             </div>
         </section>
     </div>
+
+    <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
+
+    <script>
+
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+        })
+
+    </script>
 @stop

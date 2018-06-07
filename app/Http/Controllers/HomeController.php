@@ -21,12 +21,6 @@ class HomeController extends Controller
                             ->where('sku_produto_img.cd_sku', '=', 2)
                             ->first();
 
-        //dd($imagemProduto->all());
-
-        //$primeiraImagem = $imagemProduto->where($imagemProduto->cd_sku, '=', 2)->first();
-
-        //dd($primeiraImagem);
-
         return view('pages.app.index', compact('prodPaginate', 'imagemProduto'));
     }
 
