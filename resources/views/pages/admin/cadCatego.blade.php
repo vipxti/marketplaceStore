@@ -66,7 +66,7 @@
 
 
                                     <div class="col-md-12 text-right" >
-                                        <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                        <button type="submit" id="btn_salvar"  class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                     </div>
                                 </form>
 
@@ -232,6 +232,15 @@
             })
 
         });
+
+        $('#btn_salvar').click(function (e) {
+            e.preventDefault();
+
+            console.log('Ok');
+
+        });
+
+
 
     </script>
 

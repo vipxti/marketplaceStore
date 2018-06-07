@@ -291,7 +291,7 @@
                 var qtdCaracter = 1500 - conteudo.length;
 
 
-                $('.qtd_palavras').innerHTML(qtdCaracter);
+                $('.qtd_palavras').html(qtdCaracter);
 
             });
         }
