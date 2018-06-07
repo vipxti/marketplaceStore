@@ -47,7 +47,7 @@
                                     <label>Código (SKU)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_sku" type="text" class="form-control" name="cd_ean" maxlength="20" required style="text-transform: uppercase">
+                                        <input id="campo_sku" type="text" class="form-control" name="cd_ean" maxlength="20" style="text-transform: uppercase">
 
                                     </div>
                                     <p class="msg_sku"></p>
@@ -197,7 +197,29 @@
 
                       <div class="col-md-12">
                         <div class="col-md-1">
-                           <button type="submit" class="btn btn-success pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Atributos</button>
+                           <button type="submit" id="btn_atributos" class="btn btn-success pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Atributos</button>
+                                <div class='modal fade' id='myModal'>
+                                    <div class='modal-dialog'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header'>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class='modal-title'>
+                                                    <strong>INSERIR ATRIBUTOS</strong>
+                                                </h4>
+                                            </div>
+                                            <!-- / modal-header -->
+                                            <div class='modal-body'>
+                                                <!-- COLOCAR AQUI OS CAMPOS PARA FICAR DENTRO DO MODAL -->
+                                                <label>Nome</label>
+                                                <input type="text">
+                                            </div>
+                                            <!-- / modal-body -->
+                                        </div>
+                                        <!-- / modal-content -->
+                                    </div>
+                                    <!--/ modal-dialog -->
+                                </div>
+                                <!-- / modal -->
                         </div>
                         <div class="col-md-1">
                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
@@ -214,6 +236,7 @@
         </section>
     </div>
 
+    <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
     <script>
 
         //Chama a funcção de contagem de palavras ao carregar a página
@@ -260,8 +283,6 @@
             else if(campo.length < 13 && campo.length > 0) {
                 $('.msg_ean').html("Campo deve conter 0 ou 13 caracteres.").css("color", "red");
             }
-
-
         });
 
 
@@ -282,10 +303,6 @@
 
         });
 
-        $('#campo_sku').on("input", function(){
-
-        });
-
 
         //Contagem de palavras na TextArea da Descrição
         function contadorPalavras() {
@@ -301,6 +318,28 @@
 
             });
         }
+
+        //Abrir o modal ao clicar no botão alterar
+        $('#btn_atributos').click(function(){
+
+            var my_cookie = $.cookie($('.modal-check').attr('name'));
+            if (my_cookie && my_cookie == "true") {
+                $(this).prop('checked', my_cookie);
+                console.log('checked checkbox');
+            }
+            else{
+                $('#myModal').modal('show');
+                console.log('uncheck checkbox');
+            }
+
+            $(".modal-check").change(function() {
+                $.cookie($(this).attr("name"), $(this).prop('checked'), {
+                    path: '/',
+                    expires: 1
+                });
+            });
+
+        });
 
 
     </script>
