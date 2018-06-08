@@ -9,7 +9,10 @@ class ColorController extends Controller
 {
 
     public function showColorForm() {
-        return view('pages.admin.cadCor');
+
+        $cores = Color::all();
+
+        return view('pages.admin.cadCor', compact('cores'));
     }
 
     public function cadastrarNovaCor(ColorRequest $request) {

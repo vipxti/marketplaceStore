@@ -190,7 +190,7 @@
                                                 <label>Nome do Produto</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                                    <input type="text" class="form-control campo_nome_modal" name="nm_produto_modal" maxlength="50">
+                                                    <input type="text" class="form-control campo_nome_modal" name="nm_produto" maxlength="50">
                                                 </div>
                                             </div>
                                         </div>
@@ -207,7 +207,7 @@
                                                 <label>Código (SKU)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                                    <input id="campo_sku" type="text" class="form-control campo_sku_modal" name="cd_sku_modal" maxlength="20" style="text-transform: uppercase">
+                                                    <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" maxlength="20" style="text-transform: uppercase">
 
                                                 </div>
                                                 <p class="msg_sku"></p>
@@ -220,10 +220,10 @@
                                     <td style="width: 50%">
                                         <div>
                                             <div class="form-group">
-                                                <label>Código (Ean)</label>
+                                                <label>Código (EAN)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                                    <input id="campo_ean" type="text" class="form-control campo_ean_modal" name="cd_ean_modal" maxlength="13">
+                                                    <input id="campo_ean" type="text" class="form-control campo_ean" name="cd_ean" maxlength="13">
                                                 </div>
                                                 <p class="msg_ean"></p>
                                             </div>
@@ -240,7 +240,7 @@
                                             <div class="form-group">
                                                 <label>Descrição do Produto</label>
                                                 <div class="input-group">
-                                                                          <textarea id="bold" class="campo_desc_modal" name="ds_produto_modal" rows="5" cols="121%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
+                                                                          <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="121%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
                                                                           </textarea>
                                                     <p><span class="qtd_palavras">1500</span> caracteres</p>
                                                 </div>
@@ -258,7 +258,7 @@
                                             <label>Preço</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon">R$</span>
-                                                <input type="number" class="form-control campo_preco_modal" name="vl_produto_modal" min="0">
+                                                <input type="number" class="form-control campo_preco" name="vl_produto" min="0">
                                             </div>
                                         </div>
                                     </td>
@@ -270,7 +270,7 @@
                                             <label>Quantidade</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-sort-numeric-desc"></i></span>
-                                                <input type="number" class="form-control" name="vl_quantidade">
+                                                <input type="number" class="form-control" name="qt_produto">
                                             </div>
                                         </div>
                                     </td>
@@ -286,7 +286,7 @@
                                             <label>Categoria</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                                <select id="categorias" class="form-control select2 campo_cat_modal" style="width: 100%;" name="cd_categoria_modal">
+                                                <select id="categorias" class="form-control select2 campo_cat" style="width: 100%;" name="cd_categoria">
                                                     <option value=""></option>
 
                                                     @foreach($categorias as $categoria)
@@ -304,7 +304,7 @@
                                             <label>Sub-Categoria</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                                <select id="subcategorias" class="form-control select2 campo_subcat_modal" style="width: 100%;" name="cd_subcategoria_modal" >
+                                                <select id="subcategorias" class="form-control select2 campo_subcat" style="width: 100%;" name="cd_sub_categoria" >
                                                     <option value=""></option>
                                                 </select>
                                             </div>
@@ -321,7 +321,7 @@
                                         <label>Cor</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
-                                            <select class="form-control select2" style="width: 100%;" name="cd_cor_modal" >
+                                            <select class="form-control select2" style="width: 100%;" name="cd_cor" >
                                                 <option value=""></option>
                                                 @foreach($cores as $cor)
                                                     <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
@@ -341,7 +341,7 @@
                                         <label>Tamanho (Letra)</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                            <select class="form-control select2" style="width: 100%;" name="cd_tamanho_letra_modal">
+                                            <select id="sl_tamanho_letra" class="form-control select2" style="width: 100%;" name="cd_tamanho_letra">
                                                 <option value=""></option>
                                                 @foreach($tamanhosLetras as $tamanhoLetra)
                                                     <option value="{{ $tamanhoLetra->cd_tamanho_letra }}">{{ $tamanhoLetra->nm_tamanho_letra }}</option>
@@ -356,7 +356,7 @@
                                         <label>Tamanho (Número)</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                            <select class="form-control select2" style="width: 100%;" name="cd_tamanho_num_modal">
+                                            <select id="sl_tamanho_num" class="form-control select2" style="width: 100%;" name="cd_tamanho_num">
                                                 <option value=""></option>
                                                 @foreach($tamanhosNumeros as $tamanhoNumero)
                                                     <option value="{{ $tamanhoNumero->cd_tamanho_num }}">{{ $tamanhoNumero->nm_tamanho_num }}</option>
@@ -376,7 +376,7 @@
                                             <label>Largura</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                                <input type="number" class="form-control" name="ds_largura_modal">
+                                                <input type="number" class="form-control" name="ds_largura">
                                             </div>
                                         </div>
                                     </td>
@@ -387,7 +387,7 @@
                                             <label>Altura</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                                <input type="number" class="form-control" name="ds_altura_modal">
+                                                <input type="number" class="form-control" name="ds_altura">
                                             </div>
                                         </div>
                                     </td>
@@ -398,7 +398,7 @@
                                             <label>Peso</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                                <input type="number" class="form-control" name="ds_peso_modal">
+                                                <input type="number" class="form-control" name="ds_peso">
                                             </div>
                                         </div>
                                     </td>
@@ -430,7 +430,7 @@
                                             <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
                                             <div class="box-body">
                                                 <div class="form-group">
-                                                    <input type="checkbox" class="flat-red campo_status" name="status_modal" checked>
+                                                    <input type="checkbox" class="flat-red campo_status" name="status" checked>
                                                     <label class="">Status</label>
                                                 </div>
                                             </div>
@@ -744,13 +744,18 @@
         </section>
     </div>
 
-    <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
-    <script src="{{asset('js/admin/nanobar.min.js')}}"></script>
+    <script src="{{ asset('js/admin/jquery.cookie.js') }}"></script>
+    <script src="{{ asset('js/admin/nanobar.min.js') }}"></script>
     <script>
 
         //Chama a função de contagem de palavras ao carregar a página
         $(document).ready(function(){
+
            contadorPalavras();
+
+           $('#categorias').val("");
+           $('#subcategorias').val("");
+
         });
 
         $('#categorias').change(function (e) {
@@ -764,7 +769,7 @@
                 type: 'GET',
                 success: function (data) {
 
-                    $('#subcategorias').empty();
+                    $('#subcategorias').empty().append(`<option value=""></option>`);
 
                     $.each(data.subcat, function(index, subcategoria) {
 
@@ -776,7 +781,6 @@
             })
 
         });
-
 
         //Validação do campo EAN
         $('#campo_ean').blur(function(){
@@ -794,7 +798,6 @@
             }
         });
 
-
         //Validação do campo SKU
         $('#campo_sku').blur(function() {
 
@@ -811,7 +814,6 @@
             }
 
         });
-
 
         //Contagem de palavras na TextArea da Descrição
         function contadorPalavras() {

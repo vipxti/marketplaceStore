@@ -47,6 +47,161 @@ class ProductController extends Controller
     public function cadastrarProduto(ProductRequest $request)
     {
 
+        dd($request);
+
+        if ($request->filled('status') == 'on') {
+
+            $status = 1;
+
+        } else {
+
+            $status = 0;
+
+        }
+
+        //Procura no banco a categoria e subcategoria baseado no id
+        $category = Category::findOrFail($request->cd_categoria);
+        $subcategory = DB::table('categoria')
+            ->join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+            ->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+            ->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $request->cd_subcategoria)
+            ->first();
+
+        //Seleciona o id correspondente dos forms categoria e subcategoria na tabela categoria_subcat
+        $prod_cat_subcat = DB::table('categoria_subcat')
+            ->select('cd_categoria_subcat')
+            ->where('cd_categoria', '=', $request->cd_categoria)
+            ->where('cd_sub_categoria', '=', $request->cd_subcategoria)
+            ->first();
+
+        //Salva o produto no banco
+        Product::create([
+
+            'cd_ean' => $request->cd_ean,
+            'nm_produto' => $request->nm_produto,
+            'ds_produto' => $request->ds_produto,
+            'vl_produto' => $request->vl_produto,
+            'cd_status_produto' => $status
+
+        ]);
+
+        //Pega o último id do produto cadastrado
+        $produto = Product::orderBy('cd_produto', 'DESC')->first();
+
+        //Insere os ids do produto e id da tabela de ligação de categoria/subcategoria
+        DB::table('produto_categoria_subcat')->insert([
+            'cd_produto' => $produto->cd_produto,
+            'cd_categoria_subcat' => $prod_cat_subcat->cd_categoria_subcat
+        ]);
+
+        //Cria o caminho físico das imagens
+        $images = $request->images;
+        $imagePath = $this->pastaProduto($category->nm_categoria, $subcategory->nm_sub_categoria);
+        $dbPath = $category->nm_categoria . '/' . $subcategory->nm_sub_categoria;
+
+        //Salva fisicamente a imagem e seta o caminho para ser salvo no banco
+        if ($request->hasFile('images')) {
+
+            foreach ($images as $key => $image) {
+
+                $ext = $image->getClientOriginalExtension();
+                $imageName = $request->cd_ean . '_' . ($key + 1) . '.' . $ext;
+
+                $realPath = $image->getRealPath();
+
+                $this->saveImageFile($imagePath, $imageName, $realPath);
+
+                $localImagesPath[$key] = $dbPath . '/' . $imageName;
+
+            }
+
+        }
+
+        DB::table('produto_sku')->insert([
+            'cd_nr_sku' => $request->cd_sku,
+            'cd_produto' => $produto->cd_produto
+        ]);
+
+        $SKU = DB::table('produto_sku')->select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
+
+        Package::create([
+            'ds_largura' => $request->ds_largura,
+            'ds_altura' => $request->ds_altura,
+            'ds_peso' => $request->ds_peso
+        ]);
+
+        $embalagem = Package::orderBy('cd_embalagem', 'DESC')->first();
+
+        DB::table('sku_produto_embalagem')->insert([
+            'cd_sku' => $SKU->cd_sku,
+            'cd_embalagem' => $embalagem->cd_embalagem
+        ]);
+
+        DB::table('produto_cor')->insert([
+            'cd_sku' => $SKU->cd_sku,
+            'cd_cor' => $request->cd_cor
+        ]);
+
+        if ($request->cd_tamanho_letra == null) {
+
+            DB::table('produto_tamanho_num')->insert([
+                'cd_sku' => $SKU->cd_sku,
+                'cd_tamanho_num' => $request->cd_tamanho_num
+            ]);
+
+        }
+        else {
+
+            DB::table('produto_tamanho_letra')->insert([
+                'cd_sku' => $SKU->cd_sku,
+                'cd_tamanho_letra' => $request->cd_tamanho_letra
+            ]);
+
+        }
+
+        foreach ($localImagesPath as $key => $dbImage) {
+
+            if ($key == 0) {
+
+                Img::create([
+                    'im_produto' => $dbImage,
+                    'ic_img_principal' => 1
+                ]);
+
+            }
+            else
+            {
+
+                Img::create([
+                    'im_produto' => $dbImage,
+                    'ic_img_principal' => 0
+                ]);
+
+            }
+
+            $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
+
+        }
+
+        foreach ($imgs as $img) {
+
+            DB::table('sku_produto_img')->insert([
+                'cd_sku' => $SKU->cd_sku,
+                'cd_img' => $img->cd_img
+            ]);
+
+        }
+
+        return redirect()->route('admin.cadProd');
+
+    }
+
+    //Cadastrar variação do produto
+    public function cadastrarProdutoVariacao(ProductRequest $request)
+    {
+
+        dd($request);
+
         if ($request->filled('status') == 'on') {
 
             $status = 1;

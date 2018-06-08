@@ -47,7 +47,7 @@
                         </div>
 
                         <div class="col-md-12 text-right">
-                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                            <button type="submit" id="btnSalvarCor" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                         </div>
 
                     </form>
@@ -84,12 +84,21 @@
                             <table class="table" id="table">
                                 <thead>
                                 <tr>
+                                    <th>Código</th>
                                     <th>Cores</th>
                                 </tr>
                                 </thead>
-
                                 <tbody>
-                                    <td>#</td>
+                                    @foreach($cores as $cor)
+
+                                        <tr>
+
+                                            <td>{{ $cor->cd_cor }}</td>
+                                            <td>{{ $cor->nm_cor }}</td>
+
+                                        </tr>
+
+                                    @endforeach
                                 </tbody>
                             </table>
                             <hr>
@@ -99,4 +108,5 @@
             </div>
         </section>
     </div>
+
 @stop

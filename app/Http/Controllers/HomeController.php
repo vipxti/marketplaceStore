@@ -10,8 +10,9 @@ class HomeController extends Controller
 {
     public function showIndexPage()
     {
-        $produtos = Product::where('cd_status_produto', '=', 1);
-        $prodPaginate = $produtos->paginate(6);
+        $produtos = Product::where('cd_status_produto', '=', 1)->limit(6)->get();
+
+        //dd($produtos);
 
         $imagemPrincipal = Product::join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
                             ->join('sku_produto_img', 'produto_sku.cd_sku', '=', 'sku_produto_img.cd_sku')
@@ -21,7 +22,7 @@ class HomeController extends Controller
                             ->orderBy('sku_produto_img.cd_img')
                             ->get();
 
-        return view('pages.app.index', compact('prodPaginate', 'imagemPrincipal'));
+        return view('pages.app.index', compact('produtos', 'imagemPrincipal'));
     }
 
     public function showIndexAdminPage()
