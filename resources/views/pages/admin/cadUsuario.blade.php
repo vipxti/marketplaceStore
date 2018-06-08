@@ -145,7 +145,7 @@
                                  <label>Numero</label>
                                  <div class="input-group">
                                      <span class="input-group-addon"><i class="fa fa-bell"></i></span>
-                                     <input type="number" id="numero" class="form-control" name="ds_numero_endereco">
+                                     <input type="number" id="numero" class="form-control" name="ds_numero_endereco" min="0">
                                  </div>
                              </div>
                          </div>
@@ -198,7 +198,7 @@
                             </div>
                         </div>
                        <div class="col-md-12 text-right">
-                           <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                           <button type="submit" id="btn_salvar" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                        </div>
                     </form>
                 </div>
@@ -207,6 +207,7 @@
     </div>
 
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
+    <script src="{{asset('js/admin/nanobar.min.js')}}"></script>
 
     <script>
 
@@ -274,6 +275,11 @@
             $('[data-mask]').inputmask()
 
         })
+
+        /*$('#btn_salvar').on("submit", function(){
+            var nanobar = new Nanobar();
+            nanobar.go(100);
+        });*/
 
 
 

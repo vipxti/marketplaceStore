@@ -62,7 +62,7 @@
                                     <label>Preço Falso</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-home"></i></span>
-                                        <input type="number" class="form-control" name="ds_endereco">
+                                        <input type="number" class="form-control" name="ds_endereco" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                 <label>Preço Verdadeiro</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-home"></i></span>
-                                    <input type="number" class="form-control" name="ds_endereco">
+                                    <input type="number" class="form-control" name="ds_endereco" min="0">
                                 </div>
                             </div>
                         </div>

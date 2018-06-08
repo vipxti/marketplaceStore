@@ -38,7 +38,7 @@
                                 <label>Tamanho (Número)</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
-                                    <input type="number" class="form-control" name="nm_tamanho_num">
+                                    <input type="number" class="form-control" name="nm_tamanho_num" min="0">
                                 </div>
                             </div>
                         </div>

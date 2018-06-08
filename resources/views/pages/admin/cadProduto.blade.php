@@ -8,7 +8,6 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Produto</h1>
-            @include('partials.admin._alerts')
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
                 <li class="active">Produto</li>
@@ -48,7 +47,7 @@
                                     <label>Código (SKU)</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_sku" type="text" class="form-control" name="cd_sku" maxlength="20" required style="text-transform: uppercase">
+                                        <input id="campo_sku" type="text" class="form-control" name="cd_sku" maxlength="20" style="text-transform: uppercase">
 
                                     </div>
                                     <p class="msg_sku"></p>
@@ -80,7 +79,7 @@
                                     <label>Preço</label>
                                     <div class="input-group">
                                         <span class="input-group-addon">R$</span>
-                                        <input type="number" class="form-control" name="vl_produto">
+                                        <input type="number" class="form-control" name="vl_produto" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +197,7 @@
 
                       <div class="col-md-12">
                         <div>
-                           <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                           <button type="submit" id="btn_salvar" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                          </div>
 
                           <div style="padding-right: 90px">
@@ -238,6 +237,8 @@
         </section>
     </div>
 
+    <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
+    <script src="{{asset('js/admin/nanobar.min.js')}}"></script>
     <script>
 
         //Chama a função de contagem de palavras ao carregar a página
@@ -284,8 +285,6 @@
             else if(campo.length < 13 && campo.length > 0) {
                 $('.msg_ean').html("Campo deve conter 0 ou 13 caracteres.").css("color", "red");
             }
-
-
         });
 
 
@@ -306,10 +305,6 @@
 
         });
 
-        $('#campo_sku').on("input", function(){
-
-        });
-
 
         //Contagem de palavras na TextArea da Descrição
         function contadorPalavras() {
@@ -321,7 +316,7 @@
                 var qtdCaracter = 1500 - conteudo.length;
 
 
-                $('.qtd_palavras').innerHTML = qtdCaracter;
+                $('.qtd_palavras').html(qtdCaracter);
 
             });
         };
@@ -375,6 +370,12 @@
                 });
             });
 
+        });
+
+        //Efeito da barra de progresso ao salvar os dados
+        $('#btn_salvar').on("submit", function(){
+            var nanobar = Nanobar();
+            nanobar.go(100);
         });
 
 
