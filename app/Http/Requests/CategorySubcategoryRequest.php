@@ -26,7 +26,7 @@ class CategorySubcategoryRequest extends FormRequest
         return [
 
             'cd_categoria' => 'required',
-            'cd_subcategoria' => 'required'
+            'cd_sub_categoria.*' => 'required'
 
         ];
     }

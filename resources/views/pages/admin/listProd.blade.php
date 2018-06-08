@@ -83,6 +83,13 @@
                             <hr>
                         </div>
                     </div>
+
+                    <div class="text-center">
+
+                        {{ $produtos->links() }}
+
+                    </div>
+
                 </div>
                </div>
                 <!-- /.TABELA DOS PRODUTOS -->

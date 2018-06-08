@@ -20,8 +20,6 @@
 
         </div>
 
-        @include('partials.app._scripts')
-
     </body>
 
 </html>
