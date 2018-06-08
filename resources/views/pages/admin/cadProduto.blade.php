@@ -819,6 +819,7 @@
             }
         });
 
+
         //Validação do campo SKU
         $('#campo_sku').blur(function() {
 
