@@ -182,7 +182,7 @@
                                         <label>Associar Sub-Categoria</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-                                            <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+                                            <select id="subcategorias" class="form-control select2" multiple="multiple" style="width: 100%;" name="cd_subcategoria" >
 
                                                 @foreach($subcategorias as $subcategoria)
 
@@ -207,6 +207,7 @@
         </section>
     </div>
 
+    <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
     <script>
 
         $('#categorias').change(function (e) {
@@ -239,6 +240,10 @@
             console.log('Ok');
 
         });
+
+        $(function(){
+            $('.select2').select2()
+        })
 
 
 
