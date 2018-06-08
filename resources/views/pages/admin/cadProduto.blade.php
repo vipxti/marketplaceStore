@@ -209,6 +209,7 @@
                                             </tr>
                                         </table>
 
+                                        <!-- Descrição (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
@@ -225,6 +226,8 @@
                                                 </td>
                                             </tr>
                                         </table>
+
+                                        <!-- Preço, Categoria e Sub-Categoria (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
@@ -274,37 +277,39 @@
 
                                         <br>
 
-                                              <table style="width: 100%">
-                                                  <tr>
-                                                      <td><label>Cor</label>
-                                                          <div class="input-group">
-                                                              <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
-                                                              <select class="form-control select2" style="width: 100%;" name="cd_cor" >
-                                                                  <option value=""></option>
-                                                                  @foreach($cores as $cor)
-                                                                      <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
-                                                                  @endforeach
-                                                              </select>
-                                                          </div>
-                                                      </td>
-                                                  </tr>
-                                              </table>
-                                              <br>
+                                        <!-- Cor (Modal) -->
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td><label>Cor</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
+                                                        <select class="form-control select2" style="width: 100%;" name="cd_cor" >
+                                                            <option value=""></option>
+                                                            @foreach($cores as $cor)
+                                                                <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br>
 
-                                              <table style="width: 100%">
-                                                  <tr>
-                                                      <td>
-                                                          <label>Tamanho (Letra)</label>
-                                                          <div class="input-group">
-                                                              <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                                              <select class="form-control select2" style="width: 100%;" name="cd_tamanho_letra">
-                                                                  <option value=""></option>
-                                                                  @foreach($tamanhosLetras as $tamanhoLetra)
-                                                                      <option value="{{ $tamanhoLetra->cd_tamanho_letra }}">{{ $tamanhoLetra->nm_tamanho_letra }}</option>
-                                                                  @endforeach
-                                                              </select>
-                                                          </div>
-                                                      </td>
+                                        <!-- Tamanhos (Modal) -->
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td>
+                                                    <label>Tamanho (Letra)</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                                        <select class="form-control select2" style="width: 100%;" name="cd_tamanho_letra">
+                                                            <option value=""></option>
+                                                            @foreach($tamanhosLetras as $tamanhoLetra)
+                                                                <option value="{{ $tamanhoLetra->cd_tamanho_letra }}">{{ $tamanhoLetra->nm_tamanho_letra }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </td>
 
                                                       <td>&nbsp;&nbsp;</td>
 
@@ -325,18 +330,19 @@
 
                                               <br>
 
-                                              <table style="width: 100%">
-                                                  <tr>
-                                                      <td>
-                                                          <div class="form-group">
-                                                              <label>Largura</label>
-                                                              <div class="input-group">
-                                                                  <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                                                  <input type="number" class="form-control" name="ds_largura">
-                                                              </div>
-                                                          </div>
-                                                      </td>
-                                                      <td>&nbsp;&nbsp;&nbsp;</td>
+                                        <!-- Laegura, Altura e Peso (Modal) -->
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label>Largura</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                                                            <input type="number" class="form-control" name="ds_largura">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>&nbsp;&nbsp;&nbsp;</td>
 
                                                       <td>
                                                           <div class="form-group">
@@ -361,6 +367,7 @@
                                             </tr>
                                         </table>
 
+                                        <!-- Imagens e Status (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
