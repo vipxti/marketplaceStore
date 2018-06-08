@@ -155,6 +155,56 @@
 
                                               <table style="width: 100%">
                                                   <tr>
+                                                      <td>
+                                                          <div>
+                                                              <div class="form-group">
+                                                                  <label>Nome do Produto</label>
+                                                                  <div class="input-group">
+                                                                      <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                                                                      <input type="text" class="form-control" name="nm_produto" maxlength="50">
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </td>
+                                                  </tr>
+                                              </table>
+
+                                              <table style="width: 100%">
+                                                  <tr>
+                                                      <td>
+                                                          <div>
+                                                              <div class="form-group">
+                                                                  <label>Código (SKU)</label>
+                                                                  <div class="input-group">
+                                                                      <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                                                      <input id="campo_sku" type="text" class="form-control" name="cd_sku" maxlength="20" style="text-transform: uppercase">
+
+                                                                  </div>
+                                                                  <p class="msg_sku"></p>
+                                                              </div>
+                                                          </div>
+                                                      </td>
+
+                                                      <td>&nbsp;&nbsp;&nbsp;</td>
+
+                                                      <td>
+                                                          <div>
+                                                              <div class="form-group">
+                                                                  <label>Código (Ean)</label>
+                                                                  <div class="input-group">
+                                                                      <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                                                      <input id="campo_ean" type="text" class="form-control" name="cd_ean" maxlength="13">
+                                                                  </div>
+                                                                  <p class="msg_ean"></p>
+                                                              </div>
+                                                          </div>
+                                                      </td>
+                                                  </tr>
+                                              </table>
+                                              <br>
+
+                                              <table style="width: 100%">
+                                                  <tr>
                                                       <td><label>Cor</label>
                                                           <div class="input-group">
                                                               <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
@@ -168,6 +218,7 @@
                                                       </td>
                                                   </tr>
                                               </table>
+                                              <br>
 
                                               <table style="width: 100%">
                                                   <tr>
@@ -183,7 +234,8 @@
                                                               </select>
                                                           </div>
                                                       </td>
-                                                      <td>&nbsp;&nbsp;&nbsp;</td>
+
+                                                      <td>&nbsp;&nbsp;</td>
 
                                                       <td>
                                                           <label>Tamanho (Número)</label>
@@ -200,9 +252,6 @@
                                                   </tr>
                                               </table>
 
-
-
-                                              <br>
                                               <br>
 
                                               <table style="width: 100%">
