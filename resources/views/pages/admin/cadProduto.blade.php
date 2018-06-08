@@ -952,6 +952,7 @@
             $('.campo_largura_modal').val($('.campo_largura').val());
             $('.campo_tamanho_modal').val($('.campo_tamanho').val());
             $('.campo_peso_modal').val($('.campo_peso').val());
+            $('.campo_peso_modal').val($('.campo_peso1').val());
 
         });
 
