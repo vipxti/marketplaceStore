@@ -160,6 +160,8 @@
                                     <div class='modal-body'>
                                         <!-- COLOCAR AQUI OS CAMPOS PARA FICAR DENTRO DO MODAL -->
 
+
+                                        <!-- Nome do Produto (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
@@ -176,6 +178,7 @@
                                             </tr>
                                         </table>
 
+                                        <!-- Códigos SKU e Ean (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
@@ -209,6 +212,7 @@
                                             </tr>
                                         </table>
 
+                                        <!-- Descrição (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
@@ -225,6 +229,8 @@
                                                 </td>
                                             </tr>
                                         </table>
+
+                                        <!-- Preço, Categoria e Sub-Categoria (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
@@ -271,9 +277,9 @@
                                             </tr>
 
                                         </table>
-
                                         <br>
 
+                                        <!-- Cor (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td><label>Cor</label>
@@ -291,6 +297,7 @@
                                         </table>
                                         <br>
 
+                                        <!-- Tamanhos (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
@@ -325,6 +332,7 @@
 
                                         <br>
 
+                                        <!-- Laegura, Altura e Peso (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
@@ -361,6 +369,7 @@
                                             </tr>
                                         </table>
 
+                                        <!-- Imagens e Status (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
                                                 <td>
