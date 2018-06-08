@@ -108,20 +108,22 @@
                                     <!-- Add to Cart Form -->
                                     <form class="cart" method="post">
                                         <div class="quantity">
-                                            <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-
+                                            <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;">
+                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                            </span>
                                             <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
-
-                                            <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                            <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </span>
                                         </div>
                                         <button type="submit" name="addtocart" value="5" class="cart-submit">Add ao carrinho</button>
                                         <!-- Wishlist -->
                                         <div class="modal_pro_wishlist">
-                                            <a href="wishlist.html" target="_blank"><i class="ti-heart"></i></a>
+                                            <a href="#" target="_blank"><i class="ti-heart"></i></a>
                                         </div>
                                         <!-- Compare -->
                                         <div class="modal_pro_compare">
-                                            <a href="compare.html" target="_blank"><i class="ti-stats-up"></i></a>
+                                            <a href="#" target="_blank"><i class="ti-stats-up"></i></a>
                                         </div>
                                     </form>
 
@@ -144,16 +146,6 @@
 
     <!-- ****** New Arrivals Area Start ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section_heading text-center">
-                        <h2>Novos Looks</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="karl-projects-menu mb-100">
             <div class="text-center portfolio-menu">
                 <button class="btn active" data-filter="*">Todos</button>
@@ -164,12 +156,18 @@
                 <button class="btn" data-filter=".kids">Kids</button>
             </div>
         </div>
-
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_heading text-center">
+                        <h2>NOVOS PRODUTOS</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row karl-new-arrivals">
-
                 @foreach($prodPaginate as $key => $produto)
-
                     <!-- Single gallery Item Start -->
                     <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s">
                         <!-- Product Image -->
@@ -187,30 +185,7 @@
                             <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp COMPRAR</a>
                         </div>
                     </div>
-
                 @endforeach
-
-            </div>
-
-            {{ $prodPaginate->links() }}
-
-                <!-- Single gallery Item -->
-                <div class="col-12 col-sm-6 col-md-4 single_gallery_item kids man wow fadeInUpBig" data-wow-delay="0.7s">
-                    <!-- Product Image -->
-                    <div class="product-img">
-                        <img src="{{ asset('img/app/product-img/product-6.jpg') }}" alt="">
-                        <div class="product-quicview">
-                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                        </div>
-                    </div>
-                    <!-- Product Description -->
-                    <div class="product-description">
-                        <h4 class="product-price">R$39.90</h4>
-                        <p>Jeans midi cocktail dress</p>
-                        <!-- Add to Cart -->
-                        <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp ADD AO CARRINHO</a>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -241,15 +216,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section_heading text-center">
-                        <h2>Depoimentos</h2>
+                        <h2>Instagram</h2>
                     </div>
                 </div>
             </div>
-
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="karl-testimonials-slides owl-carousel">
-
                         <!-- Single Testimonial Area -->
                         <div class="single-testimonial-area text-center">
                             <span class="quote">"</span>
@@ -264,7 +237,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Single Testimonial Area -->
                         <div class="single-testimonial-area text-center">
                             <span class="quote">"</span>
@@ -279,7 +251,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Single Testimonial Area -->
                         <div class="single-testimonial-area text-center">
                             <span class="quote">"</span>
@@ -298,7 +269,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
     <!-- ****** Popular Brands Area End ****** -->
