@@ -79,7 +79,7 @@
                                     <label>Preço</label>
                                     <div class="input-group">
                                         <span class="input-group-addon">R$</span>
-                                        <input type="number" class="form-control" name="vl_produto" min="0">
+                                        <input type="number" class="form-control campo_preco" name="vl_produto" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                 <label>Categoria</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                    <select id="categorias" class="form-control select2" style="width: 100%;" name="cd_categoria">
+                                    <select id="categorias" class="form-control select2 campo_cat" style="width: 100%;" name="cd_categoria">
                                         <option value=""></option>
 
                                         @foreach($categorias as $categoria)
@@ -101,7 +101,7 @@
                                     <label>Sub-Categoria</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                        <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+                                        <select id="subcategorias" class="form-control select2 campo_subcat" style="width: 100%;" name="cd_subcategoria" >
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -117,7 +117,7 @@
                                     <label>Imagens</label>
                                     <div class="input-group">
                                         <div class="file-loading">
-                                            <input id="input-41" name="images[]" type="file" accept="image/*" multiple>
+                                            <input id="input-41" class="campo_img" name="images[]" type="file" accept="image/*" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@
                                 <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <input type="checkbox" class="flat-red" name="status" checked>
+                                        <input type="checkbox" class="flat-red campo_status" name="status" checked>
                                         <label class="">Status</label>
                                     </div>
                                 </div>
@@ -168,7 +168,7 @@
                                                                   <label>Nome do Produto</label>
                                                                   <div class="input-group">
                                                                       <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                                                      <input type="text" class="form-control campo_nome_modal" name="nm_produto" maxlength="50">
+                                                                      <input type="text" class="form-control campo_nome_modal" name="nm_produto_modal" maxlength="50">
                                                                   </div>
                                                               </div>
                                                           </div>
@@ -176,24 +176,23 @@
                                                   </tr>
                                               </table>
 
-                                        <!-- Códigos SKU e Ean (Modal) -->
-                                        <table style="width: 100%">
-                                            <tr>
-                                                <td>
-                                                    <div>
-                                                        <div class="form-group">
-                                                            <label>Código (SKU)</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                                                <input id="campo_sku" type="text" class="form-control" name="cd_sku" maxlength="20" style="text-transform: uppercase">
+                                              <table style="width: 100%">
+                                                  <tr>
+                                                      <td>
+                                                          <div>
+                                                              <div class="form-group">
+                                                                  <label>Código (SKU)</label>
+                                                                  <div class="input-group">
+                                                                      <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                                                      <input id="campo_sku" type="text" class="form-control campo_sku_modal" name="cd_sku_modal" maxlength="20" style="text-transform: uppercase">
 
-                                                            </div>
-                                                            <p class="msg_sku"></p>
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                                                  </div>
+                                                                  <p class="msg_sku"></p>
+                                                              </div>
+                                                          </div>
+                                                      </td>
 
-                                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                                      <td>&nbsp;&nbsp;&nbsp;</td>
 
                                                 <td>
                                                     <div>
@@ -201,7 +200,7 @@
                                                             <label>Código (Ean)</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                                                <input id="campo_ean" type="text" class="form-control" name="cd_ean" maxlength="13">
+                                                                <input id="campo_ean" type="text" class="form-control campo_ean_modal" name="cd_ean_modal" maxlength="13">
                                                             </div>
                                                             <p class="msg_ean"></p>
                                                         </div>
@@ -218,7 +217,7 @@
                                                         <div class="form-group">
                                                             <label>Descrição do Produto</label>
                                                             <div class="input-group">
-                                                                      <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="107%" style="font-size: 14px; line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="1500">
+                                                                      <textarea id="bold" class="campo_desc_modal" name="ds_produto_modal" rows="5" cols="107%" style="font-size: 14px; line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="1500">
                                                                       </textarea>
                                                                 <p><span class="qtd_palavras">1500</span> caracteres</p>
                                                             </div>
@@ -233,11 +232,12 @@
                                             <tr>
                                                 <td>
                                                     <div>
-                                                        <label>Preço</label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">R$</span>
-                                                            <input type="number" class="form-control" name="vl_produto" min="0">
-                                                        </div>
+                                                            <label>Preço</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">R$</span>
+                                                                <input type="number" class="form-control campo_preco_modal" name="vl_produto_modal" min="0">
+                                                            </div>
+
                                                     </div>
                                                 </td>
 
@@ -248,7 +248,7 @@
                                                         <label>Categoria</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                                            <select id="categorias" class="form-control select2" style="width: 100%;" name="cd_categoria">
+                                                            <select id="categorias" class="form-control select2 campo_cat_modal" style="width: 100%;" name="cd_categoria_modal">
                                                                 <option value=""></option>
 
                                                                 @foreach($categorias as $categoria)
@@ -263,18 +263,21 @@
 
                                                 <td>
                                                     <div>
-                                                       <label>Sub-Categoria</label>
-                                                        <div class="input-group">
-                                                           <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                                           <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
-                                                           <option value=""></option>
-                                                           </select>
-                                                        </div>
+
+                                                            <label>Sub-Categoria</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                                                <select id="subcategorias" class="form-control select2 campo_subcat_modal" style="width: 100%;" name="cd_subcategoria_modal" >
+                                                                    <option value=""></option>
+                                                                </select>
+                                                            </div>
+
                                                     </div>
                                                 </td>
                                             </tr>
 
                                         </table>
+
                                         <br>
 
                                         <!-- Cor (Modal) -->
@@ -283,7 +286,7 @@
                                                 <td><label>Cor</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
-                                                        <select class="form-control select2" style="width: 100%;" name="cd_cor" >
+                                                        <select class="form-control select2" style="width: 100%;" name="cd_cor_modal" >
                                                             <option value=""></option>
                                                             @foreach($cores as $cor)
                                                                 <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
@@ -302,7 +305,7 @@
                                                     <label>Tamanho (Letra)</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                                        <select class="form-control select2" style="width: 100%;" name="cd_tamanho_letra">
+                                                        <select class="form-control select2" style="width: 100%;" name="cd_tamanho_letra_modal">
                                                             <option value=""></option>
                                                             @foreach($tamanhosLetras as $tamanhoLetra)
                                                                 <option value="{{ $tamanhoLetra->cd_tamanho_letra }}">{{ $tamanhoLetra->nm_tamanho_letra }}</option>
@@ -313,20 +316,20 @@
 
                                                 <td>&nbsp;&nbsp;</td>
 
-                                                <td>
-                                                    <label>Tamanho (Número)</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                                        <select class="form-control select2" style="width: 100%;" name="cd_tamanho_num">
-                                                            <option value=""></option>
-                                                            @foreach($tamanhosNumeros as $tamanhoNumero)
-                                                                <option value="{{ $tamanhoNumero->cd_tamanho_num }}">{{ $tamanhoNumero->nm_tamanho_num }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                                      <td>
+                                                          <label>Tamanho (Número)</label>
+                                                          <div class="input-group">
+                                                              <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                                              <select class="form-control select2" style="width: 100%;" name="cd_tamanho_num_modal">
+                                                                  <option value=""></option>
+                                                                  @foreach($tamanhosNumeros as $tamanhoNumero)
+                                                                      <option value="{{ $tamanhoNumero->cd_tamanho_num }}">{{ $tamanhoNumero->nm_tamanho_num }}</option>
+                                                                  @endforeach
+                                                              </select>
+                                                          </div>
+                                                      </td>
+                                                  </tr>
+                                              </table>
 
                                         <br>
 
@@ -338,29 +341,29 @@
                                                         <label>Largura</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                                            <input type="number" class="form-control" name="ds_largura">
+                                                            <input type="number" class="form-control" name="ds_largura_modal">
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>&nbsp;&nbsp;&nbsp;</td>
 
-                                                <td>
-                                                    <div class="form-group">
-                                                        <label>Altura</label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                                            <input type="number" class="form-control" name="ds_altura">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                                      <td>
+                                                          <div class="form-group">
+                                                              <label>Altura</label>
+                                                              <div class="input-group">
+                                                                  <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
+                                                                  <input type="number" class="form-control" name="ds_altura_modal">
+                                                              </div>
+                                                          </div>
+                                                      </td>
+                                                      <td>&nbsp;&nbsp;&nbsp;</td>
 
                                                 <td>
                                                     <div class="form-group">
                                                         <label>Peso</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                                            <input type="number" class="form-control" name="ds_peso">
+                                                            <input type="number" class="form-control" name="ds_peso_modal">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -392,7 +395,7 @@
                                                         <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
                                                         <div class="box-body">
                                                             <div class="form-group">
-                                                                <input type="checkbox" class="flat-red" name="status" checked>
+                                                                <input type="checkbox" class="flat-red campo_status" name="status_modal" checked>
                                                                 <label class="">Status</label>
                                                             </div>
                                                         </div>
@@ -557,8 +560,10 @@
 
             //mostrar os campos já digitados no cadastro de produtos dentro do modal
             $('.campo_nome_modal').val($('.campo_nome').val());
-            $('.campo_ean_modal').val($('.campo_ean').val());
-            $('.campo_sku_modal').val($('.campo_sku').val());
+            $('.campo_desc_modal').val($('.campo_desc').val());
+            $('.campo_preco_modal').val($('.campo_preco').val());
+            $('.campo_cat_modal').val($('.campo_cat').val());
+            $('.campo_subcat_modal').val($('.campo_subcat').val());
 
         });
 
