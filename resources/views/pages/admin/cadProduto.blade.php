@@ -235,15 +235,15 @@
                                             <tr>
                                                 <td>
                                                     <div>
-                                                        <div class="form-group">
-                                                            <label>Preço</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon">R$</span>
-                                                                <input type="number" class="form-control" name="vl_produto" min="0">
-                                                            </div>
+                                                        <label>Preço</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">R$</span>
+                                                            <input type="number" class="form-control" name="vl_produto" min="0">
                                                         </div>
                                                     </div>
                                                 </td>
+
+                                                <td>&nbsp;&nbsp;&nbsp;</td>
 
                                                 <td>
                                                     <div>
@@ -261,16 +261,16 @@
                                                     </div>
                                                 </td>
 
+                                                <td>&nbsp;&nbsp;&nbsp;</td>
+
                                                 <td>
                                                     <div>
-                                                        <div class="form-group">
-                                                            <label>Sub-Categoria</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                                                <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
-                                                                    <option value=""></option>
-                                                                </select>
-                                                            </div>
+                                                       <label>Sub-Categoria</label>
+                                                        <div class="input-group">
+                                                           <span class="input-group-addon"><i class="fa fa-list"></i></span>
+                                                           <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+                                                           <option value=""></option>
+                                                           </select>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -329,7 +329,6 @@
                                                 </td>
                                             </tr>
                                         </table>
-
                                         <br>
 
                                         <!-- Laegura, Altura e Peso (Modal) -->
