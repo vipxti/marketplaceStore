@@ -10,3 +10,5 @@
 <link rel="icon" href="{{ asset('img/app/core-img/favicon.ico') }}">
 
 @include('partials.app._styles')
+
+@include('partials.app._scripts')

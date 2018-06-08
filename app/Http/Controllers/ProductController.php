@@ -19,8 +19,7 @@ class ProductController extends Controller
     public function paginaProduto()
     {
 
-        $produtos = Product::where('cd_status_produto', '=', 1);
-        $prodPaginate = $produtos->paginate(6);
+        $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);
 
         $imagemPrincipal = Product::join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
             ->join('sku_produto_img', 'produto_sku.cd_sku', '=', 'sku_produto_img.cd_sku')
@@ -31,13 +30,15 @@ class ProductController extends Controller
             ->get();
 
 
-        return view('pages.app.produto', compact('prodPaginate', 'imagemPrincipal'));
+        return view('pages.app.produto', compact('produtos', 'imagemPrincipal'));
 
     }
 
     public function listaProduto() {
 
-        $produtos = Product::all();
+        $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);
+
+        //dd($produtos);
 
         return view('pages.admin.listProd', compact('produtos'));
 
