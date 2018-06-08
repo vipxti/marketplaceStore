@@ -46,7 +46,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="{{route('admin.cadCatego')}}"><i class="fa fa-tag"></i>Cadastrar Categorias</a></li>
-                            <li><a href="{{route('admin.cadCor')}}"><i class="fa fa-paint-brush"></i>Cadastrar Cors</a></li>
+                            <li><a href="{{route('admin.cadCor')}}"><i class="fa fa-paint-brush"></i>Cadastrar Cores</a></li>
                             <li><a href="{{route('admin.cadTamanho')}}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanhos</a></li>
                         </ul>
                     </li>
@@ -109,7 +109,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{route('admin.indexMenu')}}"><i class="fa fa-th-list"></i>Menu</a></li>
                     <li><a href="{{route('admin.indexBanner')}}"><i class="fa fa-picture-o"></i>Banner</a></li>
-                    <li><a href="{{route('admin.indexConfigproduto')}}"><i class="fa fa-th-large"></i>Produto Home</a></li>
+                    <li><a href="{{route('admin.indexConfigproduto')}}"><i class="fa fa-th-large"></i>Produtos Home</a></li>
                     <li><a href="{{route('admin.indexHotpost')}}"><i class="fa fa-newspaper-o"></i>Hot Post</a></li>
                 </ul>
             </li>

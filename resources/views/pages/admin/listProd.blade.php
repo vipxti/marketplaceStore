@@ -32,7 +32,7 @@
                 </div>
                 <div class="box-body">
 
-            <!-- Botão pesquisar -->
+            <!-- BOTÃO PESQUISAR -->
 
                     <div style="padding-left: 70%">
                         <div>
@@ -51,7 +51,7 @@
                             </select>
                         </div>
 
-            <!-- lista de produtos -->
+            <!-- TABELA DOS PRODUTOS -->
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                </div>
-                <!-- /.box-body -->
+                <!-- /.TABELA DOS PRODUTOS -->
                 <div class="box-footer hidden">
 
                 </div>
