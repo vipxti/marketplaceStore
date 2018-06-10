@@ -31,7 +31,7 @@ class ProductModalRequest extends FormRequest
             'ds_produto' => 'required',
             'vl_produto' => 'required',
             'cd_categoria' => 'required',
-            'cd_subcategoria' => 'required',
+            'cd_sub_categoria' => 'required',
             'cd_cor' => 'required',
             'ds_altura' => 'required',
             'ds_largura' => 'required',

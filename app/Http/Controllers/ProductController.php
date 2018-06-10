@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Color;
+use App\Http\Requests\ProductModalRequest;
 use App\Http\Requests\ProductRequest;
 use App\LetterSize;
 use App\Package;
@@ -29,7 +30,6 @@ class ProductController extends Controller
             ->orderBy('sku_produto_img.cd_img')
             ->get();
 
-
         return view('pages.app.produto', compact('produtos', 'imagemPrincipal'));
 
     }
@@ -47,7 +47,7 @@ class ProductController extends Controller
     public function cadastrarProduto(ProductRequest $request)
     {
 
-        dd($request);
+        //dd($request->all());
 
         if ($request->filled('status') == 'on') {
 
@@ -64,15 +64,17 @@ class ProductController extends Controller
         $subcategory = DB::table('categoria')
             ->join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
             ->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
-            ->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $request->cd_subcategoria)
+            ->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $request->cd_sub_categoria)
             ->first();
 
         //Seleciona o id correspondente dos forms categoria e subcategoria na tabela categoria_subcat
         $prod_cat_subcat = DB::table('categoria_subcat')
             ->select('cd_categoria_subcat')
             ->where('cd_categoria', '=', $request->cd_categoria)
-            ->where('cd_sub_categoria', '=', $request->cd_subcategoria)
+            ->where('cd_sub_categoria', '=', $request->cd_sub_categoria)
             ->first();
+
+        //dd($prod_cat_subcat->cd_categoria_subcat);
 
         //Salva o produto no banco
         Product::create([
@@ -81,6 +83,7 @@ class ProductController extends Controller
             'nm_produto' => $request->nm_produto,
             'ds_produto' => $request->ds_produto,
             'vl_produto' => $request->vl_produto,
+            'qt_produto' => $request->qt_produto,
             'cd_status_produto' => $status
 
         ]);
@@ -197,7 +200,7 @@ class ProductController extends Controller
     }
 
     //Cadastrar variação do produto
-    public function cadastrarProdutoVariacao(ProductRequest $request)
+    public function cadastrarProdutoVariacao(ProductModalRequest $request)
     {
 
         dd($request);

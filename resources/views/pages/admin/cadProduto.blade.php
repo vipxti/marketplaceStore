@@ -180,7 +180,8 @@
                       </div>
 
                     </form>--}}
-                        <form>
+                        <form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
                             <!-- Nome do Produto  -->
                             <table style="width: 100%">
                                 <tr>
@@ -309,7 +310,7 @@
                                             <label>Sub-Categoria</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                                <select id="subcategorias" class="form-control select2 campo_subcat_modal" style="width: 100%;" name="cd_subcategoria_modal" >
+                                                <select id="subcategorias" class="form-control select2 campo_subcat_modal" style="width: 100%;" name="cd_sub_categoria" >
                                                     <option value=""></option>
                                                 </select>
                                             </div>
@@ -463,7 +464,7 @@
                             </div>
                         </form>
 
-                        <form>
+                        <form action="#" method="post" enctype="multipart/form-data">
                         <div class='modal fade' id='myModal'>
                             <div class='modal-dialog'>
                                 <div class='modal-content' style="width: 130%">
@@ -710,7 +711,7 @@
                                                                 <label>Imagens</label>
                                                                 <div class="input-group">
                                                                     <div class="file-loading">
-                                                                        <input id="input-41" name="images[]" type="file" accept="image/*" multiple>
+                                                                        <input id="input-41" name="images_modal[]" type="file" accept="image/*" multiple>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -745,7 +746,7 @@
                             <!--/ modal-dialog -->
                         </div>
                         <!-- / modal -->
-                    </form>
+                        </form>
                 </div>
                 <!--<div class="box-footer">
                     Footer
