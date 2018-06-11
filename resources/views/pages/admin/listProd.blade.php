@@ -6,10 +6,7 @@
 
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>
-                Lista de Produtos
-                <small>(Celestial Moda Evangélica)</small>
-            </h1>
+            <h1><i class="fa fa-list-alt"></i>&nbsp;&nbsp;Lista de Produtos</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="#">Produtos</a></li>

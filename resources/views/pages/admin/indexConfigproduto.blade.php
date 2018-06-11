@@ -6,7 +6,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Configuração dos Produtos</h1>
+            <h1><i class="fa fa-th-large"></i>&nbsp;&nbsp;Configuração dos Produtos</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="#">Configuração Home</a></li>

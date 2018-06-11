@@ -7,7 +7,7 @@
         @include('partials.admin._alerts')
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Cadastrar Cor</h1>
+            <h1><i class="fa fa-paint-brush"></i>&nbsp;&nbsp;Cadastrar Cor</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="#">Produto</a></li>
@@ -52,11 +52,6 @@
 
                     </form>
                 </div>
-                <!--<div class="box-footer">
-                    Footer
-                </div>-->
-                <!-- /.box-footer-->
-
             </div>
         </section>
 
@@ -69,7 +64,7 @@
         <section class="content">
 
             <!-- Default box -->
-            <div class="box box-primary">
+            <div class="box box-danger">
                 <div class="box-header with-border">
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">

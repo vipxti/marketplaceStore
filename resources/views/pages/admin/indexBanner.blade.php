@@ -6,7 +6,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Banner Principal</h1>
+            <h1><i class="fa fa-picture-o"></i>&nbsp;&nbsp;Banner Principal</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="#">Configuração</a></li>
@@ -16,7 +16,7 @@
 
         <!-- BANNER 1 -->
         <section class="content">
-            <div class="box box-primary">
+            <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Banner 1</h3>
                     <div class="box-tools pull-right">

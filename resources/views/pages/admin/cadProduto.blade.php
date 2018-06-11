@@ -7,7 +7,7 @@
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Produto</h1>
+            <h1><i class="fa fa-plus-square"></i>&nbsp;&nbsp;Produto</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
                 <li class="active">Produto</li>
