@@ -271,63 +271,6 @@
                             </table>
                             <br>
 
-                            <!-- Tamanhos -->
-                            <table style="width: 65%">
-                                <tr>
-                                    <td style="width: 50%">
-                                        <label>Tamanho (Letra)</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                            <select id="sl_tamanho_letra" class="form-control select2" style="width: 100%;" name="cd_tamanho_letra">
-                                                <option value=""></option>
-                                                @foreach($tamanhosLetras as $tamanhoLetra)
-                                                    <option value="{{ $tamanhoLetra->cd_tamanho_letra }}">{{ $tamanhoLetra->nm_tamanho_letra }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <i class="msg_tam_letra"></i>
-                                    </td>
-
-                                    <td>&nbsp;&nbsp;&nbsp;</td>
-
-                                    <td style="width: 50%">
-                                        <label>Tamanho (Número)</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                            <select id="sl_tamanho_num" class="form-control select2" style="width: 100%;" name="cd_tamanho_num">
-                                                <option value=""></option>
-                                                @foreach($tamanhosNumeros as $tamanhoNumero)
-                                                    <option value="{{ $tamanhoNumero->cd_tamanho_num }}">{{ $tamanhoNumero->nm_tamanho_num }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <i class="msg_tam_num"></i>
-                                    </td>
-                                </tr>
-                            </table>
-                            <br>
-
-                            <!-- Cor -->
-                            <table style="width: 32%">
-                                    <tr>
-                                        <td style="width: 100%">
-                                            <label>Cor</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
-                                                <select class="form-control select2" style="width: 100%;" name="cd_cor" >
-                                                    <option value=""></option>
-                                                    @foreach($cores as $cor)
-                                                        <option value="{{ $cor->cd_cor }}">{{ $cor->nm_cor }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <i class="msg_cor"></i>
-                                        </td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                </table>
-                            <br>
-
                             <!-- Preço e quantidade  -->
                             <table style="width: 32%">
                                     <tr>
@@ -455,7 +398,7 @@
                                 </tr>
                             </table>
 
-
+                            <!-- Botões Salvar e Atributo -->
                             <div class="col-md-12">
                                 <div>
                                     <button type="submit" id="btn_salvar" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
@@ -607,9 +550,9 @@
                                         <br>
 
                                         <!-- Cor (Modal) -->
-                                        <table style="width: 50%">
+                                        <table style="width: 100%">
                                             <tr>
-                                                <td style="width: 98%">
+                                                <td style="width: 51%">
                                                     <label>Cor</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
@@ -622,15 +565,10 @@
                                                     </div>
                                                     <i class="msg_cor"></i>
                                                 </td>
-                                                <td>&nbsp;</td>
-                                            </tr>
-                                        </table>
-                                        <br>
 
-                                        <!-- Preço e quantidade (Modal)  -->
-                                        <table style="width: 49%">
-                                            <tr>
-                                                <td style="width: 50%">
+                                                <td>&nbsp;&nbsp;&nbsp;</td>
+
+                                                <td style="width: 25%">
                                                     <div>
                                                         <label>Preço</label>
                                                         <div class="input-group">
@@ -643,7 +581,7 @@
 
                                                 <td>&nbsp;&nbsp;&nbsp;</td>
 
-                                                <td style="width: 50%">
+                                                <td style="width: 25%">
                                                     <div>
                                                         <label>Quantidade</label>
                                                         <div class="input-group">
