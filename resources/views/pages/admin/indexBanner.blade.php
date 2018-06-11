@@ -37,6 +37,16 @@
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>Titulo</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                                    <input type="text" maxlength="9" class="form-control" name="cd_cep">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label>Descrição</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-info"></i></span>
@@ -44,16 +54,6 @@
                                 </div>
                             </div>
                         </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Titulo</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                        <input type="text" maxlength="9" class="form-control" name="cd_cep">
-                                    </div>
-                                </div>
-                            </div>
 
                         <div>&nbsp;</div>
 
@@ -98,9 +98,9 @@
                         <div class="col-md-12">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Descrição</label>
+                                    <label>Titulo</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-info"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
                                         <input type="text" maxlength="9" class="form-control" name="cd_cep">
                                     </div>
                                 </div>
@@ -108,9 +108,9 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Titulo</label>
+                                    <label>Descrição</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa-info"></i></span>
                                         <input type="text" maxlength="9" class="form-control" name="cd_cep">
                                     </div>
                                 </div>
