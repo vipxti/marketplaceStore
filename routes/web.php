@@ -44,10 +44,17 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/cadUsuario', 'UserController@showUserForm')->name('usuario.dados');
 
+    //Edição do site
     Route::get('/indexHotpost', 'PageController@showHotPostPage')->name('admin.indexHotpost');
     Route::get('/indexBanner', 'PageController@showBannerPage')->name('admin.indexBanner');
-    Route::get('/indexMenu', 'PageController@showMenuPage')->name('admin.indexMenu');
+
+    //Editar menus
+    Route::get('/indexMenu', 'MenuController@showEditMenuPage')->name('admin.indexMenu');
+    Route::post('/editmenu', 'MenuController@saveMenus')->name('menu.edit');
+
     Route::get('/indexConfigproduto', 'PageController@showConfigProductPage')->name('admin.indexConfigproduto');
+
+
     Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')/*->middleware('auth:admin')*/;
     Route::get('/listProd', 'ProductController@listaProduto')->name('admin.listProd');
 

@@ -18,12 +18,6 @@ class PageController extends Controller
 
     }
 
-    public function showMenuPage() {
-
-        return view('pages.admin.indexMenu');
-
-    }
-
     public function showConfigProductPage() {
 
         return view('pages.admin.indexConfigproduto');

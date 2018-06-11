@@ -1,8 +1,8 @@
-@if(session()->has('msg.level'))
+@if(session('success'))
 
-    <div class="alert alert-{{ session('msg.level') }}" role="alert">
+    <div class="alert alert-success text-center msg" role="alert">
 
-        {{ session('msg.content') }}
+        {{ session('success') }}
 
     </div>
 
@@ -12,7 +12,7 @@
 
     <div class="form-group">
 
-        <div class="alert alert-danger">
+        <div class="alert alert-danger msg">
 
             <ul>
 
@@ -34,8 +34,8 @@
 
     setTimeout(function() {
 
-        $('.flash').fadeOut('slow');
+        $('.msg').fadeOut('slow');
 
-        }, 5000);
+        }, 4000);
 
 </script>

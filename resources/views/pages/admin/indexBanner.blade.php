@@ -14,11 +14,7 @@
             </ol>
         </section>
 
-
-
-
         <!-- BANNER 1 -->
-
         <section class="content">
             <div class="box box-primary">
                 <div class="box-header with-border">

@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <form action="{{ route('product.save') }}" method="post">
+                    <form action="#" method="post">
                         {{ csrf_field() }}
                         <div class="col-md-12">
                         <div class="col-md-3">
