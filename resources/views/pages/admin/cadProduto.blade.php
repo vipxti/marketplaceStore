@@ -476,43 +476,6 @@
                                             </tr>
                                         </table>
 
-                                        <!-- Categorias (Modal) -->
-                                        <table style="width: 100%">
-                                            <tr>
-                                                <td style="width: 50%">
-                                                    <div>
-                                                        <label>Categoria</label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-                                                            <select id="categorias" class="form-control select2 campo_cat" style="width: 100%;" name="cd_categoria">
-                                                                <option value=""></option>
-
-                                                                @foreach($categorias as $categoria)
-                                                                    <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <i class="msg_cat"></i>
-                                                    </div>
-                                                </td>
-
-                                                <td>&nbsp;&nbsp;&nbsp;</td>
-
-                                                <td style="width: 50%">
-                                                    <div>
-                                                        <label>Sub-Categoria</label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-tags"></i></span>
-                                                            <select id="subcategorias" class="form-control select2 campo_subcat_modal" style="width: 100%;" name="cd_sub_categoria" >
-                                                                <option value=""></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <br>
-
                                         <!-- Tamanhos (Modal) -->
                                         <table style="width: 100%">
                                             <tr>
