@@ -50,7 +50,7 @@
                                 <div class="form-group">
                                     <label>Descrição</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa-info"></i></span>
                                         <input type="text" maxlength="9" class="form-control" name="cd_cep">
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                                 <div class="form-group">
                                     <label>Preço Falso</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                        <span class="input-group-addon">R$</span>
                                         <input type="number" class="form-control" name="ds_endereco" min="0">
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                             <div class="form-group">
                                 <label>Preço Verdadeiro</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                    <span class="input-group-addon">R$</span>
                                     <input type="number" class="form-control" name="ds_endereco" min="0">
                                 </div>
                             </div>

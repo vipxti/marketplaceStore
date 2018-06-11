@@ -330,7 +330,7 @@
 
                                     <td>
                                         <div class="form-group">
-                                            <label>Peso</label>
+                                            <label>Peso (g)</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
                                                 <input type="number" class="form-control" name="ds_peso" min="0">
@@ -405,7 +405,7 @@
                                 </div>
 
                                 <div style="padding-right: 90px">
-                                    <button type="submit" id="btn_atributos" class="btn btn-primary pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Atributos</button>
+                                    <button type="submit" id="btn_atributos" class="btn btn-primary pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Variações</button>
 
                                 </div>
                             </div>
@@ -418,7 +418,7 @@
                                     <div class='modal-header'>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         <h4 class='modal-title'>
-                                            <strong><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Cadastrar Atributos</strong>
+                                            <strong><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Cadastrar Variações</strong>
                                         </h4>
                                     </div>
 
@@ -624,7 +624,7 @@
 
                                                 <td>
                                                     <div class="form-group">
-                                                        <label>Peso</label>
+                                                        <label>Peso (g)</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
                                                             <input type="number" class="form-control" name="ds_peso" min="0">
@@ -692,6 +692,7 @@
                                             </tr>
                                         </table>
 
+                                        <!-- Botão Salvar (Modal) -->
                                         <div style="width: 100%" class="text-right">
                                             <button type="submit" id="btn_salvar" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                         </div>
