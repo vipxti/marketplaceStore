@@ -29,157 +29,7 @@
 
                 </div>
                 <div class="box-body">
-                    {{--<form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="col-md-12">
 
-                            <div class="col-md-9">
-                                <div class="form-group">
-                                    <label>Nome do Produto</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                        <input type="text" class="form-control campo_nome" name="nm_produto" maxlength="50">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Código (SKU)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" maxlength="20" style="text-transform: uppercase">
-
-                                    </div>
-                                    <p class="msg_sku"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Código (Ean)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_ean" type="text" class="form-control campo_ean" name="cd_ean" maxlength="13">
-                                    </div>
-                                    <p class="msg_ean"></p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Descrição do Produto</label>
-                                    <div class="input-group">
-                                    <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="107%" style="font-size: 14px; line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="1500">
-                                    </textarea>
-                                        <p><span class="qtd_palavras">1500</span> caracteres</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Preço</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">R$</span>
-                                        <input type="number" class="form-control campo_preco" name="vl_produto" min="0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Categoria</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                    <select id="categorias" class="form-control select2 campo_cat" style="width: 100%;" name="cd_categoria">
-                                        <option value=""></option>
-
-                                        @foreach($categorias as $categoria)
-                                            <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Sub-Categoria</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                        <select id="subcategorias" class="form-control select2 campo_subcat" style="width: 100%;" name="cd_subcategoria" >
-                                            <option value=""></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>&nbsp;</div>
-
-                        <div class="col-md-12">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Largura</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                        <input type="number" class="form-control" name="ds_largura">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Altura</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                        <input type="number" class="form-control" name="ds_altura">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Peso</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                        <input type="number" class="form-control" name="ds_peso">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-md-12">
-                          <div>&nbsp;</div>
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label>Imagens</label>
-                                    <div class="input-group">
-                                        <div class="file-loading">
-                                            <input id="input-41" class="campo_img" name="images[]" type="file" accept="image/*" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <input type="checkbox" class="flat-red campo_status" name="status" checked>
-                                        <label class="">Status</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="col-md-12">
-                        <div>
-                           <button type="submit" id="btn_salvar" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
-                         </div>
-
-                          <div style="padding-right: 90px">
-                              <button type="submit" id="btn_atributos" class="btn btn-primary pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Atributos</button>
-
-                          </div>
-                      </div>
-
-                    </form>--}}
                         <form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <!-- Nome do Produto  -->
@@ -191,7 +41,7 @@
                                                 <label>Nome do Produto</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                                    <input type="text" class="form-control campo_nome" name="nm_produto" maxlength="50">
+                                                    <input type="text" class="form-control campo_nome" name="nm_produto" required maxlength="50">
                                                 </div>
                                                 <i class="msg_nome_prod"></i>
                                             </div>
@@ -209,7 +59,7 @@
                                                 <label>Código (SKU)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                                    <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" maxlength="20" style="text-transform: uppercase">
+                                                    <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" required maxlength="20" style="text-transform: uppercase">
 
                                                 </div>
                                                     <i class="msg_sku"></i>
@@ -242,7 +92,7 @@
                                             <label>Categoria</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-                                                <select id="categorias" class="form-control select2 campo_cat" style="width: 100%;" name="cd_categoria">
+                                                <select id="categorias" class="form-control select2 campo_cat" style="width: 100%;" required name="cd_categoria">
                                                     <option value=""></option>
 
                                                     @foreach($categorias as $categoria)
@@ -261,10 +111,11 @@
                                             <label>Sub-Categoria</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-tags"></i></span>
-                                                <select id="subcategorias" class="form-control select2 campo_subcat_modal" style="width: 100%;" name="cd_sub_categoria" >
-                                                    <option value=""></option>
+                                                <select id="subcategorias" class="form-control select2 campo_subcat" style="width: 100%;" required name="cd_sub_categoria" >
+
                                                 </select>
                                             </div>
+                                            <i class="msg_subcat"></i>
                                         </div>
                                     </td>
                                 </tr>
@@ -279,7 +130,7 @@
                                                 <label>Preço</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="number" class="form-control campo_preco" name="vl_produto" min="0">
+                                                    <input type="number" class="form-control campo_preco" required name="vl_produto" min="0">
                                                 </div>
                                                 <i class="msg_preco"></i>
                                             </div>
@@ -292,7 +143,7 @@
                                                 <label>Quantidade</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">0-9</span>
-                                                    <input type="number" class="form-control" name="qt_produto" min="0">
+                                                    <input type="number" class="form-control campo_qtd" required name="qt_produto" min="0">
                                                 </div>
                                                 <i class="msg_qtd"></i>
                                             </div>
@@ -309,7 +160,7 @@
                                             <label>Largura</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                                <input type="number" class="form-control" name="ds_largura" min="0">
+                                                <input type="number" class="form-control campo_largura" required name="ds_largura" min="0">
                                             </div>
                                             <i class="msg_largura"></i>
                                         </div>
@@ -321,7 +172,7 @@
                                             <label>Altura</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                                <input type="number" class="form-control" name="ds_altura" min="0">
+                                                <input type="number" class="form-control campo_altura" required name="ds_altura" min="0">
                                             </div>
                                             <i class="msg_altura"></i>
                                         </div>
@@ -333,9 +184,9 @@
                                             <label>Peso (g)</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                                <input type="number" class="form-control" name="ds_peso" min="0">
+                                                <input type="number" class="form-control campo_peso" required name="ds_peso" min="0">
                                             </div>
-                                            <i class="msg_preco"></i>
+                                            <i class="msg_peso"></i>
                                         </div>
                                     </td>
                                 </tr>
@@ -349,7 +200,7 @@
                                       <div class="form-group">
                                        <label>Descrição do Produto</label>
                                         <div class="input-group">
-                                          <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="112%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
+                                          <textarea id="bold" class="campo_desc" name="ds_produto" required rows="5" cols="112%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
                                           </textarea>
                                         </div>
                                       </div>
@@ -401,11 +252,11 @@
                             <!-- Botões Salvar e Atributo -->
                             <div class="col-md-12">
                                 <div>
-                                    <button type="submit" id="btn_salvar" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                    <button type="submit" id="btn_salvar" class="btn btn-success pull-right" disabled><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                 </div>
 
                                 <div style="padding-right: 90px">
-                                    <button type="submit" id="btn_atributos" class="btn btn-primary pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Variações</button>
+                                    <button type="submit" id="btn_atributos" class="btn btn-primary pull-right" disabled><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Variações</button>
 
                                 </div>
                             </div>
@@ -433,7 +284,7 @@
                                                             <label>Nome do Produto</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                                                <input type="text" class="form-control campo_nome" name="nm_produto" maxlength="50">
+                                                                <input type="text" class="form-control campo_nome_modal" name="nm_produto" maxlength="50">
                                                             </div>
                                                             <i class="msg_nome_prod"></i>
                                                         </div>
@@ -451,7 +302,7 @@
                                                             <label>Código (SKU)</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                                                <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" maxlength="20" style="text-transform: uppercase">
+                                                                <input id="campo_sku" type="text" class="form-control campo_sku_modal" name="cd_sku" maxlength="20" style="text-transform: uppercase">
 
                                                             </div>
                                                             <i class="msg_sku"></i>
@@ -467,7 +318,7 @@
                                                             <label>Código (EAN)</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                                                <input id="campo_ean" type="text" class="form-control campo_ean" name="cd_ean" maxlength="13">
+                                                                <input id="campo_ean" type="text" class="form-control campo_ean_modal" name="cd_ean" maxlength="13">
                                                             </div>
                                                             <i class="msg_ean"></i>
                                                         </div>
@@ -475,6 +326,43 @@
                                                 </td>
                                             </tr>
                                         </table>
+
+                                        <!-- Categorias (Modal) -->
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="width: 50%">
+                                                    <div>
+                                                        <label>Categoria</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                                                            <select id="categorias" class="form-control select2 campo_cat_modal" style="width: 100%;" name="cd_categoria">
+                                                                <option value=""></option>
+
+                                                                @foreach($categorias as $categoria)
+                                                                    <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <i class="msg_cat"></i>
+                                                    </div>
+                                                </td>
+
+                                                <td>&nbsp;&nbsp;&nbsp;</td>
+
+                                                <td style="width: 50%">
+                                                    <div>
+                                                        <label>Sub-Categoria</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-tags"></i></span>
+                                                            <select id="subcategorias" class="form-control select2 campo_subcat_modal" style="width: 100%;" name="cd_sub_categoria" >
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br>
 
                                         <!-- Tamanhos (Modal) -->
                                         <table style="width: 100%">
@@ -536,7 +424,7 @@
                                                         <label>Preço</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">R$</span>
-                                                            <input type="number" class="form-control campo_preco" name="vl_produto" min="0">
+                                                            <input type="number" class="form-control campo_preco_modal" name="vl_produto" min="0">
                                                         </div>
                                                         <i class="msg_preco"></i>
                                                     </div>
@@ -549,7 +437,7 @@
                                                         <label>Quantidade</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">0-9</span>
-                                                            <input type="number" class="form-control" name="qt_produto" min="0">
+                                                            <input type="number" class="form-control campo_qtd_modal" name="qt_produto" min="0">
                                                         </div>
                                                         <i class="msg_qtd"></i>
                                                     </div>
@@ -566,7 +454,7 @@
                                                         <label>Largura</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                                            <input type="number" class="form-control" name="ds_largura" min="0">
+                                                            <input type="number" class="form-control campo_largura_modal" name="ds_largura" min="0">
                                                         </div>
                                                         <i class="msg_largura"></i>
                                                     </div>
@@ -578,7 +466,7 @@
                                                         <label>Altura</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                                            <input type="number" class="form-control" name="ds_altura" min="0">
+                                                            <input type="number" class="form-control campo_altura_modal" name="ds_altura" min="0">
                                                         </div>
                                                         <i class="msg_altura"></i>
                                                     </div>
@@ -590,7 +478,7 @@
                                                         <label>Peso (g)</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                                            <input type="number" class="form-control" name="ds_peso" min="0">
+                                                            <input type="number" class="form-control campo_peso_modal" name="ds_peso" min="0">
                                                         </div>
                                                         <i class="msg_preco"></i>
                                                     </div>
@@ -606,7 +494,7 @@
                                                         <div class="form-group">
                                                             <label>Descrição do Produto</label>
                                                             <div class="input-group">
-                                          <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="112%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
+                                          <textarea id="bold" class="campo_desc_modal" name="ds_produto" rows="5" cols="112%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
                                           </textarea>
                                                             </div>
                                                         </div>
@@ -703,7 +591,7 @@
                 type: 'GET',
                 success: function (data) {
 
-                    $('#subcategorias').empty().append(`<option value=""></option>`);
+                    $('#subcategorias').empty();
 
                     $.each(data.subcat, function(index, subcategoria) {
 
@@ -723,6 +611,8 @@
 
             if(campo.length == 0)
                 $('.msg_nome_prod').html("Campo obrigatório.").css("color", "red");
+
+            verificaAtributos();
         });
 
         //Validação do campo EAN
@@ -739,6 +629,8 @@
             else if(campo.length < 13 && campo.length > 0) {
                 $('.msg_ean').html("Campo deve conter 0 ou 13 caracteres.").css("color", "red");
             }
+
+            verificaAtributos();
         });
 
 
@@ -757,6 +649,7 @@
                 $('.msg_sku').html("Proibido caracteres especiais.").css("color", "red");
             }
 
+            verificaAtributos();
         });
 
         //Validação do campo DESCRIÇÃO
@@ -769,6 +662,7 @@
             if (campo.length == 0) {
                 $('.msg_desc').html("Campo obrigatório.").css("color", "red");
             }
+            verificaAtributos();
         });
 
         //Validação do campo PREÇO
@@ -781,6 +675,8 @@
             if (campo.length == 0) {
                 $('.msg_preco').html("Campo obrigatório.").css("color", "red");
             }
+
+            verificaAtributos();
         });
 
         //Validação do campo CATEGORIA
@@ -793,6 +689,78 @@
             if (campo == "") {
                 $('.msg_cat').html("Campo obrigatório.").css("color", "red");
             }
+
+            verificaAtributos();
+        });
+
+        //Validação do campo CATEGORIA
+        $('.campo_subcat').blur(function() {
+
+            var campo = $('.campo_subcat').val();
+
+            $('.msg_subcat').html("");
+
+            if (campo == "") {
+                $('.msg_subcat').html("Campo obrigatório.").css("color", "red");
+            }
+
+            verificaAtributos();
+        });
+
+        //Validação do campo QUANTIDADE
+        $('.campo_qtd').blur(function() {
+
+            var campo = $('.campo_qtd').val();
+
+            $('.msg_qtd').html("");
+
+            if (campo == "") {
+                $('.msg_qtd').html("Campo obrigatório.").css("color", "red");
+            }
+
+            verificaAtributos();
+        });
+
+        //Validação do campo LARGURA
+        $('.campo_largura').blur(function() {
+
+            var campo = $('.campo_largura').val();
+
+            $('.msg_largura').html("");
+
+            if (campo == "") {
+                $('.msg_largura').html("Campo obrigatório.").css("color", "red");
+            }
+
+            verificaAtributos();
+        });
+
+        //Validação do campo ALTURA
+        $('.campo_altura').blur(function() {
+
+            var campo = $('.campo_altura').val();
+
+            $('.msg_altura').html("");
+
+            if (campo == "") {
+                $('.msg_altura').html("Campo obrigatório.").css("color", "red");
+            }
+
+            verificaAtributos();
+        });
+
+        //Validação do campo PESO
+        $('.campo_peso').blur(function() {
+
+            var campo = $('.campo_peso').val();
+
+            $('.msg_peso').html("");
+
+            if (campo == "") {
+                $('.msg_peso').html("Campo obrigatório.").css("color", "red");
+            }
+
+            verificaAtributos();
         });
 
 
@@ -866,32 +834,41 @@
             $('.campo_ean_modal').val($('#campo_ean').val());
             $('.campo_sku_modal').val($('#campo_sku').val());
             $('.campo_preco_modal').val($('.campo_preco').val());
-            $('.campo_cat_modal').val($('.campo_cat').val());
-            $('.campo_subcat_modal').val($('.campo_subcat').val());
             $('.campo_qtd_modal').val($('.campo_qtd').val());
-            $('.campo_cor_modal').val($('.campo_cor').val());
-            $('.campo_tam_letra_modal').val($('.campo_tam_letra').val());
-            $('.campo_tam_num_modal').val($('.campo_tam_num').val());
             $('.campo_largura_modal').val($('.campo_largura').val());
-            $('.campo_tamanho_modal').val($('.campo_tamanho').val());
+            $('.campo_altura_modal').val($('.campo_altura').val());
             $('.campo_peso_modal').val($('.campo_peso').val());
-            $('.campo_peso_modal').val($('.campo_peso1').val());
+
+
 
         });
 
-        //Efeito da barra de progresso ao salvar os dados
-       /* $('#btn_salvar').on("submit", function(){
-            $.blockUI({
-                fadeIn: 1000,
-                timeout:   2000,
-                onBlock: function() {
-                    var confirmacao = confirm('Deseja acessar o menu de atributos do produto?');
-                    if(confirmacao)
-                        $('#btn_atributos').removeAttr("hidden");
+        //Verifica botão Atributos
+        function verificaAtributos(){
+            var regra = /^[0-9]+$/;
 
-                }
-            });
-        });*/
+            if ($('.campo_nome').val() != "" &&
+                $('.campo_sku').val() != "" &&
+                $('.campo_preco').val() != "" &&
+                $('.campo_cat').val() != "" &&
+                $('.campo_subcat').val() != "" &&
+                $('.campo_qtd').val() != "" &&
+                $('.campo_largura').val() != "" &&
+                $('.campo_altura').val() != "" &&
+                $('.campo_peso').val() != "" &&
+                $('.campo_desc').val() != "" &&
+                ($('.campo_ean').val().length == 0 ||
+                ($('.campo_ean').val().length == 13 && regra.exec($('.campo_ean').val())))){
+                $('#btn_atributos').removeAttr("disabled");
+                $('#btn_salvar').removeAttr("disabled");
+            }
+            else {
+                $('#btn_atributos').attr("disabled", "disabled");
+                $('#btn_salvar').attr("disabled", "disabled");
+            }
+
+        }
+
 
 
     </script>
