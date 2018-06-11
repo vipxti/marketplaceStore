@@ -53,8 +53,7 @@
 
             <!-- TABELA DOS PRODUTOS -->
 
-                    <div class="row">
-                        <div class="col-lg-12">
+
                             <table class="table" id="table">
                                 <thead>
                                 <tr>
@@ -75,14 +74,16 @@
                                         <td>{{ $produto->nm_produto }} </td>
                                         <td>{{ $produto->ds_produto }} </td>
                                         <td>{{ $produto->vl_produto }} </td>
-                                        <td>#</tr>
+                                        <td class="btn btn-outline-warning" style="color: #367fa9"><i class="fa fa-pencil"></i></td>
+                                        <td class="btn btn-outline-danger" style="color: #cc0000"><i class="fa fa-trash-o"></i></td>
+                                    </tr>
+
 
                                 @endforeach
                                 </tbody>
                             </table>
-                            <hr>
-                        </div>
-                    </div>
+
+
 
                     <div class="text-center">
 

@@ -96,6 +96,7 @@
                                             <td>{{ $cor->cd_cor }}</td>
                                             <td>{{ $cor->nm_cor }}</td>
 
+
                                         </tr>
 
                                     @endforeach
