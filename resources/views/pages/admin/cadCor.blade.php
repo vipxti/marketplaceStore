@@ -55,16 +55,13 @@
             </div>
         </section>
 
-            <!-- LISTA DE CORES CADASTRADAS -->
-        <section class="content-header">
-            <h1>Cores Cadastradas</h1>
-        </section>
+
 
         <!-- Main content -->
         <section class="content">
 
             <!-- Default box -->
-            <div class="box box-danger">
+            <div class="box box-primary">
                 <div class="box-header with-border">
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">

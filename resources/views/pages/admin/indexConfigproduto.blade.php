@@ -34,7 +34,7 @@
                         {{ csrf_field() }}
 
                     <div class="col-md-12">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label>Produtos (Linhas)</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-th-large"></i></span>
