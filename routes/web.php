@@ -72,3 +72,4 @@ Route::prefix('admin')->group(function () {
 Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
 Route::post('/productvariation', 'ProductController@cadastrarVariacaoProduto')->name('productvariation.save');
 Route::get('/productspage', 'ProductController@paginaProduto')->name('products.page');
+Route::get('/productvariationpage', 'ProductController@showProductPageVariation')->name('product.variation.page');

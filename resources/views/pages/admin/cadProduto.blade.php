@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
@@ -18,6 +17,9 @@
 
         <!-- Main content -->
         <section class="content">
+
+            @include('partials.admin._alerts')
+
             <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">

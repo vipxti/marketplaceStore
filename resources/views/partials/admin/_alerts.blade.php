@@ -8,6 +8,16 @@
 
 @endif
 
+@if(session('nosuccess'))
+
+    <div class="alert alert-danger text-center msg" role="alert">
+
+        {{ session('nosuccess') }}
+
+    </div>
+
+@endif
+
 @if (count($errors))
 
     <div class="form-group">

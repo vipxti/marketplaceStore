@@ -27,34 +27,42 @@ class ProductRequest extends FormRequest
         //dd($this->request);
 
         $rules = [
-            'nm_produto' => 'required',
-            'cd_ean' => 'required',
-            'cd_sku' => 'required',
-            'ds_produto' => 'required',
-            'vl_produto' => 'required',
-            'qt_produto' => 'required',
-            'cd_categoria' => 'required',
-            'cd_sub_categoria' => 'required',
-            'ds_altura' => 'required',
-            'ds_largura' => 'required',
-            'ds_peso' => 'required',
-            'status' => 'required',
+            'nm_produto' => 'required|string',
+            'cd_ean' => 'nullable|string',
+            'cd_sku' => 'required|string',
+            'ds_produto' => 'required|string',
+            'vl_produto' => 'required|numeric',
+            'qt_produto' => 'required|numeric',
+            'cd_categoria' => 'required|numeric',
+            'cd_sub_categoria' => 'required|numeric',
+            'cd_embalagem' => 'required|numeric',
+            'status' => 'required|string',
             'images.*' => 'required|image|mimes:jpeg,bmp,png'
         ];
 
-        if ($this->cd_tamanho_num == null) {
-
-            $rules['cd_tamanho_letra'] = 'required';
-
-        }
-
-        if ($this->cd_tamanho_letra == null) {
-
-            $rules['cd_tamanho_num'] = 'required';
-
-        }
+//        if ($this->cd_tamanho_num == null) {
+//
+//            $rules['cd_tamanho_letra'] = 'required';
+//
+//        }
+//
+//        if ($this->cd_tamanho_letra == null) {
+//
+//            $rules['cd_tamanho_num'] = 'required';
+//
+//        }
 
         return $rules;
 
     }
+
+    public function messages()
+    {
+        return [
+
+            'images.required' => 'É preciso escolher pelo menos uma imagem'
+
+        ];
+    }
+
 }
