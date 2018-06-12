@@ -163,8 +163,6 @@
           </div>
         </section>
 
-
-
     </div>
 
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
