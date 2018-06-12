@@ -9,9 +9,10 @@
         <section class="content-header">
             <h1 style="padding: 0 20px"><i class="fa fa-arrows-h"></i>&nbsp;&nbsp;Cadastrar Tamanho</h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li><a href="#">Produto</a></li>
-                <li class="active">Cadastrar Tamanho</li>
+                <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li><a href="#">Produtos</a></li>
+                <li><a href="#">Atributos</a></li>
+                <li><a class="active">Cadastrar Tamanhos</a></li>
             </ol>
         </section>
 

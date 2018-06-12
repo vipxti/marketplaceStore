@@ -9,7 +9,7 @@
             <h1><i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;Hot Post</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li><a href="#">Configuração</a></li>
+                <li><a href="#">Configuração Home</a></li>
                 <li class="active">Hot Post</li>
             </ol>
         </section>

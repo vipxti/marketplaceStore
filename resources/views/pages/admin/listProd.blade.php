@@ -10,7 +10,7 @@
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="#">Produtos</a></li>
-                <li class="active">Listar Produtos</li>
+                <li class="active">Lista de Produtos</li>
             </ol>
         </section>
 

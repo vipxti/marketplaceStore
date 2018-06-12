@@ -9,7 +9,7 @@
             <h1><i class="fa fa-picture-o"></i>&nbsp;&nbsp;Banner Principal</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li><a href="#">Configuração</a></li>
+                <li><a href="#">Configuração Home</a></li>
                 <li class="active">Banner</li>
             </ol>
         </section>

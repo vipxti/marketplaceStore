@@ -10,7 +10,7 @@
             <h1><i class="fa fa-th-list" style="padding: 0px 16px"></i>&nbsp;&nbsp;Menu</h1>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                    <li><a href="#">Configuração</a></li>
+                    <li><a href="#">Configuração Home</a></li>
                     <li class="active">Menu</li>
                 </ol>
         </section>

@@ -10,9 +10,9 @@
         <section class="content-header">
             <h1><i class="fa fa-plus-square"></i>&nbsp;&nbsp;Produto</h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
-                <li class="active">Produto</li>
-                <li><a href="#">Cadastro de produto</a></li>
+                <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li class="active">Produtos</li>
+                <li><a href="#">Cadastrar</a></li>
             </ol>
         </section>
 

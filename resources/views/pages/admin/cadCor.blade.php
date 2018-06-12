@@ -124,33 +124,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                {{--<div class="box-body">
-
-                    <table class="table" id="table">
-                        <thead>
-                        <tr>
-                            <th style="text-align: right">Código</th>
-                            <th style="text-align: right">Cor</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        @foreach($cores as $cor)
-
-                            <tr style="text-align: right">
-                                <td>{{ $cor->cd_cor }}</td>
-                                <td>{{ $cor->nm_cor }}</td>
-                                <td class="btn btn-outline-warning" style="color: #367fa9"><i class="fa fa-pencil"></i></td>
-                                <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c"><i class="fa fa-plus"></i></td>
-                                <td class="btn btn-outline-danger" style="color: #cc0000"><i class="fa fa-trash-o"></i></td>
-                            </tr>
-
-
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>--}}
             </div>
         </section>
     </div>
