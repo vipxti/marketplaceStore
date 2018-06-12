@@ -71,35 +71,97 @@
                 </div>
 
                 <div class="box-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <table class="table" id="table">
-                                <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Cores</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($cores as $cor)
 
-                                        <tr>
+                    <!-- Botão pesquisar -->
 
-                                            <td>{{ $cor->cd_cor }}</td>
-                                            <td>{{ $cor->nm_cor }}</td>
-
-
-                                        </tr>
-
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <hr>
+                    <div style="padding-left: 70%">
+                        <div>
+                            <input type="search" id="search" value="" class="form-control">
                         </div>
                     </div>
+                    <div>&nbsp;</div>
+
+
+                    <div class="dataTables_length" style="padding-left: 90%" id="example1_length">
+                        <select name="example1_length" aria-controls="example1" class="form-control form-control-sm">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+
+                    <!-- Tabelas dos produtos -->
+
+
+                    <table class="table" id="table">
+                        <thead>
+                        <tr>
+                            <th style="text-align: right">Código</th>
+                            <th style="text-align: right">Cor</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($cores as $cor)
+
+                            <tr style="text-align: right">
+                                <td>{{ $cor->cd_cor }}</td>
+                                <td>{{ $cor->nm_cor }}</td>
+                                <td class="btn btn-outline-warning" style="color: #367fa9"><i class="fa fa-pencil"></i></td>
+                                <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c"><i class="fa fa-plus"></i></td>
+                                <td class="btn btn-outline-danger" style="color: #cc0000"><i class="fa fa-trash-o"></i></td>
+                            </tr>
+
+
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
+
+                {{--<div class="box-body">
+
+                    <table class="table" id="table">
+                        <thead>
+                        <tr>
+                            <th style="text-align: right">Código</th>
+                            <th style="text-align: right">Cor</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($cores as $cor)
+
+                            <tr style="text-align: right">
+                                <td>{{ $cor->cd_cor }}</td>
+                                <td>{{ $cor->nm_cor }}</td>
+                                <td class="btn btn-outline-warning" style="color: #367fa9"><i class="fa fa-pencil"></i></td>
+                                <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c"><i class="fa fa-plus"></i></td>
+                                <td class="btn btn-outline-danger" style="color: #cc0000"><i class="fa fa-trash-o"></i></td>
+                            </tr>
+
+
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>--}}
             </div>
         </section>
     </div>
+
+
+    <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="../../plugins/datatables/jquery.dataTables.js"></script>
+    <script src="../../plugins/datatables/dataTables.bootstrap4.js"></script>
+    <!-- SlimScroll -->
+    <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="../../plugins/fastclick/fastclick.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../dist/js/demo.js"></script>
+    <!-- page script -->
 
 @stop

@@ -37,10 +37,13 @@ class ProductController extends Controller
     public function listaProduto() {
 
         $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);
+        $tamanhosLetras = LetterSize::all();
+        $tamanhosNumeros = NumberSize::all();
+        $cores = Color::all();
 
         //dd($produtos);
 
-        return view('pages.admin.listProd', compact('produtos'));
+        return view('pages.admin.listProd', compact('produtos', 'tamanhosLetras', 'tamanhosNumeros', 'cores'));
 
     }
 

@@ -784,26 +784,26 @@
 
         });
 
-        //Abrir o modal ao clicar no botão alterar
+        //Abrir o modal ao clicar no botão Atributos
         $('#btn_atributos').click(function(e){
-            e.preventDefault();
+                e.preventDefault();
 
-            var my_cookie = $.cookie($('.modal-check').attr('name'));
-            if (my_cookie && my_cookie == "true") {
-                $(this).prop('checked', my_cookie);
-                console.log('checked checkbox');
-            }
-            else{
-                $('#myModal').modal('show');
-                console.log('uncheck checkbox');
-            }
+                var my_cookie = $.cookie($('.modal-check').attr('name'));
+                if (my_cookie && my_cookie == "true") {
+                    $(this).prop('checked', my_cookie);
+                    console.log('checked checkbox');
+                }
+                else{
+                    $('#myModal').modal('show');
+                    console.log('uncheck checkbox');
+                }
 
-            $(".modal-check").change(function() {
-                $.cookie($(this).attr("name"), $(this).prop('checked'), {
-                    path: '/',
-                    expires: 1
+                $(".modal-check").change(function() {
+                    $.cookie($(this).attr("name"), $(this).prop('checked'), {
+                        path: '/',
+                        expires: 1
+                    });
                 });
-            });
 
             //mostrar os campos já digitados no cadastro de produtos dentro do modal
             $('.campo_nome_modal').val($('.campo_nome').val());
