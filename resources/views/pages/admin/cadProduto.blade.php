@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
@@ -543,14 +544,15 @@
     </div>
 
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
-    <script src="{{asset('js/admin/nanobar.min.js')}}"></script>
     <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
+    <script src="{{asset('js/admin/nanobar.js')}}"></script>
     <script>
 
         //Chama a função de contagem de palavras ao carregar a página
         $(document).ready(function(){
 
            contadorPalavras();
+
 
            $('#categorias').val("");
            $('#subcategorias').val("");
@@ -579,6 +581,24 @@
 
             })
 
+        });
+
+
+        //Tela de espera ao salvar
+        $('#btn_salvar').click(function(){
+            $.blockUI({
+                    message: 'Salvando...',
+                    css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                } });
+
+            setTimeout($.unblockUI, 3000);
         });
 
         //Validação do campo NOME DO PRODUTO
@@ -818,10 +838,20 @@
             $('.campo_cat_modal').val($('.campo_cat').val());
             $('.campo_subcat_modal').val($('.campo_subcat').val());
 
-            console.log($('.campo_cat_modal').val());
-            console.log($('.campo_subcat_modal').val());
+            carregaNanobar();
+            //nanobar.go(100);
 
         });
+
+        //Função chama NanoBar
+        function carregaNanobar(){
+            var nanobar = new Nanobar();
+            nanobar.go(30);
+
+            setTimeout(function(){
+                nanobar.go(100);
+            }, 1000)
+        }
 
         //Verifica botão Atributos
         function verificaAtributos(){
@@ -848,6 +878,7 @@
             }
 
         }
+
 
 
 

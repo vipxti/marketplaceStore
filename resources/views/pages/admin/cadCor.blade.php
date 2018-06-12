@@ -38,7 +38,7 @@
                                         <label>Cor</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
-                                            <input type="text" maxlength="" class="form-control" name="nm_cor">
+                                            <input type="text" minlength="0" maxlength="40" class="form-control" name="nm_cor">
                                         </div>
                                     </div>
                                 </div>
@@ -107,10 +107,16 @@
 
                             <tr style="text-align: right">
                                 <td>{{ $cor->cd_cor }}</td>
-                                <td>{{ $cor->nm_cor }}</td>
-                                <td class="btn btn-outline-warning" style="color: #367fa9"><i class="fa fa-pencil"></i></td>
-                                <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c"><i class="fa fa-plus"></i></td>
-                                <td class="btn btn-outline-danger" style="color: #cc0000"><i class="fa fa-trash-o"></i></td>
+                                <td id="nome_cor">{{ $cor->nm_cor }}</td>
+                                <td class="btn btn-outline-warning" style="color: #367fa9">
+                                    <button id="btn_editar" class="fa fa-pencil"></button>
+                                </td>
+                                <td id="btn_salvar" class="btn btn-outline-success" style="color: #008d4c; display: none">
+                                    <i class="fa fa-check"></i>
+                                </td>
+                                <td id="btn_cancelar" class="btn btn-outline-danger" style="color: #cc0000; display: none">
+                                    <i class="fa  fa-remove"></i>
+                                </td>
                             </tr>
 
 
@@ -149,19 +155,95 @@
         </section>
     </div>
 
+    <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
+    <script>
+        $('#btnSalvarCor').click(function(){
+            $.blockUI({
+                message: 'Salvando...',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                } });
 
-    <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- DataTables -->
-    <script src="../../plugins/datatables/jquery.dataTables.js"></script>
-    <script src="../../plugins/datatables/dataTables.bootstrap4.js"></script>
-    <!-- SlimScroll -->
-    <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="../../plugins/fastclick/fastclick.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="../../dist/js/demo.js"></script>
-    <!-- page script -->
+            setTimeout($.unblockUI, 4000);
+        });
+
+
+
+        $(document).ready(function(){
+            var conteudoOriginal;
+
+            //Ação de clicar no editar, pegando o conteudo e criando o input para edição
+            $('button#btn_editar').click(function(){
+                var campoTR = $(this).parent().parent();
+
+                var conteudo =  campoTR.find("td:eq(1)").text();
+                conteudoOriginal = conteudo;
+
+                var campo_cor = campoTR.find('#nome_cor');
+                campo_cor.addClass("irmao");
+                campo_cor.text("");
+
+                var campo_input = "<input id='caixa_editar' type='text' minlength='40' ' value='" + conteudoOriginal + "'></input>";
+                campo_cor.append(campo_input);
+                campoTR.find('#caixa_editar').focus();
+
+                trocaBotoes(campoTR);
+
+
+                //$('.irmao').parent().siblings().find('td:eq(2)').attr("disabled", "disabled");
+                $('.irmao').parent().siblings().find('td:eq(2)').children().attr("disabled", "disabled");
+                //$('.irmao').parent().siblings().find('td:eq(2)').removeAttr("id");
+
+                //console.log($('.irmao').parent().siblings().find('td:eq(2)').children());
+            });
+
+            //Ação que salva o valor digitado dentro do input, e coloca o novo valor dentro do TD
+            $('td#btn_salvar').click(function(){
+                var campoTR = $(this).parent();
+                var conteudoAtualizado = campoTR.find("#caixa_editar").val();
+                var campo_cor = campoTR.find("td:eq(1)");
+
+                if(conteudoAtualizado.length == 0){
+                    return;
+                }
+
+                campo_cor.text(conteudoAtualizado);
+
+                campo_cor.remove('#caixa_editar');
+
+                $('.irmao').parent().siblings().find('td:eq(2)').children().removeAttr("disabled");
+                trocaBotoes(campoTR);
+            });
+
+
+            //Ação para cancelar as mudanças feitas dentro do input
+            $('td#btn_cancelar').click(function(){
+                var campoTR = $(this).parent();
+                var campo_cor = campoTR.find("td:eq(1)");
+                campo_cor.remove("#caixa_editar");
+
+                campo_cor.text(conteudoOriginal);
+
+                $('.irmao').parent().siblings().find('td:eq(2)').children().removeAttr("disabled");
+                trocaBotoes(campoTR);
+            });
+
+            //Função para troca de botões, transição do display none para block
+            function trocaBotoes(campoTR){
+                campoTR.find('#btn_editar').toggle();
+                campoTR.find('#btn_salvar').toggle();
+                campoTR.find('#btn_cancelar').toggle();
+            }
+
+        });
+    </script>
+
+
 
 @stop

@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="col-md-12 text-right">
-                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Alterar</button>
+                            <button id="btn_alterar" type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Alterar</button>
                         </div>
 
                     </form>
@@ -207,7 +207,7 @@
     </div>
 
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
-    <script src="{{asset('js/admin/nanobar.min.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
 
     <script>
 
@@ -276,12 +276,29 @@
 
         })
 
-        /*$('#btn_salvar').on("submit", function(){
-            var nanobar = new Nanobar();
-            nanobar.go(100);
-        });*/
+        $('#btn_salvar').click(function(){
+            telaBloqueio();
+        });
 
+        $('#btn_alterar').click(function(){
+            telaBloqueio();
+        });
 
+        function telaBloqueio(){
+            $.blockUI({
+                message: 'Salvando...',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                } });
+
+            setTimeout($.unblockUI, 4000);
+        }
 
     </script>
 @stop
