@@ -1,7 +1,17 @@
 @extends('layouts.admin.app')
 
 @section('content')
-
+    <style type="text/css">
+        /*deixar botão transparente*/
+        button {
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+        }
+    </style>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @include('partials.admin._alerts')
@@ -149,7 +159,7 @@
             //cor branco
             $("table tbody tr:odd").css("background-color", "#fff");
             //cor cinza
-            $("table tbody tr:even").css("background-color", "#eee");
+            $("table tbody tr:even").css("background-color", "#f5f5f5");
 
             var conteudoOriginal;
 
