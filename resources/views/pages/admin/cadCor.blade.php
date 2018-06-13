@@ -108,14 +108,10 @@
                             <tr class="text-center">
                                 <td>{{ $cor->cd_cor }}</td>
                                 <td id="nome_cor">{{ $cor->nm_cor }}</td>
-                                <td style="color: #367fa9">
-                                    <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning"></button>
-                                </td>
-                                <td style="color: #008d4c">
-                                    <button id="btn_salvar" class="fa fa-check btn btn-outline-success" style="display: none"></button>
-                                </td>
-                                <td style="color: #cc0000">
-                                    <button id="btn_cancelar" class="fa fa-remove btn btn-outline-danger" style="display: none"></button>
+                                <td>
+                                    <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" alt="Editar" style="color: #367fa9"></button>
+                                    <button id="btn_salvar" class="fa fa-check btn btn-outline-success" style="color: #008d4c; display: none"></button>
+                                    <button id="btn_cancelar" class="fa fa-remove btn btn-outline-danger" style="color: #cc0000; display: none"></button>
                                 </td>
                             </tr>
 
