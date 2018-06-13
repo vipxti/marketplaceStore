@@ -174,7 +174,7 @@
                 var campo_cor = campoTR.find('#nome_cor');
                 campo_cor.text("");
 
-                var campo_input = "<input id='caixa_editar' type='text' minlength='40' ' value='" + conteudoOriginal + "'></input>";
+                var campo_input = "<input id='caixa_editar' type='text' maxlength='40' ' value='" + conteudoOriginal + "'></input>";
                 campo_cor.append(campo_input);
                 campoTR.find('#caixa_editar').focus();
 

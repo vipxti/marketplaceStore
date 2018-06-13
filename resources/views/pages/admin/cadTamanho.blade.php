@@ -12,6 +12,22 @@
             overflow: hidden;
             outline:none;
         }
+
+        /*deixar setas do input do tipo number invisivel*/
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            cursor:pointer;
+            display:block;
+            width:8px;
+            color: #333;
+            text-align:center;
+            position:relative;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+            margin: 0;
+        }
     </style>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -95,7 +111,7 @@
                                                 <label>Tamanho (Letra)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
-                                                    <input type="text" class="form-control" name="nm_tamanho_letra">
+                                                    <input type="text" class="form-control" name="nm_tamanho_letra" maxlength="4">
                                                 </div>
                                             </div>
                                         </div>
@@ -140,7 +156,7 @@
                                     <th class="text-center">Tamanho</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tamanhos">
                                 @foreach($tNum as $num)
                                     <tr class="text-center">
                                         <td>{{$num->cd_tamanho_num}}</td>
@@ -181,7 +197,7 @@
                                     <th class="text-center">Tamanho</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tamanhos">
                                 @foreach($tLetra as $letra)
                                     <tr class="text-center">
                                         <td>{{$letra->cd_tamanho_letra}}</td>
@@ -202,13 +218,17 @@
             </div>
         </section>
     </div>
+
+    <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/admin/jquery.inputmask.bundle.js') }}"></script>
     <script>
+
         $(document).ready(function(){
 
             //cor branco
-            $("table tbody tr:odd").css("background-color", "#fff");
+            $("table tbody#tamanhos tr:odd").css("background-color", "#fff");
             //cor cinza
-            $("table tbody tr:even").css("background-color", "#f5f5f5");
+            $("table tbody#tamanhos tr:even").css("background-color", "#f5f5f5");
 
             var conteudoOriginal;
 
@@ -222,7 +242,7 @@
                 var campo_tam = campoTR.find('#tam');
                 campo_tam.text("");
 
-                var campo_input = "<input id='caixa_editar' type='text' minlength='40' ' value='" + conteudoOriginal + "'></input>";
+                var campo_input = "<input id='caixa_editar' type='text' maxlength='4' ' value='" + conteudoOriginal + "'></input>";
                 campo_tam.append(campo_input);
                 campoTR.find('#caixa_editar').focus();
 
