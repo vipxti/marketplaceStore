@@ -121,13 +121,25 @@
                     </div>
 
                     <div class="box-body">
-                        <form action="{{ route('menu.edit') }}" method="post">
+                        <!--<form action="{{ route('menu.edit') }}" method="post">
                             {{ csrf_field() }}
 
+                        </form>-->
+                        <table class="table" id="table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Tamanho</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#</td>
+                                    <td>#</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-
-
-                        </form>
                     </div>
                 </div>
             </div>
@@ -144,11 +156,26 @@
                     </div>
 
                     <div class="box-body">
-                        <form action="{{ route('menu.edit') }}" method="post">
+                        <!--<form action="{{ route('menu.edit') }}" method="post">
                             {{ csrf_field() }}
 
 
-                        </form>
+                        </form>-->
+                        <table class="table" id="table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Tamanho</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#</td>
+                                    <td>#</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>

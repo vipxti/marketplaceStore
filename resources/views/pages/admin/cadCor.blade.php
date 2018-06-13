@@ -97,25 +97,25 @@
                     <table class="table" id="table">
                         <thead>
                         <tr>
-                            <th style="text-align: right">Código</th>
-                            <th style="text-align: right">Cor</th>
+                            <th class="text-center">Código</th>
+                            <th class="text-center">Cor</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($cores as $cor)
 
-                            <tr style="text-align: right">
+                            <tr class="text-center">
                                 <td>{{ $cor->cd_cor }}</td>
                                 <td id="nome_cor">{{ $cor->nm_cor }}</td>
-                                <td class="btn btn-outline-warning" style="color: #367fa9">
-                                    <button id="btn_editar" class="fa fa-pencil"></button>
+                                <td style="color: #367fa9">
+                                    <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning"></button>
                                 </td>
-                                <td id="btn_salvar" class="btn btn-outline-success" style="color: #008d4c; display: none">
-                                    <i class="fa fa-check"></i>
+                                <td style="color: #008d4c">
+                                    <button id="btn_salvar" class="fa fa-check btn btn-outline-success" style="display: none"></button>
                                 </td>
-                                <td id="btn_cancelar" class="btn btn-outline-danger" style="color: #cc0000; display: none">
-                                    <i class="fa  fa-remove"></i>
+                                <td style="color: #cc0000">
+                                    <button id="btn_cancelar" class="fa fa-remove btn btn-outline-danger" style="display: none"></button>
                                 </td>
                             </tr>
 
@@ -169,6 +169,7 @@
                 trocaBotoes(campoTR);
 
 
+                console.log(campoTR.find("#btn_salvar"));
                 //$('.irmao').parent().siblings().find('td:eq(2)').attr("disabled", "disabled");
                 $('.irmao').parent().siblings().find('td:eq(2)').children().attr("disabled", "disabled");
                 //$('.irmao').parent().siblings().find('td:eq(2)').removeAttr("id");
@@ -177,8 +178,8 @@
             });
 
             //Ação que salva o valor digitado dentro do input, e coloca o novo valor dentro do TD
-            $('td#btn_salvar').click(function(){
-                var campoTR = $(this).parent();
+            $('button#btn_salvar').click(function(){
+                var campoTR = $(this).parent().parent();
                 var conteudoAtualizado = campoTR.find("#caixa_editar").val();
                 var campo_cor = campoTR.find("td:eq(1)");
 
@@ -196,8 +197,8 @@
 
 
             //Ação para cancelar as mudanças feitas dentro do input
-            $('td#btn_cancelar').click(function(){
-                var campoTR = $(this).parent();
+            $('button#btn_cancelar').click(function(){
+                var campoTR = $(this).parent().parent();
                 var campo_cor = campoTR.find("td:eq(1)");
                 campo_cor.remove("#caixa_editar");
 
