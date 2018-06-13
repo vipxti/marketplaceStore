@@ -108,7 +108,7 @@
                             <tr class="text-center">
                                 <td>{{ $cor->cd_cor }}</td>
                                 <td id="nome_cor">{{ $cor->nm_cor }}</td>
-                                <td>
+                                <td class="text-right">
                                     <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
                                     <button id="btn_salvar" class="fa fa-check btn btn-outline-success" style="color: #008d4c; display: none"></button>
                                     <button id="btn_cancelar" class="fa fa-remove btn btn-outline-danger" style="color: #cc0000; display: none"></button>
