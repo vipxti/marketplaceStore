@@ -122,6 +122,7 @@
                                     <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
                                     <button id="btn_salvar" class="fa fa-check btn btn-outline-success" style="color: #008d4c; display: none"></button>
                                     <button id="btn_cancelar" class="fa fa-remove btn btn-outline-danger" style="color: #cc0000; display: none"></button>
+                                    <button id="btn_excluir" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                 </td>
                             </tr>
 
@@ -179,13 +180,8 @@
 
                 trocaBotoes(campoTR);
 
-                console.log(campoTR.find("#btn_salvar"));
-                //$('.irmao').parent().siblings().find('td:eq(2)').attr("disabled", "disabled");
-                //$('.irmao').parent().siblings().find('td:eq(2)').children().attr("disabled", "disabled");
                 campoTR.siblings().find('td:eq(2)').children("button#btn_editar").attr("disabled", "disabled");
-                //$('.irmao').parent().siblings().find('td:eq(2)').removeAttr("id");
-
-                //console.log($('.irmao').parent().siblings().find('td:eq(2)').children());
+                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").attr("disabled", "disabled");
             });
 
             //Ação que salva o valor digitado dentro do input, e coloca o novo valor dentro do TD
@@ -195,6 +191,8 @@
                 var campo_cor = campoTR.find("td:eq(1)");
 
                 if(conteudoAtualizado.length == 0){
+                    $("#caixa_editar").focus();
+
                     return;
                 }
 
@@ -203,8 +201,8 @@
                 campo_cor.remove('#caixa_editar');
 
                 campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").removeAttr("disabled");
                 trocaBotoes(campoTR);
-                console.log();
             });
 
 
@@ -217,6 +215,7 @@
                 campo_cor.text(conteudoOriginal);
 
                 campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").removeAttr("disabled");
                 trocaBotoes(campoTR);
             });
 
@@ -225,11 +224,10 @@
                 campoTR.find('#btn_editar').toggle();
                 campoTR.find('#btn_salvar').toggle();
                 campoTR.find('#btn_cancelar').toggle();
+                campoTR.find('#btn_excluir').toggle();
             }
 
         });
     </script>
-
-
 
 @stop
