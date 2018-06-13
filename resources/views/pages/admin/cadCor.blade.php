@@ -145,6 +145,12 @@
 
 
         $(document).ready(function(){
+
+            //cor branco
+            $("table tbody tr:odd").css("background-color", "#fff");
+            //cor cinza
+            $("table tbody tr:even").css("background-color", "#eee");
+
             var conteudoOriginal;
 
             //Ação de clicar no editar, pegando o conteudo e criando o input para edição
