@@ -95,7 +95,7 @@ class ProductController extends Controller
             ]);
 
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
 
             //dd($e->getMessage());
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
@@ -117,11 +117,11 @@ class ProductController extends Controller
             ]);
 
         }
-        catch (Exception $e){
+        catch (\Exception $e){
 
             //dd($e->getMessage());
             Product::destroy($produto->cd_produto);
-            return redirect()->back()->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
 
@@ -134,12 +134,12 @@ class ProductController extends Controller
             ]);
 
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
 
             DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
             Product::destroy($produto->cd_produto);
 
-            return redirect()->back()->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -156,14 +156,13 @@ class ProductController extends Controller
             ]);
 
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
 
-            DB::table('embalagem')->where('cd_embalagem', '=', $request->cd_embalagem)->delete();
-            DB::table('produto_sku')->where('cd_nr_sku', '=', $request->cd_sku)->delete();
+            DB::table('produto_sku')->where('cd_sku', '=', $SKU->cd_sku)->delete();
             DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
             Product::destroy($produto->cd_produto);
 
-            return redirect()->back()->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
 
@@ -190,50 +189,10 @@ class ProductController extends Controller
 
         }
 
-        DB::table('produto_sku')->insert([
-            'cd_nr_sku' => $request->cd_sku,
-            'cd_produto' => $produto->cd_produto
-        ]);
-
-        $SKU = DB::table('produto_sku')->select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
-
-        Package::create([
-            'ds_largura' => $request->ds_largura,
-            'ds_altura' => $request->ds_altura,
-            'ds_peso' => $request->ds_peso
-        ]);
-
-        $embalagem = Package::orderBy('cd_embalagem', 'DESC')->first();
-
-        DB::table('sku_produto_embalagem')->insert([
-            'cd_sku' => $SKU->cd_sku,
-            'cd_embalagem' => $embalagem->cd_embalagem
-        ]);
-
-        DB::table('produto_cor')->insert([
-            'cd_sku' => $SKU->cd_sku,
-            'cd_cor' => $request->cd_cor
-        ]);
-
-        if ($request->cd_tamanho_letra == null) {
-
-            DB::table('produto_tamanho_num')->insert([
-                'cd_sku' => $SKU->cd_sku,
-                'cd_tamanho_num' => $request->cd_tamanho_num
-            ]);
-
-        }
-        else {
-
-            DB::table('produto_tamanho_letra')->insert([
-                'cd_sku' => $SKU->cd_sku,
-                'cd_tamanho_letra' => $request->cd_tamanho_letra
-            ]);
-
-        }
+        $imgsId = [];
+        $cont = 0;
 
         foreach ($localImagesPath as $key => $dbImage) {
-
 
             try {
 
@@ -258,22 +217,36 @@ class ProductController extends Controller
             }
             catch (Exception $e) {
 
+                if ($cont > 0) {
+
+                    foreach ($cont as $c) {
+
+                        Img::destroy($imgsId[$c]);
+
+                    }
+
+                }
+
                 DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('embalagem')->where('cd_embalagem', '=', $request->cd_embalagem)->delete();
                 DB::table('produto_sku')->where('cd_nr_sku', '=', $request->cd_sku)->delete();
                 DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
                 Product::destroy($produto->cd_produto);
 
-                return redirect()->back()->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
             finally {
 
                 $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
+                $imgsId[$key] = $imgs[$key]->cd_img;
+                $cont += 1;
 
             }
 
         }
+
+        $imgsId = [];
+        $cont = 0;
 
         foreach ($imgs as $key => $img) {
 
@@ -286,25 +259,40 @@ class ProductController extends Controller
 
             } catch (Exception $e) {
 
-                Img::destroy($img->cd_img);
+                if ($cont > 0) {
+
+                    foreach ($cont as $c) {
+
+                        Img::destroy($imgsId[$c]);
+                        DB::table('sku_produto_img')->where('cd_img', '=', $imgsId[$c])->delete();
+
+                    }
+
+                }
+
                 DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('embalagem')->where('cd_embalagem', '=', $request->cd_embalagem)->delete();
                 DB::table('produto_sku')->where('cd_nr_sku', '=', $request->cd_sku)->delete();
                 DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
                 Product::destroy($produto->cd_produto);
 
-                return redirect()->back()->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+            }
+            finally {
+
+                $imgsId[$key] = $imgs[$key]->cd_img;
+                $cont += 1;
 
             }
 
         }
 
-        return redirect()->route('product.variation.page')->with('success', 'Produto principal cadastrado com sucesso');
+        return redirect()->route('admin.listProd')->with('success', 'Produto principal cadastrado com sucesso');
 
     }
 
     //Cadastrar variação do produto
-    public function cadastrarVariacaoProduto(ProductModalRequest $request)
+    public function cadastrarVariacaoProduto(ProductVariationRequest $request)
     {
 
         dd($request->all());
@@ -334,21 +322,35 @@ class ProductController extends Controller
 //            ->where('cd_sub_categoria', '=', $request->cd_subcategoria_variacao)
 //            ->first();
 
-        //Salva o produto no banco
-        ProductVariation::create([
+        //Tenta cadastrar o produto no banco e captura o erro caso ocorra
+        try {
 
-            'cd_ean_variacao' => $request->cd_ean_variacao,
-            'nm_produto_variacao' => $request->nm_produto_variacao,
-            'ds_produto_variacao' => $request->ds_produto_variacao,
-            'vl_produto_variacao' => $request->vl_produto_variacao,
-            'cd_status_produto_variacao' => $status,
-            'qt_produto_variacao' => $request->qt_produto_variacao,
-            'cd_produto_principal' => $request->cd_produto_principal
+            //Salva o produto no banco
+            ProductVariation::create([
 
-        ]);
+                'cd_ean_variacao' => $request->cd_ean_variacao,
+                'nm_produto_variacao' => $request->nm_produto_variacao,
+                'ds_produto_variacao' => $request->ds_produto_variacao,
+                'vl_produto_variacao' => $request->vl_produto_variacao,
+                'cd_status_produto_variacao' => $status,
+                'qt_produto_variacao' => $request->qt_produto_variacao,
+                'cd_produto_principal' => $request->cd_produto_principal
 
-        //Pega o último id do produto cadastrado
-        $produtoVariacao = ProductVariation::orderBy('cd_produto_variacao', 'DESC')->first();
+            ]);
+
+        }
+        catch (\Exception $e) {
+
+            //dd($e->getMessage());
+            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+        }
+        finally {
+
+            //Pega o último id do produto cadastrado
+            $produtoVariacao = ProductVariation::orderBy('cd_produto', 'DESC')->first();
+
+        }
 
 //        //Insere os ids do produto e id da tabela de ligação de categoria/subcategoria
 //        DB::table('produto_categoria_subcat')->insert([
@@ -356,13 +358,139 @@ class ProductController extends Controller
 //            'cd_categoria_subcat' => $prod_cat_subcat->cd_categoria_subcat
 //        ]);
 
+        try {
+
+            //Salva na tabela de ligação Produto/SKU
+            DB::table('produto_sku')->insert([
+                'cd_nr_sku' => $request->cd_sku_variacao,
+                'cd_produto' => $produtoVariacao->cd_produto
+            ]);
+
+        }
+        catch (\Exception $e) {
+
+            DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+            ProductVariation::destroy($produtoVariacao->cd_produto);
+
+            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+        }
+        finally {
+
+            $SKU = DB::table('produto_sku')->select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
+
+        }
+
+        try {
+
+            DB::table('produto_sku_variacao')->insert([
+                'cd_produto_sku_variacao' => $request->cd_sku_variacao,
+                'cd_produto' => $request->cd_produto_principal,
+                'cd_sku' => $SKU->cd_sku
+            ]);
+
+        }
+        catch (\Exception $e) {
+
+            DB::table('produto_sku')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+            DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+            ProductVariation::destroy($produtoVariacao->cd_produto);
+
+            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+        }
+
+        try {
+
+            DB::table('sku_produto_embalagem')->insert([
+                'cd_sku' => $SKU->cd_sku,
+                'cd_embalagem' => $request->cd_embalagem
+            ]);
+
+        }
+        catch (\Exception $e) {
+
+            DB::table('produto_sku')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+            DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+            Product::destroy($produtoVariacao->cd_produto);
+
+            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+        }
+
+        try {
+
+            DB::table('produto_cor')->insert([
+                'cd_sku' => $SKU->cd_sku,
+                'cd_cor' => $request->cd_cor_variacao
+            ]);
+
+        }
+        catch (\Exception $e) {
+
+            DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+            DB::table('produto_sku')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+            DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+            Product::destroy($produtoVariacao->cd_produto);
+
+            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+        }
+
+        if ($request->cd_tamanho_letra_variacao == null) {
+
+            try {
+
+                DB::table('produto_tamanho_num')->insert([
+                    'cd_sku' => $SKU->cd_sku,
+                    'cd_tamanho_num' => $request->cd_tamanho_num_variacao
+                ]);
+
+            }
+            catch (\Exception $e) {
+
+                DB::table('produto_cor')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+                DB::table('produto_sku')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+                Product::destroy($produtoVariacao->cd_produto);
+
+                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+            }
+
+        }
+        else {
+
+            try {
+
+                DB::table('produto_tamanho_letra')->insert([
+                    'cd_sku' => $SKU->cd_sku,
+                    'cd_tamanho_letra' => $request->cd_tamanho_letra_variacao
+                ]);
+
+            }
+            catch (\Exception $e) {
+
+                DB::table('produto_cor')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+                DB::table('produto_sku')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+                Product::destroy($produtoVariacao->cd_produto);
+
+                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+            }
+
+        }
+
         //Cria o caminho físico das imagens
         $images = $request->images_variacao;
         $imagePath = $this->pastaProduto($category->nm_categoria, $subcategory->nm_sub_categoria);
         $dbPath = $category->nm_categoria . '/' . $subcategory->nm_sub_categoria;
 
         //Salva fisicamente a imagem e seta o caminho para ser salvo no banco
-        if ($request->hasFile('images_modal')) {
+        if ($request->hasFile('images_variacao')) {
 
             foreach ($images as $key => $image) {
 
@@ -379,84 +507,101 @@ class ProductController extends Controller
 
         }
 
-        DB::table('produto_sku')->insert([
-            'cd_nr_sku' => $request->cd_sku_variacao,
-            'cd_produto' => $produtoVariacao->cd_produto_variacao
-        ]);
-
-        $SKU = DB::table('produto_sku')->select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
-
-        DB::table('produto_sku_variacao')->insert([
-            'cd_produto_sku_variacao' => $request->cd_sku_variacao,
-            'cd_produto' => $request->cd_produto_principal,
-            'cd_sku' => $SKU->cd_sku
-        ]);
-
-        Package::create([
-            'ds_largura' => $request->ds_largura_variacao,
-            'ds_altura' => $request->ds_altura_variacao,
-            'ds_peso' => $request->ds_peso_variacao
-        ]);
-
-        $embalagem = Package::orderBy('cd_embalagem', 'DESC')->first();
-
-        DB::table('sku_produto_embalagem')->insert([
-            'cd_sku' => $SKU->cd_sku,
-            'cd_embalagem' => $embalagem->cd_embalagem
-        ]);
-
-        DB::table('produto_cor')->insert([
-            'cd_sku' => $SKU->cd_sku,
-            'cd_cor' => $request->cd_cor_variacao
-        ]);
-
-        if ($request->cd_tamanho_letra_variacao == null) {
-
-            DB::table('produto_tamanho_num')->insert([
-                'cd_sku' => $SKU->cd_sku,
-                'cd_tamanho_num' => $request->cd_tamanho_num_variacao
-            ]);
-
-        }
-        else {
-
-            DB::table('produto_tamanho_letra')->insert([
-                'cd_sku' => $SKU->cd_sku,
-                'cd_tamanho_letra' => $request->cd_tamanho_letra_variacao
-            ]);
-
-        }
+        $imgsId = [];
+        $cont = 0;
 
         foreach ($localImagesPath as $key => $dbImage) {
 
-            if ($key == 0) {
+            try {
 
-                Img::create([
-                    'im_produto' => $dbImage,
-                    'ic_img_principal' => 1
-                ]);
+                if ($key == 0) {
+
+                    Img::create([
+                        'im_produto' => $dbImage,
+                        'ic_img_principal' => 1
+                    ]);
+
+                }
+                else
+                {
+
+                    Img::create([
+                        'im_produto' => $dbImage,
+                        'ic_img_principal' => 0
+                    ]);
+
+                }
 
             }
-            else
-            {
+            catch (Exception $e) {
 
-                Img::create([
-                    'im_produto' => $dbImage,
-                    'ic_img_principal' => 0
-                ]);
+                if ($cont > 0) {
+
+                    foreach ($cont as $c) {
+
+                        Img::destroy($imgsId[$c]);
+
+                    }
+
+                }
+
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+                DB::table('produto_sku')->where('cd_nr_sku', '=', $request->cd_sku)->delete();
+                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+                Product::destroy($produtoVariacao->cd_produto);
+
+                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
+            finally {
 
-            $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
+                $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
+                $imgsId[$key] = $imgs[$key]->cd_img;
+                $cont += 1;
+
+            }
 
         }
 
-        foreach ($imgs as $img) {
+        $imgsId = [];
+        $cont = 0;
 
-            DB::table('sku_produto_img')->insert([
-                'cd_sku' => $SKU->cd_sku,
-                'cd_img' => $img->cd_img
-            ]);
+        foreach ($imgs as $key => $img) {
+
+            try {
+
+                DB::table('sku_produto_img')->insert([
+                    'cd_sku' => $SKU->cd_sku,
+                    'cd_img' => $img->cd_img
+                ]);
+
+            } catch (Exception $e) {
+
+                if ($cont > 0) {
+
+                    foreach ($cont as $c) {
+
+                        Img::destroy($imgsId[$c]);
+                        DB::table('sku_produto_img')->where('cd_img', '=', $imgsId[$c])->delete();
+
+                    }
+
+                }
+
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
+                DB::table('produto_sku')->where('cd_nr_sku', '=', $request->cd_sku)->delete();
+                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+                Product::destroy($produtoVariacao->cd_produto);
+
+                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+            }
+            finally {
+
+                $imgsId[$key] = $imgs[$key]->cd_img;
+                $cont += 1;
+
+            }
 
         }
 

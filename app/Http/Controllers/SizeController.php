@@ -6,11 +6,16 @@ use App\Http\Requests\LetterSizeRequest;
 use App\Http\Requests\NumberSizeRequest;
 use App\LetterSize;
 use App\NumberSize;
+use Monolog\Handler\FingersCrossed\ActivationStrategyInterface;
 
 class SizeController extends Controller
 {
     public function showSizeForm() {
-        return view('pages.admin.cadTamanho');
+
+        $tLetra = LetterSize::orderBy('cd_tamanho_letra')->get();
+        $tNum = NumberSize::orderBy('nm_tamanho_num')->get();
+
+        return view('pages.admin.cadTamanho', compact('tLetra', 'tNum'));
     }
 
     public function cadastrarNovoTamanhoLetra(LetterSizeRequest $request) {

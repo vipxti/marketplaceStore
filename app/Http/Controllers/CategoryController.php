@@ -34,8 +34,6 @@ class CategoryController extends Controller
 
     public function cadastrarCategoria(CategoryRequest $request) {
 
-        //dd($request->all());
-
         $cat = Category::create([
             'nm_categoria' => $request->nm_categoria
         ]);
@@ -51,7 +49,7 @@ class CategoryController extends Controller
         //dd($request->all());
 
         $subcat = SubCategory::create([
-            'nm_sub_categoria' => $request->nm_sub_category
+            'nm_sub_categoria' => $request->nm_sub_categoria
         ]);
 
         if ($subcat) {
@@ -61,6 +59,8 @@ class CategoryController extends Controller
     }
 
     public function associarCategoriaSubCategoria(CategorySubcategoryRequest $request) {
+
+        //dd($request->all());
 
         foreach ($request->cd_sub_categorias as $cd_subcategoria) {
 

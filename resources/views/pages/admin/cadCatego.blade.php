@@ -90,15 +90,13 @@
                     </div>
 
                     <div class="box-body">
-                        <form id="fCat" class="form-horizontal" action="{{ route('category.save') }}" method="post">
-                            {{ csrf_field() }}
 
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Sub-Categoria</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-tags"></i></span>
-                                        <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_subcategoria" >
+                                        <select id="subcategorias" class="form-control select2" style="width: 100%;" name="cd_sub_categoria" >
                                             <option value=""></option>
 
                                             @foreach($subcategorias as $subcategoria)
@@ -112,12 +110,14 @@
                                 </div>
                             </div>
 
+                        <form id="fCat" class="form-horizontal" action="{{ route('subcategory.save') }}" method="post">
+                            {{ csrf_field() }}
+
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Alterar Sub-Categoria</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="hidden" name="catId">
-                                        <input type="text" class="form-control" name="nm_sub_category" maxlength="35">
+                                        <input type="text" class="form-control" name="nm_sub_categoria" maxlength="35">
                                     </div>
                                 </div>
                             </div>
@@ -134,8 +134,6 @@
         <!-- Cadastrar Categoria -->
         <section class="content">
 
-            @include('partials.admin._alerts')
-
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -148,6 +146,7 @@
                     </div>
 
                     <div class="box-body">
+
                         <form id="fCat" class="form-horizontal" action="{{ route('catsubcat.associate') }}" method="post">
                             {{ csrf_field() }}
 
@@ -172,11 +171,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
-
-
-                        <form id="fCat" class="form-horizontal" action="{{ route('catsubcat.associate') }}" method="post">
-                            {{ csrf_field() }}
 
                             <div class="col-md-4">
                                 <div>
@@ -199,10 +193,11 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                            </div>
                         </form>
-                        <div class="col-md-12 text-right">
-                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
-                        </div>
                     </div>
                 </div>
             </div>

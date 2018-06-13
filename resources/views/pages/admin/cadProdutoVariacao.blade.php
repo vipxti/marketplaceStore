@@ -254,6 +254,8 @@
 
                                         <input type="hidden" id="codProduto" class="form-control select2 campo_subcat_modal" style="width: 100%;" value="{{ $ultimoProduto[0]->cd_produto }}" name="cd_produto_principal" >
 
+                                        <input type="hidden" id="codEmbalagem" class="form-control select2 campo_subcat_modal" style="width: 100%;" value="{{ $ultimoProduto[0]->cd_embalagem }}" name="cd_embalagem_variacao" >
+
                                     </tr>
                                 </table>
                                 <br>
@@ -339,46 +341,6 @@
                                     </tr>
                                 </table>
                                 <br>
-
-                                <!-- Laegura, Altura e Peso (Modal) -->
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td>
-                                            <div class="form-group">
-                                                <label>Largura</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                                    <input type="number" class="form-control" name="ds_largura_variacao" value="{{ $ultimoProduto[0]->ds_largura }}" min="0">
-                                                </div>
-                                                <i class="msg_largura"></i>
-                                            </div>
-                                        </td>
-                                        <td>&nbsp;&nbsp;&nbsp;</td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <label>Altura</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                                    <input type="number" class="form-control" name="ds_altura_variacao" value="{{ $ultimoProduto[0]->ds_altura }}" min="0">
-                                                </div>
-                                                <i class="msg_altura"></i>
-                                            </div>
-                                        </td>
-                                        <td>&nbsp;&nbsp;&nbsp;</td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <label>Peso (g)</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                                    <input type="number" class="form-control" name="ds_peso_variacao" value="{{ $ultimoProduto[0]->ds_peso }}" min="0">
-                                                </div>
-                                                <i class="msg_preco"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
 
                                 <!-- Descrição (Modal)  -->
                                 <table style="width: 100%">

@@ -24,7 +24,7 @@ class SubCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'nm_sub_category' => 'required|string'
+            'nm_sub_categoria' => 'required|string'
         ];
     }
 }

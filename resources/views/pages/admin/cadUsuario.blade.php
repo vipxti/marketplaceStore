@@ -75,7 +75,7 @@
 
         <!-- CADASTRO USUARIO -->
         <section class="content">
-            <div class="box box-primary">
+            <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Cadastrar</h3>
                     <div class="box-tools pull-right">
@@ -88,18 +88,17 @@
                     <form action="#" method="post">
                         {{ csrf_field() }}
                         <div class="col-md-12">
-                        <div class="col-md-3">
+                            <div class="col-md-3">
                             <div class="form-group">
                                 <label>Celular 1</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-                                   <!-- <input type="text" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>-->
                                     <input type="text" id="campo_cel1" class="form-control" name="cd_celular1" required
                                     data-inputmask='"mask": "(99) 99999-9999"' data-mask >
                                 </div>
                             </div>
                         </div>
-                         <div class="col-md-3">
+                            <div class="col-md-3">
                              <div class="form-group">
                                  <label>Celular 2</label>
                                  <div class="input-group">
@@ -109,7 +108,7 @@
                                  </div>
                              </div>
                          </div>
-                     </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -138,9 +137,9 @@
                                     </div>
                                 </div>
                             </div>
-                     </div>
+                        </div>
                         <div class="col-md-12">
-                         <div class="col-md-3">
+                            <div class="col-md-3">
                              <div class="form-group">
                                  <label>Numero</label>
                                  <div class="input-group">
@@ -149,8 +148,6 @@
                                  </div>
                              </div>
                          </div>
-
-
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Complemento</label>
@@ -160,8 +157,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                         <div class="col-md-4">
+                            <div class="col-md-4">
                              <div class="form-group">
                                  <label>Ponto de Referencia</label>
                                  <div class="input-group">
@@ -170,7 +166,7 @@
                                  </div>
                              </div>
                          </div>
-                     </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="col-md-3">
                                 <label>Bairro</label>
@@ -192,7 +188,7 @@
                             <div class="form-group">
                                 <label>Foto Usuário</label>
                                 <div class="input-group"><div class="file-loading">
-                                        <input id="input-41" name="input41[]" type="file" multiple>
+                                        <input id="input-41" name="image" type="file">
                                     </div>
                                 </div>
                             </div>

@@ -37,8 +37,6 @@ class ProductModalRequest extends FormRequest
             'cd_sub_categoria_variacao' => 'required',
             'cd_cor_variacao' => 'required',
             'ds_altura_variacao' => 'required',
-            'ds_largura_variacao' => 'required',
-            'ds_peso_variacao' => 'required',
             'status_variacao' => 'required',
             'images_variacao.*' => 'required|image|mimes:jpeg,bmp,png'
         ];
