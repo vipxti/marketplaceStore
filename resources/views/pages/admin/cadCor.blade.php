@@ -109,7 +109,7 @@
                                 <td>{{ $cor->cd_cor }}</td>
                                 <td id="nome_cor">{{ $cor->nm_cor }}</td>
                                 <td>
-                                    <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" alt="Editar" style="color: #367fa9"></button>
+                                    <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
                                     <button id="btn_salvar" class="fa fa-check btn btn-outline-success" style="color: #008d4c; display: none"></button>
                                     <button id="btn_cancelar" class="fa fa-remove btn btn-outline-danger" style="color: #cc0000; display: none"></button>
                                 </td>
@@ -167,7 +167,8 @@
 
                 console.log(campoTR.find("#btn_salvar"));
                 //$('.irmao').parent().siblings().find('td:eq(2)').attr("disabled", "disabled");
-                $('.irmao').parent().siblings().find('td:eq(2)').children().attr("disabled", "disabled");
+                //$('.irmao').parent().siblings().find('td:eq(2)').children().attr("disabled", "disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").attr("disabled", "disabled");
                 //$('.irmao').parent().siblings().find('td:eq(2)').removeAttr("id");
 
                 //console.log($('.irmao').parent().siblings().find('td:eq(2)').children());
@@ -187,8 +188,9 @@
 
                 campo_cor.remove('#caixa_editar');
 
-                $('.irmao').parent().siblings().find('td:eq(2)').children().removeAttr("disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
                 trocaBotoes(campoTR);
+                console.log();
             });
 
 
@@ -200,7 +202,7 @@
 
                 campo_cor.text(conteudoOriginal);
 
-                $('.irmao').parent().siblings().find('td:eq(2)').children().removeAttr("disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
                 trocaBotoes(campoTR);
             });
 
