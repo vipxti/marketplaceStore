@@ -1,7 +1,17 @@
 @extends('layouts.admin.app')
 
 @section('content')
-
+    <style type="text/css">
+        /*deixar botão transparente*/
+        button {
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+        }
+    </style>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @include('partials.admin._alerts')
@@ -97,25 +107,22 @@
                     <table class="table" id="table">
                         <thead>
                         <tr>
-                            <th style="text-align: right">Código</th>
-                            <th style="text-align: right">Cor</th>
+                            <th class="text-center">Código</th>
+                            <th class="text-center">Cor</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($cores as $cor)
 
-                            <tr style="text-align: right">
+                            <tr class="text-center">
                                 <td>{{ $cor->cd_cor }}</td>
                                 <td id="nome_cor">{{ $cor->nm_cor }}</td>
-                                <td class="btn btn-outline-warning" style="color: #367fa9">
-                                    <button id="btn_editar" class="fa fa-pencil"></button>
-                                </td>
-                                <td id="btn_salvar" class="btn btn-outline-success" style="color: #008d4c; display: none">
-                                    <i class="fa fa-check"></i>
-                                </td>
-                                <td id="btn_cancelar" class="btn btn-outline-danger" style="color: #cc0000; display: none">
-                                    <i class="fa  fa-remove"></i>
+                                <td class="text-right">
+                                    <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
+                                    <button id="btn_salvar" class="fa fa-check btn btn-outline-success" style="color: #008d4c; display: none"></button>
+                                    <button id="btn_cancelar" class="fa fa-remove btn btn-outline-danger" style="color: #cc0000; display: none"></button>
+                                    <button id="btn_excluir" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                 </td>
                             </tr>
 
@@ -149,6 +156,12 @@
 
 
         $(document).ready(function(){
+
+            //cor branco
+            $("table tbody tr:odd").css("background-color", "#fff");
+            //cor cinza
+            $("table tbody tr:even").css("background-color", "#f5f5f5");
+
             var conteudoOriginal;
 
             //Ação de clicar no editar, pegando o conteudo e criando o input para edição
@@ -159,30 +172,27 @@
                 conteudoOriginal = conteudo;
 
                 var campo_cor = campoTR.find('#nome_cor');
-                campo_cor.addClass("irmao");
                 campo_cor.text("");
 
-                var campo_input = "<input id='caixa_editar' type='text' minlength='40' ' value='" + conteudoOriginal + "'></input>";
+                var campo_input = "<input id='caixa_editar' type='text' maxlength='40' ' value='" + conteudoOriginal + "'></input>";
                 campo_cor.append(campo_input);
                 campoTR.find('#caixa_editar').focus();
 
                 trocaBotoes(campoTR);
 
-
-                //$('.irmao').parent().siblings().find('td:eq(2)').attr("disabled", "disabled");
-                $('.irmao').parent().siblings().find('td:eq(2)').children().attr("disabled", "disabled");
-                //$('.irmao').parent().siblings().find('td:eq(2)').removeAttr("id");
-
-                //console.log($('.irmao').parent().siblings().find('td:eq(2)').children());
+                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").attr("disabled", "disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").attr("disabled", "disabled");
             });
 
             //Ação que salva o valor digitado dentro do input, e coloca o novo valor dentro do TD
-            $('td#btn_salvar').click(function(){
-                var campoTR = $(this).parent();
+            $('button#btn_salvar').click(function(){
+                var campoTR = $(this).parent().parent();
                 var conteudoAtualizado = campoTR.find("#caixa_editar").val();
                 var campo_cor = campoTR.find("td:eq(1)");
 
                 if(conteudoAtualizado.length == 0){
+                    $("#caixa_editar").focus();
+
                     return;
                 }
 
@@ -190,20 +200,22 @@
 
                 campo_cor.remove('#caixa_editar');
 
-                $('.irmao').parent().siblings().find('td:eq(2)').children().removeAttr("disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").removeAttr("disabled");
                 trocaBotoes(campoTR);
             });
 
 
             //Ação para cancelar as mudanças feitas dentro do input
-            $('td#btn_cancelar').click(function(){
-                var campoTR = $(this).parent();
+            $('button#btn_cancelar').click(function(){
+                var campoTR = $(this).parent().parent();
                 var campo_cor = campoTR.find("td:eq(1)");
                 campo_cor.remove("#caixa_editar");
 
                 campo_cor.text(conteudoOriginal);
 
-                $('.irmao').parent().siblings().find('td:eq(2)').children().removeAttr("disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
+                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").removeAttr("disabled");
                 trocaBotoes(campoTR);
             });
 
@@ -212,11 +224,10 @@
                 campoTR.find('#btn_editar').toggle();
                 campoTR.find('#btn_salvar').toggle();
                 campoTR.find('#btn_cancelar').toggle();
+                campoTR.find('#btn_excluir').toggle();
             }
 
         });
     </script>
-
-
 
 @stop
