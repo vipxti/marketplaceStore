@@ -156,7 +156,7 @@
                                     <th class="text-center">Tamanho</th>
                                 </tr>
                             </thead>
-                            <tbody id="tamanhos">
+                            <tbody id="tam_num">
                                 @foreach($tNum as $num)
                                     <tr class="text-center">
                                         <td>{{$num->cd_tamanho_num}}</td>
@@ -197,7 +197,7 @@
                                     <th class="text-center">Tamanho</th>
                                 </tr>
                             </thead>
-                            <tbody id="tamanhos">
+                            <tbody id="tam_letra">
                                 @foreach($tLetra as $letra)
                                     <tr class="text-center">
                                         <td>{{$letra->cd_tamanho_letra}}</td>
@@ -226,9 +226,13 @@
         $(document).ready(function(){
 
             //cor branco
-            $("table tbody#tamanhos tr:odd").css("background-color", "#fff");
+            $("table tbody#tam_letra tr:odd").css("background-color", "#fff");
             //cor cinza
-            $("table tbody#tamanhos tr:even").css("background-color", "#f5f5f5");
+            $("table tbody#tam_letra tr:even").css("background-color", "#f5f5f5");
+            //cor branco
+            $("table tbody#tam_num tr:odd").css("background-color", "#fff");
+            //cor cinza
+            $("table tbody#tam_num tr:even").css("background-color", "#f5f5f5");
 
             var conteudoOriginal;
 
