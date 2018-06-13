@@ -110,7 +110,7 @@
 
 
             <div class="col-md-6">
-                <div class="box box-primary">
+                <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Tamanho por Número Cadastrado</h3>
                         <div class="box-tools">
@@ -133,10 +133,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>#</td>
-                                    <td>#</td>
-                                </tr>
+                                @foreach($tNum as $num)
+                                    <tr>
+                                        <td>{{$num->cd_tamanho_num}}</td>
+                                        <td>{{$num->nm_tamanho_num}}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
 
@@ -145,7 +147,7 @@
             </div>
 
             <div class="col-md-6">
-                <div class="box box-primary">
+                <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Tamanho por Letra Cadastrado</h3>
                         <div class="box-tools">
@@ -156,11 +158,6 @@
                     </div>
 
                     <div class="box-body">
-                        <!--<form action="{{ route('menu.edit') }}" method="post">
-                            {{ csrf_field() }}
-
-
-                        </form>-->
                         <table class="table" id="table">
                             <thead>
                                 <tr>
@@ -169,10 +166,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>#</td>
-                                    <td>#</td>
-                                </tr>
+                                @foreach($tLetra as $letra)
+                                    <tr>
+                                        <td>{{$letra->cd_tamanho_letra}}</td>
+                                        <td>{{$letra->nm_tamanho_letra}}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
 
