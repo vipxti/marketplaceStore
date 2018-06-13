@@ -155,7 +155,6 @@
                 conteudoOriginal = conteudo;
 
                 var campo_cor = campoTR.find('#nome_cor');
-                campo_cor.addClass("irmao");
                 campo_cor.text("");
 
                 var campo_input = "<input id='caixa_editar' type='text' minlength='40' ' value='" + conteudoOriginal + "'></input>";
@@ -163,7 +162,6 @@
                 campoTR.find('#caixa_editar').focus();
 
                 trocaBotoes(campoTR);
-
 
                 console.log(campoTR.find("#btn_salvar"));
                 //$('.irmao').parent().siblings().find('td:eq(2)').attr("disabled", "disabled");
