@@ -1,3 +1,4 @@
+<script src="{{asset('js/app/popper.min.js')}}"></script>
 <header class="header_area">
     <!-- Top Header Area Start -->
     <div class="top_header_area">
@@ -49,9 +50,38 @@
                                 </ul>
                             </div>
                             <div class="header-right-side-menu ml-15">
-                                <a href="{{ route('admin.login') }}">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                </a>
+                                <div class="dropdown show">
+                                    <a href="#" class="dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Cadastrar</a>
+                                        <a class="dropdown-item" href="#">Minha Conta</a>
+                                        <a class="dropdown-item" href="#">Meus Pedidos</a>
+                                    </div>
+
+                                </div>
+
+
+                                <!--<ul class="nav navbar-nav">
+                                    <li class="dropdown">
+                                        <!--<a href="{{ route('admin.login') }}">
+                                        <a href="#">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                </ul>-->
+                                  <!-- <div class="dropdown show">
+                                       <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                           Dropdown link
+                                       </a>
+
+                                       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                           <a class="dropdown-item" href="#">Action</a>
+                                           <a class="dropdown-item" href="#">Another action</a>
+                                           <a class="dropdown-item" href="#">Something else here</a>
+                                       </div>
+                                   </div>-->
                             </div>
                         </div>
                     </div>

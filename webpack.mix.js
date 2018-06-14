@@ -33,11 +33,11 @@ mix.styles([
 //Compiled js files for app
 mix.scripts([
     'public/js/app/jquery/jquery-2.2.4.min.js',
+    'public/js/app/popper.min.js',
     'public/js/app/bootstrap.min.js',
     'public/js/app/wow.min.js',
     'public/js/app/active.js',
     'public/js/app/plugins.js',
-    'public/js/app/popper.min.js',
     'public/js/app/web-animations.min.js'
 ], 'public/js/app-js.js');
 
