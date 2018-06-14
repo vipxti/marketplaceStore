@@ -61,6 +61,9 @@ Route::prefix('admin')->group(function () {
     //Faz o logout do usuário
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');
 
+    //Página Embalagem
+    Route::get('/cadEmbalagem', 'PackageController@mostrarPaginaEmbalagem')->name('admin.cadEmbalagem');
+
     //Resetar senha
     Route::post('/password/email', 'Auth\UserForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
     Route::get('/password/reset', 'Auth\UserForgotPasswordController@showLinkRequestForm')->name('admin.password.request');

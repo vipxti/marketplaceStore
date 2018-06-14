@@ -111,7 +111,7 @@
                                                 <label>Tamanho (Letra)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
-                                                    <input type="text" class="form-control" name="nm_tamanho_letra" maxlength="4">
+                                                    <input type="text" class="form-control" name="nm_tamanho_letra">
                                                 </div>
                                             </div>
                                         </div>

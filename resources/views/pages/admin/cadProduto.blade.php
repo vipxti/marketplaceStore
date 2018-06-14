@@ -155,7 +155,7 @@
                                 </table>
                             <br>
 
-                            <!-- Laegura, Altura e Peso -->
+                            <!-- Largura, Altura e Peso -->
                             <table style="width: 65%">
                                 <tr>
                                     <td>

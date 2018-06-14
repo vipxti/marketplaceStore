@@ -83,7 +83,6 @@
                 <div class="box-body">
 
                     <!-- Botão pesquisar -->
-
                     <div style="padding-left: 70%">
                         <div>
                             <input type="search" id="search" value="" class="form-control">

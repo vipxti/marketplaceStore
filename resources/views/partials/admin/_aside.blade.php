@@ -48,6 +48,7 @@
                             <li><a href="{{route('admin.cadCatego')}}"><i class="fa fa-tag"></i>Cadastrar Categorias</a></li>
                             <li><a href="{{route('admin.cadCor')}}"><i class="fa fa-paint-brush"></i>Cadastrar Cores</a></li>
                             <li><a href="{{route('admin.cadTamanho')}}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanhos</a></li>
+                            <li><a href="{{route('admin.cadEmbalagem')}}"><i class="fa fa-cube"></i>Cadastrar Embalagem</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
+    public function mostrarPaginaEmbalagem(){
+        return view('pages.admin.cadEmbalagem');
+    }
+
     public function cadastrarEmbalagem(PackageRequest $request) {
 
         Package::create([

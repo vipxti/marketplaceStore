@@ -6,10 +6,12 @@
                 <div class="col-12 col-lg-7">
                     <div class="top_single_area d-flex align-items-center">
                         <!-- Logo Area -->
+
+
                         <div class="top_logo">
                             <a href="#"><img src="{{ asset('img/app/core-img/logo.png') }}" alt=""></a>
                         </div>
-                        <!-- Cart & Menu Area -->
+                        <!--Carrinho e Menu Area -->
                         <div class="header-cart-menu d-flex align-items-center ml-auto">
                             <!-- Cart Area -->
                             <div class="cart">
@@ -152,7 +154,7 @@
                     </div>
                     <!-- Help Line -->
                     <div class="help-line">
-                        <a href="tel:+346573556778"><i class="fa fa-whatsapp"></i>&nbsp &nbsp(13) 98858-6788</a>
+                        <a href="https://api.whatsapp.com/send?phone=5513988825540&text=Olá" target="_blank"><i class="fa fa-whatsapp"></i>&nbsp &nbsp(13) 98858-6788</a>
                     </div>
                 </div>
             </div>
