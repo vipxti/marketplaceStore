@@ -53,7 +53,7 @@ class ProductController extends Controller
     public function cadastrarProduto(ProductRequest $request)
     {
 
-        dd($request->all());
+        //dd($request->all());
 
         if ($request->filled('status') == 'on') {
 
@@ -118,6 +118,7 @@ class ProductController extends Controller
         catch (\Exception $e) {
 
             //dd($e->getMessage());
+            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
@@ -140,6 +141,7 @@ class ProductController extends Controller
         catch (\Exception $e){
 
             //dd($e->getMessage());
+            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
             Product::destroy($produto->cd_produto);
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 

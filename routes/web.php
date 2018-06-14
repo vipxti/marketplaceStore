@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@showIndexPage')->name('index');
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
     Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
@@ -23,7 +23,6 @@ Route::prefix('admin')->group(function () {
 
     //Preenche combobox do form cadastro de produtos
     Route::get('/cadProd', 'ProductController@showProductPage')->name('admin.cadProd');
-
     //Form categoria/subcategoria e cadastro
     Route::get('/cadCatego', 'CategoryController@showCategoryForm')->name('admin.cadCatego');
     Route::post('/category', 'CategoryController@cadastrarCategoria')->name('category.save');
@@ -54,8 +53,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/indexConfigproduto', 'PageController@showConfigProductPage')->name('admin.indexConfigproduto');
 
-
-    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
+    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard');
     Route::get('/listProd', 'ProductController@listaProduto')->name('admin.listProd');
 
     //Faz o logout do usuário
