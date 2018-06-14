@@ -55,7 +55,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/indexConfigproduto', 'PageController@showConfigProductPage')->name('admin.indexConfigproduto');
 
 
-    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')/*->middleware('auth:admin')*/;
+    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
     Route::get('/listProd', 'ProductController@listaProduto')->name('admin.listProd');
 
     //Faz o logout do usuário
