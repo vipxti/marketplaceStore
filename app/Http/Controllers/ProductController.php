@@ -100,7 +100,7 @@ class ProductController extends Controller
 
         }
 
-        dd($sku);
+        //dd($sku);
 
         //Tenta cadastrar o produto no banco e captura o erro caso ocorra
         try {
