@@ -96,9 +96,11 @@ class ProductController extends Controller
         }
         finally {
 
-            $sku = DB::table('sku')->select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
+            $sku = DB::table('sku')->orderBy('cd_sku', 'DESC')->first();
 
         }
+
+        dd($sku);
 
         //Tenta cadastrar o produto no banco e captura o erro caso ocorra
         try {
@@ -128,6 +130,8 @@ class ProductController extends Controller
             $produto = Product::orderBy('cd_produto', 'DESC')->first();
 
         }
+
+        dd('Ok2');
 
         try {
 
@@ -226,7 +230,7 @@ class ProductController extends Controller
 
                 }
 
-                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $cd_sku)->delete();
                 DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
                 Product::destroy($produto->cd_produto);
@@ -269,7 +273,7 @@ class ProductController extends Controller
 
                 }
 
-                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $cd_sku)->delete();
                 DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
                 Product::destroy($produto->cd_produto);

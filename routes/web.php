@@ -14,53 +14,53 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@showIndexPage')->name('index');
 
-Route::prefix('admin')->middleware('auth:admin')->group(function () {
+Route::prefix('admin')->group(function () {
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
-    Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
-    Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
-    Route::post('/register', 'Auth\UserRegisterController@create')->name('admin.register.submit');
-    Route::get('/register/{cpf_cnpj}', 'Auth\UserRegisterController@verificaCpfCnpj');
+    Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit')->middleware('auth:admin');
+    Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register')->middleware('auth:admin');
+    Route::post('/register', 'Auth\UserRegisterController@create')->name('admin.register.submit')->middleware('auth:admin');
+    Route::get('/register/{cpf_cnpj}', 'Auth\UserRegisterController@verificaCpfCnpj')->middleware('auth:admin');
 
     //Preenche combobox do form cadastro de produtos
-    Route::get('/cadProd', 'ProductController@showProductPage')->name('admin.cadProd');
+    Route::get('/cadProd', 'ProductController@showProductPage')->name('admin.cadProd')->middleware('auth:admin');
     //Form categoria/subcategoria e cadastro
-    Route::get('/cadCatego', 'CategoryController@showCategoryForm')->name('admin.cadCatego');
-    Route::post('/category', 'CategoryController@cadastrarCategoria')->name('category.save');
-    Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory');
-    Route::post('/subcategory', 'CategoryController@cadastrarSubCategoria')->name('subcategory.save');
+    Route::get('/cadCatego', 'CategoryController@showCategoryForm')->name('admin.cadCatego')->middleware('auth:admin');
+    Route::post('/category', 'CategoryController@cadastrarCategoria')->name('category.save')->middleware('auth:admin');
+    Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory')->middleware('auth:admin');
+    Route::post('/subcategory', 'CategoryController@cadastrarSubCategoria')->name('subcategory.save')->middleware('auth:admin');
 
     //Associa categoria/subcategoria
-    Route::post('/catsubcat', 'CategoryController@associarCategoriaSubCategoria')->name('catsubcat.associate');
+    Route::post('/catsubcat', 'CategoryController@associarCategoriaSubCategoria')->name('catsubcat.associate')->middleware('auth:admin');
 
     //Form tamanho e cadastro
-    Route::get('/cadTamanho', 'SizeController@showSizeForm')->name('admin.cadTamanho');
-    Route::post('/tamanholetra', 'SizeController@cadastrarNovoTamanhoLetra')->name('lettersize.save');
-    Route::post('/tamanhonumero', 'SizeController@cadastrarNovoTamanhoNumero')->name('numbersize.save');
+    Route::get('/cadTamanho', 'SizeController@showSizeForm')->name('admin.cadTamanho')->middleware('auth:admin');
+    Route::post('/tamanholetra', 'SizeController@cadastrarNovoTamanhoLetra')->name('lettersize.save')->middleware('auth:admin');
+    Route::post('/tamanhonumero', 'SizeController@cadastrarNovoTamanhoNumero')->name('numbersize.save')->middleware('auth:admin');
 
     //Form cor e cadastro
-    Route::get('/cadCor', 'ColorController@showColorForm')->name('admin.cadCor');
-    Route::post('/cor', 'ColorController@cadastrarNovaCor')->name('color.save');
+    Route::get('/cadCor', 'ColorController@showColorForm')->name('admin.cadCor')->middleware('auth:admin');
+    Route::post('/cor', 'ColorController@cadastrarNovaCor')->name('color.save')->middleware('auth:admin');
 
-    Route::get('/cadUsuario', 'UserController@showUserForm')->name('usuario.dados');
+    Route::get('/cadUsuario', 'UserController@showUserForm')->name('usuario.dados')->middleware('auth:admin');
 
     //Edição do site
-    Route::get('/indexHotpost', 'PageController@showHotPostPage')->name('admin.indexHotpost');
-    Route::get('/indexBanner', 'PageController@showBannerPage')->name('admin.indexBanner');
+    Route::get('/indexHotpost', 'PageController@showHotPostPage')->name('admin.indexHotpost')->middleware('auth:admin');
+    Route::get('/indexBanner', 'PageController@showBannerPage')->name('admin.indexBanner')->middleware('auth:admin');
 
     //Editar menus
-    Route::get('/indexMenu', 'MenuController@showEditMenuPage')->name('admin.indexMenu');
-    Route::post('/editmenu', 'MenuController@saveMenus')->name('menu.edit');
+    Route::get('/indexMenu', 'MenuController@showEditMenuPage')->name('admin.indexMenu')->middleware('auth:admin');
+    Route::post('/editmenu', 'MenuController@saveMenus')->name('menu.edit')->middleware('auth:admin');
 
     Route::get('/indexConfigproduto', 'PageController@showConfigProductPage')->name('admin.indexConfigproduto');
 
-    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard');
-    Route::get('/listProd', 'ProductController@listaProduto')->name('admin.listProd');
+    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
+    Route::get('/listProd', 'ProductController@listaProduto')->name('admin.listProd')->middleware('auth:admin');
 
     //Faz o logout do usuário
-    Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');
+    Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout')->middleware('auth:admin');
 
     //Página Embalagem
-    Route::get('/cadEmbalagem', 'PackageController@mostrarPaginaEmbalagem')->name('admin.cadEmbalagem');
+    Route::get('/cadEmbalagem', 'PackageController@mostrarPaginaEmbalagem')->name('admin.cadEmbalagem')->middleware('auth:admin');
 
     //Resetar senha
     Route::post('/password/email', 'Auth\UserForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
