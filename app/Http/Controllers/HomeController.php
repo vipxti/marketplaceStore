@@ -14,8 +14,8 @@ class HomeController extends Controller
 
         //dd($produtos);
 
-        $imagemPrincipal = Product::join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
-                            ->join('sku_produto_img', 'produto_sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+        $imagemPrincipal = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+                            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
                             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
                             ->select('img_produto.im_produto')
                             ->where('img_produto.ic_img_principal', '=', 1)
