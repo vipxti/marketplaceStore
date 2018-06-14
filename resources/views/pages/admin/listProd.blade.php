@@ -72,7 +72,7 @@
                                         <td>{{ $produto->ds_produto }} </td>
                                         <td>{{ $produto->vl_produto }} </td>
                                         <td class="btn btn-outline-warning" style="color: #367fa9"><i class="fa fa-pencil"></i></td>
-                                        <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c"><i class="fa fa-plus"></i></td>
+                                        <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c"><a href="{{ url('/productvariationpage/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>
                                         <td class="btn btn-outline-danger" style="color: #cc0000"><i class="fa fa-trash-o"></i></td>
                                     </tr>
 
@@ -378,24 +378,25 @@
 
         //Abrir o modal ao clicar no botão Atributos
         $('#btn_atributos').click(function(e){
-            e.preventDefault();
 
-            var my_cookie = $.cookie($('.modal-check').attr('name'));
-            if (my_cookie && my_cookie == "true") {
-                $(this).prop('checked', my_cookie);
-                console.log('checked checkbox');
-            }
-            else{
-                $('#myModal').modal('show');
-                console.log('uncheck checkbox');
-            }
-
-            $(".modal-check").change(function() {
-                $.cookie($(this).attr("name"), $(this).prop('checked'), {
-                    path: '/',
-                    expires: 1
-                });
-            });
+            // e.preventDefault();
+            //
+            // var my_cookie = $.cookie($('.modal-check').attr('name'));
+            // if (my_cookie && my_cookie == "true") {
+            //     $(this).prop('checked', my_cookie);
+            //     console.log('checked checkbox');
+            // }
+            // else{
+            //     $('#myModal').modal('show');
+            //     console.log('uncheck checkbox');
+            // }
+            //
+            // $(".modal-check").change(function() {
+            //     $.cookie($(this).attr("name"), $(this).prop('checked'), {
+            //         path: '/',
+            //         expires: 1
+            //     });
+            // });
         });
 
     </script>

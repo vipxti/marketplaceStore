@@ -32,8 +32,6 @@ class ProductVariationRequest extends FormRequest
             'ds_produto_variacao' => 'required',
             'vl_produto_variacao' => 'required',
             'qt_produto_variacao' => 'required',
-            'cd_categoria_variacao' => 'required',
-            'cd_sub_categoria_variacao' => 'required',
             'cd_cor_variacao' => 'required',
             'cd_embalagem_variacao' => 'required',
             'status_variacao' => 'required',

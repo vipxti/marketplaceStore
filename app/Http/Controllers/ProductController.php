@@ -25,13 +25,25 @@ class ProductController extends Controller
 
         $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);
 
-        $imagemPrincipal = Product::join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
-            ->join('sku_produto_img', 'produto_sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+        //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
+
+        $imagemPrincipal = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
             ->select('img_produto.im_produto')
             ->where('img_produto.ic_img_principal', '=', 1)
             ->orderBy('sku_produto_img.cd_img')
             ->get();
+
+        $imagemVariacao = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
+            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+            ->select('img_produto.im_produto')
+            ->where('img_produto.ic_img_principal', '=', 1)
+            ->orderBy('sku_produto_img.cd_img')
+            ->get();
+
+        //$produtos = $p->merge($pv);
 
         return view('pages.app.produto', compact('produtos', 'imagemPrincipal'));
 
@@ -52,8 +64,6 @@ class ProductController extends Controller
 
     public function cadastrarProduto(ProductRequest $request)
     {
-
-        //dd($request->all());
 
         if ($request->filled('status') == 'on') {
 
@@ -100,8 +110,6 @@ class ProductController extends Controller
 
         }
 
-        //dd($sku);
-
         //Tenta cadastrar o produto no banco e captura o erro caso ocorra
         try {
 
@@ -131,8 +139,6 @@ class ProductController extends Controller
 
         }
 
-        dd('Ok2');
-
         try {
 
             //Insere os ids do produto e id da tabela de ligação de categoria/subcategoria
@@ -145,8 +151,8 @@ class ProductController extends Controller
         catch (\Exception $e){
 
             //dd($e->getMessage());
-            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
             Product::destroy($produto->cd_produto);
+            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
@@ -161,9 +167,9 @@ class ProductController extends Controller
         }
         catch (\Exception $e) {
 
-            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
             DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
             Product::destroy($produto->cd_produto);
+            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
 
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -230,10 +236,10 @@ class ProductController extends Controller
 
                 }
 
-                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $cd_sku)->delete();
-                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
                 Product::destroy($produto->cd_produto);
+                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -273,7 +279,7 @@ class ProductController extends Controller
 
                 }
 
-                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
                 Product::destroy($produto->cd_produto);
@@ -298,7 +304,7 @@ class ProductController extends Controller
     public function cadastrarVariacaoProduto(ProductVariationRequest $request)
     {
 
-        dd($request->all());
+        //dd($request->all());
 
         if ($request->filled('status_variacao') == 'on') {
 
@@ -318,27 +324,11 @@ class ProductController extends Controller
             ->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $request->cd_sub_categoria_variacao)
             ->first();
 
-//        //Seleciona o id correspondente dos forms categoria e subcategoria na tabela categoria_subcat
-//        $prod_cat_subcat = DB::table('categoria_subcat')
-//            ->select('cd_categoria_subcat')
-//            ->where('cd_categoria', '=', $request->cd_categoria_variacao)
-//            ->where('cd_sub_categoria', '=', $request->cd_subcategoria_variacao)
-//            ->first();
-
-        //Tenta cadastrar o produto no banco e captura o erro caso ocorra
         try {
 
-            //Salva o produto no banco
-            ProductVariation::create([
-
-                'cd_ean_variacao' => $request->cd_ean_variacao,
-                'nm_produto_variacao' => $request->nm_produto_variacao,
-                'ds_produto_variacao' => $request->ds_produto_variacao,
-                'vl_produto_variacao' => $request->vl_produto_variacao,
-                'cd_status_produto_variacao' => $status,
-                'qt_produto_variacao' => $request->qt_produto_variacao,
-                'cd_produto_principal' => $request->cd_produto_principal
-
+            //Salva na tabela de ligação Produto/SKU
+            DB::table('sku')->insert([
+                'cd_nr_sku' => $request->cd_sku_variacao
             ]);
 
         }
@@ -350,72 +340,56 @@ class ProductController extends Controller
         }
         finally {
 
-            //Pega o último id do produto cadastrado
-            $produtoVariacao = ProductVariation::orderBy('cd_produto_variacao', 'DESC')->first();
+            $sku = DB::table('sku')->orderBy('cd_sku', 'DESC')->first();
 
         }
 
-//        //Insere os ids do produto e id da tabela de ligação de categoria/subcategoria
-//        DB::table('produto_categoria_subcat')->insert([
-//            'cd_produto' => $produto->cd_produto,
-//            'cd_categoria_subcat' => $prod_cat_subcat->cd_categoria_subcat
-//        ]);
+        //dd('OK1');
 
+        //Tenta cadastrar o produto no banco e captura o erro caso ocorra
         try {
 
-            //Salva na tabela de ligação Produto/SKU
-            DB::table('produto_sku')->insert([
-                'cd_nr_sku' => $request->cd_sku_variacao,
-                'cd_produto' => $produtoVariacao->cd_produto
+            //Salva o produto no banco
+            ProductVariation::create([
+
+                'cd_ean_variacao' => $request->cd_ean_variacao,
+                'nm_produto_variacao' => $request->nm_produto_variacao,
+                'ds_produto_variacao' => $request->ds_produto_variacao,
+                'vl_produto_variacao' => $request->vl_produto_variacao,
+                'qt_produto_variacao' => $request->qt_produto_variacao,
+                'cd_status_produto_variacao' => $status,
+                'cd_sku' => $sku->cd_sku,
+                'cd_produto' => $request->cd_produto_principal
+
             ]);
 
         }
         catch (\Exception $e) {
 
-            DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
-            ProductVariation::destroy($produtoVariacao->cd_produto);
-
+            //dd($e->getMessage());
+            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
 
-            $SKU = DB::table('produto_sku')->select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
-
-        }
-
-        try {
-
-            DB::table('produto_sku_variacao')->insert([
-                'cd_produto_sku_variacao' => $request->cd_sku_variacao,
-                'cd_produto' => $request->cd_produto_principal,
-                'cd_sku' => $SKU->cd_sku
-            ]);
-
-        }
-        catch (\Exception $e) {
-
-            DB::table('produto_sku')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
-            DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
-            ProductVariation::destroy($produtoVariacao->cd_produto);
-
-            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            //Pega o último id do produto cadastrado
+            $produtoVariacao = ProductVariation::orderBy('cd_produto_variacao', 'DESC')->first();
 
         }
 
         try {
 
             DB::table('sku_produto_embalagem')->insert([
-                'cd_sku' => $SKU->cd_sku,
-                'cd_embalagem' => $request->cd_embalagem
+                'cd_sku' => $sku->cd_sku,
+                'cd_embalagem' => $request->cd_embalagem_variacao
             ]);
 
         }
         catch (\Exception $e) {
 
-            DB::table('produto_sku')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-            DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
             Product::destroy($produtoVariacao->cd_produto);
+            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
 
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -424,17 +398,16 @@ class ProductController extends Controller
         try {
 
             DB::table('produto_cor')->insert([
-                'cd_sku' => $SKU->cd_sku,
+                'cd_sku' => $sku->cd_sku,
                 'cd_cor' => $request->cd_cor_variacao
             ]);
 
         }
         catch (\Exception $e) {
 
-            DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-            DB::table('produto_sku')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-            DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+            DB::table('sku_produto_embalagem')->where('cd_sku', '=', $sku->cd_sku)->delete();
             Product::destroy($produtoVariacao->cd_produto);
+            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
 
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -442,21 +415,23 @@ class ProductController extends Controller
 
         if ($request->cd_tamanho_letra_variacao == null) {
 
+            $letra = false;
+            $numero = true;
+
             try {
 
                 DB::table('produto_tamanho_num')->insert([
-                    'cd_sku' => $SKU->cd_sku,
+                    'cd_sku' => $sku->cd_sku,
                     'cd_tamanho_num' => $request->cd_tamanho_num_variacao
                 ]);
 
             }
             catch (\Exception $e) {
 
-                DB::table('produto_cor')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('produto_sku')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+                DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Product::destroy($produtoVariacao->cd_produto);
+                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -465,21 +440,23 @@ class ProductController extends Controller
         }
         else {
 
+            $letra = true;
+            $numero = false;
+
             try {
 
                 DB::table('produto_tamanho_letra')->insert([
-                    'cd_sku' => $SKU->cd_sku,
+                    'cd_sku' => $sku->cd_sku,
                     'cd_tamanho_letra' => $request->cd_tamanho_letra_variacao
                 ]);
 
             }
             catch (\Exception $e) {
 
-                DB::table('produto_cor')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('produto_sku')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+                DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Product::destroy($produtoVariacao->cd_produto);
+                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -548,10 +525,22 @@ class ProductController extends Controller
 
                 }
 
-                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('produto_sku')->where('cd_nr_sku', '=', $request->cd_sku)->delete();
-                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+                if ($letra) {
+
+                    DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku->cd_sku)->delete();
+
+                }
+
+                if ($numero) {
+
+                    DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku->cd_sku)->delete();
+
+                }
+
+                DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Product::destroy($produtoVariacao->cd_produto);
+                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -574,7 +563,7 @@ class ProductController extends Controller
             try {
 
                 DB::table('sku_produto_img')->insert([
-                    'cd_sku' => $SKU->cd_sku,
+                    'cd_sku' => $sku->cd_sku,
                     'cd_img' => $img->cd_img
                 ]);
 
@@ -591,10 +580,22 @@ class ProductController extends Controller
 
                 }
 
-                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $SKU->cd_sku)->delete();
-                DB::table('produto_sku')->where('cd_nr_sku', '=', $request->cd_sku)->delete();
-                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produtoVariacao->cd_produto)->delete();
+                if ($letra) {
+
+                    DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku->cd_sku)->delete();
+
+                }
+
+                if ($numero) {
+
+                    DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku->cd_sku)->delete();
+
+                }
+
+                DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                DB::table('sku_produto_embalagem')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Product::destroy($produtoVariacao->cd_produto);
+                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -624,25 +625,21 @@ class ProductController extends Controller
 
     }
 
-    public function showProductPageVariation() {
+    public function showProductPageVariation($cd_produto) {
 
         $categorias = Category::all();
         $cores = Color::all();
         $tamanhosLetras = LetterSize::all();
         $tamanhosNumeros = NumberSize::all();
 
-        $produto = Product::orderBy('cd_produto', 'DESC')->first();
-
-        //dd($produto);
-
-        $ultimoProduto = Product::join('produto_sku', 'produto.cd_produto', '=', 'produto_sku.cd_produto')
-            ->join('sku_produto_img', 'produto_sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+        $ultimoProduto = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
-            ->join('sku_produto_embalagem', 'sku_produto_embalagem.cd_sku', '=', 'produto_sku.cd_sku')
+            ->join('sku_produto_embalagem', 'sku_produto_embalagem.cd_sku', '=', 'sku.cd_sku')
             ->join('embalagem', 'embalagem.cd_embalagem', '=', 'sku_produto_embalagem.cd_embalagem')
             ->join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
             ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
-            ->where('produto_sku.cd_produto', '=', $produto->cd_produto)
+            ->where('produto.cd_produto', '=', $cd_produto)
             ->get();
 
         //dd($ultimoProduto);

@@ -12,6 +12,6 @@ class ProductVariation extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'cd_ean_variacao', 'nm_produto_variacao', 'ds_produto_variacao', 'vl_produto_variacao', 'qt_produto_variacao', 'cd_status_produto_variacao', 'ic_status_produto_variacao', 'cd_produto_principal'
+        'cd_ean_variacao', 'nm_produto_variacao', 'ds_produto_variacao', 'vl_produto_variacao', 'qt_produto_variacao', 'cd_status_produto_variacao', 'cd_sku', 'cd_produto'
     ];
 }

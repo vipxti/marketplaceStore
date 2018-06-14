@@ -6,10 +6,10 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ asset('img/admin/' . Auth::user()->im_usuario )}}" class="user-image" alt="User Image">
+                <img src="" class="user-image" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ Auth::user()->nm_usuario }}</p>
+                <p></p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
