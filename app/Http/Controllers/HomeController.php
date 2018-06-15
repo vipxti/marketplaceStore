@@ -27,8 +27,6 @@ class HomeController extends Controller
 
     public function showIndexAdminPage()
     {
-        $produtos = Product::all();
-
-        return view('pages.admin.index', compact('produtos'));
+        return view('pages.admin.index');
     }
 }

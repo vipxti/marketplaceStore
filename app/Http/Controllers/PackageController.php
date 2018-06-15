@@ -17,7 +17,8 @@ class PackageController extends Controller
         Package::create([
             'ds_altura' => $request->ds_altura,
             'ds_largura' => $request->ds_largura,
-            'ds_peso' => $request->ds_peso
+            'ds_peso' => $request->ds_peso,
+            'ds_comprimento' => $request->ds_comprimento
         ]);
 
     }

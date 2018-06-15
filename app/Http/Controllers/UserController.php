@@ -23,6 +23,7 @@ class UserController extends Controller
     public function showUserForm() {
         return view('pages.admin.cadUsuario');
     }
+
     public function atualizaDadosUsuario(UpdateUserRequest $request){
         //Cadastro  telefone
         Phone::create([

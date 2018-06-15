@@ -35,7 +35,10 @@ class ProductRequest extends FormRequest
             'qt_produto' => 'required|numeric',
             'cd_categoria' => 'required|numeric',
             'cd_sub_categoria' => 'required|numeric',
-            'cd_embalagem' => 'required|numeric',
+            'ds_altura' => 'required|numeric',
+            'ds_largura' => 'required|numeric',
+            'ds_comprimento' => 'required|numeric',
+            'ds_peso' => 'required|numeric',
             'status' => 'required|string',
             'images.*' => 'required|image|mimes:jpeg,bmp,png'
         ];

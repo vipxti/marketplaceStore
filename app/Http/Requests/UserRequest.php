@@ -27,7 +27,10 @@ class UserRequest extends FormRequest
             'cd_cpf_cnpj' => 'required',
             'nm_usuario' => 'required|string',
             'email' => 'required|string',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'cd_telefone' => 'required',
+            'cd_endereco' => 'required',
+            'im_usuario' => 'required|image|mimes:jpeg,bmp,png'
         ];
     }
 }

@@ -254,8 +254,6 @@
 
                                         <input type="hidden" id="codProduto" class="form-control select2 campo_subcat_modal" style="width: 100%;" value="{{ $ultimoProduto[0]->cd_produto }}" name="cd_produto_principal" >
 
-                                        <input type="hidden" id="codEmbalagem" class="form-control select2 campo_subcat_modal" style="width: 100%;" value="{{ $ultimoProduto[0]->cd_embalagem }}" name="cd_embalagem_variacao" >
-
                                     </tr>
                                 </table>
                                 <br>

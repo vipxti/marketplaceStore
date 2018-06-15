@@ -155,28 +155,61 @@
                                 </table>
                             <br>
 
-                            <!-- Largura, Altura e Peso -->
-                            <table style="width: 65%">
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <label>Embalagem</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-archive"></i></span>
-                                                <select id="embalagens" class="form-control select2 campo_cat" style="width: 100%;" required name="cd_embalagem">
-                                                    <option value=""></option>
-
-                                                    @foreach($embalagens as $embalagem)
-                                                        <option value="{{ $embalagem->cd_embalagem }}">{{ $embalagem->nm_embalagem }}&nbsp;-&nbsp;{{ $embalagem->ds_altura }}&nbsp;cm&nbsp;x&nbsp;{{ $embalagem->ds_largura }}&nbsp;cm&nbsp;x&nbsp;{{ $embalagem->ds_peso }}&nbsp;(g)</option>
-                                                    @endforeach
-                                                </select>
+                            <!-- Largura, Altura, Comprimento e Peso -->
+                                <table style="width: 75%">
+                                    <tr>
+                                        <td>&nbsp;&nbsp;&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Largura</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                                                    <input type="number" class="form-control campo_largura" required name="ds_largura" min="0">
+                                                </div>
+                                                <i class="msg_largura"></i>
                                             </div>
-                                            <i class="msg_cat"></i>
-                                        </div>
-                                    </td>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;</td>
 
-                                </tr>
-                            </table>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Altura</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
+                                                    <input type="number" class="form-control campo_altura" required name="ds_altura" min="0">
+                                                </div>
+                                                <i class="msg_altura"></i>
+                                            </div>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Comprimento</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                                                    <input type="number" class="form-control campo_comprimento" required name="ds_comprimento" min="0">
+                                                </div>
+                                                <i class="msg_peso"></i>
+                                            </div>
+                                        </td>
+
+                                        <td>&nbsp;&nbsp;&nbsp;</td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Peso (g)</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
+                                                    <input type="number" class="form-control campo_peso" required name="ds_peso" min="0">
+                                                </div>
+                                                <i class="msg_peso"></i>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
 
                             <!-- Descrição  -->
                             <table style="width: 100%">

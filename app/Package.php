@@ -12,6 +12,6 @@ class Package extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'ds_altura', 'ds_largura', 'ds_peso'
+        'ds_altura', 'ds_largura', 'ds_peso', 'ds_comprimento'
     ];
 }

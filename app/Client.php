@@ -13,7 +13,7 @@ class Client extends Authenticatable
     protected $primaryKey = 'cd_cliente';
 
     protected $fillable = [
-        'cd_cpf_cnpj', 'nm_cliente', 'password',
+        'cd_cpf_cnpj', 'nm_cliente', 'email', 'password', 'im_cliente', 'cd_telefone'
     ];
 
     /**

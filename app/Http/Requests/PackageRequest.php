@@ -24,9 +24,11 @@ class PackageRequest extends FormRequest
     public function rules()
     {
         return [
+            'nm_embalagem' => 'required',
             'ds_altura' => 'required',
             'ds_largura' => 'required',
             'ds_peso' => 'required',
+            'ds_comprimento' => 'required'
         ];
     }
 }
