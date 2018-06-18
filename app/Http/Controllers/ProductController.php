@@ -60,6 +60,12 @@ class ProductController extends Controller
 
     }
 
+    public function paginaPaineluser(){
+
+        return view('pages.app.paineluser');
+
+    }
+
     public function listaProduto() {
 
         $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);

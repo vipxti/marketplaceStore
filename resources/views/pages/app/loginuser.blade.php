@@ -135,8 +135,39 @@
 
         <div class="container">
 
+            <!-- E-mail login  -->
+            <div class="col-md-9" style="padding-left: 26%">
+                <div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"></span>
+                            <input type="text" class="form-control" name="nm_email" required maxlength="50" style="border-radius: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Senha login -->
+            <div class="col-md-9" style="padding-left: 26%">
+                <div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="ds_senha" required maxlength="20" style="border-radius: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
 
+            <!-- Botões Salvar -->
+            <div class="col-md-12" style="padding-left: 26%">
+                <div>
+                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e; border-radius: 10px"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                </div>
+            </div>
 
         </div>
 
@@ -162,6 +193,17 @@
         });
 
 
+    </script>
+
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.0&appId=609415666077102&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     </script>
 
 @stop

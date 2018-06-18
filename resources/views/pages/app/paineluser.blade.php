@@ -121,161 +121,50 @@
     </section>
     <!-- ****** Welcome Slides Area End ****** -->
 
-    <!-- ****** Area do cadastro  ****** -->
+    <!-- ****** Area de Produtos ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section_heading text-center">
-                        <h3><i class="fa fa-users"></i>&nbsp; Cadastre-se</h3>
+                    <div class="section_heading text-center text-left">
+                        <h3><i class="fa fa-sliders"></i>&nbsp; Login Cliente</h3>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Nav Painel cliente -->
+                    <div class="card">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+                            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+                            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+                        </ul>
 
-            <!-- Nome do Cliente  -->
-            <div class="col-md-9" style="padding-left: 26%">
-                <div>
-                    <div class="form-group">
-                        <label>Nome</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"></span>
-                            <input type="text" class="form-control" name="nm_cliente" required maxlength="50" style="border-radius: 10px">
+                        <!-- Conteudo -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home"></div>
+                            <div role="tabpanel" class="tab-pane" id="profile"></div>
+                            <div role="tabpanel" class="tab-pane" id="messages"></div>
+                            <div role="tabpanel" class="tab-pane" id="settings"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- E-mail -->
-            <div class="col-md-9" style="padding-left: 26%">
-                <div>
-                    <div class="form-group">
-                        <label>E-mail</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="nm_email" required maxlength="20" style="border-radius: 10px">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Senha e data de nascimento -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <form>
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label>Senha</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="password" class="form-control" name="ds_senha" required maxlength="20" style="border-radius: 10px">
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>&nbsp;&nbsp;&nbsp;</td>
-
-                            <td>
-                                <div class="form-group">
-                                    <label>Data de Nascimento</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="dt_nascimento" required maxlength="20" style="border-radius: 10px">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-            <br>
-
-            <!-- CPF e CNPJ -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <form>
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label>CPF</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20" style="border-radius: 10px">
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>&nbsp;&nbsp;&nbsp;</td>
-
-                            <td>
-                                <div class="form-group">
-                                    <label>CNPJ</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20" style="border-radius: 10px">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-            <br>
-
-            <!-- Telefone -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <form>
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label>Telefone</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="fk_cd_telefone" required maxlength="20" style="border-radius: 10px">
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>&nbsp;&nbsp;&nbsp;</td>
-
-                        </tr>
-                    </table>
-                </form>
-            </div>
-            <br>
-
-            <!-- Foto Cliente -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <div>
-                    <div class="form-group">
-                        <label></label>Foto</label>
-                        <div class="input-group">
-                            <div class="file-loading">
-                                <input id="input-41" name="images[]" type="file" accept="image/*" multiple>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-
-            <!-- Botões Salvar -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <div>
-                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e; border-radius: 10px"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
-                </div>
-            </div>
-            <br>
-            <br>
-
         </div>
+
     </section>
-    <!-- ****** Fim da area de cadastro ****** -->
+    <!-- ****** New Arrivals Area End ****** -->
 
 
+    <!-- ****** Popular Brands Area Start ****** -->
+    <section class="karl-testimonials-area section_padding_100">
+    </section>
+    <!-- ****** Popular Brands Area End ****** -->
 
     <script>
 

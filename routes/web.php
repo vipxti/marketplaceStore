@@ -85,6 +85,7 @@ Route::prefix('page')->group(function (){
 
 Route::get('/cadastrouser', 'ProductController@paginaCadastrouser')->name('cadastrouser.page');
 Route::get('/loginuser', 'ProductController@paginaLoginuser')->name('loginuser.page');
+Route::get('/paineluser', 'ProductController@paginaPaineluser')->name('paineluser.page');
 
 
 
