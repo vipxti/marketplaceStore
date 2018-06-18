@@ -275,7 +275,7 @@
                             <!-- Botões Salvar e Atributo -->
                             <div class="col-md-12">
                                 <div class="box-header">
-                                    <input type="checkbox" class="js-switch" checked/> Ativar/Desativar Produto
+                                    <input type="checkbox" class="js-switch" name="status" checked/> Ativar/Desativar Produto
 
                                     <button type="submit" id="btn_salvar" class="btn btn-success pull-right" disabled><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                 </div>
@@ -421,16 +421,18 @@
         $('.campo_preco').blur(function() {
 
             var campo = $('.campo_preco').val();
+            var reg = /^(\d{1,3}(.\d{3})*|(\d+))(.\d{2})?$/;
 
             $('.msg_preco').html("");
 
             if (campo.length == 0) {
                 $('.msg_preco').html("Campo obrigatório.").css("color", "red");
             }
+            else if(!reg.exec(campo))
+                $('.msg_preco').html("Campo digitado de forma incorreta.").css("color", "red");
 
             verificaAtributos();
         });
-
         //Validação do campo CATEGORIA
         $('.campo_cat').blur(function() {
 

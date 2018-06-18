@@ -545,12 +545,15 @@
         $('.campo_preco').blur(function() {
 
             var campo = $('.campo_preco').val();
+            var reg = /^(\d{1,3}(.\d{3})*|(\d+))(.\d{2})?$/;
 
             $('.msg_preco').html("");
 
             if (campo.length == 0) {
                 $('.msg_preco').html("Campo obrigatório.").css("color", "red");
             }
+            else if(!reg.exec(campo))
+                $('.msg_preco').html("Campo digitado de forma incorreta.").css("color", "red");
 
             verificaAtributos();
         });
@@ -643,9 +646,8 @@
         //Contagem de palavras na TextArea da Descrição
         function contadorPalavras() {
 
-            $('.campo_desc').text("");
-
-            $('.campo_desc').on("input", function () {
+            //$('.campo_desc_modal').text("");
+            $('.campo_desc_modal').on("input", function () {
                 var conteudo = $('.campo_desc').val();
                 var qtdCaracter = 1500 - conteudo.length;
 
@@ -797,9 +799,6 @@
         //     }
         //
         // }
-
-
-
     </script>
 
 @stop

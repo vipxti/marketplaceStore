@@ -311,7 +311,7 @@ class ProductController extends Controller
     public function cadastrarVariacaoProduto(ProductVariationRequest $request)
     {
 
-        //dd($request->all());
+        dd($request->all());
 
         if ($request->filled('status_variacao') == 'on') {
 

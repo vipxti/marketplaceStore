@@ -39,7 +39,7 @@ class ProductRequest extends FormRequest
             'ds_largura' => 'required|numeric',
             'ds_comprimento' => 'required|numeric',
             'ds_peso' => 'required|numeric',
-            'status' => 'required|string',
+            'status' => 'required',
             'images.*' => 'required|image|mimes:jpeg,bmp,png'
         ];
 
