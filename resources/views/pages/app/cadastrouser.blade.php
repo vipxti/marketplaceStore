@@ -182,7 +182,7 @@
                                     <label>Data de Nascimento</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="text" class="form-control" name="cd_sku" required maxlength="20" style="border-radius: 10px">
+                                        <input type="number" class="form-control" name="nm_nascimento" required maxlength="20" style="border-radius: 10px">
                                     </div>
                                 </div>
                             </td>
@@ -202,7 +202,7 @@
                                     <label>CPF</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="password" class="form-control" name="ds_senha" required maxlength="20" style="border-radius: 10px">
+                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20" style="border-radius: 10px">
                                     </div>
                                 </div>
                             </td>
@@ -214,7 +214,7 @@
                                     <label>CNPJ</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="text" class="form-control" name="cd_sku" required maxlength="20" style="border-radius: 10px">
+                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20" style="border-radius: 10px">
                                     </div>
                                 </div>
                             </td>
@@ -234,7 +234,7 @@
                                     <label>Telefone</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="password" class="form-control" name="ds_senha" required maxlength="20" style="border-radius: 10px">
+                                        <input type="number" class="form-control" name="fk_cd_telefone" required maxlength="20" style="border-radius: 10px">
                                     </div>
                                 </div>
                             </td>
