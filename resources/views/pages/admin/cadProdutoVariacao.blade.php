@@ -20,7 +20,6 @@
 
             @include('partials.admin._alerts')
 
-
                 @if($ultimoProduto == "")
 
                     <p>Não há produtos</p>
@@ -252,7 +251,7 @@
 
                                         <input type="hidden" id="subcategorias" class="form-control select2 campo_subcat_modal" style="width: 100%;" value="{{ $ultimoProduto[0]->cd_sub_categoria }}" name="cd_sub_categoria_variacao" >
 
-                                        <input type="hidden" id="codProduto" class="form-control select2 campo_subcat_modal" style="width: 100%;" value="{{ $ultimoProduto[0]->cd_produto }}" name="cd_produto_principal" >
+                                        <input type="hidden" id="codProduto" class="form-control select2 campo_subcat_modal" style="width: 100%;" value="{{ $ultimoProduto[0]->cd_produto }}" name="cd_produto_principal">
 
                                     </tr>
                                 </table>
@@ -339,6 +338,62 @@
                                     </tr>
                                 </table>
                                 <br>
+
+                                <!-- Largura, Altura, Comprimento e Peso -->
+                                <table style="width: 75%">
+                                    <tr>
+                                        <td>&nbsp;&nbsp;&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Largura</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                                                    <input type="number" class="form-control campo_largura" required name="ds_largura_variacao" min="0">
+                                                </div>
+                                                <i class="msg_largura"></i>
+                                            </div>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;</td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Altura</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
+                                                    <input type="number" class="form-control campo_altura" required name="ds_altura_variacao" min="0">
+                                                </div>
+                                                <i class="msg_altura"></i>
+                                            </div>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Comprimento</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                                                    <input type="number" class="form-control campo_comprimento" required name="ds_comprimento_variacao" min="0">
+                                                </div>
+                                                <i class="msg_peso"></i>
+                                            </div>
+                                        </td>
+
+                                        <td>&nbsp;&nbsp;&nbsp;</td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Peso (g)</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
+                                                    <input type="number" class="form-control campo_peso" required name="ds_peso_variacao" min="0">
+                                                </div>
+                                                <i class="msg_peso"></i>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
 
                                 <!-- Descrição (Modal)  -->
                                 <table style="width: 100%">
@@ -717,30 +772,31 @@
         });
 
         //Verifica botão Atributos
-        function verificaAtributos(){
-            var regra = /^[0-9]+$/;
-
-            if ($('.campo_nome').val() != "" &&
-                $('.campo_sku').val() != "" &&
-                $('.campo_preco').val() != "" &&
-                $('.campo_cat').val() != "" &&
-                $('.campo_subcat').val() != "" &&
-                $('.campo_qtd').val() != "" &&
-                $('.campo_largura').val() != "" &&
-                $('.campo_altura').val() != "" &&
-                $('.campo_peso').val() != "" &&
-                $('.campo_desc').val() != "" &&
-                ($('.campo_ean').val().length == 0 ||
-                ($('.campo_ean').val().length == 13 && regra.exec($('.campo_ean').val())))){
-                $('#btn_atributos').removeAttr("disabled");
-                $('#btn_salvar').removeAttr("disabled");
-            }
-            else {
-                $('#btn_atributos').attr("disabled", "disabled");
-                $('#btn_salvar').attr("disabled", "disabled");
-            }
-
-        }
+        // function verificaAtributos(){
+        //     var regra = /^[0-9]+$/;
+        //
+        //     if ($('.campo_nome').val() != "" &&
+        //         $('.campo_sku').val() != "" &&
+        //         $('.campo_preco').val() != "" &&
+        //         $('.campo_cat').val() != "" &&
+        //         $('.campo_subcat').val() != "" &&
+        //         $('.campo_qtd').val() != "" &&
+        //         $('.campo_largura').val() != "" &&
+        //         $('.campo_altura').val() != "" &&
+        //         $('.campo_comprimento').val() != "" &&
+        //         $('.campo_peso').val() != "" &&
+        //         $('.campo_desc').val() != "" &&
+        //         ($('.campo_ean').val().length == 0 ||
+        //         ($('.campo_ean').val().length == 13 && regra.exec($('.campo_ean').val())))){
+        //         $('#btn_atributos').removeAttr("disabled");
+        //         $('#btn_salvar').removeAttr("disabled");
+        //     }
+        //     else {
+        //         $('#btn_atributos').attr("disabled", "disabled");
+        //         $('#btn_salvar').attr("disabled", "disabled");
+        //     }
+        //
+        // }
 
 
 

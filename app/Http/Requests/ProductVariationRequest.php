@@ -32,8 +32,11 @@ class ProductVariationRequest extends FormRequest
             'ds_produto_variacao' => 'required',
             'vl_produto_variacao' => 'required',
             'qt_produto_variacao' => 'required',
+            'ds_largura_variacao' => 'required',
+            'ds_altura_variacao' => 'required',
+            'ds_comprimento_variacao' => 'required',
+            'ds_peso_variacao' => 'required',
             'cd_cor_variacao' => 'required',
-            'cd_embalagem_variacao' => 'required',
             'status_variacao' => 'required',
             'images_variacao.*' => 'required|image|mimes:jpeg,bmp,png'
         ];

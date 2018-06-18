@@ -1,5 +1,4 @@
 <header class="main-header">
-
     <!-- Logo -->
   <a href="{{route('admin.dashboard')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -17,31 +16,57 @@
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+
+          @if(Auth::guard('admin')->check())
+
+              <li class="dropdown user user-menu">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                  <img src="{{ asset('img/admin/' . Auth::guard('admin')->user()->im_usuario)  }}" class="user-image" alt="User Image">
+                  <span class="hidden-xs"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src="{{ asset('img/admin/' . Auth::guard('admin')->user()->im_usuario)  }}" class="user-image" alt="User Image">
+                    <p>
+                      <small>{{ Auth::guard('admin')->user()->nm_usuario }}</small>
+                      <small>{{ Auth::guard('admin')->user()->email }}</small>
+                    </p>
+                  </li>
+                </ul>
+              </li>
+
+            @else
+
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <img src="" class="user-image" alt="User Image">
+                  <span class="hidden-xs"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src="" class="user-image" alt="User Image">
+                    <p>
+                      <small>Member since Nov. 2012</small>
+                    </p>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat">Sair</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+            @endif
+
           <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="" class="user-image" alt="User Image">
-                <span class="hidden-xs"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="" class="user-image" alt="User Image">
-                <p>
-                    <small>Member since Nov. 2012</small>
-                </p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sair</a>
-                </div>
-              </li>
-            </ul>
-          </li>
+
           <!-- Control Sidebar Toggle Button -->
           <li>
             <a href="{{ route('index') }}"><i class="fa fa-home"></i></a>

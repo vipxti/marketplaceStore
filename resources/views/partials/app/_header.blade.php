@@ -65,7 +65,7 @@
 
                                 <!--<ul class="nav navbar-nav">
                                     <li class="dropdown">
-                                        <!--<a href="{{ route('admin.login') }}">
+                                        <!--<a href="">
                                         <a href="#">
                                             <i class="fa fa-user" aria-hidden="true"></i>
                                         </a>

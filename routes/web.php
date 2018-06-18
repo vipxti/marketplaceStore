@@ -21,59 +21,64 @@ Route::prefix('admin')->group(function () {
     Route::post('/register', 'Auth\UserRegisterController@create')->name('admin.register.submit');
     Route::get('/register/{cpf_cnpj}', 'Auth\UserRegisterController@verificaCpfCnpj');
 
-    //Preenche combobox do form cadastro de produtos
-    Route::get('/cadProd', 'ProductController@showProductPage')->name('admin.cadProd');
+    //Produto
+    Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
+    Route::get('/product', 'ProductController@showProductPage')->name('product.register')->middleware('auth:admin');
+
+    //Variação do produto
+    Route::post('/productvariation', 'ProductController@cadastrarVariacaoProduto')->name('productvariation.save')->middleware('auth:admin');
+    Route::get('/productvariationpage/{cd_produto}', 'ProductController@showProductPageVariation')->name('product.variation.page');
+
     //Form categoria/subcategoria e cadastro
-    Route::get('/cadCatego', 'CategoryController@showCategoryForm')->name('admin.cadCatego');
+    Route::get('/category', 'CategoryController@showCategoryForm')->name('category.register')->middleware('auth:admin');
     Route::post('/category', 'CategoryController@cadastrarCategoria')->name('category.save');
-    Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory');
+    Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory')->middleware('auth:admin');
     Route::post('/subcategory', 'CategoryController@cadastrarSubCategoria')->name('subcategory.save');
 
     //Associa categoria/subcategoria
     Route::post('/catsubcat', 'CategoryController@associarCategoriaSubCategoria')->name('catsubcat.associate');
 
     //Form tamanho e cadastro
-    Route::get('/cadTamanho', 'SizeController@showSizeForm')->name('admin.cadTamanho');
+    Route::get('/size', 'SizeController@showSizeForm')->name('size.register')->middleware('auth:admin');
     Route::post('/tamanholetra', 'SizeController@cadastrarNovoTamanhoLetra')->name('lettersize.save');
     Route::post('/tamanhonumero', 'SizeController@cadastrarNovoTamanhoNumero')->name('numbersize.save');
 
     //Form cor e cadastro
-    Route::get('/cadCor', 'ColorController@showColorForm')->name('admin.cadCor');
-    Route::post('/cor', 'ColorController@cadastrarNovaCor')->name('color.save');
+    Route::get('/color', 'ColorController@showColorForm')->name('color.page')->middleware('auth:admin')->middleware('auth:admin');
+    Route::post('/color', 'ColorController@cadastrarNovaCor')->name('color.save');
 
-    Route::get('/cadUsuario', 'UserController@showUserForm')->name('usuario.dados');
+    Route::get('/userdata', 'UserController@showUserForm')->name('user.data')->middleware('auth:admin')->middleware('auth:admin');
 
     //Edição do site
-    Route::get('/indexHotpost', 'PageController@showHotPostPage')->name('admin.indexHotpost');
-    Route::get('/indexBanner', 'PageController@showBannerPage')->name('admin.indexBanner');
+    Route::get('/hotpost', 'PageController@showHotPostPage')->name('hotpost.edit')->middleware('auth:admin');
+    Route::get('/banner', 'PageController@showBannerPage')->name('banner.edit')->middleware('auth:admin');
 
     //Editar menus
-    Route::get('/indexMenu', 'MenuController@showEditMenuPage')->name('admin.indexMenu');
-    Route::post('/editmenu', 'MenuController@saveMenus')->name('menu.edit');
+    Route::get('/menu', 'MenuController@showEditMenuPage')->name('menu.edit')->middleware('auth:admin');
+    Route::post('/menu', 'MenuController@saveMenus')->name('menu.save');
 
-    Route::get('/indexConfigproduto', 'PageController@showConfigProductPage')->name('admin.indexConfigproduto');
+    Route::get('/productconfig', 'PageController@showConfigProductPage')->name('product.config');
 
-    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard');
-    Route::get('/listProd', 'ProductController@listaProduto')->name('admin.listProd');
+    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
+    Route::get('/getproducts', 'ProductController@listaProduto')->name('products.list')->middleware('auth:admin');
 
     //Faz o logout do usuário
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');
 
-    //Página Embalagem
-    Route::get('/cadEmbalagem', 'PackageController@mostrarPaginaEmbalagem')->name('admin.cadEmbalagem');
-
     //Resetar senha
     Route::post('/password/email', 'Auth\UserForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
-    Route::get('/password/reset', 'Auth\UserForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+    Route::get('/password/reset', 'Auth\UserForgotPasswordController@showLinkRequestForm')->name('admin.password.request')->middleware('auth:admin');
     Route::post('/password/reset', 'Auth\UserResetPasswordController@reset');
     Route::get('/password/reset/{token}', 'Auth\UserResetPasswordController@showResetForm')->name('admin.password.reset');
     //----------------
 });
 
-//Produto
-Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
-Route::get('/productspage', 'ProductController@paginaProduto')->name('products.page');
+Route::prefix('page')->group(function (){
 
-//Variação do produto
-Route::post('/productvariation', 'ProductController@cadastrarVariacaoProduto')->name('productvariation.save');
-Route::get('/productvariationpage/{cd_produto}', 'ProductController@showProductPageVariation')->name('product.variation.page');
+    Route::get('/products', 'ProductController@paginaProduto')->name('products.page');
+
+});
+
+
+
+

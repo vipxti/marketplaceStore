@@ -6,7 +6,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="" class="user-image" alt="User Image">
+                <img src="{{ asset('img/admin/' . Auth::guard('admin')->user()->im_usuario)  }}" class="user-image" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p></p>
@@ -20,7 +20,7 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MENU</li>
             <li>
-                <a href="{{route('admin.dashboard')}}">
+                <a href="{{ route('admin.dashboard') }}">
                     <i class="fa fa-dashboard"></i>
                     <span>Dashboard</span>
                 </a>
@@ -35,20 +35,19 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-plus-square"></i>Cadastrar</a></li>
-                    <li><a href="{{route('admin.cadProd')}}"><i class="fa fa-edit"></i>Alterar</a></li>
-                   <li><a href="{{route('admin.listProd')}}"><i class="fa fa-list-alt"></i>Lista de Produtos</a></li>
+                    <li><a href="{{ route('product.register') }}"><i class="fa fa-plus-square"></i>Cadastrar</a></li>
+                    <li><a href="#"><i class="fa fa-edit"></i>Alterar</a></li>
+                   <li><a href="{{ route('products.list') }}"><i class="fa fa-list-alt"></i>Lista de Produtos</a></li>
                     <li class="treeview">
-                        <a href="{{route('admin.cadProd')}}"><i class="fa fa-diamond">
+                        <a href="#"><i class="fa fa-diamond">
                             </i>Atributos<span class="pull-right-container">
                               <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{route('admin.cadCatego')}}"><i class="fa fa-tag"></i>Cadastrar Categorias</a></li>
-                            <li><a href="{{route('admin.cadCor')}}"><i class="fa fa-paint-brush"></i>Cadastrar Cores</a></li>
-                            <li><a href="{{route('admin.cadTamanho')}}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanhos</a></li>
-                            <li><a href="{{route('admin.cadEmbalagem')}}"><i class="fa fa-cube"></i>Cadastrar Embalagem</a></li>
+                            <li><a href="{{ route('category.register') }}"><i class="fa fa-tag"></i>Cadastrar Categorias</a></li>
+                            <li><a href="{{ route('color.page') }}"><i class="fa fa-paint-brush"></i>Cadastrar Cores</a></li>
+                            <li><a href="{{ route('size.register') }}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanhos</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -97,7 +96,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('usuario.dados')}}"><i class="fa fa-edit"></i>Alterar Dados do Usuário</a></li>
+                    <li><a href="{{route('user.data')}}"><i class="fa fa-edit"></i>Alterar Dados do Usuário</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -108,10 +107,10 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('admin.indexMenu')}}"><i class="fa fa-th-list"></i>Menu</a></li>
-                    <li><a href="{{route('admin.indexBanner')}}"><i class="fa fa-picture-o"></i>Banner</a></li>
-                    <li><a href="{{route('admin.indexConfigproduto')}}"><i class="fa fa-th-large"></i>Produtos Home</a></li>
-                    <li><a href="{{route('admin.indexHotpost')}}"><i class="fa fa-newspaper-o"></i>Hot Post</a></li>
+                    <li><a href="{{ route('menu.edit') }}"><i class="fa fa-th-list"></i>Menu</a></li>
+                    <li><a href="{{ route('banner.edit') }}"><i class="fa fa-picture-o"></i>Banner</a></li>
+                    <li><a href="{{ route('product.config') }}"><i class="fa fa-th-large"></i>Produtos Home</a></li>
+                    <li><a href="{{ route('hotpost.edit') }}"><i class="fa fa-newspaper-o"></i>Hot Post</a></li>
                 </ul>
             </li>
         </ul>

@@ -19,6 +19,9 @@
 
         <!-- Main content -->
         <section class="content">
+
+            @include('partials.admin._alerts')
+
             <!-- Info boxes -->
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">

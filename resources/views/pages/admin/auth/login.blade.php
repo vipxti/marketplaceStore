@@ -2,10 +2,9 @@
 
 @section('content')
 
-    @include('partials.admin._alerts')
-
     <!--login-box -->
     <div class="login-box">
+    @include('partials.admin._alerts')
     <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Entre para iniciar sua sessão</p>

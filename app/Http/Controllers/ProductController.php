@@ -11,6 +11,7 @@ use App\LetterSize;
 use App\Product;
 use App\NumberSize;
 use App\ProductVariation;
+use App\Sku;
 use Illuminate\Support\Facades\DB;
 use Image;
 use App\Image as Img;
@@ -75,11 +76,7 @@ class ProductController extends Controller
 
         //Procura no banco a categoria e subcategoria baseado no id
         $category = Category::find($request->cd_categoria);
-        $subcategory = DB::table('categoria')
-            ->join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
-            ->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
-            ->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $request->cd_sub_categoria)
-            ->first();
+        $subcategory = Category::join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $request->cd_sub_categoria)->first();
 
         //Seleciona o id correspondente dos forms categoria e subcategoria na tabela categoria_subcat
         $prod_cat_subcat = DB::table('categoria_subcat')
@@ -110,8 +107,7 @@ class ProductController extends Controller
         //Cadastro do SKU do produto
         try {
 
-            //Salva na tabela de ligação Produto/SKU
-            DB::table('sku')->insert([
+            Sku::create([
                 'cd_nr_sku' => $request->cd_sku,
                 'cd_dimensao' => $dimensao->cd_dimensao
             ]);
@@ -125,7 +121,7 @@ class ProductController extends Controller
         }
         finally {
 
-            $sku = DB::table('sku')->orderBy('cd_sku', 'DESC')->first();
+            $sku = Sku::select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
 
         }
 
@@ -146,7 +142,7 @@ class ProductController extends Controller
         }
         catch (\Exception $e) {
 
-            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+            Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -170,7 +166,7 @@ class ProductController extends Controller
         catch (\Exception $e){
 
             Product::destroy($produto->cd_produto);
-            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+            Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -225,13 +221,13 @@ class ProductController extends Controller
                 }
 
             }
-            catch (Exception $e) {
+            catch (\Exception $e) {
 
                 if ($cont > 0) {
 
-                    foreach ($cont as $c) {
+                    foreach ($imgsId as $i) {
 
-                        Img::destroy($imgsId[$c]);
+                        Img::destroy($i);
 
                     }
 
@@ -239,7 +235,7 @@ class ProductController extends Controller
 
                 DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
                 Product::destroy($produto->cd_produto);
-                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
@@ -249,7 +245,6 @@ class ProductController extends Controller
 
                 $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
                 $imgsId[$key] = $imgs[$key]->cd_img;
-                $cont += 1;
 
             }
 
@@ -267,14 +262,14 @@ class ProductController extends Controller
                     'cd_img' => $img->cd_img
                 ]);
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
 
                 if ($cont > 0) {
 
-                    foreach ($cont as $c) {
+                    foreach ($imgsId as $i) {
 
-                        Img::destroy($imgsId[$c]);
-                        DB::table('sku_produto_img')->where('cd_img', '=', $imgsId[$c])->delete();
+                        Img::destroy($i);
+                        DB::table('sku_produto_img')->where('cd_img', '=', $i)->delete();
 
                     }
 
@@ -282,7 +277,7 @@ class ProductController extends Controller
 
                 DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
                 Product::destroy($produto->cd_produto);
-                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
@@ -291,7 +286,6 @@ class ProductController extends Controller
             finally {
 
                 $imgsId[$key] = $imgs[$key]->cd_img;
-                $cont += 1;
 
             }
 
@@ -319,11 +313,7 @@ class ProductController extends Controller
 
         //Procura no banco a categoria e subcategoria baseado no id
         $category = Category::findOrFail($request->cd_categoria_variacao);
-        $subcategory = DB::table('categoria')
-            ->join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
-            ->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
-            ->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $request->cd_sub_categoria_variacao)
-            ->first();
+        $subcategory = Category::join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $request->cd_sub_categoria_variacao)->first();
 
         try {
             Dimension::create([
@@ -346,8 +336,7 @@ class ProductController extends Controller
 
         try {
 
-            //Salva na tabela de ligação Produto/SKU
-            DB::table('sku')->insert([
+            Sku::create([
                 'cd_nr_sku' => $request->cd_sku_variacao,
                 'cd_dimensao' => $dimensao->cd_dimensao
             ]);
@@ -355,14 +344,13 @@ class ProductController extends Controller
         }
         catch (\Exception $e) {
 
-            //dd($e->getMessage());
             Dimension::destroy($dimensao->cd_dimensao);
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
 
-            $sku = DB::table('sku')->orderBy('cd_sku', 'DESC')->first();
+            $sku = Sku::select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
 
         }
 
@@ -386,8 +374,7 @@ class ProductController extends Controller
         }
         catch (\Exception $e) {
 
-            //dd($e->getMessage());
-            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+            Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
@@ -410,7 +397,7 @@ class ProductController extends Controller
         catch (\Exception $e) {
 
             Product::destroy($produtoVariacao->cd_produto);
-            DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+            Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
 
             return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
@@ -434,7 +421,7 @@ class ProductController extends Controller
 
                 DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Product::destroy($produtoVariacao->cd_produto);
-                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
@@ -459,7 +446,7 @@ class ProductController extends Controller
 
                 DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Product::destroy($produtoVariacao->cd_produto);
-                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
@@ -517,13 +504,13 @@ class ProductController extends Controller
                 }
 
             }
-            catch (Exception $e) {
+            catch (\Exception $e) {
 
                 if ($cont > 0) {
 
-                    foreach ($cont as $c) {
+                    foreach ($imgsId as $i) {
 
-                        Img::destroy($imgsId[$c]);
+                        Img::destroy($i);
 
                     }
 
@@ -553,7 +540,6 @@ class ProductController extends Controller
 
                 $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
                 $imgsId[$key] = $imgs[$key]->cd_img;
-                $cont += 1;
 
             }
 
@@ -575,10 +561,10 @@ class ProductController extends Controller
 
                 if ($cont > 0) {
 
-                    foreach ($cont as $c) {
+                    foreach ($imgsId as $i) {
 
-                        Img::destroy($imgsId[$c]);
-                        DB::table('sku_produto_img')->where('cd_img', '=', $imgsId[$c])->delete();
+                        Img::destroy($i);
+                        DB::table('sku_produto_img')->where('cd_img', '=', $i)->delete();
 
                     }
 
@@ -598,7 +584,7 @@ class ProductController extends Controller
 
                 DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Product::destroy($produtoVariacao->cd_produto);
-                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
                 return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
@@ -607,7 +593,6 @@ class ProductController extends Controller
             finally {
 
                 $imgsId[$key] = $imgs[$key]->cd_img;
-                $cont += 1;
 
             }
 
@@ -639,8 +624,6 @@ class ProductController extends Controller
         $ultimoProduto = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
             ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
-            ->join('sku_produto_embalagem', 'sku_produto_embalagem.cd_sku', '=', 'sku.cd_sku')
-            ->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')
             ->join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
             ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
             ->where('produto.cd_produto', '=', $cd_produto)

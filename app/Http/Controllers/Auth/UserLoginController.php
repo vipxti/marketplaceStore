@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class UserLoginController extends Controller
 {
-    //use AuthenticatesUsers;
+    use AuthenticatesUsers;
 
     public function __construct()
     {
@@ -30,12 +29,12 @@ class UserLoginController extends Controller
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'))) {
 
             //Redireciona o usuário caso consiga logar
-            return redirect()->intended(route('admin.dashboard'))->with('success', 'Bem vindo ' . Auth::user()->nm_usuario);
+            return redirect()->route('admin.dashboard')->with('success', 'Bem vindo ' . Auth::guard('admin')->user()->nm_usuario);
 
         }
         
         //Retorna para a tela de login com o campo email preenchido
-        return redirect()->back()->withInput($request->only('email'))->with('error', 'Erro ao logar no sistema');
+        return redirect()->back()->withInput($request->only('email'))->with('nosuccess', 'Usuário ou senha incorretos');
 
     }
 
