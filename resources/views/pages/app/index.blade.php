@@ -60,7 +60,7 @@
             <div class="catagory-content">
                 <h6>Acessórios</h6>
                 <h2>Vendas 30%</h2>
-                <a href="#" class="btn karl-btn">Compre Agora</a>
+                <a href="{{ route('carrinho.page') }}" class="btn karl-btn">Compre Agora</a>
             </div>
         </div>
         <!-- Single Catagory -->
@@ -68,7 +68,7 @@
             <div class="catagory-content">
                 <h6>Os melhores designer</h6>
                 <h2>Moda Feminina</h2>
-                <a href="#" class="btn karl-btn">Compre Agora</a>
+                <a href="{{ route('carrinho.page') }}" class="btn karl-btn">Compre Agora</a>
             </div>
         </div>
     </section>

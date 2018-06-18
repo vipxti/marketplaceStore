@@ -23,4 +23,16 @@ class PageController extends Controller
         return view('pages.admin.indexConfigproduto');
 
     }
+
+    public function showCart() {
+
+        return view('pages.app.carrinho');
+
+    }
+
+    public function showCheckout() {
+
+        return view('pages.app.checkout');
+
+    }
 }

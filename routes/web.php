@@ -77,6 +77,10 @@ Route::prefix('page')->group(function (){
 
     Route::get('/products', 'ProductController@paginaProduto')->name('products.page');
 
+    //Carrinho
+    Route::get('/Carrinho', 'PageController@showCart')->name('carrinho.page');
+    Route::get('/Checkout', 'PageController@showCheckout')->name('checkout.page');
+
 });
 
 
