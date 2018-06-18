@@ -152,7 +152,7 @@
             <div class="col-md-8" style="padding-left: 34%">
                 <div>
                     <div class="form-group">
-                        <label>E-mail</label>
+                        <label>Senha</label>
                         <div class="input-group">
                             <input type="password" class="form-control" name="ds_senha" required maxlength="20">
                         </div>

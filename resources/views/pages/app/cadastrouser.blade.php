@@ -193,14 +193,14 @@
             </div>
 
 
-            <!-- CPF e CNPJ -->
+            <!-- CPF -->
             <div class="col-md-12" style="padding-left: 26%">
                 <form>
                     <table>
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label>CPF</label>
+                                    <label>CPF ou CNPJ</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
                                         <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
@@ -209,16 +209,6 @@
                             </td>
 
                             <td>&nbsp;&nbsp;&nbsp;</td>
-
-                            <td>
-                                <div class="form-group">
-                                    <label>CNPJ</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
-                                    </div>
-                                </div>
-                            </td>
                         </tr>
                     </table>
                 </form>
