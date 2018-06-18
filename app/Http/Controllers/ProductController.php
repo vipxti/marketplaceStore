@@ -48,21 +48,33 @@ class ProductController extends Controller
 
     }
 
-    public function paginaCadastrouser(){
+    public function paginaCadastrocliente(){
 
-        return view('pages.app.cadastrouser');
-
-    }
-
-    public function paginaLoginuser(){
-
-        return view('pages.app.loginuser');
+        return view('pages.app.cadastrocliente');
 
     }
 
-    public function paginaPaineluser(){
+    public function paginaLogincliente(){
 
-        return view('pages.app.paineluser');
+        return view('pages.app.logincliente');
+
+    }
+
+    public function paginaPainelcliente(){
+
+        return view('pages.app.painelcliente');
+
+    }
+
+    public function paginaAlteraremailcliente(){
+
+        return view('pages.app.alteraremailcliente');
+
+    }
+
+    public function paginaAlterarsenhacliente(){
+
+        return view('pages.app.alterarsenhacliente');
 
     }
 
