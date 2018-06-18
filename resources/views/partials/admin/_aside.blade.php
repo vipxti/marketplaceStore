@@ -45,9 +45,9 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ route('category.register') }}"><i class="fa fa-tag"></i>Cadastrar Categorias</a></li>
-                            <li><a href="{{ route('color.page') }}"><i class="fa fa-paint-brush"></i>Cadastrar Cores</a></li>
-                            <li><a href="{{ route('size.register') }}"><i class="fa fa-arrows-h"></i>Cadastrar Tamanhos</a></li>
+                            <li><a href="{{ route('category.register') }}"><i class="fa fa-tag"></i>Categorias</a></li>
+                            <li><a href="{{ route('color.page') }}"><i class="fa fa-paint-brush"></i>Cores</a></li>
+                            <li><a href="{{ route('size.register') }}"><i class="fa fa-arrows-h"></i>Tamanhos</a></li>
                         </ul>
                     </li>
                 </ul>

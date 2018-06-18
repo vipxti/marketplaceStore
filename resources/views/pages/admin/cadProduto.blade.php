@@ -221,7 +221,7 @@
                                       <div class="form-group">
                                        <label>Descrição do Produto</label>
                                         <div class="input-group">
-                                          <textarea id="bold" class="campo_desc" name="ds_produto" required rows="5" cols="112%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
+                                          <textarea id="bold" class="campo_desc" name="ds_produto" required rows="5" cols="129,99%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
                                           </textarea>
                                         </div>
                                       </div>
