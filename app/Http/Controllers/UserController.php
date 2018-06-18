@@ -26,11 +26,25 @@ class UserController extends Controller
 
     public function atualizaDadosUsuario(UpdateUserRequest $request){
         //Cadastro  telefone
-        Phone::create([
-            'cd_celular1'=>$request->cd_celular1,
-            'cd_celular2'=>$request->cd_celular2
-        ]);
-        $tel = Phone::ordeBy('cd_telefone', 'DESC')->first();
+
+        try {
+
+            Phone::create([
+                'cd_celular1'=>$request->cd_celular1,
+                'cd_celular2'=>$request->cd_celular2
+            ]);
+
+        }
+        catch (\Exception $e) {
+
+            return redirect()->back()->with('nosuccess', 'Houve um problema ao atualizar seus dados');
+
+        }
+        finally {
+
+            $tel = Phone::ordeBy('cd_telefone', 'DESC')->first();
+
+        }
 
         //Cad do End
         Uf::create([

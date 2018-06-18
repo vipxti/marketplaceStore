@@ -19,11 +19,16 @@
                             </thead>
                             <tbody>
                             <tr>
+
+                                {{-- Foreach aqui!!!!! --}}
+
                                 <td class="cart_product_img d-flex align-items-center">
-                                    <a href="#"><img src="{{asset('img/app/product-img/product-3.jpg')}}" alt="Product"></a>
-                                    <h6>Brinco Coração</h6>
+                                    <a href="#"><img src="{{ asset('img/products/' . $imagem[0]->im_produto) }}" alt="Product"></a>
+                                    <h6>{{ $imagem[0]->nm_produto }}</h6>
                                 </td>
-                                <td class="price"><span>R$ 29,99</span></td>
+
+                                <td class="price"><span>R$  {{ $imagem[0]->vl_produto }}</span></td>
+
                                 <td class="qty">
                                     <div class="quantity">
                                         <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>

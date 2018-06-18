@@ -27,7 +27,7 @@ Route::prefix('admin')->group(function () {
 
     //Variação do produto
     Route::post('/productvariation', 'ProductController@cadastrarVariacaoProduto')->name('productvariation.save')->middleware('auth:admin');
-    Route::get('/productvariationpage/{cd_produto}', 'ProductController@showProductPageVariation')->name('product.variation.page');
+    Route::get('/productvariationpage/{cd_produto}', 'ProductController@showProductPageVariation')->middleware('auth:admin');
 
     //Form categoria/subcategoria e cadastro
     Route::get('/category', 'CategoryController@showCategoryForm')->name('category.register')->middleware('auth:admin');
@@ -78,8 +78,8 @@ Route::prefix('page')->group(function (){
     Route::get('/products', 'ProductController@paginaProduto')->name('products.page');
 
     //Carrinho
-    Route::get('/Carrinho', 'PageController@showCart')->name('carrinho.page');
-    Route::get('/Checkout', 'PageController@showCheckout')->name('checkout.page');
+    Route::get('/carrinho/{cd_produto}', 'PageController@showCart');
+    Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');
 
 });
 

@@ -107,7 +107,7 @@ class ProductController extends Controller
         }
         catch (\Exception $e) {
 
-            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -156,7 +156,7 @@ class ProductController extends Controller
 
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
-            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -180,7 +180,7 @@ class ProductController extends Controller
             Product::destroy($produto->cd_produto);
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
-            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
 
@@ -250,7 +250,7 @@ class ProductController extends Controller
                 Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
-                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
             finally {
@@ -292,7 +292,7 @@ class ProductController extends Controller
                 Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
-                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
             finally {
@@ -303,7 +303,7 @@ class ProductController extends Controller
 
         }
 
-        return redirect()->route('admin.listProd')->with('success', 'Produto principal cadastrado com sucesso');
+        return redirect()->route('products.list')->with('success', 'Produto principal cadastrado com sucesso');
 
     }
 
@@ -337,7 +337,7 @@ class ProductController extends Controller
         }
         catch (\Exception $e) {
 
-            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -357,7 +357,7 @@ class ProductController extends Controller
         catch (\Exception $e) {
 
             Dimension::destroy($dimensao->cd_dimensao);
-            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -388,7 +388,7 @@ class ProductController extends Controller
 
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
-            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -412,7 +412,7 @@ class ProductController extends Controller
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
 
-            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
 
@@ -436,7 +436,7 @@ class ProductController extends Controller
                 Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
-                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
 
@@ -461,7 +461,7 @@ class ProductController extends Controller
                 Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
-                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
 
@@ -545,7 +545,7 @@ class ProductController extends Controller
                 DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Dimension::destroy($dimensao->cd_dimensao);
 
-                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
             finally {
@@ -599,7 +599,7 @@ class ProductController extends Controller
                 Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
-                return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
             finally {
@@ -610,7 +610,7 @@ class ProductController extends Controller
 
         }
 
-        return redirect()->route('admin.cadProd')->with('success', 'Variação do produto cadastrado com sucesso');
+        return redirect()->route('products.list')->with('success', 'Variação do produto cadastrado com sucesso');
 
     }
 
