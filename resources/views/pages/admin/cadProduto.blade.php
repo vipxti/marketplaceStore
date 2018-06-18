@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
@@ -256,13 +258,15 @@
                                 <tr>
                                     <td>
                                         <div>
-                                            <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
-                                            <div class="box-body">
+                                            <div class="box-header">
+
+                                            </div>
+                                           <!-- <div class="box-body">
                                                 <div class="form-group">
                                                     <input type="checkbox" class="flat-red campo_status" name="status" checked>
                                                     <label class="">Status</label>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </td>
                                 </tr>
@@ -270,7 +274,9 @@
 
                             <!-- Botões Salvar e Atributo -->
                             <div class="col-md-12">
-                                <div>
+                                <div class="box-header">
+                                    <input type="checkbox" class="js-switch" checked/> Ativar/Desativar Produto
+
                                     <button type="submit" id="btn_salvar" class="btn btn-success pull-right" disabled><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                 </div>
 
@@ -286,9 +292,12 @@
         </section>
     </div>
 
+
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
     <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
     <script src="{{asset('js/admin/nanobar.js')}}"></script>
+    <script src="{{asset('js/admin/switchery.js')}}"></script>
+
     <script>
 
         //Chama a função de contagem de palavras ao carregar a página
@@ -299,6 +308,9 @@
 
            $('#categorias').val("");
            $('#subcategorias').val("");
+
+            var elem = document.querySelector('.js-switch');
+            var init = new Switchery(elem);
 
         });
 

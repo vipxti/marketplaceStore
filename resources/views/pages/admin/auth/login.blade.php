@@ -5,6 +5,7 @@
     <!--login-box -->
     <div class="login-box">
     @include('partials.admin._alerts')
+        <link rel="stylesheet" href="{{asset('css/admin/_all.css')}}">
     <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Entre para iniciar sua sessão</p>
@@ -23,7 +24,7 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox" name="remember"> Lembrar de mim
+                                <input type="checkbox" class="flat-red" name="remember"> Lembrar de mim
                             </label>
                         </div>
                     </div>
@@ -49,14 +50,23 @@
         <!-- /.login-box-body -->
     </div>
 
+    <script src="{{asset('js/admin/icheck.min.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.inputmask.js')}}"></script>
     <script>
-        () => {
+        /*() => {
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '30%' /* optional */
-            });
-        };
+            /*});
+        };*/
+
+        $(function(){
+            //Flat red color scheme for iCheck
+            $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                checkboxClass: 'icheckbox_flat-blue'
+            })
+        })
     </script>
     <!-- /.login-box -->
 @stop
