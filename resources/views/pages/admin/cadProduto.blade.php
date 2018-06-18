@@ -135,7 +135,7 @@
                                                 <label>Preço</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="number" class="form-control campo_preco" required name="vl_produto" min="0">
+                                                    <input type="text" class="form-control campo_preco" required name="vl_produto">
                                                 </div>
                                                 <i class="msg_preco"></i>
                                             </div>

@@ -404,7 +404,7 @@
                                                     <label>Descrição do Produto</label>
                                                     <div class="input-group">
                                           <textarea id="bold" class="campo_desc_modal" name="ds_produto_variacao" rows="5" cols="112%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
-                                              {{ $ultimoProduto[0]->ds_produto }}
+                                            {{--{{ $ultimoProduto[0]->ds_produto }}--}}
                                           </textarea>
                                                     </div>
                                                 </div>
@@ -646,9 +646,11 @@
         //Contagem de palavras na TextArea da Descrição
         function contadorPalavras() {
 
-            //$('.campo_desc_modal').text("");
+            $('.campo_desc_modal').text("");
+            $('.campo_desc_modal').text("{{ $ultimoProduto[0]->ds_produto }}");
+
             $('.campo_desc_modal').on("input", function () {
-                var conteudo = $('.campo_desc').val();
+                var conteudo = $('.campo_desc_modal').val();
                 var qtdCaracter = 1500 - conteudo.length;
 
 
