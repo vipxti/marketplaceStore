@@ -57,7 +57,6 @@
                                     <th style="text-align: right">Nº</th>
                                     <th style="text-align: right">SKU</th>
                                     <th style="text-align: right">Nome</th>
-                                    <th style="text-align: right">Descrição</th>
                                     <th style="text-align: right">Preço</th>
                                 </tr>
                                 </thead>
@@ -69,7 +68,6 @@
                                         <td>{{ $produto->cd_produto }} </td>
                                         <td>{{ $produto->nm_produto }} </td>
                                         <td>{{ $produto->nm_produto }} </td>
-                                        <td>{{ $produto->ds_produto }} </td>
                                         <td>{{ $produto->vl_produto }} </td>
                                         <td class="btn btn-outline-warning" style="color: #367fa9"><i class="fa fa-pencil"></i></td>
                                         <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c"><a href="{{ url('/admin/productvariationpage/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>
