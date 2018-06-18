@@ -136,25 +136,25 @@
         <div class="container">
 
             <!-- E-mail login  -->
-            <div class="col-md-9" style="padding-left: 26%">
+            <div class="col-md-8" style="padding-left: 34%">
                 <div>
                     <div class="form-group">
                         <label>E-mail</label>
                         <div class="input-group">
                             <span class="input-group-addon"></span>
-                            <input type="text" class="form-control" name="nm_email" required maxlength="50" style="border-radius: 10px">
+                            <input type="text" class="form-control" name="nm_email" required maxlength="50">
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Senha login -->
-            <div class="col-md-9" style="padding-left: 26%">
+            <div class="col-md-8" style="padding-left: 34%">
                 <div>
                     <div class="form-group">
-                        <label>E-mail</label>
+                        <label>Senha</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="ds_senha" required maxlength="20" style="border-radius: 10px">
+                            <input type="password" class="form-control" name="ds_senha" required maxlength="20">
                         </div>
                     </div>
                 </div>
@@ -163,9 +163,9 @@
             <br>
 
             <!-- Botões Salvar -->
-            <div class="col-md-12" style="padding-left: 26%">
+            <div class="col-md-12" style="padding-left: 34%">
                 <div>
-                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e; border-radius: 10px"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 350px; background-color: #ff084e">Logar</button>
                 </div>
             </div>
 

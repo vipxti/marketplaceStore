@@ -142,7 +142,7 @@
                         <label>Nome</label>
                         <div class="input-group">
                             <span class="input-group-addon"></span>
-                            <input type="text" class="form-control" name="nm_cliente" required maxlength="50" style="border-radius: 10px">
+                            <input type="text" class="form-control" name="nm_cliente" required maxlength="50">
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,8 @@
                     <div class="form-group">
                         <label>E-mail</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="nm_email" required maxlength="20" style="border-radius: 10px">
+                            <span class="input-group-addon"></span>
+                            <input type="text" class="form-control" name="nm_email" required maxlength="50">
                         </div>
                     </div>
                 </div>
@@ -170,7 +171,7 @@
                                     <label>Senha</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="password" class="form-control" name="ds_senha" required maxlength="20" style="border-radius: 10px">
+                                        <input type="password" class="form-control" name="ds_senha" required maxlength="20">
                                     </div>
                                 </div>
                             </td>
@@ -182,7 +183,7 @@
                                     <label>Data de Nascimento</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="dt_nascimento" required maxlength="20" style="border-radius: 10px">
+                                        <input type="number" class="form-control" name="dt_nascimento" required maxlength="20">
                                     </div>
                                 </div>
                             </td>
@@ -190,39 +191,29 @@
                     </table>
                 </form>
             </div>
-            <br>
 
-            <!-- CPF e CNPJ -->
+
+            <!-- CPF -->
             <div class="col-md-12" style="padding-left: 26%">
                 <form>
                     <table>
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label>CPF</label>
+                                    <label>CPF ou CNPJ</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20" style="border-radius: 10px">
+                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
                                     </div>
                                 </div>
                             </td>
 
                             <td>&nbsp;&nbsp;&nbsp;</td>
-
-                            <td>
-                                <div class="form-group">
-                                    <label>CNPJ</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20" style="border-radius: 10px">
-                                    </div>
-                                </div>
-                            </td>
                         </tr>
                     </table>
                 </form>
             </div>
-            <br>
+
 
             <!-- Telefone -->
             <div class="col-md-12" style="padding-left: 26%">
@@ -234,7 +225,7 @@
                                     <label>Telefone</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="fk_cd_telefone" required maxlength="20" style="border-radius: 10px">
+                                        <input type="number" class="form-control" name="fk_cd_telefone" required maxlength="20">
                                     </div>
                                 </div>
                             </td>
@@ -245,7 +236,7 @@
                     </table>
                 </form>
             </div>
-            <br>
+
 
             <!-- Foto Cliente -->
             <div class="col-md-12" style="padding-left: 26%">
@@ -265,7 +256,7 @@
             <!-- Botões Salvar -->
             <div class="col-md-12" style="padding-left: 26%">
                 <div>
-                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e; border-radius: 10px"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
                 </div>
             </div>
             <br>

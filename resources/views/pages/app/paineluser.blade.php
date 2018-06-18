@@ -181,9 +181,9 @@
                                     <!-- Botões alterar senha e e-mail -->
                                     <div class="col-md-12">
                                         <div>
-                                            <button type="submit" class="btn btn-danger" style="width: 150px; background-color: #ff084e; border-radius: 10px"><i class="fa fa fa-edit"></i>&nbsp;&nbsp;Alterar Senha</button>
+                                            <button type="submit" class="btn btn-danger" style="width: 150px; background-color: #ff084e"><i class="fa fa fa-edit"></i>&nbsp;&nbsp;Alterar Senha</button>
                                         &nbsp;&nbsp;&nbsp;
-                                            <button type="submit" class="btn btn-danger" style="width: 150px; background-color: #ff084e; border-radius: 10px"><i class="fa fa fa-edit"></i>&nbsp;&nbsp;Alterar E-mail</button>
+                                            <button type="submit" class="btn btn-danger" style="width: 150px; background-color: #ff084e"><i class="fa fa fa-edit"></i>&nbsp;&nbsp;Alterar E-mail</button>
                                         </div>
                                     </div>
                                     <br>
@@ -196,7 +196,7 @@
                                                 <label>Nome</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"></span>
-                                                    <input type="text" class="form-control" name="nm_cliente" required maxlength="50" style="border-radius: 10px">
+                                                    <input type="text" class="form-control" name="nm_cliente" required maxlength="50">
                                                 </div>
                                             </div>
                                         </div>
@@ -208,12 +208,11 @@
                                             <div class="form-group">
                                                 <label>E-mail</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="nm_email" required maxlength="20" style="border-radius: 10px">
+                                                    <input type="text" class="form-control" name="nm_email" required maxlength="20">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <br>
 
                                     <!-- Senha e data de nascimento -->
                                     <div class="col-md-5" >
@@ -225,7 +224,7 @@
                                                             <label>Senha</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"></span>
-                                                                <input type="password" class="form-control" name="ds_senha" required maxlength="20" style="border-radius: 10px">
+                                                                <input type="password" class="form-control" name="ds_senha" required maxlength="20">
                                                             </div>
                                                         </div>
                                                     </td>
@@ -237,7 +236,7 @@
                                                             <label>Data de Nascimento</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"></span>
-                                                                <input type="number" class="form-control" name="dt_nascimento" required maxlength="20" style="border-radius: 10px">
+                                                                <input type="number" class="form-control" name="dt_nascimento" required maxlength="20">
                                                             </div>
                                                         </div>
                                                     </td>
@@ -246,38 +245,26 @@
                                         </form>
                                     </div>
 
-
-                                    <!-- CPF e CNPJ -->
+                                    <!-- CPF -->
                                     <div class="col-md-5">
                                         <form>
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <div class="form-group">
-                                                            <label>CPF</label>
+                                                        <div class="form-group" style="width:204px">
+                                                            <label>CPF ou CNPJ</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"></span>
-                                                                <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20" style="border-radius: 10px">
+                                                                <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
                                                             </div>
                                                         </div>
                                                     </td>
 
                                                     <td>&nbsp;&nbsp;&nbsp;</td>
-
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <label>CNPJ</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon"></span>
-                                                                <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20" style="border-radius: 10px">
-                                                            </div>
-                                                        </div>
-                                                    </td>
                                                 </tr>
                                             </table>
                                         </form>
                                     </div>
-
 
                                     <!-- Telefone -->
                                     <div class="col-md-5">
@@ -287,20 +274,17 @@
                                                     <td>
                                                         <div class="form-group">
                                                             <label>Telefone</label>
-                                                            <div class="input-group">
+                                                            <div class="input-group" style="width: 204px">
                                                                 <span class="input-group-addon"></span>
-                                                                <input type="number" class="form-control" name="fk_cd_telefone" required maxlength="20" style="border-radius: 10px">
+                                                                <input type="number" class="form-control" name="fk_cd_telefone" required maxlength="20">
                                                             </div>
                                                         </div>
                                                     </td>
-
                                                     <td>&nbsp;&nbsp;&nbsp;</td>
-
                                                 </tr>
                                             </table>
                                         </form>
                                     </div>
-
 
                                     <!-- Foto Cliente -->
                                     <div class="col-md-5">
@@ -318,11 +302,10 @@
                                     <br>
                                     <br>
 
-
                                     <!-- Botões Salvar -->
                                     <div class="col-md-5">
                                         <div>
-                                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e; border-radius: 10px"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
                                         </div>
                                     </div>
 
