@@ -27,6 +27,7 @@ mix.styles([
     'public/css/app/owl.carousel.css',
     'public/css/app/responsive.css',
     'public/css/app/style.css',
+    'public/css/app/paineluser.css',
     'public/css/app/themify-icons.css'
 ], 'public/css/app-styles.css');
 
