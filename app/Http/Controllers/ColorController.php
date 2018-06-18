@@ -16,20 +16,24 @@ class ColorController extends Controller
     }
 
     public function cadastrarNovaCor(ColorRequest $request) {
-        $cor = Color::create([
-            'nm_cor' => $request->nm_cor
-        ]);
 
-        if ($cor) {
-            session()->flash('Mensagem', 'Cor cadastrada com sucesso');
-            return redirect()->route('admin.cadCor');
+        try {
 
-        }
-        else
-        {
-
-            return redirect()->back()->withErrors('Houve um problema ao cadastrar a cor');
+            Color::create([
+                'nm_cor' => $request->nm_cor
+            ]);
 
         }
+        catch (\Exception $e) {
+
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao cadastrar a cor');
+
+        }
+        finally {
+
+            return redirect()->route('color.page')->with('success', 'Cor cadastrada com sucesso');
+
+        }
+
     }
 }

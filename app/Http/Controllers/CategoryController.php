@@ -34,48 +34,72 @@ class CategoryController extends Controller
 
     public function cadastrarCategoria(CategoryRequest $request) {
 
-        $cat = Category::create([
-            'nm_categoria' => $request->nm_categoria
-        ]);
+        try {
 
-        if ($cat) {
-            return redirect()->route('admin.cadCatego');
+            Category::create([
+                'nm_categoria' => $request->nm_categoria
+            ]);
+
+        }
+        catch (\Exception $e) {
+
+            return redirect()->route('category.register')->with('nosuccess', 'Erro ao cadadastrar a categoria');
+
+        }
+        finally {
+
+            return redirect()->route('category.register')->with('success', 'Categoria cadastrada com sucesso');
+
         }
 
     }
 
     public function cadastrarSubCategoria(SubCategoryRequest $request) {
 
-        //dd($request->all());
 
-        $subcat = SubCategory::create([
-            'nm_sub_categoria' => $request->nm_sub_categoria
-        ]);
+        try {
 
-        if ($subcat) {
-            return redirect()->route('admin.cadCatego');
+            SubCategory::create([
+                'nm_sub_categoria' => $request->nm_sub_categoria
+            ]);
+
+        }
+        catch (\Exception $e) {
+
+            return redirect()->route('category.register')->with('nosuccess', 'Erro ao cadadastrar a subcategoria');
+
+        }
+        finally {
+
+            return redirect()->route('category.register')->with('success', 'Subcategoria cadastrada com sucesso');
+
         }
 
     }
 
     public function associarCategoriaSubCategoria(CategorySubcategoryRequest $request) {
 
-        //dd($request->all());
-
         foreach ($request->cd_sub_categorias as $cd_subcategoria) {
 
-            $assocCatSubcat = DB::table('categoria_subcat')->insert([
+            try {
 
-                'cd_categoria' => $request->cd_categoria,
-                'cd_sub_categoria' => $cd_subcategoria
+                DB::table('categoria_subcat')->insert([
 
-            ]);
+                    'cd_categoria' => $request->cd_categoria,
+                    'cd_sub_categoria' => $cd_subcategoria
+
+                ]);
+
+            }
+            catch (\Exception $e) {
+
+                return redirect()->route('category.register')->with('nosuccess', 'Erro ao realizar a associação');
+
+            }
 
         }
 
-        if ($assocCatSubcat) {
-            return redirect()->route('admin.cadCatego');
-        }
+        return redirect()->route('category.register')->with('success', 'Associações realizadas com sucesso');
 
     }
 

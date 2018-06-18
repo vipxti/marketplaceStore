@@ -27,16 +27,16 @@
                                     <h6>{{ $imagem[0]->nm_produto }}</h6>
                                 </td>
 
-                                <td class="price"><span>R$ {{ str_replace('.', ',', $imagem[0]->vl_produto) }}</span></td>
+                                <td class="price"><span id="precoProd">R$ {{ str_replace('.', ',', $imagem[0]->vl_produto) }}</span></td>
 
                                 <td class="qty">
                                     <div class="quantity">
-                                        <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                        <span class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
                                         <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="1">
-                                        <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                     </div>
                                 </td>
-                                <td class="total_price"><span>R$ 29,99</span></td>
+                                <td class="total_price"><span id="#valorTotal"></span></td>
                             </tr>
                             </tbody>
                         </table>
@@ -110,6 +110,61 @@
     <script>
 
 
+        $('.qty-minus').on('click', function (e) {
+
+            $preco = $('#precoProd').html().replace('R$ ', '').replace(',', '.');
+
+            $qtd = $('#qty').val();
+
+            if ($qtd == 0) {
+
+                $num = 1;
+
+            }
+            else {
+
+                $num = parseInt($qtd) - 1;
+
+            }
+
+            $('#qty').val($num);
+
+            var $total = parseFloat($preco) * $num;
+
+            console.log($total);
+
+            $('#valorTotal').html($total);
+
+
+        })
+
+        $('.qty-plus').on('click', function (e) {
+
+            $preco = $('#precoProd').html().replace('R$ ', '').replace(',', '.');
+
+            $qtd = $('#qty').val();
+
+            if ($qtd == 0) {
+
+                $num = 1;
+
+            }
+            else {
+
+                $num = parseInt($qtd) + 1;
+
+            }
+
+            $('#qty').val($num);
+
+            var $total = parseFloat($preco) * $num;
+
+            console.log($total);
+
+            $('#valorTotal').innerHTML = $total;
+
+
+        })
 
     </script>
 
