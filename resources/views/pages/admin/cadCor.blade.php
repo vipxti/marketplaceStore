@@ -14,7 +14,6 @@
     </style>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @include('partials.admin._alerts')
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1><i class="fa fa-paint-brush"></i>&nbsp;&nbsp;Cadastrar Cor</h1>
@@ -27,6 +26,7 @@
 
         <!-- Main content -->
         <section class="content">
+            @include('partials.admin._alerts')
 
             <!-- Default box -->
             <div class="box box-primary">

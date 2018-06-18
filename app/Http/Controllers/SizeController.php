@@ -19,22 +19,46 @@ class SizeController extends Controller
     }
 
     public function cadastrarNovoTamanhoLetra(LetterSizeRequest $request) {
-        $tamanho = LetterSize::create([
-            'nm_tamanho_letra' => $request->nm_tamanho_letra
-        ]);
 
-        if ($tamanho) {
-            return redirect()->route('admin.cadTamanho');
+        try {
+
+            LetterSize::create([
+                'nm_tamanho_letra' => $request->nm_tamanho_letra
+            ]);
+
         }
+        catch (\Exception $e) {
+
+            return redirect()->route('size.register')->with('nosuccess', 'Erro ao cadastrar  o tamanho');
+
+        }
+        finally {
+
+            return redirect()->route('size.register')->with('success', 'Tamanho cadastro com sucesso');
+
+        }
+
     }
 
     public function cadastrarNovoTamanhoNumero(NumberSizeRequest $request) {
-        $tamanho = NumberSize::create([
-            'nm_tamanho_num' => $request->nm_tamanho_num
-        ]);
 
-        if ($tamanho) {
-            return redirect()->route('admin.cadTamanho');
+        try {
+
+            NumberSize::create([
+                'nm_tamanho_num' => $request->nm_tamanho_num
+            ]);
+
         }
+        catch (\Exception $e) {
+
+            return redirect()->route('size.register')->with('nosuccess', 'Erro ao cadastrar o tamanho');
+
+        }
+        finally {
+
+            return redirect()->route('size.register')->with('success', 'Tamanho cadastro com sucesso');
+
+        }
+
     }
 }
