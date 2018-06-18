@@ -404,9 +404,9 @@ img {
     height: 20px;
     line-height: 20px;
     position: absolute;
-    left: -5px;
+    left: -7px;
     text-align: center;
-    top: 5px;
+    top: 8px;
     width: 20px;
     z-index: 2;
     -webkit-transition-duration: 500ms;
@@ -561,7 +561,7 @@ img {
     z-index: 1;
     font-size: 14px;
     font-weight: 700;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 .main-menu-area .navbar {
@@ -574,16 +574,16 @@ img {
 }
 
 .dropdown-menu .dropdown-item {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
-    text-transform: uppercase;
+    text-transform:capitalize;
 }
 
 .dropdown-menu .dropdown-item:focus,
 .dropdown-menu .dropdown-item:hover {
     color: #fff;
     text-decoration: none;
-    background-color: #e6c843;
+    background-color: #ff084e;
     font-weight: 700;
 }
 
@@ -1326,7 +1326,7 @@ img {
 ---------------------- */
 
 .footer_area {
-    background-color: #fff;
+    background-color: #f5f5f5;
     border-top: 2px solid #f5f5f5;
     padding: 100px 0 50px;
 }

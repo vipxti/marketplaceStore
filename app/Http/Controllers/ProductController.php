@@ -48,6 +48,18 @@ class ProductController extends Controller
 
     }
 
+    public function paginaCadastrouser(){
+
+        return view('pages.app.cadastrouser');
+
+    }
+
+    public function paginaLoginuser(){
+
+        return view('pages.app.loginuser');
+
+    }
+
     public function listaProduto() {
 
         $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);

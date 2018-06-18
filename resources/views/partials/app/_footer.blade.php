@@ -10,7 +10,7 @@
                         </div>
                         <div class="copywrite_text d-flex align-items-center">
                             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                <script>document.write(new Date().getFullYear());</script> &copy; Todos os direitos reservados <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">VipX Marketplace</a>
+                                <script>document.write(new Date().getFullYear());</script> &copy; Todos os direitos reservados <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="http://vipx.com.br/" target="_blank">VipX Marketplace</a>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                         </div>
                     </div>
@@ -60,8 +60,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="footer_social_area text-center">
-                            <a href="https://www.facebook.com/Celestial-Moda-Evang%C3%A9lica-480913635394202/"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="https://www.instagram.com/celestial_moda_evangelica/?hl=pt-br"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="https://www.facebook.com/Celestial-Moda-Evang%C3%A9lica-480913635394202/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="https://www.instagram.com/celestial_moda_evangelica/?hl=pt-br" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>

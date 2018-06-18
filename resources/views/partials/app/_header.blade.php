@@ -55,8 +55,8 @@
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Cadastrar</a>
-                                        <a class="dropdown-item" href="#">Minha Conta</a>
+                                        <a class="dropdown-item" href="{{ route('cadastrouser.page') }}">Cadastrar</a>
+                                        <a class="dropdown-item" href="{{ route('loginuser.page') }}">Minha Conta</a>
                                         <a class="dropdown-item" href="#">Meus Pedidos</a>
                                     </div>
 
