@@ -636,6 +636,7 @@ class ProductController extends Controller
         $ultimoProduto = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
             ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+            ->join('dimensao', 'sku.cd_dimensao', 'dimensao.cd_dimensao')
             ->join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
             ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
             ->where('produto.cd_produto', '=', $cd_produto)

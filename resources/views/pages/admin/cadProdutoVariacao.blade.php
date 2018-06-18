@@ -350,7 +350,7 @@
                                                 <label>Largura</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                                    <input type="number" class="form-control campo_largura" required name="ds_largura_variacao" min="0">
+                                                    <input type="number" class="form-control campo_largura" required name="ds_largura_variacao" value="{{ $ultimoProduto[0]->ds_largura }}" min="0">
                                                 </div>
                                                 <i class="msg_largura"></i>
                                             </div>
@@ -362,7 +362,7 @@
                                                 <label>Altura</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                                    <input type="number" class="form-control campo_altura" required name="ds_altura_variacao" min="0">
+                                                    <input type="number" class="form-control campo_altura" required name="ds_altura_variacao" value="{{ $ultimoProduto[0]->ds_altura }}" min="0">
                                                 </div>
                                                 <i class="msg_altura"></i>
                                             </div>
@@ -373,7 +373,7 @@
                                                 <label>Comprimento</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                                    <input type="number" class="form-control campo_comprimento" required name="ds_comprimento_variacao" min="0">
+                                                    <input type="number" class="form-control campo_comprimento" required name="ds_comprimento_variacao" value="{{ $ultimoProduto[0]->ds_comprimento }}" min="0">
                                                 </div>
                                                 <i class="msg_peso"></i>
                                             </div>
@@ -386,7 +386,7 @@
                                                 <label>Peso (g)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                                    <input type="number" class="form-control campo_peso" required name="ds_peso_variacao" min="0">
+                                                    <input type="number" class="form-control campo_peso" required name="ds_peso_variacao" value="{{ $ultimoProduto[0]->ds_peso }}" min="0">
                                                 </div>
                                                 <i class="msg_peso"></i>
                                             </div>

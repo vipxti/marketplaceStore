@@ -27,7 +27,7 @@
                                     <h6>{{ $imagem[0]->nm_produto }}</h6>
                                 </td>
 
-                                <td class="price"><span>R$  {{ $imagem[0]->vl_produto }}</span></td>
+                                <td class="price"><span>R$ {{ str_replace('.', ',', $imagem[0]->vl_produto) }}</span></td>
 
                                 <td class="qty">
                                     <div class="quantity">
@@ -44,7 +44,7 @@
 
                     <div class="cart-footer d-flex mt-30">
                         <div class="back-to-shop w-50">
-                            <a href="{{route('index')}}">Continuar Comprando</a>
+                            <a href="{{ route('index') }}">Continuar Comprando</a>
                         </div>
                         <div class="update-checkout w-50 text-right">
                             <a href="#">Limpar Carrinho</a>
@@ -106,4 +106,11 @@
         </div>
     </div>
     <!-- ****** Cart Area End ****** -->
+
+    <script>
+
+
+
+    </script>
+
 @stop
