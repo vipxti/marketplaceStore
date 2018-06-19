@@ -440,7 +440,7 @@
 
                                     <tr>
                                         <td>
-                                            <div>
+                                            <!--<div>
                                                 <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
                                                 <div class="box-body">
                                                     <div class="form-group">
@@ -448,14 +448,15 @@
                                                         <label class="">Status</label>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </td>
                                     </tr>
                                 </table>
 
                                 <!-- Botão Salvar (Modal) -->
-                                <div style="width: 100%" class="text-right">
-                                    <button type="submit" id="btn_salvar" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                <div style="width: 100%" >
+                                    <input type="checkbox" class="js-switch" name="status" checked/> Ativar/Desativar Produto
+                                    <button type="submit" id="btn_salvar" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                 </div>
                         </form>
 
@@ -475,6 +476,9 @@
 
         //Chama a função de contagem de palavras ao carregar a página
         $(document).ready(function(){
+
+            var elem = document.querySelector('.js-switch');
+            var init = new Switchery(elem);
 
            contadorPalavras();
 

@@ -258,6 +258,7 @@
                                 <tr>
                                     <td>
                                         <div>
+                                            <!--
                                             <div class="box-header">
 
                                             </div>
@@ -273,13 +274,9 @@
                             </table>
 
                             <!-- Botões Salvar e Atributo -->
-                            <div class="col-md-12">
-                                <div class="box-header">
+                            <div>
                                     <input type="checkbox" class="js-switch" name="status" checked/> Ativar/Desativar Produto
-
                                     <button type="submit" id="btn_salvar" class="btn btn-success pull-right" disabled><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
-                                </div>
-
                             </div>
                         </form>
 

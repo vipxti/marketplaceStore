@@ -2,7 +2,7 @@
 @section('content')
 
     @include('partials.admin._alerts')
-
+    <link rel="stylesheet" href="{{asset('css/admin/_all.css')}}">
     <div class="register-box">
         <div class="register-box-body">
             <p class="login-box-msg">Registre uma nova conta</p>
@@ -32,10 +32,10 @@
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                 </div>--}}
                 <div class="row">
-                    <div class="col-xs-8">
+                    <div class="col-xs-8" style="padding-left: 13px">
                         <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox">Estou de acordo com os <a href="#">termos</a>
+                            <label style="padding-left: 0px">
+                                <input type="checkbox" class="flat-red">&nbsp;Estou de acordo com os <a href="#">termos</a>
                             </label>
                         </div>
                     </div>
@@ -56,7 +56,18 @@
         <!-- /.form-box -->
     </div>
 
+
+    <script src="{{asset('js/admin/icheck.min.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.inputmask.js')}}"></script>
     <script>
+
+        $(function(){
+            //Flat red color scheme for iCheck
+            $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                checkboxClass: 'icheckbox_flat-blue'
+            })
+        });
+
         $('#cpf_cnpj').blur(function(e){
             e.preventDefault();
 
@@ -67,11 +78,8 @@
                 type: 'GET',
                 success: function(data){
 
-
-
                     var cnpjValido = validarCNPJ($cpf_cnpj);
                     var cpfValido = validarCPF($cpf_cnpj);
-
 
                     if($cpf_cnpj.length > 15){
                         $('#status_cpf_cnpj').addClass('has-error');
@@ -95,13 +103,10 @@
 
                         $('.msg-erro').html("CPF/CNPJ é válido.").css("color", "green");
                     }
-
-            }
+                }
 
             });
         });
-
-
 
 
         $('#verifica_senha').blur(function(){
@@ -114,10 +119,6 @@
                 $('.msg-senha').html("Senha deve conter no mínimo 1 caracter maiúsculo.").css("color", "red");
 
         });
-
-
-
-
 
 
         function validarCNPJ(cnpj) {
@@ -208,7 +209,6 @@
             else
                 return false;
         }
-
 
     </script>
 

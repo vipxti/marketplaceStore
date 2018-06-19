@@ -3,7 +3,7 @@
 @section('content')
 
 
-
+    <link rel="stylesheet" href="{{asset('css/admin/TreeViewEstilo.css')}}">
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
@@ -42,6 +42,16 @@
 
                             <div class="col-md-8">
                                 <div class="form-group">
+                                    <label>Alterar Categoria</label>
+                                    <div class="input-group">
+                                        <input class="form-control" type="hidden" id="catId" name="catId">
+                                        <input type="text" class="form-control" id="catName" name="nm_categoria" maxlength="35">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
                                     <label>Categoria</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-tag"></i></span>
@@ -59,16 +69,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label>Alterar Categoria</label>
-                                    <div class="input-group">
-                                        <input class="form-control" type="hidden" id="catId" name="catId">
-                                        <input type="text" class="form-control" id="catName" name="nm_categoria" maxlength="35">
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                             </div>
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <!-- Cadastrar Categoria -->
+            <!-- Cadastrar Sub-Categoria -->
             <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -90,6 +90,19 @@
                     </div>
 
                     <div class="box-body">
+
+
+                        <form id="fCat" class="form-horizontal" action="{{ route('subcategory.save') }}" method="post">
+                            {{ csrf_field() }}
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>Alterar Sub-Categoria</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="nm_sub_categoria" maxlength="35">
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -110,17 +123,6 @@
                                 </div>
                             </div>
 
-                        <form id="fCat" class="form-horizontal" action="{{ route('subcategory.save') }}" method="post">
-                            {{ csrf_field() }}
-
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label>Alterar Sub-Categoria</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="nm_sub_categoria" maxlength="35">
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
@@ -131,7 +133,7 @@
             </div>
         </section>
 
-        <!-- Cadastrar Categoria -->
+        <!-- Cadastrar Associação -->
         <section class="content">
 
             <div class="col-md-12">
@@ -144,6 +146,8 @@
                             </button>
                         </div>
                     </div>
+
+
 
                     <div class="box-body">
 
@@ -202,10 +206,78 @@
                 </div>
             </div>
         </section>
+
+        <!-- Listar Categorias Pais e Filhas -->
+        <section class="content">
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Lista de Categorias</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+
+                                    @foreach($categorias as $categoria)
+                                        <ul class="lista">
+                                            {{--onclick="listarSubCategorias({{$categoria->cd_categoria}})"--}}
+                                            <li id="liCategoria" onclick="listarSubCategorias({{$categoria->cd_categoria}}, this, $contador=0)">
+                                                {{$categoria->nm_categoria}}
+                                                <ul>
+
+
+                                                {{--@foreach($subcategorias as $sub)
+                                                        <li>{{$sub->nm_sub_categoria}}</li>
+                                                @endforeach--}}
+                                                 </ul>
+                                            </li>
+                                        </ul>
+                                    @endforeach
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/admin/TreeViewEstilo.js') }}"></script>
     <script>
+
+        function listarSubCategorias(categoria, elementLi, contador){
+
+            console.log($(elementLi));
+            console.log(contador);
+            $.ajax({
+
+                url: '{{ url('/admin/subcat') }}/' + categoria,
+                type: 'GET',
+                success: function (data) {
+                    //console.log(data.subcat);
+
+
+                    $.each(data.subcat, function(index, subcategoria) {
+
+                        //$('#liCategoria').append(`<ul>`);
+                        $(elementLi).append(`<ul><li>` + subcategoria.nm_sub_categoria + `</li></ul>`);
+                        //$('#liCategoria').append(`</ul>`);
+                    })
+
+                }
+
+            });
+
+        }
 
         $('#categorias').change(function (e) {
             e.preventDefault();
@@ -227,12 +299,24 @@
 
                 }
 
-            })
+            });
+
+        });
+
+
+        $(document).ready(function(){
+
+            /*$("#liCategoria").one("click", function(categoria){
+                console.log($(this));
+                //listarSubCategorias();
+            });*/
 
         });
 
         $(function(){
-            $('.select2').select2()
+            $('.select2').select2();
+
+            var contador = 0;
         })
 
     </script>

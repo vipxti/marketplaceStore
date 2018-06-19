@@ -230,18 +230,31 @@
         </div>
     </section>
 
+    {{--}}<script src="{{ asset('js/app/instagram.js') }}"></script>
     <script type='text/javascript'>
-       /* var feed=new ody({get:"user",
+
+
+
+        var feed=new ody({get:"user",
+
             limit:9,
 
             resolution:"standard_resolution",
+            template:`<li><a href="" target="_blank" style="background-image:url('');background-size: cover;">
+            <img src="https://lh3.googleusercontent.com/-P-gOTAfNfZ4/V2RPSYvECxI/AAAAAAAABng/Efqy2Oxjqm4lrmDhT07PBtlgYRb_MlJ7QCCo/s576/questyerror.png">
+            </img><div class="instagrid-z">
+            <div class="instagrids"><span class="instagrid-outter">{{''}}
+            <i class="fa fa-heart"></i><br/>{{'comments'}} <i class="fa fa-comment"></i></span></div></div></a></li>`,
+
+
+
 
 
             userId:4479769937,
             accessToken:"4479769937.d58614b.95ed9230bc564aedb27083af9c0875a4"
-        });feed.run();*/
+        });feed.run();
 
-    </script>
+    </script>--}}
     <!-- ****** Popular Brands Area End ****** -->
 
 @stop
