@@ -1,7 +1,7 @@
 @extends('layouts.app.app')
 
 @section('content')
-
+    <link rel="stylesheet" href="{{asset('css/admin/_all.css')}}">
     <!-- ****** Quick View Modal Area Start ****** -->
     <div class="modal fade" id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -154,12 +154,18 @@
                     <div class="form-group">
                         <label>Senha</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="ds_senha" required maxlength="20">
+                            <span class="input-group-addon"></span>
+                            <input type="password" class="form-control" name="ds_senha" required maxlength="50">
                         </div>
                     </div>
                 </div>
             </div>
-            <br>
+            <div class="col-xs-8" style="padding-left: 34%">
+                <div class="checkbox icheck">
+                    <label>
+                        <input type="checkbox" class="flat-red" style="right: 15px"  name="remember"> Lembrar de mim</label>
+                </div>
+            </div>
             <br>
 
             <!-- Botões Salvar -->
@@ -193,6 +199,17 @@
         });
 
 
+    </script>
+    <script src="{{asset('js/admin/icheck.min.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.inputmask.js')}}"></script>
+    <script>
+
+        $(function(){
+            //Flat red color scheme for iCheck
+            $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                checkboxClass: 'icheckbox_flat-blue'
+            })
+        })
     </script>
 
     <div id="fb-root"></div>

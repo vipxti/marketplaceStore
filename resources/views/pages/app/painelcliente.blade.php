@@ -188,7 +188,6 @@
                                     </div>
                                     <br>
                                     <br>
-
                                     <!-- Nome do Cliente  -->
                                     <div class="col-md-7">
                                         <div>
@@ -301,31 +300,77 @@
                                     </div>
                                     <br>
                                     <br>
-
                                     <!-- Botões Salvar -->
                                     <div class="col-md-5">
                                         <div>
                                             <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
                                         </div>
                                     </div>
-
-
-                                </div>
                                 </div>
                                 <div class="tab-pane" id="tab_default_4">
-                                    <p></p>
-                                    <p></p>
-                                    <p></p>
+                                    <br>
+                                    <br>
+                                    <!-- Nome do destinatário -->
+                                    <div class="col-md-5" style="width: 37.30%">
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Nome do destinatário</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"></span>
+                                                    <input type="text" class="form-control" name="" required maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Cep e Tipo de endereço -->
+                                    <div class="col-md-5" >
+                                        <form>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label>Tipo de endereço</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon"></span>
+                                                                <select id="categorias" class="form-control select2" required name="">
+                                                                    <option value="apatamento">Apartamento</option>
+                                                                    <option value="casa">Casa</option>
+                                                                    <option value="comercio">Comercio</option>
+                                                                    <option value="outro">Outro</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>&nbsp;&nbsp;&nbsp;</td>
+
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label>Cep</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon"></span>
+                                                                <input type="number" class="form-control" name="dt_nascimento" required maxlength="20">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <br>
+
+                                    <!-- Botões Salvar -->
+                                    <div class="col-md-5">
+                                        <div>
+                                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 375px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Adicionar Endereço</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane" id="tab_default_5">
-                                    <p></p>
-                                    <p></p>
-                                    <p></p>
                                 </div>
                                 <div class="tab-pane" id="tab_default_6">
-                                    <p></p>
-                                    <p></p>
-                                    <p></p>
+
                                 </div>
                             </div>
                         </div>

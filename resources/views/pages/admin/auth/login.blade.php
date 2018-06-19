@@ -24,8 +24,7 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox" class="flat-red" name="remember"> Lembrar de mim
-                            </label>
+                                <input type="checkbox" class="flat-red" style="right: 15px"  name="remember"> Lembrar de mim</label>
                         </div>
                     </div>
                     <!-- /.col -->
