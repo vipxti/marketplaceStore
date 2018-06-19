@@ -23,14 +23,26 @@ class UserDataRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'cd_cpf_cnpj' => 'required',
-            'nm_usuario' => 'required|string',
-            'email' => 'required|string',
-            'password' => 'required|string',
-            'cd_telefone' => 'required',
-            'cd_endereco' => 'required',
-            'im_usuario' => 'required|image|mimes:jpeg,bmp,png'
-        ];
+
+        //dd($this->request);
+
+        $rules = [
+            'nm_usuario' => 'string',
+            'email' => 'email|string',
+            ];
+
+        if ($this->password != null) {
+
+            $rules['password'] = 'string';
+
+        }
+
+        if ($this->cd_acesso != null) {
+
+            $rules['cd_acesso'] = 'numeric';
+
+        }
+
+        return $rules;
     }
 }

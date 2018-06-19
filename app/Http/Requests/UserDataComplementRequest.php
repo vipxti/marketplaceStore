@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class UserDataComplementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,12 @@ class UserRequest extends FormRequest
     public function rules()
     {
 
+        //dd($this->request);
+
         return [
-            'nm_usuario' => 'required',
-            'email' => 'required|string',
-            'password' => 'required|string',
-            'cd_cpf_cnpj' => 'required'
+
+
+
         ];
     }
 }

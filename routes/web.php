@@ -15,11 +15,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@showIndexPage')->name('index');
 
 Route::prefix('admin')->group(function () {
+
+    //Cadastro e login de usuário
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
     Route::get('/register', 'Auth\UserRegisterController@showRegisterForm')->name('admin.register');
     Route::post('/register', 'Auth\UserRegisterController@create')->name('admin.register.submit');
     Route::get('/register/{cpf_cnpj}', 'Auth\UserRegisterController@verificaCpfCnpj');
+
+    //Atualizar dados do usuário
+    Route::post('/edit', 'UserController@atualizaDadosUsuario')->name('admin.edit');
 
     //Produto
     Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
@@ -71,6 +76,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/password/reset', 'Auth\UserResetPasswordController@reset');
     Route::get('/password/reset/{token}', 'Auth\UserResetPasswordController@showResetForm')->name('admin.password.reset');
     //----------------
+
 });
 
 Route::prefix('page')->group(function (){

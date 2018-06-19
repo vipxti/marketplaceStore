@@ -31,7 +31,7 @@ class ProductRequest extends FormRequest
             'cd_ean' => 'nullable|string',
             'cd_sku' => 'required|string',
             'ds_produto' => 'required|string',
-            'vl_produto' => 'required|numeric',
+            'vl_produto' => 'required|string',
             'qt_produto' => 'required|numeric',
             'cd_categoria' => 'required|numeric',
             'cd_sub_categoria' => 'required|numeric',

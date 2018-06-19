@@ -19,6 +19,8 @@
         <!-- PERFIL USUARIO -->
         <section class="content">
 
+            @include('partials.admin._alerts')
+
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Alterar</h3>
@@ -29,8 +31,9 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <form action="#" method="post">
+                    <form action="{{ route('admin.edit') }}" method="post">
                         {{ csrf_field() }}
+                        <input type="hidden" name="cd_usuario" value="{{ Auth::user()->cd_usuario }}">
                         <div class="col-md-12">
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -48,7 +51,7 @@
                                     <label>Email</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-at"></i></span>
-                                        <input type="text" id="campo_email" class="form-control" name="nm_email" maxlength="35" value="{{ Auth::user()->email }}">
+                                        <input type="text" id="campo_email" class="form-control" name="email" maxlength="35" value="{{ Auth::user()->email }}">
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +61,7 @@
                                     <label>Alterar Senha</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" id="campo_senha" class="form-control" name="ds_senha" minlength="6">
+                                        <input type="password" id="campo_senha" class="form-control" name="password" minlength="6">
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +70,7 @@
                                 <div class="form-group">
                                     <label>Nível de Acesso</label>
                                     <div class="form-group has-feedback">
-                                        <select class="form-control" style="width: 100%;" required name="cd_acesso">
+                                        <select class="form-control" style="width: 100%;" name="cd_acesso">
                                             <option value=""></option>
 
                                             @foreach($acessos as $acesso)

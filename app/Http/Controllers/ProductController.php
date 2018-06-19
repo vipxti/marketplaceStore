@@ -12,6 +12,7 @@ use App\Product;
 use App\NumberSize;
 use App\ProductVariation;
 use App\Sku;
+use function GuzzleHttp\Psr7\str;
 use Illuminate\Support\Facades\DB;
 use Image;
 use App\Image as Img;
@@ -94,6 +95,14 @@ class ProductController extends Controller
     public function cadastrarProduto(ProductRequest $request)
     {
 
+        $v = strpos($request->vl_produto, ',');
+
+        if ($v !== false) {
+
+            $val = str_replace(',', '.', $request->vl_produto);
+
+        }
+
         if ($request->filled('status') == 'on') {
 
             $status = 1;
@@ -146,7 +155,7 @@ class ProductController extends Controller
         catch (\Exception $e) {
 
             Dimension::destroy($dimensao->cd_dimensao);
-            return redirect()->route('admin.cadProd')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -163,7 +172,7 @@ class ProductController extends Controller
                 'cd_ean' => $request->cd_ean,
                 'nm_produto' => $request->nm_produto,
                 'ds_produto' => $request->ds_produto,
-                'vl_produto' => $request->vl_produto,
+                'vl_produto' => $val,
                 'qt_produto' => $request->qt_produto,
                 'cd_status_produto' => $status,
                 'cd_sku' => $sku->cd_sku
@@ -202,13 +211,15 @@ class ProductController extends Controller
 
         }
 
-        //Cria o caminho físico das imagens
-        $images = $request->images;
-        $imagePath = $this->pastaProduto($category->nm_categoria, $subcategory->nm_sub_categoria);
-        $dbPath = $category->nm_categoria . '/' . $subcategory->nm_sub_categoria;
+
 
         //Salva fisicamente a imagem e seta o caminho para ser salvo no banco
         if ($request->hasFile('images')) {
+
+            //Cria o caminho físico das imagens
+            $images = $request->images;
+            $imagePath = $this->pastaProduto($category->nm_categoria, $subcategory->nm_sub_categoria);
+            $dbPath = $category->nm_categoria . '/' . $subcategory->nm_sub_categoria;
 
             foreach ($images as $key => $image) {
 
@@ -223,101 +234,102 @@ class ProductController extends Controller
 
             }
 
-        }
+            $imgsId = [];
+            $cont = 0;
 
-        $imgsId = [];
-        $cont = 0;
+            foreach ($localImagesPath as $key => $dbImage) {
 
-        foreach ($localImagesPath as $key => $dbImage) {
+                try {
 
-            try {
+                    if ($key == 0) {
 
-                if ($key == 0) {
+                        Img::create([
+                            'im_produto' => $dbImage,
+                            'ic_img_principal' => 1
+                        ]);
 
-                    Img::create([
-                        'im_produto' => $dbImage,
-                        'ic_img_principal' => 1
-                    ]);
+                    }
+                    else
+                    {
 
-                }
-                else
-                {
-
-                    Img::create([
-                        'im_produto' => $dbImage,
-                        'ic_img_principal' => 0
-                    ]);
-
-                }
-
-            }
-            catch (\Exception $e) {
-
-                if ($cont > 0) {
-
-                    foreach ($imgsId as $i) {
-
-                        Img::destroy($i);
+                        Img::create([
+                            'im_produto' => $dbImage,
+                            'ic_img_principal' => 0
+                        ]);
 
                     }
 
                 }
+                catch (\Exception $e) {
 
-                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
-                Product::destroy($produto->cd_produto);
-                Sku::destroy($sku->cd_sku);
-                Dimension::destroy($dimensao->cd_dimensao);
+                    if ($cont > 0) {
 
-                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                        foreach ($imgsId as $i) {
 
-            }
-            finally {
+                            Img::destroy($i);
 
-                $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
-                $imgsId[$key] = $imgs[$key]->cd_img;
-
-            }
-
-        }
-
-        $imgsId = [];
-        $cont = 0;
-
-        foreach ($imgs as $key => $img) {
-
-            try {
-
-                DB::table('sku_produto_img')->insert([
-                    'cd_sku' => $sku->cd_sku,
-                    'cd_img' => $img->cd_img
-                ]);
-
-            } catch (\Exception $e) {
-
-                if ($cont > 0) {
-
-                    foreach ($imgsId as $i) {
-
-                        Img::destroy($i);
-                        DB::table('sku_produto_img')->where('cd_img', '=', $i)->delete();
+                        }
 
                     }
 
+                    DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
+                    Product::destroy($produto->cd_produto);
+                    Sku::destroy($sku->cd_sku);
+                    Dimension::destroy($dimensao->cd_dimensao);
+
+                    return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+                }
+                finally {
+
+                    $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
+                    $imgsId[$key] = $imgs[$key]->cd_img;
+
                 }
 
-                DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
-                Product::destroy($produto->cd_produto);
-                Sku::destroy($sku->cd_sku);
-                Dimension::destroy($dimensao->cd_dimensao);
+            }
 
-                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            $imgsId = [];
+            $cont = 0;
+
+            foreach ($imgs as $key => $img) {
+
+                try {
+
+                    DB::table('sku_produto_img')->insert([
+                        'cd_sku' => $sku->cd_sku,
+                        'cd_img' => $img->cd_img
+                    ]);
+
+                } catch (\Exception $e) {
+
+                    if ($cont > 0) {
+
+                        foreach ($imgsId as $i) {
+
+                            Img::destroy($i);
+                            DB::table('sku_produto_img')->where('cd_img', '=', $i)->delete();
+
+                        }
+
+                    }
+
+                    DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
+                    Product::destroy($produto->cd_produto);
+                    Sku::destroy($sku->cd_sku);
+                    Dimension::destroy($dimensao->cd_dimensao);
+
+                    return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+                }
+                finally {
+
+                    $imgsId[$key] = $imgs[$key]->cd_img;
+
+                }
 
             }
-            finally {
 
-                $imgsId[$key] = $imgs[$key]->cd_img;
-
-            }
 
         }
 
@@ -329,7 +341,13 @@ class ProductController extends Controller
     public function cadastrarVariacaoProduto(ProductVariationRequest $request)
     {
 
-        dd($request->all());
+        $v = strpos($request->vl_produto_variacao, ',');
+
+        if ($v !== false) {
+
+            $val = str_replace(',', '.', $request->vl_produto_variacao);
+
+        }
 
         if ($request->filled('status_variacao') == 'on') {
 
@@ -355,7 +373,7 @@ class ProductController extends Controller
         }
         catch (\Exception $e) {
 
-            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -375,7 +393,7 @@ class ProductController extends Controller
         catch (\Exception $e) {
 
             Dimension::destroy($dimensao->cd_dimensao);
-            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -393,7 +411,7 @@ class ProductController extends Controller
                 'cd_ean_variacao' => $request->cd_ean_variacao,
                 'nm_produto_variacao' => $request->nm_produto_variacao,
                 'ds_produto_variacao' => $request->ds_produto_variacao,
-                'vl_produto_variacao' => $request->vl_produto_variacao,
+                'vl_produto_variacao' => $val,
                 'qt_produto_variacao' => $request->qt_produto_variacao,
                 'cd_status_produto_variacao' => $status,
                 'cd_sku' => $sku->cd_sku,
@@ -406,7 +424,7 @@ class ProductController extends Controller
 
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
-            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
         finally {
@@ -430,7 +448,7 @@ class ProductController extends Controller
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
 
-            return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+            return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
         }
 
@@ -454,7 +472,7 @@ class ProductController extends Controller
                 Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
-                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
 
@@ -479,19 +497,20 @@ class ProductController extends Controller
                 Sku::destroy($sku->cd_sku);
                 Dimension::destroy($dimensao->cd_dimensao);
 
-                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+                return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
 
         }
 
-        //Cria o caminho físico das imagens
-        $images = $request->images_variacao;
-        $imagePath = $this->pastaProduto($category->nm_categoria, $subcategory->nm_sub_categoria);
-        $dbPath = $category->nm_categoria . '/' . $subcategory->nm_sub_categoria;
-
         //Salva fisicamente a imagem e seta o caminho para ser salvo no banco
         if ($request->hasFile('images_variacao')) {
+
+            //Cria o caminho físico das imagens
+            $images = $request->images_variacao;
+            $imagePath = $this->pastaProduto($category->nm_categoria, $subcategory->nm_sub_categoria);
+            $dbPath = $category->nm_categoria . '/' . $subcategory->nm_sub_categoria;
+
 
             foreach ($images as $key => $image) {
 
@@ -506,125 +525,126 @@ class ProductController extends Controller
 
             }
 
-        }
+            $imgsId = [];
+            $cont = 0;
 
-        $imgsId = [];
-        $cont = 0;
+            foreach ($localImagesPath as $key => $dbImage) {
 
-        foreach ($localImagesPath as $key => $dbImage) {
+                try {
 
-            try {
+                    if ($key == 0) {
 
-                if ($key == 0) {
+                        Img::create([
+                            'im_produto' => $dbImage,
+                            'ic_img_principal' => 1
+                        ]);
 
-                    Img::create([
-                        'im_produto' => $dbImage,
-                        'ic_img_principal' => 1
-                    ]);
+                    }
+                    else
+                    {
 
-                }
-                else
-                {
-
-                    Img::create([
-                        'im_produto' => $dbImage,
-                        'ic_img_principal' => 0
-                    ]);
-
-                }
-
-            }
-            catch (\Exception $e) {
-
-                if ($cont > 0) {
-
-                    foreach ($imgsId as $i) {
-
-                        Img::destroy($i);
+                        Img::create([
+                            'im_produto' => $dbImage,
+                            'ic_img_principal' => 0
+                        ]);
 
                     }
 
                 }
+                catch (\Exception $e) {
 
-                if ($letra) {
+                    if ($cont > 0) {
 
-                    DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                        foreach ($imgsId as $i) {
 
-                }
+                            Img::destroy($i);
 
-                if ($numero) {
-
-                    DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku->cd_sku)->delete();
-
-                }
-
-                DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
-                Product::destroy($produtoVariacao->cd_produto);
-                DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
-                Dimension::destroy($dimensao->cd_dimensao);
-
-                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-            }
-            finally {
-
-                $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
-                $imgsId[$key] = $imgs[$key]->cd_img;
-
-            }
-
-        }
-
-        $imgsId = [];
-        $cont = 0;
-
-        foreach ($imgs as $key => $img) {
-
-            try {
-
-                DB::table('sku_produto_img')->insert([
-                    'cd_sku' => $sku->cd_sku,
-                    'cd_img' => $img->cd_img
-                ]);
-
-            } catch (Exception $e) {
-
-                if ($cont > 0) {
-
-                    foreach ($imgsId as $i) {
-
-                        Img::destroy($i);
-                        DB::table('sku_produto_img')->where('cd_img', '=', $i)->delete();
+                        }
 
                     }
 
+                    if ($letra) {
+
+                        DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku->cd_sku)->delete();
+
+                    }
+
+                    if ($numero) {
+
+                        DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku->cd_sku)->delete();
+
+                    }
+
+                    DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                    Product::destroy($produtoVariacao->cd_produto);
+                    DB::table('sku')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                    Dimension::destroy($dimensao->cd_dimensao);
+
+                    return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
                 }
+                finally {
 
-                if ($letra) {
-
-                    DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku->cd_sku)->delete();
-
-                }
-
-                if ($numero) {
-
-                    DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                    $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
+                    $imgsId[$key] = $imgs[$key]->cd_img;
 
                 }
-
-                DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
-                Product::destroy($produtoVariacao->cd_produto);
-                Sku::destroy($sku->cd_sku);
-                Dimension::destroy($dimensao->cd_dimensao);
-
-                return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
 
             }
-            finally {
 
-                $imgsId[$key] = $imgs[$key]->cd_img;
+            $imgsId = [];
+            $cont = 0;
+
+            foreach ($imgs as $key => $img) {
+
+                try {
+
+                    DB::table('sku_produto_img')->insert([
+                        'cd_sku' => $sku->cd_sku,
+                        'cd_img' => $img->cd_img
+                    ]);
+
+                } catch (Exception $e) {
+
+                    if ($cont > 0) {
+
+                        foreach ($imgsId as $i) {
+
+                            Img::destroy($i);
+                            DB::table('sku_produto_img')->where('cd_img', '=', $i)->delete();
+
+                        }
+
+                    }
+
+                    if ($letra) {
+
+                        DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku->cd_sku)->delete();
+
+                    }
+
+                    if ($numero) {
+
+                        DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku->cd_sku)->delete();
+
+                    }
+
+                    DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
+                    Product::destroy($produtoVariacao->cd_produto);
+                    Sku::destroy($sku->cd_sku);
+                    Dimension::destroy($dimensao->cd_dimensao);
+
+                    return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+
+                }
+                finally {
+
+                    $imgsId[$key] = $imgs[$key]->cd_img;
+
+                }
 
             }
+
 
         }
 

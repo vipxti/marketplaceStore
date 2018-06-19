@@ -26,7 +26,7 @@ class ProductVariationRequest extends FormRequest
         //dd($this->request);
 
         $rules = [
-            'cd_ean_variacao' => 'required',
+            'cd_ean_variacao' => 'nullable',
             'cd_sku_variacao' => 'required',
             'nm_produto_variacao' => 'required',
             'ds_produto_variacao' => 'required',
