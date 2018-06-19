@@ -30,15 +30,6 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <p class="msg-senha"></p>
                 </div>
-                {{--<div class="form-group has-feedback">--}}
-                    {{--<select id="categorias" class="form-control select2" style="width: 100%;" required name="cd_acesso">--}}
-                        {{--<option value=""></option>--}}
-
-                        {{--@foreach($acessos as $acesso)--}}
-                            {{--<option value="{{ $acesso->cd_acesso }}">{{ $acesso->nm_acesso }}</option>--}}
-                        {{--@endforeach--}}
-                    {{--</select>--}}
-                {{--</div>--}}
                 {{--<div class="form-group has-feedback">
                     <input type="password" class="form-control" name="conf_senha" placeholder="Confirmar senha">
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>

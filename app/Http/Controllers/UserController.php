@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Access;
 use App\Bairro;
 use App\Cidade;
 use App\Endereco;
@@ -21,7 +22,10 @@ class UserController extends Controller
     }
 
     public function showUserForm() {
-        return view('pages.admin.cadUsuario');
+
+        $acessos = Access::all();
+
+        return view('pages.admin.cadUsuario', compact('acessos'));
     }
 
     public function atualizaDadosUsuario(UpdateUserRequest $request){

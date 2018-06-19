@@ -62,6 +62,21 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Nível de Acesso</label>
+                                    <div class="form-group has-feedback">
+                                        <select class="form-control" style="width: 100%;" required name="cd_acesso">
+                                            <option value=""></option>
+
+                                            @foreach($acessos as $acesso)
+                                                <option value="{{ $acesso->cd_acesso }}">{{ $acesso->nm_acesso }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-md-12 text-right">

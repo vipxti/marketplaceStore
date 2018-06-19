@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Access;
-use App\Contact;
 use App\Http\Requests\UserRequest;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -42,8 +40,6 @@ class UserRegisterController extends Controller
      */
     protected function create(UserRequest $request)
     {
-
-        //dd($request->all());
 
         try {
 
