@@ -21,6 +21,7 @@ class CategoryController extends Controller
 
     public function selectSubCategory($cd_categoria) {
 
+
         $subCategorias = DB::table('categoria')
                         ->join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
                         ->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
