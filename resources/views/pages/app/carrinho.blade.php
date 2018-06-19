@@ -43,10 +43,10 @@
                     </div>
 
                     <div class="cart-footer d-flex mt-30">
-                        <div class="back-to-shop w-50">
+                        <div class="back-to-shop">
                             <a href="{{ route('index') }}">Continuar Comprando</a>
                         </div>
-                        <div class="update-checkout w-50 text-right">
+                        <div class="update-checkout w-50" style="padding: 0 4px">
                             <a href="#">Limpar Carrinho</a>
                             <a href="#">Atualizar Carrinho</a>
                         </div>
@@ -56,39 +56,49 @@
             </div>
 
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-6">
                     <div class="coupon-code-area mt-70">
                         <div class="cart-page-heading">
-                            <h5>Código do Cupom</h5>
-                            <p>Entre com Código do Cupom</p>
+                            <h5>Calcular Frete</h5>
+                            <p><b>Insira o CEP do endereço que deseja receber o produto.</b></p>
+                            <p>Assim você poderá calcular o frete e conhecer os serviços disponíveis</p>
                         </div>
                         <form action="#">
-                            <input type="search" name="search" placeholder="#569ab15">
-                            <button type="submit">Salvar</button>
+                            <input type="search" name="search">
+                            <button type="submit">Calcular</button>
                         </form>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-6">
                     <div class="shipping-method-area mt-70">
                         <div class="cart-page-heading">
-                            <h5>Modo de Envio</h5>
+                            <h5>Forma de envio</h5>
                             <p>Escolha uma Opção</p>
                         </div>
-                        <div class="custom-control custom-radio mb-30">
+                        <div class="custom-control custom-radio mb-14">
                             <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1"><span>Correios - Pac</span><span>R$ 20,20</span></label>
+                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                <span>Normal</span>
+                                <span>R$ 20,20</span>
+                            </label>
                         </div>
-                        <div class="custom-control custom-radio mb-30">
+                        <div class="custom-control custom-radio mb-14">
                             <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2"><span>Correios - Sedex</span><span>R$ 25,00</span></label>
+                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                <span>Expresso</span>
+                                <span>R$ 30,00</span>
+                            </label>
                         </div>
                         <div class="custom-control custom-radio">
                             <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" checked>
-                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3"><span>Retirar no Local</span><span>Grátis</span></label>
+                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
+                                <span>Retirar no Local</span>
+                                <span>Grátis</span>
+                            </label>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4">
+                <div class="col-12 col-lg-12">
                     <div class="cart-total-area mt-70">
                         <div class="cart-page-heading">
                             <h5>Total</h5>
@@ -105,10 +115,9 @@
             </div>
         </div>
     </div>
-    <!-- ****** Cart Area End ****** -->
+    <!-- ****** Area final do carrinho ****** -->
 
     <script>
-
 
         $('.qty-minus').on('click', function (e) {
 

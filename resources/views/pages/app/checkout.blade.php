@@ -80,13 +80,12 @@
                     <div class="order-details-confirmation">
 
                         <div class="cart-page-heading">
-                            <h5>Seu Pedido</h5>
-                            <p>Detalhes</p>
+                            <h5>Seu Carrinho</h5>
                         </div>
 
                         <ul class="order-details-form mb-4">
                             <li><span>Produto</span> <span>Total</span></li>
-                            <li><span>Cocktail Yellow dress</span> <span>$59.90</span></li>
+                            <li><span>Blusa Amarela</span> <span>$59.90</span></li>
                             <li><span>Subtotal</span> <span>R$ 29,99</span></li>
                             <li><span>Envio</span> <span>Grátis</span></li>
                             <li><span>Total</span> <span>R$ 29,99</span></li>
@@ -103,7 +102,7 @@
 
                                 <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                     <div class="card-body">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integ er bibendum sodales arcu id te mpus. Ut consectetur lacus.</p>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +114,7 @@
                                 </div>
                                 <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
                                     <div class="card-body">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo quis in veritatis officia inventore, tempore provident dignissimos.</p>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +126,7 @@
                                 </div>
                                 <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
                                     <div class="card-body">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse quo sint repudiandae suscipit ab soluta delectus voluptate, vero vitae</p>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -139,13 +138,11 @@
                                 </div>
                                 <div id="collapseFour" class="collapse show" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
                                     <div class="card-body">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est cum autem eveniet saepe fugit, impedit magni.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <a href="#" class="btn karl-checkout-btn">Place Order</a>
+                        <a href="#" class="btn karl-checkout-btn">Finalizar</a>
                     </div>
                 </div>
 

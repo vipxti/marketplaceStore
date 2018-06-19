@@ -16,8 +16,8 @@
                         <div class="header-cart-menu d-flex align-items-center ml-auto">
                             <!-- Cart Area -->
                             <div class="cart">
-                                <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">2</span>
-                                    <i class="fa fa-shopping-cart"></i> Carrinho R$20,00</a>
+                                <a href="{{ route('checkout.page') }}" id="header-cart-btn" target="_blank"><span class="cart_quantity">2</span>
+                                    <i class="fa fa-shopping-cart"></i>Carrinho R$20,00</a>
                                 <!-- Cart List Area Start -->
                                 <ul class="cart-list">
                                     <li>

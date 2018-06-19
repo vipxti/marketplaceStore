@@ -1920,8 +1920,9 @@ img {
 
 .cart_area .update-checkout a,
 .cart_area .back-to-shop a {
-    background-color: transparent;
+    background-color: #ff084e;
     border-radius: 0;
+    color: white;
     display: inline-block;
     height: 55px;
     line-height: 51px;
@@ -1930,19 +1931,20 @@ img {
     text-align: center;
     font-size: 14px;
     font-weight: 700;
-    border: 2px solid #3a3a3a;
-    text-transform: uppercase;
+    border: 1px solid #ff084e;
+    text-transform: capitalize;
 }
 
 .cart_area .update-checkout a:first-child {
     color: #7a7a7a;
-    border-color: #f4f2f8;
+    border-color: #7a7a7a;
+    background-color: #f4f2f8;
 }
 
 .cart_area .update-checkout a:last-child {
     background-color: #f4f2f8;
     color: #7a7a7a;
-    border-color: #f4f2f8;
+    border-color: #7a7a7a;
 }
 
 .cart-page-heading {
@@ -1950,8 +1952,8 @@ img {
 }
 
 .cart-page-heading h5 {
-    text-transform: uppercase;
-    font-size: 18px;
+    text-transform: capitalize;
+    font-size: 15px;
 }
 
 .cart-page-heading p {
@@ -1966,7 +1968,7 @@ img {
 }
 
 .coupon-code-area form > input {
-    width: 100%;
+    width: 58%;
     height: 52px;
     border: none;
     background-color: #f4f2f8;
@@ -1980,9 +1982,7 @@ img {
     border: none;
     text-transform: uppercase;
     background-color: #ff084e;
-    padding: 0 30px;
     font-size: 14px;
-    position: absolute;
     top: 0;
     color: #fff;
     font-weight: 700;
@@ -2040,7 +2040,7 @@ img {
 
 .checkout_details_area form label {
     font-size: 12px;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 .checkout_details_area form label span {
@@ -2073,7 +2073,7 @@ img {
     justify-content: space-between;
     margin-bottom: 20px;
     font-size: 12px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     padding: 30px 0;
     border-bottom: 2px solid #ebebeb;
 }
@@ -2081,7 +2081,7 @@ img {
 .order-details-confirmation .card-header h6 a {
     display: block;
     font-size: 12px;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 .order-details-confirmation .card-header h6 a i {
