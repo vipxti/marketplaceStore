@@ -102,7 +102,7 @@
                     <div class="cart-total-area mt-70">
                         <div class="cart-page-heading">
                             <h5>Total</h5>
-                            <p>informções da compra</p>
+                            <p>informações da compra</p>
                         </div>
                         <ul class="cart-total-chart">
                             <li><span>Subtotal</span> <span>R$ 29,99</span></li>
