@@ -18,7 +18,7 @@
             </ol>
         </section>
 
-
+        <!-- Cadastrar Categorias -->
         <section class="content">
 
             @include('partials.admin._alerts')
@@ -42,7 +42,7 @@
 
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Alterar Categoria</label>
+                                    <label>Cadastrar/Alterar</label>
                                     <div class="input-group">
                                         <input class="form-control" type="hidden" id="catId" name="catId">
                                         <input type="text" class="form-control" id="catName" name="nm_categoria" maxlength="35">
@@ -97,9 +97,9 @@
 
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Alterar Sub-Categoria</label>
+                                    <label>Cadastrar/Alterar</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="nm_sub_categoria" maxlength="35">
+                                        <input type="text" id="subCatNome" class="form-control" name="nm_sub_categoria" maxlength="35">
                                     </div>
                                 </div>
                             </div>
@@ -283,6 +283,7 @@
             e.preventDefault();
 
             $cd_categoria = $(this).val();
+            $("#catName").val($('#categorias option:selected').text());
 
             $.ajax({
 
@@ -295,11 +296,20 @@
                     $.each(data.subcat, function(index, subcategoria) {
 
                         $('#subcategorias').append(`<option value="` + subcategoria.cd_sub_categoria + `">` + subcategoria.nm_sub_categoria + `</option>`);
-                    })
+                    });
 
+                    $("#subCatNome").val($("#subcategorias option:selected").text());
                 }
 
             });
+
+
+
+        });
+
+        $("#subcategorias").change(function(){
+
+            $("#subCatNome").val($("#subcategorias option:selected").text());
 
         });
 
