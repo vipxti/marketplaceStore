@@ -39,6 +39,7 @@ mix.scripts([
     'public/js/app/wow.min.js',
     'public/js/app/active.js',
     //'public/js/app/instagram.js',
+    'public/js/app/jquery.inputmask.js',
     'public/js/app/plugins.js',
     'public/js/app/web-animations.min.js'
 ], 'public/js/app-js.js');

@@ -142,7 +142,7 @@
                         <label>Nome</label>
                         <div class="input-group">
                             <span class="input-group-addon"></span>
-                            <input type="text" class="form-control" name="nm_cliente" required maxlength="50">
+                            <input type="text" class="form-control campo_nome" name="nm_cliente" required maxlength="50">
                         </div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                         <label>E-mail</label>
                         <div class="input-group">
                             <span class="input-group-addon"></span>
-                            <input type="text" class="form-control" name="nm_email" required maxlength="50">
+                            <input type="email" class="form-control campo_email" name="nm_email" required maxlength="50">
                         </div>
                     </div>
                 </div>
@@ -171,8 +171,10 @@
                                     <label>Senha</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="password" class="form-control" name="ds_senha" required maxlength="20">
+                                        <input type="password" class="form-control campo_senha" name="ds_senha"
+                                               pattern="^(?=.*?[A-Z])(?=.*?[a-z]).{6,}$" required maxlength="20">
                                     </div>
+                                    <p class="msg-senha"></p>
                                 </div>
                             </td>
 
@@ -183,7 +185,8 @@
                                     <label>Data de Nascimento</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="dt_nascimento" required maxlength="20">
+                                        <input type="text" class="form-control campo_data" name="dt_nascimento"
+                                               data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20">
                                     </div>
                                 </div>
                             </td>
@@ -203,7 +206,8 @@
                                     <label>CPF ou CNPJ</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
+                                        <input type="text" class="form-control campo_cpf_cnpj" name="cd_cpf_cnpj" required maxlength="20">
+                                        <p class="msg_cpf_cnpj"></p>
                                     </div>
                                 </div>
                             </td>
@@ -225,7 +229,8 @@
                                     <label>Telefone</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control" name="fk_cd_telefone" required maxlength="20">
+                                        <input type="text" class="form-control campo_telefone" name="fk_cd_telefone"
+                                               data-inputmask='"mask": "(99) 9999-9999"' data-mask required maxlength="20">
                                     </div>
                                 </div>
                             </td>
@@ -267,7 +272,7 @@
     <!-- ****** Fim da area de cadastro ****** -->
 
 
-
+    <script src="{{ asset('js/app/select2.full.min.js') }}"></script>
     <script>
 
 
@@ -279,6 +284,145 @@
             console.log($modal);
 
         });
+
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Money Euro
+            $('[data-mask]').inputmask()
+
+        })
+
+        //Verificação e exibição de erros do campo CPF/CNPJ
+        $('#cpf_cnpj').blur(function(e){
+            e.preventDefault();
+
+            $cpf_cnpj = $(this).val();
+
+            $.ajax({
+                url: '{{ url('/admin/register') }}/' + $cpf_cnpj,
+                type: 'GET',
+                success: function(data){
+
+                    var cnpjValido = validarCNPJ($cpf_cnpj);
+                    var cpfValido = validarCPF($cpf_cnpj);
+
+                    if($cpf_cnpj.length > 15){
+                        $('.msg-erro').html("Limite de 15 caracteres excedido.").css("color", "red");
+                    }
+                    else if(data.cpf_cnpj.length > 0){
+                        $('.msg-erro').html("CPF/CNPJ já existente.").css("color", "red");
+                    }
+                    else if(!cpfValido && !cnpjValido) {
+                        $('.msg-erro').html("CPF/CNPJ inválido.").css("color", "red");
+                    }
+                }
+
+            });
+        });
+
+        //VALIDAÇÃO DA SENHA E EXEBIÇÃO DE ERROS
+        $('.campo_senha').blur(function(){
+            var campo = $('.campo_senha').val();
+            var reg = new RegExp("^(?=.*[A-Z])(?=.{6,})");
+
+            $('.msg-senha').html("");
+
+            if(!reg.exec(campo))
+                $('.msg-senha').html("Mínimo 1 caracter maiúsculo.").css("color", "red").css("font-size", "small");
+
+        });
+
+        //VALIDAÇÃO DO CNPJ
+        function validarCNPJ(cnpj) {
+
+            cnpj = cnpj.replace(/[^\d]+/g,'');
+
+            if(cnpj == '') return false;
+
+            if (cnpj.length != 14)
+                return false;
+
+            // Elimina CNPJs invalidos conhecidos
+            if (cnpj == "00000000000000" ||
+                cnpj == "11111111111111" ||
+                cnpj == "22222222222222" ||
+                cnpj == "33333333333333" ||
+                cnpj == "44444444444444" ||
+                cnpj == "55555555555555" ||
+                cnpj == "66666666666666" ||
+                cnpj == "77777777777777" ||
+                cnpj == "88888888888888" ||
+                cnpj == "99999999999999")
+                return false;
+
+            // Valida DVs
+            var tamanho = cnpj.length - 2
+            var numeros = cnpj.substring(0,tamanho);
+            var digitos = cnpj.substring(tamanho);
+            var soma = 0;
+            var pos = tamanho - 7;
+            for (i = tamanho; i >= 1; i--) {
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2)
+                    pos = 9;
+            }
+            var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(0))
+                return false;
+
+            tamanho = tamanho + 1;
+            numeros = cnpj.substring(0,tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            for (var i = tamanho; i >= 1; i--) {
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2)
+                    pos = 9;
+            }
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(1))
+                return false;
+
+            return true;
+        }
+
+        //VALIDAÇÃO DO CPF
+        function validarCPF(cpf)
+        {
+            var numeros, digitos, soma, i, resultado, digitos_iguais;
+            digitos_iguais = 1;
+            if (cpf.length < 11)
+                return false;
+            for (i = 0; i < cpf.length - 1; i++)
+                if (cpf.charAt(i) != cpf.charAt(i + 1))
+                {
+                    digitos_iguais = 0;
+                    break;
+                }
+            if (!digitos_iguais)
+            {
+                numeros = cpf.substring(0,9);
+                digitos = cpf.substring(9);
+                soma = 0;
+                for (i = 10; i > 1; i--)
+                    soma += numeros.charAt(10 - i) * i;
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(0))
+                    return false;
+                numeros = cpf.substring(0,10);
+                soma = 0;
+                for (i = 11; i > 1; i--)
+                    soma += numeros.charAt(11 - i) * i;
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(1))
+                    return false;
+                return true;
+            }
+            else
+                return false;
+        }
 
 
     </script>

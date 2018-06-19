@@ -177,15 +177,16 @@
                     <div class="box-body">
                         <div class="panel panel-default">
                             <div class="panel-body">
+
                                 @foreach($categorias as $categoria)
-                                    <ul class="lista">
-                                        onclick="listarSubCategorias({{$categoria->cd_categoria}})"
+                                    <ul class="treeview lista">
+                                        {{--onclick="listarSubCategorias({{$categoria->cd_categoria}})"--}}
                                         <li id="liCategoria" onclick="listarSubCategorias({{$categoria->cd_categoria}}, this)">
                                             {{$categoria->nm_categoria}}
                                             <ul>
-                                                @foreach($subcategorias as $sub)
+                                                {{--@foreach($subcategorias as $sub)
                                                     <li>{{$sub->nm_sub_categoria}}</li>
-                                                @endforeach
+                                                @endforeach--}}
                                              </ul>
                                         </li>
                                     </ul>
@@ -198,10 +199,11 @@
         </section>
     </div>
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
-    <script src="{{ asset('js/admin/TreeViewEstilo.js') }}"></script>
+    {{--<script src="{{ asset('js/admin/TreeViewScript.js') }}"></script>--}}
     <script>
 
         function listarSubCategorias(categoria, elementLi){
+
 
             $.ajax({
 
@@ -210,9 +212,10 @@
                 success: function (data) {
                     //console.log(data.subcat);
 
+                    //console.log($(elementLi).find(".filho"));
+                    $(elementLi).find(".filho").empty();
                     $.each(data.subcat, function(index, subcategoria) {
-
-                        $(elementLi).append(`<ul><li>` + subcategoria.nm_sub_categoria + `</li></ul>`);
+                        $(elementLi).append(`<ul><li class="filho">` + subcategoria.nm_sub_categoria + `</li></ul>`);
                     })
                 }
             });
