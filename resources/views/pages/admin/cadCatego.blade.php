@@ -224,12 +224,10 @@
                     <div class="box-body">
                         <div class="panel panel-default">
                             <div class="panel-body">
-
-
                                     @foreach($categorias as $categoria)
                                         <ul class="lista">
                                             {{--onclick="listarSubCategorias({{$categoria->cd_categoria}})"--}}
-                                            <li id="liCategoria" onclick="listarSubCategorias({{$categoria->cd_categoria}}, this, $contador=0)">
+                                            <li id="liCategoria" onclick="listarSubCategorias({{$categoria->cd_categoria}}, this)">
                                                 {{$categoria->nm_categoria}}
                                                 <ul>
 
@@ -241,7 +239,6 @@
                                             </li>
                                         </ul>
                                     @endforeach
-
                             </div>
                         </div>
                     </div>
@@ -254,10 +251,8 @@
     <script src="{{ asset('js/admin/TreeViewEstilo.js') }}"></script>
     <script>
 
-        function listarSubCategorias(categoria, elementLi, contador){
+        function listarSubCategorias(categoria, elementLi){
 
-            console.log($(elementLi));
-            console.log(contador);
             $.ajax({
 
                 url: '{{ url('/admin/subcat') }}/' + categoria,
@@ -265,18 +260,12 @@
                 success: function (data) {
                     //console.log(data.subcat);
 
-
                     $.each(data.subcat, function(index, subcategoria) {
 
-                        //$('#liCategoria').append(`<ul>`);
                         $(elementLi).append(`<ul><li>` + subcategoria.nm_sub_categoria + `</li></ul>`);
-                        //$('#liCategoria').append(`</ul>`);
                     })
-
                 }
-
             });
-
         }
 
         $('#categorias').change(function (e) {
