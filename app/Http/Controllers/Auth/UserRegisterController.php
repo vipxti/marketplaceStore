@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Access;
 use App\Contact;
 use App\Http\Requests\UserRequest;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserRegisterController extends Controller
 {
-    //use RegistersUsers;
+    use RegistersUsers;
 
     public function __construct()
     {
@@ -42,40 +45,30 @@ class UserRegisterController extends Controller
 
         //dd($request->all());
 
-        Contact::create([
-            'cd_celular2' => null
-        ]);
+        try {
 
-        $lastIdTel = Contact::orderBy('cd_telefone','DESC')->first();
+            $user = User::create([
 
-        //dd($lastIdTel->cd_telefone);
-
-        $user = User::create([
-                'cd_cpf_cnpj' => $request->cd_cpf_cnpj,
                 'nm_usuario' => $request->nm_usuario,
                 'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'ic_adm' => 0,
-                'ds_img' => 0,
-                'cd_telefone' => $lastIdTel->cd_telefone
+                'password' => Hash::make($request->password),
+                'cd_cpf_cnpj' => $request->cd_cpf_cnpj,
+                'cd_acesso' => 0
+
             ]);
 
-        if ($user) {
+        }
+        catch (\Exception $e) {
 
-            auth()->login($user);
-            $userName = Auth::user()->nm_usuario;
-            //$request->session()->flash('msg.level', 'success');
-            //$request->session()->flash('msg.content', 'Bem vindo '. $userName);
-            return redirect()->route('usuario.dados');
+            return redirect()->route('admin.register')->with('nosuccess', 'Houve um problema ao cadastrar o usuário');
 
         }
-        else
-        {
+        finally {
 
-            return redirect()->back()->withErrors('Houve um problema ao cadastrar o usuário');
+            Auth::guard('admin')->login($user);
+            return redirect()->route('user.data')->with('success', 'Bem vindo ' . Auth::guard('admin')->user()->nm_usuario);
 
         }
-
 
     }
 

@@ -25,12 +25,12 @@ class ClientRequest extends FormRequest
     {
         return [
             'cd_cpf_cnpj' => 'required',
-            'nm_usuario' => 'required|string',
+            'nm_cliente' => 'required|string',
+            'dt_nascimento' => 'required',
             'email' => 'required|string',
             'password' => 'required|string',
             'cd_telefone' => 'required',
-            'cd_endereco' => 'required',
-            'im_usuario' => 'required|image|mimes:jpeg,bmp,png'
+            'im_cliente' => 'required|image|mimes:jpeg,bmp,png'
         ];
     }
 }

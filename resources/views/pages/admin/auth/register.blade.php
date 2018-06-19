@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="{{asset('css/admin/_all.css')}}">
     <div class="register-box">
         <div class="register-box-body">
+
+            @include('partials.admin._alerts')
+
             <p class="login-box-msg">Registre uma nova conta</p>
             <form action="{{ route('admin.register.submit') }}" method="post">
                 {{ csrf_field() }}
@@ -27,6 +30,15 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <p class="msg-senha"></p>
                 </div>
+                {{--<div class="form-group has-feedback">--}}
+                    {{--<select id="categorias" class="form-control select2" style="width: 100%;" required name="cd_acesso">--}}
+                        {{--<option value=""></option>--}}
+
+                        {{--@foreach($acessos as $acesso)--}}
+                            {{--<option value="{{ $acesso->cd_acesso }}">{{ $acesso->nm_acesso }}</option>--}}
+                        {{--@endforeach--}}
+                    {{--</select>--}}
+                {{--</div>--}}
                 {{--<div class="form-group has-feedback">
                     <input type="password" class="form-control" name="conf_senha" placeholder="Confirmar senha">
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
@@ -49,9 +61,9 @@
             <div class="social-auth-links text-center">
                 <p>- OU -</p>
                 <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>Inscreva-se usando o Facebook</a>
-                <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Inscreva-se usando o Google+</a>
             </div>
-            <a href="{{route('admin.login')}}" class="text-center">Eu já tenho uma conta</a>
+            <a href="{{ route('admin.login') }}" class="text-center">Eu já tenho uma conta</a>
         </div>
         <!-- /.form-box -->
     </div>
