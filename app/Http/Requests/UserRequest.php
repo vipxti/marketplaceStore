@@ -23,6 +23,9 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+
+        //dd($this->request);
+
         return [
             'nm_usuario' => 'required',
             'email' => 'required|string',
