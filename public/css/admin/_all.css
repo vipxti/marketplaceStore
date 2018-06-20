@@ -9,7 +9,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(flat.png) no-repeat;
+    background: url(admin/flat.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -49,7 +49,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat,
     .iradio_flat {
-        background-image: url(flat@2x.png);
+        background-image: url(admin/flat@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }
@@ -65,7 +65,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(red.png) no-repeat;
+    background: url(admin/red.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -105,7 +105,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat-red,
     .iradio_flat-red {
-        background-image: url(red@2x.png);
+        background-image: url(admin/red@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }
@@ -121,7 +121,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(green.png) no-repeat;
+    background: url(admin/green.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -161,7 +161,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat-green,
     .iradio_flat-green {
-        background-image: url(green@2x.png);
+        background-image: url(admin/green@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }
@@ -178,7 +178,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(blue.png) no-repeat;
+    background: url(admin/blue.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -218,7 +218,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat-blue,
     .iradio_flat-blue {
-        background-image: url(blue@2x.png);
+        background-image: url(admin/blue@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }
@@ -234,7 +234,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(aero.png) no-repeat;
+    background: url(admin/aero.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -274,7 +274,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat-aero,
     .iradio_flat-aero {
-        background-image: url(aero@2x.png);
+        background-image: url(admin/aero@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }
@@ -290,7 +290,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(grey.png) no-repeat;
+    background: url(admin/grey.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -330,7 +330,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat-grey,
     .iradio_flat-grey {
-        background-image: url(grey@2x.png);
+        background-image: url(admin/grey@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }
@@ -346,7 +346,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(orange.png) no-repeat;
+    background: url(admin/orange.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -386,7 +386,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat-orange,
     .iradio_flat-orange {
-        background-image: url(orange@2x.png);
+        background-image: url(admin/orange@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }
@@ -402,7 +402,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(yellow.png) no-repeat;
+    background: url(admin/yellow.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -442,7 +442,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat-yellow,
     .iradio_flat-yellow {
-        background-image: url(yellow@2x.png);
+        background-image: url(admin/yellow@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }
@@ -458,7 +458,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(pink.png) no-repeat;
+    background: url(admin/pink.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -498,7 +498,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat-pink,
     .iradio_flat-pink {
-        background-image: url(pink@2x.png);
+        background-image: url(admin/pink@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }
@@ -514,7 +514,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url(purple.png) no-repeat;
+    background: url(admin/purple.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -555,7 +555,7 @@
        only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_flat-purple,
     .iradio_flat-purple {
-        background-image: url(purple@2x.png);
+        background-image: url(admin/purple@2x.png);
         -webkit-background-size: 176px 22px;
         background-size: 176px 22px;
     }

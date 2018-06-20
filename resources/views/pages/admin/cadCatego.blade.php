@@ -227,7 +227,6 @@
         });
         $(function(){
             $('.select2').select2();
-            var contador = 0;
         })
     </script>
 @stop
