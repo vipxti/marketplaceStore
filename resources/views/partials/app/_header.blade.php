@@ -7,10 +7,8 @@
                 <div class="col-12 col-lg-7">
                     <div class="top_single_area d-flex align-items-center">
                         <!-- Logo Area -->
-
-
                         <div class="top_logo">
-                            <a href="#"><img src="{{ asset('img/app/core-img/logo.png') }}" alt=""></a>
+                            <a href="{{route('index')}}"><img src="{{ asset('img/app/core-img/logo.png') }}" alt=""></a>
                         </div>
                         <!--Carrinho e Menu Area -->
                         <div class="header-cart-menu d-flex align-items-center ml-auto">

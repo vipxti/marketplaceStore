@@ -16,6 +16,10 @@ class CategoryController extends Controller
         $categorias = Category::all();
         $subcategorias = SubCategory::all();
 
+        //dd($categorias);
+//        dd($categorias[0]->cd_categoria);
+//        dd($subcategorias);
+
         return view('pages.admin.cadCatego', compact('categorias', 'subcategorias'));
     }
 

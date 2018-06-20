@@ -30,6 +30,14 @@ class HomeController extends Controller
         $produtos = Product::where('cd_status_produto', '=', 1)->limit(3)->get();
         $coutProduct = Product::where('cd_status_produto', '=', 1)->count();
 
-        return view('pages.admin.index', compact('coutProduct','produtos'));
+        $imagemPrincipal = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+            ->select('img_produto.im_produto')
+            ->where('img_produto.ic_img_principal', '=', 1)
+            ->orderBy('sku_produto_img.cd_img')
+            ->get();
+
+        return view('pages.admin.index', compact('coutProduct','produtos', 'imagemPrincipal'));
     }
 }
