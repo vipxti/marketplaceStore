@@ -26,7 +26,7 @@
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input id="verifica_senha" type="text" class="form-control" name="password" placeholder="Senha" minlength="6" pattern="^(?=.*?[A-Z])(?=.*?[a-z]).{6,}$">
+                    <input id="verifica_senha" type="password" class="form-control" name="password" placeholder="Senha" minlength="6" pattern="^(?=.*?[A-Z])(?=.*?[a-z]).{6,}$">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     <p class="msg-senha"></p>
                 </div>

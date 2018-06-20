@@ -53,7 +53,7 @@
                     <div class="info-box">
                         <span class="info-box-icon bg-yellow"><i class="ion ion-ios-paper"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Vendas do Mes</span>
+                            <span class="info-box-text">Vendas do Mês</span>
                             <span class="info-box-number">0</span>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <p class="text-center">
-                                        <strong>Tramsações do Mes</strong>
+                                        <strong>Transações do Mês</strong>
                                     </p>
                                     <div class="progress-group">
                                         <span class="progress-text">Produtos Adicionados ao Carrinho</span>
@@ -86,7 +86,7 @@
                                     </div>
                                     <!-- /.progress-group -->
                                     <div class="progress-group">
-                                        <span class="progress-text">Vendas Concluidas</span>
+                                        <span class="progress-text">Vendas Concluídas</span>
                                         <span class="progress-number"><b>3100</b>/4000</span>
 
                                         <div class="progress sm">
@@ -104,7 +104,7 @@
                                     </div>
                                     <!-- /.progress-group -->
                                     <div class="progress-group">
-                                        <span class="progress-text">Send Inquiries</span>
+                                        <span class="progress-text">Consultas</span>
                                         <span class="progress-number"><b>250</b>/500</span>
 
                                         <div class="progress sm">
@@ -122,7 +122,7 @@
                 <div class="col-md-4">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Produtos Recem Adicionados</h3>
+                            <h3 class="box-title">Produtos Recém Adicionados</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                             </div>

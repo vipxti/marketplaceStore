@@ -20,10 +20,7 @@
 
         <!-- Cadastrar Categorias -->
         <section class="content">
-
             @include('partials.admin._alerts')
-
-
             <!-- Cadastrar Categoria -->
             <div class="col-md-6">
                 <div class="box box-primary">
@@ -163,7 +160,7 @@
         </section>
 
         <!-- Listar Categorias Pais e Filhas -->
-        <section class="content">
+        {{--<section class="content">
             <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
@@ -196,7 +193,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>--}}
     </div>
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
     {{--<script src="{{ asset('js/admin/TreeViewScript.js') }}"></script>--}}
