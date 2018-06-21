@@ -397,6 +397,7 @@
         //Validação do campo PREÇO
         $('.campo_preco').blur(function() {
 
+
             var campo = $('.campo_preco').val();
             var reg = /^(\d{1,3}(.\d{3})*|(\d+))(.\d{2})?$/;
 

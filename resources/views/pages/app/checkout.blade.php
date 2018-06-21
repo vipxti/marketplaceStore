@@ -1,11 +1,57 @@
 @extends('layouts.app.app')
 
 @section('content')
+    <link rel="stylesheet" href="{{asset('css/app/estiloWizard.css')}}">
     <!-- ****** Checkout Area Start ****** -->
     <div class="checkout_area section_padding_100">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-6">
+                <form id="signup" action="" method="">
+                <ul id="section-tabs">
+                    <li class="current active"><span>1.</span> Passo 1</li>
+                    <li><span>2.</span> Passo 2</li>
+                    <li><span>3.</span> Passo 3</li>
+                    <li><span>4.</span> Passo 4</li>
+                    <li><span>5.</span> Passo 5</li>
+                </ul>
+                <div id="fieldsets">
+                    <fieldset class="current">
+                        <label for="email">Exemplo1:</label>
+                        <input name="email" type="email" class="required email" />
+                        <label name="password" for="password">Exemplo Senha:</label>
+                        <input type="password" minlength="10" class="required">
+                    </fieldset>
+                    <fieldset class="next">
+                        <label for="username">Exemplo2:</label>
+                        <input name="username" type="text">
+                        <label for="bio">Exemplo TextArea:</label>
+                        <textarea name="bio" class="required"></textarea>
+                    </fieldset>
+                    <fieldset class="next">
+                        <label for="interests">Exemplo3:</label>
+                        <textarea name="bio"></textarea>
+                        <p>Exemplo RadioButton<br>
+                            <input type="radio" name="newsletter" value="yes"><label for="newsletter">Sim</label>
+                            <input type="radio" name="newsletter" value="no"><label for="newsletter">Não</label>
+                        </p>
+                    </fieldset>
+                    <fieldset class="next">
+                        <label for="referrer">Exemplo4:</label>
+                        <input type="text" name="referrer">
+                        <label for="phone">Exemplo Tel:</label>
+                        <input type="tel" name="phone">
+                    </fieldset>
+                    <fieldset class="next">
+                        <label for="username">Exemplo5:</label>
+                        <input name="username" type="text">
+                    </fieldset>
+                    <a class="btn" id="next">Próximo ▷</a>
+                    <input type="submit" class="btn">
+                </div>
+                </form>
+
+
+                {{--<div class="col-12 col-md-6">
                     <div class="checkout_details_area mt-50 clearfix">
 
                         <div class="cart-page-heading">
@@ -74,9 +120,9 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div>--}}
 
-                <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
+              {{--  <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
                     <div class="order-details-confirmation">
 
                         <div class="cart-page-heading">
@@ -144,10 +190,57 @@
                         </div>
                         <a href="#" class="btn karl-checkout-btn">Finalizar</a>
                     </div>
-                </div>
+                </div>--}}
 
             </div>
         </div>
     </div>
+    <script>
+        $("#next").on("click", function(e){
+            console.log(e.target);
+            nextSection();
+        });
+
+        $("form").on("submit", function(e){
+            if ($("#next").is(":visible") || $("fieldset.current").index() < 3){
+                e.preventDefault();
+            }
+        });
+
+        function goToSection(i){
+            console.log(i);
+            $("fieldset:gt("+i+")").removeClass("current").addClass("next");
+            $("fieldset:lt("+i+")").removeClass("current");
+            $("#section-tabs li").eq(i).addClass("current").siblings().removeClass("current");
+            setTimeout(function(){
+                $("fieldset").eq(i).removeClass("next").addClass("current active");
+                if ($("fieldset.current").index() == 4){
+                    $("#next").hide();
+                    $("input[type=submit]").show();
+                } else {
+                    $("#next").show();
+                    $("input[type=submit]").hide();
+                }
+            }, 80);
+
+        }
+
+        function nextSection(){
+            var i = $("fieldset.current").index();
+            if (i < 4){
+                $("#section-tabs li").eq(i+1).addClass("active");
+                goToSection(i+1);
+            }
+        }
+
+        $("#section-tabs li").on("click", function(e){
+            var i = $(this).index();
+            if ($(this).hasClass("active")){
+                goToSection(i);
+            } else {
+                alert("Por favor preencha as sessões anteriores!");
+            }
+        });
+    </script>
     <!-- ****** Checkout Area End ****** -->
 @stop

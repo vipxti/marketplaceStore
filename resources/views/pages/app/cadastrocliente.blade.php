@@ -206,7 +206,7 @@
                                     <label>CPF ou CNPJ</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="text" class="form-control campo_cpf_cnpj" name="cd_cpf_cnpj" required maxlength="20">
+                                        <input type="number" class="form-control campo_cpf_cnpj" name="cd_cpf_cnpj" required maxlength="20">
                                         <p class="msg_cpf_cnpj"></p>
                                     </div>
                                 </div>
