@@ -167,7 +167,7 @@
                                                 <label>Preço</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="number" class="form-control campo_preco_modal" name="vl_produto_variacao" value="{{ $ultimoProduto[0]->vl_produto }}" min="0">
+                                                    <input type="text" class="form-control campo_preco" required name="vl_produto_variacao" value="{{ $ultimoProduto[0]->vl_produto }}">
                                                 </div>
                                                 <i class="msg_preco"></i>
                                             </div>
@@ -305,7 +305,7 @@
 
                                 <!-- Botão Salvar -->
                                 <div style="width: 100%" >
-                                    <input type="checkbox" class="js-switch" name="status" checked/> Ativar/Desativar Produto
+                                    <input type="checkbox" class="js-switch" name="status_variacao" checked/> Ativar/Desativar Produto
                                     <button type="submit" id="btn_salvar" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                 </div>
                         </form>

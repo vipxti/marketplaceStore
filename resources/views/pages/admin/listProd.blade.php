@@ -15,6 +15,9 @@
         </section>
 
         <section class="content">
+
+            @include('partials.admin._alerts')
+
             <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">

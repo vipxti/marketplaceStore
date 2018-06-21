@@ -19,10 +19,8 @@ use App\Image as Img;
 
 class ProductController extends Controller
 {
-
     public function paginaProduto()
     {
-
         $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);
 
         //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
@@ -46,47 +44,40 @@ class ProductController extends Controller
         //$produtos = $p->merge($pv);
 
         return view('pages.app.produto', compact('produtos', 'imagemPrincipal'));
-
     }
 
-    public function paginaCadastrocliente(){
-
+    public function paginaCadastrocliente()
+    {
         return view('pages.app.cadastrocliente');
-
     }
 
-    public function paginaLogincliente(){
-
+    public function paginaLogincliente()
+    {
         return view('pages.app.logincliente');
-
     }
 
-    public function paginaPainelcliente(){
-
+    public function paginaPainelcliente()
+    {
         return view('pages.app.painelcliente');
-
     }
 
-    public function paginaAlteraremailcliente(){
-
+    public function paginaAlteraremailcliente()
+    {
         return view('pages.app.alteraremailcliente');
-
     }
 
-    public function paginaDescproduto(){
-
+    public function paginaDescproduto()
+    {
         return view('pages.app.descproduto');
-
     }
 
-    public function paginaAlterarsenhacliente(){
-
+    public function paginaAlterarsenhacliente()
+    {
         return view('pages.app.alterarsenhacliente');
-
     }
 
-    public function listaProduto() {
-
+    public function listaProduto()
+    {
         $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);
         $tamanhosLetras = LetterSize::all();
         $tamanhosNumeros = NumberSize::all();
@@ -95,28 +86,20 @@ class ProductController extends Controller
         //dd($produtos);
 
         return view('pages.admin.listProd', compact('produtos', 'tamanhosLetras', 'tamanhosNumeros', 'cores'));
-
     }
 
     public function cadastrarProduto(ProductRequest $request)
     {
-
         $v = strpos($request->vl_produto, ',');
 
         if ($v !== false) {
-
             $val = str_replace(',', '.', $request->vl_produto);
-
         }
 
         if ($request->filled('status') == 'on') {
-
             $status = 1;
-
         } else {
-
             $status = 0;
-
         }
 
         //Procura no banco a categoria e subcategoria baseado no id
@@ -137,37 +120,23 @@ class ProductController extends Controller
                 'ds_comprimento' => $request->ds_comprimento,
                 'ds_peso' => $request->ds_peso
             ]);
-        }
-        catch (\Exception $e) {
-
+        } catch (\Exception $e) {
             return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-        }
-        finally {
-
+        } finally {
             $dimensao = Dimension::orderBy('cd_dimensao', 'DESC')->first();
-
         }
 
         //Cadastro do SKU do produto
         try {
-
             Sku::create([
                 'cd_nr_sku' => $request->cd_sku,
                 'cd_dimensao' => $dimensao->cd_dimensao
             ]);
-
-        }
-        catch (\Exception $e) {
-
+        } catch (\Exception $e) {
             Dimension::destroy($dimensao->cd_dimensao);
             return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-        }
-        finally {
-
+        } finally {
             $sku = Sku::select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
-
         }
 
         //Tenta cadastrar o produto no banco e captura o erro caso ocorra
@@ -183,20 +152,14 @@ class ProductController extends Controller
                 'cd_status_produto' => $status,
                 'cd_sku' => $sku->cd_sku
             ]);
-
-        }
-        catch (\Exception $e) {
-
+        } catch (\Exception $e) {
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
             return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-        }
-        finally {
+        } finally {
 
             //Pega o último id do produto cadastrado
             $produto = Product::orderBy('cd_produto', 'DESC')->first();
-
         }
 
         try {
@@ -206,15 +169,11 @@ class ProductController extends Controller
                 'cd_produto' => $produto->cd_produto,
                 'cd_categoria_subcat' => $prod_cat_subcat->cd_categoria_subcat
             ]);
-
-        }
-        catch (\Exception $e){
-
+        } catch (\Exception $e) {
             Product::destroy($produto->cd_produto);
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
             return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
         }
 
 
@@ -228,7 +187,6 @@ class ProductController extends Controller
             $dbPath = $category->nm_categoria . '/' . $subcategory->nm_sub_categoria;
 
             foreach ($images as $key => $image) {
-
                 $ext = $image->getClientOriginalExtension();
                 $imageName = $request->cd_ean . '_' . ($key + 1) . '.' . $ext;
 
@@ -237,45 +195,29 @@ class ProductController extends Controller
                 $this->saveImageFile($imagePath, $imageName, $realPath);
 
                 $localImagesPath[$key] = $dbPath . '/' . $imageName;
-
             }
 
             $imgsId = [];
             $cont = 0;
 
             foreach ($localImagesPath as $key => $dbImage) {
-
                 try {
-
                     if ($key == 0) {
-
                         Img::create([
                             'im_produto' => $dbImage,
                             'ic_img_principal' => 1
                         ]);
-
-                    }
-                    else
-                    {
-
+                    } else {
                         Img::create([
                             'im_produto' => $dbImage,
                             'ic_img_principal' => 0
                         ]);
-
                     }
-
-                }
-                catch (\Exception $e) {
-
+                } catch (\Exception $e) {
                     if ($cont > 0) {
-
                         foreach ($imgsId as $i) {
-
                             Img::destroy($i);
-
                         }
-
                     }
 
                     DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
@@ -284,40 +226,27 @@ class ProductController extends Controller
                     Dimension::destroy($dimensao->cd_dimensao);
 
                     return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-                }
-                finally {
-
+                } finally {
                     $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
                     $imgsId[$key] = $imgs[$key]->cd_img;
-
                 }
-
             }
 
             $imgsId = [];
             $cont = 0;
 
             foreach ($imgs as $key => $img) {
-
                 try {
-
                     DB::table('sku_produto_img')->insert([
                         'cd_sku' => $sku->cd_sku,
                         'cd_img' => $img->cd_img
                     ]);
-
                 } catch (\Exception $e) {
-
                     if ($cont > 0) {
-
                         foreach ($imgsId as $i) {
-
                             Img::destroy($i);
                             DB::table('sku_produto_img')->where('cd_img', '=', $i)->delete();
-
                         }
-
                     }
 
                     DB::table('produto_categoria_subcat')->where('cd_produto', '=', $produto->cd_produto)->delete();
@@ -326,43 +255,28 @@ class ProductController extends Controller
                     Dimension::destroy($dimensao->cd_dimensao);
 
                     return redirect()->route('product.register')->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-                }
-                finally {
-
+                } finally {
                     $imgsId[$key] = $imgs[$key]->cd_img;
-
                 }
-
             }
-
-
         }
 
         return redirect()->route('products.list')->with('success', 'Produto principal cadastrado com sucesso');
-
     }
 
     //Cadastrar variação do produto
     public function cadastrarVariacaoProduto(ProductVariationRequest $request)
     {
-
         $v = strpos($request->vl_produto_variacao, ',');
 
         if ($v !== false) {
-
             $val = str_replace(',', '.', $request->vl_produto_variacao);
-
         }
 
         if ($request->filled('status_variacao') == 'on') {
-
             $status = 1;
-
         } else {
-
             $status = 0;
-
         }
 
         //Procura no banco a categoria e subcategoria baseado no id
@@ -376,36 +290,26 @@ class ProductController extends Controller
                 'ds_comprimento' => $request->ds_comprimento_variacao,
                 'ds_peso' => $request->ds_peso_variacao
             ]);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
+            dd($e->getMessage());
 
-            return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-        }
-        finally {
-
+            return redirect('/admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
+        } finally {
             $dimensao = Dimension::orderBy('cd_dimensao', 'DESC')->first();
-
         }
 
         try {
-
             Sku::create([
                 'cd_nr_sku' => $request->cd_sku_variacao,
                 'cd_dimensao' => $dimensao->cd_dimensao
             ]);
-
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
+            dd($e->getMessage());
 
             Dimension::destroy($dimensao->cd_dimensao);
             return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-        }
-        finally {
-
+        } finally {
             $sku = Sku::select('cd_sku')->orderBy('cd_sku', 'DESC')->first();
-
         }
 
         //Tenta cadastrar o produto no banco e captura o erro caso ocorra
@@ -424,54 +328,44 @@ class ProductController extends Controller
                 'cd_produto' => $request->cd_produto_principal
 
             ]);
-
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
+            dd($e->getMessage());
 
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
             return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-        }
-        finally {
+        } finally {
 
             //Pega o último id do produto cadastrado
             $produtoVariacao = ProductVariation::orderBy('cd_produto_variacao', 'DESC')->first();
-
         }
 
         try {
-
             DB::table('produto_cor')->insert([
                 'cd_sku' => $sku->cd_sku,
                 'cd_cor' => $request->cd_cor_variacao
             ]);
-
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
+            dd($e->getMessage());
 
             Product::destroy($produtoVariacao->cd_produto);
             Sku::destroy($sku->cd_sku);
             Dimension::destroy($dimensao->cd_dimensao);
 
             return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
         }
 
         if ($request->cd_tamanho_letra_variacao == null) {
-
             $letra = false;
             $numero = true;
 
             try {
-
                 DB::table('produto_tamanho_num')->insert([
                     'cd_sku' => $sku->cd_sku,
                     'cd_tamanho_num' => $request->cd_tamanho_num_variacao
                 ]);
-
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
+                dd($e->getMessage());
 
                 DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Product::destroy($produtoVariacao->cd_produto);
@@ -479,24 +373,18 @@ class ProductController extends Controller
                 Dimension::destroy($dimensao->cd_dimensao);
 
                 return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
             }
-
-        }
-        else {
-
+        } else {
             $letra = true;
             $numero = false;
 
             try {
-
                 DB::table('produto_tamanho_letra')->insert([
                     'cd_sku' => $sku->cd_sku,
                     'cd_tamanho_letra' => $request->cd_tamanho_letra_variacao
                 ]);
-
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
+                dd($e->getMessage());
 
                 DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
                 Product::destroy($produtoVariacao->cd_produto);
@@ -504,9 +392,7 @@ class ProductController extends Controller
                 Dimension::destroy($dimensao->cd_dimensao);
 
                 return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
             }
-
         }
 
         //Salva fisicamente a imagem e seta o caminho para ser salvo no banco
@@ -519,7 +405,6 @@ class ProductController extends Controller
 
 
             foreach ($images as $key => $image) {
-
                 $ext = $image->getClientOriginalExtension();
                 $imageName = $request->cd_ean_variacao . '_' . ($key + 1) . '.' . $ext;
 
@@ -528,57 +413,37 @@ class ProductController extends Controller
                 $this->saveImageFile($imagePath, $imageName, $realPath);
 
                 $localImagesPath[$key] = $dbPath . '/' . $imageName;
-
             }
 
             $imgsId = [];
             $cont = 0;
 
             foreach ($localImagesPath as $key => $dbImage) {
-
                 try {
-
                     if ($key == 0) {
-
                         Img::create([
                             'im_produto' => $dbImage,
                             'ic_img_principal' => 1
                         ]);
-
-                    }
-                    else
-                    {
-
+                    } else {
                         Img::create([
                             'im_produto' => $dbImage,
                             'ic_img_principal' => 0
                         ]);
-
                     }
-
-                }
-                catch (\Exception $e) {
-
+                } catch (\Exception $e) {
                     if ($cont > 0) {
-
                         foreach ($imgsId as $i) {
-
                             Img::destroy($i);
-
                         }
-
                     }
 
                     if ($letra) {
-
                         DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku->cd_sku)->delete();
-
                     }
 
                     if ($numero) {
-
                         DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku->cd_sku)->delete();
-
                     }
 
                     DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
@@ -587,52 +452,35 @@ class ProductController extends Controller
                     Dimension::destroy($dimensao->cd_dimensao);
 
                     return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-                }
-                finally {
-
+                } finally {
                     $imgs[$key] = Img::orderBy('cd_img', 'DESC')->first();
                     $imgsId[$key] = $imgs[$key]->cd_img;
-
                 }
-
             }
 
             $imgsId = [];
             $cont = 0;
 
             foreach ($imgs as $key => $img) {
-
                 try {
-
                     DB::table('sku_produto_img')->insert([
                         'cd_sku' => $sku->cd_sku,
                         'cd_img' => $img->cd_img
                     ]);
-
                 } catch (Exception $e) {
-
                     if ($cont > 0) {
-
                         foreach ($imgsId as $i) {
-
                             Img::destroy($i);
                             DB::table('sku_produto_img')->where('cd_img', '=', $i)->delete();
-
                         }
-
                     }
 
                     if ($letra) {
-
                         DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku->cd_sku)->delete();
-
                     }
 
                     if ($numero) {
-
                         DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku->cd_sku)->delete();
-
                     }
 
                     DB::table('produto_cor')->where('cd_sku', '=', $sku->cd_sku)->delete();
@@ -641,25 +489,17 @@ class ProductController extends Controller
                     Dimension::destroy($dimensao->cd_dimensao);
 
                     return redirect('admin/productvariationpage/'.$request->cd_produto_principal)->with('nosuccess', 'Houve um problema ao cadastrar o produto');
-
-                }
-                finally {
-
+                } finally {
                     $imgsId[$key] = $imgs[$key]->cd_img;
-
                 }
-
             }
-
-
         }
 
-        return redirect()->route('products.list')->with('success', 'Variação do produto cadastrado com sucesso');
-
+        return redirect()->route('products.list')->with('success', 'Variação do produto cadastrada com sucesso');
     }
 
-    public function showProductPage() {
-
+    public function showProductPage()
+    {
         $categorias = Category::all();
         $cores = Color::all();
         $tamanhosLetras = LetterSize::all();
@@ -667,11 +507,10 @@ class ProductController extends Controller
         $dimensoes = Dimension::all();
 
         return view('pages.admin.cadProduto', compact('categorias', 'cores', 'tamanhosLetras', 'tamanhosNumeros', 'dimensoes'));
-
     }
 
-    public function showProductPageVariation($cd_produto) {
-
+    public function showProductPageVariation($cd_produto)
+    {
         $categorias = Category::all();
         $cores = Color::all();
         $tamanhosLetras = LetterSize::all();
@@ -689,46 +528,32 @@ class ProductController extends Controller
         //dd($ultimoProduto);
 
         return view('pages.admin.cadProdutoVariacao', compact('categorias', 'cores', 'tamanhosLetras', 'tamanhosNumeros', 'ultimoProduto'));
-
     }
 
-    public function saveImageFile($imagePath, $imageName, $realPath) {
-
+    public function saveImageFile($imagePath, $imageName, $realPath)
+    {
         Image::make($realPath)->save($imagePath . '/' . $imageName);
-
     }
 
-    public function pastaProduto($categoria, $subcategoria) {
-
+    public function pastaProduto($categoria, $subcategoria)
+    {
         $rootProductsPath = public_path('img/products/');
 
         if (!file_exists($rootProductsPath . $categoria)) {
-
             mkdir($rootProductsPath . $categoria, 0775, true);
             $p1 = $rootProductsPath . $categoria;
-
-        }
-        else
-        {
-
+        } else {
             $p1 = $rootProductsPath . $categoria;
-
         }
 
         if (!file_exists($p1 . '/' . $subcategoria)) {
-
             mkdir($p1 . '/' . $subcategoria, 0775, true);
             $path = $p1 . '/' . $subcategoria;
-
-        }
-        else {
-
+        } else {
             $path = $p1 . '/' . $subcategoria;
-
         }
 
         return $path;
-
     }
 
 //    public function generateSKU($ean, $cat, $color, $price) {
@@ -741,5 +566,4 @@ class ProductController extends Controller
 //        return $sku1.$sku2.$sku3.$sku4;
 //
 //    }
-
 }
