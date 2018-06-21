@@ -7,47 +7,80 @@
         <div class="container">
             <div class="row">
                 <form id="signup" action="" method="">
-                <ul id="section-tabs">
-                    <li class="current active"><span>1.</span> Passo 1</li>
-                    <li><span>2.</span> Passo 2</li>
-                    <li><span>3.</span> Passo 3</li>
-                    <li><span>4.</span> Passo 4</li>
-                    <li><span>5.</span> Passo 5</li>
-                </ul>
-                <div id="fieldsets">
-                    <fieldset class="current">
-                        <label for="email">Exemplo1:</label>
-                        <input name="email" type="email" class="required email" />
-                        <label name="password" for="password">Exemplo Senha:</label>
-                        <input type="password" minlength="10" class="required">
-                    </fieldset>
-                    <fieldset class="next">
-                        <label for="username">Exemplo2:</label>
-                        <input name="username" type="text">
-                        <label for="bio">Exemplo TextArea:</label>
-                        <textarea name="bio" class="required"></textarea>
-                    </fieldset>
-                    <fieldset class="next">
-                        <label for="interests">Exemplo3:</label>
-                        <textarea name="bio"></textarea>
-                        <p>Exemplo RadioButton<br>
-                            <input type="radio" name="newsletter" value="yes"><label for="newsletter">Sim</label>
-                            <input type="radio" name="newsletter" value="no"><label for="newsletter">Não</label>
-                        </p>
-                    </fieldset>
-                    <fieldset class="next">
-                        <label for="referrer">Exemplo4:</label>
-                        <input type="text" name="referrer">
-                        <label for="phone">Exemplo Tel:</label>
-                        <input type="tel" name="phone">
-                    </fieldset>
-                    <fieldset class="next">
-                        <label for="username">Exemplo5:</label>
-                        <input name="username" type="text">
-                    </fieldset>
-                    <a class="btn" id="next">Próximo ▷</a>
-                    <input type="submit" class="btn">
-                </div>
+                    <ul id="section-tabs">
+                        <li class="current active"><span></span> Passo 1</li>
+                        <li><span></span> Passo 2</li>
+                        <li><span></span> Passo 3</li>
+                        <li><span></span> Passo 4</li>
+                        <li><span></span> Passo 5</li>
+                    </ul>
+                    <div id="fieldsets">
+                        <fieldset class="current col-md-12">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="order-details-confirmation">
+
+                                        <!-- Imagem do Produto -->
+                                        <span>
+                                            <img class="badge__product-icon picture-image" src="https://http2.mlstatic.com/D_NQ_NP_632155-MLB27524314306_062018-Z.jpg" srcset="https://http2.mlstatic.com/D_NQ_NP_632155-MLB27524314306_062018-Z.jpg" style="height: 70px" data-object-fit="cover">
+                                        </span>
+
+                                        <!-- Nome do produto -->
+                                        <div class="cart-page-heading">
+                                            <h5>Geforce Zotac Gtx Performance Nvidia Gtx 660 2gb Ddr5 192bit</h5>
+                                            <p>Quantidade: 1</p>
+                                        </div>
+
+                                        <!-- Preços do produto -->
+                                        <ul class="order-details-form">
+
+                                            <li><span>Produto</span><span>R$&nbsp;95,99</span></li>
+                                            <li><span>Envio</span><span>R$&nbsp;11,90</span></li>
+                                            <li><span>Total</span><span>R$&nbsp;107.89</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                                <!-- Detalhes do produto -->
+                                <div class="col-md-5 text-center">
+                                    <div class="order-details-confirmation">
+
+                                        <!-- Imagem do Produto -->
+                                        <span>
+                                            <img class="badge__product-icon picture-image" src="https://http2.mlstatic.com/D_NQ_NP_632155-MLB27524314306_062018-Z.jpg" srcset="https://http2.mlstatic.com/D_NQ_NP_632155-MLB27524314306_062018-Z.jpg" style="height: 70px" data-object-fit="cover">
+                                        </span>
+
+                                        <!-- Nome do produto -->
+                                        <div class="cart-page-heading">
+                                            <h5>Geforce Zotac Gtx Performance Nvidia Gtx 660 2gb Ddr5 192bit</h5>
+                                            <p>Quantidade: 1</p>
+                                        </div>
+
+                                        <!-- Preços do produto -->
+                                        <ul class="order-details-form">
+
+                                            <li><span>Produto</span><span>R$&nbsp;95,99</span></li>
+                                            <li><span>Envio</span><span>R$&nbsp;11,90</span></li>
+                                            <li><span>Total</span><span>R$&nbsp;107.89</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="next">
+
+                        </fieldset>
+                        <fieldset class="next">
+
+                        </fieldset>
+                        <fieldset class="next">
+
+                        </fieldset>
+                        <fieldset class="next">
+
+                        </fieldset>
+                    </div>
                 </form>
 
 
