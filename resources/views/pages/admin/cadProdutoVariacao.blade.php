@@ -265,7 +265,7 @@
                                         <td><p class="msg_desc"></p></td>
                                     </tr>
                                     <tr>
-                                        <td><p><span class="qtd_palavras">1500</span> caracteres</p></td>
+                                        <td><p><span class="qtd_palavras">1500</span>&nbsp;caracteres</p></td>
                                     </tr>
                                 </table>
 

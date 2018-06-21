@@ -51,7 +51,7 @@
                 </form>
 
 
-                {{--<div class="col-12 col-md-6">
+              {{--<div class="col-12 col-md-6">
                     <div class="checkout_details_area mt-50 clearfix">
 
                         <div class="cart-page-heading">

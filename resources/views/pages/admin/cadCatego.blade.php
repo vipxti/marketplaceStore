@@ -163,7 +163,7 @@
 
                 <!-- Lista das categorias cadastradas -->
                 <div class="col-md-6">
-                    <div class="box box-info">
+                    <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">Lista de Categorias</h3>
                             <div class="box-tools pull-right">
