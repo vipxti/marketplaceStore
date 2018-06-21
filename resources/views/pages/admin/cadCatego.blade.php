@@ -195,21 +195,35 @@
 
 
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
-    {{--<script src="{{ asset('js/admin/TreeViewScript.js') }}"></script>--}}
+    <script src="{{ asset('js/admin/TreeViewScript.js') }}"></script>
     <script>
+        var arrayCat = [];
+        var verificaCat = false;
         function listarSubCategorias(categoria, elementLi){
-            $.ajax({
-                url: '{{ url('/admin/subcat') }}/' + categoria,
-                type: 'GET',
-                success: function (data) {
-                    //console.log(data.subcat);
-                    //console.log($(elementLi).find(".filho"));
-                    $(elementLi).find(".filho").empty();
-                    $.each(data.subcat, function(index, subcategoria) {
-                        $(elementLi).append(`<ul><li class="filho">` + subcategoria.nm_sub_categoria + `</li></ul>`);
-                    })
+
+            for(var i=0; i < arrayCat.length; i++){
+                if(categoria == arrayCat[i]){
+                    verificaCat = true;
                 }
-            });
+            }
+
+            if(!verificaCat) {
+                $.ajax({
+                    url: '{{ url('/admin/subcat') }}/' + categoria,
+                    type: 'GET',
+                    success: function (data) {
+                        //console.log(data.subcat);
+                        //console.log($(elementLi).find(".filho"));
+                        $(elementLi).find(".filho").empty();
+                        $.each(data.subcat, function (index, subcategoria) {
+                            $(elementLi).append(`<ul><li class="filho">` + subcategoria.nm_sub_categoria + `</li></ul>`);
+                        })
+
+                        arrayCat.push(categoria);
+                    }
+                });
+            }
+            verificaCat = false;
         }
         $('#categorias').change(function (e) {
             e.preventDefault();
