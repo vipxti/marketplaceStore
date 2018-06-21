@@ -51,12 +51,23 @@
                                 <div class="dropdown show">
                                     <a href="#" class="dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-user" aria-hidden="true"></i>
+                                        @if(Auth::check())
+                                            <span>{{ Auth::user()->nm_usuario }}</span>
+                                        @endif
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="{{ route('cadastrocliente.page') }}">Cadastrar</a>
-                                        <a class="dropdown-item" href="{{ route('logincliente.page') }}">Minha Conta</a>
-                                        <a class="dropdown-item" href="#">Meus Pedidos</a>
-                                    </div>
+                                        
+                                        @if(Auth::check())
+
+                                            <a class="dropdown-item" href="{{ route('logincliente.page') }}">Minha Conta</a>
+                                            <a class="dropdown-item" href="#">Meus Pedidos</a>
+
+                                        @else
+
+                                            <a class="dropdown-item" href="{{ route('client.register') }}">Cadastrar</a>
+
+                                        @endif
+                                        </div>
 
                                 </div>
 

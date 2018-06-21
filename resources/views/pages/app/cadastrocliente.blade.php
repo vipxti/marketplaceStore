@@ -136,17 +136,22 @@
         <div class="container">
 
             <!-- Nome do Cliente  -->
-            <div class="col-md-9" style="padding-left: 26%">
-                <div>
-                    <div class="form-group">
-                        <label>Nome</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"></span>
-                            <input type="text" class="form-control campo_nome" name="nm_cliente" required maxlength="50">
+            <div class="row">
+
+                <div class="col-md-9" style="padding-left: 26%">
+                    <div>
+                        <div class="form-group">
+                            <label>Nome</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" class="form-control campo_nome" name="nm_cliente" required maxlength="50">
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+            
 
             <!-- E-mail -->
             <div class="col-md-9" style="padding-left: 26%">

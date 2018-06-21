@@ -6,6 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\ClientRequest;
+use App\Client;
 
 class ClientRegisterController extends Controller
 {
@@ -39,45 +41,31 @@ class ClientRegisterController extends Controller
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function showRegisterForm()
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        return view('pages.app.cadastrocliente');
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
+    protected function create(ClientRequest $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        try {
+            Client::create([
+
+                //TO DO
+
+            ]);
+        } catch (\Exception $e) {
+        } finally {
+        }
     }
 
-    public function verificaCpfCnpj($cpf_cnpj){
-
+    public function verificaCpfCnpj($cpf_cnpj)
+    {
         $cpf_cpnj_achado = DB::table('cliente')
             ->select('cd_cpf_cnpj')
             ->where('cd_cpf_cnpj', '=', $cpf_cnpj)
             ->get();
 
         return response()->json([ 'cpf_cnpj' => $cpf_cpnj_achado ]);
-
-
     }
 }

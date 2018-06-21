@@ -64,7 +64,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/productconfig', 'PageController@showConfigProductPage')->name('product.config');
 
-    Route::get('/','HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
+    Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
     Route::get('/getproducts', 'ProductController@listaProduto')->name('products.list')->middleware('auth:admin');
 
     //Faz o logout do usuário
@@ -76,16 +76,18 @@ Route::prefix('admin')->group(function () {
     Route::post('/password/reset', 'Auth\UserResetPasswordController@reset');
     Route::get('/password/reset/{token}', 'Auth\UserResetPasswordController@showResetForm')->name('admin.password.reset');
     //----------------
-
 });
 
-Route::prefix('page')->group(function (){
-
+Route::prefix('page')->group(function () {
     Route::get('/products', 'ProductController@paginaProduto')->name('products.page');
 
     //Carrinho
     Route::get('/carrinho/{cd_produto}', 'PageController@showCart');
     Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');
+
+    //Cliente
+    Route::get('/client/register', 'Auth\ClientRegisterController@showRegisterForm')->name('client.register');
+    
 
     Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
 });
@@ -96,7 +98,3 @@ Route::get('/painelcliente', 'ProductController@paginaPainelcliente')->name('pai
 Route::get('/alteraremailcliente', 'ProductController@paginaAlteraremailcliente')->name('alteraremailcliente.page');
 Route::get('/alterarsenhacliente', 'ProductController@paginaAlterarsenhacliente')->name('alterarsenhacliente.page');
 Route::get('/descproduto', 'ProductController@paginaDescproduto')->name('descproduto.page');
-
-
-
-
