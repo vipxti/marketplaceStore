@@ -27,11 +27,11 @@
                                 <input type="checkbox" class="flat-red" style="right: 15px"  name="remember"> Lembrar de mim</label>
                         </div>
                     </div>
-                    <!-- /.col -->
-                    <div class="col-xs-4">
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
                     </div>
-                    <!-- /.col -->
                 </div>
             </form>
 

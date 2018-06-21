@@ -48,7 +48,7 @@
 
             @include('partials.admin._alerts')
 
-
+            <div class="row">
             <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -128,6 +128,7 @@
                     </div>
                 </div>
             </div>
+            </div>
         </section>
 
         <!-- Tabelas -->
@@ -137,6 +138,7 @@
 
 
             <!-- LISTA DE TAMANHO POR NÚMERO -->
+            <div class="row">
             <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
@@ -176,7 +178,6 @@
                 </div>
             </div>
 
-
             <!-- LISTA DE TAMANHO POR LETRA -->
             <div class="col-md-6">
                 <div class="box box-info">
@@ -215,6 +216,7 @@
 
                     </div>
                 </div>
+            </div>
             </div>
         </section>
     </div>

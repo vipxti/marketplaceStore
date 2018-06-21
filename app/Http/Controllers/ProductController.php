@@ -73,6 +73,12 @@ class ProductController extends Controller
 
     }
 
+    public function paginaDescproduto(){
+
+        return view('pages.app.descproduto');
+
+    }
+
     public function paginaAlterarsenhacliente(){
 
         return view('pages.app.alterarsenhacliente');

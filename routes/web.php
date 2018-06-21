@@ -94,6 +94,7 @@ Route::get('/logincliente', 'ProductController@paginaLogincliente')->name('login
 Route::get('/painelcliente', 'ProductController@paginaPainelcliente')->name('painelcliente.page');
 Route::get('/alteraremailcliente', 'ProductController@paginaAlteraremailcliente')->name('alteraremailcliente.page');
 Route::get('/alterarsenhacliente', 'ProductController@paginaAlterarsenhacliente')->name('alterarsenhacliente.page');
+Route::get('/descproduto', 'ProductController@paginaDescproduto')->name('descproduto.page');
 
 
 

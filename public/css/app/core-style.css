@@ -710,7 +710,6 @@ img {
     background-color: #ff084e;
     border-radius: 2px;
     display: inline-block;
-    margin-left: 10px;
     margin-right: 10px;
     content: '';
     position: absolute;
@@ -725,7 +724,6 @@ img {
     background-color: transparent;
     border-radius: 2px;
     display: inline-block;
-    margin-left: 10px;
     margin-right: 10px;
     content: '';
     position: absolute;

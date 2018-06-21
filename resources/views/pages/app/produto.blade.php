@@ -121,8 +121,8 @@
     </section>
     <!-- ****** Welcome Slides Area End ****** -->
 
-    <!-- ****** Area de Produtos ****** -->
-    <section class="new_arrivals_area section_padding_100_0 clearfix">
+
+    {{--<section class="new_arrivals_area section_padding_100_0 clearfix">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -171,79 +171,231 @@
 
         </div>
 
-    </section>
-    <!-- ****** New Arrivals Area End ****** -->
+    </section>--}}
 
-    <!-- ****** Popular Brands Area Start ****** -->
-    <section class="karl-testimonials-area section_padding_100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section_heading text-center">
-                        <h2>Depoimentos</h2>
+
+        <section class="shop_grid_area section_padding_100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-3">
+                        <div class="shop_sidebar_area">
+
+                            <div class="widget catagory mb-50">
+                                <!--  Side Nav  -->
+                                <div class="nav-side-menu">
+                                    <h6 class="mb-0">Categorias</h6>
+                                    <div class="menu-list">
+                                        <ul id="menu-content2" class="menu-content collapse out">
+                                            <!-- Single Item -->
+                                            <li data-toggle="collapse" data-target="#women2">
+                                                <a href="#">Woman wear</a>
+                                                <ul class="sub-menu collapse show" id="women2">
+                                                    <li><a href="#">Midi Dresses</a></li>
+                                                    <li><a href="#">Maxi Dresses</a></li>
+                                                    <li><a href="#">Prom Dresses</a></li>
+                                                    <li><a href="#">Little Black Dresses</a></li>
+                                                    <li><a href="#">Mini Dresses</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- Single Item -->
+                                            <li data-toggle="collapse" data-target="#man2" class="collapsed">
+                                                <a href="#">Man Wear</a>
+                                                <ul class="sub-menu collapse" id="man2">
+                                                    <li><a href="#">Man Dresses</a></li>
+                                                    <li><a href="#">Man Black Dresses</a></li>
+                                                    <li><a href="#">Man Mini Dresses</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- Single Item -->
+                                            <li data-toggle="collapse" data-target="#kids2" class="collapsed">
+                                                <a href="#">Children</a>
+                                                <ul class="sub-menu collapse" id="kids2">
+                                                    <li><a href="#">Children Dresses</a></li>
+                                                    <li><a href="#">Mini Dresses</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- Single Item -->
+                                            <li data-toggle="collapse" data-target="#bags2" class="collapsed">
+                                                <a href="#">Bags &amp; Purses</a>
+                                                <ul class="sub-menu collapse" id="bags2">
+                                                    <li><a href="#">Bags</a></li>
+                                                    <li><a href="#">Purses</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- Single Item -->
+                                            <li data-toggle="collapse" data-target="#eyewear2" class="collapsed">
+                                                <a href="#">Eyewear</a>
+                                                <ul class="sub-menu collapse" id="eyewear2">
+                                                    <li><a href="#">Eyewear Style 1</a></li>
+                                                    <li><a href="#">Eyewear Style 2</a></li>
+                                                    <li><a href="#">Eyewear Style 3</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- Single Item -->
+                                            <li data-toggle="collapse" data-target="#footwear2" class="collapsed">
+                                                <a href="#">Footwear</a>
+                                                <ul class="sub-menu collapse" id="footwear2">
+                                                    <li><a href="#">Footwear 1</a></li>
+                                                    <li><a href="#">Footwear 2</a></li>
+                                                    <li><a href="#">Footwear 3</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="widget price mb-50">
+                                <h6 class="widget-title mb-30">Filtro por preço</h6>
+                                <div class="widget-desc">
+                                    <div class="slider-range">
+                                        <div data-min="0" data-max="3000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="1350" data-label-result="Price:">
+                                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
+                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                                        </div>
+                                        <div class="range-price">Preço: 0 - 1350</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="widget color mb-70">
+                                <h6 class="widget-title mb-30">Filtro por cor</h6>
+                                <div class="widget-desc">
+                                    <ul class="d-flex justify-content-between">
+                                        <li class="gray"><a href="#"><span class="text-center">(3)</span></a></li>
+                                        &nbsp;&nbsp;
+                                        <li class="red"><a href="#"><span class="text-center">(4)</span></a></li>
+                                        &nbsp;&nbsp;
+                                        <li class="yellow"><a href="#"><span class="text-center">(5)</span></a></li>
+                                        &nbsp;&nbsp;
+                                        <li class="green"><a href="#"><span class="text-center">(6)</span></a></li>
+                                        &nbsp;&nbsp;
+                                        <li class="teal"><a href="#"><span class="text-center">(7)</span></a></li>
+                                        &nbsp;&nbsp;
+                                        <li class="cyan"><a href="#"><span class="text-center">(8)</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget size mb-50">
+                                <h6 class="widget-title mb-30">Filtro por tamanho</h6>
+                                <div class="widget-desc">
+                                    <ul class="d-flex justify-content-between">
+                                        <li><a href="#">PP</a></li>
+                                        <li><a href="#">P</a></li>
+                                        <li><a href="#">M</a></li>
+                                        <li><a href="#">G</a></li>
+                                        <li><a href="#">GG</a></li>
+                                        <li><a href="#">GGG</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget recommended">
+                                <h6 class="widget-title mb-30">Recomendado</h6>
+
+                                <div class="widget-desc">
+                                    <!-- Single Recommended Product -->
+                                    <div class="single-recommended-product d-flex mb-30">
+                                        <div class="single-recommended-thumb mr-3">
+                                            <img src="img/product-img/product-10.jpg" alt="">
+                                        </div>
+                                        <div class="single-recommended-desc">
+                                            <h6>Men’s T-shirt</h6>
+                                            <p>$ 39.99</p>
+                                        </div>
+                                    </div>
+                                    <!-- Single Recommended Product -->
+                                    <div class="single-recommended-product d-flex mb-30">
+                                        <div class="single-recommended-thumb mr-3">
+                                            <img src="img/product-img/product-11.jpg" alt="">
+                                        </div>
+                                        <div class="single-recommended-desc">
+                                            <h6>Blue mini top</h6>
+                                            <p>$ 19.99</p>
+                                        </div>
+                                    </div>
+                                    <!-- Single Recommended Product -->
+                                    <div class="single-recommended-product d-flex">
+                                        <div class="single-recommended-thumb mr-3">
+                                            <img src="img/product-img/product-12.jpg" alt="">
+                                        </div>
+                                        <div class="single-recommended-desc">
+
+                                            <h6>Women’s T-shirt</h6>                               <p>$ 39.99</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-8 col-lg-9">
+                        <div class="shop_grid_product_area">
+                            <div class="row">
+                                <div class="row karl-new-arrivals">
+
+                                @foreach($produtos as $key => $produto)
+
+                                        <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
+
+                                            <div class="product-img">
+                                                <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="">
+                                                <div class="product-quicview">
+                                                    <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-description">
+                                                <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
+                                                <p>{{ $produto->nm_produto }}</p>
+                                                <!-- Botão comprar -->
+                                                <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;COMPRAR</a>
+                                            </div>
+
+                                        </div>
+
+                                    @endforeach
+
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+
+                                    {{ $produtos->links("pagination::bootstrap-4") }}
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="shop_pagination_area wow fadeInUp" data-wow-delay="1.1s">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pagination-sm">
+                                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">02</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">03</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-8">
-                    <div class="karl-testimonials-slides owl-carousel">
 
-                        <!-- Single Testimonial Area -->
-                        <div class="single-testimonial-area text-center">
-                            <span class="quote">"</span>
-                            <h6>Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. Aliquam finibus nulla quam, a iaculis justo finibus non. Suspendisse in fermentum nunc.Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. </h6>
-                            <div class="testimonial-info d-flex align-items-center justify-content-center">
-                                <div class="tes-thumbnail">
-                                    <img src="{{ asset('img/app/bg-img/tes-1.jpg') }}" alt="">
-                                </div>
-                                <div class="testi-data">
-                                    <p>Michelle Williams</p>
-                                    <span>Client, Los Angeles</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Single Testimonial Area -->
-                        <div class="single-testimonial-area text-center">
-                            <span class="quote">"</span>
-                            <h6>Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. Aliquam finibus nulla quam, a iaculis justo finibus non. Suspendisse in fermentum nunc.Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. </h6>
-                            <div class="testimonial-info d-flex align-items-center justify-content-center">
-                                <div class="tes-thumbnail">
-                                    <img src="{{ asset('img/app/bg-img/tes-1.jpg') }}" alt="">
-                                </div>
-                                <div class="testi-data">
-                                    <p>Michelle Williams</p>
-                                    <span>Client, Los Angeles</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Single Testimonial Area -->
-                        <div class="single-testimonial-area text-center">
-                            <span class="quote">"</span>
-                            <h6>Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. Aliquam finibus nulla quam, a iaculis justo finibus non. Suspendisse in fermentum nunc.Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. </h6>
-                            <div class="testimonial-info d-flex align-items-center justify-content-center">
-                                <div class="tes-thumbnail">
-                                    <img src="{{ asset('img/app/bg-img/tes-1.jpg') }}" alt="">
-                                </div>
-                                <div class="testi-data">
-                                    <p>Michelle Williams</p>
-                                    <span>Client, Los Angeles</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <!-- ****** Popular Brands Area End ****** -->
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Plugins js -->
+    <script src="js/plugins.js"></script>
+    <!-- Active js -->
+    <script src="js/active.js"></script>
 
     <script>
-
 
         $('#quickview').on('show', function (e) {
 
@@ -253,7 +405,6 @@
             console.log($modal);
 
         });
-
 
     </script>
 

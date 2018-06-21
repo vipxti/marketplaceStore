@@ -35,18 +35,18 @@
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                 </div>--}}
                 <div class="row">
-                    <div class="col-xs-8" style="padding-left: 13px">
+                    <div class="col-xs-9" style="padding-left: 16px">
                         <div class="checkbox icheck">
-                            <label style="padding-left: 0px">
-                                <input type="checkbox" class="flat-red">&nbsp;Estou de acordo com os <a href="#">termos</a>
+                            <label>
+                                <input type="checkbox" class="flat-red">&nbsp Estou de acordo com os <a href="#">termos</a>
                             </label>
                         </div>
                     </div>
-                    <!-- /.col -->
-                    <div class="col-xs-4">
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
                         <button id="btnRegistrar" type="submit" class="btn btn-primary btn-block btn-flat">Registrar</button>
                     </div>
-                    <!-- /.col -->
                 </div>
             </form>
             <div class="social-auth-links text-center">
