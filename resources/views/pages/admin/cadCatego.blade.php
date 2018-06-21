@@ -99,6 +99,7 @@
                                         <div class="form-group" style="margin-right: 0 !important;">
                                             <label>Cadastrar/Alterar</label>
                                             <div class="input-group-prepend">
+                                                <input class="form-control" type="hidden" id="subcatId" name="cat_sub_Id">
                                                 <input type="text" id="subCatNome" class="form-control" name="nm_sub_categoria" maxlength="35">
                                             </div>
                                         </div>
@@ -231,6 +232,7 @@
         $('#categorias').change(function (e) {
             e.preventDefault();
             $cd_categoria = $(this).val();
+            $("#catId").val($('#categorias option:selected').val());
             $("#catName").val($('#categorias option:selected').text());
             $.ajax({
                 url: '{{ url('/admin/subcat') }}/' + $cd_categoria,
@@ -245,7 +247,10 @@
             });
         });
         $("#subcategorias").change(function(){
+            $("#subcatId").val($("#subcategorias option:selected").val());
             $("#subCatNome").val($("#subcategorias option:selected").text());
+            console.log($("#subcategorias option:selected").val());
+            console.log($("#subcategorias option:selected").text());
         });
         $(function(){
             $('.select2').select2();

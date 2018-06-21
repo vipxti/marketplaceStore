@@ -36,9 +36,9 @@ Route::prefix('admin')->group(function () {
 
     //Form categoria/subcategoria e cadastro
     Route::get('/category', 'CategoryController@showCategoryForm')->name('category.register')->middleware('auth:admin');
-    Route::post('/category', 'CategoryController@cadastrarCategoria')->name('category.save');
+    Route::post('/category', 'CategoryController@cadastrarAtualizarCategoria')->name('category.save');
     Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory')->middleware('auth:admin');
-    Route::post('/subcategory', 'CategoryController@cadastrarSubCategoria')->name('subcategory.save');
+    Route::post('/subcategory', 'CategoryController@cadastrarAtualizarSubCategoria')->name('subcategory.save');
 
     //Associa categoria/subcategoria
     Route::post('/catsubcat', 'CategoryController@associarCategoriaSubCategoria')->name('catsubcat.associate');

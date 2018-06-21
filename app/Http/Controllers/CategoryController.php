@@ -37,49 +37,73 @@ class CategoryController extends Controller
 
     }
 
-    public function cadastrarCategoria(CategoryRequest $request) {
-
-        try {
-
-            Category::create([
-                'nm_categoria' => $request->nm_categoria
-            ]);
-
+    public function cadastrarAtualizarCategoria(CategoryRequest $request) {
+        if($request->cd_categoria == 0 ){
+            try {
+                Category::create([
+                    'nm_categoria' => $request->nm_categoria
+                ]);
+            }
+            catch (\Exception $e) {
+                return redirect()->route('category.register')->with('nosuccess', 'Erro ao cadadastrar a categoria');
+            }
+            finally {
+                return redirect()->route('category.register')->with('success', 'Categoria cadastrada com sucesso');
+            }
         }
-        catch (\Exception $e) {
+        else{
+            try{
+                $categoria = Category::where('cd_categoria', '=', $request->cd_categoria);
+                $categoria-> nm_categora=$request->nm_categoria;
+                $categoria->save();
+            }
+            catch (\Exception $e) {
 
-            return redirect()->route('category.register')->with('nosuccess', 'Erro ao cadadastrar a categoria');
+                return redirect()->route('category.register')->with('nosuccess', 'Erro ao cadadastrar a categoria');
 
+            }
+            finally {
+
+                return redirect()->route('category.register')->with('success', 'Categoria cadastrada com sucesso');
+
+            }
         }
-        finally {
 
-            return redirect()->route('category.register')->with('success', 'Categoria cadastrada com sucesso');
 
-        }
 
     }
 
-    public function cadastrarSubCategoria(SubCategoryRequest $request) {
-
-
-        try {
-
-            SubCategory::create([
-                'nm_sub_categoria' => $request->nm_sub_categoria
-            ]);
-
+    public function cadastrarAtualizarSubCategoria(SubCategoryRequest $request) {
+        if($request->cd_sub_categoria == 0 ){
+            try {
+                SubCategory::create([
+                    'nm_sub_categoria' => $request->nm_sub_categoria
+                ]);
+            }
+            catch (\Exception $e) {
+                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Alterada/Cadastrada a Sub-Categoria');
+            }
+            finally {
+                return redirect()->route('category.register')->with('success', 'Sub-Categoria Alterada/Cadastrada com Sucesso');
+            }
         }
-        catch (\Exception $e) {
+        else{
+            try{
+                $subCategoria = Category::where('cd_sub_categoria', '=', $request->cd_sub_categoria);
+                $subCategoria-> nm_sub_categoria=$request->nm_sub_categoria;
+                $subCategoria->save();
+            }
+            catch (\Exception $e) {
 
-            return redirect()->route('category.register')->with('nosuccess', 'Erro ao cadadastrar a subcategoria');
+                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Alterada/Cadastrada  a Sub-Categoria');
 
+            }
+            finally {
+
+                return redirect()->route('category.register')->with('success', 'Sub-Categoria Alterada/Cadastrada com Sucesso');
+
+            }
         }
-        finally {
-
-            return redirect()->route('category.register')->with('success', 'Subcategoria cadastrada com sucesso');
-
-        }
-
     }
 
     public function associarCategoriaSubCategoria(CategorySubcategoryRequest $request) {

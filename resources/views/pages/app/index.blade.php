@@ -169,7 +169,7 @@
             <div class="row karl-new-arrivals">
                 @foreach($produtos as $key => $produto)
                     <!-- Single gallery Item Start -->
-                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s">
+                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s" style="margin-bottom: 13% !important;">
                         <!-- Product Image -->
                         <div class="product-img">
                             <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="">
