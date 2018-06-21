@@ -42,6 +42,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-tag"></i></span>
                                             <select id="categorias" class="form-control select2-selection select2-selection--single" name="cd_categoria" >
+                                                <option></option>
                                                 @foreach($categorias as $categoria)
                                                     <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
                                                 @endforeach
@@ -133,6 +134,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-tag"></i></span>
                                                     <select id="categorias" class="form-control form-control select2-selection select2-selection--single" style="width: 100%;" name="cd_categoria" >
+                                                        <option></option>
                                                         @foreach($categorias as $categoria)
                                                             <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
                                                         @endforeach
