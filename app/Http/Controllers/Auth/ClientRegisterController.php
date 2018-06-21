@@ -68,4 +68,16 @@ class ClientRegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    public function verificaCpfCnpj($cpf_cnpj){
+
+        $cpf_cpnj_achado = DB::table('cliente')
+            ->select('cd_cpf_cnpj')
+            ->where('cd_cpf_cnpj', '=', $cpf_cnpj)
+            ->get();
+
+        return response()->json([ 'cpf_cnpj' => $cpf_cpnj_achado ]);
+
+
+    }
 }

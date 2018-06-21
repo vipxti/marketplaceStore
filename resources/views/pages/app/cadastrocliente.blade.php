@@ -206,7 +206,7 @@
                                     <label>CPF ou CNPJ</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
-                                        <input type="number" class="form-control campo_cpf_cnpj" name="cd_cpf_cnpj" required maxlength="20">
+                                        <input type="number" id="cpf_cnpj" class="form-control campo_cpf_cnpj" name="cd_cpf_cnpj" required maxlength="20">
                                         <p class="msg_cpf_cnpj"></p>
                                     </div>
                                 </div>
@@ -301,7 +301,7 @@
             $cpf_cnpj = $(this).val();
 
             $.ajax({
-                url: '{{ url('/admin/register') }}/' + $cpf_cnpj,
+                url: '{{ url('/page/register') }}/' + $cpf_cnpj,
                 type: 'GET',
                 success: function(data){
 

@@ -87,6 +87,7 @@ Route::prefix('page')->group(function (){
     Route::get('/carrinho/{cd_produto}', 'PageController@showCart');
     Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');
 
+    Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
 });
 
 Route::get('/cadastrocliente', 'ProductController@paginaCadastrocliente')->name('cadastrocliente.page');

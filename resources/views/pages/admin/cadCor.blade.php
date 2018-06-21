@@ -146,7 +146,27 @@
             setTimeout($.unblockUI, 4000);
         });
 
+        //Campo pesquisa de produtos
+        $(function () {
+            $( '#table' ).searchable({
+                striped: true,
+                oddRow: { 'background-color': '#f5f5f5' },
+                evenRow: { 'background-color': '#fff' },
+                searchType: 'fuzzy'
+            });
 
+            $( '#searchable-container' ).searchable({
+                searchField: '#container-search',
+                selector: '.row',
+                childSelector: '.col-xs-4',
+                show: function( elem ) {
+                    elem.slideDown(100);
+                },
+                hide: function( elem ) {
+                    elem.slideUp( 100 );
+                }
+            })
+        });
 
         $(document).ready(function(){
 
@@ -222,5 +242,7 @@
 
         });
     </script>
+
+    <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
 
 @stop
