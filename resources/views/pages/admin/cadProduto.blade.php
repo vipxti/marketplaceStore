@@ -17,12 +17,11 @@
             </ol>
         </section>
 
-        <!-- Main content -->
+
         <section class="content">
 
             @include('partials.admin._alerts')
 
-            <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Cadastro de Produto</h3>
@@ -38,7 +37,7 @@
                         <form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <!-- Nome do Produto  -->
-                            <table style="width: 65%">
+                            <table style="width: 75%">
                                 <tr>
                                     <td>
                                         <div>
@@ -56,7 +55,7 @@
                             </table>
 
                             <!-- Códigos SKU e Ean  -->
-                            <table style="width: 65%">
+                            <table style="width: 75%">
                                 <tr>
                                     <td style="width: 50%">
                                         <div>
@@ -90,7 +89,7 @@
                             </table>
 
                             <!-- Categorias -->
-                            <table style="width: 65%">
+                            <table style="width: 75%">
                                 <tr>
                                     <td style="width: 50%">
                                         <div>
@@ -128,7 +127,7 @@
                             <br>
 
                             <!-- Preço e quantidade  -->
-                            <table style="width: 32%">
+                            <table style="width: 37%">
                                     <tr>
                                         <td style="width: 50%">
                                             <div>
@@ -254,37 +253,18 @@
                                         </div>
                                     </td>
                                 </tr>
-
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <!--
-                                            <div class="box-header">
-
-                                            </div>
-                                           <!-- <div class="box-body">
-                                                <div class="form-group">
-                                                    <input type="checkbox" class="flat-red campo_status" name="status" checked>
-                                                    <label class="">Status</label>
-                                                </div>
-                                            </div>-->
-                                        </div>
-                                    </td>
-                                </tr>
                             </table>
 
                             <!-- Botões Salvar e Atributo -->
-                            <div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <input type="checkbox" class="js-switch" name="status" checked/> Ativar/Desativar Produto
                                     <button type="submit" id="btn_salvar" class="btn btn-success pull-right" disabled><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                </div>
                             </div>
                         </form>
 
                 </div>
-                <!--<div class="box-footer">
-                    Footer
-                </div>-->
-                <!-- /.box-footer-->
             </div>
         </section>
     </div>

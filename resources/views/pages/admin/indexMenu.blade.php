@@ -9,7 +9,7 @@
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1 style="padding: 0 20px"><i class="fa fa-tags"></i>&nbsp;&nbsp;Categorias</h1>
+            <h1><i class="fa fa-th-list"></i>&nbsp;&nbsp;Menu</h1>
             <ol class="breadcrumb">
                 <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="#">Configurações Home</a></li>
@@ -20,8 +20,9 @@
         <!-- Campos Cadastrar Menu e SubMenu -->
         <section class="content">
             @include('partials.admin._alerts')
-            <!-- Cadastrar Menu -->
-            <div class="col-md-6">
+            <div class="row">
+               <!-- Cadastrar e alterar/Menu -->
+               <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Cadastrar Menu</h3>
@@ -59,8 +60,9 @@
                     </div>
                 </div>
             </div>
-            <!-- Cadastrar SubMenu -->
-            <div class="col-md-6">
+
+               <!-- Cadastrar e alterar/submenu -->
+               <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Cadastrar Sub-Menu</h3>
@@ -97,11 +99,14 @@
                     </div>
                 </div>
             </div>
+            </div>
         </section>
 
-        <!-- Cadastrar Associação -->
+
         <section class="content">
-            <div class="col-md-6">
+            <div class="row">
+               <!-- Cadastrar Associação -->
+               <div class="col-md-6">
                 <div class="box box-warning">
                     <div class="box-header with-border">
                         <h3 class="box-title">Associação</h3>
@@ -145,11 +150,9 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Listar Menu e Sub-Menu -->
-        <section class="content">
-            <div class="col-md-6">
+               <!-- Lista do menu e submenu cadastrados -->
+               <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Lista de Menus</h3>
@@ -171,6 +174,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </section>
     </div>

@@ -12,7 +12,7 @@
             outline:none;
         }
     </style>
-    <!-- Content Wrapper. Contains page content -->
+
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -24,11 +24,11 @@
             </ol>
         </section>
 
-        <!-- Main content -->
+
         <section class="content">
             @include('partials.admin._alerts')
 
-            <!-- Default box -->
+            <!-- Cadastro das cores -->
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div class="box-tools pull-right">
@@ -63,14 +63,8 @@
                     </form>
                 </div>
             </div>
-        </section>
 
-
-
-        <!-- Main content -->
-        <section class="content">
-
-            <!-- Default box -->
+            <!-- Lista das cores cadastradas -->
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div class="box-tools pull-right">

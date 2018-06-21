@@ -2,12 +2,11 @@
 
 @section('content')
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
 
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Produto</h1>
+            <h1><i class="fa fa-pencil"></i>&nbsp;&nbsp;Variação de produtos</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
                 <li class="active">Produto</li>
@@ -15,7 +14,7 @@
             </ol>
         </section>
 
-        <!-- Main content -->
+
         <section class="content">
 
             @include('partials.admin._alerts')
@@ -26,7 +25,7 @@
 
                     @endif
 
-            <!-- Default box -->
+
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Cadastro de Produto</h3>
@@ -38,161 +37,12 @@
 
                 </div>
                 <div class="box-body">
-                    {{--<form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="col-md-12">
 
-                            <div class="col-md-9">
-                                <div class="form-group">
-                                    <label>Nome do Produto</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                        <input type="text" class="form-control campo_nome" name="nm_produto" maxlength="50">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Código (SKU)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" maxlength="20" style="text-transform: uppercase">
-
-                                    </div>
-                                    <p class="msg_sku"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Código (Ean)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                        <input id="campo_ean" type="text" class="form-control campo_ean" name="cd_ean" maxlength="13">
-                                    </div>
-                                    <p class="msg_ean"></p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Descrição do Produto</label>
-                                    <div class="input-group">
-                                    <textarea id="bold" class="campo_desc" name="ds_produto" rows="5" cols="107%" style="font-size: 14px; line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none" maxlength="1500">
-                                    </textarea>
-                                        <p><span class="qtd_palavras">1500</span> caracteres</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Preço</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">R$</span>
-                                        <input type="number" class="form-control campo_preco" name="vl_produto" min="0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Categoria</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                    <select id="categorias" class="form-control select2 campo_cat" style="width: 100%;" name="cd_categoria">
-                                        <option value=""></option>
-
-                                        @foreach($categorias as $categoria)
-                                            <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Sub-Categoria</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-list"></i></span>
-                                        <select id="subcategorias" class="form-control select2 campo_subcat" style="width: 100%;" name="cd_subcategoria" >
-                                            <option value=""></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>&nbsp;</div>
-
-                        <div class="col-md-12">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Largura</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                                        <input type="number" class="form-control" name="ds_largura">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Altura</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                                        <input type="number" class="form-control" name="ds_altura">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Peso</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                        <input type="number" class="form-control" name="ds_peso">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-md-12">
-                          <div>&nbsp;</div>
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label>Imagens</label>
-                                    <div class="input-group">
-                                        <div class="file-loading">
-                                            <input id="input-41" class="campo_img" name="images[]" type="file" accept="image/*" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <input type="checkbox" class="flat-red campo_status" name="status" checked>
-                                        <label class="">Status</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="col-md-12">
-                        <div>
-                           <button type="submit" id="btn_salvar" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
-                         </div>
-
-                          <div style="padding-right: 90px">
-                              <button type="submit" id="btn_atributos" class="btn btn-primary pull-right"><i class="fa fa-sort-amount-desc"></i>&nbsp;&nbsp;Atributos</button>
-
-                          </div>
-                      </div>
-
-                    </form>--}}
                         <form id="frmCadastroProduto" action="{{ route('productvariation.save') }}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <!-- Nome do Produto (Modal) -->
-                                <table style="width: 100%">
+
+                                <!-- Nome do Produto -->
+                                <table style="width: 75%">
                                     <tr>
                                         <td>
                                             <div>
@@ -209,8 +59,8 @@
                                     </tr>
                                 </table>
 
-                                <!-- Códigos SKU e Ean (Modal) -->
-                                <table style="width: 100%">
+                                <!-- Códigos SKU e Ean -->
+                                <table style="width: 75%">
                                     <tr>
                                         <td style="width: 50%">
                                             <div>
@@ -243,8 +93,8 @@
                                     </tr>
                                 </table>
 
-                                <!-- Categorias (Modal) -->
-                                <table style="width: 100%">
+                                <!-- Categorias -->
+                                <table style="width: 75%">
                                     <tr>
 
                                         <input type="hidden" id="categorias" class="form-control select2 campo_cat_modal" style="width: 100%;" value="{{ $ultimoProduto[0]->cd_categoria }}" name="cd_categoria_variacao">
@@ -257,8 +107,8 @@
                                 </table>
                                 <br>
 
-                                <!-- Tamanhos (Modal) -->
-                                <table style="width: 100%">
+                                <!-- Tamanhos -->
+                                <table style="width: 75%">
                                     <tr>
                                         <td style="width: 50%">
                                             <label>Tamanho (Letra)</label>
@@ -293,8 +143,8 @@
                                 </table>
                                 <br>
 
-                                <!-- Cor (Modal) -->
-                                <table style="width: 100%">
+                                <!-- Cor -->
+                                <table style="width: 75%">
                                     <tr>
                                         <td style="width: 51%">
                                             <label>Cor</label>
@@ -395,7 +245,7 @@
                                     </tr>
                                 </table>
 
-                                <!-- Descrição (Modal)  -->
+                                <!-- Descrição -->
                                 <table style="width: 100%">
                                     <tr>
                                         <td>
@@ -403,7 +253,7 @@
                                                 <div class="form-group">
                                                     <label>Descrição do Produto</label>
                                                     <div class="input-group">
-                                          <textarea id="bold" class="campo_desc_modal" name="ds_produto_variacao" rows="5" cols="112%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
+                                          <textarea id="bold" class="campo_desc_modal" name="ds_produto_variacao" rows="5" cols="129,99%" style="line-height: 40px; border: 1px solid #dddddd; padding: 2px; resize: none"  maxlength="1500">
                                             {{--{{ $ultimoProduto[0]->ds_produto }}--}}
                                           </textarea>
                                                     </div>
@@ -419,8 +269,8 @@
                                     </tr>
                                 </table>
 
-                                <!-- Imagens e Status (Modal) -->
-                                <table style="width: 100%">
+                                <!-- Imagens e Status -->
+                                <table style="width: 75%">
                                     <tr>
                                         <td>
                                             <div>
@@ -453,7 +303,7 @@
                                     </tr>
                                 </table>
 
-                                <!-- Botão Salvar (Modal) -->
+                                <!-- Botão Salvar -->
                                 <div style="width: 100%" >
                                     <input type="checkbox" class="js-switch" name="status" checked/> Ativar/Desativar Produto
                                     <button type="submit" id="btn_salvar" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
@@ -461,10 +311,6 @@
                         </form>
 
                 </div>
-                <!--<div class="box-footer">
-                    Footer
-                </div>-->
-                <!-- /.box-footer-->
             </div>
         </section>
     </div>

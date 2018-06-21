@@ -21,10 +21,10 @@
         <!-- Cadastrar Categorias -->
         <section class="content">
             @include('partials.admin._alerts')
-            <!-- Cadastrar Categoria -->
-                <div class="row">
 
-                    <div class="col-md-6">
+            <div class="row">
+               <!-- Cadastrar Categoria -->
+               <div class="col-md-6">
                         <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Cadastrar Menu</h3>
@@ -52,7 +52,7 @@
                                 <form id="fCat" class="form-horizontal" action="{{ route('category.save') }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group" style="margin-right: 0 !important;">
                                             <label>Cadastrar/Alterar</label>
                                             <div class="input-group-prepend">
                                                 <input class="form-control" type="hidden" id="catId" name="catId">
@@ -66,8 +66,8 @@
                         </div>
                     </div>
 
-                    <!-- Cadastrar Sub-Categoria -->
-                    <div class="col-md-6">
+               <!-- Cadastrar Sub-Categoria -->
+               <div class="col-md-6">
                         <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Cadastrar Sub-Categoria</h3>
@@ -108,11 +108,10 @@
                             </div>
                         </div>
                     </div>
-
-                </div>
+            </div>
 
             <div class="row">
-
+                <!-- Associação dos produtos -->
                 <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -162,6 +161,7 @@
                     </div>
                 </div>
 
+                <!-- Lista das categorias cadastradas -->
                 <div class="col-md-6">
                     <div class="box box-info">
                         <div class="box-header with-border">
@@ -190,10 +190,10 @@
                 </div>
 
             </div>
-
         </section>
-
     </div>
+
+
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
     {{--<script src="{{ asset('js/admin/TreeViewScript.js') }}"></script>--}}
     <script>

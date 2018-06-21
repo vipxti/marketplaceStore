@@ -34,7 +34,7 @@
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1 style="padding: 0 20px"><i class="fa fa-arrows-h"></i>&nbsp;&nbsp;Cadastrar Tamanho</h1>
+            <h1><i class="fa fa-arrows-h"></i>&nbsp;&nbsp;Cadastrar Tamanho</h1>
             <ol class="breadcrumb">
                 <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="#">Produtos</a></li>
@@ -43,13 +43,13 @@
             </ol>
         </section>
 
-        <!-- Campos tamanho -->
         <section class="content">
 
             @include('partials.admin._alerts')
 
             <div class="row">
-            <div class="col-md-6">
+               <!-- Cadastrar tamanho números  -->
+               <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <div class="box-tools">
@@ -89,7 +89,8 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+               <!-- Cadastrar tamanho letras  -->
+               <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <div class="box-tools">
@@ -129,17 +130,13 @@
                 </div>
             </div>
             </div>
-        </section>
 
-        <!-- Tabelas -->
-        <section class="content">
 
             @include('partials.admin._alerts')
 
-
-            <!-- LISTA DE TAMANHO POR NÚMERO -->
             <div class="row">
-            <div class="col-md-6">
+               <!-- Lista de tamanhos por números -->
+               <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Tamanho por Número Cadastrado</h3>
@@ -178,8 +175,8 @@
                 </div>
             </div>
 
-            <!-- LISTA DE TAMANHO POR LETRA -->
-            <div class="col-md-6">
+               <!-- Lista de tamanhos por letras -->
+               <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Tamanho por Letra Cadastrado</h3>
