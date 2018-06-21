@@ -177,9 +177,10 @@
                                 <div class="panel-body">
                                     @foreach($categorias as $categoria)
                                         <ul class="treeview lista">
-                                            <li id="liCategoria" onclick="listarSubCategorias({{$categoria->cd_categoria}}, this)">
+                                            <li id="liCategoria" onclick="listarSubCategorias({{$categoria->cd_categoria}}, this)"><a href="#">
                                                 {{$categoria->nm_categoria}}
                                                 <ul></ul>
+                                                </a>
                                             </li>
                                         </ul>
                                     @endforeach

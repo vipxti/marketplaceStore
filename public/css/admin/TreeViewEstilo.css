@@ -1,87 +1,88 @@
 div.panel:first-child {
-    margin-top:20px;
+    margin-top: 0px;
 }
 
 div.lista {
     min-width: 100px;
     min-height: 100px;
-    
     max-height: 256px;
-    overflow:auto;
-	
-	padding: 4px;
-	
-	margin-bottom: 20px;
-	
-	color: #369;
-	
-	border: solid 1px;
-	border-radius: 4px;
+    overflow: auto;
+    padding: 4px;
+    margin-bottom: 20px;
+    color: #369;
+    border: solid 1px;
+    border-radius: 4px;
 }
+
 div.lista ul:first-child:before {
     display: none;
 }
+
 .lista, .lista ul {
-    margin:0;
-    padding:0;
-    list-style:none;
-    
-	color: #369;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: #369;
 }
+
 .lista ul {
-    margin-left:1em;
-    position:relative
+    margin-left: 1em;
+    position: relative
 }
+
 .lista ul ul {
-    margin-left:.5em
+    margin-left: .5em
 }
+
 .lista ul:before {
-    content:"";
-    display:block;
-    width:0;
-    position:absolute;
-    top:0;
-    left:0;
-    border-left:1px solid;
-    
+    content: "";
+    display: block;
+    width: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 1px solid;
     /* creates a more theme-ready standard for the bootstrap themes */
-    bottom:15px;
+    bottom: 15px;
 }
+
 .lista li {
-    margin:0;
-    padding:0 1em;
-    line-height:2em;
-    font-weight:700;
-    position:relative
+    margin: 0;
+    padding: 0 1em;
+    line-height: 2em;
+    font-weight: 700;
+    position: relative
 }
+
 .lista ul li:before {
-    content:"";
-    display:block;
-    width:10px;
-    height:0;
-    border-top:1px solid;
-    margin-top:-1px;
-    position:absolute;
-    top:1em;
-    left:0
+    content: "";
+    display: block;
+    width: 10px;
+    height: 0;
+    border-top: 1px solid;
+    margin-top: -1px;
+    position: absolute;
+    top: 1em;
+    left: 0
 }
+
 .tree-indicator {
-    margin-right:5px;
-    
-    cursor:pointer;
+    margin-right: 5px;
+    cursor: pointer;
 }
+
 .lista li a {
     text-decoration: none;
-    color:inherit;
-    
-    cursor:pointer;
+    color: inherit;
+    cursor: pointer;
 }
+
 .lista li button, .lista li button:active, .lista li button:focus {
     text-decoration: none;
-    color:inherit;
-    border:none;
-    background:transparent;
-    margin:0px 0px 0px 0px;
-    padding:0px 0px 0px 0px;
+    color: inherit;
+    border: none;
+    background: transparent;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
     outline: 0;
 }
