@@ -126,7 +126,7 @@
                                 @foreach($produtos as $key => $produto)
                                     <li class="item">
                                         <div class="product-img">
-                                            <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="Imagem do Produto">
+                                            <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" style="height: 70px !important;">
                                         </div>
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">{{ $produto->nm_produto }}
