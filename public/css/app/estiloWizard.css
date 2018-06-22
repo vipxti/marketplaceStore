@@ -1,4 +1,4 @@
-#signup {
+.signup {
   width: 100%;
   height: auto;
   padding: 20px;
@@ -16,33 +16,6 @@
   padding: 20px;
   box-sizing: border-box;
   overflow: hidden;
-}
-input[type=text],
-input[type=email],
-input[type=password],
-input[type=tel],
-textarea {
-  display: block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #fff;
-  padding: 8px;
-  margin-bottom: 8px;
-  position: relative;
-}
-input[type=text]:focus,
-input[type=email]:focus,
-input[type=password]:focus,
-input[type=tel]:focus,
-textarea:focus {
-  outline: none;
-  border: 1px solid #22918b;
-}
-input[type=radio] {
-  margin: 6px;
-  display: inline-block;
 }
 fieldset {
   border: none;

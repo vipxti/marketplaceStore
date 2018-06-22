@@ -2,11 +2,12 @@
 
 @section('content')
     <link rel="stylesheet" href="{{asset('css/app/estiloWizard.css')}}">
+    <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
     <!-- ****** Checkout Area Start ****** -->
     <div class="checkout_area section_padding_100">
         <div class="container">
             <div class="row">
-                <form id="signup" action="" method="">
+                <form id="form_validation" class="signup" action="" method="">
                     <ul id="section-tabs">
                         <li class="current active"><span></span> Passo 1</li>
                         <li><span></span> Passo 2</li>
@@ -38,6 +39,22 @@
                                             <li><span>Envio</span><span>R$&nbsp;11,90</span></li>
                                             <li><span>Total</span><span>R$&nbsp;107.89</span></li>
                                         </ul>
+
+                                        <div>
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input type="text" class="form-control" name="nome" required>
+                                                    <label class="form-label">Nome</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input type="email" class="form-control" name="email" required>
+                                                    <label class="form-label">Email</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -228,6 +245,10 @@
             </div>
         </div>
     </div>
+    <script src="{{asset('js/app/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('js/app/waves.js')}}"></script>
+    <script src="{{asset('js/app/input.js')}}"></script>
+    <script src="{{asset('js/app/form-validation.js')}}"></script>
     <script>
         $("#next").on("click", function(e){
             console.log(e.target);
