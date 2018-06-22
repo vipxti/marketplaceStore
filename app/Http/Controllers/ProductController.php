@@ -46,11 +46,6 @@ class ProductController extends Controller
         return view('pages.app.produto', compact('produtos', 'imagemPrincipal'));
     }
 
-    public function paginaCadastrocliente()
-    {
-        return view('pages.app.cadastrocliente');
-    }
-
     public function paginaLogincliente()
     {
         return view('pages.app.logincliente');

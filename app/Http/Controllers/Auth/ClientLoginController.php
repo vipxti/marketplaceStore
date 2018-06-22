@@ -22,7 +22,6 @@ class ClientLoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-
         dd($request);
 
         //Faz o login do cliente
@@ -30,7 +29,6 @@ class ClientLoginController extends Controller
 
             //Redireciona o cliente caso consiga logar
             return redirect()->route('admin.dashboard')->with('success', 'Bem vindo ' . Auth::user()->nm_cliente);
-
         }
 
         //Retorna para a tela de login com o campo email preenchido

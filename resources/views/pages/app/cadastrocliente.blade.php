@@ -134,157 +134,99 @@
         </div>
 
         <div class="container">
-            <form id="form_advanced_validation" action="" method="">
+        <form id="form_advanced_validation" action="{{ route('client.save') }}" method="post">
                 <!-- Nome do Cliente  -->
                 <div class="row">
 
                     <div class="col-md-9" style="padding-left: 26%">
 
-                        <div>
-                            {{--<div class="form-group">
-                                <label>Nome</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"></span>
-                                    <input type="text" class="form-control campo_nome" name="nm_cliente" required maxlength="50">
-                                </div>
-                            </div>--}}
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" class="form-control" name="nm_cliente" required maxlength="50">
-                                    <label class="form-label">Nome</label>
-                                </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="nm_cliente" required maxlength="50">
+                                <label class="form-label">Nome</label>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
 
-
                 <!-- E-mail -->
-                <div class="col-md-9" style="padding-left: 26%">
-                    <div>
-                        {{--<div class="form-group">
-                            <label>E-mail</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"></span>
-                                <input type="email" class="form-control campo_email" name="nm_email" required maxlength="50">
-                            </div>
-                        </div>--}}
+                <div class="row">
+
+                    <div class="col-md-9" style="padding-left: 26%">
+
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="email" class="form-control" name="nm_email" required maxlength="50">
                                 <label class="form-label">Email</label>
                             </div>
                         </div>
+
                     </div>
+                    
                 </div>
 
                 <!-- Senha e data de nascimento -->
-                <div class="col-md-12" style="padding-left: 26%">
-                    <table>
-                        <tr>
-                            <td>
-                               {{-- <div class="form-group">
-                                    <label>Senha</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="password" class="form-control campo_senha" name="ds_senha"
-                                               pattern="^(?=.*?[A-Z])(?=.*?[a-z]).{6,}$" required maxlength="20">
-                                    </div>
-                                    <p class="msg-senha"></p>
-                                </div>--}}
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input type="password" class="form-control" name="ds_senha" required maxlength="20">
-                                        <label class="form-label">Senha</label>
-                                    </div>
-                                </div>
-                            </td>
+                <div class="row">
 
-                            <td>&nbsp;&nbsp;&nbsp;</td>
+                    <div class="col-md-6" style="padding-left: 26%">
 
-                            <td>
-                                {{--<div class="form-group">
-                                    <label>Data de Nascimento</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="text" class="form-control campo_data" name="dt_nascimento"
-                                               data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20">
-                                    </div>
-                                </div>--}}
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control" name="dt_nascimento"
-                                               data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20">
-                                        <label class="form-label">Data de Nascimento</label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="password" class="form-control" name="ds_senha" required maxlength="20">
+                                <label class="form-label">Senha</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6" style="padding-right: 26%">
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="dt_nascimento"
+                                        data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20">
+                                <label class="form-label">Data de Nascimento</label>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
 
+                <div class="row">
 
-                <!-- CPF -->
-                <div class="col-md-12" style="padding-left: 26%">
-                    <table>
-                        <tr>
-                            <td>
-                               {{-- <div class="form-group">
-                                    <label>CPF ou CNPJ</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="number" id="cpf_cnpj" class="form-control campo_cpf_cnpj" name="cd_cpf_cnpj" required maxlength="20">
-                                        <p class="msg_cpf_cnpj"></p>
-                                    </div>
-                                </div>--}}
+                    <div class="col-md-6" style="padding-left: 26%">
 
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
-                                        <label class="form-label">CPF ou CNPJ</label>
-                                    </div>
-                                </div>
-                            </td>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
+                                <label class="form-label">CPF ou CNPJ</label>
+                            </div>
+                        </div>
 
-                            <td>&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                    </table>
+                    </div>
+
+                    <div class="col-md-6" style="padding-right: 26%">
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="fk_cd_telefone"
+                                        data-inputmask='"mask": "(99) 9999-9999"' data-mask required maxlength="20">
+                                <label class="form-label">Telefone</label>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
-
-
-                <!-- Telefone -->
-                <div class="col-md-12" style="padding-left: 26%">
-                    <table>
-                        <tr>
-                            <td>
-                                {{--<div class="form-group">
-                                    <label>Telefone</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"></span>
-                                        <input type="text" class="form-control campo_telefone" name="fk_cd_telefone"
-                                               data-inputmask='"mask": "(99) 9999-9999"' data-mask required maxlength="20">
-                                    </div>
-                                </div>--}}
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control" name="fk_cd_telefone"
-                                               data-inputmask='"mask": "(99) 9999-9999"' data-mask required maxlength="20">
-                                        <label class="form-label">Telefone</label>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>&nbsp;&nbsp;&nbsp;</td>
-
-                        </tr>
-                    </table>
-                </div>
-
 
                 <!-- Foto Cliente -->
-                <div class="col-md-12" style="padding-left: 26%">
-                    <div>
+                <div class="row">
+
+                    <div class="col-md-12" style="padding-left: 26%">
+
                         <div class="form-group">
                             <label></label>Foto</label>
                             <div class="input-group">
@@ -293,18 +235,26 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <br>
 
-                <!-- Botões Salvar -->
-                <div class="col-md-12" style="padding-left: 26%">
-                    <div>
-                        <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
                     </div>
+
                 </div>
-                <br>
-                <br>
+
+                <p>&nbsp;</p>
+
+                <!-- Botão Salvar -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <div>
+                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <p>&nbsp;</p>
+
             </form>
         </div>
     </section>

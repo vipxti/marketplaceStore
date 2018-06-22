@@ -23,6 +23,8 @@ class ClientRequest extends FormRequest
      */
     public function rules()
     {
+        dd($this->request);
+
         return [
             'cd_cpf_cnpj' => 'required',
             'nm_cliente' => 'required|string',

@@ -78,22 +78,21 @@ Route::prefix('admin')->group(function () {
     //----------------
 });
 
-Route::prefix('page')->group(function () {
+Route::prefix('pages')->group(function () {
     Route::get('/products', 'ProductController@paginaProduto')->name('products.page');
 
     //Carrinho
-    Route::get('/carrinho/{cd_produto}', 'PageController@showCart');
+    Route::get('/cart/{cd_produto}', 'PageController@showCart');
     Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');
 
     //Cliente
+    Route::post('/client', 'Auth\ClientRegisterController@create')->name('client.save');
     Route::get('/client/register', 'Auth\ClientRegisterController@showRegisterForm')->name('client.register');
-    
+    Route::get('/client/login', 'Auth\ClientLoginController@showClientLoginForm')->name('client.login');
 
     Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
 });
 
-Route::get('/cadastrocliente', 'ProductController@paginaCadastrocliente')->name('cadastrocliente.page');
-Route::get('/logincliente', 'ProductController@paginaLogincliente')->name('logincliente.page');
 Route::get('/painelcliente', 'ProductController@paginaPainelcliente')->name('painelcliente.page');
 Route::get('/alteraremailcliente', 'ProductController@paginaAlteraremailcliente')->name('alteraremailcliente.page');
 Route::get('/alterarsenhacliente', 'ProductController@paginaAlterarsenhacliente')->name('alterarsenhacliente.page');

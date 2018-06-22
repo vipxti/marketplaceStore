@@ -52,7 +52,7 @@
                                     <a href="#" class="dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                         @if(Auth::check())
-                                            <span>{{ Auth::user()->nm_usuario }}</span>
+                                            <span>&nbsp;{{ Auth::user()->nm_usuario }}</span>
                                         @endif
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -64,8 +64,9 @@
 
                                         @else
 
+                                            <a class="dropdown-item" href="{{ route('client.login') }}">Fazer login</a>
                                             <a class="dropdown-item" href="{{ route('client.register') }}">Cadastrar</a>
-
+                                            
                                         @endif
                                         </div>
 

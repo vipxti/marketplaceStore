@@ -51,7 +51,13 @@ class ClientRegisterController extends Controller
         try {
             Client::create([
 
-                //TO DO
+                'cd_cpf_cnpj' => '',
+                'nm_cliente' => '',
+                'email' => '',
+                'password' => '',
+                'dt_nascimento' => '',
+                'im_cliente' => '',
+                'cd_telefone' => '',
 
             ]);
         } catch (\Exception $e) {
