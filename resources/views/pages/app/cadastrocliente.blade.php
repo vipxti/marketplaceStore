@@ -1,7 +1,7 @@
 @extends('layouts.app.app')
 
 @section('content')
-
+    <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
     <!-- ****** Quick View Modal Area Start ****** -->
     <div class="modal fade" id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -134,45 +134,57 @@
         </div>
 
         <div class="container">
+            <form id="form_advanced_validation" action="" method="">
+                <!-- Nome do Cliente  -->
+                <div class="row">
 
-            <!-- Nome do Cliente  -->
-            <div class="row">
+                    <div class="col-md-9" style="padding-left: 26%">
 
+                        <div>
+                            {{--<div class="form-group">
+                                <label>Nome</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"></span>
+                                    <input type="text" class="form-control campo_nome" name="nm_cliente" required maxlength="50">
+                                </div>
+                            </div>--}}
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" name="nm_cliente" required maxlength="50">
+                                    <label class="form-label">Nome</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- E-mail -->
                 <div class="col-md-9" style="padding-left: 26%">
                     <div>
-                        <div class="form-group">
-                            <label>Nome</label>
+                        {{--<div class="form-group">
+                            <label>E-mail</label>
                             <div class="input-group">
                                 <span class="input-group-addon"></span>
-                                <input type="text" class="form-control campo_nome" name="nm_cliente" required maxlength="50">
+                                <input type="email" class="form-control campo_email" name="nm_email" required maxlength="50">
+                            </div>
+                        </div>--}}
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="email" class="form-control" name="nm_email" required maxlength="50">
+                                <label class="form-label">Email</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
-            
-
-            <!-- E-mail -->
-            <div class="col-md-9" style="padding-left: 26%">
-                <div>
-                    <div class="form-group">
-                        <label>E-mail</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"></span>
-                            <input type="email" class="form-control campo_email" name="nm_email" required maxlength="50">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Senha e data de nascimento -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <form>
+                <!-- Senha e data de nascimento -->
+                <div class="col-md-12" style="padding-left: 26%">
                     <table>
                         <tr>
                             <td>
-                                <div class="form-group">
+                               {{-- <div class="form-group">
                                     <label>Senha</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
@@ -180,62 +192,85 @@
                                                pattern="^(?=.*?[A-Z])(?=.*?[a-z]).{6,}$" required maxlength="20">
                                     </div>
                                     <p class="msg-senha"></p>
+                                </div>--}}
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="password" class="form-control" name="ds_senha" required maxlength="20">
+                                        <label class="form-label">Senha</label>
+                                    </div>
                                 </div>
                             </td>
 
                             <td>&nbsp;&nbsp;&nbsp;</td>
 
                             <td>
-                                <div class="form-group">
+                                {{--<div class="form-group">
                                     <label>Data de Nascimento</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
                                         <input type="text" class="form-control campo_data" name="dt_nascimento"
                                                data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20">
                                     </div>
+                                </div>--}}
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="dt_nascimento"
+                                               data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20">
+                                        <label class="form-label">Data de Nascimento</label>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
                     </table>
-                </form>
-            </div>
+                </div>
 
 
-            <!-- CPF -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <form>
+                <!-- CPF -->
+                <div class="col-md-12" style="padding-left: 26%">
                     <table>
                         <tr>
                             <td>
-                                <div class="form-group">
+                               {{-- <div class="form-group">
                                     <label>CPF ou CNPJ</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
                                         <input type="number" id="cpf_cnpj" class="form-control campo_cpf_cnpj" name="cd_cpf_cnpj" required maxlength="20">
                                         <p class="msg_cpf_cnpj"></p>
                                     </div>
+                                </div>--}}
+
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
+                                        <label class="form-label">CPF ou CNPJ</label>
+                                    </div>
                                 </div>
                             </td>
 
                             <td>&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                     </table>
-                </form>
-            </div>
+                </div>
 
 
-            <!-- Telefone -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <form>
+                <!-- Telefone -->
+                <div class="col-md-12" style="padding-left: 26%">
                     <table>
                         <tr>
                             <td>
-                                <div class="form-group">
+                                {{--<div class="form-group">
                                     <label>Telefone</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"></span>
                                         <input type="text" class="form-control campo_telefone" name="fk_cd_telefone"
                                                data-inputmask='"mask": "(99) 9999-9999"' data-mask required maxlength="20">
+                                    </div>
+                                </div>--}}
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="fk_cd_telefone"
+                                               data-inputmask='"mask": "(99) 9999-9999"' data-mask required maxlength="20">
+                                        <label class="form-label">Telefone</label>
                                     </div>
                                 </div>
                             </td>
@@ -244,39 +279,41 @@
 
                         </tr>
                     </table>
-                </form>
-            </div>
+                </div>
 
 
-            <!-- Foto Cliente -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <div>
-                    <div class="form-group">
-                        <label></label>Foto</label>
-                        <div class="input-group">
-                            <div class="file-loading">
-                                <input id="input-41" name="images[]" type="file" accept="image/*" multiple>
+                <!-- Foto Cliente -->
+                <div class="col-md-12" style="padding-left: 26%">
+                    <div>
+                        <div class="form-group">
+                            <label></label>Foto</label>
+                            <div class="input-group">
+                                <div class="file-loading">
+                                    <input id="input-41" name="images[]" type="file" accept="image/*" multiple>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <br>
+                <br>
 
-            <!-- Botões Salvar -->
-            <div class="col-md-12" style="padding-left: 26%">
-                <div>
-                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                <!-- Botões Salvar -->
+                <div class="col-md-12" style="padding-left: 26%">
+                    <div>
+                        <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <br>
-
+                <br>
+                <br>
+            </form>
         </div>
     </section>
     <!-- ****** Fim da area de cadastro ****** -->
 
-
+    <script src="{{asset('js/app/jquery.validate.js')}}"></script>
+    <script src="{{asset('js/app/waves.js')}}"></script>
+    <script src="{{asset('js/app/input.js')}}"></script>
+    <script src="{{asset('js/app/form-validation.js')}}"></script>
     <script src="{{ asset('js/app/select2.full.min.js') }}"></script>
     <script>
 

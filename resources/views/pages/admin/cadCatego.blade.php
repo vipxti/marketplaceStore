@@ -192,7 +192,7 @@
                         </div>
                     </div>
                 </div>
-
+====
             </div>
         </section>
     </div>
@@ -232,19 +232,34 @@
         $('#categorias').change(function (e) {
             e.preventDefault();
             $cd_categoria = $(this).val();
-            $("#catId").val($('#categorias option:selected').val());
-            $("#catName").val($('#categorias option:selected').text());
-            $.ajax({
-                url: '{{ url('/admin/subcat') }}/' + $cd_categoria,
-                type: 'GET',
-                success: function (data) {
-                    $('#subcategorias').empty();
-                    $.each(data.subcat, function(index, subcategoria) {
-                        $('#subcategorias').append(`<option value="` + subcategoria.cd_sub_categoria + `">` + subcategoria.nm_sub_categoria + `</option>`);
-                    });
-                    $("#subCatNome").val($("#subcategorias option:selected").text());
-                }
-            });
+
+            {{--if($cd_categoria == ""){
+                console.log("Categoria vazia" + $cd_categoria);
+                $("#subcategorias").empty();
+                $("#subCatNome").val("");
+                $("#catId").val("");
+                $("#catName").val("");
+
+                @foreach($subcategorias as $subcategoria)
+                {{--<option value="{{ $subcategoria->cd_sub_categoria }}">{{ $subcategoria->nm_sub_categoria }}</option>--}}
+                {{--console.log("{{$subcategoria->nm_sub_categoria}}");
+                @endforeach
+            }
+            else {--}}
+                $("#catId").val($('#categorias option:selected').val());
+                $("#catName").val($('#categorias option:selected').text());
+                $.ajax({
+                    url: '{{ url('/admin/subcat') }}/' + $cd_categoria,
+                    type: 'GET',
+                    success: function (data) {
+                        $('#subcategorias').empty();
+                        $.each(data.subcat, function (index, subcategoria) {
+                            $('#subcategorias').append(`<option value="` + subcategoria.cd_sub_categoria + `">` + subcategoria.nm_sub_categoria + `</option>`);
+                        });
+                        $("#subCatNome").val($("#subcategorias option:selected").text());
+                    }
+                });
+            //}
         });
         $("#subcategorias").change(function(){
             $("#subcatId").val($("#subcategorias option:selected").val());
