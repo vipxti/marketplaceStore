@@ -16,8 +16,8 @@ class CategoryController extends Controller
         $categorias = Category::all();
         $subcategorias = SubCategory::all();
 
-        //dd($categorias);
-//        dd($categorias[0]->cd_categoria);
+
+        //dd($categorias[0]->cd_categoria);
 //        dd($subcategorias);
 
         return view('pages.admin.cadCatego', compact('categorias', 'subcategorias'));
@@ -38,53 +38,50 @@ class CategoryController extends Controller
     }
 
     public function cadastrarAtualizarCategoria(CategoryRequest $request) {
-        if($request->cd_categoria == 0 ){
+        //dd($request->all());
+
+        if($request->cd_categoria == NULL ){
+
             try {
                 Category::create([
                     'nm_categoria' => $request->nm_categoria
                 ]);
             }
             catch (\Exception $e) {
-                return redirect()->route('category.register')->with('nosuccess', 'Erro ao cadadastrar a categoria');
+                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Cadadastrar a categoria');
             }
-            finally {
-                return redirect()->route('category.register')->with('success', 'Categoria cadastrada com sucesso');
+            finally {return redirect()->route('category.register')->with('success', 'Categoria cadastrada com sucesso');
             }
         }
         else{
             try{
-                $categoria = Category::where('cd_categoria', '=', $request->cd_categoria);
-                $categoria-> nm_categora=$request->nm_categoria;
+                $categoria = Category::find($request->cd_categoria);
+                $categoria-> nm_categoria = $request->nm_categoria;
                 $categoria->save();
+
             }
             catch (\Exception $e) {
-
-                return redirect()->route('category.register')->with('nosuccess', 'Erro ao cadadastrar a categoria');
-
+                dd($e->getMessage());
+                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Alterar a categoria');
             }
             finally {
-
-                return redirect()->route('category.register')->with('success', 'Categoria cadastrada com sucesso');
-
+                return redirect()->route('category.register')->with('success', 'Categoria Alterada com sucesso');
             }
         }
-
-
-
     }
 
     public function cadastrarAtualizarSubCategoria(SubCategoryRequest $request) {
-        if($request->cd_sub_categoria == 0 ){
+        if($request->cd_sub_categoria == NULL ){
             try {
                 SubCategory::create([
                     'nm_sub_categoria' => $request->nm_sub_categoria
                 ]);
             }
             catch (\Exception $e) {
-                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Alterada/Cadastrada a Sub-Categoria');
+                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Cadastrada a Sub-Categoria');
             }
             finally {
-                return redirect()->route('category.register')->with('success', 'Sub-Categoria Alterada/Cadastrada com Sucesso');
+                return redirect()->route('category.register')->with('success', 'Sub-Categoria Cadastrada com Sucesso');
             }
         }
         else{
@@ -94,14 +91,10 @@ class CategoryController extends Controller
                 $subCategoria->save();
             }
             catch (\Exception $e) {
-
-                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Alterada/Cadastrada  a Sub-Categoria');
-
+                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Alterar  a Sub-Categoria');
             }
             finally {
-
-                return redirect()->route('category.register')->with('success', 'Sub-Categoria Alterada/Cadastrada com Sucesso');
-
+                return redirect()->route('category.register')->with('success', 'Sub-Categoria Alterada com Sucesso');
             }
         }
     }
@@ -111,12 +104,9 @@ class CategoryController extends Controller
         foreach ($request->cd_sub_categorias as $cd_subcategoria) {
 
             try {
-
                 DB::table('categoria_subcat')->insert([
-
                     'cd_categoria' => $request->cd_categoria,
                     'cd_sub_categoria' => $cd_subcategoria
-
                 ]);
 
             }

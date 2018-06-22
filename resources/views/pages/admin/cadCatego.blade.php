@@ -25,7 +25,7 @@
             <div class="row">
                <!-- Cadastrar Categoria -->
                <div class="col-md-6">
-                        <div class="box box-primary">
+                    <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Cadastrar Menu</h3>
                                 <div class="box-tools">
@@ -34,7 +34,6 @@
                                     </button>
                                 </div>
                             </div>
-
                             <div class="box-body">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -42,7 +41,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-tag"></i></span>
                                             <select id="categorias" class="form-control select2-selection select2-selection--single" name="cd_categoria" >
-                                                <option></option>
+                                                <option selected value="0"></option>
                                                 @foreach($categorias as $categoria)
                                                     <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
                                                 @endforeach
@@ -56,8 +55,8 @@
                                         <div class="form-group" style="margin-right: 0 !important;">
                                             <label>Cadastrar/Alterar</label>
                                             <div class="input-group-prepend">
-                                                <input class="form-control" type="hidden" id="catId" name="catId">
-                                                <input type="text" id="catName" class="form-control" name="nm_categoria" maxlength="35">
+                                                <input class="form-control" type="hidden" id="cd_categoria" name="cd_categoria">
+                                                <input type="text" id="nm_categoria" class="form-control" name="nm_categoria" maxlength="35">
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
@@ -65,51 +64,50 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                </div>
 
                <!-- Cadastrar Sub-Categoria -->
                <div class="col-md-6">
-                        <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Cadastrar Sub-Categoria</h3>
-                                <div class="box-tools">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="box-body">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Sub-Categoria</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-tags"></i></span>
-                                            <select id="subcategorias" class="form-control form-control select2-selection select2-selection--single" style="width: 100%;" name="cd_sub_categoria" >
-                                                <option value=""></option>
-                                                @foreach($subcategorias as $subcategoria)
-                                                    <option value="{{ $subcategoria->cd_sub_categoria }}">{{ $subcategoria->nm_sub_categoria }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <form id="fCat" class="form-horizontal" action="{{ route('subcategory.save') }}" method="post">
-                                    {{ csrf_field() }}
-                                    <div class="col-md-6">
-                                        <div class="form-group" style="margin-right: 0 !important;">
-                                            <label>Cadastrar/Alterar</label>
-                                            <div class="input-group-prepend">
-                                                <input class="form-control" type="hidden" id="subcatId" name="cat_sub_Id">
-                                                <input type="text" id="subCatNome" class="form-control" name="nm_sub_categoria" maxlength="35">
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
-                                    </div>
-                                </form>
-
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Cadastrar Sub-Categoria</h3>
+                            <div class="box-tools">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
                             </div>
                         </div>
+                        <div class="box-body">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Sub-Categoria</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-tags"></i></span>
+                                        <select id="subcategorias" class="form-control form-control select2-selection select2-selection--single" style="width: 100%;" name="cd_sub_categoria" >
+                                            <option value=""></option>
+                                            @foreach($subcategorias as $subcategoria)
+                                                <option value="{{ $subcategoria->cd_sub_categoria }}">{{ $subcategoria->nm_sub_categoria }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <form id="fCat" class="form-horizontal" action="{{ route('subcategory.save') }}" method="post">
+                                {{ csrf_field() }}
+                                <div class="col-md-6">
+                                    <div class="form-group" style="margin-right: 0 !important;">
+                                        <label>Cadastrar/Alterar</label>
+                                        <div class="input-group-prepend">
+                                            <input class="form-control" type="hidden" id="cat_sub_Id" name="cat_sub_Id">
+                                            <input type="text" id="nm_sub_categoria" class="form-control" name="nm_sub_categoria" maxlength="35">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
+                </div>
             </div>
 
             <div class="row">
@@ -135,7 +133,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-tag"></i></span>
                                                     <select id="categorias" class="form-control form-control select2-selection select2-selection--single" style="width: 100%;" name="cd_categoria" >
-                                                        <option></option>
+                                                        <option selected value="0"></option>
                                                         @foreach($categorias as $categoria)
                                                             <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
                                                         @endforeach
@@ -232,38 +230,26 @@
         $('#categorias').change(function (e) {
             e.preventDefault();
             $cd_categoria = $(this).val();
-
-            {{--if($cd_categoria == ""){
-                console.log("Categoria vazia" + $cd_categoria);
-                $("#subcategorias").empty();
-                $("#subCatNome").val("");
-                $("#catId").val("");
-                $("#catName").val("");
-
-                @foreach($subcategorias as $subcategoria)
-                {{--<option value="{{ $subcategoria->cd_sub_categoria }}">{{ $subcategoria->nm_sub_categoria }}</option>--}}
-                {{--console.log("{{$subcategoria->nm_sub_categoria}}");
-                @endforeach
-            }
-            else {--}}
-                $("#catId").val($('#categorias option:selected').val());
-                $("#catName").val($('#categorias option:selected').text());
-                $.ajax({
-                    url: '{{ url('/admin/subcat') }}/' + $cd_categoria,
-                    type: 'GET',
-                    success: function (data) {
-                        $('#subcategorias').empty();
-                        $.each(data.subcat, function (index, subcategoria) {
-                            $('#subcategorias').append(`<option value="` + subcategoria.cd_sub_categoria + `">` + subcategoria.nm_sub_categoria + `</option>`);
-                        });
-                        $("#subCatNome").val($("#subcategorias option:selected").text());
-                    }
-                });
-            //}
+            $("#cd_categoria").val($('#categorias option:selected').val());
+            $("#nm_categoria").val($('#categorias option:selected').text());
+            console.log($('#categorias option:selected').val());
+            console.log($('#categorias option:selected').text());
+            $.ajax({
+                url: '{{ url('/admin/subcat') }}/' + $cd_categoria,
+                type: 'GET',
+                success: function (data) {
+                    $('#subcategorias').empty();
+                    $.each(data.subcat, function(index, subcategoria) {
+                        $('#subcategorias').append(`<option value="` + subcategoria.cd_sub_categoria + `">` + subcategoria.nm_sub_categoria + `</option>`);
+                    });
+                    $("#nm_sub_categoria").val($("#subcategorias option:selected").text());
+                }
+            });
         });
+
         $("#subcategorias").change(function(){
-            $("#subcatId").val($("#subcategorias option:selected").val());
-            $("#subCatNome").val($("#subcategorias option:selected").text());
+            $("#cat_sub_Id").val($("#subcategorias option:selected").val());
+            $("#nm_sub_categoria").val($("#subcategorias option:selected").text());
             console.log($("#subcategorias option:selected").val());
             console.log($("#subcategorias option:selected").text());
         });
