@@ -287,20 +287,6 @@
                                             </div>
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <!--<div>
-                                                <div class="box-header"><h3 class="box-title">Ativa/Desativar Produto</h3></div>
-                                                <div class="box-body">
-                                                    <div class="form-group">
-                                                        <input type="checkbox" class="flat-red campo_status" name="status_variacao" checked>
-                                                        <label class="">Status</label>
-                                                    </div>
-                                                </div>
-                                            </div>-->
-                                        </td>
-                                    </tr>
                                 </table>
 
                                 <!-- Botão Salvar -->
