@@ -182,7 +182,7 @@
                                         <ul class="treeview lista">
                                             <li id="liCategoria" onclick="listarSubCategorias({{$categoria->cd_categoria}}, this)"><a href="#">
                                                 {{$categoria->nm_categoria}}
-                                                <ul></ul>
+                                                <ul class="ulFilho"></ul>
                                                 </a>
                                             </li>
                                         </ul>

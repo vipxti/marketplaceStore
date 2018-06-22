@@ -17,7 +17,7 @@ $.fn.extend({
 			tree.find('li').each(function() {
 				var stick = $(this);
 			});
-			tree.find('li').has("ul").each(function () {
+			tree.find('li').has("ul.ulFilho").each(function () {
 				var branch = $(this); //li with children ul
 				
 				branch.prepend("<i class='tree-indicator glyphicon glyphicon-chevron-right'></i>");
