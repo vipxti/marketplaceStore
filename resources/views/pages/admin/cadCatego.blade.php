@@ -55,8 +55,15 @@
                                         <div class="form-group" style="margin-right: 0 !important;">
                                             <label>Cadastrar/Alterar</label>
                                             <div class="input-group-prepend">
+                                                    <input class="form-control" type="hidden" id="delCat" name="delCat" value="0">
                                                 <input class="form-control" type="hidden" id="cd_categoria" name="cd_categoria">
-                                                <input type="text" id="nm_categoria" class="form-control" name="nm_categoria" maxlength="35">
+                                                <div class="input-group">
+                                                    <input type="text" id="nm_categoria" class="form-control" name="nm_categoria" maxlength="35">
+                                                    <span class="input-group-btn">
+                                                      <button id="btnDelCat" type="submit" class="btn  btn-flat" disabled><i class="fa fa-close"></i></button>
+                                                    </span>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
@@ -98,8 +105,14 @@
                                     <div class="form-group" style="margin-right: 0 !important;">
                                         <label>Cadastrar/Alterar</label>
                                         <div class="input-group-prepend">
+                                            <input class="form-control" type="hidden" id="delSubCat" name="delSubCat" value="0">
                                             <input class="form-control" type="hidden" id="cat_sub_Id" name="cat_sub_Id">
-                                            <input type="text" id="nm_sub_categoria" class="form-control" name="nm_sub_categoria" maxlength="35">
+                                            <div class="input-group">
+                                                <input type="text" id="nm_sub_categoria" class="form-control" name="nm_sub_categoria" maxlength="35">
+                                                <span class="input-group-btn">
+                                                      <button id="btnDelSubCat" type="submit" class="btn btn-flat" disabled><i class="fa fa-close"></i></button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
@@ -108,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                </div>
 
             <div class="row">
                 <!-- Associação dos produtos -->
@@ -230,29 +243,37 @@
         $('#categorias').change(function (e) {
             e.preventDefault();
             $cd_categoria = $(this).val();
+            if($cd_categoria == 0) {
+                $("#btnDelCat").attr("disabled", "disabled");
+                $("#btnDelCat").removeClass("btn-danger");
+            }else{
+                $("#btnDelCat").removeAttr("disabled").addClass("btn-danger");
+            }
+            $("#delCat").val($('#delCat').val());
             $("#cd_categoria").val($('#categorias option:selected').val());
             $("#nm_categoria").val($('#categorias option:selected').text());
-            console.log($('#categorias option:selected').val());
-            console.log($('#categorias option:selected').text());
-            $.ajax({
-                url: '{{ url('/admin/subcat') }}/' + $cd_categoria,
-                type: 'GET',
-                success: function (data) {
-                    $('#subcategorias').empty();
-                    $.each(data.subcat, function(index, subcategoria) {
-                        $('#subcategorias').append(`<option value="` + subcategoria.cd_sub_categoria + `">` + subcategoria.nm_sub_categoria + `</option>`);
-                    });
-                    $("#nm_sub_categoria").val($("#subcategorias option:selected").text());
-                }
-            });
+        });
+
+        $("#btnDelCat").click(function(){
+            $("#delCat").val("1");
         });
 
         $("#subcategorias").change(function(){
+            var cdSubCat = $(this).val();
+            if(cdSubCat == 0) {
+                $("#btnDelSubCat").attr("disabled", "disabled");
+                $("#btnDelSubCat").removeClass("btn-danger");
+            }else{
+                $("#btnDelSubCat").removeAttr("disabled").addClass("btn-danger");
+            }
+            $("#delSubCat").val($("#delSubCat").val());
             $("#cat_sub_Id").val($("#subcategorias option:selected").val());
             $("#nm_sub_categoria").val($("#subcategorias option:selected").text());
-            console.log($("#subcategorias option:selected").val());
-            console.log($("#subcategorias option:selected").text());
         });
+        $("#btnDelSubCat").click(function(){
+            $("#delSubCat").val("1");
+        });
+
         $(function(){
             $('.select2').select2();
         })
