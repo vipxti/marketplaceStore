@@ -106,7 +106,7 @@
                                         <label>Cadastrar/Alterar</label>
                                         <div class="input-group-prepend">
                                             <input class="form-control" type="hidden" id="delSubCat" name="delSubCat" value="0">
-                                            <input class="form-control" type="hidden" id="cat_sub_Id" name="cat_sub_Id">
+                                            <input class="form-control" type="hidden" id="cat_sub_Id" name="cd_sub_categoria">
                                             <div class="input-group">
                                                 <input type="text" id="nm_sub_categoria" class="form-control" name="nm_sub_categoria" maxlength="35">
                                                 <span class="input-group-btn">
@@ -124,7 +124,7 @@
                 </div>
 
             <div class="row">
-                <!-- Associação dos produtos -->
+                <!-- Associação Categoria > SubCategoria -->
                 <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -203,7 +203,6 @@
                         </div>
                     </div>
                 </div>
-====
             </div>
         </section>
     </div>
