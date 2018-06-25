@@ -66,7 +66,7 @@
 
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                        <button id="btnSalvarCat" type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                     </div>
                                 </form>
                             </div>
@@ -115,7 +115,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                    <button id="btnSalvarSub" type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                 </div>
                             </form>
                         </div>
@@ -241,6 +241,7 @@
         }
         $('#categorias').change(function (e) {
             e.preventDefault();
+            $('#btnSalvarCat').removeAttr("disabled");
             $cd_categoria = $(this).val();
             if($cd_categoria == 0) {
                 $("#btnDelCat").attr("disabled", "disabled");
@@ -253,12 +254,68 @@
             $("#nm_categoria").val($('#categorias option:selected').text());
         });
 
+
+        //Carrega as categorias já cadastrados dentro de um array
+        var arrayCadCat = [];
+        $('#nm_categoria').one("click", function(){
+            carregaArray($('#categorias option'), arrayCadCat);
+        });
+
+        //Ao digitar faz a verificação se determinada categoria já existe
+        var verificaCat = false;
+        $('#nm_categoria').on("input", function(){
+            verificaArray($('#nm_categoria'), arrayCadCat, verificaCat, $('#btnSalvarCat'));
+        });
+
+        //Carrega as categorias já cadastrados dentro de um array
+        var arrayCadSub = [];
+        $('#nm_sub_categoria').one("click", function(){
+            carregaArray($('#subcategorias option'), arrayCadSub);
+        });
+
+        //Ao digitar faz a verificação se determinada sub-categoria já existe
+        var verificaSub = false;
+        $('#nm_sub_categoria').on("input", function(){
+            verificaArray($('#nm_sub_categoria'), arrayCadSub, verificaSub, $('#btnSalvarSub'));
+        });
+
+        //Função para carregar os arrays
+        function carregaArray(opcoes, array){
+            opcoes.each(function(){
+                array.push($(this).text().toUpperCase());
+            });
+            console.log(array);
+        }
+
+        //Função que faz a verificação dos arrays
+        function verificaArray(opcInput, array, verifica, botao){
+            var regInicio = new RegExp("^\\s+");
+            var regMeio = new RegExp("\\s+");
+            var regFinal = new RegExp("\\s+$");
+            for(var i = 0; i < array.length; i++){
+                if(opcInput.val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, " ") == array[i]){
+                    verifica = true;
+                }
+            }
+
+            if(verifica) {
+                botao.attr("disabled", "disabled");
+                console.log("Existe")
+            }
+            else
+                botao.removeAttr("disabled");
+
+            verifica = false;
+            console.log(opcInput.val().toUpperCase().replace(regInicio, "").replace(regFinal, ""));
+        }
+
         $("#btnDelCat").click(function(){
             $("#delCat").val("1");
         });
 
         $("#subcategorias").change(function(){
             var cdSubCat = $(this).val();
+            $('#btnSalvarSub').removeAttr("disabled");
             if(cdSubCat == 0) {
                 $("#btnDelSubCat").attr("disabled", "disabled");
                 $("#btnDelSubCat").removeClass("btn-danger");

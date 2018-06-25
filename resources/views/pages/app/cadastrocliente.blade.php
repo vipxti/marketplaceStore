@@ -186,7 +186,8 @@
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" class="form-control" name="dt_nascimento"
-                                        data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20">
+                                        data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20"
+                                        pattern="/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/">
                                 <label class="form-label">Data de Nascimento</label>
                             </div>
                         </div>
