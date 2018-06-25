@@ -89,11 +89,16 @@ Route::prefix('pages')->group(function () {
     Route::post('/client', 'Auth\ClientRegisterController@create')->name('client.save');
     Route::get('/client/register', 'Auth\ClientRegisterController@showRegisterForm')->name('client.register');
     Route::get('/client/login', 'Auth\ClientLoginController@showClientLoginForm')->name('client.login');
+    Route::post('/client/login', 'Auth\ClientLoginController@login')->name('client.login.submit');
+    Route::get('/client/dashboard', 'ProductController@paginaPainelcliente')->name('client.dashboard');
+
+    //Logout do cliente
+    Route::get('/client/logout', 'Auth\ClientLoginController@clientLogout')->name('client.logout');
 
     Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
 });
 
-Route::get('/painelcliente', 'ProductController@paginaPainelcliente')->name('painelcliente.page');
+
 Route::get('/alteraremailcliente', 'ProductController@paginaAlteraremailcliente')->name('alteraremailcliente.page');
 Route::get('/alterarsenhacliente', 'ProductController@paginaAlterarsenhacliente')->name('alterarsenhacliente.page');
 Route::get('/descproduto', 'ProductController@paginaDescproduto')->name('descproduto.page');

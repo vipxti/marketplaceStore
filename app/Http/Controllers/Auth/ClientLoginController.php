@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientRequest;
-use App\Http\Requests\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ClientLoginRequest;
 
 class ClientLoginController extends Controller
 {
@@ -20,15 +19,15 @@ class ClientLoginController extends Controller
         return view('pages.app.auth.login');
     }
 
-    public function login(LoginRequest $request)
+    public function login(ClientLoginRequest $request)
     {
-        dd($request);
+        //dd($request->all());
 
         //Faz o login do cliente
-        if (Auth::attempt(['' => $request->email, '' => $request->password], $request->filled('remember'))) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'))) {
 
             //Redireciona o cliente caso consiga logar
-            return redirect()->route('admin.dashboard')->with('success', 'Bem vindo ' . Auth::user()->nm_cliente);
+            return redirect()->route('client.dashboard')->with('success', 'Bem vindo ' . Auth::user()->nm_cliente);
         }
 
         //Retorna para a tela de login com o campo email preenchido
@@ -39,6 +38,6 @@ class ClientLoginController extends Controller
     {
         Auth::guard('web')->logout();
 
-        return redirect()->route('index');
+        return redirect()->route('client.login');
     }
 }

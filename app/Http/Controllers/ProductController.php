@@ -398,7 +398,6 @@ class ProductController extends Controller
             $imagePath = $this->pastaProduto($category->nm_categoria, $subcategory->nm_sub_categoria);
             $dbPath = $category->nm_categoria . '/' . $subcategory->nm_sub_categoria;
 
-
             foreach ($images as $key => $image) {
                 $ext = $image->getClientOriginalExtension();
                 $imageName = $request->cd_ean_variacao . '_' . ($key + 1) . '.' . $ext;

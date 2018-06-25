@@ -4,7 +4,9 @@
 
     <!-- ****** Area de Produtos ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
+
         <div class="container">
+
             <div class="row">
                 <div class="col-12">
                     <div class="section_heading text-center">
@@ -12,63 +14,68 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="container">
+            <p>&nbsp;</p>
 
-            <!-- E-mail login  -->
-            <div class="col-md-8" style="padding-left: 34%">
-                <div>
-                    <div class="form-group">
-                        <label>E-mail</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"></span>
-                            <input type="text" class="form-control" name="nm_email" required maxlength="50">
+            <form action="{{ route('client.login.submit') }}" method="post">
+                {{ csrf_field() }}
+            
+                <!-- E-mail login  -->
+                <div class="row">
+                    <div class="col-md-8" style="padding-left: 34%">
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" class="form-control" name="email" required maxlength="50">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Senha login -->
-            <div class="col-md-8" style="padding-left: 34%">
-                <div>
-                    <div class="form-group">
-                        <label>Senha</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"></span>
-                            <input type="password" class="form-control" name="ds_senha" required maxlength="50">
+                <!-- Senha login -->
+                <div class="row">
+                    <div class="col-md-8" style="padding-left: 34%">
+                        <div class="form-group">
+                            <label>Senha</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="password" class="form-control" name="password" required maxlength="50">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-8" style="padding-left: 34%">
-                <div class="checkbox icheck">
-                    <label>
-                        <input type="checkbox" class="flat-red" style="right: 15px"  name="remember"> Lembrar de mim</label>
+                
+                <div class="row">
+                    <div class="col-md-8" style="padding-left: 34%">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" class="flat-red" name="remember"> Lembrar de mim
+                            </label>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <br>
 
-            <!-- Botões Salvar -->
-            <div class="col-md-12" style="padding-left: 34%">
-                <div>
-                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 350px; background-color: #ff084e">Logar</button>
+                <p>&nbsp;</p>
+
+                <div class="row">
+
+                    <!-- Botão Salvar -->
+                    <div class="col-md-12" style="padding-left: 34%">
+                        <div>
+                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 350px; background-color: #ff084e">Logar</button>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
+            
+            </form>
 
         </div>
 
     </section>
-    <!-- ****** New Arrivals Area End ****** -->
-
-
-    <!-- ****** Popular Brands Area Start ****** -->
-    <section class="karl-testimonials-area section_padding_100">
-    </section>
-    <!-- ****** Popular Brands Area End ****** -->
 
     <script>
-
 
         $('#quickview').on('show', function (e) {
 
@@ -78,7 +85,6 @@
             console.log($modal);
 
         });
-
 
     </script>
     <script src="{{asset('js/admin/icheck.min.js')}}"></script>

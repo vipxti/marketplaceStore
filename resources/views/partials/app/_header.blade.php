@@ -14,7 +14,7 @@
                         <div class="header-cart-menu d-flex align-items-center ml-auto">
                             <!-- Cart Area -->
                             <div class="cart">
-                                <a href="{{ route('checkout.page') }}" id="header-cart-btn" target="_blank"><span class="cart_quantity">2</span>
+                                <a href="{{ route('checkout.page') }}" id="header-cart-btn" target="_blank"><span class="cart_quantity">0</span>
                                     <i class="fa fa-shopping-cart"></i>Carrinho R$20,00</a>
                                 <!-- Cart List Area Start -->
                                 <ul class="cart-list">
@@ -49,18 +49,20 @@
                             </div>
                             <div class="header-right-side-menu ml-15">
                                 <div class="dropdown show">
-                                    <a href="#" class="dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                         @if(Auth::check())
-                                            <span>&nbsp;{{ Auth::user()->nm_usuario }}</span>
-                                        @endif
+                                            <span>&nbsp;{{ Auth::user()->nm_cliente }}</span>
+                                        @endif  
                                     </a>
+                                    
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         
                                         @if(Auth::check())
 
-                                            <a class="dropdown-item" href="{{ route('logincliente.page') }}">Minha Conta</a>
+                                            <a class="dropdown-item" href="{{ route('client.dashboard') }}">Minha Conta</a>
                                             <a class="dropdown-item" href="#">Meus Pedidos</a>
+                                            <a class="dropdown-item" href="{{ route('client.logout') }}">Sair</a>
 
                                         @else
 

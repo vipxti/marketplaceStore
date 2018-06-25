@@ -21,8 +21,8 @@ class UserController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function showUserForm() {
-
+    public function showUserForm()
+    {
         $acessos = Access::all();
 
         //dd(Auth::user()->cd_acesso);
@@ -30,63 +30,40 @@ class UserController extends Controller
         return view('pages.admin.cadUsuario', compact('acessos'));
     }
 
-    public function atualizaDadosUsuario(UserDataRequest $request){
+    public function atualizaDadosUsuario(UserDataRequest $request)
+    {
 
         //dd($request->all());
 
         $user = Auth::user();
 
         if ($request->password != null) {
-
             $pass = Hash::make($request->password);
-
-        }
-        else {
-
+        } else {
             $pass = Auth::user()->getAuthPassword();
-
         }
 
         if ($request->cd_acesso != null) {
-
             $acesso = $request->cd_acesso;
-
-        }
-        else {
-
+        } else {
             $acesso = Auth::user()->cd_acesso;
-
         }
 
         try {
-
             $user->nm_usuario = $request->nm_usuario;
             $user->email = $request->email;
             $user->password = $pass;
             $user->cd_acesso = $acesso;
 
             $user->save();
-
-        }
-        catch (\Exception $e) {
-
+        } catch (\Exception $e) {
             return redirect()->back()->with('nosuccess', 'Houve um problema ao atualizar seus dados');
-
-        }
-        finally {
-
+        } finally {
             return redirect()->route('user.data')->with('success', 'Dados atualizados com sucesso');
-
         }
-
-
-
-
     }
 
-    public function atualizaEnderecoUsuario() {
-
-
-
+    public function atualizaEnderecoUsuario()
+    {
     }
 }

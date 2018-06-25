@@ -12,8 +12,10 @@ class Client extends Authenticatable
     protected $table = 'cliente';
     protected $primaryKey = 'cd_cliente';
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'cd_cpf_cnpj', 'nm_cliente', 'email', 'password', 'im_cliente', 'cd_telefone'
+        'cd_cpf_cnpj', 'nm_cliente', 'email', 'password', 'dt_nascimento', 'im_cliente', 'cd_telefone'
     ];
 
     /**
@@ -22,6 +24,6 @@ class Client extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 }

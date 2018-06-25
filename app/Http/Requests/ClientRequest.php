@@ -23,16 +23,22 @@ class ClientRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this->request);
-
         return [
             'cd_cpf_cnpj' => 'required',
             'nm_cliente' => 'required|string',
-            'dt_nascimento' => 'required',
+            'dt_nascimento' => 'required|date_format:d/m/Y',
             'email' => 'required|string',
             'password' => 'required|string',
-            'cd_telefone' => 'required',
-            'im_cliente' => 'required|image|mimes:jpeg,bmp,png'
+            'cd_celular1' => 'required',
+            'im_cliente' => 'nullable|image|mimes:jpeg,bmp,png'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'cd_cpf_cnpj.required' => 'Campo CPF/CNPJ é obrigatório',
+            'dt_nascimento.date_format:d/m/Y' => 'A data informada é inválida!!!'
         ];
     }
 }

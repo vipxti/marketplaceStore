@@ -22,7 +22,7 @@
 
     <div class="form-group">
 
-        <div class="alert alert-danger msg">
+        <div class="alert alert-danger msg text-center" role="alert">
 
             <ul>
 

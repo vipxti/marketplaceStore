@@ -134,7 +134,11 @@
         </div>
 
         <div class="container">
-        <form id="form_advanced_validation" action="{{ route('client.save') }}" method="post">
+
+            @include('partials.admin._alerts')
+
+        <form id="form_advanced_validation" action="{{ route('client.save') }}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
                 <!-- Nome do Cliente  -->
                 <div class="row">
 
@@ -158,7 +162,7 @@
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="email" class="form-control" name="nm_email" required maxlength="50">
+                                <input type="email" class="form-control" name="email" required maxlength="50">
                                 <label class="form-label">Email</label>
                             </div>
                         </div>
@@ -174,7 +178,7 @@
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="password" class="form-control" name="ds_senha" required maxlength="20">
+                                <input type="password" class="form-control" name="password" required maxlength="20">
                                 <label class="form-label">Senha</label>
                             </div>
                         </div>
@@ -213,8 +217,8 @@
 
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="fk_cd_telefone"
-                                        data-inputmask='"mask": "(99) 9999-9999"' data-mask required maxlength="20">
+                                <input type="text" class="form-control" name="cd_celular1"
+                                        data-inputmask='"mask": "(99) 99999-9999"' data-mask required maxlength="20">
                                 <label class="form-label">Telefone</label>
                             </div>
                         </div>
@@ -232,7 +236,7 @@
                             <label></label>Foto</label>
                             <div class="input-group">
                                 <div class="file-loading">
-                                    <input id="input-41" name="images[]" type="file" accept="image/*" multiple>
+                                    <input id="input-41" name="image" type="file" accept="image/*">
                                 </div>
                             </div>
                         </div>

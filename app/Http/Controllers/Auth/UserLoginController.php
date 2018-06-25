@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserLoginRequest;
 
 class UserLoginController extends Controller
 {
@@ -22,7 +22,7 @@ class UserLoginController extends Controller
         return view('pages.admin.auth.login');
     }
 
-    public function login(LoginRequest $request)
+    public function login(UserLoginRequest $request)
     {
 
         //Faz o login do usuário
@@ -30,12 +30,10 @@ class UserLoginController extends Controller
 
             //Redireciona o usuário caso consiga logar
             return redirect()->route('admin.dashboard')->with('success', 'Bem vindo ' . Auth::guard('admin')->user()->nm_usuario);
-
         }
         
         //Retorna para a tela de login com o campo email preenchido
         return redirect()->back()->withInput($request->only('email'))->with('nosuccess', 'Usuário ou senha incorretos');
-
     }
 
     public function userLogout()
