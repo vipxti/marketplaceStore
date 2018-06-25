@@ -27,7 +27,7 @@
                <div class="col-md-6">
                     <div class="box box-primary">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Cadastrar Menu</h3>
+                                <h3 class="box-title">Categoria</h3>
                                 <div class="box-tools">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                                         <i class="fa fa-minus"></i>
@@ -77,7 +77,7 @@
                <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Cadastrar Sub-Categoria</h3>
+                            <h3 class="box-title">Sub-Categoria</h3>
                             <div class="box-tools">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                                     <i class="fa fa-minus"></i>
