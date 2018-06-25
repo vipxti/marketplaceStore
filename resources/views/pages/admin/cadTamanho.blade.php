@@ -52,6 +52,7 @@
                <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
+                        <h3 class="box-title">Número</h3>
                         <div class="box-tools">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fa fa-minus"></i>
@@ -68,7 +69,7 @@
                                     <td>
                                         <div>
                                             <div class="form-group">
-                                                <label>Tamanho (Número)</label>
+                                                <label>Cadastrar Tamanho (Número)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
                                                     <input id="nm_num" type="number" class="form-control" name="nm_tamanho_num" min="0">
@@ -93,6 +94,7 @@
                <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
+                        <h3 class="box-title">Letra</h3>
                         <div class="box-tools">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fa fa-minus"></i>
@@ -109,7 +111,7 @@
                                     <td>
                                         <div>
                                             <div class="form-group">
-                                                <label>Tamanho (Letra)</label>
+                                                <label>Cadastrar Tamanho (Letra)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
                                                     <input id="nm_letra" type="text" class="form-control" name="nm_tamanho_letra" style="text-transform: uppercase">
@@ -139,7 +141,7 @@
                <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Tamanho por Número Cadastrado</h3>
+                        <h3 class="box-title">Tamanhos Cadastrados</h3>
                         <div class="box-tools">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fa fa-minus"></i>
@@ -179,7 +181,7 @@
                <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Tamanho por Letra Cadastrado</h3>
+                        <h3 class="box-title">Tamanhos Cadastrados</h3>
                         <div class="box-tools">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fa fa-minus"></i>

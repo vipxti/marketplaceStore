@@ -29,9 +29,10 @@
                 <div class="row">
                     <div class="">
                         <!-- Cadastro das cores -->
-                        <div class="col-md-4 col-md-6">
+                        <div class="col-md-3 col-md-4">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
+                                    <h3 class="box-title">Cor</h3>
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                                             <i class="fa fa-minus"></i>
@@ -43,10 +44,10 @@
                                         {{ csrf_field() }}
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Cor</label>
+                                                <label>Cadastar Cor</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
-                                                    <input type="text" minlength="0" maxlength="40" class="form-control" name="nm_cor">
+                                                    <input type="text" id="nm_cor" minlength="0" maxlength="40" class="form-control" name="nm_cor">
                                                 </div>
                                             </div>
                                         </div>
@@ -57,11 +58,13 @@
                                 </div>
                             </div>
                         </div>
+
                         <!-- Alteração das cores -->
-                        <div class="col-md-7 col-md-8">
+                        <div class="col-md-7 col-md-12">
                             <!-- Lista das cores cadastradas -->
                             <div class="box box-info">
                                 <div class="box-header with-border">
+                                    <h3 class="box-title">Lista de Cores</h3>
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                                             <i class="fa fa-minus"></i>
@@ -120,7 +123,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
     </div>
 

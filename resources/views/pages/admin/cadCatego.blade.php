@@ -142,7 +142,7 @@
                                     <div>
                                         <div class="col-md-6">
                                             <div class="input-group-prependp">
-                                                <label>Principal</label>
+                                                <label>Categoria Principal</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-tag"></i></span>
                                                     <select id="categorias" class="form-control form-control select2-selection select2-selection--single" style="width: 100%;" name="cd_categoria" >
