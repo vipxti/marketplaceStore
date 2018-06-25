@@ -71,7 +71,7 @@
                                                 <label>Tamanho (Número)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
-                                                    <input type="number" class="form-control" name="nm_tamanho_num" min="0">
+                                                    <input id="nm_num" type="number" class="form-control" name="nm_tamanho_num" min="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -82,7 +82,7 @@
                             </table>
 
                             <div class="col-md-12 text-right">
-                                <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                <button id="btnSalvarNum" type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                             </div>
                         </form>
                     </div>
@@ -112,7 +112,7 @@
                                                 <label>Tamanho (Letra)</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa fa-arrows-h"></i></span>
-                                                    <input type="text" class="form-control" name="nm_tamanho_letra">
+                                                    <input id="nm_letra" type="text" class="form-control" name="nm_tamanho_letra" style="text-transform: uppercase">
                                                 </div>
                                             </div>
                                         </div>
@@ -123,7 +123,7 @@
                             </table>
 
                             <div class="col-md-12 text-right">
-                                <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                <button id="btnSalvarLetra" type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                             </div>
                         </form>
                     </div>
@@ -223,6 +223,60 @@
     <script>
 
         $(document).ready(function(){
+
+            //Carrega os números já cadastrados dentro de um array
+            var arrayNum = [];
+            $('#nm_num').one("click", function(){
+                carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
+            });
+
+            //Carrega as letras já cadastradas dentro de um array
+            var arrayLetra = [];
+            $('#nm_letra').one("click", function(){
+                carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
+            });
+
+            //Função para carregar os arrays
+            function carregaArray(opcoes, array){
+                opcoes.each(function(){
+                    array.push($(this).text().toUpperCase());
+                });
+            }
+
+            //Ao digitar faz a verificação se determinado número já existe
+            var verificaNum = false;
+            $('#nm_num').on("input", function(){
+                for(var i=0; i<arrayNum.length; i++){
+                    if($(this).val() == arrayNum[i])
+                        verificaNum = true;
+                }
+                if(verificaNum)
+                    $("#btnSalvarNum").attr("disabled", "disabled");
+                else
+                    $("#btnSalvarNum").removeAttr("disabled");
+
+                verificaNum = false;
+            });
+
+            //Ao digitar faz a verificação se determinada letra já existe
+            var verificaLetra = false;
+            $('#nm_letra').on("input", function(){
+                var regInicio = new RegExp("^\\s+");
+                var regMeio = new RegExp("\\s+");
+                var regFinal = new RegExp("\\s+$");
+
+                for(var i=0; i<arrayLetra.length; i++){
+                    if($(this).val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, "") == arrayLetra[i]) {
+                        verificaLetra = true;
+                    }
+                }
+                if(verificaLetra)
+                    $("#btnSalvarLetra").attr("disabled", "disabled");
+                else
+                    $("#btnSalvarLetra").removeAttr("disabled");
+
+                verificaLetra = false;
+            });
 
             //cor branco
             $("table tbody#tam_letra tr:odd").css("background-color", "#fff");

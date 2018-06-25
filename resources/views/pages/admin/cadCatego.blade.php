@@ -284,7 +284,6 @@
             opcoes.each(function(){
                 array.push($(this).text().toUpperCase());
             });
-            console.log(array);
         }
 
         //Função que faz a verificação dos arrays
@@ -293,20 +292,15 @@
             var regMeio = new RegExp("\\s+");
             var regFinal = new RegExp("\\s+$");
             for(var i = 0; i < array.length; i++){
-                if(opcInput.val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, " ") == array[i]){
+                if(opcInput.val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, " ") == array[i])
                     verifica = true;
-                }
             }
-
-            if(verifica) {
+            if(verifica)
                 botao.attr("disabled", "disabled");
-                console.log("Existe")
-            }
             else
                 botao.removeAttr("disabled");
 
             verifica = false;
-            console.log(opcInput.val().toUpperCase().replace(regInicio, "").replace(regFinal, ""));
         }
 
         $("#btnDelCat").click(function(){

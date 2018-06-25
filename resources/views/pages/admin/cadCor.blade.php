@@ -48,7 +48,7 @@
                                         <label>Cor</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
-                                            <input type="text" minlength="0" maxlength="40" class="form-control" name="nm_cor">
+                                            <input id="nm_cor" type="text" minlength="0" maxlength="40" class="form-control" name="nm_cor">
                                         </div>
                                     </div>
                                 </div>
@@ -169,6 +169,32 @@
         });
 
         $(document).ready(function(){
+
+            var arrayCor = [];
+            $('#nm_cor').one("click", function(){
+                $("tbody td:nth-child(2)").each(function(){
+                    arrayCor.push($(this).text().toUpperCase());
+                });
+            });
+
+            var verificaCor = false;
+            $('#nm_cor').on("input", function(){
+                var regInicio = new RegExp("^\\s+");
+                var regMeio = new RegExp("\\s+");
+                var regFinal = new RegExp("\\s+$");
+
+                for(var i=0; i<arrayCor.length; i++){
+                    if($(this).val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, " ") == arrayCor[i])
+                        verificaCor = true;
+                }
+
+                if(verificaCor)
+                    $('#btnSalvarCor').attr("disabled", "disabled");
+                else
+                    $('#btnSalvarCor').removeAttr("disabled");
+
+                verificaCor = false;
+            });
 
             //cor branco
             $("table tbody tr:odd").css("background-color", "#fff");
