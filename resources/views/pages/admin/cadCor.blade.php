@@ -108,7 +108,7 @@
                                             <tr class="text-center">
                                                 <td class="text-left">{{ $cor->cd_cor }}</td>
                                                 <td id="nome_cor" class="text-left">{{ $cor->nm_cor }}</td>
-                                                <td class="text-right">
+                                                <td id="colBotoes" class="text-right">
                                                     <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
                                                     <button id="btn_salvar" class="fa fa-check btn btn-outline-success" style="color: #008d4c; display: none"></button>
                                                     <button id="btn_cancelar" class="fa fa-remove btn btn-outline-danger" style="color: #cc0000; display: none"></button>
@@ -169,6 +169,7 @@
 
         $(document).ready(function(){
 
+            //Carrega as letras já cadastradas dentro de um array
             var arrayCor = [];
             $('#nm_cor').one("click", function(){
                 $("tbody td:nth-child(2)").each(function(){
@@ -176,6 +177,7 @@
                 });
             });
 
+            //Ao digitar faz a verificação se determinado número já existe
             var verificaCor = false;
             $('#nm_cor').on("input", function(){
                 var regInicio = new RegExp("^\\s+");
@@ -186,7 +188,6 @@
                     if($(this).val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, " ") == arrayCor[i])
                         verificaCor = true;
                 }
-
                 if(verificaCor)
                     $('#btnSalvarCor').attr("disabled", "disabled");
                 else
@@ -194,6 +195,36 @@
 
                 verificaCor = false;
             });
+
+            //Função chamada quando um input, para edição da cor, for gerado
+            function verificaCaixaEditar() {
+                //Carrega as letras já cadastradas dentro de um array
+                $('#caixa_editar').one("click", function () {
+                    if (arrayCor.length == 0) {
+                        $("tbody td:nth-child(2)").each(function () {
+                            arrayCor.push($(this).text().toUpperCase());
+                        });
+                    }
+                });
+
+                //Ao digitar faz a verificação se determinado número já existe
+                $('#caixa_editar').on("input", function () {
+                    var regInicio = new RegExp("^\\s+");
+                    var regMeio = new RegExp("\\s+");
+                    var regFinal = new RegExp("\\s+$");
+
+                    for(var i=0; i<arrayCor.length; i++){
+                        if($(this).val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, " ") == arrayCor[i])
+                            verificaCor = true;
+                    }
+                    if(verificaCor)
+                        $(this).parent().parent().find('#colBotoes').find('#btn_salvar').attr("disabled", "disabled");
+                    else
+                        $(this).parent().parent().find('#colBotoes').find('#btn_salvar').removeAttr("disabled");
+
+                    verificaCor = false;
+                });
+            }
 
             //cor branco
             $("table tbody tr:odd").css("background-color", "#fff");
@@ -215,6 +246,7 @@
                 var campo_input = "<input id='caixa_editar' type='text' maxlength='40' ' value='" + conteudoOriginal + "'></input>";
                 campo_cor.append(campo_input);
                 campoTR.find('#caixa_editar').focus();
+                verificaCaixaEditar();
 
                 trocaBotoes(campoTR);
 

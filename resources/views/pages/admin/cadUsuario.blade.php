@@ -194,6 +194,13 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
+                                <label>Estado</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-map"></i></span>
+                                    <input type="text" id="uf" class="form-control" name="sg_uf" maxlength="4">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <label>País</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-map"></i></span>
@@ -232,6 +239,7 @@
                 $("#cidade").val("");
                 $("#pais").val("");
                 $("#ibge").val("");
+                $("#uf").val("");
             }
 
             //Quando o campo cep perde o foco.
@@ -251,21 +259,32 @@
                         $("#bairro").val("...");
                         $("#cidade").val("...");
                         $("#pais").val("...");
+                        $("#uf").val("...");
                         //Consulta o webservice viacep.com.br/
                         $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
                             if (!("erro" in dados)) {
                                 //Atualiza os campos com os valores da consulta.
                                 $("#rua").val(dados.logradouro);
+                                $("#rua").attr("disabled", "disabled");
                                 $("#bairro").val(dados.bairro);
+                                $("#bairro").attr("disabled", "disabled");
                                 $("#cidade").val(dados.localidade);
+                                $("#cidade").attr("disabled", "disabled");
                                 $("#pais").val("Brasil");
-                               // $("#uf").val(dados.uf);
+                                $("#pais").attr("disabled", "disabled");
+                                $("#uf").val(dados.uf);
+                                $("#uf").attr("disabled", "disabled");
                                 //$("#ibge").val(dados.ibge);
                             } //end if.
                             else {
                                 //CEP pesquisado não foi encontrado.
                                 limpa_formulario_cep();
                                 $(".msg-cpf").html("CEP não encontrado.").css("color", "red");
+                                $("#rua").removeAttr("disabled");
+                                $("#bairro").removeAttr("disabled");
+                                $("#cidade").removeAttr("disabled");
+                                $("#pais").removeAttr("disabled");
+                                $("#uf").removeAttr("disabled");
                             }
                         });
                     } //end if.
@@ -273,11 +292,21 @@
                         //cep é inválido.
                         limpa_formulario_cep();
                         $(".msg-cpf").html("Formato de CEP inválido.").css("color", "red");
+                        $("#rua").removeAttr("disabled");
+                        $("#bairro").removeAttr("disabled");
+                        $("#cidade").removeAttr("disabled");
+                        $("#pais").removeAttr("disabled");
+                        $("#uf").removeAttr("disabled");
                     }
                 } //end if.
                 else {
                     //cep sem valor, limpa formulário.
                     limpa_formulario_cep();
+                    $("#rua").removeAttr("disabled");
+                    $("#bairro").removeAttr("disabled");
+                    $("#cidade").removeAttr("disabled");
+                    $("#pais").removeAttr("disabled");
+                    $("#uf").removeAttr("disabled");
                 }
             });
 

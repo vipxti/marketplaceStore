@@ -162,7 +162,7 @@
                                     <tr class="text-center">
                                         <td>{{$num->cd_tamanho_num}}</td>
                                         <td id="tam">{{$num->nm_tamanho_num}}</td>
-                                        <td class="text-right">
+                                        <td id="colBotoes" class="text-right">
                                             <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
                                             <button id="btn_excluir" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                             <button id="btn_salvar" class="fa fa-check btn btn-outline-warning" style="color: #008d4c; display:none"></button>
@@ -202,7 +202,7 @@
                                     <tr class="text-center">
                                         <td>{{$letra->cd_tamanho_letra}}</td>
                                         <td id="tam">{{$letra->nm_tamanho_letra}}</td>
-                                        <td class="text-right">
+                                        <td id="colBotoes" class="text-right">
                                             <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
                                             <button id="btn_salvar" class="fa fa-check btn btn-outline-warning" style="color: #008d4c; display:none"></button>
                                             <button id="btn_cancelar" class="fa fa-remove btn btn-outline-warning" style="color: #cc0000; display: none"></button>
@@ -289,6 +289,62 @@
             //cor cinza
             $("table tbody#tam_num tr:even").css("background-color", "#f5f5f5");
 
+            //Função chamada quando um input, para edição da cor, for gerado
+            function verificaCaixaEditar() {
+
+                var verifica = false;
+                //Carrega as letras já cadastradas dentro de um array
+                $('#caixa_editar').one("click", function () {
+                    if(parseInt(conteudoOriginal)) {
+                        if(arrayNum.length == 0) {
+                            carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
+                        }
+                    }else {
+                        if(arrayLetra.length == 0) {
+                            carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
+                        }
+                    }
+                });
+
+                //Ao digitar faz a verificação se determinado número já existe
+                $('#caixa_editar').on("input", function () {
+                    var regInicio = new RegExp("^\\s+");
+                    var regMeio = new RegExp("\\s+");
+                    var regFinal = new RegExp("\\s+$");
+                    var array = [];
+                    var valor = $(this).val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, "");
+                    var numero = false;
+
+                    if(parseInt(conteudoOriginal)){
+                        array = arrayNum;
+                        numero = true;
+                    } else {
+                        array = arrayLetra;
+                    }
+
+                    for (var i = 0; i < array.length; i++) {
+                        if (valor == array[i])
+                            verifica = true;
+                    }
+
+
+                    if (verifica)
+                        $(this).parent().parent().find('#colBotoes').find('#btn_salvar').attr("disabled", "disabled");
+                    else
+                        $(this).parent().parent().find('#colBotoes').find('#btn_salvar').removeAttr("disabled");
+
+                    if(numero){
+                        if(!parseInt(valor))
+                            $(this).parent().parent().find('#colBotoes').find('#btn_salvar').attr("disabled", "disabled");
+                    } else {
+                        if(parseInt(valor))
+                            $(this).parent().parent().find('#colBotoes').find('#btn_salvar').attr("disabled", "disabled");
+                    }
+
+                    verifica = false;
+                });
+            }
+
             var conteudoOriginal;
 
             //Ação de clicar no editar, pegando o conteudo e criando o input para edição
@@ -304,6 +360,7 @@
                 var campo_input = "<input id='caixa_editar' type='text' maxlength='4' ' value='" + conteudoOriginal + "'></input>";
                 campo_tam.append(campo_input);
                 campoTR.find('#caixa_editar').focus();
+                verificaCaixaEditar();
 
                 trocaBotoes(campoTR);
 
