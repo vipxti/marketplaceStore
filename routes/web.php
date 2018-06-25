@@ -79,10 +79,13 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('pages')->group(function () {
+    //Página Produtos
     Route::get('/products', 'ProductController@paginaProduto')->name('products.page');
 
     //Carrinho
     Route::get('/cart/{cd_produto}', 'PageController@showCart');
+
+    //Compra
     Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');
 
     //Cliente

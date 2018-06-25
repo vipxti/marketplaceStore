@@ -53,28 +53,27 @@
 
                         <!-- Tabelas dos produtos -->
 
-
                             <table class="table" id="table">
                                 <thead>
                                 <tr>
-                                    <th style="text-align: right">Nº</th>
-                                    <th style="text-align: right">SKU</th>
-                                    <th style="text-align: right">Nome</th>
-                                    <th style="text-align: right">Preço</th>
+                                    <th style="text-align: left">Nº</th>
+                                    <th style="text-align: left">SKU</th>
+                                    <th style="text-align: left">Nome</th>
+                                    <th style="text-align: left">Preço</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 @foreach($produtos as $produto)
 
-                                    <tr style="text-align: right">
+                                    <tr>
                                         <td>{{ $produto->cd_produto }} </td>
+                                        <td>{{ $produto->cd_nr_sku }} </td>
                                         <td>{{ $produto->nm_produto }} </td>
-                                        <td>{{ $produto->nm_produto }} </td>
-                                        <td>{{ $produto->vl_produto }} </td>
-                                        <td class="btn btn-outline-warning" style="color: #367fa9"><i class="fa fa-pencil"></i></td>
-                                        <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c"><a href="{{ url('/admin/productvariationpage/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>
-                                        <td class="btn btn-outline-danger" style="color: #cc0000"><i class="fa fa-trash-o"></i></td>
+                                        <td>R$ {{ str_replace('.', ',', $produto->vl_produto) }} </td>
+                                        <td class="btn btn-outline-warning" style="color: #367fa9;"><i class="fa fa-pencil"></i></td>
+                                        <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/productvariationpage/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>
+                                        <td class="btn btn-outline-danger" style="color: #cc0000;"><i class="fa fa-trash-o"></i></td>
                                     </tr>
 
 

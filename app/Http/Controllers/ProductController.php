@@ -46,11 +46,6 @@ class ProductController extends Controller
         return view('pages.app.produto', compact('produtos', 'imagemPrincipal'));
     }
 
-    public function paginaLogincliente()
-    {
-        return view('pages.app.logincliente');
-    }
-
     public function paginaPainelcliente()
     {
         return view('pages.app.painelcliente');
@@ -73,7 +68,7 @@ class ProductController extends Controller
 
     public function listaProduto()
     {
-        $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('produto.cd_status_produto', '=', 1)->paginate(6);
         $tamanhosLetras = LetterSize::all();
         $tamanhosNumeros = NumberSize::all();
         $cores = Color::all();

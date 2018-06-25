@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Image;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ClientRegisterController extends Controller
 {
@@ -48,7 +49,7 @@ class ClientRegisterController extends Controller
 
     public function showRegisterForm()
     {
-        return view('pages.app.cadastrocliente');
+        return view('pages.app.auth.register');
     }
 
     protected function create(ClientRequest $request)
@@ -82,7 +83,7 @@ class ClientRegisterController extends Controller
         }
 
         try {
-            Client::create([
+            $client = Client::create([
                 'cd_cpf_cnpj' => $request->cd_cpf_cnpj,
                 'nm_cliente' => $request->nm_cliente,
                 'email' => $request->email,
@@ -99,8 +100,10 @@ class ClientRegisterController extends Controller
             if ($userWithImage) {
                 $this->saveImageFile($imagePath, $imageName, $realPath);
             }
+
+            Auth::login($client);
             
-            return redirect()->route('index')->with('success', 'Cadastro realizado com sucesso');
+            return redirect()->route('client.dashboard')->with('success', 'Cadastro realizado com sucesso');
         }
     }
 

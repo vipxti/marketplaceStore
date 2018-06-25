@@ -8,7 +8,7 @@
                     <div class="top_single_area d-flex align-items-center">
                         <!-- Logo Area -->
                         <div class="top_logo">
-                            <a href="{{route('index')}}"><img src="{{ asset('img/app/core-img/logo.png') }}" alt=""></a>
+                            <a href="{{ route('index') }}"><img src="{{ asset('img/app/core-img/logo.png') }}" alt=""></a>
                         </div>
                         <!--Carrinho e Menu Area -->
                         <div class="header-cart-menu d-flex align-items-center ml-auto">
@@ -61,7 +61,6 @@
                                         @if(Auth::check())
 
                                             <a class="dropdown-item" href="{{ route('client.dashboard') }}">Minha Conta</a>
-                                            <a class="dropdown-item" href="#">Meus Pedidos</a>
                                             <a class="dropdown-item" href="{{ route('client.logout') }}">Sair</a>
 
                                         @else
@@ -73,27 +72,7 @@
                                         </div>
 
                                 </div>
-
-
-                                <!--<ul class="nav navbar-nav">
-                                    <li class="dropdown">
-                                        <!--<a href="">
-                                        <a href="#">
-                                            <i class="fa fa-user" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-                                </ul>-->
-                                  <!-- <div class="dropdown show">
-                                       <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                           Dropdown link
-                                       </a>
-
-                                       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                           <a class="dropdown-item" href="#">Action</a>
-                                           <a class="dropdown-item" href="#">Another action</a>
-                                           <a class="dropdown-item" href="#">Something else here</a>
-                                       </div>
-                                   </div>-->
+                                
                             </div>
                         </div>
                     </div>
