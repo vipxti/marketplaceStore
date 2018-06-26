@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <link rel="stylesheet" href="{{asset('css/app/estiloInstagram.css')}}">
+    <link rel="stylesheet" href="{{asset('css/app/magnific.css')}}">
     <!-- ****** Welcome Slides Area Start ****** -->
     <section class="welcome_area">
         <div class="welcome_slides owl-carousel">
@@ -223,13 +225,17 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
-
+                    <div id="instafeed" class="row gallery"></div>
 
                 </div>
             </div>
         </div>
     </section>
 
+
+    <script src="{{asset('js/app/instafeed.js')}}"></script>
+    <script src="{{asset('js/app/magnific.min.js')}}"></script>
+    <script src="{{asset('js/app/custom.js')}}"></script>
     {{--}}<script src="{{ asset('js/app/instagram.js') }}"></script>
     <script type='text/javascript'>
 

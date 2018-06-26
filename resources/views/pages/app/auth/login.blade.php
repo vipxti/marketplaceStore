@@ -2,6 +2,7 @@
 
 @section('content')
 
+    <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
     <!-- ****** Area de Produtos ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
 
@@ -23,11 +24,17 @@
                 <!-- E-mail login  -->
                 <div class="row">
                     <div class="col-md-8" style="padding-left: 34%">
-                        <div class="form-group">
+                        {{--<div class="form-group">
                             <label>E-mail</label>
                             <div class="input-group">
                                 <span class="input-group-addon"></span>
                                 <input type="text" class="form-control" name="email" required maxlength="50">
+                            </div>
+                        </div>--}}
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="email" class="form-control" name="email" required maxlength="50">
+                                <label class="form-label">Email</label>
                             </div>
                         </div>
                     </div>
@@ -36,11 +43,17 @@
                 <!-- Senha login -->
                 <div class="row">
                     <div class="col-md-8" style="padding-left: 34%">
-                        <div class="form-group">
+                        {{--<div class="form-group">
                             <label>Senha</label>
                             <div class="input-group">
                                 <span class="input-group-addon"></span>
                                 <input type="password" class="form-control" name="password" required maxlength="50">
+                            </div>
+                        </div>--}}
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="password" class="form-control" name="password" required maxlength="50">
+                                <label class="form-label">Senha</label>
                             </div>
                         </div>
                     </div>
@@ -87,8 +100,12 @@
         });
 
     </script>
-    <script src="{{asset('js/admin/icheck.min.js')}}"></script>
-    <script src="{{asset('js/admin/jquery.inputmask.js')}}"></script>
+    <script src="{{asset('js/app/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('js/app/waves.js')}}"></script>
+    <script src="{{asset('js/app/input.js')}}"></script>
+    <script src="{{asset('js/app/form-validation.js')}}"></script>
+    <script src="{{asset('js/app/icheck.min.js')}}"></script>
+    <script src="{{asset('js/app/jquery.inputmask.js')}}"></script>
     <script>
 
         $(function(){
