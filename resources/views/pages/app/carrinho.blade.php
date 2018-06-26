@@ -72,7 +72,7 @@
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="shipping-method-area mt-70">
                         <div class="cart-page-heading">
-                            <h5>Forma de envio</h5>
+                            <h5>Qual envio prefere?</h5>
                             <p>Escolha uma Opção</p>
                         </div>
                         <div class="custom-control custom-radio mb-14">

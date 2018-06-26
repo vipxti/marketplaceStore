@@ -2,7 +2,9 @@
 
 @section('content')
 
-    <!-- ****** Area de Produtos ****** -->
+    <link rel="stylesheet" href="{{asset('css/app/estiloWizard.css')}}">
+    <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
+
     <section class="new_arrivals_area section_padding_100_0 clearfix">
         <div class="container">
             <div class="row">
@@ -29,7 +31,7 @@
                                 </li>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <li>
-                                    <a href="#tab_default_3" data-toggle="tab">Cadastro</a>
+                                    <a href="#tab_default_3" data-toggle="tab">Dados Pessoais</a>
                                 </li>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <li>
@@ -58,52 +60,36 @@
                                 <div class="tab-pane" id="tab_default_3">
                                     <br>
                                     <br>
-                                    <!-- Botões alterar senha e e-mail -->
-                                    <div class="col-md-12">
-                                        <div>
-                                            <button type="submit" class="btn btn-danger" style="width: 150px; background-color: #ff084e"><i class="fa fa fa-edit"></i>&nbsp;&nbsp;Alterar Senha</button>
-                                        &nbsp;&nbsp;&nbsp;
-                                            <button type="submit" class="btn btn-danger" style="width: 150px; background-color: #ff084e"><i class="fa fa fa-edit"></i>&nbsp;&nbsp;Alterar E-mail</button>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <br>
                                     <!-- Nome do Cliente  -->
                                     <div class="col-md-7">
-                                        <div>
-                                            <div class="form-group">
-                                                <label>Nome</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"></span>
-                                                    <input type="text" class="form-control" name="nm_cliente" required maxlength="50">
-                                                </div>
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="nm_cliente" required maxlength="50">
+                                                <label class="form-label">Nome</label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- E-mail -->
                                     <div class="col-md-7">
-                                        <div>
-                                            <div class="form-group">
-                                                <label>E-mail</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="nm_email" required maxlength="20">
-                                                </div>
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="nm_email" required maxlength="20">
+                                                <label class="form-label">E-mail</label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Senha e data de nascimento -->
-                                    <div class="col-md-5" >
+                                    <div class="col-md-7" >
                                         <form>
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <div class="form-group">
-                                                            <label>Senha</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon"></span>
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
                                                                 <input type="password" class="form-control" name="ds_senha" required maxlength="20">
+                                                                <label class="form-label">Senha</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -111,11 +97,10 @@
                                                     <td>&nbsp;&nbsp;&nbsp;</td>
 
                                                     <td>
-                                                        <div class="form-group">
-                                                            <label>Data de Nascimento</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon"></span>
-                                                                <input type="number" class="form-control" name="dt_nascimento" required maxlength="20">
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
+                                                                <input type="text" class="form-control" name="dt_nascimento" required maxlength="20">
+                                                                <label class="form-label">Data de Nascimento</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -125,16 +110,15 @@
                                     </div>
 
                                     <!-- CPF -->
-                                    <div class="col-md-5">
+                                    <div class="col-md-7">
                                         <form>
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <div class="form-group" style="width:204px">
-                                                            <label>CPF ou CNPJ</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon"></span>
-                                                                <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
+                                                                <input type="text" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
+                                                                <label class="form-label">CPF ou CNPJ</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -146,16 +130,15 @@
                                     </div>
 
                                     <!-- Telefone -->
-                                    <div class="col-md-5">
+                                    <div class="col-md-7">
                                         <form>
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <div class="form-group">
-                                                            <label>Telefone</label>
-                                                            <div class="input-group" style="width: 204px">
-                                                                <span class="input-group-addon"></span>
-                                                                <input type="number" class="form-control" name="fk_cd_telefone" required maxlength="20">
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
+                                                                <input type="text" class="form-control" name="fk_cd_telefone" required maxlength="20">
+                                                                <label class="form-label">Telefone</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -164,9 +147,10 @@
                                             </table>
                                         </form>
                                     </div>
+                                    <br>
 
                                     <!-- Foto Cliente -->
-                                    <div class="col-md-5">
+                                    <div class="col-md-7">
                                         <div>
                                             <div class="form-group">
                                                 <label></label>Foto</label>
@@ -179,72 +163,97 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <br>
-                                    <!-- Botões Salvar -->
-                                    <div class="col-md-5">
-                                        <div>
-                                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
-                                        </div>
-                                    </div>
+
+                                    {{--<!-- Botões Salvar -->
+                                    <div class="col-md-7">
+                                        <input type="button" value="Cadastrar" style="width: 200px">
+                                    </div>--}}
                                 </div>
                                 <div class="tab-pane" id="tab_default_4">
                                     <br>
                                     <br>
                                     <!-- Nome do destinatário -->
-                                    <div class="col-md-5" style="width: 37.30%">
-                                        <div>
-                                            <div class="form-group">
-                                                <label>Nome do destinatário</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"></span>
-                                                    <input type="text" class="form-control" name="" required maxlength="50">
+                                    <div class="col-md-7">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="" required maxlength="50">
+                                                <label class="form-label">Nome do destinatário</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Nome -->
+                                    <div class="col-md-7">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="number" class="form-control" name="cep" required>
+                                                <label class="form-label">Cep</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Estado e Cidade -->
+                                    <div class="col-md-7">
+                                        <div class="row">
+                                            <div class="form-group form-float col-md-6">
+                                                <div class="form-line">
+                                                    <input type="text" class="form-control" name="estado" required>
+                                                    <label class="form-label">Estado</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group form-float col-md-6">
+                                                <div class="form-line">
+                                                    <input type="text" class="form-control" name="cidade" required>
+                                                    <label class="form-label">Cidade</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Cep e Tipo de endereço -->
-                                    <div class="col-md-5" >
-                                        <form>
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <label>Tipo de endereço</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon"></span>
-                                                                <select id="categorias" class="form-control select2" required name="">
-                                                                    <option value="apatamento">Apartamento</option>
-                                                                    <option value="casa">Casa</option>
-                                                                    <option value="comercio">Comercio</option>
-                                                                    <option value="outro">Outro</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </td>
+                                    <!-- Complemnto -->
+                                    <div class="col-md-7">
+                                        <div class="row">
+                                            <div class="form-group form-float col-md-6">
+                                                <div class="form-line">
+                                                    <input type="text" class="form-control" name="endereco" required>
+                                                    <label class="form-label">Rua/Avenida</label>
+                                                </div>
+                                            </div>
 
-                                                    <td>&nbsp;&nbsp;&nbsp;</td>
+                                            <div class="form-group form-float col-md-6">
+                                                <div class="form-line">
+                                                    <input type="numero" class="form-control" name="numero" required>
+                                                    <label class="form-label">Número</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <label>Cep</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon"></span>
-                                                                <input type="number" class="form-control" name="dt_nascimento" required maxlength="20">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </form>
+                                    <!-- Complemento -->
+                                    <div class="col-md-7">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="complemento" required>
+                                                <label class="form-label">Complemento</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bairro -->
+                                    <div class="col-md-7">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="bairro" required>
+                                                <label class="form-label">Bairro</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <br>
 
                                     <!-- Botões Salvar -->
                                     <div class="col-md-5">
-                                        <div>
-                                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 375px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Adicionar Endereço</button>
-                                        </div>
+                                        <input type="button" value="Adicionar Endereço" style="width: 200px;">
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab_default_5">
@@ -258,16 +267,18 @@
                 </div>
             </div>
         </div>
-
-
     </section>
-    <!-- ****** New Arrivals Area End ****** -->
 
 
-    <!-- ****** Popular Brands Area Start ****** -->
+
+
     <section class="karl-testimonials-area section_padding_100">
     </section>
-    <!-- ****** Popular Brands Area End ****** -->
+
+    <script src="{{asset('js/app/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('js/app/waves.js')}}"></script>
+    <script src="{{asset('js/app/input.js')}}"></script>
+    <script src="{{asset('js/app/form-validation.js')}}"></script>
 
     <script>
 

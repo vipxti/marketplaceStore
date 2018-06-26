@@ -42,4 +42,22 @@ class PageController extends Controller
         return view('pages.app.checkout');
 
     }
+
+    public function showEndereco() {
+
+        return view('pages.app.endereco');
+
+    }
+
+    public function showCartao() {
+
+        return view('pages.app.cartao');
+
+    }
+
+    public function showBoleto() {
+
+        return view('pages.app.boletoPageController');
+
+    }
 }

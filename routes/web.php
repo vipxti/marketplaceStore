@@ -87,6 +87,9 @@ Route::prefix('pages')->group(function () {
 
     //Compra
     Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');
+    Route::get('/endereco', 'PageController@showEndereco')->name('endereco.page');
+    Route::get('/cartao', 'PageController@showCartao')->name('cartao.page');
+    Route::get('/boleto', 'PageController@showBoleto')->name('boleto.page');
 
     //Cliente
     Route::post('/client', 'Auth\ClientRegisterController@create')->name('client.save');

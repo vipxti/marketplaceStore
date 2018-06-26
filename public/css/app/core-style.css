@@ -1946,11 +1946,11 @@ img {
 }
 
 .cart-page-heading {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .cart-page-heading h5 {
-    text-transform: capitalize;
+    text-transform: inherit;
     font-size: 15px;
 }
 
