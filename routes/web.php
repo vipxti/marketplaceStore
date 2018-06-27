@@ -28,11 +28,11 @@ Route::prefix('admin')->group(function () {
 
     //Produto
     Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
-    Route::get('/product', 'ProductController@showProductPage')->name('product.register')->middleware('auth:admin');
+    Route::get('/product', 'ProductController@showProductAdminPage')->name('product.register')->middleware('auth:admin');
 
     //Variação do produto
-    Route::post('/productvariation', 'ProductController@cadastrarVariacaoProduto')->name('productvariation.save')->middleware('auth:admin');
-    Route::get('/productvariationpage/{cd_produto}', 'ProductController@showProductPageVariation')->middleware('auth:admin');
+    Route::post('/product/variation', 'ProductController@cadastrarVariacaoProduto')->name('product.variation.save')->middleware('auth:admin');
+    Route::get('/product/variation/{cd_produto}', 'ProductController@showProductPageVariation')->middleware('auth:admin');
 
     //Form categoria/subcategoria e cadastro
     Route::get('/category', 'CategoryController@showCategoryForm')->name('category.register')->middleware('auth:admin');
@@ -65,7 +65,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/productconfig', 'PageController@showConfigProductPage')->name('product.config');
 
     Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
-    Route::get('/getproducts', 'ProductController@listaProduto')->name('products.list')->middleware('auth:admin');
+    Route::get('/products/list', 'ProductController@listaProduto')->name('products.list')->middleware('auth:admin');
 
     //Faz o logout do usuário
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');

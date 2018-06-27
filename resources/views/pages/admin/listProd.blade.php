@@ -72,7 +72,7 @@
                                         <td>{{ $produto->nm_produto }} </td>
                                         <td>R$ {{ str_replace('.', ',', $produto->vl_produto) }} </td>
                                         <td class="btn btn-outline-warning" style="color: #367fa9;"><i class="fa fa-pencil"></i></td>
-                                        <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/productvariationpage/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>
+                                        <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>
                                         <td class="btn btn-outline-danger" style="color: #cc0000;"><i class="fa fa-trash-o"></i></td>
                                     </tr>
 

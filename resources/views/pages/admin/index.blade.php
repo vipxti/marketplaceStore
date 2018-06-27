@@ -22,7 +22,7 @@
         <!-- Info boxes -->
             <div class="row">
                 <div class="clearfix visible-sm-block"></div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
                         <div class="info-box-content">
@@ -33,7 +33,7 @@
                     </div>
                     <!-- /.info-box -->
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-blue"><i class="ion ion-cube"></i></span>
 
@@ -45,7 +45,7 @@
                     </div>
                     <!-- /.info-box -->
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-yellow"><i class="ion ion-ios-paper"></i></span>
                         <div class="info-box-content">
@@ -57,7 +57,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Dados</h3>
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">Produtos Recém Adicionados</h3>

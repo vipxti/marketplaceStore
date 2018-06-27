@@ -56,7 +56,6 @@ class ProductRequest extends FormRequest
 //        }
 
         return $rules;
-
     }
 
     public function messages()
@@ -67,5 +66,4 @@ class ProductRequest extends FormRequest
 
         ];
     }
-
 }
