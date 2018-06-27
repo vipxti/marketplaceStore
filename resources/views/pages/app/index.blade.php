@@ -184,7 +184,7 @@
                             <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
                             <p>{{ $produto->nm_produto }}</p>
                             <!-- Add to Cart -->
-                            <a href="{{ url('/page/carrinho/' . $produto->cd_produto) }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp COMPRAR</a>
+                            <a href="{{ url('/pages/cart/' . $produto->cd_produto) }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp COMPRAR</a>
                         </div>
                     </div>
                 @endforeach

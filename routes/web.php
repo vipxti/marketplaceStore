@@ -102,6 +102,7 @@ Route::prefix('pages')->group(function () {
     Route::get('/client/logout', 'Auth\ClientLoginController@clientLogout')->name('client.logout');
 
     Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
+    Route::get('/calculaFrete/{cep},{altura},{largura},{peso},{comprimento}', 'CartController@calcFrete');
 });
 
 

@@ -63,13 +63,13 @@
                             <p><b>Insira o CEP do endereço que deseja receber o produto.</b></p>
                             <p>Assim você poderá calcular o frete e conhecer os serviços disponíveis</p>
                         </div>
-                        <form action="#">
-                            <input type="search" name="search">
-                            <button type="submit">Calcular</button>
+                        <form>
+                            <input id="campoCep" type="text" name="cep_cliente" maxlength="8">
+                            <button id="btnCalcFrete" type="button" disabled>Calcular</button>
                         </form>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-6">
+                {{--<div class="col-12 col-md-6 col-lg-6">
                     <div class="shipping-method-area mt-70">
                         <div class="cart-page-heading">
                             <h5>Qual envio prefere?</h5>
@@ -97,8 +97,8 @@
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-lg-12">
+                </div>--}}
+                <div class="col-12 col-md-6 col-lg-6">
                     <div class="cart-total-area mt-70">
                         <div class="cart-page-heading">
                             <h5>Total</h5>
@@ -106,10 +106,10 @@
                         </div>
                         <ul class="cart-total-chart">
                             <li><span>Subtotal</span> <span>R$ 29,99</span></li>
-                            <li><span>Envio</span> <span>Grátis</span></li>
-                            <li><span><strong>Total</strong></span> <span><strong>R$ 29,99</strong></span></li>
+                            <li><span>Envio</span> <span>-</span></li>
+                            <li><span><strong>Total</strong></span> <span><strong>-</strong></span></li>
                         </ul>
-                        <a href="{{ route('checkout.page') }}" class="btn karl-checkout-btn">Finalizar Compra</a>
+                        <button type="submit"><a href="{{ route('checkout.page') }}" class="btn karl-checkout-btn">Finalizar Compra</a></button>
                     </div>
                 </div>
             </div>
@@ -119,60 +119,81 @@
 
     <script>
 
+        $('#btnCalcFrete').click(function(e){
+            e.preventDefault();
+            {{--var cepCliente = $('#campoCep').val();
+            var altura = '{{$produto[0]->ds_altura}}';
+            var largura = '{{$produto[0]->ds_largura}}';
+            var peso = '{{$produto[0]->ds_peso}}';
+            var comprimento = '{{$produto[0]->ds_comprimento}}';--}}
+
+            $objF = {
+                    cep: $('#campoCep').val(),
+                    altura: '{{$produto[0]->ds_altura}}',
+                    largura: '{{$produto[0]->ds_largura}}',
+                    peso: '{{$produto[0]->ds_peso}}',
+                    comprimento: '{{$produto[0]->ds_comprimento}}'
+                };
+
+            $.ajax({
+                //url: '/pages/calculaFrete/' + objF,
+                url: '{{ url('/pages/calculaFrete') }}/' + $objF.cep + ',' + $objF.altura + ',' + $objF.largura + ',' + $objF.peso  + ',' + $objF.comprimento,
+                type: 'GET',
+                success: function(data){
+                    console.log(data);
+                }
+            });
+
+
+
+            /*console.log("CEP Cliente: " + cepCliente);
+            console.log("Altura: " + altura);
+            console.log("Largura: " + largura);
+            console.log("Peso: " + peso);
+            console.log("Comprimento: " + comprimento);*/
+
+        });
+
+        $('#campoCep').on("input", function(){
+            if($(this).val().length == 8){
+                $('#btnCalcFrete').removeAttr("disabled");
+            }else {
+                $('#btnCalcFrete').attr("disabled", "disabled");
+            }
+        });
+
         $('.qty-minus').on('click', function (e) {
-
             $preco = $('#precoProd').html().replace('R$ ', '').replace(',', '.');
-
             $qtd = $('#qty').val();
 
             if ($qtd == 0) {
-
                 $num = 1;
-
             }
             else {
-
                 $num = parseInt($qtd) - 1;
-
             }
 
             $('#qty').val($num);
-
             var $total = parseFloat($preco) * $num;
-
             console.log($total);
-
             $('#valorTotal').html($total);
-
-
         })
 
         $('.qty-plus').on('click', function (e) {
-
             $preco = $('#precoProd').html().replace('R$ ', '').replace(',', '.');
-
             $qtd = $('#qty').val();
 
             if ($qtd == 0) {
-
                 $num = 1;
-
             }
             else {
-
                 $num = parseInt($qtd) + 1;
-
             }
 
             $('#qty').val($num);
-
             var $total = parseFloat($preco) * $num;
-
             console.log($total);
-
             $('#valorTotal').innerHTML = $total;
-
-
         })
 
     </script>
