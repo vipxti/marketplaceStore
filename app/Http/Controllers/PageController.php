@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -33,9 +34,11 @@ class PageController extends Controller
 
         $imagem = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('sku_produto_img', 'sku_produto_img.cd_sku', 'sku.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_produto', '=', $cd_produto)->get();
 
+        $cliente = Client::all();
+
         //dd($produto);
 
-        return view('pages.app.carrinho', compact('produto','imagem'));
+        return view('pages.app.carrinho', compact('produto','imagem', 'cliente'));
 
     }
 

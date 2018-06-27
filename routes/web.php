@@ -103,6 +103,7 @@ Route::prefix('pages')->group(function () {
 
     Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
     Route::get('/calculaFrete/{cep},{altura},{largura},{peso},{comprimento}', 'CartController@calcFrete');
+    Route::post('/finalizarcompra', 'CartController@finalizarCompra')->name('finalizar.compra');
 });
 
 

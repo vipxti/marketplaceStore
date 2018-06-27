@@ -102,14 +102,44 @@
                     <div class="cart-total-area mt-70">
                         <div class="cart-page-heading">
                             <h5>Total</h5>
-                            <p>informações da compra</p>
+                            <p>Informações da compra</p>
                         </div>
                         <ul class="cart-total-chart">
                             <li><span>Subtotal</span> <span>R$ 29,99</span></li>
                             <li><span>Envio</span> <span>-</span></li>
                             <li><span><strong>Total</strong></span> <span><strong>-</strong></span></li>
                         </ul>
-                        <button type="submit"><a href="{{ route('checkout.page') }}" class="btn karl-checkout-btn">Finalizar Compra</a></button>
+                        <form action="{{route('finalizar.compra')}}" method="post">
+                            {{ csrf_field() }}
+
+                            <!-- array dos produtos -->
+                            <input type="hidden" name="id" value="1">
+                            <input type="hidden" name="descricao" value="{{ $produto[0]->nm_produto }}">
+                            <input type="hidden" name="quantidade" value="{{ $produto[0]->qt_produto }}">
+                            <input type="hidden" name="valor" value="{{ $produto[0]->vl_produto }}">
+                            <input type="hidden" name="peso" value="{{ $produto[0]->ds_peso }}">
+                            <input type="hidden" name="fretecal" value="">
+                            <input type="hidden" name="largura" value="{{ $produto[0]->ds_largura }}">
+                            <input type="hidden" name="altura" value="{{ $produto[0]->ds_altura }}">
+                            <input type="hidden" name="comprimento" value="{{ $produto[0]->ds_comprimento }}">
+
+                            <!-- array do cliente -->
+                          {{--  <input type="hidden" name="cep" value="{{ $cliente[0]->cd_cep }}">
+                            <input type="hidden" name="endereco" value="{{ $cliente[0]->ds_endereco }}">
+                            <input type="hidden" name="numero" value="{{ $cliente[0]->cd_numero_endereco }}">
+                            <input type="hidden" name="bairro" value="{{ $cliente[0]->nm_bairro }}">
+                            <input type="hidden" name="cidade" value="{{ $cliente[0]->nm_cidade }}">
+                            <input type="hidden" name="estado" value="{{ $cliente[0]->nm_uf }}">
+                            <input type="hidden" name="pais" value="{{ $cliente[0]->nm_pais }}">--}}
+
+                            <input type="hidden" name="email_cliente" value="{{ $cliente[0]->email }}">
+                            <input type="hidden" name="nome" value="{{ $cliente[0]->nm_cliente }}">
+                            <input type="hidden" name="numero_cpf" value="{{ $cliente[0]->cd_cpf_cnpj }}">
+                            <input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
+                            <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">
+
+                            <button type="submit" class="btn btn-danger">Finalizar Compra</button>
+                        </form>
                     </div>
                 </div>
             </div>

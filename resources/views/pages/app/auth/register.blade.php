@@ -23,52 +23,40 @@
             {{ csrf_field() }}
                 <!-- Nome do Cliente  -->
                 <div class="row">
-
                     <div class="col-md-9" style="padding-left: 26%">
-
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" class="form-control" name="nm_cliente" required maxlength="50">
                                 <label class="form-label">Nome</label>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
                 <!-- E-mail -->
                 <div class="row">
-
                     <div class="col-md-9" style="padding-left: 26%">
-
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="email" class="form-control" name="email" required maxlength="50">
                                 <label class="form-label">Email</label>
                             </div>
                         </div>
-
                     </div>
-                    
                 </div>
 
                 <!-- Senha e data de nascimento -->
                 <div class="row">
-
                     <div class="col-md-6" style="padding-left: 26%">
-
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="password" class="form-control" name="password" required maxlength="20">
                                 <label class="form-label">Senha</label>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="col-md-6" style="padding-right: 26%">
-
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" class="form-control" name="dt_nascimento"
@@ -77,26 +65,22 @@
                                 <label class="form-label">Data de Nascimento</label>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
 
+                <!-- CNPJ/CPF e Telefone -->
                 <div class="row">
-
                     <div class="col-md-6" style="padding-left: 26%">
-
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
                                 <label class="form-label">CPF ou CNPJ</label>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="col-md-6" style="padding-right: 26%">
-
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" class="form-control" name="cd_celular1"
@@ -104,16 +88,13 @@
                                 <label class="form-label">Telefone</label>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
+                <br>
 
                 <!-- Foto Cliente -->
                 <div class="row">
-
                     <div class="col-md-12" style="padding-left: 26%">
-
                         <div class="form-group">
                             <label></label>Foto</label>
                             <div class="input-group">
@@ -122,22 +103,18 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
                 <p>&nbsp;</p>
 
                 <!-- Botão Salvar -->
                 <div class="row">
-
                     <div class="col-md-12 text-center">
                         <div>
-                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 250px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 547px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
                         </div>
                     </div>
-
                 </div>
 
                 <p>&nbsp;</p>

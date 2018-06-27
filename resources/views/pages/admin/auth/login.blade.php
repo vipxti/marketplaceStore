@@ -2,11 +2,11 @@
 
 @section('content')
 
-    <!--login-box -->
+
     <div class="login-box">
     @include('partials.admin._alerts')
         <link rel="stylesheet" href="{{asset('css/admin/_all.css')}}">
-    <!-- /.login-logo -->
+
         <div class="login-box-body">
             <p class="login-box-msg">Entre para iniciar sua sessão</p>
 
@@ -40,26 +40,17 @@
                 <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>Entre usando o Facebook</a>
                 <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i>Entre usando o Google+</a>
             </div>
-            <!-- /.social-auth-links -->
+
 
             <a href="{{ route('admin.password.request') }}">Esqueci a minha senha</a><br>
             <a href="{{ route('admin.register' )}}" class="text-center">Registre uma nova conta</a>
 
         </div>
-        <!-- /.login-box-body -->
     </div>
 
     <script src="{{asset('js/admin/icheck.min.js')}}"></script>
     <script src="{{asset('js/admin/jquery.inputmask.js')}}"></script>
     <script>
-        /*() => {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '30%' /* optional */
-            /*});
-        };*/
-
         $(function(){
             //Flat red color scheme for iCheck
             $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -67,7 +58,7 @@
             })
         })
     </script>
-    <!-- /.login-box -->
+
 @stop
 
 

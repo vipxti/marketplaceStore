@@ -175,7 +175,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        laravel\pagseguro\Platform\Laravel5\ServiceProvider::class
+        laravel\pagseguro\Platform\Laravel5\ServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ],
 

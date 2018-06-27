@@ -3,9 +3,9 @@
 @section('content')
 
     <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
-    <!-- ****** Area de Produtos ****** -->
-    <section class="new_arrivals_area section_padding_100_0 clearfix">
+    <link rel="stylesheet" href="{{asset('css/admin/_all.css')}}">
 
+    <section class="new_arrivals_area section_padding_100_0 clearfix">
         <div class="container">
 
             <div class="row">
@@ -24,13 +24,6 @@
                 <!-- E-mail login  -->
                 <div class="row">
                     <div class="col-md-8" style="padding-left: 34%">
-                        {{--<div class="form-group">
-                            <label>E-mail</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"></span>
-                                <input type="text" class="form-control" name="email" required maxlength="50">
-                            </div>
-                        </div>--}}
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="email" class="form-control" name="email" required maxlength="50">
@@ -43,13 +36,6 @@
                 <!-- Senha login -->
                 <div class="row">
                     <div class="col-md-8" style="padding-left: 34%">
-                        {{--<div class="form-group">
-                            <label>Senha</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"></span>
-                                <input type="password" class="form-control" name="password" required maxlength="50">
-                            </div>
-                        </div>--}}
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="password" class="form-control" name="password" required maxlength="50">
@@ -69,18 +55,17 @@
                     </div>
                 </div>
 
-                <p>&nbsp;</p>
+                <br>
 
+                <!-- Botão Salvar -->
                 <div class="row">
-
-                    <!-- Botão Salvar -->
                     <div class="col-md-12" style="padding-left: 34%">
                         <div>
-                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 350px; background-color: #ff084e">Logar</button>
+                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 360px; background-color: #ff084e">Logar</button>
                         </div>
                     </div>
-
                 </div>
+                <br><br><br>
             
             </form>
 
@@ -88,26 +73,14 @@
 
     </section>
 
-    <script>
 
-        $('#quickview').on('show', function (e) {
-
-            var link = e.relatedTarget(),
-                $modal = $(this)
-
-            console.log($modal);
-
-        });
-
-    </script>
     <script src="{{asset('js/app/jquery.validate.min.js')}}"></script>
     <script src="{{asset('js/app/waves.js')}}"></script>
     <script src="{{asset('js/app/input.js')}}"></script>
     <script src="{{asset('js/app/form-validation.js')}}"></script>
-    <script src="{{asset('js/app/icheck.min.js')}}"></script>
-    <script src="{{asset('js/app/jquery.inputmask.js')}}"></script>
+    <script src="{{asset('js/admin/icheck.min.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.inputmask.js')}}"></script>
     <script>
-
         $(function(){
             //Flat red color scheme for iCheck
             $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -116,7 +89,6 @@
         })
     </script>
 
-    <div id="fb-root"></div>
     <script>
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -125,6 +97,17 @@
             js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.0&appId=609415666077102&autoLogAppEvents=1';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <script>
+        $('#quickview').on('show', function (e) {
+
+            var link = e.relatedTarget(),
+                $modal = $(this)
+
+            console.log($modal);
+
+        });
     </script>
 
 @stop
