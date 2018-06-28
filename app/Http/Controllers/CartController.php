@@ -47,6 +47,16 @@ class CartController extends Controller
 
         //dd($request->all());
 
+        $largura = $request->largura;
+        $altura= $request->altura;
+        $comprimento= $request->comprimento;
+
+        if($largura < 11)
+            $largura = 11;
+        if($altura < 2)
+            $altura = 2;
+        if($comprimento < 16)
+            $comprimento = 16;
 
         $data['token'] ='98911E4EC1494B7A8C3E8E7C4AD9F181';
         $data['email'] = 'manoel@manoelcastro.com.br';
@@ -56,9 +66,9 @@ class CartController extends Controller
         $data['itemDescription1'] = $request->descricao;
         $data['itemAmount1'] = $request->valor;
         $data['itemWeight1'] = $request->peso;
-        $data['itemWidth1'] = $request->largura;
-        $data['itemHeight1'] = $request->altura;
-        $data['itemLength1'] = $request->comprimento;
+        $data['itemWidth1'] = $largura;
+        $data['itemHeight1'] = $altura;
+        $data['itemLength1'] = $comprimento;
         $data['shippingType'] = '2';
         $data['shippingAddressPostalCode'] = '11702690';
         $data['shippingAddressStreet'] = 'Rua Jose Carlixto do Carmo';
