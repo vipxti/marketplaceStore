@@ -43,12 +43,13 @@
                     </div>
 
                     <div class="cart-footer d-flex mt-30">
+
                         <div class="back-to-shop">
-                            <a href="{{ route('index') }}">Continuar Comprando</a>
+                            <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px">Continuar Comprando</button>
                         </div>
                         <div class="update-checkout w-50" style="padding: 0 4px">
-                            <a href="#">Limpar Carrinho</a>
-                            <a href="#">Atualizar Carrinho</a>
+                            <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #3a3a3a">Limpar Carrinho</button>
+                            <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #3a3a3a">Atualizar Carrinho</button>
                         </div>
                     </div>
 
@@ -65,8 +66,8 @@
                         </div>
                         <form>
                             <input id="campoCep" type="text" name="cep_cliente" maxlength="8">
-                            <button id="btnCalcFrete" type="button">Calcular</button><br>
-                            <p id="msgErroCep"></p>
+                            <button class="btn btn-danger" id="btnCalcFrete" type="button" style="border-radius: 0px">Calcular</button><br>
+                            <p style="font-size: 0.90em" id="msgErroCep"></p>
                         </form>
                     </div>
                 </div>
@@ -139,7 +140,7 @@
                             {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
                             <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
 
-                                <button type="button" id="finalizar" class="btn btn-danger">Finalizar Compra</button>
+                                <button type="button" id="finalizar" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px">Finalizar Compra</button>
                         </form>
                     </div>
                 </div>

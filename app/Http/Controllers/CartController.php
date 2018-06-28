@@ -81,6 +81,7 @@ class CartController extends Controller
         $data['itemHeight1'] = $altura;
         $data['itemLength1'] = $comprimento;
         $data['shippingType'] = '2';
+        $data['shippingCost'] = '23.00';
         $data['shippingAddressPostalCode'] = '11702690';
         $data['shippingAddressStreet'] = 'Rua Jose Carlixto do Carmo';
         $data['shippingAddressNumber'] = '111';
@@ -90,9 +91,12 @@ class CartController extends Controller
         $data['shippingAddressState'] = 'SP';
         $data['shippingAddressCountry'] = '';
         $data['senderName'] = 'Myck Carvalho';
+        $data['senderCPF'] = '40949300861';
         $data['senderAreaCode'] = '13';
         $data['senderPhone'] = '974082536';
         $data['senderEmail'] = 'felipecunha_7@hotmail.com';
+        $data['redirectURL'] = url('');
+
 
 
         $url = 'https://ws.pagseguro.uol.com.br/v2/checkout';

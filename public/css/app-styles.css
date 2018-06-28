@@ -1946,8 +1946,8 @@ img {
     border-radius: 0;
     color: white;
     display: inline-block;
-    height: 55px;
-    line-height: 51px;
+    height: 35px;
+    line-height: 35px;
     min-width: 120px;
     padding: 0 30px;
     text-align: center;
@@ -1991,7 +1991,7 @@ img {
 
 .coupon-code-area form > input {
     width: 58%;
-    height: 52px;
+    height: 35px;
     border: none;
     background-color: #f4f2f8;
     padding: 0 30px;
@@ -2000,14 +2000,14 @@ img {
 
 .coupon-code-area form > button {
     width: 120px;
-    height: 52px;
+    height: 35px;
     border: none;
-    text-transform: uppercase;
+    text-transform: capitalize;
     background-color: #ff084e;
     font-size: 14px;
     top: 0;
     color: #fff;
-    font-weight: 700;
+    font-weight: 400;
     right: 0;
 }
 
