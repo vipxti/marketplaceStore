@@ -47,7 +47,57 @@ class CartController extends Controller
 
         //dd($request->all());
 
-        $data = [
+
+        $data['token'] ='98911E4EC1494B7A8C3E8E7C4AD9F181';
+        $data['email'] = 'manoel@manoelcastro.com.br';
+        $data['currency'] = 'BRL';
+        $data['itemId1'] = '1';
+        $data['itemQuantity1'] = $request->quantidade;
+        $data['itemDescription1'] = $request->descricao;
+        $data['itemAmount1'] = $request->valor;
+        $data['itemWeight1'] = $request->peso;
+        $data['itemWidth1'] = $request->largura;
+        $data['itemHeight1'] = $request->altura;
+        $data['itemLength1'] = $request->comprimento;
+        $data['shippingType'] = '2';
+        $data['shippingAddressPostalCode'] = '11702690';
+        $data['shippingAddressStreet'] = 'Rua Jose Carlixto do Carmo';
+        $data['shippingAddressNumber'] = '111';
+        $data['shippingAddressComplement'] = 'Apto 505';
+        $data['shippingAddressDistrict'] = '';
+        $data['shippingAddressCity'] = 'Praia Grande';
+        $data['shippingAddressState'] = 'SP';
+        $data['shippingAddressCountry'] = '';
+        $data['senderName'] = 'Myck Carvalho';
+        $data['senderAreaCode'] = '13';
+        $data['senderPhone'] = '974082536';
+        $data['senderEmail'] = 'felipecunha_7@hotmail.com';
+
+
+        $url = 'https://ws.pagseguro.uol.com.br/v2/checkout';
+
+        $data = http_build_query($data);
+
+        $curl = curl_init($url);
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        $xml= curl_exec($curl);
+
+        curl_close($curl);
+
+        $xml= simplexml_load_string($xml);
+
+        //dd($xml);
+
+        //$xml->code;
+
+        return response()->json([ 'codigoCompra' => $xml->code ]);
+
+       /* $data = [
             'items' => [
                 [
                     'id' => '1',
@@ -55,7 +105,7 @@ class CartController extends Controller
                     'quantity' => $request->quantidade,
                     'amount' => $request->valor,
                     'weight' => $request->peso,
-                    'shippingCost' => '3.5',
+                    'shippingCost' => '',
                     'width' => $request->largura,
                     'height' => $request->altura,
                     'length' => $request->comprimento,
@@ -63,13 +113,13 @@ class CartController extends Controller
             ],
             'shipping' => [
                 'address' => [
-                    'postalCode' => $request->cep,
-                    'street' => $request->endereco,
-                    'number' => $request->numero,
-                    'district' => $request->bairro,
-                    'city' => $request->cidade,
-                    'state' => $request->estado,
-                    'country' => $request->pais,
+                    'postalCode' => '11702690',
+                    'street' => 'Rua Jose Calixto do Carmo',
+                    'number' => '111',
+                    'district' => 'Aviação',
+                    'city' => 'Praia Grande',
+                    'state' => 'SP',
+                    'country' => 'BRA',
                 ],
                 'type' => '',
                 'cost' => '',
@@ -83,22 +133,26 @@ class CartController extends Controller
                         'type' => 'CPF'
                     ]
                 ],
-                'phone' => '11985445522',
-                'bornDate' => '1988-03-21',
+                'phone' => '13974082536',
+                'bornDate' => '2018-07-27',
             ]
-        ];
+        ];*/
 
-        dd($data);
+       /* $r = new PagSeguro;
 
-        $checkout = PagSeguro::checkout()->createFromArray($data);
 
-        $credentials = PagSeguro::credentials()->get();
+        $checkout = $r->checkout()->createFromArray($data);
+
+        dd($checkout);*/
+
+        /*$credentials = $p->credentials()->get();
+
         $information = $checkout->send($credentials); // Retorna um objeto de laravel\pagseguro\Checkout\Information\Information
         if ($information) {
             print_r($information->getCode());
             print_r($information->getDate());
             print_r($information->getLink());
-        }
+        }*/
 
 
 

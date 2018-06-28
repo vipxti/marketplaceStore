@@ -103,9 +103,8 @@ Route::prefix('pages')->group(function () {
 
     Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
     Route::get('/calculaFrete/{cep},{altura},{largura},{peso},{comprimento}', 'CartController@calcFrete');
-    Route::post('/finalizarcompra', 'CartController@finalizarCompra')->name('finalizar.compra');
+    Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
 });
-
 
 Route::get('/alteraremailcliente', 'ProductController@paginaAlteraremailcliente')->name('alteraremailcliente.page');
 Route::get('/alterarsenhacliente', 'ProductController@paginaAlterarsenhacliente')->name('alterarsenhacliente.page');

@@ -109,13 +109,15 @@
                             <li><span>Envio</span> <span>-</span></li>
                             <li><span><strong>Total</strong></span> <span><strong>-</strong></span></li>
                         </ul>
-                        <form action="{{route('finalizar.compra')}}" method="post">
+
+                        <form id="formComprar">
                             {{ csrf_field() }}
 
                             <!-- array dos produtos -->
                             <input type="hidden" name="id" value="1">
+                            <input type="hidden" name="code" id="code" value="" />
                             <input type="hidden" name="descricao" value="{{ $produto[0]->nm_produto }}">
-                            <input type="hidden" name="quantidade" value="{{ $produto[0]->qt_produto }}">
+                            <input type="hidden" name="quantidade" value="2">
                             <input type="hidden" name="valor" value="{{ $produto[0]->vl_produto }}">
                             <input type="hidden" name="peso" value="{{ $produto[0]->ds_peso }}">
                             <input type="hidden" name="fretecal" value="">
@@ -135,10 +137,10 @@
                             <input type="hidden" name="email_cliente" value="{{ $cliente[0]->email }}">
                             <input type="hidden" name="nome" value="{{ $cliente[0]->nm_cliente }}">
                             <input type="hidden" name="numero_cpf" value="{{ $cliente[0]->cd_cpf_cnpj }}">
-                            <input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
-                            <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">
+                            {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
+                            <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
 
-                            <button type="submit" class="btn btn-danger">Finalizar Compra</button>
+                                <button type="button" id="finalizar" class="btn btn-danger">Finalizar Compra</button>
                         </form>
                     </div>
                 </div>
@@ -146,6 +148,20 @@
         </div>
     </div>
     <!-- ****** Area final do carrinho ****** -->
+
+    <script src="{{ asset('js/app/pagseguro.lightbox.js') }}"></script>
+
+    <script>
+
+        {{--  function enviaPagseguro(){
+            $.post('{{url( '/pages/pagseguro/redirect')}}','',function(data){
+                $('#code').val(data);
+                $('#comprar').submit();
+            })
+        }--}}
+
+    </script>
+
 
     <script>
 
@@ -174,13 +190,51 @@
                 }
             });
 
-
-
             /*console.log("CEP Cliente: " + cepCliente);
             console.log("Altura: " + altura);
             console.log("Largura: " + largura);
             console.log("Peso: " + peso);
             console.log("Comprimento: " + comprimento);*/
+
+        });
+
+        $('#finalizar').click(function (e) {
+            //e.preventDefault();
+
+            var cdCompra = null;
+
+            $.ajax({
+                //url: '/pages/calculaFrete/' + objF,
+                url: '{{ url('pages/pagseguro/redirect') }}',
+                type: 'POST',
+                data: $("#formComprar").serialize(),
+                success: function(codigoCompra){
+
+                    $.each(codigoCompra, function () {
+                        var key = Object.keys(this)[0];
+                        cdCompra = this[key];
+                    })
+
+                    //console.log(cdCompra);
+
+                    PagSeguroLightbox(cdCompra);
+                },
+                error: function () {
+                    console.log('erro');
+                }
+            });
+
+            {{--$.ajax({--}}
+            {{--//url: '/pages/calculaFrete/' + objF,--}}
+            {{--url: '{{ url('/pagseguro/redirect') }}',--}}
+            {{--type: 'POST',--}}
+            {{--success: function(data){--}}
+            {{--console.log(data.codigo_compra);--}}
+            {{--},--}}
+            {{--error: function () {--}}
+            {{--console.log('erro');--}}
+            {{--}--}}
+            {{--});--}}
 
         });
 
