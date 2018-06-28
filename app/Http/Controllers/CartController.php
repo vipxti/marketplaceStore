@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use Cagartner\CorreiosConsulta\CorreiosConsulta;
 use Illuminate\Http\Request;
-use laravel\pagseguro\Facades\PagSeguro;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -41,6 +41,17 @@ class CartController extends Controller
 
         return response()->json([ 'freteCalculado' => $frete ]);
 
+    }
+
+    public function calcFreteOffline($cep, $peso)
+    {
+        //$e = DB::select('CALL buscarFrete('.$cep.','.$peso.')');
+        $e = DB::select('CALL buscarFrete(:Cep,:Peso)',[
+            ':Cep' => $cep,
+            ':Peso' => $peso,
+        ]);
+
+        dd($e);
     }
 
     public function finalizarCompra(Request $request){

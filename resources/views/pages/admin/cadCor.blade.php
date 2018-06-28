@@ -46,6 +46,7 @@
                                             <div class="form-group">
                                                 <label>Cadastar Cor</label>
                                                 <div class="input-group">
+                                                    <input class="form-control" type="hidden" id="cd_cor" name="cd_cor" value="NULL">
                                                     <span class="input-group-addon"><i class="fa fa-paint-brush"></i></span>
                                                     <input type="text" id="nm_cor" minlength="0" maxlength="40" class="form-control" name="nm_cor">
                                                 </div>

@@ -50,7 +50,7 @@ Route::prefix('admin')->group(function () {
 
     //Form cor e cadastro
     Route::get('/color', 'ColorController@showColorForm')->name('color.page')->middleware('auth:admin')->middleware('auth:admin');
-    Route::post('/color', 'ColorController@cadastrarNovaCor')->name('color.save');
+    Route::post('/color', 'ColorController@crudCor')->name('color.save');
 
     Route::get('/userdata', 'UserController@showUserForm')->name('user.data')->middleware('auth:admin')->middleware('auth:admin');
 
@@ -104,6 +104,8 @@ Route::prefix('pages')->group(function () {
     Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
     Route::get('/calculaFrete/{cep},{altura},{largura},{peso},{comprimento}', 'CartController@calcFrete');
     Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
+    Route::get('/calculaFreteOffline/{cep},{peso}', 'CartController@calcFreteOffline');
+
 });
 
 Route::get('/alteraremailcliente', 'ProductController@paginaAlteraremailcliente')->name('alteraremailcliente.page');
