@@ -11,6 +11,13 @@ class CartController extends Controller
 {
     public function calcFrete($cep, $altura, $largura, $peso, $comprimento){
 
+        if($largura < 11)
+            $largura = 11;
+        if($altura < 2)
+            $altura = 2;
+        if($comprimento < 16)
+            $comprimento = 16;
+
         $dados = [
             'tipo'              => 'sedex', // Separar opções por vírgula (,) caso queira consultar mais de um (1) serviço. > Opções: `sedex`, `sedex_a_cobrar`, `sedex_10`, `sedex_hoje`, `pac`, 'pac_contrato', 'sedex_contrato' , 'esedex'
             'formato'           => 'caixa', // opções: `caixa`, `rolo`, `envelope`
@@ -46,12 +53,12 @@ class CartController extends Controller
     public function calcFreteOffline($cep, $peso)
     {
         //$e = DB::select('CALL buscarFrete('.$cep.','.$peso.')');
-        $e = DB::select('CALL buscarFrete(:Cep,:Peso)',[
+        $frete = DB::select('CALL buscarFrete(:Cep,:Peso)',[
             ':Cep' => $cep,
             ':Peso' => $peso,
         ]);
 
-        dd($e);
+        return response()->json([ 'freteCalculado' => $frete ]);
     }
 
     public function finalizarCompra(Request $request){
