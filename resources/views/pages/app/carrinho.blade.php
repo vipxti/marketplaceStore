@@ -34,6 +34,7 @@
                                         <span class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
                                         <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="1">
                                         <span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <i id="spinner_qtd" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i>
                                     </div>
                                 </td>
                                 <td class="total_price"><span id="valorTotal"></span></td>
@@ -66,7 +67,8 @@
                         </div>
                         <form>
                             <input id="campoCep" type="text" name="cep_cliente" maxlength="8">
-                            <button class="btn btn-danger" id="btnCalcFrete" type="button" style="border-radius: 0px">Calcular</button><br>
+                            <button class="btn btn-danger" id="btnCalcFrete" type="button" style="border-radius: 0px">Calcular</button>
+                            <i id="spinner_btn" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i><br>
                             <p style="font-size: 0.90em" id="msgErroCep"></p>
                         </form>
                     </div>
@@ -117,14 +119,15 @@
                             <input type="hidden" name="id" value="1">
                             <input type="hidden" name="code" id="code" value="" />
                             <input type="hidden" name="descricao" value="{{ $produto[0]->nm_produto }}">
-                            <input type="hidden" name="quantidade" value="2">
+                            <input id="qtdProd" type="hidden" name="quantidade" value="1">
                             <input type="hidden" name="valor" value="{{ $produto[0]->vl_produto }}">
                             <input type="hidden" name="peso" value="{{ $produto[0]->ds_peso }}">
                             <input type="hidden" name="fretecal" value="">
                             <input type="hidden" name="largura" value="{{ $produto[0]->ds_largura }}">
                             <input type="hidden" name="altura" value="{{ $produto[0]->ds_altura }}">
                             <input type="hidden" name="comprimento" value="{{ $produto[0]->ds_comprimento }}">
-                            <input type="hidden" name="freteval" value="">
+                            <input id="freteForm" type="hidden" name="freteval" value="">
+                            <input id="tipoServForm" type="hidden" name="tipoServ" value="">
 
                             <!-- array do cliente -->
                           {{--  <input type="hidden" name="cep" value="{{ $cliente[0]->cd_cep }}">
@@ -141,7 +144,7 @@
                             {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
                             <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
 
-                                <button type="button" id="finalizar" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px">Finalizar Compra</button>
+                            <button type="button" id="finalizar" disabled class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px">Finalizar Compra</button>
                         </form>
                     </div>
                 </div>
@@ -175,74 +178,9 @@
                 $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
                     if (!("erro" in dados)) {
                         //Atualiza os campos com os valores da consulta.
-                        console.log("oi");
-                        var qtd = $('#qty').val();
-                        var pesoTotal = parseFloat('{{$produto[0]->ds_peso}}');
-                        console.log('Peso Atual em gramas: ' + pesoTotal);
-                        pesoTotal = (pesoTotal / 1000);
-                        console.log('Peso Atual em kg: ' + pesoTotal.toFixed(2));
-                        pesoTotal = pesoTotal * qtd;
-                        console.log('Peso Atual em kg multiplicado em qtd: ' + pesoTotal.toFixed(2));
-                        $objF = {
-                            cep: $('#campoCep').val(),
-                            altura: '{{$produto[0]->ds_altura}}',
-                            largura: '{{$produto[0]->ds_largura}}',
-                            peso: pesoTotal.toFixed(2),
-                            comprimento: '{{$produto[0]->ds_comprimento}}'
-                        };
 
-                        $.ajax({
-                            url: '{{url('/pages/calculaFreteOffline')}}/' + $objF.cep + ',' + $objF.peso,
-                        {{--url: '{{ url('/pages/calculaFrete') }}/' + $objF.cep + ',' + $objF.altura + ',' + $objF.largura + ',' + $objF.peso  + ',' + $objF.comprimento,--}}
-                            type: 'GET',
-                            success: function(data){
-                                console.log(data);
-                                console.log(data.freteCalculado[0].preco_frete);
-                                console.log(data.freteCalculado[0].qtd_dias);
-                                console.log(data.freteCalculado[0].metodo);
+                        consultaFrete($('#spinner_btn'));
 
-                                if(data.freteCalculado[0].metodo == "PAC") {
-                                    $('#precoPac').html('R$ ' + data.freteCalculado[0].preco_frete);
-                                    $('#diasPac').html(data.freteCalculado[0].qtd_dias + ' dias');
-                                    $('#precoSedex').html('R$ ' + data.freteCalculado[1].preco_frete);
-                                    $('#diasSedex').html(data.freteCalculado[1].qtd_dias + ' dias');
-                                }
-
-                                if($('#customRadio1').has('checked')){
-                                    $('#precoCalcFrete').html($('#precoSedex').html().replace('.', ','));
-                                }
-                                else {
-                                    $('#precoCalcFrete').html($('#precoPac').html().replace('.', ','));
-                                }
-
-                                $('#precoSubTotal').html($('#valorTotal').html());
-                                var precoSub = $('#precoSubTotal').html().replace('R$', '').replace(',', '.');
-                                var precoFrete =  $('#precoCalcFrete').html().replace('R$', '').replace(',', '.');
-                                precoSub = parseFloat(precoSub);
-                                precoFrete = parseFloat(precoFrete);
-                                var calcTotal = precoSub + precoFrete;
-
-                                totalCalc = true;
-                                $('#precoCalcTotal').html('R$ ' + calcTotal.toFixed(2));
-
-                            },
-                            error: function(){
-                                console.log("Erro");
-                                {{--$.ajax({
-                                    url: '{{url('/pages/calculaFreteOffline')}}' + $objF.cep + ',' + $objF.peso,
-                                    type: 'GET',
-                                    async: false,
-                                    success: function(data){
-                                        console.log(data);
-                                    },
-                                    error: function(){
-                                        console.log("erro 2");
-                                    }
-                                })--}}
-
-
-                            }
-                        });
                     } //end if.
                     else {
                         //CEP pesquisado não foi encontrado.
@@ -254,42 +192,126 @@
                 //cep é inválido.
                 $("#msgErroCep").html("Formato de CEP inválido.").css("color", "red");
             } //end if.
-
-            /*console.log("CEP Cliente: " + cepCliente);
-            console.log("Altura: " + altura);
-            console.log("Largura: " + largura);
-            console.log("Peso: " + peso);
-            console.log("Comprimento: " + comprimento);*/
-
         });
+
+
+        //CONSULTA O WEBSERVICE OU OFFLINE O CEP
+        function consultaFrete(spinner){
+            var qtd = $('#qty').val();
+            var pesoTotal = parseFloat('{{$produto[0]->ds_peso}}');
+            pesoTotal = (pesoTotal / 1000);
+            pesoTotal = pesoTotal * qtd;
+
+            $objF = {
+                cep: $('#campoCep').val(),
+                altura: '{{$produto[0]->ds_altura}}',
+                largura: '{{$produto[0]->ds_largura}}',
+                peso: pesoTotal.toFixed(2),
+                comprimento: '{{$produto[0]->ds_comprimento}}'
+            };
+
+            spinner.css('visibility', 'visible');
+            $('#finalizar').attr('disabled', 'disabled');
+
+            $.ajax({
+                url: '{{ url('/pages/calculaFrete') }}/' + $objF.cep + ',' + $objF.altura + ',' + $objF.largura + ',' + $objF.peso  + ',' + $objF.comprimento,
+                type: 'GET',
+                success: function(data){
+                    console.log('oy');
+                    $('#precoPac').html('R$ ' + data.freteCalculado[0].valor.toFixed(2).toString().replace('.', ','));
+                    $('#diasPac').html(data.freteCalculado[0].prazo + ' dias');
+                    $('#precoSedex').html('R$ ' + data.freteCalculado[1].valor.toFixed(2).toString().replace('.', ','));
+                    $('#diasSedex').html(data.freteCalculado[1].prazo + ' dias');
+
+                    verificaFrete(spinner);
+
+                },
+                error: function(){
+                    console.log("Erro Correio");
+
+                    //CONSULTA OFFLINE CASO O WEBSERVICE NAO FUNCIONAR
+                    $.ajax({
+                        url: '{{url('/pages/calculaFreteOffline')}}/' + $objF.cep + ',' + $objF.peso,
+                        type: 'GET',
+                        success: function (data) {
+                            console.log("yo");
+                            if (data.freteCalculado[0].metodo == "PAC") {
+                                $('#precoPac').html('R$ ' + data.freteCalculado[0].preco_frete.toString().replace('.', ','));
+                                $('#diasPac').html(data.freteCalculado[0].qtd_dias + ' dias');
+                                $('#precoSedex').html('R$ ' + data.freteCalculado[1].preco_frete.toString().replace('.', ','));
+                                $('#diasSedex').html(data.freteCalculado[1].qtd_dias + ' dias');
+                                $('#customRadio2').removeAttr('disabled');
+                                console.log("if");
+                            }
+                            else{
+                                $('#precoSedex').html('R$ ' + data.freteCalculado[0].preco_frete.toString().replace('.', ','));
+                                $('#diasSedex').html(data.freteCalculado[0].qtd_dias + ' dias');
+                                $('#precoPac').html('');
+                                $('#diasPac').html('');
+                                $('#customRadio2').attr('disabled', 'disabled');
+                            }
+
+                            verificaFrete(spinner);
+                        },
+                        error: function () {
+                            console.log("Erro");
+                        }
+                    });
+                }
+            });
+
+
+
+        }
+
+        function verificaFrete(spinner){
+            if ($('#customRadio1').is(':checked')) {
+                $('#precoCalcFrete').html($('#precoSedex').html().replace('.', ','));
+                $('#tipoServForm').val($('#customRadio1').val());
+            }
+            else {
+                $('#precoCalcFrete').html($('#precoPac').html().replace('.', ','));
+                $('#tipoServForm').val($('#customRadio2').val());
+            }
+
+            /*$('#precoSubTotal').html($('#valorTotal').html());
+            $('#qtdProd').val($('#qty').val());*/
+            totalCalc = true;
+
+            atualizaFrete();
+
+            /*$('#freteForm').val(precoFrete.toFixed(2));*/
+            $('#finalizar').removeAttr('disabled');
+            spinner.css('visibility', 'hidden');
+        }
 
         //VERIFICA SE O SEDEX ESTA SELECIONADO
         $('#customRadio1').on("click", function(){
             $('#precoCalcFrete').html($('#precoSedex').html().replace('.', ','));
-
-            var precoSub = $('#precoSubTotal').html().replace('R$', '').replace(',', '.');
-            var precoFrete =  $('#precoCalcFrete').html().replace('R$', '').replace(',', '.');
-            precoSub = parseFloat(precoSub);
-            precoFrete = parseFloat(precoFrete);
-            var calcTotal = precoSub + precoFrete;
-
-            $('#precoCalcTotal').html('R$ ' + calcTotal.toFixed(2));
-
+            $('#tipoServForm').val($(this).val());
+            atualizaFrete();
         });
 
         //VERIFICA SE O PAC ESTA SELECIONADO
         $('#customRadio2').on("click", function(){
             $('#precoCalcFrete').html($('#precoPac').html().replace('.', ','));
+            $('#tipoServForm').val($(this).val());
+            atualizaFrete();
+        });
 
-            var precoSub = $('#precoSubTotal').html().replace('R$', '').replace(',', '.');
-            var precoFrete =  $('#precoCalcFrete').html().replace('R$', '').replace(',', '.');
+        //ATUALIZA FRETE
+        var precoSub;
+        var precoFrete;
+        function atualizaFrete(){
+            precoSub = $('#precoSubTotal').html().replace('R$', '').replace(',', '.');
+            precoFrete =  $('#precoCalcFrete').html().replace('R$', '').replace(',', '.');
             precoSub = parseFloat(precoSub);
             precoFrete = parseFloat(precoFrete);
             var calcTotal = precoSub + precoFrete;
 
-            $('#precoCalcTotal').html('R$ ' + calcTotal.toFixed(2));
-
-        });
+            $('#precoCalcTotal').html('R$ ' + calcTotal.toFixed(2).toString().replace('.',','));
+            $('#freteForm').val(precoFrete.toFixed(2));
+        }
 
         //ABRE O LIGHTBOX DA PAGSEGURO
         $('#finalizar').click(function (e) {
@@ -334,10 +356,15 @@
 
         //SO HABILITA O CAMPO CEP SE ESTIVER PREENCHIDO
         $('#campoCep').on("input", function(){
-            if($(this).val().length == 8){
-                $('#btnCalcFrete').removeAttr("disabled");
-            }else {
-                $('#btnCalcFrete').attr("disabled", "disabled");
+            if($(this).length != 8){
+                $('#precoCalcFrete').html("-");
+                $('#precoCalcTotal').html("-");
+                $('#precoSedex').html("");
+                $('#precoPac').html("");
+                $('#diasPac').html("");
+                $('#diasSedex').html("");
+                $('#finalizar').attr('disabled', 'disabled');
+                totalCalc=false;
             }
         });
 
@@ -355,14 +382,18 @@
             if(qtd > 1) {
                 total = preco * (qtd - 1);
                 qtd--;
+                $('.qty-plus').removeAttr('disabled');
+            } else {
+                $(this).attr('disabled', 'disabled');
             }
 
             $('#qty').val(qtd);
             $('#valorTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-
-            if(!totalCalc) {
-                $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-                $('#quantidade').val($('#qty').val());
+            $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
+            $('#qtdProd').val($('#qty').val());
+            if(totalCalc){
+                atualizaFrete();
+                consultaFrete($('#spinner_qtd'));
             }
 
         });
@@ -378,13 +409,21 @@
             if(qtd < {{$produto[0]->qt_produto}} - 1) {
                 qtd++;
                 total = preco * qtd;
+                $('.qty-minus').removeAttr('disabled');
+            }
+            else {
+                $(this).attr('disabled', 'disabled');
             }
 
             $('#qty').val(qtd);
             $('#valorTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
+            $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
+            $('#qtdProd').val($('#qty').val());
 
-            if(!totalCalc)
-                $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
+            if(totalCalc) {
+                atualizaFrete();
+                consultaFrete($('#spinner_qtd'));
+            }
 
         });
 
