@@ -42,7 +42,7 @@
                             <!-- Nome do Produto  -->
                             <div class="row">
 
-                                <div class="col-lg-7 col-lg-offset-2 col-md-10 col-md-offset-1">
+                                <div class="col-md-12">
 
                                     <div class="form-group">
                                         <label>Nome do Produto</label>
@@ -60,7 +60,7 @@
                             <div class="row">
 
                                 <!-- Códigos SKU e Ean  -->
-                                <div class="col-lg-3 col-lg-offset-2 col-md-4 col-md-offset-1">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Código (SKU)</label>
                                         <div class="input-group">
@@ -72,7 +72,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-3 col-lg-offset-1 col-md-4 col-md-offset-2">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Código (EAN)</label>
                                         <div class="input-group">
@@ -88,7 +88,7 @@
                             <div class="row">
 
                                 <!-- Categorias -->
-                                <div class="col-lg-3 col-lg-offset-2 col-md-4 col-md-offset-1">
+                                <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label>Categoria</label>
@@ -109,7 +109,7 @@
                                 </div>
 
                                 <!-- Subcategorias -->
-                                <div class="col-lg-3 col-lg-offset-1 col-md-4 col-md-offset-2">
+                                <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label>Sub-Categoria</label>
@@ -129,7 +129,7 @@
                             <!-- Preço e quantidade  -->
                             <div class="row">
 
-                                <div class="col-lg-3 col-lg-offset-2 col-md-4 col-md-offset-1">
+                                <div class="col-md-6">
 
                                     <div class="form-group">
                                     
@@ -144,7 +144,7 @@
 
                                 </div>
 
-                                <div class="col-lg-3 col-lg-offset-1 col-md-4 col-md-offset-2">
+                                <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label>Quantidade</label>
@@ -162,7 +162,7 @@
                             <!-- Largura, Altura, Comprimento e Peso -->
                             <div class="row">
 
-                                <div class="col-lg-1 col-lg-offset-2 col-md-3">
+                                <div class="col-md-3">
 
                                     <div class="form-group">
                                         <label>Largura</label>
@@ -175,7 +175,7 @@
 
                                 </div>
 
-                                <div class="col-lg-1 col-lg-offset-1 col-md-3">
+                                <div class="col-md-3">
 
                                     <div class="form-group">
                                         <label>Altura</label>
@@ -188,7 +188,7 @@
 
                                 </div>
 
-                                <div class="col-lg-1 col-lg-offset-1 col-md-3">
+                                <div class="col-md-3">
 
                                     <div class="form-group">
                                         <label>Comprimento</label>
@@ -201,7 +201,7 @@
 
                                 </div>
 
-                                <div class="col-lg-1 col-lg-offset-1 col-md-3">
+                                <div class="col-md-3">
 
                                     <div class="form-group">
                                         <label>Peso (g)</label>
@@ -219,7 +219,7 @@
                             <!-- Descrição  -->
                             <div class="row">
 
-                                <div class="col-lg-7 col-lg-offset-2 col-md-10 col-md-offset-1">
+                                <div class="col-md-12">
 
                                     <div class="form-group">
                                         <label>Descrição do Produto</label>
@@ -236,7 +236,7 @@
                             <!-- Imagens e Status -->
                             <div class="row">
 
-                                <div class="col-lg-3 col-lg-offset-2 col-md-4 col-md-offset-1">
+                                <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label>Imagens</label>
@@ -247,7 +247,7 @@
 
                                 </div>
 
-                                <div class="col-lg-3 col-lg-offset-1 col-md-4 col-md-offset-2">
+                                <div class="col-md-6">
 
                                     <input type="checkbox" class="js-switch" name="status" checked/> Ativar/Desativar Produto
 

@@ -37,7 +37,9 @@ class ClientController extends Controller
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro');
         }
 
-        return view('pages.app.painelcliente', compact('telCliente'));
+        $endereco = Client::join('cliente_endereco', 'cliente.cd_cliente', '=', 'cliente_endereco.cd_cliente')->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')->select('ds_endereco', 'cd_numero_endereco', 'ds_complemento', 'ds_ponto_referencia')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get();
+
+        return view('pages.app.painelcliente', compact('telCliente', 'endereco'));
     }
 
     public function saveClientAddress(ClientAddressRequest $request)
