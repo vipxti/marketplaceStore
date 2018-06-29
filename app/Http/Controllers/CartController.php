@@ -21,7 +21,7 @@ class CartController extends Controller
         }
 
         $dados = [
-            'tipo'              => 'sedex', // Separar opções por vírgula (,) caso queira consultar mais de um (1) serviço. > Opções: `sedex`, `sedex_a_cobrar`, `sedex_10`, `sedex_hoje`, `pac`, 'pac_contrato', 'sedex_contrato' , 'esedex'
+            'tipo'              => 'pac,sedex', // Separar opções por vírgula (,) caso queira consultar mais de um (1) serviço. > Opções: `sedex`, `sedex_a_cobrar`, `sedex_10`, `sedex_hoje`, `pac`, 'pac_contrato', 'sedex_contrato' , 'esedex'
             'formato'           => 'caixa', // opções: `caixa`, `rolo`, `envelope`
             'cep_destino'       => $cep, // Obrigatório
             'cep_origem'        => '11365230', // Obrigatorio
@@ -92,8 +92,8 @@ class CartController extends Controller
         $data['itemWidth1'] = $largura;
         $data['itemHeight1'] = $altura;
         $data['itemLength1'] = $comprimento;
-        $data['shippingType'] = '2';
-        $data['shippingCost'] = '23.00';
+        $data['shippingType'] = $request->tipoServ;
+        $data['shippingCost'] = $request->freteval;
         $data['shippingAddressPostalCode'] = '11702690';
         $data['shippingAddressStreet'] = 'Rua Jose Carlixto do Carmo';
         $data['shippingAddressNumber'] = '111';
