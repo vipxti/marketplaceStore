@@ -54,7 +54,6 @@ class Handler extends ExceptionHandler
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Usuário não logado'], 401);
         }
@@ -66,12 +65,10 @@ class Handler extends ExceptionHandler
                 $login = 'admin.login';
                 break;
             default:
-                $login = 'index';
+                $login = 'client.login';
                 break;
         }
 
         return redirect()->guest(route($login));
-
     }
-
 }

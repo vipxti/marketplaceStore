@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
-
 use Cagartner\CorreiosConsulta\CorreiosConsulta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
-    public function calcFrete($cep, $altura, $largura, $peso, $comprimento){
-
-        if($largura < 11)
+    public function calcFrete($cep, $altura, $largura, $peso, $comprimento)
+    {
+        if ($largura < 11) {
             $largura = 11;
-        if($altura < 2)
+        }
+        if ($altura < 2) {
             $altura = 2;
-        if($comprimento < 16)
+        }
+        if ($comprimento < 16) {
             $comprimento = 16;
+        }
 
         $dados = [
             'tipo'              => 'sedex', // Separar opções por vírgula (,) caso queira consultar mais de um (1) serviço. > Opções: `sedex`, `sedex_a_cobrar`, `sedex_10`, `sedex_hoje`, `pac`, 'pac_contrato', 'sedex_contrato' , 'esedex'
@@ -47,13 +49,12 @@ class CartController extends Controller
         ];*/
 
         return response()->json([ 'freteCalculado' => $frete ]);
-
     }
 
     public function calcFreteOffline($cep, $peso)
     {
         //$e = DB::select('CALL buscarFrete('.$cep.','.$peso.')');
-        $frete = DB::select('CALL buscarFrete(:Cep,:Peso)',[
+        $frete = DB::select('CALL buscarFrete(:Cep,:Peso)', [
             ':Cep' => $cep,
             ':Peso' => $peso,
         ]);
@@ -61,7 +62,8 @@ class CartController extends Controller
         return response()->json([ 'freteCalculado' => $frete ]);
     }
 
-    public function finalizarCompra(Request $request){
+    public function finalizarCompra(Request $request)
+    {
 
         //dd($request->all());
 
@@ -69,12 +71,15 @@ class CartController extends Controller
         $altura= $request->altura;
         $comprimento= $request->comprimento;
 
-        if($largura < 11)
+        if ($largura < 11) {
             $largura = 11;
-        if($altura < 2)
+        }
+        if ($altura < 2) {
             $altura = 2;
-        if($comprimento < 16)
+        }
+        if ($comprimento < 16) {
             $comprimento = 16;
+        }
 
         $data['token'] ='98911E4EC1494B7A8C3E8E7C4AD9F181';
         $data['email'] = 'manoel@manoelcastro.com.br';
@@ -104,8 +109,6 @@ class CartController extends Controller
         $data['senderEmail'] = 'felipecunha_7@hotmail.com';
         $data['redirectURL'] = url('');
 
-
-
         $url = 'https://ws.pagseguro.uol.com.br/v2/checkout';
 
         $data = http_build_query($data);
@@ -129,46 +132,46 @@ class CartController extends Controller
 
         return response()->json([ 'codigoCompra' => $xml->code ]);
 
-       /* $data = [
-            'items' => [
-                [
-                    'id' => '1',
-                    'description' => $request->descricao,
-                    'quantity' => $request->quantidade,
-                    'amount' => $request->valor,
-                    'weight' => $request->peso,
-                    'shippingCost' => '',
-                    'width' => $request->largura,
-                    'height' => $request->altura,
-                    'length' => $request->comprimento,
-                ],
-            ],
-            'shipping' => [
-                'address' => [
-                    'postalCode' => '11702690',
-                    'street' => 'Rua Jose Calixto do Carmo',
-                    'number' => '111',
-                    'district' => 'Aviação',
-                    'city' => 'Praia Grande',
-                    'state' => 'SP',
-                    'country' => 'BRA',
-                ],
-                'type' => '',
-                'cost' => '',
-            ],
-            'sender' => [
-                'email' => $request->email_cliente,
-                'name' => $request->nome,
-                'documents' => [
-                    [
-                        'number' => $request->numero_cpf,
-                        'type' => 'CPF'
-                    ]
-                ],
-                'phone' => '13974082536',
-                'bornDate' => '2018-07-27',
-            ]
-        ];*/
+        /* $data = [
+             'items' => [
+                 [
+                     'id' => '1',
+                     'description' => $request->descricao,
+                     'quantity' => $request->quantidade,
+                     'amount' => $request->valor,
+                     'weight' => $request->peso,
+                     'shippingCost' => '',
+                     'width' => $request->largura,
+                     'height' => $request->altura,
+                     'length' => $request->comprimento,
+                 ],
+             ],
+             'shipping' => [
+                 'address' => [
+                     'postalCode' => '11702690',
+                     'street' => 'Rua Jose Calixto do Carmo',
+                     'number' => '111',
+                     'district' => 'Aviação',
+                     'city' => 'Praia Grande',
+                     'state' => 'SP',
+                     'country' => 'BRA',
+                 ],
+                 'type' => '',
+                 'cost' => '',
+             ],
+             'sender' => [
+                 'email' => $request->email_cliente,
+                 'name' => $request->nome,
+                 'documents' => [
+                     [
+                         'number' => $request->numero_cpf,
+                         'type' => 'CPF'
+                     ]
+                 ],
+                 'phone' => '13974082536',
+                 'bornDate' => '2018-07-27',
+             ]
+         ];*/
 
        /* $r = new PagSeguro;
 
@@ -185,8 +188,5 @@ class CartController extends Controller
             print_r($information->getDate());
             print_r($information->getLink());
         }*/
-
-
-
     }
 }

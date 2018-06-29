@@ -12,6 +12,6 @@ class Uf extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nm_uf','cd_pais'
+        'sg_uf','cd_pais'
     ];
 }

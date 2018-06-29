@@ -15,8 +15,6 @@ class Endereco extends Model
         'cd_cep',
         'ds_endereco',
         'cd_numero_endereco',
-        'ds_complemento',
-        'ds_ponto_referencia',
         'cd_bairro'
     ];
 }

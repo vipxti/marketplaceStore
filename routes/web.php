@@ -96,7 +96,7 @@ Route::prefix('pages')->group(function () {
     Route::get('/client/register', 'Auth\ClientRegisterController@showRegisterForm')->name('client.register');
     Route::get('/client/login', 'Auth\ClientLoginController@showClientLoginForm')->name('client.login');
     Route::post('/client/login', 'Auth\ClientLoginController@login')->name('client.login.submit');
-    Route::get('/client/dashboard', 'ProductController@paginaPainelcliente')->name('client.dashboard');
+    Route::get('/client/dashboard', 'ClientController@showClientPage')->name('client.dashboard')/*->middleware('auth:web')*/;
 
     //Logout do cliente
     Route::get('/client/logout', 'Auth\ClientLoginController@clientLogout')->name('client.logout');
@@ -106,6 +106,7 @@ Route::prefix('pages')->group(function () {
     Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
     Route::get('/calculaFreteOffline/{cep},{peso}', 'CartController@calcFreteOffline');
 
+    Route::post('/client/address', 'ClientController@saveClientAddress')->name('client.address.save');
 });
 
 Route::get('/alteraremailcliente', 'ProductController@paginaAlteraremailcliente')->name('alteraremailcliente.page');

@@ -71,40 +71,61 @@ class ClientRegisterController extends Controller
             $imageName = 'noavatar.png';
         }
 
+        DB::beginTransaction();
+
         try {
-            Phone::create([
-            'cd_celular1' => $telefone
-        ]);
+            $telefone = $this->createPhone($telefone);
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('client.register')->with('nosuccess', 'Erro ao cadastrar o telefone do cliente');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('client.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
         } catch (\Exception $e) {
-            dd($e->getMessage());
-            return redirect()->route('client.register')->with('nosuccess', 'Problema ao cadastrar o cliente');
-        } finally {
-            $tel = Phone::orderBy('cd_telefone', 'DESC')->first();
+            DB::rollBack();
+            throw $e;
         }
 
         try {
-            $client = Client::create([
-                'cd_cpf_cnpj' => $request->cd_cpf_cnpj,
-                'nm_cliente' => $request->nm_cliente,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'dt_nascimento' => $dtNascimento->toDateString(),
-                'im_cliente' => $imageName,
-                'cd_telefone' => $tel->cd_telefone,
-            ]);
+            $cliente = $this->createClient($request->cd_cpf_cnpj, $request->nm_cliente, $request->email, $request->password, $dtNascimento->toDateString(), $imageName, $telefone->cd_telefone);
         } catch (\Exception $e) {
-            dd($e->getMessage());
-            Phone::destroy($tel->cd_telefone);
-            return redirect()->route('client.register')->with('nosuccess', 'Problema ao realizar o cadastro');
+            DB::rollBack();
+            return redirect()->route('client.register')->with('nosuccess', 'Erro ao cadastrar os dados do cliente');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('client.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         } finally {
             if ($userWithImage) {
                 $this->saveImageFile($imagePath, $imageName, $realPath);
             }
 
-            Auth::login($client);
-            
+            DB::commit();
+            Auth::login($cliente);
             return redirect()->route('client.dashboard')->with('success', 'Cadastro realizado com sucesso');
         }
+    }
+
+    public function createPhone($numTelefone)
+    {
+        return Phone::firstOrCreate([
+            'cd_celular1' => $numTelefone
+        ]);
+    }
+
+    public function createClient($cpfCnpj, $nomeCliente, $email, $senha, $dataNascimento, $imagemCliente, $codTelefone)
+    {
+        return Client::create([
+            'cd_cpf_cnpj' => $cpfCnpj,
+            'nm_cliente' => $nomeCliente,
+            'email' => $email,
+            'password' => Hash::make($senha),
+            'dt_nascimento' => $dataNascimento,
+            'im_cliente' => $imagemCliente,
+            'cd_telefone' => $codTelefone,
+        ]);
     }
 
     public function verificaCpfCnpj($cpf_cnpj)
