@@ -46,7 +46,7 @@
                     <div class="cart-footer d-flex mt-30">
 
                         <div class="back-to-shop">
-                            <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px">Continuar Comprando</button>
+                            <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</button>
                         </div>
                         <div class="update-checkout w-50" style="padding: 0 4px">
                             <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #3a3a3a">Limpar Carrinho</button>
@@ -144,7 +144,7 @@
                             {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
                             <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
 
-                            <button type="button" id="finalizar" disabled class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px">Finalizar Compra</button>
+                            <button type="button" id="finalizar" disabled class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
                         </form>
                     </div>
                 </div>

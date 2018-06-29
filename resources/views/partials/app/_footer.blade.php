@@ -6,7 +6,7 @@
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="single_footer_area">
                         <div class="footer-logo">
-                            <img src=" {{ asset('img/app/core-img/logo.png') }}" alt="">
+                            <img style="max-width: 75%" src=" {{ asset('img/app/core-img/logo.png') }}" alt="">
                         </div>
                         <div class="copywrite_text d-flex align-items-center">
                             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
