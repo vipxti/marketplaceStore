@@ -22,7 +22,7 @@
 
                                 {{-- Foreach aqui!!!!! --}}
 
-                                {{ dd($produtos[0]) }}
+                                {{--{{ dd($produtos[0]) }}--}}
 
                                 @foreach($produtos as $key => $produto)
 
