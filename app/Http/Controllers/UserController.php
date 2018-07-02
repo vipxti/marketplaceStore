@@ -27,7 +27,7 @@ class UserController extends Controller
 
         //dd(Auth::user()->cd_acesso);
 
-        return view('pages.admin.cadUsuario', compact('acessos'));
+        return view('pages.admin.users.register', compact('acessos'));
     }
 
     public function atualizaDadosUsuario(UserDataRequest $request)
@@ -50,20 +50,31 @@ class UserController extends Controller
         }
 
         try {
-            $user->nm_usuario = $request->nm_usuario;
-            $user->email = $request->email;
-            $user->password = $pass;
-            $user->cd_acesso = $acesso;
-
-            $user->save();
+            $this->atualizaDados($request->nm_usuario, $request->email, $pass, $acesso);
+        } catch (ValidationException $e) {
+            return redirect()->route('admin.register')->with('nosuccess', 'Erro ao atualizar seus dados');
+        } catch (QueryException $e) {
+            return redirect()->route('admin.register')->with('nosuccess', 'Erro ao atualizar seus dados');
+        } catch (\PDOException $e) {
+            return redirect()->route('admin.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
         } catch (\Exception $e) {
-            return redirect()->back()->with('nosuccess', 'Houve um problema ao atualizar seus dados');
-        } finally {
-            return redirect()->route('user.data')->with('success', 'Dados atualizados com sucesso');
+            throw $e;
         }
+
+        $user->save();
+
+        return redirect()->route('admin.data')->with('success', 'Dados atualizados com sucesso');
     }
 
-    public function atualizaEnderecoUsuario()
+    public function atualizaEndereco()
     {
+    }
+
+    public function atualizaDados($nome, $email, $senha, $acesso)
+    {
+        $user->nm_usuario = $nome;
+        $user->email = $email;
+        $user->password = $senha;
+        $user->cd_acesso = $acesso;
     }
 }

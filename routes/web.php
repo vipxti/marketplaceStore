@@ -49,10 +49,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/tamanhonumero', 'SizeController@cadastrarNovoTamanhoNumero')->name('numbersize.save');
 
     //Form cor e cadastro
-    Route::get('/color', 'ColorController@showColorForm')->name('color.page')->middleware('auth:admin')->middleware('auth:admin');
+    Route::get('/color', 'ColorController@showColorForm')->name('color.page')->middleware('auth:admin');
     Route::post('/color', 'ColorController@crudCor')->name('color.save');
 
-    Route::get('/userdata', 'UserController@showUserForm')->name('user.data')->middleware('auth:admin')->middleware('auth:admin');
+    Route::get('/data', 'UserController@showUserForm')->name('admin.data')->middleware('auth:admin');
 
     //Edição do site
     Route::get('/hotpost', 'PageController@showHotPostPage')->name('hotpost.edit')->middleware('auth:admin');
@@ -78,12 +78,16 @@ Route::prefix('admin')->group(function () {
     //----------------
 });
 
-Route::prefix('pages')->group(function () {
-    //Página Produtos
-    Route::get('/products', 'ProductController@paginaProduto')->name('products.page');
+Route::prefix('page')->group(function () {
+    
+    //Produtos
+    Route::prefix('product')->group(function () {
+        Route::get('/list', 'ProductController@paginaProduto')->name('products.page');
+    });
 
     //Carrinho
-    Route::get('/cart/{cd_produto}', 'PageController@showCart');
+    //Route::get('/cart/{produtos}', 'CartController@showCartPage');
+    ROute::post('/cart/buy', 'CartController@comprarProduto')->name('cart.buy');
 
     //Compra
     Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');
@@ -92,16 +96,16 @@ Route::prefix('pages')->group(function () {
     Route::get('/boleto', 'PageController@showBoleto')->name('boleto.page');
 
     //Cliente
-    Route::post('/client', 'Auth\ClientRegisterController@create')->name('client.save');
-    Route::get('/client/register', 'Auth\ClientRegisterController@showRegisterForm')->name('client.register');
-    Route::get('/client/login', 'Auth\ClientLoginController@showClientLoginForm')->name('client.login');
-    Route::post('/client/login', 'Auth\ClientLoginController@login')->name('client.login.submit');
-    Route::get('/client/dashboard', 'ClientController@showClientPage')->name('client.dashboard')/*->middleware('auth:web')*/;
-
-    //Logout do cliente
-    Route::get('/client/logout', 'Auth\ClientLoginController@clientLogout')->name('client.logout');
-
-    Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
+    Route::prefix('client')->group(function () {
+        Route::post('/save', 'Auth\ClientRegisterController@create')->name('client.save');
+        Route::get('/register', 'Auth\ClientRegisterController@showRegisterForm')->name('client.register');
+        Route::get('/login', 'Auth\ClientLoginController@showClientLoginForm')->name('client.login');
+        Route::post('/login', 'Auth\ClientLoginController@login')->name('client.login.submit');
+        Route::get('/dashboard', 'ClientController@showClientPage')->name('client.dashboard')/*->middleware('auth:web')*/;
+        Route::get('/logout', 'Auth\ClientLoginController@clientLogout')->name('client.logout');
+        Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
+    });
+    
     Route::get('/calculaFrete/{cep},{altura},{largura},{peso},{comprimento}', 'CartController@calcFrete');
     Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
     Route::get('/calculaFreteOffline/{cep},{peso}', 'CartController@calcFreteOffline');

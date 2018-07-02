@@ -5,9 +5,34 @@ namespace App\Http\Controllers;
 use Cagartner\CorreiosConsulta\CorreiosConsulta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cookie;
+use App\Product;
+use App\Client;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+    public function showCartPage($produtos, $idx)
+    {
+        //dd($idx);
+
+        //$produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', 'sku.cd_dimensao')->where('produto.cd_produto', '=', $cd_produto)->get();
+
+        //$produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->where('produto.cd_produto', '=', $cd_produto)->get();
+
+        $imagem = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('sku_produto_img', 'sku_produto_img.cd_sku', 'sku.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->select('im_produto')->where('produto.cd_produto', '=', $produtos[$idx]['codProduto'])->get();
+
+        //dd($imagem);
+
+        $cliente = Auth::user();
+
+        //dd($cliente);
+
+        return view('pages.app.carrinho', compact('produtos', 'idx', 'imagem', 'cliente'));
+    }
+
     public function calcFrete($cep, $altura, $largura, $peso, $comprimento)
     {
         if ($largura < 11) {
@@ -62,14 +87,77 @@ class CartController extends Controller
         return response()->json([ 'freteCalculado' => $frete ]);
     }
 
+    public function comprarProduto(Request $request)
+    {
+        //dd($request->all());
+
+        if ($this->verificaProduto($request->sku_produto)) {
+            $qtdIndividual = intval(Session::get('qtd' . $request->sku_produto)) + 1;
+
+            session(['qtd' . $request->sku_produto => $qtdIndividual ]);
+
+            $produtosCarrinho = Session::get($request->sku_produto);
+            $idx = Session::get('idx' . $request->sku_produto);
+
+            //dd($produto);
+
+            Cookie::queue($request->sku_produto, $produtosCarrinho, 10);
+            session([$request->sku_produto[$idx]['qtdIndividual'] => $qtdIndividual]);
+        } else {
+            $uniqueId = uniqid(time(), true);
+            $qtdProdutosCarrinho = intval(session('qtdCarrinho'));
+
+            $qtdIndividual = 1;
+
+            $produtosCarrinho[$qtdProdutosCarrinho] = [
+                'uidProduto' => $uniqueId,
+                'codProduto' => $request->cd_produto,
+                'nomeProduto' => $request->nm_produto,
+                'skuProduto' => $request->sku_produto,
+                'descricaoProduto' => $request->ds_produto,
+                'valorProduto' => $request->vl_produto,
+                'qtdProdutoEstoque' => $request->qt_produto,
+                'qtdIndividual' => $qtdIndividual,
+                'pesoProduto' => $request->ds_peso,
+                'alturaProduto' => $request->ds_altura,
+                'larguraProduto' => $request->ds_largura,
+                'comprimentoProduto' => $request->ds_comprimento
+            ];
+
+            $idx = $qtdProdutosCarrinho;
+
+            $qtdProdutosCarrinho++;
+
+            Session::put($request->sku_produto, $produtosCarrinho);
+
+            Session::put('idx' . $request->sku_produto, $idx);
+            
+            //dd($qtdProdutosCarrinho);
+
+            Session::put('qtd' . $request->sku_produto, 1);
+            session([ 'qtdCarrinho' => $qtdProdutosCarrinho ]);
+        }
+
+        return $this->showCartPage($produtosCarrinho, $idx);
+    }
+
+    public function verificaProduto($skuProduto)
+    {
+        if (Session::has($skuProduto)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function finalizarCompra(Request $request)
     {
 
         //dd($request->all());
 
         $largura = $request->largura;
-        $altura= $request->altura;
-        $comprimento= $request->comprimento;
+        $altura = $request->altura;
+        $comprimento = $request->comprimento;
 
         if ($largura < 11) {
             $largura = 11;
@@ -81,9 +169,12 @@ class CartController extends Controller
             $comprimento = 16;
         }
 
-        $data['token'] ='98911E4EC1494B7A8C3E8E7C4AD9F181';
+        $data['token'] = '98911E4EC1494B7A8C3E8E7C4AD9F181';
         $data['email'] = 'manoel@manoelcastro.com.br';
         $data['currency'] = 'BRL';
+
+
+
         $data['itemId1'] = '1';
         $data['itemQuantity1'] = $request->quantidade;
         $data['itemDescription1'] = $request->descricao;
@@ -92,6 +183,9 @@ class CartController extends Controller
         $data['itemWidth1'] = $largura;
         $data['itemHeight1'] = $altura;
         $data['itemLength1'] = $comprimento;
+
+
+
         $data['shippingType'] = $request->tipoServ;
         $data['shippingCost'] = $request->freteval;
         $data['shippingAddressPostalCode'] = '11702690';
@@ -120,17 +214,14 @@ class CartController extends Controller
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        $xml= curl_exec($curl);
+        $xml = curl_exec($curl);
 
         curl_close($curl);
 
-        $xml= simplexml_load_string($xml);
+        $xml = simplexml_load_string($xml);
 
-        //dd($xml);
-
-        //$xml->code;
-
-        return response()->json([ 'codigoCompra' => $xml->code ]);
+        return response()->json(['codigoCompra' => $xml->code]);
+        
 
         /* $data = [
              'items' => [

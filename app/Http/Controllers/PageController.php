@@ -8,26 +8,23 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function showHotPostPage() {
-
+    public function showHotPostPage()
+    {
         return view('pages.admin.indexHotpost');
-
     }
 
-    public function showBannerPage() {
-
+    public function showBannerPage()
+    {
         return view('pages.admin.indexBanner');
-
     }
 
-    public function showConfigProductPage() {
-
+    public function showConfigProductPage()
+    {
         return view('pages.admin.indexConfigproduto');
-
     }
 
-    public function showCart($cd_produto) {
-
+    public function showCart($cd_produto)
+    {
         $produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', 'sku.cd_dimensao')->where('produto.cd_produto', '=', $cd_produto)->get();
 
 //        $produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->where('produto.cd_produto', '=', $cd_produto)->get();
@@ -38,31 +35,26 @@ class PageController extends Controller
 
         //dd($produto);
 
-        return view('pages.app.carrinho', compact('produto','imagem', 'cliente'));
-
+        return view('pages.app.carrinho', compact('produto', 'imagem', 'cliente'));
     }
 
-    public function showCheckout() {
-
+    public function showCheckout()
+    {
         return view('pages.app.checkout');
-
     }
 
-    public function showEndereco() {
-
+    public function showEndereco()
+    {
         return view('pages.app.endereco');
-
     }
 
-    public function showCartao() {
-
+    public function showCartao()
+    {
         return view('pages.app.cartao');
-
     }
 
-    public function showBoleto() {
-
+    public function showBoleto()
+    {
         return view('pages.app.boletoPageController');
-
     }
 }

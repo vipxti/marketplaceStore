@@ -96,7 +96,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('user.data')}}"><i class="fa fa-edit"></i>Alterar Dados do Usuário</a></li>
+                    <li><a href="{{route('admin.data')}}"><i class="fa fa-edit"></i>Alterar Dados do Usuário</a></li>
                 </ul>
             </li>
             <li class="treeview">

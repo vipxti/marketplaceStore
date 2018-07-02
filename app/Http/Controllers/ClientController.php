@@ -52,13 +52,9 @@ class ClientController extends Controller
             $pais = $this->createCountry($request->nm_pais);
         } catch (ValidationException $e) {
             DB::rollBack();
-            dd($e->getMessage());
-
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o país');
         } catch (QueryException $e) {
             DB::rollBack();
-            dd($e->getMessage());
-
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o país');
         } catch (\PDOException $e) {
             DB::rollBack();

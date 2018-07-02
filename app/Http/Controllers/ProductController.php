@@ -47,11 +47,6 @@ class ProductController extends Controller
         return view('pages.app.produto', compact('produtos', 'imagemPrincipal'));
     }
 
-    public function paginaPainelcliente()
-    {
-        return view('pages.app.painelcliente');
-    }
-
     public function paginaAlteraremailcliente()
     {
         return view('pages.app.alteraremailcliente');
@@ -76,7 +71,7 @@ class ProductController extends Controller
 
         //dd($produtos);
 
-        return view('pages.admin.listProd', compact('produtos', 'tamanhosLetras', 'tamanhosNumeros', 'cores'));
+        return view('pages.admin.products.list', compact('produtos', 'tamanhosLetras', 'tamanhosNumeros', 'cores'));
     }
 
     public function showProductAdminPage()
@@ -87,7 +82,7 @@ class ProductController extends Controller
         $tamanhosNumeros = NumberSize::all();
         $dimensoes = Dimension::all();
 
-        return view('pages.admin.cadProduto', compact('categorias', 'cores', 'tamanhosLetras', 'tamanhosNumeros', 'dimensoes'));
+        return view('pages.admin.products.register', compact('categorias', 'cores', 'tamanhosLetras', 'tamanhosNumeros', 'dimensoes'));
     }
 
     public function showProductPageVariation($cd_produto)

@@ -40,43 +40,36 @@ class UserRegisterController extends Controller
      */
     protected function create(UserRequest $request)
     {
-
         try {
-
-            $user = User::create([
-
-                'nm_usuario' => $request->nm_usuario,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'cd_cpf_cnpj' => $request->cd_cpf_cnpj,
-                'cd_acesso' => 0
-
-            ]);
-
-        }
-        catch (\Exception $e) {
-
-            return redirect()->route('admin.register')->with('nosuccess', 'Houve um problema ao cadastrar o usuário');
-
-        }
-        finally {
-
-            Auth::guard('admin')->login($user);
-            return redirect()->route('user.data')->with('success', 'Bem vindo ' . Auth::guard('admin')->user()->nm_usuario);
-
+            $this->createUser($request->nm_usuario, $request->email, $request->password, $request->cd_cpf_cnpj, 0);
+        } catch (ValidationException $e) {
+            return redirect()->route('admin.register')->with('nosuccess', 'Erro ao cadastrar o usuário');
+        } catch (QueryException $e) {
+            return redirect()->route('admin.register')->with('nosuccess', 'Erro ao cadastrar o usuário');
+        } catch (\PDOException $e) {
+            return redirect()->route('admin.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        } catch (\Exception $e) {
+            throw $e;
         }
 
+        return redirect()->route('admin.login')->with('success', 'Usuário cadastrado com sucesso');
     }
 
-    public function verificaCpfCnpj($cpf_cnpj){
+    public function createUser($nome, $email, $senha, $cpfCnpj, $acesso)
+    {
+        return User::create([
+            'nm_usuario' => $nome,
+            'email' => $email,
+            'password' => Hash::make($senha),
+            'cd_cpf_cnpj' => $cpfCnpj,
+            'cd_acesso' => $acesso
+        ]);
+    }
 
-        $cpf_cpnj_achado = DB::table('usuario')
-                            ->select('cd_cpf_cnpj')
-                            ->where('cd_cpf_cnpj', '=', $cpf_cnpj)
-                            ->get();
+    public function verificaCpfCnpj($cpf_cnpj)
+    {
+        $cpf_cpnj_achado = DB::table('usuario')->select('cd_cpf_cnpj')->where('cd_cpf_cnpj', '=', $cpf_cnpj)->get();
 
         return response()->json([ 'cpf_cnpj' => $cpf_cpnj_achado ]);
-
-
     }
 }

@@ -22,22 +22,31 @@
 
                                 {{-- Foreach aqui!!!!! --}}
 
-                                <td class="cart_product_img d-flex align-items-center">
-                                    <a href="#"><img src="{{ asset('img/products/' . $imagem[0]->im_produto) }}" alt="Product"></a>
-                                    <h6>{{ $imagem[0]->nm_produto }}</h6>
-                                </td>
+                                {{ dd($produtos[0]) }}
 
-                                <td class="price"><span id="precoProd">R$ {{ str_replace('.', ',', $imagem[0]->vl_produto) }}</span></td>
+                                @foreach($produtos as $key => $produto)
 
-                                <td class="qty">
-                                    <div class="quantity">
-                                        <span class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="1">
-                                        <span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                        <i id="spinner_qtd" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i>
-                                    </div>
-                                </td>
-                                <td class="total_price"><span id="valorTotal"></span></td>
+                                    <p>{{ Session::get('qtd' . $produto['skuProduto']) }}</p>
+
+                                    <td class="cart_product_img d-flex align-items-center">
+                                        <a href="#"><img src="{{ asset('img/products/' . $imagem[$key]->im_produto) }}" alt="Product"></a>
+                                        <h6>{{ $produto['nomeProduto'] }}</h6>
+                                    </td>
+
+                                    <td class="price"><span id="precoProd">R$ {{ str_replace('.', ',', $produto['valorProduto']) }}</span></td>
+
+                                    <td class="qty">
+                                        <div class="quantity">
+                                            <span class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{ Session::get('qtd' . $produto['skuProduto']) }}">
+                                            <span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                            <i id="spinner_qtd" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i>
+                                        </div>
+                                    </td>
+                                    <td class="total_price"><span id="valorTotal"></span></td>
+                                    
+                                @endforeach
+                                
                             </tr>
                             </tbody>
                         </table>
@@ -115,19 +124,25 @@
                         <form id="formComprar">
                             {{ csrf_field() }}
 
-                            <!-- array dos produtos -->
-                            <input type="hidden" name="id" value="1">
-                            <input type="hidden" name="code" id="code" value="" />
-                            <input type="hidden" name="descricao" value="{{ $produto[0]->nm_produto }}">
-                            <input id="qtdProd" type="hidden" name="quantidade" value="1">
-                            <input type="hidden" name="valor" value="{{ $produto[0]->vl_produto }}">
-                            <input type="hidden" name="peso" value="{{ $produto[0]->ds_peso }}">
-                            <input type="hidden" name="fretecal" value="">
-                            <input type="hidden" name="largura" value="{{ $produto[0]->ds_largura }}">
-                            <input type="hidden" name="altura" value="{{ $produto[0]->ds_altura }}">
-                            <input type="hidden" name="comprimento" value="{{ $produto[0]->ds_comprimento }}">
-                            <input id="freteForm" type="hidden" name="freteval" value="">
-                            <input id="tipoServForm" type="hidden" name="tipoServ" value="">
+                            @foreach($produtos as $key => $produto)
+
+                                <!-- array dos produtos -->
+                                <input type="hidden" name="id[]" value="{{ $key + 1}}">
+                                <input type="hidden" name="code[]" id="code" value="{{ $produto['uidProduto'] }}" />
+                                <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
+                                <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
+                                <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
+                                <input type="hidden" name="peso[]" value="{{ $produto['pesoProduto'] }}">
+                                <input type="hidden" name="fretecal[]" value="">
+                                <input type="hidden" name="largura[]" value="{{ $produto['larguraProduto'] }}">
+                                <input type="hidden" name="altura[]" value="{{ $produto['alturaProduto'] }}">
+                                <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoProduto'] }}">
+                                <input id="freteForm" type="hidden" name="freteval[]" value="">
+                                <input id="tipoServForm" type="hidden" name="tipoServ[]" value="">
+
+                            @endforeach
+
+                            
 
                             <!-- array do cliente -->
                           {{--  <input type="hidden" name="cep" value="{{ $cliente[0]->cd_cep }}">
@@ -138,9 +153,15 @@
                             <input type="hidden" name="estado" value="{{ $cliente[0]->nm_uf }}">
                             <input type="hidden" name="pais" value="{{ $cliente[0]->nm_pais }}">--}}
 
-                            <input type="hidden" name="email_cliente" value="{{ $cliente[0]->email }}">
-                            <input type="hidden" name="nome" value="{{ $cliente[0]->nm_cliente }}">
-                            <input type="hidden" name="numero_cpf" value="{{ $cliente[0]->cd_cpf_cnpj }}">
+                            @if(Auth::check())
+
+                                <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
+                                <input type="hidden" name="nome" value="{{ Auth::user()->nm_cliente }}">
+                                <input type="hidden" name="numero_cpf" value="{{ Auth::user()->cd_cpf_cnpj }}">
+
+                            @endif
+
+                            
                             {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
                             <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
 
@@ -159,8 +180,8 @@
 
         //JA SETA OS VALORES AO CARREGAR A PAGINA
         $(document).ready(function(){
-            $('#precoSubTotal').html($('#precoProd').html());
-            $('#valorTotal').html($('#precoProd').html());
+            $('#precoSubTotal').html('R$ ' + (parseFloat($('#precoProd').html().replace('R$ ', '')) * parseInt($('#qty').val())).toFixed(2).replace('.', ','));
+            $('#valorTotal').html('R$ ' + (parseFloat($('#precoProd').html().replace('R$ ', '')) * parseInt($('#qty').val())).toFixed(2).replace('.', ','));
         });
 
         var totalCalc = false;
@@ -198,23 +219,23 @@
         //CONSULTA O WEBSERVICE OU OFFLINE O CEP
         function consultaFrete(spinner){
             var qtd = $('#qty').val();
-            var pesoTotal = parseFloat('{{$produto[0]->ds_peso}}');
+            var pesoTotal = parseFloat(`{{$produtos[$idx]['pesoProduto']}}`);
             pesoTotal = (pesoTotal / 1000);
             pesoTotal = pesoTotal * qtd;
 
             $objF = {
                 cep: $('#campoCep').val(),
-                altura: '{{$produto[0]->ds_altura}}',
-                largura: '{{$produto[0]->ds_largura}}',
+                altura: `{{$produtos[$idx]['alturaProduto']}}`,
+                largura: `{{$produtos[$idx]['larguraProduto']}}`,
                 peso: pesoTotal.toFixed(2),
-                comprimento: '{{$produto[0]->ds_comprimento}}'
+                comprimento: `{{$produtos[$idx]['comprimentoProduto']}}`
             };
 
             spinner.css('visibility', 'visible');
             $('#finalizar').attr('disabled', 'disabled');
 
             $.ajax({
-                url: '{{ url('/pages/calculaFrete') }}/' + $objF.cep + ',' + $objF.altura + ',' + $objF.largura + ',' + $objF.peso  + ',' + $objF.comprimento,
+                url: '{{ url('/page/calculaFrete') }}/' + $objF.cep + ',' + $objF.altura + ',' + $objF.largura + ',' + $objF.peso  + ',' + $objF.comprimento,
                 type: 'GET',
                 success: function(data){
                     console.log('oy');
@@ -231,7 +252,7 @@
 
                     //CONSULTA OFFLINE CASO O WEBSERVICE NAO FUNCIONAR
                     $.ajax({
-                        url: '{{url('/pages/calculaFreteOffline')}}/' + $objF.cep + ',' + $objF.peso,
+                        url: '{{url('/page/calculaFreteOffline')}}/' + $objF.cep + ',' + $objF.peso,
                         type: 'GET',
                         success: function (data) {
                             console.log("yo");
@@ -321,7 +342,7 @@
 
             $.ajax({
                 //url: '/pages/calculaFrete/' + objF,
-                url: '{{ url('pages/pagseguro/redirect') }}',
+                url: '{{ url('page/pagseguro/redirect') }}',
                 type: 'POST',
                 data: $("#formComprar").serialize(),
                 success: function(codigoCompra){
@@ -340,17 +361,17 @@
                 }
             });
 
-            {{--$.ajax({--}}
-            {{--//url: '/pages/calculaFrete/' + objF,--}}
-            {{--url: '{{ url('/pagseguro/redirect') }}',--}}
-            {{--type: 'POST',--}}
-            {{--success: function(data){--}}
-            {{--console.log(data.codigo_compra);--}}
-            {{--},--}}
-            {{--error: function () {--}}
-            {{--console.log('erro');--}}
-            {{--}--}}
-            {{--});--}}
+            // {{--$.ajax({--}}
+            // {{--//url: '/pages/calculaFrete/' + objF,--}}
+            // {{--url: '{{ url('/pagseguro/redirect') }}',--}}
+            // {{--type: 'POST',--}}
+            // {{--success: function(data){--}}
+            // {{--console.log(data.codigo_compra);--}}
+            // {{--},--}}
+            // {{--error: function () {--}}
+            // {{--console.log('erro');--}}
+            // {{--}--}}
+            // {{--});--}}
 
         });
 
@@ -406,7 +427,7 @@
                 total = preco;
             }
 
-            if(qtd < {{$produto[0]->qt_produto}} - 1) {
+            if(qtd < {{ $produtos[$idx]['qtdProdutoEstoque'] }} - 1) {
                 qtd++;
                 total = preco * qtd;
                 $('.qty-minus').removeAttr('disabled');

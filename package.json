@@ -17,6 +17,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "js-cookie": "^2.2.0",
         "wowjs": "^1.1.3"
     }
 }

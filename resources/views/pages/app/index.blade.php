@@ -184,7 +184,23 @@
                             <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
                             <p>{{ $produto->nm_produto }}</p>
                             <!-- Add to Cart -->
-                            <a href="{{ url('/pages/cart/' . $produto->cd_produto) }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp COMPRAR</a>
+                            <form action="{{ route('cart.buy') }}" method="post">
+                                {{ csrf_field() }}
+                                
+                                <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
+                                <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
+                                <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
+                                <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
+                                <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
+                                <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
+                                <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
+                                <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
+                                <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
+                                <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
+
+                                <button type="submit" class="btn btn-link add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                {{-- <a href="{{ route('cart.buy') }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a> --}}
+                            </form> 
                         </div>
                     </div>
                 @endforeach
@@ -226,21 +242,16 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
                     <div id="instafeed" class="row gallery"></div>
-
                 </div>
             </div>
         </div>
     </section>
-
 
     <script src="{{asset('js/app/instafeed.js')}}"></script>
     <script src="{{asset('js/app/magnific.min.js')}}"></script>
     <script src="{{asset('js/app/custom.js')}}"></script>
     {{--}}<script src="{{ asset('js/app/instagram.js') }}"></script>
     <script type='text/javascript'>
-
-
-
         var feed=new ody({get:"user",
 
             limit:9,
@@ -262,5 +273,13 @@
 
     </script>--}}
     <!-- ****** Popular Brands Area End ****** -->
+
+    <script>
+    
+        $(document).ready(function() {
+            console.log('Ok');
+        });    
+    
+    </script>
 
 @stop
