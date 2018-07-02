@@ -44,25 +44,23 @@
                                         </div>
                                     </td>
                                     <td class="total_price"><span id="valorTotal"></span></td>
-                                    
+
                                 @endforeach
-                                
+
                             </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="cart-footer d-flex mt-30">
-
                         <div class="back-to-shop">
                             <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</button>
                         </div>
-                        <div class="update-checkout w-50" style="padding: 0 4px">
+                        <div class="update-checkout w-50">
                             <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #3a3a3a">Limpar Carrinho</button>
                             <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #3a3a3a">Atualizar Carrinho</button>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -71,102 +69,55 @@
                     <div class="coupon-code-area mt-70">
                         <div class="cart-page-heading">
                             <h5>Calcular Frete</h5>
-                            <p><b>Insira o CEP do endereço que deseja receber o produto.</b></p>
+                            <p>Insira o CEP do endereço que deseja receber o produto.</p>
                             <p>Assim você poderá calcular o frete e conhecer os serviços disponíveis</p>
                         </div>
                         <form>
-                            <input id="campoCep" type="text" name="cep_cliente" maxlength="8">
-                            <button class="btn btn-danger" id="btnCalcFrete" type="button" style="border-radius: 0px">Calcular</button>
-                            <i id="spinner_btn" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i><br>
+                            <input id="campoCep" type="text" name="cep_cliente" maxlength="8" style="padding: 0 10px !important; border: 0.5px solid #1e282c !important;">
+                            <button class="btn btn-danger" id="btnCalcFrete" type="button" style="border-radius: 0px !important; width: 90px !important;">Calcular</button><br>
                             <p style="font-size: 0.90em" id="msgErroCep"></p>
                         </form>
                     </div>
                 </div>
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <div class="shipping-method-area mt-70">
-                            <div class="cart-page-heading">
-                                <h5>Qual envio prefere?</h5>
-                                <p>Escolha uma Opção</p>
-                            </div>
-                            <div class="custom-control custom-radio mb-14">
-                                <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" checked>
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                    <span id="sedex">Expresso &nbsp;</span><span id="precoSedex"></span><span id="diasSedex"></span>
-                                </label>
-                            </div>
-                            <div class="custom-control custom-radio mb-14">
-                                <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input">
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
-                                    <span id="pac">Normal &nbsp;</span><span id="precoPac"></span><span id="diasPac"></span>
-                                </label>
-                            </div>{{--
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" checked>
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
-                                    <span>Retirar no Local</span>
-                                    <span>Grátis</span>
-                                </label>
-                            </div>--}}
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="cart-page-heading">
+                            <h5>Qual envio prefere?</h5>
+                            <p>Escolha uma Opção</p>
                         </div>
                     </div>
-                <div class="col-12 col-md-12 col-lg-12">
-                    <div class="cart-total-area mt-70">
-                        <div class="cart-page-heading">
-                            <h5>Total</h5>
-                            <p>Informações da compra</p>
+                    <div class="row">
+                        <div class="custom-control custom-radio">
+                            <div class="col-4 col-sm-4" style="height: 50px; !important;">
+                                <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input" checked>
+                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                    <span id="pac">&nbsp;Normal</span>
+                                </label>
+                            </div>
+
+                            <div class="col-4 col-sm-4" style="height: 50px; !important;">
+                                <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
+                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                    <span id="sedex">&nbsp;Expresso</span>
+                                </label>
+                            </div>
                         </div>
-                        <ul class="cart-total-chart">
-                            <li><span>Subtotal</span> <span id="precoSubTotal">-</span></li>
-                            <li><span>Envio</span> <span id="precoCalcFrete">-</span></li>
-                            <li><span><strong>Total</strong></span> <span><strong id="precoCalcTotal">-</strong></span></li>
-                        </ul>
-
-                        <form id="formComprar">
-                            {{ csrf_field() }}
-
-                            @foreach($produtos as $key => $produto)
-
-                                <!-- array dos produtos -->
-                                <input type="hidden" name="id[]" value="{{ $key + 1}}">
-                                <input type="hidden" name="code[]" id="code" value="{{ $produto['uidProduto'] }}" />
-                                <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
-                                <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
-                                <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
-                                <input type="hidden" name="peso[]" value="{{ $produto['pesoProduto'] }}">
-                                <input type="hidden" name="fretecal[]" value="">
-                                <input type="hidden" name="largura[]" value="{{ $produto['larguraProduto'] }}">
-                                <input type="hidden" name="altura[]" value="{{ $produto['alturaProduto'] }}">
-                                <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoProduto'] }}">
-                                <input id="freteForm" type="hidden" name="freteval[]" value="">
-                                <input id="tipoServForm" type="hidden" name="tipoServ[]" value="">
-
-                            @endforeach
-
-                            
-
-                            <!-- array do cliente -->
-                          {{--  <input type="hidden" name="cep" value="{{ $cliente[0]->cd_cep }}">
-                            <input type="hidden" name="endereco" value="{{ $cliente[0]->ds_endereco }}">
-                            <input type="hidden" name="numero" value="{{ $cliente[0]->cd_numero_endereco }}">
-                            <input type="hidden" name="bairro" value="{{ $cliente[0]->nm_bairro }}">
-                            <input type="hidden" name="cidade" value="{{ $cliente[0]->nm_cidade }}">
-                            <input type="hidden" name="estado" value="{{ $cliente[0]->nm_uf }}">
-                            <input type="hidden" name="pais" value="{{ $cliente[0]->nm_pais }}">--}}
-
-                            @if(Auth::check())
-
-                                <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
-                                <input type="hidden" name="nome" value="{{ Auth::user()->nm_cliente }}">
-                                <input type="hidden" name="numero_cpf" value="{{ Auth::user()->cd_cpf_cnpj }}">
-
-                            @endif
-
-                            
-                            {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
-                            <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
-
-                            <button type="button" id="finalizar" disabled class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
-                        </form>
+                        <div class="row">
+                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                <span id="precoPac"></span>
+                            </div>
+                            <div class="w-100 d-none d-md-block"></div>
+                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                <span id="diasPac"></span>
+                            </div>
+                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                <span id="precoSedex"></span>
+                            </div>
+                            <div class="w-100 d-none d-md-block"></div>
+                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                <span id="diasSedex" ></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -373,82 +324,80 @@
             // {{--}--}}
             // {{--});--}}
 
-        });
+            });
 
-        //SO HABILITA O CAMPO CEP SE ESTIVER PREENCHIDO
-        $('#campoCep').on("input", function(){
-            if($(this).length != 8){
-                $('#precoCalcFrete').html("-");
-                $('#precoCalcTotal').html("-");
-                $('#precoSedex').html("");
-                $('#precoPac').html("");
-                $('#diasPac').html("");
-                $('#diasSedex').html("");
-                $('#finalizar').attr('disabled', 'disabled');
-                totalCalc=false;
-            }
-        });
+            //SO HABILITA O CAMPO CEP SE ESTIVER PREENCHIDO
+            $('#campoCep').on("input", function(){
+                if($(this).length != 8){
+                    $('#precoCalcFrete').html("-");
+                    $('#precoCalcTotal').html("-");
+                    $('#precoSedex').html("");
+                    $('#precoPac').html("");
+                    $('#diasPac').html("");
+                    $('#diasSedex').html("");
+                    $('#finalizar').attr('disabled', 'disabled');
+                    totalCalc=false;
+                }
+            });
 
-        var preco = null;
-        var qtd=0;
-        var total=0;
-        //DIMINUI O ITEM DA QTD
-        $('.qty-minus').click(function(){
-            if(preco==null){
-                preco = $('#precoProd').html().replace('R$', '').replace(',', '.');
-                qtd = $('#qty').val();
-                total = preco;
-            }
+            var preco = null;
+            var qtd=0;
+            var total=0;
+            //DIMINUI O ITEM DA QTD
+            $('.qty-minus').click(function(){
+                if(preco==null){
+                    preco = $('#precoProd').html().replace('R$', '').replace(',', '.');
+                    qtd = $('#qty').val();
+                    total = preco;
+                }
 
-            if(qtd > 1) {
-                total = preco * (qtd - 1);
-                qtd--;
-                $('.qty-plus').removeAttr('disabled');
-            } else {
-                $(this).attr('disabled', 'disabled');
-            }
+                if(qtd > 1) {
+                    total = preco * (qtd - 1);
+                    qtd--;
+                    $('.qty-plus').removeAttr('disabled');
+                } else {
+                    $(this).attr('disabled', 'disabled');
+                }
 
-            $('#qty').val(qtd);
-            $('#valorTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-            $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-            $('#qtdProd').val($('#qty').val());
-            if(totalCalc){
-                atualizaFrete();
-                consultaFrete($('#spinner_qtd'));
-            }
+                $('#qty').val(qtd);
+                $('#valorTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
+                $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
+                $('#qtdProd').val($('#qty').val());
+                if(totalCalc){
+                    atualizaFrete();
+                    consultaFrete($('#spinner_qtd'));
+                }
 
-        });
+            });
 
-        //AUMENTA O ITEM DA QTD
-        $('.qty-plus').click(function(){
-            if(preco==null){
-                preco = $('#precoProd').html().replace('R$', '').replace(',', '.');
-                qtd = $('#qty').val();
-                total = preco;
-            }
+            //AUMENTA O ITEM DA QTD
+            $('.qty-plus').click(function(){
+                if(preco==null){
+                    preco = $('#precoProd').html().replace('R$', '').replace(',', '.');
+                    qtd = $('#qty').val();
+                    total = preco;
+                }
 
-            if(qtd < {{ $produtos[$idx]['qtdProdutoEstoque'] }} - 1) {
-                qtd++;
-                total = preco * qtd;
-                $('.qty-minus').removeAttr('disabled');
-            }
-            else {
-                $(this).attr('disabled', 'disabled');
-            }
+                if(qtd < {{ $produtos[$idx]['qtdProdutoEstoque'] }} - 1) {
+                    qtd++;
+                    total = preco * qtd;
+                    $('.qty-minus').removeAttr('disabled');
+                }
+                else {
+                    $(this).attr('disabled', 'disabled');
+                }
 
-            $('#qty').val(qtd);
-            $('#valorTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-            $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-            $('#qtdProd').val($('#qty').val());
+                $('#qty').val(qtd);
+                $('#valorTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
+                $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
+                $('#qtdProd').val($('#qty').val());
 
-            if(totalCalc) {
-                atualizaFrete();
-                consultaFrete($('#spinner_qtd'));
-            }
+                if(totalCalc) {
+                    atualizaFrete();
+                    consultaFrete($('#spinner_qtd'));
+                }
 
-        });
-
-
+            });
     </script>
 
 @stop
