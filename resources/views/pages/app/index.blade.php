@@ -58,7 +58,7 @@
     <!-- ****** Top Catagory Area Start ****** -->
     <section class="top_catagory_area d-md-flex clearfix">
         <!-- Single Catagory -->
-        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-2.jpg);">
+        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-2.png);">
             <div class="catagory-content">
                 <h6>Acessórios</h6>
                 <h2>Vendas 30%</h2>
@@ -66,7 +66,7 @@
             </div>
         </div>
         <!-- Single Catagory -->
-        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-3.jpg);">
+        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-3.png);">
             <div class="catagory-content">
                 <h6>Os melhores designer</h6>
                 <h2>Moda Feminina</h2>
@@ -210,26 +210,26 @@
     <!-- ****** New Arrivals Area End ****** -->
 
     <!-- ****** Offer Area Start ****** -->
-    <section class="offer_area height-700 section_padding_100 bg-img" style="background-image: url(img/app/bg-img/bg-5.jpg);">
+    <section class="offer_area height-700 section_padding_100 bg-img" style="background-image: url(img/app/bg-img/bg-5.png);">
         <div class="container h-100">
             <div class="row h-100 align-items-end justify-content-end">
                 <div class="col-12 col-md-8 col-lg-6">
                     <div class="offer-content-area wow fadeInUp" data-wow-delay="1s">
-                        <h2>White t-shirt <span class="karl-level">Hot</span></h2>
-                        <p>* Free shipping until 25 Dec 2017</p>
+                        <h2>Oferta Especial <span class="karl-level">Hot</span></h2>
+                        <p>Catharine Hill Sombras Variadas 1017 - Paleta De Sombras Com 30 Cores Diferentes De Acabamentos Opacos E Cintilantes.</p>
                         <div class="offer-product-price">
-                            <h3><span class="regular-price">R$25.90</span> R$15.90</h3>
+                            <h3><span class="regular-price">R$126.99</span> R$99.99</h3>
                         </div>
-                        <a href="#" class="btn karl-btn mt-30">Compre Agora</a>
+                        <a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM" target="_blank"  class="btn karl-btn mt-30">Compre Agora</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ****** Offer Area End ****** -->
 
-    <!-- ****** Popular Brands Area Start ****** -->
-    <section class="karl-testimonials-area section_padding_100">
+
+    <!-- ****** Grid do Instagram ****** -->
+    {{--<section class="karl-testimonials-area section_padding_100">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -245,7 +245,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>--}}
 
     <script src="{{asset('js/app/instafeed.js')}}"></script>
     <script src="{{asset('js/app/magnific.min.js')}}"></script>

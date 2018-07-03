@@ -112,7 +112,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <div>
-                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 547px; background-color: #ff084e"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 547px; background-color: #d33889"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
                         </div>
                     </div>
                 </div>
