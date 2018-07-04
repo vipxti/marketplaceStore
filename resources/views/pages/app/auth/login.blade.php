@@ -54,7 +54,6 @@
                         </div>
                     </div>
                 </div>
-
                 <br>
 
                 <!-- Botão Salvar -->
@@ -62,6 +61,16 @@
                     <div class="col-md-12" style="padding-left: 34%">
                         <div>
                             <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 360px; background-color: #d33889">Logar</button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-8" style="padding-left: 34%">
+                        <div class="checkbox icheck">
+                            <a href="{{ route('alterarsenhacliente.page' )}}">Esqueci a minha senha</a><br>
+                            <a href="{{ route('client.register' )}}">Registre uma nova conta</a>
                         </div>
                     </div>
                 </div>

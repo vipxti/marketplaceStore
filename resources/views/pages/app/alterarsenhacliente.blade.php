@@ -161,33 +161,20 @@
                 </div>
             </div>
             <br>
-            <div class="col-md-12" style="padding-left: 34%">
-                <p><b>dicas para criar uma senha mais segura:</b></p>
 
-                <ul>
-                    <li>combine letras maiúsculas e minúsculas, símbolos e números</li>
-                    <li>não use informações pessoais</li>
-                    <li>para maior segurança, defina uma senha diferente da anterior</li>
-                </ul>
-            </div>
             <br>
             <!-- Botões Salvar -->
             <div class="col-md-12" style="padding-left: 34%">
                 <div>
-                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 350px; background-color: #ff084e">Salvar</button>
+                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 350px; background-color: #d33889">Salvar</button>
                 </div>
             </div>
 
         </div>
 
     </section>
+    <br><br><br>
     <!-- ****** New Arrivals Area End ****** -->
-
-
-    <!-- ****** Popular Brands Area Start ****** -->
-    <section class="karl-testimonials-area section_padding_100">
-    </section>
-    <!-- ****** Popular Brands Area End ****** -->
 
     <script>
 

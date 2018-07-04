@@ -58,18 +58,18 @@
     <!-- ****** Top Catagory Area Start ****** -->
     <section class="top_catagory_area d-md-flex clearfix">
         <!-- Single Catagory -->
-        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-2.png);">
+        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-2.jpg);">
             <div class="catagory-content">
-                <h6>Acessórios</h6>
-                <h2>Vendas 30%</h2>
+                <h6>Os melhores preços e acessórios</h6>
+                <h2>Sapatos 30%</h2>
                 <a href="#" class="btn karl-btn">Compre Agora</a>
             </div>
         </div>
         <!-- Single Catagory -->
         <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-3.png);">
             <div class="catagory-content">
-                <h6>Os melhores designer</h6>
-                <h2>Moda Feminina</h2>
+                <h6>Os melhores produtos e maquiagens</h6>
+                <h2>Novidades Beleza </h2>
                 <a href="#" class="btn karl-btn">Compre Agora</a>
             </div>
         </div>

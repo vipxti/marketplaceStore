@@ -26,64 +26,37 @@
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acessórios</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Bolsas</a>
-                                                    <a class="dropdown-item" href="#">Carteiras</a>
-                                                    <a class="dropdown-item" href="#">Cintos</a>
+                                                    <a class="dropdown-item" href="#">Bijuterias</a>
+                                                    <a class="dropdown-item" href="#">Relógios</a>
+                                                    <a class="dropdown-item" href="#">Música</a>
+                                                    <a class="dropdown-item" href="#">TV e Áudio</a>
                                                 </div>
                                             </li>
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blazer</a>
+                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Informática</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Cardigan</a>
-                                                    <a class="dropdown-item" href="#">Casacos</a>
-                                                    <a class="dropdown-item" href="#">Jaquetas</a>
+                                                    <a class="dropdown-item" href="#">Computadores</a>
+                                                    <a class="dropdown-item" href="#">acessórios</a>
+                                                    <a class="dropdown-item" href="#">Games</a>
+                                                    <a class="dropdown-item" href="#">Celular</a>
                                                 </div>
                                             </li>
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blusas</a>
+                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Beleza</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Body</a>
-                                                    <a class="dropdown-item" href="#">Camisas</a>
-                                                    <a class="dropdown-item" href="#">Curta</a>
-                                                    <a class="dropdown-item" href="#">Longa</a>
-                                                    <a class="dropdown-item" href="#">Maga</a>
-                                                    <a class="dropdown-item" href="#">Manga</a>
+                                                    <a class="dropdown-item" href="#">Perfume</a>
+                                                    <a class="dropdown-item" href="#">Maquiagem</a>
+                                                    <a class="dropdown-item" href="#">Cabelos</a>
+                                                    <a class="dropdown-item" href="#">Pele</a>
                                                 </div>
                                             </li>
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Outlet</a>
+                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moda</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Queima de Estoque</a>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Plus Size</a>
-                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Blusas</a>
-                                                    <a class="dropdown-item" href="#">Saias</a>
-                                                    <a class="dropdown-item" href="#">Vestidos</a>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Saias</a>
-                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Evazê</a>
-                                                    <a class="dropdown-item" href="#">Jeans</a>
-                                                    <a class="dropdown-item" href="#">Lápis</a>
-                                                    <a class="dropdown-item" href="#">Longa</a>
-                                                    <a class="dropdown-item" href="#">Mid</a>
-                                                    <a class="dropdown-item" href="#">Secretária</a>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Vestido</a>
-                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Longo</a>
-                                                    <a class="dropdown-item" href="#">Godê</a>
-                                                    <a class="dropdown-item" href="#">Malha</a>
-                                                    <a class="dropdown-item" href="#">Mid</a>
-                                                    <a class="dropdown-item" href="#">Jeans</a>
-                                                    <a class="dropdown-item" href="#">Tubinho</a>
+                                                    <a class="dropdown-item" href="#">Feminina</a>
+                                                    <a class="dropdown-item" href="#">Masculina</a>
+                                                    <a class="dropdown-item" href="#">Infantil</a>
+                                                    <a class="dropdown-item" href="#">Esportiva</a>
                                                 </div>
                                             </li>
                                             <li class="nav-item"><a class="nav-link" href=" {{ route('products.page') }}">Produtos</a></li>
@@ -91,7 +64,9 @@
                                     </div>
                                 </nav>
                             </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                             <!-- Carrinho -->
                             <div class="cart">
 
@@ -106,7 +81,7 @@
 
                                     <a href="{{ route('checkout.page') }}" id="header-cart-btn" target="_blank">
                                         <span class="cart_quantity">{{ session::get('qtdCarrinho') }}</span>
-                                        <i class="fa fa-shopping-cart"></i>Carrinho
+                                        <i class="fa fa-shopping-cart"></i>
                                     </a>
 
                                 @endif

@@ -418,7 +418,7 @@ img {
 
 .cart > a > i {
     font-size: 20px;
-    padding-right: 5px;
+    padding-right: 10px;
 }
 
 .cart_quantity {
@@ -3857,7 +3857,7 @@ img {
     ------------------------------------------------- */
 .tabbable-panel {
     border:1px solid #eee;
-    padding: 10px;
+    padding: 12px;
 }
 
 .tabbable-line > .nav-tabs {
