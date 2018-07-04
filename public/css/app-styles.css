@@ -1623,7 +1623,7 @@ img {
     text-align: center;
     font-weight: 700;
     color: #9f9f9f;
-    border: 2px solid #9f9f9f;
+    border: 2px solid #d33889;
     margin-right: 5px;
     background-color: transparent;
 }
@@ -3890,7 +3890,7 @@ img {
     margin-top: 0px;
 }
 .tabbable-line > .nav-tabs > li.active {
-    border-bottom: 4px solid #f3565d;
+    border-bottom: 4px solid #d33889;
     position: relative;
 }
 .tabbable-line > .nav-tabs > li.active > a {

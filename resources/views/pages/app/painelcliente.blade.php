@@ -224,7 +224,7 @@
                                                         <label class="form-label">CEP</label>
                                                     </div>
                                                 </div>
-                                                <p class="msg-cpf"></p>
+                                                <p class="msg-cpf" style="font-size:14px"></p>
                                             </div>
 
                                         </div>
@@ -317,13 +317,12 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <p>&nbsp;</p>
+                                        <br><br>
 
                                         <!-- Botões Salvar -->
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button type="submit" class="btn btn-primary">Adicionar Endereço</button>
+                                        <div class="row" style="padding: 8px">
+                                            <div class="col-md-2" style="padding: 10px">
+                                                <button type="submit" class="btn btn-primary" style="background-color: #d33889">Adicionar Endereço</button>
                                             </div>
                                         </div>                                        
 
