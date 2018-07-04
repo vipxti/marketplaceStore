@@ -27,23 +27,23 @@
                         <div class="tabbable-line">
                             <ul class="nav nav-tabs ">
                                 <li class="active">
-                                    <a href="#tab_default_1" data-toggle="tab">Pedidos</a>
+                                    <a id="tabPedidos" href="#tab_default_1" data-toggle="tab">Pedidos</a>
                                 </li>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <li>
-                                    <a href="#tab_default_2" data-toggle="tab">Compras</a>
+                                    <a id="tabCompras" href="#tab_default_2" data-toggle="tab">Compras</a>
                                 </li>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <li>
-                                    <a href="#tab_default_3" data-toggle="tab">Dados Pessoais</a>
+                                    <a id="tabDados" href="#tab_default_3" data-toggle="tab">Dados Pessoais</a>
                                 </li>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <li>
-                                    <a href="#tab_default_4" data-toggle="tab">Endereço</a>
+                                    <a id="tabEndereco" href="#tab_default_4" data-toggle="tab">Endereço</a>
                                 </li>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <li>
-                                    <a href="#tab_default_5" data-toggle="tab">Atendimento</a>
+                                    <a id="tabAtendimento" href="#tab_default_5" data-toggle="tab">Atendimento</a>
                                 </li>
 
                             </ul>
@@ -430,14 +430,19 @@
                         $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
                             if (!("erro" in dados)) {
                                 //Atualiza os campos com os valores da consulta.
+                                $("#rua").parent().addClass("focused");
                                 $("#rua").val(dados.logradouro);
                                 //$("#rua").attr("disabled", "disabled");
+                                $("#bairro").parent().addClass("focused");
                                 $("#bairro").val(dados.bairro);
                                 //$("#bairro").attr("disabled", "disabled");
+                                $("#cidade").parent().addClass("focused");
                                 $("#cidade").val(dados.localidade);
                                 //$("#cidade").attr("disabled", "disabled");
+                                $("#pais").parent().addClass("focused");
                                 $("#pais").val('Brasil');
                                 //$("#pais").attr("disabled", "disabled");
+                                $("#uf").parent().addClass("focused");
                                 $("#uf").val(dados.uf);
                                 //$("#uf").attr("disabled", "disabled");
                                 $("#ibge").val(dados.ibge);
@@ -484,6 +489,31 @@
 
             console.log($modal);
 
+        });
+
+        $("#tabPedidos").click(function(){
+            $(this).parent().addClass("active");
+            $(this).parent().siblings().removeClass("active");
+        });
+
+        $("#tabCompras").click(function(){
+            $(this).parent().addClass("active");
+            $(this).parent().siblings().removeClass("active");
+        });
+
+        $("#tabDados").click(function(){
+            $(this).parent().addClass("active");
+            $(this).parent().siblings().removeClass("active");
+        });
+
+        $("#tabEndereco").click(function(){
+            $(this).parent().addClass("active");
+            $(this).parent().siblings().removeClass("active");
+        });
+
+        $("#tabAtendimento").click(function(){
+            $(this).parent().addClass("active");
+            $(this).parent().siblings().removeClass("active");
         });
 
 
