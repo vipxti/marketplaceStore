@@ -177,6 +177,7 @@
         <section class="shop_grid_area section_padding_100">
             <div class="container">
                 <div class="row">
+                    <!-- NavBar Lateral -->
                     <div class="col-12 col-md-4 col-lg-3">
                         <div class="shop_sidebar_area">
                             <!-- Menu categorias lateral -->
@@ -327,11 +328,9 @@
                         <div class="shop_grid_product_area">
                             <div class="row">
                                 <div class="row karl-new-arrivals">
-
-                                @foreach($produtos as $key => $produto)
+                                    @foreach($produtos as $key => $produto)
 
                                         <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
-
                                             <div class="product-img">
                                                 <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="">
                                                 <div class="product-quicview">
@@ -345,11 +344,9 @@
                                                 <!-- Botão comprar -->
                                                 <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;COMPRAR</a>
                                             </div>
-
                                         </div>
 
-                                    @endforeach
-
+                                     @endforeach
                                 </div>
 
                                 {{--<div class="d-flex justify-content-center">
@@ -357,6 +354,15 @@
                                     {{ $produtos->links("pagination::bootstrap-4") }}
 
                                 </div>--}}
+
+                                <div>
+                                    <h5>Roupas femininas no Vip-x</h5>
+                                    <p>Para as mulheres que gostam de usar looks modernos e sempre atuais, comprar moda feminina online é a maneira mais fácil e simples de garantir as peças que são tendências na temporada. Além da praticidade e comodidade, a variedade de produtos é um diferencial para quem compra roupas na internet.</p>
+                                    <p>Aqui no vipx.com, as novidades em moda feminina não param de chegar! São blusas femininas, vestidos, calçados e acessórios para renovar seu guarda-roupa com preços que cabem no bolso. E você ainda conta com segurança e ótimo atendimento oferecidos pela equipe do Portal Vipx.</p>
+                                    <p>&nbsp;</p>
+                                </div>
+
+
                                 <div class="shop_pagination_area wow fadeInUp" data-wow-delay="1.1s">
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination pagination-sm">
@@ -366,6 +372,8 @@
                                         </ul>
                                     </nav>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
