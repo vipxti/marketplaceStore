@@ -148,7 +148,7 @@
 
     <!-- ****** New Arrivals Area Start ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
-        <div class="karl-projects-menu mb-100">
+        <div class="karl-projects-menu mb-50">
             <div class="text-center portfolio-menu">
                 <button class="btn active" data-filter="*">Todos</button>
                 <button class="btn" data-filter=".women">Mulher</button>

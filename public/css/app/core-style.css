@@ -306,7 +306,7 @@ img {
 }
 
 .section_heading h2 {
-    font-size: 48px;
+    font-size: 40px;
     margin-bottom: 0;
     text-transform: uppercase;
 }
@@ -1468,7 +1468,7 @@ img {
 .widget-title {
     font-size: 14px;
     font-weight: 700;
-    text-transform: uppercase;
+    text-transform: inherit;
 }
 
 .widget-desc .custom-control-description {
@@ -1497,7 +1497,7 @@ img {
 }
 
 .widget.price .ui-slider-handle {
-    background-color: #3a3a3a;
+    background-color: #d33889;
     border: none;
     border-radius: 0;
     top: -6px;
@@ -1517,7 +1517,7 @@ img {
     font-size: 14px;
     font-weight: 700;
     margin-top: 15px;
-    text-transform: uppercase;
+    text-transform: inherit;
 }
 
 .widget.color .widget-desc ul li a {
@@ -1598,8 +1598,8 @@ img {
     width: 37px;
     text-align: center;
     font-weight: 700;
-    color: #9f9f9f;
-    border: 2px solid #9f9f9f;
+    color: #d33889;
+    border: 2px solid #d33889;
     margin-right: 5px;
     background-color: transparent;
 }
@@ -1607,8 +1607,8 @@ img {
 .pagination-sm .page-link:hover,
 .pagination-sm .page-item.active .page-link,
 .pagination-sm .page-link:focus {
-    color: #d33889;
-    border: 2px solid #d33889;
+    color: #d33889 !important;
+    border: 2px solid #d33889 !important;
     background-color: transparent;
 }
 

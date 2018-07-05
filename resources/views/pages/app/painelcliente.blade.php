@@ -49,12 +49,28 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab_default_1">
-                                    <p></p>
+                                    <p>&nbsp;</p>
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                          <div class="p-3" style="background-color: #f5f5f5">Ops! Produto não encontrado.</div>
+                                       </div>
+                                    </div>
+                                    <p>&nbsp;</p>
                                 </div>
                                 <div class="tab-pane" id="tab_default_2">
-                                    <p></p>
-                                    <p></p>
-                                    <p></p>
+                                    <p>&nbsp;</p>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="p-3" style="background-color: #f5f5f5">Ops! Compra não encontrada.</div>
+                                        </div>
+                                    </div>
+                                    <br><br><br>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <input type="button" class="btn btn-danger" value="Compre agora" style="width: 150px; background-color: #d33889">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane" id="tab_default_3">
 
@@ -66,36 +82,36 @@
                                         <div class="row">
                                             <!-- Nome do Cliente  -->
                                             <div class="col-md-12">
-                                                    <div class="form-group form-float">
-                                                        <div class="form-line">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
                                                         <input type="text" class="form-control" name="nm_cliente" required maxlength="50" value="{{ Auth::user()->nm_cliente }}">
-                                                            <label class="form-label">Nome</label>
-                                                        </div>
+                                                        <label class="form-label">Nome</label>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
 
                                         <!-- E-mail, Data de Nascimento -->
                                         <div class="row">
                                             <!-- E-mail -->
                                             <div class="col-md-6">
-                                                    <div class="form-group form-float">
-                                                        <div class="form-line">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
                                                         <input type="text" class="form-control" name="nm_email" required maxlength="20" value="{{ Auth::user()->email }}">
-                                                            <label class="form-label">E-mail</label>
-                                                        </div>
+                                                        <label class="form-label">E-mail</label>
                                                     </div>
                                                 </div>
+                                            </div>
 
                                             <!-- Data de Nascimento -->
                                             <div class="col-md-6">
-                                                    <div class="form-group form-float">
-                                                        <div class="form-line">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
                                                         <input type="text" class="form-control" name="dt_nascimento" required maxlength="20" value="{{ \Carbon\Carbon::parse(Auth::user()->dt_nascimento)->format('d/m/Y') }}">
-                                                            <label class="form-label">Data de Nascimento</label>
-                                                        </div>
+                                                        <label class="form-label">Data de Nascimento</label>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
 
                                         <!-- Senha,CPF, e CNPJ -->

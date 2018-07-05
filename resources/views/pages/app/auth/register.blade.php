@@ -85,7 +85,7 @@
                             <div class="form-line">
                                 <input type="text" class="form-control" name="cd_celular1"
                                         data-inputmask='"mask": "(99) 99999-9999"' data-mask required maxlength="20">
-                                <label class="form-label">Telefone</label>
+                                <label class="form-label">Celular</label>
                             </div>
                         </div>
                     </div>

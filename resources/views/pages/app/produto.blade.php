@@ -179,65 +179,51 @@
                 <div class="row">
                     <div class="col-12 col-md-4 col-lg-3">
                         <div class="shop_sidebar_area">
-
+                            <!-- Menu categorias lateral -->
                             <div class="widget catagory mb-50">
                                 <!--  Side Nav  -->
                                 <div class="nav-side-menu">
                                     <h6 class="mb-0">Categorias</h6>
                                     <div class="menu-list">
                                         <ul id="menu-content2" class="menu-content collapse out">
-                                            <!-- Single Item -->
+                                            <!-- Acessórios -->
                                             <li data-toggle="collapse" data-target="#women2">
-                                                <a href="#">Woman wear</a>
+                                                <a href="#">Acessórios</a>
                                                 <ul class="sub-menu collapse show" id="women2">
-                                                    <li><a href="#">Midi Dresses</a></li>
-                                                    <li><a href="#">Maxi Dresses</a></li>
-                                                    <li><a href="#">Prom Dresses</a></li>
-                                                    <li><a href="#">Little Black Dresses</a></li>
-                                                    <li><a href="#">Mini Dresses</a></li>
+                                                    <li><a href="#">Bijuterias</a></li>
+                                                    <li><a href="#">Relógios</a></li>
+                                                    <li><a href="#">Música</a></li>
+                                                    <li><a href="#">TV e Áudio</a></li>
                                                 </ul>
                                             </li>
-                                            <!-- Single Item -->
+                                            <!-- Informática -->
                                             <li data-toggle="collapse" data-target="#man2" class="collapsed">
-                                                <a href="#">Man Wear</a>
+                                                <a href="#">Informática</a>
                                                 <ul class="sub-menu collapse" id="man2">
-                                                    <li><a href="#">Man Dresses</a></li>
-                                                    <li><a href="#">Man Black Dresses</a></li>
-                                                    <li><a href="#">Man Mini Dresses</a></li>
+                                                    <li><a href="#">Computadores</a></li>
+                                                    <li><a href="#">Acessórios</a></li>
+                                                    <li><a href="#">Games</a></li>
+                                                    <li><a href="#">Celular</a></li>
                                                 </ul>
                                             </li>
-                                            <!-- Single Item -->
+                                            <!-- Beleza -->
                                             <li data-toggle="collapse" data-target="#kids2" class="collapsed">
-                                                <a href="#">Children</a>
+                                                <a href="#">Beleza</a>
                                                 <ul class="sub-menu collapse" id="kids2">
-                                                    <li><a href="#">Children Dresses</a></li>
-                                                    <li><a href="#">Mini Dresses</a></li>
+                                                    <li><a href="#">Perfume</a></li>
+                                                    <li><a href="#">Maquiagem</a></li>
+                                                    <li><a href="#">Cabelos</a></li>
+                                                    <li><a href="#">Pele</a></li>
                                                 </ul>
                                             </li>
-                                            <!-- Single Item -->
+                                            <!-- Moda -->
                                             <li data-toggle="collapse" data-target="#bags2" class="collapsed">
-                                                <a href="#">Bags &amp; Purses</a>
+                                                <a href="#">Moda</a>
                                                 <ul class="sub-menu collapse" id="bags2">
-                                                    <li><a href="#">Bags</a></li>
-                                                    <li><a href="#">Purses</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Single Item -->
-                                            <li data-toggle="collapse" data-target="#eyewear2" class="collapsed">
-                                                <a href="#">Eyewear</a>
-                                                <ul class="sub-menu collapse" id="eyewear2">
-                                                    <li><a href="#">Eyewear Style 1</a></li>
-                                                    <li><a href="#">Eyewear Style 2</a></li>
-                                                    <li><a href="#">Eyewear Style 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Single Item -->
-                                            <li data-toggle="collapse" data-target="#footwear2" class="collapsed">
-                                                <a href="#">Footwear</a>
-                                                <ul class="sub-menu collapse" id="footwear2">
-                                                    <li><a href="#">Footwear 1</a></li>
-                                                    <li><a href="#">Footwear 2</a></li>
-                                                    <li><a href="#">Footwear 3</a></li>
+                                                    <li><a href="#">Feminina</a></li>
+                                                    <li><a href="#">Masculina</a></li>
+                                                    <li><a href="#">Infantil</a></li>
+                                                    <li><a href="#">Esportiva</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -245,6 +231,7 @@
                                 </div>
                             </div>
 
+                            <!-- Filtro de preço lateral -->
                             <div class="widget price mb-50">
                                 <h6 class="widget-title mb-30">Filtro por preço</h6>
                                 <div class="widget-desc">
@@ -259,25 +246,27 @@
                                 </div>
                             </div>
 
+                            <!-- Filtro de cor lateral -->
                             <div class="widget color mb-70">
                                 <h6 class="widget-title mb-30">Filtro por cor</h6>
                                 <div class="widget-desc">
                                     <ul class="d-flex justify-content-between">
-                                        <li class="gray"><a href="#"><span class="text-center">(3)</span></a></li>
+                                        <li class="gray"><a href="#"><span class="text-center"></span></a></li>
                                         &nbsp;&nbsp;
-                                        <li class="red"><a href="#"><span class="text-center">(4)</span></a></li>
+                                        <li class="red"><a href="#"><span class="text-center"></span></a></li>
                                         &nbsp;&nbsp;
-                                        <li class="yellow"><a href="#"><span class="text-center">(5)</span></a></li>
+                                        <li class="yellow"><a href="#"><span class="text-center"></span></a></li>
                                         &nbsp;&nbsp;
-                                        <li class="green"><a href="#"><span class="text-center">(6)</span></a></li>
+                                        <li class="green"><a href="#"><span class="text-center"></span></a></li>
                                         &nbsp;&nbsp;
-                                        <li class="teal"><a href="#"><span class="text-center">(7)</span></a></li>
+                                        <li class="teal"><a href="#"><span class="text-center"></span></a></li>
                                         &nbsp;&nbsp;
-                                        <li class="cyan"><a href="#"><span class="text-center">(8)</span></a></li>
+                                        <li class="cyan"><a href="#"><span class="text-center"></span></a></li>
                                     </ul>
                                 </div>
                             </div>
 
+                            <!-- Tamanhos lateral -->
                             <div class="widget size mb-50">
                                 <h6 class="widget-title mb-30">Filtro por tamanho</h6>
                                 <div class="widget-desc">
@@ -292,7 +281,8 @@
                                 </div>
                             </div>
 
-                            <div class="widget recommended">
+                            <!-- Recomendados lateral -->
+                            {{--<div class="widget recommended">
                                 <h6 class="widget-title mb-30">Recomendado</h6>
 
                                 <div class="widget-desc">
@@ -323,14 +313,16 @@
                                         </div>
                                         <div class="single-recommended-desc">
 
-                                            <h6>Women’s T-shirt</h6>                               <p>$ 39.99</p>
+                                            <h6>Women’s T-shirt</h6>
+                                            <p>$ 39.99</p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
 
+                    <!-- Produtos e Contador páginas -->
                     <div class="col-12 col-md-8 col-lg-9">
                         <div class="shop_grid_product_area">
                             <div class="row">
@@ -360,10 +352,19 @@
 
                                 </div>
 
-                                <div class="d-flex justify-content-center">
+                                {{--<div class="d-flex justify-content-center">
 
                                     {{ $produtos->links("pagination::bootstrap-4") }}
 
+                                </div>--}}
+                                <div class="shop_pagination_area wow fadeInUp" data-wow-delay="1.1s">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination pagination-sm">
+                                            <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">02</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">03</a></li>
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
