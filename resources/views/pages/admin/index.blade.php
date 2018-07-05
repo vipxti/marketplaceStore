@@ -39,7 +39,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Itens Cadastrados</span>
-                            <span class="info-box-number">{{ $coutProduct }}</span>
+                            <span class="info-box-number">{{ $countProduct }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>

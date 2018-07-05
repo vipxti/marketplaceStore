@@ -20,9 +20,9 @@ use Illuminate\Database\QueryException;
 
 class ProductController extends Controller
 {
-    public function paginaProduto()
+    public function showShopProductsPage()
     {
-        $produtos = Product::where('cd_status_produto', '=', 1)->paginate(6);
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('cd_status_produto', '=', 1)->paginate(6);
 
         //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
 
@@ -42,9 +42,11 @@ class ProductController extends Controller
             ->orderBy('sku_produto_img.cd_img')
             ->get();
 
+        //dd($produtos);
+
         //$produtos = $p->merge($pv);
 
-        return view('pages.app.produto', compact('produtos', 'imagemPrincipal'));
+        return view('pages.app.product.index', compact('produtos', 'imagemPrincipal'));
     }
 
     public function paginaAlteraremailcliente()
@@ -52,9 +54,13 @@ class ProductController extends Controller
         return view('pages.app.alteraremailcliente');
     }
 
-    public function paginaDescproduto()
+    public function showProductDetails($sku)
     {
-        return view('pages.app.descproduto');
+        $product = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('sku.cd_nr_sku', '=', $sku)->firstOrFail();
+
+        //dd($product);
+
+        return view('pages.app.product.details', compact('product'));
     }
 
     public function paginaAlterarsenhacliente()
@@ -114,6 +120,8 @@ class ProductController extends Controller
 
         if ($v !== false) {
             $val = str_replace(',', '.', $request->vl_produto);
+        } else {
+            $val = $request->vl_produto;
         }
 
         if ($request->filled('status') == 'on') {

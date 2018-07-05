@@ -11,26 +11,45 @@ use App\Client;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
-    public function showCartPage($produtos, $idx)
+    public function showCartPage()
     {
-        //dd($idx);
+        return view('pages.app.carrinho');
+    }
+
+    public function cart2()
+    {
+        return view('pages.app.carrinho');
+    }
+
+    public function teste()
+    {
+        //dd($carrinho);
 
         //$produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', 'sku.cd_dimensao')->where('produto.cd_produto', '=', $cd_produto)->get();
 
+        //$p = Session::get('produtos');
+
+        $produtos = Session::get('carrinho');
+
+        dd($produtos);
+
         //$produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->where('produto.cd_produto', '=', $cd_produto)->get();
 
-        $imagem = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('sku_produto_img', 'sku_produto_img.cd_sku', 'sku.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->select('im_produto')->where('produto.cd_produto', '=', $produtos[$idx]['codProduto'])->get();
+        foreach ($produtos as $key => $produto) {
+            $imagem = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('sku_produto_img', 'sku_produto_img.cd_sku', 'sku.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->select('im_produto')->where('produto.cd_produto', '=', $produto['codProduto'])->get()->toArray();
+        }
 
-        //dd($imagem);
+        $arr = array_combine($produtos, $imagem);
+
+        dd($arr);
 
         $cliente = Auth::user();
 
         //dd($cliente);
-
-        return view('pages.app.carrinho', compact('produtos', 'idx', 'imagem', 'cliente'));
     }
 
     public function calcFrete($cep, $altura, $largura, $peso, $comprimento)
@@ -87,64 +106,128 @@ class CartController extends Controller
         return response()->json([ 'freteCalculado' => $frete ]);
     }
 
-    public function comprarProduto(Request $request)
+    public function store(Request $request)
     {
         //dd($request->all());
 
+        Cart::add($request->sku_produto, $request->nm_poduto, $request->qtd_produto, $request->vl_produto);
+
+        return redirect()->route('cart.page')->with('success', 'Item adicionado ao carrinho');
+    }
+
+    public function addToCart(Request $request)
+    {
+        //dd($request->all());
+
+        //Verificar se já tem produto no carrinho
+        //Se tem, acrescentar a quantidade
+        //Se não tem, salvar na session o primeiro produto
+        
+        //verificar se o produto acrescentado é diferente
+        //Se for, fazer a lógica de acrecentar na tabela do carrinho
+
         if ($this->verificaProduto($request->sku_produto)) {
-            $qtdIndividual = intval(Session::get('qtd' . $request->sku_produto)) + 1;
+            $index = Session::get('idx' . $request->sku_produto);
+            $produtosCarrinho = Session::get('cart');
 
-            session(['qtd' . $request->sku_produto => $qtdIndividual ]);
-
-            $produtosCarrinho = Session::get($request->sku_produto);
-            $idx = Session::get('idx' . $request->sku_produto);
-
-            //dd($produto);
-
-            Cookie::queue($request->sku_produto, $produtosCarrinho, 10);
-            session([$request->sku_produto[$idx]['qtdIndividual'] => $qtdIndividual]);
-        } else {
-            $uniqueId = uniqid(time(), true);
-            $qtdProdutosCarrinho = intval(session('qtdCarrinho'));
-
-            $qtdIndividual = 1;
-
-            $produtosCarrinho[$qtdProdutosCarrinho] = [
-                'uidProduto' => $uniqueId,
-                'codProduto' => $request->cd_produto,
-                'nomeProduto' => $request->nm_produto,
-                'skuProduto' => $request->sku_produto,
-                'descricaoProduto' => $request->ds_produto,
-                'valorProduto' => $request->vl_produto,
-                'qtdProdutoEstoque' => $request->qt_produto,
-                'qtdIndividual' => $qtdIndividual,
-                'pesoProduto' => $request->ds_peso,
-                'alturaProduto' => $request->ds_altura,
-                'larguraProduto' => $request->ds_largura,
-                'comprimentoProduto' => $request->ds_comprimento
-            ];
-
-            $idx = $qtdProdutosCarrinho;
-
-            $qtdProdutosCarrinho++;
-
-            Session::put($request->sku_produto, $produtosCarrinho);
-
-            Session::put('idx' . $request->sku_produto, $idx);
+            //dd($produtosCarrinho[$index]['qtdIndividual']);
             
-            //dd($qtdProdutosCarrinho);
+            $qtdIndividual = intval($produtosCarrinho[$index]['qtdIndividual']);
+            $qtdIndividual++;
+            $qtdProdutosCarrinho = intval(Session::get('qtCart'));
 
-            Session::put('qtd' . $request->sku_produto, 1);
-            session([ 'qtdCarrinho' => $qtdProdutosCarrinho ]);
+            //dd($produtosCarrinho[$index]['valorProduto']);
+            //dd($qtdIndividual);
+
+            $valorTotal = $produtosCarrinho[$index]['valorProduto'] * $qtdIndividual;
+            $qtdProdutosCarrinho++;
+            //dd($valorTotal);
+
+            $produtosCarrinho[$index]['qtdIndividual'] = $qtdIndividual;
+            $produtosCarrinho[$index]['valorTotalProduto'] = $valorTotal;
+
+            session([ 'qtCart' => $qtdProdutosCarrinho ]);
+            session([ 'cart' => $produtosCarrinho ]);
+
+        //dd(Session::get('cart'));
+        } else {
+            if (Session::get('qtCart') == 0) {
+                Session::put('cart', []);
+
+                $qtdProdutosCarrinho = Session::get('qtCart');
+                
+                $index = 0;
+
+                $produtosCarrinho = [
+                    'codProduto' => $request->cd_produto,
+                    'nomeProduto' => $request->nm_produto,
+                    'skuProduto' => $request->sku_produto,
+                    'descricaoProduto' => $request->ds_produto,
+                    'valorProduto' => $request->vl_produto,
+                    'qtdProdutoEstoque' => $request->qt_produto,
+                    'qtdIndividual' => 1,
+                    'imagemProduto' => $request->im_produto,
+                    'pesoProduto' => $request->ds_peso,
+                    'alturaProduto' => $request->ds_altura,
+                    'larguraProduto' => $request->ds_largura,
+                    'comprimentoProduto' => $request->ds_comprimento,
+                    'valorTotalProduto' => $request->vl_produto
+                ];
+
+                Session::push('cart', $produtosCarrinho);
+                Session::put('idx' . $request->sku_produto, $index);
+
+                $qtdProdutosCarrinho++;
+
+                Session::put('qtCart', $qtdProdutosCarrinho);
+            } else {
+                $qtdProdutosCarrinho = intval(Session::get('qtCart'));
+
+                $index = Session::get('idx' . $request->sku_produto);
+
+                //dd($produtosCarrinho);
+
+                $produtosCarrinho = [
+                    'codProduto' => $request->cd_produto,
+                    'nomeProduto' => $request->nm_produto,
+                    'skuProduto' => $request->sku_produto,
+                    'descricaoProduto' => $request->ds_produto,
+                    'valorProduto' => $request->vl_produto,
+                    'qtdProdutoEstoque' => $request->qt_produto,
+                    'qtdIndividual' => 1,
+                    'imagemProduto' => $request->im_produto,
+                    'pesoProduto' => $request->ds_peso,
+                    'alturaProduto' => $request->ds_altura,
+                    'larguraProduto' => $request->ds_largura,
+                    'comprimentoProduto' => $request->ds_comprimento,
+                    'valorTotalProduto' => $request->vl_produto
+                ];
+
+                Session::push('cart', $produtosCarrinho);
+
+                //dd($produtosCarrinho);
+
+                $qtdProdutosCarrinho++;
+                $index++;
+
+                session([ 'qtCart' => $qtdProdutosCarrinho ]);
+                session([ 'idx' . $request->sku_produto => $index ]);
+            }
         }
 
-        return $this->showCartPage($produtosCarrinho, $idx);
+        return redirect()->route('cart.page')->with('success', 'Item adicionado ao carrinho');
     }
 
     public function verificaProduto($skuProduto)
     {
-        if (Session::has($skuProduto)) {
-            return true;
+        if (Session::has('cart')) {
+            $carrinho = Session::get('cart');
+
+            foreach ($carrinho as $key => $item) {
+                if ($item['skuProduto'] == $skuProduto) {
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -279,5 +362,93 @@ class CartController extends Controller
             print_r($information->getDate());
             print_r($information->getLink());
         }*/
+    }
+
+    public function deleteProduct(Request $request)
+    {
+        //dd($request->all());
+
+        $carrinho = Session::get('cart');
+        $qtdCarrinho = Session::get('qtCart');
+
+        //dd($qtdCarrinho);
+
+        $qtdProdExcluido = $carrinho[$request->cod_produto_carrinho]['qtdIndividual'];
+
+        //dd($qtdProdExcluido);
+
+        $qtdCarrinho -= $qtdProdExcluido;
+
+        unset($carrinho[$request->cod_produto_carrinho]);
+
+        session([ 'cart' => $carrinho ]);
+        session([ 'qtCart' => $qtdCarrinho ]);
+
+        return redirect()->route('cart.page')->with('success', 'Item excluído com sucesso');
+    }
+
+    public function clearCart(Request $request)
+    {
+        foreach ($request->idx as $key => $sku) {
+            Session::forget('idx' . $sku);
+        }
+
+        Session::forget('cart');
+        Session::forget('qtCart');
+
+        return redirect()->route('cart.page')->with('success', 'Itens excluídos do carrinho');
+    }
+
+    public function addQuantityCart($idx)
+    {
+        $carrinho = Session::get('cart');
+        $qtdCart = Session::get('qtCart');
+
+        $qtInd = $carrinho[$idx]['qtdIndividual'];
+        $vlProd = $carrinho[$idx]['valorProduto'];
+
+        $qtInd += 1;
+
+        $carrinho[$idx]['qtdIndividual'] = $qtInd;
+            
+        $vTotal = $vlProd * $qtInd;
+
+        $carrinho[$idx]['valorTotalProduto'] = $vTotal;
+        $qtdCart += 1;
+
+        session([ 'cart' => $carrinho ]);
+        session([ 'qtCart' => $qtdCart ]);
+
+        return response([
+                'cartSession' => Session::get('cart'),
+                'qtCarrinho' => Session::get('qtCart'),
+                'qtProdEstoque' => $carrinho[$idx]['qtdProdutoEstoque']
+            ]);
+    }
+
+    public function removeQuantityCart($idx)
+    {
+        $carrinho = Session::get('cart');
+        $qtdCart = Session::get('qtCart');
+
+        $qtInd = $carrinho[$idx]['qtdIndividual'];
+        $vlProd = $carrinho[$idx]['valorProduto'];
+
+        $qtInd -= 1;
+
+        $carrinho[$idx]['qtdIndividual'] = $qtInd;
+        
+        $vTotal = $vlProd * $qtInd;
+
+        $carrinho[$idx]['valorTotalProduto'] = $vTotal;
+        $qtdCart -= 1;
+
+        session([ 'cart' => $carrinho ]);
+        session([ 'qtCart' => $qtdCart ]);
+
+        return response([
+            'cartSession' => Session::get('cart'),
+            'qtCarrinho' => Session::get('qtCart')
+        ]);
     }
 }

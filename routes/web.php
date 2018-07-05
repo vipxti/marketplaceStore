@@ -82,12 +82,22 @@ Route::prefix('page')->group(function () {
     
     //Produtos
     Route::prefix('product')->group(function () {
-        Route::get('/list', 'ProductController@paginaProduto')->name('products.page');
+        Route::get('/shop', 'ProductController@showShopProductsPage')->name('products.page');
+        Route::get('/{productsku}', 'ProductController@showProductDetails')->name('products.details');
+    });
+
+    Route::prefix('cart')->group(function () {
+        Route::get('/', 'CartController@showCartPage')->name('cart.page');
+        Route::post('/', 'CartController@addToCart')->name('cart.buy');
+        Route::post('/store', 'CartController@store')->name('cart.store');
+        Route::post('/delete', 'CartController@deleteProduct')->name('cart.product.delete');
+        Route::post('/clear', 'CartController@clearCart')->name('cart.clear');
+        Route::get('/minus/{idx}', 'CartController@removeQuantityCart')->name('minus.quantity');
+        Route::get('/plus/{idx}', 'CartController@addQuantityCart')->name('plus.quantity');
     });
 
     //Carrinho
-    //Route::get('/cart/{produtos}', 'CartController@showCartPage');
-    ROute::post('/cart/buy', 'CartController@comprarProduto')->name('cart.buy');
+    Route::get('/carrinho', 'CartController@cart2');
 
     //Compra
     Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');

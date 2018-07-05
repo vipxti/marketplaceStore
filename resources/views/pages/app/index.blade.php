@@ -174,9 +174,9 @@
                     <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s" style="margin-bottom: 13% !important;">
                         <!-- Product Image -->
                         <div class="product-img">
-                            <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="">
+                            <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="{{ $produto['nomeProduto'] }}">
                             <div class="product-quicview">
-                                <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
+                                <a href="{{ route('products.details', $produto->cd_nr_sku)}}"><i class="fa fa-plus"></i></a>
                             </div>
                         </div>
                         <!-- Product Description -->
@@ -197,6 +197,7 @@
                                 <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
                                 <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
                                 <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
+                                <input type="hidden" name="im_produto" value="{{ $imagemPrincipal[$key]->im_produto }}">
 
                                 <button type="submit" class="btn btn-link add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
                                 {{-- <a href="{{ route('cart.buy') }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a> --}}
@@ -273,13 +274,5 @@
 
     </script>--}}
     <!-- ****** Popular Brands Area End ****** -->
-
-    <script>
-    
-        $(document).ready(function() {
-            console.log('Ok');
-        });    
-    
-    </script>
 
 @stop

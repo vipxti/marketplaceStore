@@ -4,67 +4,120 @@
 
     <!-- ****** Cart Area Start ****** -->
     <div class="cart_area section_padding_100 clearfix">
+
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="cart-table clearfix">
-                        <table class="table table-responsive">
-                            <thead>
-                            <tr>
-                                <th>Produto</th>
-                                <th>Valor</th>
-                                <th>Quantidade</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
 
-                                {{-- Foreach aqui!!!!! --}}
+            @if(Session::get('cart') == null)
 
-                                {{--{{ dd($produtos[0]) }}--}}
+                <p class="h2 text-center">Não há produtos no carrinho</p>
 
-                                @foreach($produtos as $key => $produto)
+            @else
+            
+                <div class="row">
+                    
+                    <div class="col-12">
 
-                                    <p>{{ Session::get('qtd' . $produto['skuProduto']) }}</p>
+                        <div class="cart-table clearfix">
+                            
+                            <table class="table table-responsive">
+                                
+                                <thead>
 
-                                    <td class="cart_product_img d-flex align-items-center">
-                                        <a href="#"><img src="{{ asset('img/products/' . $imagem[$key]->im_produto) }}" alt="Product"></a>
-                                        <h6>{{ $produto['nomeProduto'] }}</h6>
-                                    </td>
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th>Valor</th>
+                                        <th>Quantidade</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                
+                                </thead>
+                                
+                                <tbody>
 
-                                    <td class="price"><span id="precoProd">R$ {{ str_replace('.', ',', $produto['valorProduto']) }}</span></td>
 
-                                    <td class="qty">
-                                        <div class="quantity">
-                                            <span class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{ Session::get('qtd' . $produto['skuProduto']) }}">
-                                            <span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                            <i id="spinner_qtd" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i>
-                                        </div>
-                                    </td>
-                                    <td class="total_price"><span id="valorTotal"></span></td>
+                                    @foreach(Session::get('cart') as $key => $produto)
 
-                                @endforeach
+                                        <input id="{{ 'idxProd' . $key }}" type="hidden" name="idx" value="{{ $key }}">
+                                        <input id="{{ 'qtProdEst' . $key }}" type="hidden" name="qtd_prod_estoque" value="{{ $produto['qtdProdutoEstoque'] }}">
 
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                        <tr>
 
-                    <div class="cart-footer d-flex mt-30">
+                                            <td class="cart_product_img d-flex align-items-center">
+                                                <a href="{{ route('products.details', $produto['skuProduto']) }}">
+                                                    <img src="{{ URL::asset('img/products' . '/' . $produto['imagemProduto']) }}" alt="Product">
+                                                </a>
+                                                <h5>{{ $produto['nomeProduto'] }}</h5>
+                                            </td>
 
-                        <div class="back-to-shop">
-                            <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</button>
+                                            <td class="price"><span id="precoProd">R$ {{ number_format($produto['valorProduto'], 2, ',', '.') }}</span></td>
+
+                                            <td class="qty">
+                                                <div class="quantity">
+                                                    <span class="qty-minus">
+                                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                                    </span>
+                                                    
+                                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{ $produto['qtdIndividual'] }}">
+                                                    
+                                                    <span class="qty-plus">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </span>
+                                                    
+                                                    <i id="spinner_qtd" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i>
+                                                </div>
+                                            </td>
+
+                                            <td class="total_price">
+                                                <span id="valorTotal">
+                                                    R$ {{ number_format($produto['valorTotalProduto'], 2, ',', '.') }}
+                                                </span>
+                                            </td>
+                                            
+                                            <td>
+                                                <form action="{{ route('cart.product.delete') }}" method="post">
+                                                    {{ csrf_field() }}
+                                                <input type="hidden" name="cod_produto_carrinho" value="{{ $key }}">
+                                                    <button type="submit" class="btn btn-danger">
+                                                        Excluir
+                                                    </button>
+                                                </form>
+                                            </td>
+
+                                        </tr>
+
+                                    @endforeach
+
+                                </tbody>
+                            
+                            </table>
+                        
                         </div>
-                        <div class="update-checkout w-50" style="padding: 0 4px">
-                            <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #3a3a3a">Limpar Carrinho</button>
-                            <button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #3a3a3a">Atualizar Carrinho</button>
-                        </div>
-                    </div>
 
+                        <div class="cart-footer d-flex mt-30">
+                            <div class="back-to-shop">
+                                
+                                <a href="{{ route('index') }}" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</a>
+                            </div>
+                            <div class="update-checkout w-50">
+                                <form action="{{ route('cart.clear') }}" method="post">
+                                    {{ csrf_field() }}
+
+                                    @foreach(Session::get('cart') as $key => $produto)
+
+                                        <input type="hidden" name="{{ 'idx[' . $key . ']' }}" value="{{ $produto['skuProduto'] }}">
+
+                                    @endforeach
+
+                                    <button type="submit" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #3a3a3a">Limpar Carrinho</button>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    
                 </div>
-            </div>
 
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-6">
@@ -124,32 +177,45 @@
                                     <span id="pac">&nbsp;Normal</span>
                                 </label>
                             </div>
-
-                            <div class="col-4 col-sm-4" style="height: 50px; !important;">
-                                <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                    <span id="sedex">&nbsp;Expresso</span>
-                                </label>
-                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                <span id="precoPac"></span>
+                            <div class="custom-control custom-radio">
+                                <div class="col-4 col-sm-4" style="height: 50px; !important;">
+                                    <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input" checked>
+                                    <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                        <span id="pac">&nbsp;Normal</span>
+                                    </label>
+                                </div>
+
+                                <div class="col-4 col-sm-4" style="height: 50px; !important;">
+                                    <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
+                                    <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                        <span id="sedex">&nbsp;Expresso</span>
+                                    </label>
+                                </div>
                             </div>
-                            <div class="w-100 d-none d-md-block"></div>
-                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                <span id="diasPac"></span>
-                            </div>
-                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                <span id="precoSedex"></span>
-                            </div>
-                            <div class="w-100 d-none d-md-block"></div>
-                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                <span id="diasSedex" ></span>
+                            <div class="row">
+                                <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                    <span id="precoPac"></span>
+                                </div>
+                                <div class="w-100 d-none d-md-block"></div>
+                                <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                    <span id="diasPac"></span>
+                                </div>
+                                <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                    <span id="precoSedex"></span>
+                                </div>
+                                <div class="w-100 d-none d-md-block"></div>
+                                <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                    <span id="diasSedex" ></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+            @endif
+
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="cart-total-area mt-70">
                         <div class="cart-page-heading">
@@ -219,12 +285,87 @@
 
     <script>
 
-        //JA SETA OS VALORES AO CARREGAR A PAGINA
-        $(document).ready(function(){
-            $('#precoSubTotal').html('R$ ' + (parseFloat($('#precoProd').html().replace('R$ ', '')) * parseInt($('#qty').val())).toFixed(2).replace('.', ','));
-            $('#valorTotal').html('R$ ' + (parseFloat($('#precoProd').html().replace('R$ ', '')) * parseInt($('#qty').val())).toFixed(2).replace('.', ','));
+        var qtd = parseInt($('#qty').val());
+        var precoProd = parseFloat($('#precoProd').html().replace('R$ ', '').replace(',', '.'));
+        var qtdEstoque = parseInt($('#qtdProdutoEstoque').val());
+        var valTotal;
+
+        $('.qty-plus').click(function(){
+
+            var idx = $('#idx').val();
+
+            if (qtd == 1000) {
+                
+                $('.qty-plus').attr('disabled');    
+
+            }
+            else {
+
+                qtd += 1;
+
+                valTotal = precoProd * qtd;
+
+                console.log('Mais');
+
+                $('#qty').val(qtd);
+                $('#valorTotal').html('R$ ' + valTotal.toFixed(2).replace('.', ','));
+
+                $.ajax({
+                    url: '{{ url('/page/cart/plus') }}/' + idx,
+                    type: 'GET',
+                    success: function (r) {
+
+                        if (r.cartSession[idx].qtdIndividual == r.qtProdEstoque - 1) {
+                            
+                        }
+
+                        console.log(r.qtCarrinho);
+                        $('.cart_quantity').html(r.qtCarrinho);
+                        
+                    }
+                });
+
+            }
+
         });
 
+        $('.qty-minus').click(function (e){
+
+            var idx = $('#idx').val();
+            
+            if (qtd == 1) {
+                
+                $('.qty-minus').attr('disabled');    
+
+            }
+            else {
+
+                qtd -= 1;
+
+                valTotal = precoProd * qtd;
+
+                console.log('Menos');
+
+                $('#qty').val(qtd);
+                $('#valorTotal').html('R$ ' + valTotal.toFixed(2).replace('.', ','));
+
+                $.ajax({
+                    url: '{{ url('/page/cart/minus') }}/' + idx,
+                    type: 'GET',
+                    data: {},
+                    success: function (r) {
+                        console.log(r);
+                        $('.cart_quantity').html(r.qtCarrinho);
+                        
+                    }
+                });
+
+            }
+
+        });
+
+        //JA SETA OS VALORES AO CARREGAR A PAGINA
+        
         var totalCalc = false;
         //CALCULO FRETE
         $('#btnCalcFrete').click(function(){
@@ -260,16 +401,16 @@
         //CONSULTA O WEBSERVICE OU OFFLINE O CEP
         function consultaFrete(spinner){
             var qtd = $('#qty').val();
-            var pesoTotal = parseFloat(`{{$produtos[$idx]['pesoProduto']}}`);
+
             pesoTotal = (pesoTotal / 1000);
             pesoTotal = pesoTotal * qtd;
 
             $objF = {
                 cep: $('#campoCep').val(),
-                altura: `{{$produtos[$idx]['alturaProduto']}}`,
-                largura: `{{$produtos[$idx]['larguraProduto']}}`,
+                altura: alturaTotal.toFixed(2),
+                largura: larguraTotal.toFixed(2),
                 peso: pesoTotal.toFixed(2),
-                comprimento: `{{$produtos[$idx]['comprimentoProduto']}}`
+                comprimento: comprimentoTotal.toFixed(2)
             };
 
             spinner.css('visibility', 'visible');
@@ -429,67 +570,6 @@
                     totalCalc=false;
                 }
             });
-
-            var preco = null;
-            var qtd=0;
-            var total=0;
-            //DIMINUI O ITEM DA QTD
-            $('.qty-minus').click(function(){
-                if(preco==null){
-                    preco = $('#precoProd').html().replace('R$', '').replace(',', '.');
-                    qtd = $('#qty').val();
-                    total = preco;
-                }
-
-                if(qtd > 1) {
-                    total = preco * (qtd - 1);
-                    qtd--;
-                    $('.qty-plus').removeAttr('disabled');
-                } else {
-                    $(this).attr('disabled', 'disabled');
-                }
-
-                $('#qty').val(qtd);
-                $('#valorTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-                $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-                $('#qtdProd').val($('#qty').val());
-                if(totalCalc){
-                    atualizaFrete();
-                    consultaFrete($('#spinner_qtd'));
-                }
-
-            });
-
-            //AUMENTA O ITEM DA QTD
-            $('.qty-plus').click(function(){
-                if(preco==null){
-                    preco = $('#precoProd').html().replace('R$', '').replace(',', '.');
-                    qtd = $('#qty').val();
-                    total = preco;
-                }
-
-                if(qtd < {{ $produtos[$idx]['qtdProdutoEstoque'] }} - 1) {
-                    qtd++;
-                    total = preco * qtd;
-                    $('.qty-minus').removeAttr('disabled');
-                }
-                else {
-                    $(this).attr('disabled', 'disabled');
-                }
-
-                $('#qty').val(qtd);
-                $('#valorTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-                $('#precoSubTotal').html('R$ ' + total.toFixed(2).toString().replace('.', ','));
-                $('#qtdProd').val($('#qty').val());
-
-                if(totalCalc) {
-                    atualizaFrete();
-                    consultaFrete($('#spinner_qtd'));
-                }
-
-            });
-
-
     </script>
 
 @stop

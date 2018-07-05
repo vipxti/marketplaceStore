@@ -71,18 +71,18 @@
                             <!-- Carrinho -->
                             <div class="cart">
 
-                                @if(Session::get('qtdCarrinho') == 0)
+                                @if(Session::get('qtCart') == 0)
 
-                                    <a href="{{ route('checkout.page') }}" id="header-cart-btn" target="_blank">
+                                    <a href="{{ route('cart.page') }}" id="header-cart-btn">
                                         <span class="cart_quantity">0</span>
                                         <i class="fa fa-shopping-cart"></i>Carrinho
                                     </a>
 
                                 @else
 
-                                    <a href="{{ route('checkout.page') }}" id="header-cart-btn" target="_blank">
-                                        <span class="cart_quantity">{{ session::get('qtdCarrinho') }}</span>
-                                        <i class="fa fa-shopping-cart"></i>
+                                    <a href="{{ route('cart.page') }}" id="header-cart-btn">
+                                        <span class="cart_quantity">{{ Session::get('qtCart') }}</span>
+                                        <i class="fa fa-shopping-cart"></i>Carrinho
                                     </a>
 
                                 @endif

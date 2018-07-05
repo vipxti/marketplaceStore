@@ -129,11 +129,11 @@
                 <div class="row">
                     <div class="col-12">
                         <ol class="breadcrumb d-flex align-items-center">
-                            <li class="breadcrumb-item"><a href="#">Início</a></li>
-                            <li class="breadcrumb-item active">Vestido Amarelo Longo</li>
+                        <li class="breadcrumb-item"><a href="{{ route('products.page') }}">Início</a></li>
+                            <li class="breadcrumb-item active">{{ $product->nm_produto }}</li>
                         </ol>
                         <!-- btn -->
-                        <a href="#" class="backToHome d-block"><i class="fa fa-angle-double-left"></i> Voltar</a>
+                        <a href="{{ route('products.page') }}" class="backToHome d-block"><i class="fa fa-angle-double-left"></i> Voltar</a>
                     </div>
                 </div>
             </div>
@@ -188,9 +188,9 @@
                     <div class="col-12 col-md-6">
                         <div class="single_product_desc">
 
-                            <h4 class="title"><a href="#">Vestido Amarelo Longo</a></h4>
+                            <h4 class="title"><a href="#">{{ $product->nm_produto }}</a></h4>
 
-                            <h4 class="price">R$ 39.99</h4>
+                            <h4 class="price">{{ $product->vl_produto }}</h4>
 
                             <p class="available">Disponível: <span class="text-muted">Estoque</span></p>
 
@@ -260,7 +260,7 @@
 
                                     <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                         <div class="card-body">
-                                            <p>A descrição do produto é o momento onde você DEVE vender o seu produto. Invista tempo para fazer um texto bom, falando os principais diferenciais daquilo que você vende.</p>
+                                            <p>{{ $product->ds_produto }}</p>
                                         </div>
                                     </div>
                                 </div>
