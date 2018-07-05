@@ -169,6 +169,7 @@
                             <p>Escolha uma Opção</p>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="custom-control custom-radio">
                             <div class="col-4 col-sm-4" style="height: 50px; !important;">
@@ -177,38 +178,28 @@
                                     <span id="pac">&nbsp;Normal</span>
                                 </label>
                             </div>
+
+                            <div class="col-4 col-sm-4" style="height: 50px; !important;">
+                                <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
+                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                    <span id="sedex">&nbsp;Expresso</span>
+                                </label>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="custom-control custom-radio">
-                                <div class="col-4 col-sm-4" style="height: 50px; !important;">
-                                    <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input" checked>
-                                    <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
-                                        <span id="pac">&nbsp;Normal</span>
-                                    </label>
-                                </div>
-
-                                <div class="col-4 col-sm-4" style="height: 50px; !important;">
-                                    <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
-                                    <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                        <span id="sedex">&nbsp;Expresso</span>
-                                    </label>
-                                </div>
+                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                <span id="precoPac"></span>
                             </div>
-                            <div class="row">
-                                <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                    <span id="precoPac"></span>
-                                </div>
-                                <div class="w-100 d-none d-md-block"></div>
-                                <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                    <span id="diasPac"></span>
-                                </div>
-                                <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                    <span id="precoSedex"></span>
-                                </div>
-                                <div class="w-100 d-none d-md-block"></div>
-                                <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                    <span id="diasSedex" ></span>
-                                </div>
+                            <div class="w-100 d-none d-md-block"></div>
+                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                <span id="diasPac"></span>
+                            </div>
+                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                <span id="precoSedex"></span>
+                            </div>
+                            <div class="w-100 d-none d-md-block"></div>
+                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
+                                <span id="diasSedex" ></span>
                             </div>
                         </div>
                     </div>
@@ -229,25 +220,24 @@
                         </ul>
 
                         <form id="formComprar">
-                        {{ csrf_field() }}
+                            {{ csrf_field() }}
 
-                        @foreach($produtos as $key => $produto)
+                            @foreach(Session::get('cart') as $key => $produto)
 
-                            <!-- array dos produtos -->
-                                <input type="hidden" name="id[]" value="{{ $key + 1}}">
-                                <input type="hidden" name="code[]" id="code" value="{{ $produto['uidProduto'] }}" />
-                                <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
-                                <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
-                                <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
-                                <input type="hidden" name="peso[]" value="{{ $produto['pesoProduto'] }}">
-                                <input type="hidden" name="fretecal[]" value="">
-                                <input type="hidden" name="largura[]" value="{{ $produto['larguraProduto'] }}">
-                                <input type="hidden" name="altura[]" value="{{ $produto['alturaProduto'] }}">
-                                <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoProduto'] }}">
-                                <input id="freteForm" type="hidden" name="freteval[]" value="">
-                                <input id="tipoServForm" type="hidden" name="tipoServ[]" value="">
+                                <!-- array dos produtos -->
+                                    <input type="hidden" name="id[]" value="{{ $key + 1}}">
+                                    <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
+                                    <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
+                                    <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
+                                    <input type="hidden" name="peso[]" value="{{ $produto['pesoProduto'] }}">
+                                    <input type="hidden" name="fretecal[]" value="">
+                                    <input type="hidden" name="largura[]" value="{{ $produto['larguraProduto'] }}">
+                                    <input type="hidden" name="altura[]" value="{{ $produto['alturaProduto'] }}">
+                                    <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoProduto'] }}">
+                                    <input id="freteForm" type="hidden" name="freteval[]" value="">
+                                    <input id="tipoServForm" type="hidden" name="tipoServ[]" value="">
 
-                        @endforeach
+                            @endforeach
 
 
 
