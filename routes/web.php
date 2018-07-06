@@ -16,6 +16,13 @@ Route::get('/', 'HomeController@showIndexPage')->name('index');
 
 Route::prefix('admin')->group(function () {
 
+    //Cadastro dos dados da Empresa
+    Route::get('/dadosCadastrais', 'CompanyController@cadCompany')->name('company.data')->middleware('auth:admin');
+    //Pedido
+    Route::get('/pedido', 'OrderController@listOrder')->name('order.list')->middleware('auth:admin');
+
+
+
     //Cadastro e login de usuário
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
@@ -51,6 +58,10 @@ Route::prefix('admin')->group(function () {
     //Form cor e cadastro
     Route::get('/color', 'ColorController@showColorForm')->name('color.page')->middleware('auth:admin');
     Route::post('/color', 'ColorController@crudCor')->name('color.save');
+
+    //Integração
+    //Bling
+    Route::get('/product/bling', 'ProductBlingController@importFromBling')->name('product.list.bling')->middleware('auth:admin');
 
     Route::get('/data', 'UserController@showUserForm')->name('admin.data')->middleware('auth:admin');
 

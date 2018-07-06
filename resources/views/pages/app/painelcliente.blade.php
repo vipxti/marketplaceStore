@@ -163,7 +163,6 @@
                                         <div class="row">
                                             <div class="col-12 col-md-6" style="border: 1px solid black;">
                                                 <p class="h3 text-center">Endereço Principal</p>
-
                                                 <div class="row">
                                                     <div class="col-md-8 col-xs-8">
                                                         <div class="row">
@@ -183,24 +182,20 @@
 
                                             <div class="col-12 col-md-6" style="border: 1px solid black;">
                                                 <p class="h3 text-center">Endereço Principal</p>
-
                                                 <div class="row">
                                                     <div class="col-md-8 col-xs-8">
                                                         <div class="row">
                                                             Teste
                                                         </div>
-
                                                         <div class="row">
                                                             Teste
                                                         </div>
-
                                                         <div class="row">
                                                             Teste
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </form>--}}
                                 </div>

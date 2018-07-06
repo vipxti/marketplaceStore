@@ -128,20 +128,15 @@
                         
                             <!-- Preço e quantidade  -->
                             <div class="row">
-
                                 <div class="col-md-6">
-
                                     <div class="form-group">
-                                    
                                         <label>Preço</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">R$</span>
                                             <input type="text" class="form-control campo_preco" required name="vl_produto">
                                         </div>
                                         <i class="msg_preco"></i>
-
                                     </div>
-
                                 </div>
 
                                 <div class="col-md-6">

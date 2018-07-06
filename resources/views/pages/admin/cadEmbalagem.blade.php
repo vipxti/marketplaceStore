@@ -31,7 +31,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="box-body">
                     <form action="{{ route('menu.edit') }}" method="post">
                         {{ csrf_field() }}
