@@ -199,7 +199,18 @@
                                 <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
                                 <input type="hidden" name="im_produto" value="{{ $imagemPrincipal[$key]->im_produto }}">
 
-                                <button type="submit" class="btn btn-link add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                @if($produto->qt_produto < 5)
+
+                                    <br>
+                                    <p>SEM ESTOQUE</p>
+
+                                @else
+
+                                    <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+
+                                @endif
+
+                                
                                 {{-- <a href="{{ route('cart.buy') }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a> --}}
                             </form> 
                         </div>

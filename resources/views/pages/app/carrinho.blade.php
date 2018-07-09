@@ -7,9 +7,49 @@
 
         <div class="container">
 
+            <div class="row">
+
+                <div class="col-lg-10 offset-lg-1 col-md-10 offset-md-1">
+
+                    <p class="h3">Meu carrinho</p>
+
+                </div>
+
+            </div>
+
+            <p>&nbsp;</p>
+
             @if(Session::get('cart') == null)
 
-                <p class="h2 text-center">Não há produtos no carrinho</p>
+                <div class="row">
+
+                    <div class="col-12 col-md-11 offset-md-1" style="border: 1px solid black;">
+
+                        <p>&nbsp;</p>
+
+                        <p class="h2 text-center">Não há produtos no carrinho</p>
+                        <p>&nbsp;</p>
+                        <p class="h5 text-justify">
+                            Para inserir algum produto no seu carrinho, navegue pela página de produtos. Ao encontrar os itens desejados, clique no botão COMPRAR localizado na página do produto.
+                        </p>
+
+                        <p>&nbsp;</p>
+
+                    </div>     
+
+                </div>
+
+                <p>&nbsp;</p>
+
+                <div class="row">
+
+                    <div class="col-12 col-md-12 text-right">
+
+                        <a href="{{ route('index') }}" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</a>
+
+                    </div>
+
+                </div>
 
             @else
             
@@ -35,11 +75,17 @@
                                 
                                 <tbody>
 
+                                    <input type="hidden" name="qtdItensCarrinho" value="{{ Session::get('qtCartItems') }}">
+
+                                    <input type="hidden" id="alturaTotal" name="alturaTotal" value="{{ Session::get('totalHeight') }}">
+                                    <input type="hidden" id="larguraTotal" name="larguraTotal" value="{{ Session::get('totalWidth') }}">
+                                    <input type="hidden" id="comprimentoTotal" name="comprimentoTotal" value="{{ Session::get('totalLength') }}">
+                                    <input type="hidden" id="pesoTotal" name="pesoTotal" value="{{ Session::get('totalWeight') }}">
 
                                     @foreach(Session::get('cart') as $key => $produto)
 
-                                        <input id="{{ 'idxProd' . $key }}" type="hidden" name="idx" value="{{ $key }}">
-                                        <input id="{{ 'qtProdEst' . $key }}" type="hidden" name="qtd_prod_estoque" value="{{ $produto['qtdProdutoEstoque'] }}">
+                                        <input id="{{ 'idx' . $key }}" type="hidden" name="{{ 'idx['. $key .']' }}" value="{{ $key }}">
+                                        <input id="{{ 'qtProdEstoque' . $key }}" type="hidden" value="{{ $produto['qtdProdutoEstoque'] }}">
 
                                         <tr>
 
@@ -50,17 +96,17 @@
                                                 <h5>{{ $produto['nomeProduto'] }}</h5>
                                             </td>
 
-                                            <td class="price"><span id="precoProd">R$ {{ number_format($produto['valorProduto'], 2, ',', '.') }}</span></td>
+                                            <td class="price"><span id="{{ 'precoProd' . $key }}">R$ {{ number_format($produto['valorProduto'], 2, ',', '.') }}</span></td>
 
                                             <td class="qty">
                                                 <div class="quantity">
-                                                    <span class="qty-minus">
+                                                    <span id="{{ $key }}" class="qty-minus">
                                                         <i class="fa fa-minus" aria-hidden="true"></i>
                                                     </span>
                                                     
-                                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{ $produto['qtdIndividual'] }}">
+                                                    <input type="number" class="qty-text" id="{{ 'qty' . $key }}" step="1" min="1" max="99" name="quantity" value="{{ $produto['qtdIndividual'] }}">
                                                     
-                                                    <span class="qty-plus">
+                                                    <span id="{{ $key }}" class="qty-plus">
                                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                                     </span>
                                                     
@@ -69,7 +115,7 @@
                                             </td>
 
                                             <td class="total_price">
-                                                <span id="valorTotal">
+                                                <span id="{{ 'valorTotal' . $key }}">
                                                     R$ {{ number_format($produto['valorTotalProduto'], 2, ',', '.') }}
                                                 </span>
                                             </td>
@@ -77,7 +123,9 @@
                                             <td>
                                                 <form action="{{ route('cart.product.delete') }}" method="post">
                                                     {{ csrf_field() }}
-                                                <input type="hidden" name="cod_produto_carrinho" value="{{ $key }}">
+                                                    
+                                                    <input type="hidden" name="cod_produto_carrinho" value="{{ $key }}">
+                                                    
                                                     <button type="submit" class="btn btn-danger">
                                                         Excluir
                                                     </button>
@@ -98,7 +146,9 @@
                             <div class="back-to-shop">
                                 
                                 <a href="{{ route('index') }}" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</a>
+
                             </div>
+
                             <div class="update-checkout w-50">
                                 <form action="{{ route('cart.clear') }}" method="post">
                                     {{ csrf_field() }}
@@ -119,49 +169,23 @@
                     
                 </div>
 
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="coupon-code-area mt-70">
-                        <div class="cart-page-heading">
-                            <h5>Calcular Frete</h5>
-                            <p><b>Insira o CEP do endereço que deseja receber o produto.</b></p>
-                            <p>Assim você poderá calcular o frete e conhecer os serviços disponíveis</p>
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="coupon-code-area mt-70">
+                            <div class="cart-page-heading">
+                                <h5>Calcular Frete</h5>
+                                <p><b>Insira o CEP do endereço que deseja receber o produto.</b></p>
+                                <p>Assim você poderá calcular o frete e conhecer os serviços disponíveis</p>
+                            </div>
+                            <form>
+                                <input id="campoCep" type="text" name="cep_cliente" maxlength="8" style="padding: 0 10px !important;">
+                                <button class="btn btn-danger" id="btnCalcFrete" type="button" style="border-radius: 0px">Calcular</button>
+                                <i id="spinner_btn" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i><br>
+                                <p style="font-size: 0.90em" id="msgErroCep"></p>
+                            </form>
                         </div>
-                        <form>
-                            <input id="campoCep" type="text" name="cep_cliente" maxlength="8" style="padding: 0 10px !important;">
-                            <button class="btn btn-danger" id="btnCalcFrete" type="button" style="border-radius: 0px">Calcular</button>
-                            <i id="spinner_btn" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i><br>
-                            <p style="font-size: 0.90em" id="msgErroCep"></p>
-                        </form>
                     </div>
-                </div>
-                {{--<div class="col-12 col-md-6 col-lg-6">
-                    <div class="shipping-method-area mt-70">
-                        <div class="cart-page-heading">
-                            <h5>Qual envio prefere?</h5>
-                            <p>Escolha uma Opção</p>
-                        </div>
-                        <div class="custom-control custom-radio mb-14">
-                            <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" checked>
-                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                <span id="sedex">Expresso &nbsp;</span><span id="precoSedex"></span><span id="diasSedex"></span>
-                            </label>
-                        </div>
-                        <div class="custom-control custom-radio mb-14">
-                            <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input">
-                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
-                                <span id="pac">Normal &nbsp;</span><span id="precoPac"></span><span id="diasPac"></span>
-                            </label>
-                        </div>--}}{{--
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" checked>
-                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
-                                <span>Retirar no Local</span>
-                                <span>Grátis</span>
-                            </label>
-                        </div>--}}{{--
-                    </div>
-                </div>--}}
+
                 <div class="col-12 col-md-6 col-lg-6" style="margin-top: 70px !important;">
                     <div class="col-md-12 col-lg-12">
                         <div class="cart-page-heading">
@@ -205,8 +229,6 @@
                     </div>
                 </div>
 
-            @endif
-
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="cart-total-area mt-70">
                         <div class="cart-page-heading">
@@ -214,7 +236,7 @@
                             <p>Informações da compra</p>
                         </div>
                         <ul class="cart-total-chart">
-                            <li><span>Subtotal</span> <span id="precoSubTotal">-</span></li>
+                            <li><span>Subtotal</span> <span id="precoSubTotal">R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}</span></li>
                             <li><span>Envio</span> <span id="precoCalcFrete">-</span></li>
                             <li><span><strong>Total</strong></span> <span><strong id="precoCalcTotal">-</strong></span></li>
                         </ul>
@@ -225,21 +247,21 @@
                             @foreach(Session::get('cart') as $key => $produto)
 
                                 <!-- array dos produtos -->
-                                    <input type="hidden" name="id[]" value="{{ $key + 1}}">
-                                    <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
-                                    <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
-                                    <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
-                                    <input type="hidden" name="peso[]" value="{{ $produto['pesoProduto'] }}">
-                                    <input type="hidden" name="fretecal[]" value="">
-                                    <input type="hidden" name="largura[]" value="{{ $produto['larguraProduto'] }}">
-                                    <input type="hidden" name="altura[]" value="{{ $produto['alturaProduto'] }}">
-                                    <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoProduto'] }}">
-                                    <input id="freteForm" type="hidden" name="freteval[]" value="">
-                                    <input id="tipoServForm" type="hidden" name="tipoServ[]" value="">
+                                <input type="hidden" name="id[]" value="{{ ($key + 1) }}">
+                                <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
+                                <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
+                                <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
+                                <input type="hidden" name="peso[]" value="{{ $produto['pesoTotalProduto'] }}">
+                                <input type="hidden" name="largura[]" value="{{ $produto['larguraTotalProduto'] }}">
+                                <input type="hidden" name="altura[]" value="{{ $produto['alturaTotalProduto'] }}">
+                                <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoTotalProduto'] }}">
+                                    
 
                             @endforeach
 
-
+                            <input type="hidden" name="fretecal" value="">
+                            <input id="freteForm" type="hidden" name="freteval" value="">
+                            <input id="tipoServForm" type="hidden" name="tipoServ" value="">
 
                         <!-- array do cliente -->
                             {{--  <input type="hidden" name="cep" value="{{ $cliente[0]->cd_cep }}">
@@ -266,8 +288,11 @@
                         </form>
                     </div>
                 </div>
-            </div>
+
+            @endif
+
         </div>
+
     </div>
     <!-- ****** Area final do carrinho ****** -->
 
@@ -275,16 +300,15 @@
 
     <script>
 
-        var qtd = parseInt($('#qty').val());
-        var precoProd = parseFloat($('#precoProd').html().replace('R$ ', '').replace(',', '.'));
-        var qtdEstoque = parseInt($('#qtdProdutoEstoque').val());
-        var valTotal;
-
+        //Aumenta a quantidade de cada item no carrinho
         $('.qty-plus').click(function(){
 
-            var idx = $('#idx').val();
+            var idx = $(this).attr('id');
+            var qtd = parseInt($('#qty' + idx).val());
+            var precoProd = parseFloat($('#precoProd' + idx).html().replace('R$ ', '').replace(',', '.'));
+            var qtdEstoque = parseInt($('#qtProdEstoque' + idx).val());
 
-            if (qtd == 1000) {
+            if (qtd == qtdEstoque - 5) {
                 
                 $('.qty-plus').attr('disabled');    
 
@@ -293,24 +317,15 @@
 
                 qtd += 1;
 
-                valTotal = precoProd * qtd;
-
-                console.log('Mais');
-
-                $('#qty').val(qtd);
-                $('#valorTotal').html('R$ ' + valTotal.toFixed(2).replace('.', ','));
-
                 $.ajax({
                     url: '{{ url('/page/cart/plus') }}/' + idx,
                     type: 'GET',
                     success: function (r) {
 
-                        if (r.cartSession[idx].qtdIndividual == r.qtProdEstoque - 1) {
-                            
-                        }
-
-                        console.log(r.qtCarrinho);
                         $('.cart_quantity').html(r.qtCarrinho);
+                        $('#qty' + idx).val(r.cartSession[idx].qtdIndividual);
+                        $('#valorTotal' + idx).html('R$ ' + r.cartSession[idx].valorTotalProduto.toFixed(2).replace('.', ','));
+                        $('#precoSubTotal').html('R$ ' + r.subTotal.toFixed(2).replace('.', ','));
                         
                     }
                 });
@@ -319,9 +334,12 @@
 
         });
 
+        //Diminui a quantidade de cada item no carrinho
         $('.qty-minus').click(function (e){
 
-            var idx = $('#idx').val();
+            var idx = $(this).attr('id');
+            var qtd = parseInt($('#qty' + idx).val());
+            var precoProd = parseFloat($('#precoProd' + idx).html().replace('R$ ', '').replace(',', '.'));
             
             if (qtd == 1) {
                 
@@ -332,20 +350,16 @@
 
                 qtd -= 1;
 
-                valTotal = precoProd * qtd;
-
-                console.log('Menos');
-
-                $('#qty').val(qtd);
-                $('#valorTotal').html('R$ ' + valTotal.toFixed(2).replace('.', ','));
-
                 $.ajax({
                     url: '{{ url('/page/cart/minus') }}/' + idx,
                     type: 'GET',
                     data: {},
                     success: function (r) {
-                        console.log(r);
+
                         $('.cart_quantity').html(r.qtCarrinho);
+                        $('#qty' + idx).val(r.cartSession[idx].qtdIndividual);
+                        $('#valorTotal' + idx).html('R$ ' + r.cartSession[idx].valorTotalProduto.toFixed(2).replace('.', ','));
+                        $('#precoSubTotal').html('R$ ' + r.subTotal.toFixed(2).replace('.', ','));
                         
                     }
                 });
@@ -353,8 +367,6 @@
             }
 
         });
-
-        //JA SETA OS VALORES AO CARREGAR A PAGINA
         
         var totalCalc = false;
         //CALCULO FRETE
@@ -390,17 +402,22 @@
 
         //CONSULTA O WEBSERVICE OU OFFLINE O CEP
         function consultaFrete(spinner){
-            var qtd = $('#qty').val();
+            
+            var pesoTotal = $('#pesoTotal').val();
+            var alturaTotal = $('#alturaTotal').val();
+            var larguraTotal = $('#larguraTotal').val();
+            var comprimentoTotal = $('#comprimentoTotal').val();
+
+            console.log(alturaTotal);
 
             pesoTotal = (pesoTotal / 1000);
-            pesoTotal = pesoTotal * qtd;
 
             $objF = {
                 cep: $('#campoCep').val(),
-                altura: alturaTotal.toFixed(2),
-                largura: larguraTotal.toFixed(2),
-                peso: pesoTotal.toFixed(2),
-                comprimento: comprimentoTotal.toFixed(2)
+                altura: parseFloat(alturaTotal).toFixed(2),
+                largura: parseFloat(larguraTotal).toFixed(2),
+                peso: parseFloat(pesoTotal).toFixed(2),
+                comprimento: parseFloat(comprimentoTotal).toFixed(2)
             };
 
             spinner.css('visibility', 'visible');
@@ -523,8 +540,6 @@
                         var key = Object.keys(this)[0];
                         cdCompra = this[key];
                     })
-
-                    //console.log(cdCompra);
 
                     PagSeguroLightbox(cdCompra);
                 },

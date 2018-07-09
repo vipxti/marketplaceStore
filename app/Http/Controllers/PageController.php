@@ -27,7 +27,7 @@ class PageController extends Controller
     {
         $produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', 'sku.cd_dimensao')->where('produto.cd_produto', '=', $cd_produto)->get();
 
-//        $produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->where('produto.cd_produto', '=', $cd_produto)->get();
+        //$produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->where('produto.cd_produto', '=', $cd_produto)->get();
 
         $imagem = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('sku_produto_img', 'sku_produto_img.cd_sku', 'sku.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_produto', '=', $cd_produto)->get();
 
