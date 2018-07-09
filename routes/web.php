@@ -62,6 +62,8 @@ Route::prefix('admin')->group(function () {
     //Integração
     //Bling
     Route::get('/product/bling', 'ProductBlingController@importFromBling')->name('product.list.bling')->middleware('auth:admin');
+    Route::get('api/bling/{pagina}', 'ProductBlingController@searchProds')->name('search.api.bling')->middleware('auth:admin');
+    Route::get('api/bling/cat/{id}', 'ProductBlingController@searchCatFather')->name('searchCat.api.bling')->middleware('auth:admin');
 
     Route::get('/data', 'UserController@showUserForm')->name('admin.data')->middleware('auth:admin');
 
