@@ -72,31 +72,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-shopping-bag"></i>
-                        <span>Produtos</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="{{ route('product.register') }}"><i class="fa fa-plus-square"></i>Cadastrar</a></li>
-                        <li><a href="#"><i class="fa fa-edit"></i>Alterar</a></li>
-                        <li><a href="{{ route('products.list') }}"><i class="fa fa-list-alt"></i>Lista de Produtos</a></li>
-                        <li class="treeview">
-                            <a href="#"><i class="fa fa-diamond">
-                                </i>Atributos<span class="pull-right-container">
-                                  <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="{{ route('category.register') }}"><i class="fa fa-tag"></i>Categorias</a></li>
-                                <li><a href="{{ route('color.page') }}"><i class="fa fa-paint-brush"></i>Cores</a></li>
-                                <li><a href="{{ route('size.register') }}"><i class="fa fa-arrows-h"></i>Tamanhos</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+
+
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-credit-card"></i> <span>Formas de Pagamento</span>
