@@ -11,9 +11,9 @@
             display: block;
             z-index: 1;
         }
-
         .example-modal .modal {
             background: transparent !important;
+
         }
     </style>
 
@@ -28,10 +28,9 @@
         </section>
 
         <section class="content">
+            @include('partials.admin._alerts')
 
-        @include('partials.admin._alerts')
-
-        <!-- Default box -->
+            <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div class="box-tools pull-right">
@@ -44,17 +43,6 @@
                     </div>
                 </div>
                 <div class="box-body">
-
-                    <!-- Botão pesquisar -->
-
-                    <div style="padding-left: 70%">
-                        <div>
-                            <input type="search" id="search" value="" class="form-control">
-                        </div>
-                    </div>
-                    <div>&nbsp;</div>
-
-
                     <div class="dataTables_length" style="padding-left: 90%" id="example1_length">
                         <select name="example1_length" aria-controls="example1" class="form-control form-control-sm">
                             <option value="10">10</option>
@@ -64,8 +52,7 @@
                         </select>
                     </div>
 
-                    <!-- Tabelas dos produtos -->
-
+                    <!-- Tabelas dos Pedidos -->
                     <table class="table" id="table">
                         <thead>
                         <tr>
@@ -143,8 +130,10 @@
                                             <div class="row">
                                                 <div class="col-xs-12">
                                                     <h2 class="page-header">
-                                                        <img style="width:108px; height:85px;" src=" {{ asset('img/app/core-img/logo.png') }}" alt="">&nbsp;Vip-X
-                                                        <small class="pull-right">Date: 2/10/2014</small>
+                                                        <img style="width:108px; height:85px;" src=" {{ asset('img/app/core-img/logo.png') }}" alt="">
+                                                        <small class="pull-right">Data de Emissão: 02/10/2018</small>
+                                                        <p>Vip-X galeria</p>
+
                                                     </h2>
                                                 </div>
                                                 <!-- /.col -->
@@ -152,7 +141,7 @@
                                             <!-- info row -->
                                             <div class="row invoice-info">
                                                 <div class="col-sm-4 invoice-col">
-                                                    From
+                                                    DE
                                                     <address>
                                                         <strong>Admin, Inc.</strong><br>
                                                         795 Folsom Ave, Suite 600<br>
@@ -163,7 +152,7 @@
                                                 </div>
                                                 <!-- /.col -->
                                                 <div class="col-sm-4 invoice-col">
-                                                    To
+                                                    Para
                                                     <address>
                                                         <strong>John Doe</strong><br>
                                                         795 Folsom Ave, Suite 600<br>
@@ -174,7 +163,7 @@
                                                 </div>
                                                 <!-- /.col -->
                                                 <div class="col-sm-4 invoice-col">
-                                                    <b>Invoice #007612</b><br>
+                                                    <b>Pedido Nº#007612</b><br>
                                                     <br>
                                                     <b>Order ID:</b> 4F3S8J<br>
                                                     <b>Payment Due:</b> 2/22/2014<br>
