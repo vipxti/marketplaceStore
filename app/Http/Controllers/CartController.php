@@ -650,6 +650,8 @@ class CartController extends Controller
         session([ 'subtotalPrice' => $precoSubTotal ]);
         session([ 'totalPrice' => $precoTotal ]);
 
+        Session::save();
+
         return response([
                 'cartSession' => Session::get('cart'),
                 'qtCarrinho' => Session::get('qtCart'),
@@ -703,7 +705,6 @@ class CartController extends Controller
         $precoSubTotal -= $vlProd;
         $precoTotal -= $vlProd;
 
-
         $carrinho[$idx]['valorTotalProduto'] = $vTotal;
         $qtdCart -= 1;
 
@@ -717,6 +718,8 @@ class CartController extends Controller
 
         session([ 'subtotalPrice' => $precoSubTotal ]);
         session([ 'totalPrice' => $precoTotal ]);
+
+        Session::save();
 
         return response([
             'cartSession' => Session::get('cart'),

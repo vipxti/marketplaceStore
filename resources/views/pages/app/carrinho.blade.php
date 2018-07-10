@@ -266,7 +266,6 @@
                                 <input type="hidden" name="altura[]" value="{{ $produto['alturaTotalProduto'] }}">
                                 <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoTotalProduto'] }}">
                                     
-
                             @endforeach
 
                             <input type="hidden" name="fretecal" value="">
@@ -335,34 +334,28 @@
 
             if (qtd == qtdEstoque - 5) {
               
-                $('.qty-plus').attr('disabled');    
+                $(this).attr('disabled');    
 
             }
             else {
 
                 qtd += 1;
 
-                $('.qty-plus').attr('disabled');
-
                 $.ajax({
                     url: '{{ url('/page/cart/plus') }}/' + idx,
                     type: 'GET',
                     success: function (r) {
+
+                        location.reload();
 
                         $('.cart_quantity').html(r.qtCarrinho);
                         $('#qty' + idx).val(r.cartSession[idx].qtdIndividual);
                         $('#valorTotal' + idx).html('R$ ' + r.cartSession[idx].valorTotalProduto.toFixed(2).replace('.', ','));
                         $('#precoSubTotal').html('R$ ' + r.subTotal.toFixed(2).replace('.', ','));
                         $('#precoCalcTotal').html('R$ ' + r.total.toFixed(2).replace('.', ','));
-                        
+
                     }
-                });
-
-                $('.qty-plus').attr('disabled');
-
-                setTimeout(() => {
-                    $('.qty-plus').removeAttr('disabled');
-                }, 3000);
+                });               
                     
             } 
 
@@ -391,6 +384,8 @@
                     type: 'GET',
                     data: {},
                     success: function (r) {
+
+                        location.reload();
 
                         $('.cart_quantity').html(r.qtCarrinho);
                         $('#qty' + idx).val(r.cartSession[idx].qtdIndividual);
@@ -507,8 +502,6 @@
                 }
             });
 
-
-
         }
 
         function verificaFrete(spinner){
@@ -573,12 +566,14 @@
                 data: $("#formComprar").serialize(),
                 success: function(codigoCompra){
 
-
+                    
 
                     $.each(codigoCompra, function () {
                         var key = Object.keys(this)[0];
                         cdCompra = this[key];
                     })
+
+                    console.log(cdCompra);
 
                     PagSeguroLightbox(cdCompra);
                 },
