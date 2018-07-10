@@ -17,7 +17,8 @@ Route::get('/', 'HomeController@showIndexPage')->name('index');
 Route::prefix('admin')->group(function () {
 
     //Cadastro dos dados da Empresa
-    Route::get('/dadosCadastrais', 'CompanyController@cadCompany')->name('company.data')->middleware('auth:admin');
+    Route::get('/dadosCadastrais', 'CompanyController@showCompanyForm')->name('company.data')->middleware('auth:admin');
+    Route::post('/dadosCadastrais', 'CompanyController@registerComnpany')->name('company.register.data')->middleware('auth:admin');
     //Pedido
     Route::get('/pedido', 'OrderController@listOrder')->name('order.list')->middleware('auth:admin');
 

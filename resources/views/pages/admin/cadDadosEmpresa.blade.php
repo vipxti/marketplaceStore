@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <form action="#" method="post">
+                    <form action="{{route('company.register.data')}}" method="post">
                     {{ csrf_field() }}
                         <div class="col-sm-8">
                             <div class="form-group">
@@ -53,7 +53,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Cnpj &nbsp;<i style="color: red !important;">*</i></label>
-                                <input type="text" class="form-control" id="cd_cnpj" name="cd_cnpj" required>
+                                <input type="number" class="form-control" id="cd_cnpj" name="cd_cnpj" required maxlength="14">
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -65,7 +65,7 @@
                         <div class="col-sm-2">
                             <div class="form-group" style="padding:32.5px 0;">
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" value="" id="ic_ie_isento" name="ic_ie_isento">
+                                    <input type="checkbox" id="ic_ie_isento" name="ic_ie_isento" checked>
                                     IE Isento
                                 </label>
                             </div>
@@ -74,7 +74,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Inscrição Municipal</label>
-                                <input type="text" class="form-control" id="cd_im" name="cd_im">
+                                <input type="number" class="form-control" id="cd_im" name="cd_im">
                             </div>
                         </div>
                         <div class="col-sm-3">

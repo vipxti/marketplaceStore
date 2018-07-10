@@ -1,7 +1,33 @@
 @extends('layouts.admin.app')
 
 @section('content')
+    <style type="text/css">
+        /*deixar botão transparente*/
+        button {
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+        }
 
+        /*deixar setas do input do tipo number invisivel*/
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            cursor:pointer;
+            display:block;
+            width:8px;
+            color: #333;
+            text-align:center;
+            position:relative;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+            margin: 0;
+        }
+    </style>
     <link rel="stylesheet" href="{{ asset('css/admin/btInterativo.css') }}">
 
     <div class="content-wrapper">
@@ -60,18 +86,25 @@
                                     <th style="text-align: left">SKU</th>
                                     <th style="text-align: left">Nome</th>
                                     <th style="text-align: left">Preço</th>
+                                    <th style="text-align: left">Qtd</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 @foreach($produtos as $produto)
-
+                                        {{--{{dd($produto)}}--}}
                                     <tr>
                                         <td>{{ $produto->cd_produto }} </td>
                                         <td>{{ $produto->cd_nr_sku }} </td>
                                         <td>{{ $produto->nm_produto }} </td>
                                         <td>R$ {{ str_replace('.', ',', $produto->vl_produto) }} </td>
-                                        <td class="btn btn-outline-warning" style="color: #367fa9;"><i class="fa fa-pencil"></i></td>
+                                        <td>{{ str_replace('.', ',', $produto->qt_produto) }} </td>
+                                        <td id="colBotoes" class="text-right">
+                                            <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
+                                            <button id="btn_excluir" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
+                                            <button id="btn_salvar" class="fa fa-check btn btn-outline-warning" style="color: #008d4c; display:none"></button>
+                                            <button id="btn_cancelar" class="fa fa-remove btn btn-outline-warning" style="color: #cc0000; display: none"></button>
+                                        </td>
                                         <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>
                                         <td class="btn btn-outline-danger" style="color: #cc0000;"><i class="fa fa-trash-o"></i></td>
                                     </tr>
