@@ -314,6 +314,7 @@
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                 var id = campoTR.find('#id_cor').text();
 
+
                 $.ajax({
                     url: '{{ route('color.delete') }}',
                     type: 'POST',
@@ -322,6 +323,14 @@
                     success: function (e) {
                         console.log(e.message);
                     }
+                });
+
+                campoTR.fadeOut(500, function () {
+                    $(this).remove();
+                    //cor branco
+                    $("table tbody tr:odd").css("background-color", "#fff");
+                    //cor cinza
+                    $("table tbody tr:even").css("background-color", "#f5f5f5");
                 });
 
             });
@@ -333,6 +342,7 @@
                 campoTR.find('#btn_cancelar').toggle();
                 campoTR.find('#btn_excluir').toggle();
             }
+
 
         });
     </script>
