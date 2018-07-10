@@ -98,15 +98,20 @@
                                         <td>{{ $produto->cd_nr_sku }} </td>
                                         <td>{{ $produto->nm_produto }} </td>
                                         <td>R$ {{ str_replace('.', ',', $produto->vl_produto) }} </td>
-                                        <td>{{ str_replace('.', ',', $produto->qt_produto) }} </td>
+                                        <td id="qt_produto">{{ str_replace('.', ',', $produto->qt_produto) }} </td>
                                         <td id="colBotoes" class="text-right">
                                             <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
+                                            <button type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;">
+                                                <a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                            </button>
                                             <button id="btn_excluir" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                             <button id="btn_salvar" class="fa fa-check btn btn-outline-warning" style="color: #008d4c; display:none"></button>
                                             <button id="btn_cancelar" class="fa fa-remove btn btn-outline-warning" style="color: #cc0000; display: none"></button>
                                         </td>
-                                        <td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>
-                                        <td class="btn btn-outline-danger" style="color: #cc0000;"><i class="fa fa-trash-o"></i></td>
+                                        {{--<td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>--}}
+
                                     </tr>
 
 
@@ -432,10 +437,81 @@
             // });
         });
 
+        var conteudoOriginal;
+        //Ação de clicar no editar, pegando o conteudo e criando o input para edição
+        $('button#btn_editar').click(function(){
+            var campoTR = $(this).parent().parent();
+
+            var conteudo =  campoTR.find("td:eq(4)").text();
+            conteudoOriginal = conteudo;
+
+            var campo_qt_produto = campoTR.find('#qt_produto');
+            campo_qt_produto.text("");
+
+            var campo_input = "<input id='caixa_editar' type='text' maxlength='4' ' value='" + conteudoOriginal + "'></input>";
+            campo_qt_produto.append(campo_input);
+            campoTR.find('#caixa_editar').focus();
+
+            trocaBotoes(campoTR);
+
+            campoTR.siblings().find('td:eq(5)').children().attr("disabled", "disabled");
+        });
+
+        //Ação que salva o valor digitado dentro do input, e coloca o novo valor dentro do TD
+        $('button#btn_salvar').click(function(){
+            var campoTR = $(this).parent().parent();
+            var conteudoAtualizado = campoTR.find("#caixa_editar").val();
+            var campo_qt_produto = campoTR.find("td:eq(4)");
+            var regLetras = new RegExp("^[0-9]*$");
+
+            //console.log(conteudoAtualizado.replace(regLetras, ''));
+            /*var word = "my~wo@rd 12$3";
+            console.log(word);
+            var regx = "/[^0-9]/g";
+            word = word.replace(eval(regx), '');
+            console.log(word);*/
+
+            if(conteudoAtualizado.length == 0 || !regLetras.exec(conteudoAtualizado)){
+                $("#caixa_editar").focus();
+
+                return;
+            }
+
+            campo_qt_produto.text(conteudoAtualizado);
+
+            campo_qt_produto.remove('#caixa_editar');
+
+            campoTR.siblings().find('td:eq(5)').children().removeAttr("disabled");
+
+            trocaBotoes(campoTR);
+        });
+
+        //Ação para cancelar as mudanças feitas dentro do input
+        $('button#btn_cancelar').click(function(){
+            var campoTR = $(this).parent().parent();
+            var campo_qt_produto = campoTR.find("td:eq(4)");
+            campo_qt_produto.remove("#caixa_editar");
+
+            campo_qt_produto.text(conteudoOriginal);
+
+            campoTR.siblings().find('td:eq(5)').children().removeAttr("disabled");
+            trocaBotoes(campoTR);
+        });
+
+
+        //Função para troca de botões, transição do display none para block
+        function trocaBotoes(campoTR){
+            campoTR.find('#btn_editar').toggle();
+            campoTR.find('#btn_excluir').toggle();
+            campoTR.find('#btn_salvar').toggle();
+            campoTR.find('#btn_cancelar').toggle();
+            campoTR.find('#btn_atributos').toggle();
+        }
+
     </script>
 
     <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
-    <!-- Bootstrap 4 -->
+ {{--   <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables -->
     <script src="../../plugins/datatables/jquery.dataTables.js"></script>
@@ -446,7 +522,7 @@
     <script src="../../plugins/fastclick/fastclick.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
-    <!-- page script -->
+    <!-- page script -->--}}
 
 
 
