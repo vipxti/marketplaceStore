@@ -16,12 +16,12 @@ class ColorController extends Controller
 
     public function addNewColor(ColorRequest $request)
     {
-        dd($request->all());
+
 
         DB::beginTransaction();
 
         try {
-            $this->createColor($request->nm_cor);
+            $this->colorCreate($request->nm_cor);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('color.page')->with('nosuccess', 'Erro ao cadastrar a cor');
