@@ -11,45 +11,31 @@ use App\Client;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\URL;
 
 class CartController extends Controller
 {
     public function showCartPage()
     {
-        return view('pages.app.carrinho');
-    }
-
-    public function cart2()
-    {
-        return view('pages.app.carrinho');
-    }
-
-    public function teste()
-    {
-        //dd($carrinho);
-
-        //$produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', 'sku.cd_dimensao')->where('produto.cd_produto', '=', $cd_produto)->get();
-
-        //$p = Session::get('produtos');
-
-        $produtos = Session::get('carrinho');
-
-        dd($produtos);
-
-        //$produto = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->where('produto.cd_produto', '=', $cd_produto)->get();
-
-        foreach ($produtos as $key => $produto) {
-            $imagem = Product::join('sku', 'produto.cd_sku', 'sku.cd_sku')->join('sku_produto_img', 'sku_produto_img.cd_sku', 'sku.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->select('im_produto')->where('produto.cd_produto', '=', $produto['codProduto'])->get()->toArray();
+        if (Auth::check()) {
+            $telefoneCliente = Client::join('telefone', 'cliente.cd_telefone', 'telefone.cd_telefone')->select('telefone.cd_celular1')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get()->toArray();
+        } else {
+            $telefoneCliente = null;
+            if (!(Session::has('cartRoute'))) {
+                Session::put('cartRoute', 'cart.page');
+            }
         }
 
-        $arr = array_combine($produtos, $imagem);
+        $enderecoCliente = Client::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->join('bairro', 'bairro.cd_bairro', 'endereco.cd_bairro')->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->join('uf', 'uf.cd_uf', 'cidade.cd_uf')->join('pais', 'pais.cd_pais', 'uf.cd_pais')->select('endereco.cd_cep', 'endereco.ds_endereco', 'endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'pais.nm_pais')->where('cliente_endereco.ic_principal', '=', 1)->get();
 
-        dd($arr);
+        $telefone = $telefoneCliente[0]['cd_celular1'];
 
-        $cliente = Auth::user();
+        return view('pages.app.carrinho', compact('telefone', 'enderecoCliente'));
+    }
 
-        //dd($cliente);
+    public function showResultPage()
+    {
+        return view('pages.app.cart.result');
     }
 
     public function calcFrete($cep, $altura, $largura, $peso, $comprimento)
@@ -132,6 +118,7 @@ class CartController extends Controller
             $pesoTotalIndividual = $produtosCarrinho[$index]['pesoTotalProduto'];
 
             $precoSubTotal = Session::get('subtotalPrice');
+            $precoTotal = Session::get('totalPrice');
 
             $alturaTotal += $produtosCarrinho[$index]['alturaProduto'];
             $larguraTotal += $produtosCarrinho[$index]['larguraProduto'];
@@ -165,6 +152,7 @@ class CartController extends Controller
             $produtosCarrinho[$index]['pesoTotalProduto'] = $pesoTotalIndividual;
 
             $precoSubTotal += $produtosCarrinho[$index]['valorProduto'];
+            $precoTotal += $produtosCarrinho[$index]['valorProduto'];
 
             session([ 'totalHeight' => $alturaTotal ]);
             session([ 'totalWidth' => $larguraTotal ]);
@@ -172,6 +160,7 @@ class CartController extends Controller
             session([ 'totalWeight' => $pesoTotal ]);
 
             session([ 'subtotalPrice' => $precoSubTotal ]);
+            session([ 'totalPrice' => $precoTotal ]);
 
             session([ 'qtCart' => $qtdProdutosCarrinho ]);
             session([ 'cart' => $produtosCarrinho ]);
@@ -192,6 +181,7 @@ class CartController extends Controller
                 $pesoTotal = 0;
 
                 $precoSubTotal = 0;
+                $precoTotal = 0;
 
                 $produtosCarrinho = [
                     'codProduto' => $request->cd_produto,
@@ -220,6 +210,7 @@ class CartController extends Controller
                 $larguraTotal += $request->ds_largura;
                 $comprimentoTotal += $request->ds_comprimento;
                 $pesoTotal += $request->ds_peso;
+                $precoTotal += $request->vl_produto;
 
                 Session::put('totalHeight', $alturaTotal);
                 Session::put('totalWidth', $larguraTotal);
@@ -227,6 +218,7 @@ class CartController extends Controller
                 Session::put('totalWeight', $pesoTotal);
 
                 Session::put('subtotalPrice', $precoSubTotal);
+                Session::put('totalPrice', $precoTotal);
                 
                 Session::put('idx' . $request->sku_produto, $index);
                 Session::put('qtCartItems', $qtdItensCarrinho);
@@ -246,6 +238,7 @@ class CartController extends Controller
                 $pesoTotal = Session::get('totalWeight');
 
                 $precoSubTotal = Session::get('subtotalPrice');
+                $precoTotal = Session::get('totalPrice');
 
                 //dd($produtosCarrinho);
 
@@ -272,6 +265,7 @@ class CartController extends Controller
                 Session::push('cart', $produtosCarrinho);
 
                 $precoSubTotal += $request->vl_produto;
+                $precoTotal += $request->vl_produto;
                 $alturaTotal += $request->ds_altura;
                 $larguraTotal += $request->ds_largura;
                 $comprimentoTotal += $request->ds_comprimento;
@@ -289,6 +283,7 @@ class CartController extends Controller
                 session([ 'totalWeight' => $pesoTotal ]);
 
                 session([ 'subtotalPrice' => $precoSubTotal ]);
+                session([ 'totalPrice' => $precoTotal ]);
 
                 session([ 'qtCart' => $qtdProdutosCarrinho ]);
                 session([ 'qtCartItems' => $qtdItensCarrinho ]);
@@ -317,6 +312,15 @@ class CartController extends Controller
     public function finalizarCompra(Request $request)
     {
         //dd($request->all());
+
+        $ddd = substr($request->telefone, 0, 2);
+        $telefone = substr($request->telefone, 2);
+
+        if ($request->complemento_endereco == null) {
+            $complemento = '';
+        } else {
+            $complemento = $request->complemento_endereco;
+        }
 
         $data['token'] = '98911E4EC1494B7A8C3E8E7C4AD9F181';
         $data['email'] = 'manoel@manoelcastro.com.br';
@@ -376,8 +380,6 @@ class CartController extends Controller
         //     $pesos[$key] = doubleval($p) * $qtd;
         // }
 
-        
-
         foreach ($request->id as $key => $id) {
             $data['itemId'.($key + 1)] = $id;
         }
@@ -412,20 +414,20 @@ class CartController extends Controller
 
         $data['shippingType'] = $request->tipoServ;
         $data['shippingCost'] = $request->freteval;
-        $data['shippingAddressPostalCode'] = '11702690';
-        $data['shippingAddressStreet'] = 'Rua Jose Carlixto do Carmo';
-        $data['shippingAddressNumber'] = '111';
-        $data['shippingAddressComplement'] = 'Apto 505';
-        $data['shippingAddressDistrict'] = '';
-        $data['shippingAddressCity'] = 'Praia Grande';
-        $data['shippingAddressState'] = 'SP';
-        $data['shippingAddressCountry'] = '';
-        $data['senderName'] = 'Myck Carvalho';
-        $data['senderCPF'] = '40949300861';
-        $data['senderAreaCode'] = '13';
-        $data['senderPhone'] = '974082536';
-        $data['senderEmail'] = 'felipecunha_7@hotmail.com';
-        $data['redirectURL'] = '';
+        $data['shippingAddressPostalCode'] = $request->cep;
+        $data['shippingAddressStreet'] = $request->endereco;
+        $data['shippingAddressNumber'] = $request->numero_endereco;
+        $data['shippingAddressComplement'] = $complemento;
+        $data['shippingAddressDistrict'] = $request->bairro;
+        $data['shippingAddressCity'] = $request->cidade;
+        $data['shippingAddressState'] = $request->estado;
+        $data['shippingAddressCountry'] = $request->pais;
+        $data['senderName'] = $request->nome;
+        $data['senderCPF'] = $request->numero_cpf;
+        $data['senderAreaCode'] = $ddd;
+        $data['senderPhone'] = $telefone;
+        $data['senderEmail'] = $request->email_cliente;
+        $data['redirectURL'] = route('cart.result.page');
 
         //dd($data);
 
@@ -591,6 +593,7 @@ class CartController extends Controller
         $qtdCart = Session::get('qtCart');
 
         $precoSubTotal = Session::get('subtotalPrice');
+        $precoTotal = Session::get('totalPrice');
 
         $alturaTotal = Session::get('totalHeight');
         $alturaTotalIndividual = $carrinho[$idx]['alturaTotalProduto'];
@@ -631,6 +634,7 @@ class CartController extends Controller
         $vTotal = $vlProd * $qtInd;
 
         $precoSubTotal += $vlProd;
+        $precoTotal += $vlProd;
 
         $carrinho[$idx]['valorTotalProduto'] = $vTotal;
         $qtdCart += 1;
@@ -642,13 +646,16 @@ class CartController extends Controller
         session([ 'totalWidth' => $larguraTotal ]);
         session([ 'totalLength' => $comprimentoTotal ]);
         session([ 'totalWeight' => $pesoTotal ]);
+
         session([ 'subtotalPrice' => $precoSubTotal ]);
+        session([ 'totalPrice' => $precoTotal ]);
 
         return response([
                 'cartSession' => Session::get('cart'),
                 'qtCarrinho' => Session::get('qtCart'),
                 'qtProdEstoque' => $carrinho[$idx]['qtdProdutoEstoque'],
-                'subTotal' => Session::get('subtotalPrice')
+                'subTotal' => Session::get('subtotalPrice'),
+                'total' => Session::get('totalPrice')
             ]);
     }
 
@@ -658,6 +665,7 @@ class CartController extends Controller
         $qtdCart = Session::get('qtCart');
 
         $precoSubTotal = Session::get('subtotalPrice');
+        $precoTotal = Session::get('totalPrice');
 
         $alturaTotal = Session::get('totalHeight');
         $alturaTotalIndividual = $carrinho[$idx]['alturaTotalProduto'];
@@ -693,6 +701,8 @@ class CartController extends Controller
         $vTotal = $vlProd * $qtInd;
 
         $precoSubTotal -= $vlProd;
+        $precoTotal -= $vlProd;
+
 
         $carrinho[$idx]['valorTotalProduto'] = $vTotal;
         $qtdCart -= 1;
@@ -704,13 +714,16 @@ class CartController extends Controller
         session([ 'totalWidth' => $larguraTotal ]);
         session([ 'totalLength' => $comprimentoTotal ]);
         session([ 'totalWeight' => $pesoTotal ]);
+
         session([ 'subtotalPrice' => $precoSubTotal ]);
+        session([ 'totalPrice' => $precoTotal ]);
 
         return response([
             'cartSession' => Session::get('cart'),
             'qtCarrinho' => Session::get('qtCart'),
             'qtProdEstoque' => $carrinho[$idx]['qtdProdutoEstoque'],
-            'subTotal' => Session::get('subtotalPrice')
+            'subTotal' => Session::get('subtotalPrice'),
+            'total' => Session::get('totalPrice')
         ]);
     }
 }

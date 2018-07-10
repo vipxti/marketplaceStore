@@ -4,61 +4,125 @@ namespace App\Http\Controllers;
 
 use App\Color;
 use App\Http\Requests\ColorRequest;
+use Illuminate\Support\Facades\DB;
 
 class ColorController extends Controller
 {
-
-    public function showColorForm() {
+    public function showColorForm()
+    {
         $cores = Color::all();
         return view('pages.admin.cadCor', compact('cores'));
     }
 
-    public function crudCor(ColorRequest $request) {
+    public function addNewColor(ColorRequest $request)
+    {
         dd($request->all());
-        if($request->cd_cor == NULL ){
-            try {
-                $this->novaCor($request->nm_cor);
-            }
-            catch (\Exception $e) {
-                return redirect()->route('color.page')->with('nosuccess', 'Erro ao Cadastrar a Cor');
-            }
-            finally {
-                return redirect()->route('color.page')->with('success', 'Cor Cadastrada com Sucesso');
-            }
+
+        DB::beginTransaction();
+
+        try {
+            $this->createColor($request->nm_cor);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao cadastrar a cor');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao cadastrar a cor');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
-        elseif($request->delCor == 1){
-            try {
-                $this->delCor($request->cd_cor);
-            }
-            catch (\Exception $e) {
-                return redirect()->route('color.page')->with('nosuccess', 'Erro ao Deletar a Cor');
-            }
-            finally {
-                return redirect()->route('color.page')->with('success', 'Cor Deletada com Sucesso');
-            }
-        }
-        else{
-            try{
-                $this->atualizarCor ($request->cd_cor, $request->nm_cor);
-            }
-            catch (\Exception $e) {
-                return redirect()->route('color.page')->with('nosuccess', 'Erro ao Alterar a Cor');
-            }
-            finally {
-                return redirect()->route('color.page')->with('success', 'Cor Alterada com Sucesso');
-            }
-        }
+
+        DB::commit();
+
+        return redirect()->route('color.page')->with('success', 'Cor cadastrada com sucesso');
     }
-    public function novaCor ($nomeCor){
-        Color::create(['nm_cor' => $nomeCor]);
+
+    public function updateColor(ColorRequest $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $this->colorUpdate($request->cd_cor, $request->nm_cor);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao atualizar a cor');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao atualizar a cor');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao atualizar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        DB::commit();
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Cor atualizada com sucesso'
+        ];
+
+        return response()->json($response);
+
+        //return redirect()->route('color.page')->with('success', 'Cor atualizada com sucesso');
     }
-    public function atualizarCor ($cdCor,$nomeCor){
-        $cor = Color::find($cdCor);
-        $cor-> nm_cor = $nomeCor;
+
+    public function deleteColor(ColorRequest $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $this->colorDelete($request->cd_cor);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao excluir a cor');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao excluir a cor');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('color.page')->with('nosuccess', 'Erro ao atualizar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        DB::commit();
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Cor excluir com sucesso'
+        ];
+
+        return response()->json($response);
+
+        //return redirect()->route('color.page')->with('success', 'Cor excluída com sucesso');
+    }
+
+    public function colorCreate($nomeCor)
+    {
+        return Color::firstOrCreate([
+            'nm_cor' => $nomeCor
+            ]);
+    }
+
+    public function colorUpdate($codCor, $nomeCor)
+    {
+        $cor = Color::find($codCor);
+        $cor->nm_cor = $nomeCor;
+
         $cor->save();
     }
-    public function delCor ($cdCor){
-        DB::table('produto_cor')-> where('cd_cor', '=', $cdCor)->delete();
-        Color::destroy($cdCor);
+
+    public function colorDelete($codCor)
+    {
+        DB::table('produto_cor')->where('cd_cor', '=', $codCor)->delete();
+        Color::destroy($codCor);
     }
 }

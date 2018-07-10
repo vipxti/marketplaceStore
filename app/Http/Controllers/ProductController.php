@@ -22,7 +22,7 @@ class ProductController extends Controller
 {
     public function showShopProductsPage()
     {
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('cd_status_produto', '=', 1)->paginate(6);
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(6);
 
         //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
 

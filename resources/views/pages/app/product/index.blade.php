@@ -34,7 +34,7 @@
                                         <a href="#">Ver detalhes completos do produto</a>
                                     </div>
                                     <!-- Add to Cart Form -->
-                                    <form class="cart" method="post">
+                                    <form action="{{ route('cart.buy') }}" class="cart" method="post">
                                         <div class="quantity">
                                             <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
 
@@ -341,7 +341,34 @@
                                                 <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
                                                 <p>{{ $produto->nm_produto }}</p>
                                                 <!-- Botão comprar -->
-                                                <a href="#" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;COMPRAR</a>
+
+                                                <form action="{{ route('cart.buy') }}" method="post">
+                                                {{ csrf_field() }}
+                                                    
+                                                    <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
+                                                    <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
+                                                    <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
+                                                    <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
+                                                    <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
+                                                    <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
+                                                    <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
+                                                    <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
+                                                    <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
+                                                    <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
+                                                    <input type="hidden" name="im_produto" value="{{ $imagemPrincipal[$key]->im_produto }}">
+
+                                                    @if($produto->qt_produto < 5)
+
+                                                        <br>
+                                                        <p>SEM ESTOQUE</p>
+
+                                                    @else
+
+                                                        <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+
+                                                    @endif
+
+                                                </form>
                                             </div>
                                         </div>
 

@@ -104,7 +104,7 @@
                                                         <i class="fa fa-minus" aria-hidden="true"></i>
                                                     </span>
                                                     
-                                                    <input type="number" class="qty-text" id="{{ 'qty' . $key }}" step="1" min="1" max="99" name="quantity" value="{{ $produto['qtdIndividual'] }}">
+                                                    <input type="text" class="qty-text" id="{{ 'qty' . $key }}" step="1" min="1" max="99" name="quantity" disabled value="{{ $produto['qtdIndividual'] }}">
                                                     
                                                     <span id="{{ $key }}" class="qty-plus">
                                                         <i class="fa fa-plus" aria-hidden="true"></i>
@@ -178,7 +178,17 @@
                                 <p>Assim você poderá calcular o frete e conhecer os serviços disponíveis</p>
                             </div>
                             <form>
-                                <input id="campoCep" type="text" name="cep_cliente" maxlength="8" style="padding: 0 10px !important;">
+
+                                @if(Auth::check())
+
+                                    <input id="campoCep" type="text" name="cep_cliente" maxlength="8" value={{ $enderecoCliente[0]['cd_cep'] }} style="padding: 0 10px !important;">
+
+                                @else
+
+                                    <input id="campoCep" type="text" name="cep_cliente" maxlength="8" style="padding: 0 10px !important;">
+
+                                @endif
+
                                 <button class="btn btn-danger" id="btnCalcFrete" type="button" style="border-radius: 0px">Calcular</button>
                                 <i id="spinner_btn" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i><br>
                                 <p style="font-size: 0.90em" id="msgErroCep"></p>
@@ -238,7 +248,7 @@
                         <ul class="cart-total-chart">
                             <li><span>Subtotal</span> <span id="precoSubTotal">R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}</span></li>
                             <li><span>Envio</span> <span id="precoCalcFrete">-</span></li>
-                            <li><span><strong>Total</strong></span> <span><strong id="precoCalcTotal">-</strong></span></li>
+                        <li><span><strong>Total</strong></span> <span><strong id="precoCalcTotal">R$ {{ number_format(Session::get('totalPrice'), 2, ',', '.') }}</strong></span></li>
                         </ul>
 
                         <form id="formComprar">
@@ -274,9 +284,24 @@
 
                             @if(Auth::check())
 
-                                <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
                                 <input type="hidden" name="nome" value="{{ Auth::user()->nm_cliente }}">
+                                <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
                                 <input type="hidden" name="numero_cpf" value="{{ Auth::user()->cd_cpf_cnpj }}">
+                                <input type="hidden" name="telefone" value="{{ $telefone }}">
+                                <input type="hidden" name="cep" value="{{ $enderecoCliente[0]['cd_cep'] }}">
+                                <input type="hidden" name="endereco" value="{{ $enderecoCliente[0]['ds_endereco'] }}">
+                                <input type="hidden" name="complemento_endereco" value="{{ $enderecoCliente[0]['ds_complemento'] }}">
+                                <input type="hidden" name="numero_endereco" value="{{ $enderecoCliente[0]['cd_numero_endereco'] }}">
+                                <input type="hidden" name="cidade" value="{{ $enderecoCliente[0]['nm_cidade'] }}">
+                                <input type="hidden" name="bairro" value="{{ $enderecoCliente[0]['nm_bairro'] }}">
+                                <input type="hidden" name="estado" value="{{ $enderecoCliente[0]['sg_uf'] }}">
+                                <input type="hidden" name="pais" value="{{ $enderecoCliente[0]['nm_pais'] }}">
+
+                                <button type="button" id="finalizar" disabled class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
+
+                            @else
+
+                                <a href="{{ route('client.login') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Faça login para finalizar sua compra</button></a> 
 
                             @endif
 
@@ -284,7 +309,7 @@
                             {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
                             <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
 
-                            <button type="button" id="finalizar" disabled class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
+                            
                         </form>
                     </div>
                 </div>
@@ -301,7 +326,7 @@
     <script>
 
         //Aumenta a quantidade de cada item no carrinho
-        $('.qty-plus').click(function(){
+        $('.qty-plus').click(function(e){
 
             var idx = $(this).attr('id');
             var qtd = parseInt($('#qty' + idx).val());
@@ -309,13 +334,15 @@
             var qtdEstoque = parseInt($('#qtProdEstoque' + idx).val());
 
             if (qtd == qtdEstoque - 5) {
-                
+              
                 $('.qty-plus').attr('disabled');    
 
             }
             else {
 
                 qtd += 1;
+
+                $('.qty-plus').attr('disabled');
 
                 $.ajax({
                     url: '{{ url('/page/cart/plus') }}/' + idx,
@@ -326,11 +353,18 @@
                         $('#qty' + idx).val(r.cartSession[idx].qtdIndividual);
                         $('#valorTotal' + idx).html('R$ ' + r.cartSession[idx].valorTotalProduto.toFixed(2).replace('.', ','));
                         $('#precoSubTotal').html('R$ ' + r.subTotal.toFixed(2).replace('.', ','));
+                        $('#precoCalcTotal').html('R$ ' + r.total.toFixed(2).replace('.', ','));
                         
                     }
                 });
 
-            }
+                $('.qty-plus').attr('disabled');
+
+                setTimeout(() => {
+                    $('.qty-plus').removeAttr('disabled');
+                }, 3000);
+                    
+            } 
 
         });
 
@@ -350,6 +384,8 @@
 
                 qtd -= 1;
 
+                $('.qty-minus').attr('disabled');
+
                 $.ajax({
                     url: '{{ url('/page/cart/minus') }}/' + idx,
                     type: 'GET',
@@ -360,6 +396,7 @@
                         $('#qty' + idx).val(r.cartSession[idx].qtdIndividual);
                         $('#valorTotal' + idx).html('R$ ' + r.cartSession[idx].valorTotalProduto.toFixed(2).replace('.', ','));
                         $('#precoSubTotal').html('R$ ' + r.subTotal.toFixed(2).replace('.', ','));
+                        $('#precoCalcTotal').html('R$ ' + r.total.toFixed(2).replace('.', ','));
                         
                     }
                 });
@@ -408,7 +445,7 @@
             var larguraTotal = $('#larguraTotal').val();
             var comprimentoTotal = $('#comprimentoTotal').val();
 
-            console.log(alturaTotal);
+            console.log(pesoTotal);
 
             pesoTotal = (pesoTotal / 1000);
 
@@ -535,6 +572,8 @@
                 type: 'POST',
                 data: $("#formComprar").serialize(),
                 success: function(codigoCompra){
+
+
 
                     $.each(codigoCompra, function () {
                         var key = Object.keys(this)[0];

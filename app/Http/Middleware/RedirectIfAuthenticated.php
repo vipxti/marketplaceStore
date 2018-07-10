@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class RedirectIfAuthenticated
 {
@@ -29,7 +30,11 @@ class RedirectIfAuthenticated
                 break;
             default:
                 if (Auth::guard($guard)->check()) {
-                    return redirect()->route('index');
+                    if (Session::get('urlCart') === null) {
+                        return redirect()->route('client.dashboard');
+                    } else {
+                        return redirect()->route('cart.page');
+                    }
                 };
                 break;
 

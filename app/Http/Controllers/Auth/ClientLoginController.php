@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientLoginRequest;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class ClientLoginController extends Controller
 {
@@ -21,13 +23,19 @@ class ClientLoginController extends Controller
 
     public function login(ClientLoginRequest $request)
     {
-        //dd($request->all());
+        if (Session::has('cartRoute')) {
+            $route = Session::get('cartRoute');
+        } else {
+            $route = 'client.dashboard';
+        }
+
+        //dd($route);
 
         //Faz o login do cliente
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'))) {
-
             //Redireciona o cliente caso consiga logar
-            return redirect()->route('client.dashboard')->with('success', 'Bem vindo ' . Auth::user()->nm_cliente);
+            Session::forget('cartRoute');
+            return redirect()->route($route)->with('success', 'Bem vindo');
         }
 
         //Retorna para a tela de login com o campo email preenchido

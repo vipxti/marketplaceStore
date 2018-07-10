@@ -57,7 +57,9 @@ Route::prefix('admin')->group(function () {
 
     //Form cor e cadastro
     Route::get('/color', 'ColorController@showColorForm')->name('color.page')->middleware('auth:admin');
-    Route::post('/color', 'ColorController@crudCor')->name('color.save');
+    Route::post('/color/save', 'ColorController@addNewColor')->name('color.save');
+    Route::post('/color/update', 'ColorController@updateColor')->name('color.update');
+    Route::post('/color/delete', 'ColorController@deleteColor')->name('color.delete');
 
     //Integração
     //Bling
@@ -107,10 +109,8 @@ Route::prefix('page')->group(function () {
         Route::post('/clear', 'CartController@clearCart')->name('cart.clear');
         Route::get('/minus/{idx}', 'CartController@removeQuantityCart')->name('minus.quantity');
         Route::get('/plus/{idx}', 'CartController@addQuantityCart')->name('plus.quantity');
+        Route::get('/result', 'CartController@showResultPage')->name('cart.result.page');
     });
-
-    //Carrinho
-    Route::get('/carrinho', 'CartController@cart2');
 
     //Compra
     Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');
