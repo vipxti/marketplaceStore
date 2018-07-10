@@ -101,10 +101,10 @@
                                         <td id="qt_produto">{{ str_replace('.', ',', $produto->qt_produto) }} </td>
                                         <td id="colBotoes" class="text-right">
                                             <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
-                                            <button type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;">
-                                                <a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}">
+                                            <button type="submit" id="btn_atributos" class="fa fa-plus btn btn-outline-success" onclick="pagVariacao({{$produto->cd_produto}});" style="color: #008d4c;">
+                                                {{--<a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}">
                                                     <i class="fa fa-plus"></i>
-                                                </a>
+                                                </a>--}}
                                             </button>
                                             <button id="btn_excluir" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                             <button id="btn_salvar" class="fa fa-check btn btn-outline-warning" style="color: #008d4c; display:none"></button>
@@ -414,6 +414,10 @@
             })
         });
 
+        function pagVariacao(cd_prod){
+            window.location.href = '{{ url('/admin/product/variation/') }}' + '/' + cd_prod;
+        }
+
         //Abrir o modal ao clicar no botão Atributos
         $('#btn_atributos').click(function(e){
 
@@ -463,13 +467,6 @@
             var conteudoAtualizado = campoTR.find("#caixa_editar").val();
             var campo_qt_produto = campoTR.find("td:eq(4)");
             var regLetras = new RegExp("^[0-9]*$");
-
-            //console.log(conteudoAtualizado.replace(regLetras, ''));
-            /*var word = "my~wo@rd 12$3";
-            console.log(word);
-            var regx = "/[^0-9]/g";
-            word = word.replace(eval(regx), '');
-            console.log(word);*/
 
             if(conteudoAtualizado.length == 0 || !regLetras.exec(conteudoAtualizado)){
                 $("#caixa_editar").focus();
