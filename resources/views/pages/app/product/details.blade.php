@@ -201,9 +201,9 @@
                 <div class="col-12 col-md-6">
                     <div class="single_product_desc">
 
-                        <h4 class="title"><a href="#">{{ $product->nm_produto }}</a></h4>
+                        <h4 class="title">{{ $product->nm_produto }}</h4>
 
-                        <h4 class="price">{{ $product->vl_produto }}</h4>
+                        <h4 class="price">R$ {{ number_format($product->vl_produto, 2, ',', '.') }}</h4>
 
                         @if($product->qt_produto > 5)
 

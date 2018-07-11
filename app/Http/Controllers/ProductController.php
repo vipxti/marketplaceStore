@@ -32,14 +32,14 @@ class ProductController extends Controller
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(6);
 
 
-
-        //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
+        //$produtosVariacao = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
 
         $imagemPrincipal = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
             ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
             ->select('img_produto.im_produto')
             ->where('img_produto.ic_img_principal', '=', 1)
+            ->where('produto.cd_status_produto', '=', 1)
             ->orderBy('sku_produto_img.cd_img')
             ->get();
 
