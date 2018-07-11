@@ -54,7 +54,11 @@ Route::prefix('admin')->group(function () {
     //Form tamanho e cadastro
     Route::get('/size', 'SizeController@showSizeForm')->name('size.register')->middleware('auth:admin');
     Route::post('/tamanholetra', 'SizeController@cadastrarNovoTamanhoLetra')->name('lettersize.save');
+    Route::post('/tamanholetra/update', 'SizeController@updateSizeLetter')->name('lettersize.update');
+    Route::post('/tamanholetra/delete', 'SizeController@deleteSizeLetter')->name('lettersize.delete');
     Route::post('/tamanhonumero', 'SizeController@cadastrarNovoTamanhoNumero')->name('numbersize.save');
+    Route::post('/tamanhonumero/update', 'SizeController@updateSizeNumber')->name('numbersize.update');
+    Route::post('/tamanhonumero/delete', 'SizeController@deleteSizeNumber')->name('numbersize.delete');
 
     //Form cor e cadastro
     Route::get('/color', 'ColorController@showColorForm')->name('color.page')->middleware('auth:admin');

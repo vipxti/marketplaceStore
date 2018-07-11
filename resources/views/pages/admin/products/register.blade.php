@@ -332,7 +332,7 @@
                 color: '#fff'
             } });
 
-        setTimeout($.unblockUI, 3000);
+        setTimeout($.unblockUI, 8000);
     });
 
     //Validação do campo NOME DO PRODUTO

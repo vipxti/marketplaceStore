@@ -149,7 +149,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 4000);
+            setTimeout($.unblockUI, 6000);
         });
 
         //Campo pesquisa de produtos
@@ -322,16 +322,17 @@
                     dataType: 'JSON',
                     success: function (e) {
                         console.log(e.message);
+                        campoTR.fadeOut(500, function () {
+                            $(this).remove();
+                            //cor branco
+                            $("table tbody tr:odd").css("background-color", "#fff");
+                            //cor cinza
+                            $("table tbody tr:even").css("background-color", "#f5f5f5");
+                        });
                     }
                 });
 
-                campoTR.fadeOut(500, function () {
-                    $(this).remove();
-                    //cor branco
-                    $("table tbody tr:odd").css("background-color", "#fff");
-                    //cor cinza
-                    $("table tbody tr:even").css("background-color", "#f5f5f5");
-                });
+
 
             });
 

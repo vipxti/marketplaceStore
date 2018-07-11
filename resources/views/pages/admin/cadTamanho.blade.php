@@ -164,7 +164,7 @@
                                         <td id="tam">{{$num->nm_tamanho_num}}</td>
                                         <td id="colBotoes" class="text-right">
                                             <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
-                                            <button id="btn_excluir" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
+                                            <button id="btn_excluir_num" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                             <button id="btn_salvar" class="fa fa-check btn btn-outline-warning" style="color: #008d4c; display:none"></button>
                                             <button id="btn_cancelar" class="fa fa-remove btn btn-outline-warning" style="color: #cc0000; display: none"></button>
                                         </td>
@@ -206,7 +206,7 @@
                                             <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" style="color: #367fa9"></button>
                                             <button id="btn_salvar" class="fa fa-check btn btn-outline-warning" style="color: #008d4c; display:none"></button>
                                             <button id="btn_cancelar" class="fa fa-remove btn btn-outline-warning" style="color: #cc0000; display: none"></button>
-                                            <button id="btn_excluir" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
+                                            <button id="btn_excluir_letra" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -222,7 +222,40 @@
 
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/admin/jquery.inputmask.bundle.js') }}"></script>
+    <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
     <script>
+
+        $('#btnSalvarNum').click(function(){
+            $.blockUI({
+                message: 'Salvando...',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                } });
+
+            setTimeout($.unblockUI, 6000);
+        });
+
+        $('#btnSalvarLetra').click(function(){
+            $.blockUI({
+                message: 'Salvando...',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                } });
+
+            setTimeout($.unblockUI, 6000);
+        });
 
         $(document).ready(function(){
 
@@ -357,22 +390,26 @@
                 var campo_tam = campoTR.find('#tam');
                 campo_tam.text("");
 
-                var campo_input = "<input id='caixa_editar' type='text' maxlength='4' ' value='" + conteudoOriginal + "'></input>";
+                var campo_input = "<input id='caixa_editar' type='text' maxlength='4' style=\"text-transform: uppercase\" ' value='" + conteudoOriginal + "'></input>";
                 campo_tam.append(campo_input);
                 campoTR.find('#caixa_editar').focus();
                 verificaCaixaEditar();
 
-                trocaBotoes(campoTR);
-
-                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").attr("disabled", "disabled");
-                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").attr("disabled", "disabled");
+                trocaBotoes(campoTR.find('td:eq(2)').children());
+                campoTR.siblings().find('td:eq(2)').children().attr("disabled", "disabled");
             });
 
             //Ação que salva o valor digitado dentro do input, e coloca o novo valor dentro do TD
             $('button#btn_salvar').click(function(){
                 var campoTR = $(this).parent().parent();
                 var conteudoAtualizado = campoTR.find("#caixa_editar").val();
+                var id = campoTR.find('td:eq(0)').text();
                 var campo_tam = campoTR.find("td:eq(1)");
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                var regInicio = new RegExp("^\\s+");
+                var regMeio = new RegExp("\\s+");
+                var regFinal = new RegExp("\\s+$");
+                conteudoAtualizado = conteudoAtualizado.replace(regInicio, "").replace(regFinal, "").replace(regMeio, "");
 
                 if(conteudoAtualizado.length == 0){
                     $("#caixa_editar").focus();
@@ -380,13 +417,39 @@
                     return;
                 }
 
+                if(campoTR.parent().is('#tam_num')){
+                    $.ajax({
+                        url: '{{ route('numbersize.update') }}',
+                        type: 'POST',
+                        data: {_token: CSRF_TOKEN, cd_tamanho_num: id, nm_tamanho_num: conteudoAtualizado},
+                        dataType: 'JSON',
+                        success: function (e) {
+                            console.log(e.message);
+                        }
+                    });
+                    console.log("tabela numero");
+                }
+                else {
+                    conteudoAtualizado = conteudoAtualizado.toUpperCase();
+                    $.ajax({
+                        url: '{{ route('lettersize.update') }}',
+                        type: 'POST',
+                        data: {_token: CSRF_TOKEN, cd_tamanho_letra: id, nm_tamanho_letra: conteudoAtualizado},
+                        dataType: 'JSON',
+                        success: function (e) {
+                            console.log(e.message);
+                        }
+                    });
+                    console.log("tabela letra");
+                }
+
                 campo_tam.text(conteudoAtualizado);
 
                 campo_tam.remove('#caixa_editar');
 
-                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
-                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").removeAttr("disabled");
-                trocaBotoes(campoTR);
+                campoTR.siblings().find('td:eq(2)').children().removeAttr("disabled");
+
+                trocaBotoes(campoTR.find('td:eq(2)').children());
             });
 
 
@@ -398,17 +461,65 @@
 
                 campo_tam.text(conteudoOriginal);
 
-                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
-                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").removeAttr("disabled");
-                trocaBotoes(campoTR);
+                campoTR.siblings().find('td:eq(2)').children().removeAttr("disabled");
+                trocaBotoes(campoTR.find('td:eq(2)').children());
+            });
+
+            $('button#btn_excluir_letra').click(function(){
+                var campoTR = $(this).parent().parent();
+                var id = campoTR.find('td:eq(0)').text();
+                var conteudo = campoTR.find('td:eq(1)').text();
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    url: '{{ route('lettersize.delete') }}',
+                    type: 'POST',
+                    data: {_token: CSRF_TOKEN, cd_tamanho_letra: id, nm_tamanho_letra: conteudo},
+                    dataType: 'JSON',
+                    success: function (e) {
+                        console.log(e.message);
+                        campoTR.fadeOut(500, function () {
+                            $(this).remove();
+                            //cor branco
+                            $("table tbody#tam_letra tr:odd").css("background-color", "#fff");
+                            //cor cinza
+                            $("table tbody#tam_letra tr:even").css("background-color", "#f5f5f5");
+                        });
+                    }
+                });
+
+            });
+
+            $('button#btn_excluir_num').click(function(){
+                var campoTR = $(this).parent().parent();
+                var id = campoTR.find('td:eq(0)').text();
+                var conteudo = campoTR.find('td:eq(1)').text();
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    url: '{{ route('numbersize.delete') }}',
+                    type: 'POST',
+                    data: {_token: CSRF_TOKEN, cd_tamanho_num: id, nm_tamanho_num: conteudo},
+                    dataType: 'JSON',
+                    success: function (e) {
+                        console.log(e.message);
+                        campoTR.fadeOut(500, function () {
+                            $(this).remove();
+                            //cor branco
+                            $("table tbody#tam_num tr:odd").css("background-color", "#fff");
+                            //cor cinza
+                            $("table tbody#tam_num tr:even").css("background-color", "#f5f5f5");
+                        });
+                    }
+                });
+
+                console.log(id);
+                console.log(campoTR);
             });
 
             //Função para troca de botões, transição do display none para block
-            function trocaBotoes(campoTR){
-                campoTR.find('#btn_editar').toggle();
-                campoTR.find('#btn_excluir').toggle();
-                campoTR.find('#btn_salvar').toggle();
-                campoTR.find('#btn_cancelar').toggle();
+            function trocaBotoes(botoes){
+                botoes.toggle();
             }
 
         });
