@@ -22,9 +22,9 @@ class ProductController extends Controller
 {
     public function showShopProductsPage()
     {
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('produto_variacao', 'produto.cd_produto', 'produto_variacao.cd_produto')->where('cd_status_produto', '=', 1)->get();
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->leftJoin('produto_variacao', 'produto.cd_produto', 'produto_variacao.cd_produto')->where('cd_status_produto', '=', 1)->get();
 
-        //dd($produtos);
+        dd($produtos);
 
         //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
 
@@ -273,6 +273,8 @@ class ProductController extends Controller
 
         $v = strpos($request->vl_produto_variacao, ',');
 
+        $slugnameVariation = str_slug($request->nm_produto_variacao, '-');
+
         if ($v !== false) {
             $val = str_replace(',', '.', $request->vl_produto_variacao);
         }
@@ -319,7 +321,7 @@ class ProductController extends Controller
 
         //Tenta cadastrar o produto no banco e captura o erro caso ocorra
         try {
-            $produtoVariacao = $this->createProductVariation($request->cd_ean_variacao, $request->nm_produto_variacao, $request->ds_produto_variacao, $val, $request->qt_produto_variacao, $status, $sku->cd_sku, $request->cd_produto_principal);
+            $produtoVariacao = $this->createProductVariation($request->cd_ean_variacao, $request->nm_produto_variacao, $request->ds_produto_variacao, $val, $request->qt_produto_variacao, $status, $sku->cd_sku, $request->cd_produto_principal, $slugnameVariation);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao cadastrar a variação do produto');
@@ -524,13 +526,14 @@ class ProductController extends Controller
         ]);
     }
 
-    public function createProductVariation($codEanVariacao, $nomeProdVariacao, $descProdVariacao, $valorProdVariacao, $qtProdVariacao, $statusProdVariacao, $codSkuProdVariacao, $codProdPrincipal)
+    public function createProductVariation($codEanVariacao, $nomeProdVariacao, $descProdVariacao, $valorProdVariacao, $qtProdVariacao, $statusProdVariacao, $codSkuProdVariacao, $codProdPrincipal, $slugnameVariacao)
     {
         ProductVariation::firstOrCreate([
             'cd_ean_variacao' => $codEanVariacao,
             'nm_produto_variacao' => $nomeProdVariacao,
             'ds_produto_variacao' => $descProdVariacao,
             'vl_produto_variacao' => $valorProdVariacao,
+            'nm_slug_variacao' => $slugnameVariacao,
             'qt_produto_variacao' => $qtProdVariacao,
             'cd_status_produto_variacao' => $statusProdVariacao,
             'cd_sku' => $codSkuProdVariacao,
