@@ -168,7 +168,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                    <button id="btnSalvarAssoc" type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                 </div>
                             </form>
                         </div>
@@ -210,6 +210,7 @@
 
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/admin/TreeViewScript.js') }}"></script>
+    <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
     <script>
         var arrayCat = [];
         var verificaCat = false;
@@ -239,6 +240,55 @@
             }
             verificaCat = false;
         }
+
+        $('#btnSalvarCat').click(function(){
+            $.blockUI({
+                message: 'Salvando...',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                } });
+
+            setTimeout($.unblockUI, 6000);
+        });
+
+        $('#btnSalvarSub').click(function(){
+            $.blockUI({
+                message: 'Salvando...',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                } });
+
+            setTimeout($.unblockUI, 6000);
+        });
+
+        $('#btnSalvarAssoc').click(function(){
+            $.blockUI({
+                message: 'Salvando...',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                } });
+
+            setTimeout($.unblockUI, 6000);
+        });
+
         $('#categorias').change(function (e) {
             e.preventDefault();
             $('#btnSalvarCat').removeAttr("disabled");

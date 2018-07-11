@@ -262,20 +262,24 @@
             //Carrega os números já cadastrados dentro de um array
             var arrayNum = [];
             $('#nm_num').one("click", function(){
+                arrayNum = [];
                 carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
             });
 
             //Carrega as letras já cadastradas dentro de um array
             var arrayLetra = [];
             $('#nm_letra').one("click", function(){
+                arrayNum = [];
                 carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
             });
 
             //Função para carregar os arrays
             function carregaArray(opcoes, array){
+                console.log("1º " + array);
                 opcoes.each(function(){
                     array.push($(this).text().toUpperCase());
                 });
+                console.log("2º " + array);
             }
 
             //Ao digitar faz a verificação se determinado número já existe
@@ -327,7 +331,7 @@
 
                 var verifica = false;
                 //Carrega as letras já cadastradas dentro de um array
-                $('#caixa_editar').one("click", function () {
+                /*$('#caixa_editar').one("click", function () {
                     if(parseInt(conteudoOriginal)) {
                         if(arrayNum.length == 0) {
                             carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
@@ -337,7 +341,7 @@
                             carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
                         }
                     }
-                });
+                });*/
 
                 //Ao digitar faz a verificação se determinado número já existe
                 $('#caixa_editar').on("input", function () {
@@ -378,6 +382,20 @@
                 });
             }
 
+            function verificaArray(){
+                if(parseInt(conteudoOriginal)) {
+                    arrayNum = [];
+                    if(arrayNum.length == 0) {
+                        carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
+                    }
+                }else {
+                    arrayLetra = [];
+                    if(arrayLetra.length == 0) {
+                        carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
+                    }
+                }
+            }
+
             var conteudoOriginal;
 
             //Ação de clicar no editar, pegando o conteudo e criando o input para edição
@@ -388,6 +406,7 @@
                 conteudoOriginal = conteudo;
 
                 var campo_tam = campoTR.find('#tam');
+                verificaArray();
                 campo_tam.text("");
 
                 var campo_input = "<input id='caixa_editar' type='text' maxlength='4' style=\"text-transform: uppercase\" ' value='" + conteudoOriginal + "'></input>";
@@ -425,6 +444,7 @@
                         dataType: 'JSON',
                         success: function (e) {
                             console.log(e.message);
+                            carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
                         }
                     });
                     console.log("tabela numero");
@@ -438,6 +458,7 @@
                         dataType: 'JSON',
                         success: function (e) {
                             console.log(e.message);
+                            carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
                         }
                     });
                     console.log("tabela letra");
@@ -484,6 +505,8 @@
                             $("table tbody#tam_letra tr:odd").css("background-color", "#fff");
                             //cor cinza
                             $("table tbody#tam_letra tr:even").css("background-color", "#f5f5f5");
+                            //carrega o array novamente
+                            carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
                         });
                     }
                 });
@@ -509,6 +532,8 @@
                             $("table tbody#tam_num tr:odd").css("background-color", "#fff");
                             //cor cinza
                             $("table tbody#tam_num tr:even").css("background-color", "#f5f5f5");
+                            //carrega o array novamente
+                            carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
                         });
                     }
                 });

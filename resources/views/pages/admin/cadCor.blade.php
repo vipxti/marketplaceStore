@@ -178,10 +178,15 @@
 
             //Carrega as letras já cadastradas dentro de um array
             var arrayCor = [];
-            $('#nm_cor').one("click", function(){
-                $("tbody td:nth-child(2)").each(function(){
+            function carregarCoresCadastradas(){
+                arrayCor = [];
+                $("tbody td:nth-child(2)").each(function () {
                     arrayCor.push($(this).text().toUpperCase());
                 });
+            }
+
+            $('#nm_cor').one("click", function(){
+                carregarCoresCadastradas();
             });
 
             //Ao digitar faz a verificação se determinado número já existe
@@ -206,13 +211,11 @@
             //Função chamada quando um input, para edição da cor, for gerado
             function verificaCaixaEditar() {
                 //Carrega as letras já cadastradas dentro de um array
-                $('#caixa_editar').one("click", function () {
+                /*$('#caixa_editar').one("click", function () {
                     if (arrayCor.length == 0) {
-                        $("tbody td:nth-child(2)").each(function () {
-                            arrayCor.push($(this).text().toUpperCase());
-                        });
+                        carregarCoresCadastradas();
                     }
-                });
+                });*/
 
                 //Ao digitar faz a verificação se determinado número já existe
                 $('#caixa_editar').on("input", function () {
@@ -248,6 +251,7 @@
                 conteudoOriginal = conteudo;
 
                 var campo_cor = campoTR.find('#nome_cor');
+                carregarCoresCadastradas();
                 campo_cor.text("");
 
                 var campo_input = "<input id='caixa_editar' type='text' maxlength='40' ' value='" + conteudoOriginal + "'></input>";
@@ -284,6 +288,7 @@
                     dataType: 'JSON',
                     success: function (e) {
                         console.log(e.message);
+                        carregarCoresCadastradas();
                     }
                 });
 
@@ -328,6 +333,8 @@
                             $("table tbody tr:odd").css("background-color", "#fff");
                             //cor cinza
                             $("table tbody tr:even").css("background-color", "#f5f5f5");
+
+                            carregarCoresCadastradas();
                         });
                     }
                 });
