@@ -34,6 +34,7 @@ Route::prefix('admin')->group(function () {
 
     //Produto
     Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
+    Route::post('/product/update', 'ProductController@updateProduct')->name('product.update');
     Route::get('/product', 'ProductController@showProductAdminPage')->name('product.register')->middleware('auth:admin');
 
     //Variação do produto

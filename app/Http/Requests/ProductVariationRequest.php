@@ -44,13 +44,13 @@ class ProductVariationRequest extends FormRequest
 
         if ($this->cd_tamanho_num_variacao == null) {
 
-            $rules['cd_tamanho_letra_variacao'] = 'required';
+            $rules['cd_tamanho_letra_variacao'] = 'nullable';
 
         }
 
         if ($this->cd_tamanho_letra_variacao == null) {
 
-            $rules['cd_tamanho_num_variacao'] = 'required';
+            $rules['cd_tamanho_num_variacao'] = 'nullable';
 
         }
 

@@ -375,11 +375,11 @@
                                      @endforeach
                                 </div>
 
-                                {{--<div class="d-flex justify-content-center">
+                                <div class="d-flex justify-content-center">
 
                                     {{ $produtos->links("pagination::bootstrap-4") }}
 
-                                </div>--}}
+                                </div>
 
                                 <div>
                                     <h5>Roupas femininas no Vip-x</h5>

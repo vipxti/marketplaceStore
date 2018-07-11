@@ -129,7 +129,7 @@
                             </div>
 
                          <!-- Moda Variações -->
-                            <form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
+                            {{--<form action="{{ route('product.save') }}" method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
                                 <div class='modal fade' id='myModal'>
@@ -384,7 +384,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </form>--}}
                         </div>
                       </div>
                 </section>
@@ -467,6 +467,8 @@
             var conteudoAtualizado = campoTR.find("#caixa_editar").val();
             var campo_qt_produto = campoTR.find("td:eq(4)");
             var regLetras = new RegExp("^[0-9]*$");
+            var id = campoTR.find('td:eq(0)').text();
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
             if(conteudoAtualizado.length == 0 || !regLetras.exec(conteudoAtualizado)){
                 $("#caixa_editar").focus();
@@ -475,6 +477,16 @@
             }
 
             campo_qt_produto.text(conteudoAtualizado);
+
+            $.ajax({
+                url: '{{ route('product.update') }}',
+                type: 'POST',
+                data: {_token: CSRF_TOKEN, cd_produto: id, qt_produto: conteudoAtualizado},
+                dataType: 'JSON',
+                success: function (e) {
+                    console.log(e.message);
+                }
+            });
 
             campo_qt_produto.remove('#caixa_editar');
 
