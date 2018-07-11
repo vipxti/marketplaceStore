@@ -333,7 +333,7 @@
                                             <div class="product-img">
                                                 <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="">
                                                 <div class="product-quicview">
-                                                    <a href="{{ route('products.details', $produto->cd_nr_sku) }}"><i class="ti-plus"></i></a>
+                                                    <a href="{{ route('products.details', $produto->nm_slug) }}"><i class="ti-plus"></i></a>
                                                 </div>
                                             </div>
 

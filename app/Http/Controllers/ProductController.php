@@ -22,7 +22,9 @@ class ProductController extends Controller
 {
     public function showShopProductsPage()
     {
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(6);
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('produto_variacao', 'produto.cd_produto', 'produto_variacao.cd_produto')->where('cd_status_produto', '=', 1)->get();
+
+        //dd($produtos);
 
         //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
 
@@ -54,13 +56,23 @@ class ProductController extends Controller
         return view('pages.app.alteraremailcliente');
     }
 
-    public function showProductDetails($sku)
+    public function showProductDetails($slug)
     {
-        $product = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('sku.cd_nr_sku', '=', $sku)->firstOrFail();
+        $product = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->where('produto.nm_slug', '=', $slug)->firstOrFail();
 
         //dd($product);
 
-        return view('pages.app.product.details', compact('product'));
+        $productImages = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+            ->select('img_produto.im_produto')
+            ->where('sku.cd_nr_sku', '=', $product->cd_nr_sku)
+            ->orderBy('sku_produto_img.cd_img')
+            ->get()->toArray();
+
+        //dd($productImages);
+
+        return view('pages.app.product.details', compact('product', 'productImages'));
     }
 
     public function paginaAlterarsenhacliente()
@@ -118,6 +130,8 @@ class ProductController extends Controller
         //dd($request->all());
         $v = strpos($request->vl_produto, ',');
 
+        $slugname = str_slug($request->nm_produto, '-');
+
         if ($v !== false) {
             $val = str_replace(',', '.', $request->vl_produto);
         } else {
@@ -165,7 +179,7 @@ class ProductController extends Controller
         }
 
         try {
-            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku);
+            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('product.register')->with('nosuccess', 'Erro ao cadastrar o produto');
@@ -496,13 +510,14 @@ class ProductController extends Controller
         ]);
     }
 
-    public function createProduct($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $codSkuProd)
+    public function createProduct($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $codSkuProd, $slugname)
     {
         return Product::firstOrCreate([
             'cd_ean' => $eanProd,
             'nm_produto' => $nomeProd,
             'ds_produto' => $descProd,
             'vl_produto' => $valorProd,
+            'nm_slug' => $slugname,
             'qt_produto' => $qtProd,
             'cd_status_produto' => $statusProd,
             'cd_sku' => $codSkuProd

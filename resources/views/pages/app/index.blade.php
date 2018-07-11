@@ -176,7 +176,7 @@
                         <div class="product-img">
                             <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="{{ $produto['nomeProduto'] }}">
                             <div class="product-quicview">
-                                <a href="{{ route('products.details', $produto->cd_nr_sku)}}"><i class="fa fa-plus"></i></a>
+                                <a href="{{ route('products.details', $produto->nm_slug)}}"><i class="fa fa-plus"></i></a>
                             </div>
                         </div>
                         <!-- Product Description -->

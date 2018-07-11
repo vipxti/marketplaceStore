@@ -22,8 +22,6 @@ Route::prefix('admin')->group(function () {
     //Pedido
     Route::get('/pedido', 'OrderController@listOrder')->name('order.list')->middleware('auth:admin');
 
-
-
     //Cadastro e login de usuário
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');

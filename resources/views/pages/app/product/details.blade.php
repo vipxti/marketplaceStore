@@ -120,157 +120,201 @@
         </div>
     </section>
 
-
-
-
-        <!-- Nav bar do produto -->
-        <div class="breadcumb_area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <ol class="breadcrumb d-flex align-items-center">
-                        <li class="breadcrumb-item"><a href="{{ route('products.page') }}">Início</a></li>
-                            <li class="breadcrumb-item active">{{ $product->nm_produto }}</li>
-                        </ol>
-                        <!-- btn -->
-                        <a href="{{ route('products.page') }}" class="backToHome d-block"><i class="fa fa-angle-double-left"></i> Voltar</a>
-                    </div>
+    <!-- Nav bar do produto -->
+    <div class="breadcumb_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <ol class="breadcrumb d-flex align-items-center">
+                    <li class="breadcrumb-item"><a href="{{ route('products.page') }}">Início</a></li>
+                        <li class="breadcrumb-item active">{{ $product->nm_produto }}</li>
+                    </ol>
+                    <!-- btn -->
+                    <a href="{{ route('products.page') }}" class="backToHome d-block"><i class="fa fa-angle-double-left"></i> Voltar</a>
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- Produto e detalhes -->
-        <section class="single_product_details_area section_padding_0_100">
-            <div class="container">
-                <div class="row">
+    <section class="single_product_details_area section_padding_0_100">
 
-                    <div class="col-12 col-md-6">
-                        <div class="single_product_thumb">
-                            <div id="product_details_slider" class="carousel slide" data-ride="carousel">
+        <div class="container">
+            <div class="row">
 
-                                <ol class="carousel-indicators">
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(img/product-img/product-9.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(img/product-img/product-2.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(img/product-img/product-3.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(img/product-img/product-4.jpg);">
-                                    </li>
-                                </ol>
+                <div class="col-12 col-md-6">
+                    <div class="single_product_thumb">
+                        <div id="product_details_slider" class="carousel slide" data-ride="carousel">
 
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <a class="gallery_img" href="img/product-img/product-9.jpg">
-                                            <img class="d-block w-100" src="img/product-img/product-9.jpg" alt="First slide">
-                                        </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/product-2.jpg">
-                                            <img class="d-block w-100" src="img/product-img/product-2.jpg" alt="Second slide">
-                                        </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/product-3.jpg">
-                                            <img class="d-block w-100" src="img/product-img/product-3.jpg" alt="Third slide">
-                                        </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/product-4.jpg">
-                                            <img class="d-block w-100" src="img/product-img/product-4.jpg" alt="Fourth slide">
-                                        </a>
-                                    </div>
+                            <ol class="carousel-indicators">
+
+                                <li class="active" data-target="#product_details_slider" data-slide-to="0" style="{{ 'background-image: url(' . URL::asset('img/products/' . $productImages[0]['im_produto']) . ');' }}">
+                                </li>
+
+                                @if(count($productImages) > 1)
+
+                                    @foreach($productImages as $key => $pImages)
+
+                                        @if($key > 0)
+
+                                            <li data-target="#product_details_slider" data-slide-to="1" style="{{ 'background-image: url(' . URL::asset('img/products/' . $pImages['im_produto']) . ');' }}">
+                                            </li>
+
+                                        @endif
+
+                                    @endforeach
+
+                                @endif
+
+                            </ol>
+
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <a class="gallery_img" href="{{ URL::asset('img/products/' . $productImages[0]['im_produto']) }}">
+                                        <img class="d-block w-100" src="{{ URL::asset('img/products/' . $productImages[0]['im_produto']) }}" alt="First slide">
+                                    </a>
                                 </div>
+
+                                @if(count($productImages) > 1)
+
+                                    @foreach($productImages as $key => $pImages)
+
+                                        @if($key > 0)
+
+                                            <div class="carousel-item">
+                                                <a class="gallery_img" href="{{ URL::asset('img/products/' . $pImages['im_produto']) }}">
+                                                <img class="d-block w-100" src="{{ URL::asset('img/products/' . $pImages['im_produto']) }}" alt="slide">
+                                                </a>
+                                            </div>
+
+                                        @endif
+
+                                    @endforeach
+
+                                @endif
+
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-12 col-md-6">
-                        <div class="single_product_desc">
+                <div class="col-12 col-md-6">
+                    <div class="single_product_desc">
 
-                            <h4 class="title"><a href="#">{{ $product->nm_produto }}</a></h4>
+                        <h4 class="title"><a href="#">{{ $product->nm_produto }}</a></h4>
 
-                            <h4 class="price">{{ $product->vl_produto }}</h4>
+                        <h4 class="price">{{ $product->vl_produto }}</h4>
 
-                            <p class="available">Disponível: <span class="text-muted">Estoque</span></p>
+                        @if($product->qt_produto > 5)
 
-                            <div class="single_product_ratings mb-15">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <p class="available">Disponibilidade: <span class="text-muted">Em estoque</span></p>
+
+                        @else
+
+                            <p class="available">Disponibilidade: <span class="text-muted">Não disponível</span></p>
+
+                        @endif
+
+                        <div class="single_product_ratings mb-15">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+
+                        {{-- <div class="widget size mb-30">
+                            <h6 class="widget-title">Tamanho</h6>
+                            <div class="widget-desc">
+                                <ul>
+                                    <li><a href="#">32</a></li>
+                                    <li><a href="#">34</a></li>
+                                    <li><a href="#">36</a></li>
+                                    <li><a href="#">38</a></li>
+                                    <li><a href="#">40</a></li>
+                                    <li><a href="#">42</a></li>
+                                </ul>
                             </div>
+                        </div> --}}
 
-                            <div class="widget size mb-30">
-                                <h6 class="widget-title">Tamanho</h6>
-                                <div class="widget-desc">
-                                    <ul>
-                                        <li><a href="#">32</a></li>
-                                        <li><a href="#">34</a></li>
-                                        <li><a href="#">36</a></li>
-                                        <li><a href="#">38</a></li>
-                                        <li><a href="#">40</a></li>
-                                        <li><a href="#">42</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
 
-                            <div class="widget color mb-50">
-                                <h6 class="widget-title">Cor</h6>
-                                <div class="widget-desc">
-                                    <ul class="d-flex justify-content-between">
-                                        <li class="gray"><a href="#"><span class="text-center">(3)</span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="red"><a href="#"><span class="text-center">(25)</span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="yellow"><a href="#"><span class="text-center">(112)</span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="green"><a href="#"><span class="text-center">(72)</span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="teal"><a href="#"><span class="text-center">(9)</span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="cyan"><a href="#"><span class="text-center">(29)</span></a></li>
-                                    </ul>
-                                </div>
+                        <div class="widget color mb-50">
+                            <h6 class="widget-title">Cor</h6>
+                            <div class="widget-desc">
+                                <ul class="d-flex justify-content-between">
+                                    <li class="gray"><a href="#"><span class="text-center">(3)</span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="red"><a href="#"><span class="text-center">(25)</span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="yellow"><a href="#"><span class="text-center">(112)</span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="green"><a href="#"><span class="text-center">(72)</span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="teal"><a href="#"><span class="text-center">(9)</span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="cyan"><a href="#"><span class="text-center">(29)</span></a></li>
+                                </ul>
                             </div>
+                        </div>
+
+                        @if($product->qt_produto <= 5)
+
+                            <p>SEM ESTOQUE</p>
+
+                        @else
 
                             <!-- Botão adicionar carrinho -->
                             <form class="cart clearfix mb-50 d-flex" method="post">
+
                                 <div class="quantity">
                                     <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;">
                                         <i class="fa fa-minus" aria-hidden="true"></i>
                                     </span>
-                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
+                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1" disabled>
                                     <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                     </span>
                                 </div>
-                                <button type="submit" name="addtocart" value="5" class="btn cart-submit d-block">Comprar</button>
+
+                                <button type="submit" name="addtocart" value="5" class="btn cart-submit d-block">Comprar</button>                            
+                                
                             </form>
 
+                        @endif                     
 
-                            <form id="accordion" role="tablist">
-                                <div class="card">
-                                    <div class="card-header" role="tab" id="headingOne">
-                                        <h6 class="mb-0">
-                                            <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Informação do produto</a>
-                                        </h6>
-                                    </div>
+                    </div>
 
-                                    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <p>{{ $product->ds_produto }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                </div>
+
+            </div>
+
+            <p>&nbsp;</p>
+
+            <!--Informações do produto -->
+            <div class="row">
+
+                <form id="accordion" role="tablist">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingOne">
+                            <h6 class="mb-0">
+                                <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Informação do produto</a>
+                            </h6>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <p>{{ $product->ds_produto }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </form>
 
+            </div>
+        </div>
+
+    </section>
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
@@ -283,9 +327,7 @@
     <!-- Active js -->
     <script src="js/active.js"></script>
 
-
     <script>
-
 
         $('#quickview').on('show', function (e) {
 
@@ -296,6 +338,6 @@
 
         });
 
-
     </script>
+
 @stop
