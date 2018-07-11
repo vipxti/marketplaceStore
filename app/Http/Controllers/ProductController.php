@@ -21,11 +21,17 @@ use Illuminate\Database\QueryException;
 
 class ProductController extends Controller
 {
+    //mostar produto por cat/subcat
+    public function showShopProductsCatSubcat($CatSubcatname){
+
+        //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
+    }
+
     public function showShopProductsPage()
     {
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(6);
 
-        dd($produtos);
+
 
         //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
 
