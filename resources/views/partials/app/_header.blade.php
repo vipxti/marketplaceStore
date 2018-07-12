@@ -99,11 +99,11 @@
                                             <li class="nav-item dropdown">
                                                 <a href="#" id="menu" data-toggle="dropdown" class="cormenu nav-link dropdown-toggle">Beleza e Saúde</a>
                                                 <ul class="dropdown-menu">
-                                                    <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Maquiagem</a>
+                                                    <li id="c" class="dropdown-submenu">
+                                                        <a id="1" href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle listagem">Maquiagem</a>
                                                         <ul class="dropdown-menu">
-                                                            <li>
-                                                                <a href="#" class="cormenu dropdown-item">Batom</a>
+                                                            <li id="s">
+                                                                <a id="1" href="#" class="cormenu dropdown-item listagem">Batom</a>
                                                             </li>
                                                             <li>
                                                                 <a href="#" class="cormenu dropdown-item">Gloss</a>
@@ -397,6 +397,11 @@
 </script>
 
 <script>
+
+    $('.listagem').click(function(){
+        var catSubCat= $(this).attr('id');
+        var id = $(this).parent().attr('id');
+
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         $.ajax({
@@ -404,14 +409,14 @@
             type: "POST",
             data:{
                 _token: CSRF_TOKEN,
-                id: "1",
-                catSubCat:"5"
+                id: id,
+                catSubCat:catSubCat
             },
             dataType: 'JSON',
             success: function(d) {
                 console.log(d)
             }
-        })
+        });
     });
 
 

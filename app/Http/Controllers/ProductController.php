@@ -22,14 +22,12 @@ use Illuminate\Database\QueryException;
 class ProductController extends Controller
 {
     //mostar produto por cat/subcat
-
-        //dd($request->id, $request->catSubCat);
-    function kk(Request $request){
-        $dV = $request->id;
+    public function showShopProductsCatSubcat(Request $request){
+        $dVerificador = $request->id;
         $catSubCat = $request->catSubCat;
         $produtoCatSubCat = null;
 
-        if($dV=0){
+        if($dVerificador=="c"){
             $produtoCatSubCat = Product::join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
                 ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
                 ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
@@ -48,7 +46,7 @@ class ProductController extends Controller
                 ->where('img_produto.ic_img_principal', '=', $catSubCat)
                 ->get();
         }
-        else{
+        elseif($dVerificador=="s"){
             $produtoCatSubCat = Product::join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
                 ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
                 ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
