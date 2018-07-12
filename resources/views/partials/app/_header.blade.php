@@ -9,66 +9,16 @@
         top: 0;
         left: 100%;
         margin-top: -1px;
+
     }
-
-    .menu {
-        background-color: #fff;
-        width: 100%;
-        height: 60px;
-    }
-
-    .menu ul {
-        background-color: #fff;
-        text-align: center;
-        list-style-type: none;
-    }
-
-    .menu ul li ul {
-        display: none;
-        opacity: 0;
-        position: absolute;
-        top: 60px;
-        width: 100%;
-        background-color: #fff;
-        transform: all .5s;
-    }
-
-    .menu ul li ul:hover {
-        display: block;
-        opacity: 1;
-    }
-
-    .menu ul li ul li { width: 100%; }
-
-    .menu ul li ul li ul {
-        position: absolute;
-        top: 0;
-        left: 100%;
-    }
-
-    .menu li {
-        width: 25%;
-        float: left;
-        position: relative;
-    }
-
-    .menu li a {
-        display: block;
-        color: #666;
-        line-height: 60px;
-    }
-
-    .menu li a:hover { background-color: #f0f0f0; }
-
-    .menu li a:hover + ul {
-        display: block;
-        opacity: 1;
-    }
-
-    a:link{
-        text-decoration: none;
+    .cormenu{
+        text-decoration: none !important;
+        color: #3a3a3a !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
     }
 </style>
+
 
 <header class="header_area">
     <!-- Top Header Area Start -->
@@ -85,7 +35,7 @@
                         <!--Carrinho e Menu -->
                         <div class="header-cart-menu d-flex align-items-center ml-auto">
                             <div class="main-menu-area">
-                                {{--<nav class="navbar navbar-expand-lg align-items-start">
+                               {{-- <nav class="navbar navbar-expand-lg align-items-start">
                                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#karl-navbar" aria-controls="karl-navbar" aria-expanded="false" aria-label="Toggle navigation">
                                         <span class="navbar-toggler-icon">
                                             <i class="ti-menu"> </i>
@@ -97,7 +47,7 @@
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Saúde e Beleza</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a id="test" class="dropdown-item list">Maquiagem</a>
+                                                    <a class="dropdown-item" href="#">Maquiagem</a>
                                                     <a class="dropdown-item" href="#">Batom</a>
                                                     <a class="dropdown-item" href="#">Gloss</a>
                                                     <a class="dropdown-item" href="#">Blush</a>
@@ -139,10 +89,160 @@
                                     </div>
                                 </nav>--}}
 
-                                <div class="col-md-12">
+                                <nav class="navbar navbar-expand-lg align-items-start">
+                                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar1">
+                                        <span class="navbar-toggler-icon"></span>
+                                    </button>
+                                    <div class="collapse navbar-collapse" id="navbar1" style="padding-right: 180px">
+                                        <ul class="navbar-nav">
+                                            <!-- Beleza e Saúde -->
+                                            <li class="nav-item dropdown">
+                                                <a href="#" id="menu" data-toggle="dropdown" class="cormenu nav-link dropdown-toggle">Beleza e Saúde</a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Maquiagem</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Batom</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Gloss</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Base</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Blush</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Primer</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Pó Compacto</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Iluminador</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Corretivo</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Delineador</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Máscara</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Glitter</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Sombras</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Cílios</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Lápis</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Maletas</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Pincel</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Esmalte</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Acessórios</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- Moda -->
+                                            <li class="nav-item dropdown">
+                                                <a href="#" id="menu" data-toggle="dropdown" class="cormenu nav-link dropdown-toggle">Moda</a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Masculino</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Cuecas</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Sungas</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown-item dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-toggle">Feminino</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Vestido</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Conjunto</a>
+                                                            </li>
+                                                        </ul>
+
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Unissex</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item"></a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item"></a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- Tecnologia -->
+                                            <li class="nav-item dropdown">
+                                                <a href="#" id="menu" data-toggle="dropdown" class="cormenu nav-link dropdown-toggle">Tecnologia</a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Eletrônica</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item"></a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item"></a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- Promoção -->
+                                            <li class="nav-item dropdown">
+                                                <a href="#" id="menu" data-toggle="dropdown" class="cormenu nav-link dropdown-toggle">Promoções</a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item">Kits e Combos</a>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item">Preço Baixo</a>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item">Outlet</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
+
+                                {{--<div class="col-md-12">
                                 <nav class="menu">
                                     <ul>
-                                        <li><a href="{{route('index')}}">Início</a></li>
+                                        --}}{{--<li><a href="{{route('index')}}">Início</a></li>--}}{{--
                                         <li><a href="">Saúde e Beleza</a>
                                             <ul>
                                                 <li><a href="">Maquiagem</a>
@@ -192,19 +292,13 @@
                                             </ul>
                                         </li>
 
-                                        {{--<li><a href=" {{ route('products.page') }}">Produtos</a></li>--}}
+                                        <li><a href=" {{ route('products.page') }}">Produtos</a></li>
 
                                     </ul>
                                 </nav>
 
-                                </div>
+                                </div>--}}
                             </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-
 
                             <!-- Carrinho -->
                             <div class="cart">
@@ -289,9 +383,20 @@
 </header>
 
 <script>
-    $('#test').click(function (e) {
-        e.preventDefault();
+    $('.dropdown-submenu > a').on("click", function(e) {
+        var submenu = $(this);
+        $('.dropdown-submenu .dropdown-menu').removeClass('show');
+        submenu.next('.dropdown-menu').addClass('show');
+        e.stopPropagation();
+    });
 
+    $('.dropdown').on("hidden.bs.dropdown", function() {
+        // hide any open menus when parent closes
+        $('.dropdown-menu.show').removeClass('show');
+    });
+</script>
+
+<script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         $.ajax({
