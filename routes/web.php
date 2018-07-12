@@ -102,6 +102,7 @@ Route::prefix('page')->group(function () {
     //Produtos
     Route::prefix('product')->group(function () {
         Route::get('/shop', 'ProductController@showShopProductsPage')->name('products.page');
+        Route::post('/filter', 'ProductController@showShopProductsCatSubcat')->name('productsFilterCatSubCat.page');
         Route::get('/{productsku}', 'ProductController@showProductDetails')->name('products.details');
     });
 

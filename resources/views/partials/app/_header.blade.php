@@ -97,7 +97,7 @@
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Saúde e Beleza</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Maquiagem</a>
+                                                    <a id="test" class="dropdown-item list">Maquiagem</a>
                                                     <a class="dropdown-item" href="#">Batom</a>
                                                     <a class="dropdown-item" href="#">Gloss</a>
                                                     <a class="dropdown-item" href="#">Blush</a>
@@ -289,6 +289,28 @@
 </header>
 
 <script>
+    $('#test').click(function (e) {
+        e.preventDefault();
+
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: '{{route('productsFilterCatSubCat.page')}}',
+            type: "POST",
+            data:{
+                _token: CSRF_TOKEN,
+                id: "1",
+                catSubCat:"5"
+            },
+            dataType: 'JSON',
+            success: function(d) {
+                console.log(d)
+            }
+        })
+    });
+
+
+
     $(document).ready(function(){
         $('.dropdown-submenu a.test').on("click", function(e){
             $(this).next('ul').toggle();
