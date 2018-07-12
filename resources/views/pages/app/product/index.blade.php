@@ -2,6 +2,8 @@
 
 @section('content')
 
+    {{-- dd($imagemPrincipal) --}}
+
     <!-- ****** Quick View Modal Area Start ****** -->
     <div class="modal fade" id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -331,7 +333,7 @@
 
                                         <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
                                             <div class="product-img">
-                                                <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="">
+                                                <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$idxImgs[$key]][0]['im_produto'])  }}" alt="">
                                                 <div class="product-quicview">
                                                     <a href="{{ route('products.details', $produto->nm_slug) }}"><i class="ti-plus"></i></a>
                                                 </div>
@@ -351,11 +353,12 @@
                                                     <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
                                                     <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
                                                     <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
+                                                    <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
                                                     <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
                                                     <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
                                                     <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
                                                     <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
-                                                    <input type="hidden" name="im_produto" value="{{ $imagemPrincipal[$key]->im_produto }}">
+                                                    <input type="hidden" name="im_produto" value="{{ $imagemPrincipal[$idxImgs[$key]][0]['im_produto'] }}">
 
                                                     @if($produto->qt_produto < 5)
 

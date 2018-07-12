@@ -72,7 +72,7 @@
                                         <tr>
 
                                             <td class="cart_product_img d-flex align-items-center">
-                                                <a href="{{ route('products.details', $produto['skuProduto']) }}">
+                                                <a href="{{ route('products.details', $produto['slugProduto']) }}">
                                                     <img src="{{ URL::asset('img/products' . '/' . $produto['imagemProduto']) }}" alt="Product">
                                                 </a>
                                                 <h5>{{ $produto['nomeProduto'] }}</h5>

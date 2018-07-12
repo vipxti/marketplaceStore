@@ -189,6 +189,7 @@ class CartController extends Controller
                     'skuProduto' => $request->sku_produto,
                     'descricaoProduto' => $request->ds_produto,
                     'valorProduto' => $request->vl_produto,
+                    'slugProduto' => $request->slug_produto,
                     'qtdProdutoEstoque' => $request->qt_produto,
                     'qtdIndividual' => 1,
                     'imagemProduto' => $request->im_produto,
@@ -248,6 +249,7 @@ class CartController extends Controller
                     'skuProduto' => $request->sku_produto,
                     'descricaoProduto' => $request->ds_produto,
                     'valorProduto' => $request->vl_produto,
+                    'slugProduto' => $request->slug_produto,
                     'qtdProdutoEstoque' => $request->qt_produto,
                     'qtdIndividual' => 1,
                     'imagemProduto' => $request->im_produto,
@@ -661,6 +663,25 @@ class CartController extends Controller
             ]);
     }
 
+    public function addQuantityFromDetails(Request $request)
+    {
+        if (Session::has('qtDetails')) {
+            $qtdAnterior = Session::get('qtDetails');
+        } else {
+            $qtdAnterior = 0;
+        }
+
+        $qtdAnterior += $request->qtd;
+
+        Session::put('qtDetails', $qtdAnterior);
+
+        Session::save();
+
+        return response([
+            'qtd' => $qtdAnterior
+        ]);
+    }
+
     public function removeQuantityCart($idx)
     {
         $carrinho = Session::get('cart');
@@ -728,5 +749,10 @@ class CartController extends Controller
             'subTotal' => Session::get('subtotalPrice'),
             'total' => Session::get('totalPrice')
         ]);
+    }
+
+    public function removeQuantityFromDetails($sku)
+    {
+        dd($sku);
     }
 }

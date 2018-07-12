@@ -74,19 +74,31 @@ class ProductController extends Controller
 
     public function showShopProductsPage()
     {
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(6);
+        $idxImgs = [];
 
+        $prod = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->get();
 
         //$produtosVariacao = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
 
-        $imagemPrincipal = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
-            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
-            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
-            ->select('img_produto.im_produto')
-            ->where('img_produto.ic_img_principal', '=', 1)
-            ->where('produto.cd_status_produto', '=', 1)
-            ->orderBy('sku_produto_img.cd_img')
-            ->get();
+        //dd($produtos);
+
+        foreach ($prod as $key => $p) {
+            $imagemPrincipal[$key] = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+                ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+                ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+                ->select('img_produto.im_produto')
+                ->where('img_produto.ic_img_principal', '=', 1)
+                ->where('produto.cd_status_produto', '=', 1)
+                ->where('sku.cd_nr_sku', '=', $p['cd_nr_sku'])
+                ->orderBy('sku_produto_img.cd_img')
+                ->get()->toArray();
+
+            $idxImgs[$key] = $key;
+        }
+
+        //dd($imagemPrincipal);
+
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(30);
 
         $imagemVariacao = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
             ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
@@ -100,7 +112,7 @@ class ProductController extends Controller
 
         //$produtos = $p->merge($pv);
 
-        return view('pages.app.product.index', compact('produtos', 'imagemPrincipal'));
+        return view('pages.app.product.index', compact('produtos', 'imagemPrincipal', 'idxImgs'));
     }
 
     public function paginaAlteraremailcliente()
@@ -404,7 +416,7 @@ class ProductController extends Controller
             throw $e;
         }
 
-        if (!($request->cd_tamanho_letra_variacao == null && $request->cd_tamanho_num_variacao == null)){
+        if (!($request->cd_tamanho_letra_variacao == null && $request->cd_tamanho_num_variacao == null)) {
             if ($request->cd_tamanho_letra_variacao == null) {
                 $letra = false;
                 $numero = true;

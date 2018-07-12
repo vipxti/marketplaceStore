@@ -36,7 +36,7 @@
                                     <td class="qty">
                                         <div class="quantity">
                                             <span class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{ Session::get('qtd' . $produto['skuProduto']) }}">
+                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="5" name="quantity" value="{{ Session::get('qtd' . $produto['skuProduto']) }}">
                                             <span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                             <i id="spinner_qtd" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i>
                                         </div>

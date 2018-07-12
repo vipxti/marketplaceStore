@@ -193,6 +193,7 @@
                                 <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
                                 <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
                                 <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
+                                <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
                                 <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
                                 <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
                                 <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">

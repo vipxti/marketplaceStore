@@ -113,7 +113,9 @@ Route::prefix('page')->group(function () {
         Route::post('/delete', 'CartController@deleteProduct')->name('cart.product.delete');
         Route::post('/clear', 'CartController@clearCart')->name('cart.clear');
         Route::get('/minus/{idx}', 'CartController@removeQuantityCart')->name('minus.quantity');
+        Route::get('/minus/details/{sku}', 'CartController@removeQuantityFromDetails')->name('minus.details.quantity');
         Route::get('/plus/{idx}', 'CartController@addQuantityCart')->name('plus.quantity');
+        Route::post('/plus/details', 'CartController@addQuantityFromDetails')->name('plus.details.quantity');
         Route::get('/result', 'CartController@showResultPage')->name('cart.result.page');
     });
 
