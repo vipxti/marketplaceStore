@@ -54,6 +54,7 @@ mix.styles([
     'public/css/admin/_all-skins.min.css',
     'public/css/admin/select2.min.css',
     'public/css/admin/switchery.css',
+    'public/css/admin/sweetalert.css',
     'public/css/admin/_all.css'
 ], 'public/css/admin-styles.css');
 
@@ -70,6 +71,7 @@ mix.scripts([
     'public/js/admin/Chart.js',
     'public/js/admin/icheck.min.js',
     'public/js/admin/switchery.js',
+    'public/js/admin/sweetalert.min.js',
     'public/js/admin/jquery.inputmask.js',
     'public/js/admin/jquery.inputmask.extensions.js',
 

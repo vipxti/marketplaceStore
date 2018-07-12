@@ -22,9 +22,54 @@ use Illuminate\Database\QueryException;
 class ProductController extends Controller
 {
     //mostar produto por cat/subcat
-    public function showShopProductsCatSubcat($CatSubcatname){
 
-        //$pv = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
+        //dd($request->id, $request->catSubCat);
+    function kk(Request $request){
+        $dV = $request->id;
+        $catSubCat = $request->catSubCat;
+        $produtoCatSubCat = null;
+
+        if($dV=0){
+            $produtoCatSubCat = Product::join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+                ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
+                ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                ->select(
+                            'produto.cd_produto',
+                            'produto.cd_ean',
+                            'produto.nm_produto',
+                            'produto.ds_produto',
+                            'produto.nm_slug',
+                            'produto.vl_produto',
+                            'produto.qt_produto',
+                            'produto.cd_status_produto',
+                            'produto.cd_sku',
+                            'categoria.nm_categoria'
+                )
+                ->where('img_produto.ic_img_principal', '=', $catSubCat)
+                ->get();
+        }
+        else{
+            $produtoCatSubCat = Product::join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+                ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
+                ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                ->join('sub_categoria', 'categoria_subcat.cd_sub_categoria', '=', 'sub_categoria.cd_sub_categoria')
+                ->select(
+                            'produto.cd_produto',
+                            'produto.cd_ean',
+                            'produto.nm_produto',
+                            'produto.ds_produto',
+                            'produto.nm_slug',
+                            'produto.vl_produto',
+                            'produto.qt_produto',
+                            'produto.cd_status_produto',
+                            'produto.cd_sku',
+                            'categoria.nm_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                )
+                ->where('sub_categoria.cd_sub_categoria', '=', $catSubCat)
+                ->get();
+        }
+        return response()->json($produtoCatSubCat);
     }
 
     public function showShopProductsPage()

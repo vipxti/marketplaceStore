@@ -7,48 +7,30 @@
 
         <div class="container">
 
-            <div class="row">
-
-                <div class="col-lg-10 offset-lg-1 col-md-10 offset-md-1">
-
-                    <p class="h3">Meu carrinho</p>
-
+           {{-- <div class="row">
+                <div class="col-12">
+                    <div class="section_heading text-center">
+                        <h3><i class="fa fa-shopping-cart"></i>&nbsp; Meu Carrinho</h3>
+                    </div>
                 </div>
-
-            </div>
+            </div>--}}
 
             <p>&nbsp;</p>
 
             @if(Session::get('cart') == null)
 
                 <div class="row">
-
-                    <div class="col-12 col-md-11 offset-md-1" style="border: 1px solid black;">
-
-                        <p>&nbsp;</p>
-
-                        <p class="h2 text-center">Não há produtos no carrinho</p>
-                        <p>&nbsp;</p>
-                        <p class="h5 text-justify">
-                            Para inserir algum produto no seu carrinho, navegue pela página de produtos. Ao encontrar os itens desejados, clique no botão COMPRAR localizado na página do produto.
-                        </p>
-
-                        <p>&nbsp;</p>
-
-                    </div>     
-
+                    <div class="col-12 text-center">
+                        <img src="{{asset('img/app/bg-img/carrinhovazio.png')}}" alt="">
+                    </div>
                 </div>
 
-                <p>&nbsp;</p>
+                <br><br>
 
                 <div class="row">
-
                     <div class="col-12 col-md-12 text-right">
-
-                        <a href="{{ route('index') }}" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</a>
-
+                        <a href="{{ route('index') }}" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889; width: 100%;">Continuar Comprando</a>
                     </div>
-
                 </div>
 
             @else
@@ -316,7 +298,6 @@
             @endif
 
         </div>
-
     </div>
     <!-- ****** Area final do carrinho ****** -->
 

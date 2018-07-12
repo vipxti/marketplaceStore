@@ -325,6 +325,22 @@
 
     });
 
+    $('#btn_salvar').click(function(){
+        $.blockUI({
+            message: 'Salvando...',
+            css: {
+                border: 'none',
+                padding: '15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
+            } });
+
+        setTimeout($.unblockUI, 12000);
+    });
+
     //Validação do campo NOME DO PRODUTO
     $('.campo_nome').blur(function(){
         var campo = $(this).val();
@@ -491,18 +507,21 @@
     //Contagem de palavras na TextArea da Descrição
     function contadorPalavras() {
 
-        $('.campo_desc_modal').text("");
-        $('.campo_desc_modal').text("{{ $ultimoProduto[0]->ds_produto }}");
+        $('.campo_desc').text("");
+        $('.campo_desc').text("{{ $ultimoProduto[0]->ds_produto }}");
+        contarPalavras();
 
-        $('.campo_desc_modal').on("input", function () {
-            var conteudo = $('.campo_desc_modal').val();
-            var qtdCaracter = 1500 - conteudo.length;
-
-
-            $('.qtd_palavras').html(qtdCaracter);
-
+        $('.campo_desc').on("input", function () {
+            contarPalavras();
         });
     };
+
+    function contarPalavras(){
+        var conteudo = $('.campo_desc').val();
+        var qtdCaracter = 1500 - conteudo.length;
+
+        $('.qtd_palavras').html(qtdCaracter);
+    }
 
     $('#sl_tamanho_letra').change(function (e) {
 

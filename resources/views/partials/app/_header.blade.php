@@ -1,4 +1,75 @@
 <script src="{{asset('js/app/popper.min.js')}}"></script>
+
+<style>
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -1px;
+    }
+
+    .menu {
+        background-color: #fff;
+        width: 100%;
+        height: 60px;
+    }
+
+    .menu ul {
+        background-color: #fff;
+        text-align: center;
+        list-style-type: none;
+    }
+
+    .menu ul li ul {
+        display: none;
+        opacity: 0;
+        position: absolute;
+        top: 60px;
+        width: 100%;
+        background-color: #fff;
+        transform: all .5s;
+    }
+
+    .menu ul li ul:hover {
+        display: block;
+        opacity: 1;
+    }
+
+    .menu ul li ul li { width: 100%; }
+
+    .menu ul li ul li ul {
+        position: absolute;
+        top: 0;
+        left: 100%;
+    }
+
+    .menu li {
+        width: 25%;
+        float: left;
+        position: relative;
+    }
+
+    .menu li a {
+        display: block;
+        color: #666;
+        line-height: 60px;
+    }
+
+    .menu li a:hover { background-color: #f0f0f0; }
+
+    .menu li a:hover + ul {
+        display: block;
+        opacity: 1;
+    }
+
+    a:link{
+        text-decoration: none;
+    }
+</style>
+
 <header class="header_area">
     <!-- Top Header Area Start -->
     <div class="top_header_area">
@@ -14,59 +85,126 @@
                         <!--Carrinho e Menu -->
                         <div class="header-cart-menu d-flex align-items-center ml-auto">
                             <div class="main-menu-area">
-                                <nav class="navbar navbar-expand-lg align-items-start">
+                                {{--<nav class="navbar navbar-expand-lg align-items-start">
                                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#karl-navbar" aria-controls="karl-navbar" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon">
-                                    <i class="ti-menu"> </i>
-                                </span>
+                                        <span class="navbar-toggler-icon">
+                                            <i class="ti-menu"> </i>
+                                        </span>
                                     </button>
                                     <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
                                         <ul class="navbar-nav animated" id="nav">
                                             <li class="nav-item active"><a class="nav-link" href="{{route('index')}}">Início</a></li>
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acessórios</a>
+                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Saúde e Beleza</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Bijuterias</a>
-                                                    <a class="dropdown-item" href="#">Relógios</a>
-                                                    <a class="dropdown-item" href="#">Música</a>
-                                                    <a class="dropdown-item" href="#">TV e Áudio</a>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Informática</a>
-                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Computadores</a>
-                                                    <a class="dropdown-item" href="#">acessórios</a>
-                                                    <a class="dropdown-item" href="#">Games</a>
-                                                    <a class="dropdown-item" href="#">Celular</a>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Beleza</a>
-                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Perfume</a>
-                                                    <a class="dropdown-item" href="#">Maquiagem</a>
-                                                    <a class="dropdown-item" href="#">Cabelos</a>
-                                                    <a class="dropdown-item" href="#">Pele</a>
+                                                    <a id="test" class="dropdown-item list">Maquiagem</a>
+                                                    <a class="dropdown-item" href="#">Batom</a>
+                                                    <a class="dropdown-item" href="#">Gloss</a>
+                                                    <a class="dropdown-item" href="#">Blush</a>
+                                                    <a class="dropdown-item" href="#">Primer</a>
+                                                    <a class="dropdown-item" href="#">Pó Compacto</a>
+                                                    <a class="dropdown-item" href="#">Iluminador</a>
+                                                    <a class="dropdown-item" href="#">Corretivo</a>
+                                                    <a class="dropdown-item" href="#">Delineador</a>
+                                                    <a class="dropdown-item" href="#">Máscara</a>
+                                                    <a class="dropdown-item" href="#">Glitter</a>
+                                                    <a class="dropdown-item" href="#">Lápis</a>
+                                                    <a class="dropdown-item" href="#">Maletas</a>
+                                                    <a class="dropdown-item" href="#">Pincel</a>
+                                                    <a class="dropdown-item" href="#">Esmalte</a>
+                                                    <a class="dropdown-item" href="#">Acessórios</a>
                                                 </div>
                                             </li>
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moda</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="#">Feminina</a>
-                                                    <a class="dropdown-item" href="#">Masculina</a>
-                                                    <a class="dropdown-item" href="#">Infantil</a>
-                                                    <a class="dropdown-item" href="#">Esportiva</a>
+                                                    <a class="dropdown-item" href="#">Masculino</a>
+                                                    <a class="dropdown-item" href="#">Cuecas</a>
+                                                    <a class="dropdown-item" href="#">Sungas</a>
+                                                    <a class="dropdown-item" href="#">Feminino</a>
+                                                    <a class="dropdown-item" href="#">Vestido</a>
+                                                    <a class="dropdown-item" href="#">Conjunto</a>
+                                                </div>
+                                            </li>
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Promoções</a>
+                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
+                                                    <a class="dropdown-item" href="#">Kits e Combos</a>
+                                                    <a class="dropdown-item" href="#">Preços Baixos</a>
+                                                    <a class="dropdown-item" href="#">Outlet</a>
                                                 </div>
                                             </li>
                                             <li class="nav-item"><a class="nav-link" href=" {{ route('products.page') }}">Produtos</a></li>
                                         </ul>
                                     </div>
+                                </nav>--}}
+
+                                <div class="col-md-12">
+                                <nav class="menu">
+                                    <ul>
+                                        <li><a href="{{route('index')}}">Início</a></li>
+                                        <li><a href="">Saúde e Beleza</a>
+                                            <ul>
+                                                <li><a href="">Maquiagem</a>
+                                                    <ul>
+                                                        <li><a href="">Batom</a></li>
+                                                        <li><a href="">Gloss</a></li>
+                                                        <li><a href="">Blush</a></li>
+                                                        <li><a href="">Primer</a></li>
+                                                        <li><a href="">Pó Compacto</a></li>
+                                                        <li><a href="">Iluminador</a></li>
+                                                        <li><a href="">Corretivo</a></li>
+                                                        <li><a href="">Delineador</a></li>
+                                                        <li><a href="">Máscara</a></li>
+                                                        <li><a href="">Glitter</a></li>
+                                                        <li><a href="">Lápis</a></li>
+                                                        <li><a href="">Maletas</a></li>
+                                                        <li><a href="">Pincel</a></li>
+                                                        <li><a href="">Esmalte</a></li>
+                                                        <li><a href="">Acessórios</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li><a href="">Moda</a>
+                                            <ul>
+                                                <li><a href="">Masculino</a>
+                                                    <ul>
+                                                        <li><a href="">Cuecas</a></li>
+                                                        <li><a href="">Sungas</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="">Feminino</a>
+                                                    <ul>
+                                                        <li><a href="">Vestidos</a></li>
+                                                        <li><a href="">Conjuntos</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li><a href="">Promoções</a>
+                                            <ul>
+                                                <li><a href="">Kits e Combos</a></li>
+                                                <li><a href="">Preços Baixos</a></li>
+                                                <li><a href="">Outlet</a></li>
+                                            </ul>
+                                        </li>
+
+                                        {{--<li><a href=" {{ route('products.page') }}">Produtos</a></li>--}}
+
+                                    </ul>
                                 </nav>
+
+                                </div>
                             </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+
 
                             <!-- Carrinho -->
                             <div class="cart">
@@ -128,7 +266,6 @@
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-
                                         @if(Auth::check())
 
                                             <a class="dropdown-item" href="{{ route('client.dashboard') }}">Minha Conta</a>
@@ -140,10 +277,8 @@
                                             <a class="dropdown-item" href="{{ route('client.register') }}">Cadastrar</a>
 
                                         @endif
-                                        </div>
-
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -151,29 +286,36 @@
             </div>
         </div>
     </div>
-
-    <!-- Top Header Area End -->
-   {{--<div class="main_header_area">
-        <div class="container h-100">
-            <div class="row h-100">
-                <div class="col-12 d-md-flex justify-content-between">
-                    <!-- Header Social Area -->
-                    <div class="header-social-area">
-                        <a href="https://www.instagram.com/celestial_moda_evangelica/?hl=pt-br"><span class="karl-level">Compartilhar</span>
-                            <i class="fa fa-instagram" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://www.facebook.com/Celestial-Moda-Evang%C3%A9lica-480913635394202/"><i class="fa fa-facebook" aria-hidden="true"></i></a>--}}{{--
-                    </div>
-
-                    <!-- menu -->
-
-
-                    <!-- Botão whatsapp -->
-                    <div class="help-line">
-                        <a href="https://api.whatsapp.com/send?phone=5513988825540&text=Olá" target="_blank"><i class="fa fa-whatsapp"></i>&nbsp &nbsp(13) 98858-6788</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>   --}}
 </header>
+
+<script>
+    $('#test').click(function (e) {
+        e.preventDefault();
+
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: '{{route('productsFilterCatSubCat.page')}}',
+            type: "POST",
+            data:{
+                _token: CSRF_TOKEN,
+                id: "1",
+                catSubCat:"5"
+            },
+            dataType: 'JSON',
+            success: function(d) {
+                console.log(d)
+            }
+        })
+    });
+
+
+
+    $(document).ready(function(){
+        $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>

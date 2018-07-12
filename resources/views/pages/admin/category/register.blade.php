@@ -286,7 +286,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 6000);
+            setTimeout($.unblockUI, 8000);
         });
 
         $('#categorias').change(function (e) {

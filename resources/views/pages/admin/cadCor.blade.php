@@ -1,6 +1,7 @@
 @extends('layouts.admin.app')
 
 @section('content')
+    <link rel="stylesheet" href="{{asset('css/admin/sweetalert.css')}}">
     <style type="text/css">
         /*deixar botão transparente*/
         button {
@@ -135,6 +136,7 @@
 
 
     <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
+    <script src="{{asset('js/admin/sweetalert.min.js')}}"></script>
     <script>
         $('#btnSalvarCor').click(function(){
             $.blockUI({
@@ -149,7 +151,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 6000);
+            setTimeout($.unblockUI, 8000);
         });
 
         //Campo pesquisa de produtos
@@ -289,6 +291,7 @@
                     success: function (e) {
                         console.log(e.message);
                         carregarCoresCadastradas();
+                        swal("Atualização", "Produto atualizado com sucesso.", "success");
                     }
                 });
 
