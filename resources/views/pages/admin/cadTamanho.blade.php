@@ -238,7 +238,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 6000);
+            setTimeout($.unblockUI, 8000);
         });
 
         $('#btnSalvarLetra').click(function(){

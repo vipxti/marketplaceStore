@@ -24,7 +24,7 @@ class ProductController extends Controller
     //mostar produto por cat/subcat
 
         //dd($request->id, $request->catSubCat);
-
+    function kk(Request $request){
         $dV = $request->id;
         $catSubCat = $request->catSubCat;
         $produtoCatSubCat = null;
