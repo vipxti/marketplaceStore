@@ -179,7 +179,7 @@
             <div class="container">
                 <div class="row">
                     <!-- NavBar Lateral -->
-                    <div class="col-12 col-md-4 col-lg-3">
+                    {{-- <div class="col-12 col-md-4 col-lg-3">
                         <div class="shop_sidebar_area">
                             <!-- Menu categorias lateral -->
                             <div class="widget catagory mb-50">
@@ -320,12 +320,12 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>--}}
+                            </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Produtos e Contador páginas -->
-                    <div class="col-12 col-md-8 col-lg-9">
+                    <div class="col-12 col-md-12 col-lg-12 justify-content-center">
                         <div class="shop_grid_product_area">
                             <div class="row">
                                 <div class="row karl-new-arrivals d-flex justify-content-center">
@@ -368,7 +368,7 @@
 
                                                     @else
 
-                                                        <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                                        <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none; padding: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
 
                                                     @endif
 
@@ -388,7 +388,7 @@
 
                                 <p>&nbsp;</p><p>&nbsp;</p>
 
-                                <div class="row">
+                                {{-- <div class="row">
 
                                     <h5>Roupas femininas no Vip-x</h5>
 
@@ -396,7 +396,7 @@
 
                                     <p class="justify-content-center">Aqui no vipx.com, as novidades em moda feminina não param de chegar! São blusas femininas, vestidos, calçados e acessórios para renovar seu guarda-roupa com preços que cabem no bolso. E você ainda conta com segurança e ótimo atendimento oferecidos pela equipe do Portal Vipx.</p>
                                     
-                                </div>
+                                </div> --}}
 
                             </div>
                         </div>

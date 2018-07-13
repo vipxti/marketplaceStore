@@ -170,6 +170,10 @@
                                                     </li>
                                                 </ul>
                                             </li>
+
+                                            <li class="nav-item dropdown menuLi">
+                                                <a href="{{ route('products.page') }}" id="menu" class="nav-link corFundoPrincipal">Produtos</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </nav>

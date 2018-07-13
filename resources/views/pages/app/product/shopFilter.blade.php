@@ -180,7 +180,7 @@
             <div class="row">
                 <!-- NavBar Lateral -->
                 <div class="col-12 col-md-4 col-lg-3">
-                    <div class="shop_sidebar_area">
+                    {{-- <div class="shop_sidebar_area">
                         <!-- Menu categorias lateral -->
                         <div class="widget catagory mb-50">
                             <!--  Side Nav  -->
@@ -284,7 +284,7 @@
                         </div>
 
                         <!-- Recomendados lateral -->
-                        {{--<div class="widget recommended">
+                        <div class="widget recommended">
                             <h6 class="widget-title mb-30">Recomendado</h6>
 
                             <div class="widget-desc">
@@ -320,12 +320,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>--}}
-                    </div>
+                        </div>
+                    </div> --}}
                 </div>
 
                 <!-- Produtos e Contador páginas -->
-                <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-md-8 col-lg-12 d-flex justify-content-center">
                     <div class="shop_grid_product_area">
                         <div class="row">
                             <div class="row karl-new-arrivals">
@@ -383,25 +383,6 @@
                                 {{-- $produtoCatSubCat->links("pagination::bootstrap-4") --}}
 
                             </div>
-
-                            <div>
-                                <h5>Roupas femininas no Vip-x</h5>
-                                <p>Para as mulheres que gostam de usar looks modernos e sempre atuais, comprar moda feminina online é a maneira mais fácil e simples de garantir as peças que são tendências na temporada. Além da praticidade e comodidade, a variedade de produtos é um diferencial para quem compra roupas na internet.</p>
-                                <p>Aqui no vipx.com, as novidades em moda feminina não param de chegar! São blusas femininas, vestidos, calçados e acessórios para renovar seu guarda-roupa com preços que cabem no bolso. E você ainda conta com segurança e ótimo atendimento oferecidos pela equipe do Portal Vipx.</p>
-                                <p>&nbsp;</p>
-                            </div>
-
-
-                            <div class="shop_pagination_area wow fadeInUp" data-wow-delay="1.1s">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination pagination-sm">
-                                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-
 
                         </div>
                     </div>

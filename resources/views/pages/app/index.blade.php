@@ -148,7 +148,7 @@
 
     <!-- ****** New Arrivals Area Start ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
-        <div class="karl-projects-menu mb-50">
+        {{-- <div class="karl-projects-menu mb-50">
             <div class="text-center portfolio-menu">
                 <button class="btn active" data-filter="*">Todos</button>
                 <button class="btn" data-filter=".women">Mulher</button>
@@ -157,7 +157,8 @@
                 <button class="btn" data-filter=".shoes">Sapatos</button>
                 <button class="btn" data-filter=".kids">Kids</button>
             </div>
-        </div>
+        </div> --}}
+        <p>&nbsp;</p>
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -207,7 +208,7 @@
 
                                 @else
 
-                                    <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                    <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none; padding: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
 
                                 @endif
 
@@ -231,9 +232,9 @@
                         <h2>Oferta Especial <span class="karl-level">Hot</span></h2>
                         <p>Catharine Hill Sombras Variadas 1017 - Paleta De Sombras Com 30 Cores Diferentes De Acabamentos Opacos E Cintilantes.</p>
                         <div class="offer-product-price">
-                            <h3><span class="regular-price">R$126.99</span> R$99.99</h3>
+                            <h3><span class="regular-price">R$126,99</span> R$106,00</h3>
                         </div>
-                        <a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM" target="_blank"  class="btn karl-btn mt-30">Compre Agora</a>
+                        <a href="{{ route('products.details', 'catharine-hill-paleta-de-sombras-variadas-30-cores') }}" target="_blank"  class="btn karl-btn mt-30">Compre Agora</a>
                     </div>
                 </div>
             </div>

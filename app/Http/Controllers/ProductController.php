@@ -31,6 +31,14 @@ class ProductController extends Controller
         $catSubCat = $request->catSubCat;
         $produtoCatSubCat = null;
 
+        if (Auth::check()) {
+            $n = explode(' ', Auth::user()->nm_cliente);
+            $nome = $n[0];
+        } else {
+            $nome = null;
+        }
+
+
         //dd($request->all());
 
         if ($dVerificador=="c") {
@@ -115,7 +123,7 @@ class ProductController extends Controller
 
         //dd($produtoCatSubCat);
 
-        return view('pages.app.product.shopFilter', compact('produtoCatSubCat'));
+        return view('pages.app.product.shopFilter', compact('produtoCatSubCat', 'nome'));
         //return response()->json($produtoCatSubCat);
     }
 

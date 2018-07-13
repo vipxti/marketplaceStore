@@ -189,14 +189,14 @@
 
                     <div class="row">
                         <div class="custom-control custom-radio">
-                            <div class="col-4 col-sm-4" style="height: 50px; !important;">
+                            <div class="col-4 col-sm-4">
                                 <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input" checked>
                                 <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
                                     <span id="pac">&nbsp;Normal</span>
                                 </label>
                             </div>
 
-                            <div class="col-4 col-sm-4" style="height: 50px; !important;">
+                            <div class="col-4 col-sm-4">
                                 <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
                                 <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
                                     <span id="sedex">&nbsp;Expresso</span>
@@ -223,7 +223,7 @@
                 </div>
 
                 <div class="col-12 col-md-12 col-lg-12">
-                    <div class="cart-total-area mt-70">
+                    <div class="cart-total-area mt-30">
                         <ul class="cart-total-chart">
                             <li>
                                 <span>

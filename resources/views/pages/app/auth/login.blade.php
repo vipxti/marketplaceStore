@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-8" style="padding-left: 34%">
                         <div class="checkbox icheck">
                             <label>
@@ -53,8 +53,8 @@
                             </label>
                         </div>
                     </div>
-                </div>
-                <br>
+                </div> --}}
+                <p>&nbsp;</p>
 
                 <!-- Botão Salvar -->
                 <div class="row">
@@ -69,7 +69,7 @@
                 <div class="row">
                     <div class="col-md-8" style="padding-left: 34%">
                         <div class="checkbox icheck">
-                            <a href="{{ route('alterarsenhacliente.page' )}}">Esqueci a minha senha</a><br>
+                            {{-- <a href="{{ route('alterarsenhacliente.page' )}}">Esqueci a minha senha</a><br> --}}
                             <a href="{{ route('client.register' )}}">Registre uma nova conta</a>
                         </div>
                     </div>
