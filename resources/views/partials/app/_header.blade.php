@@ -8,15 +8,10 @@
     .dropdown-submenu .dropdown-menu {
         top: 0;
         left: 100%;
-        margin-top: -1px;
+        margin-top: -8px;
 
     }
-    .cormenu{
-        text-decoration: none !important;
-        color: #3a3a3a !important;
-        font-weight: 600 !important;
-        font-size: 14px !important;
-    }
+
 </style>
 
 
@@ -97,64 +92,64 @@
                                         <ul class="navbar-nav">
                                             <!-- Beleza e Saúde -->
                                             <li class="nav-item dropdown">
-                                                <a href="#" id="menu" data-toggle="dropdown" class="cormenu nav-link dropdown-toggle">Beleza e Saúde</a>
+                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Beleza e Saúde</a>
                                                 <ul class="dropdown-menu">
-                                                    <li id="c" class="dropdown-submenu">
-                                                        <a id="1" href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle listagem">Maquiagem</a>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Maquiagem</a>
                                                         <ul class="dropdown-menu">
-                                                            <li id="s">
-                                                                <a id="1" href="#" class="cormenu dropdown-item listagem">Batom</a>
+                                                            <li>
+                                                                <a href="#" class="cormenu dropdown-item">Batom</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Gloss</a>
+                                                                <a href="#" class="dropdown-item">Gloss</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Base</a>
+                                                                <a href="#" class="dropdown-item">Base</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Blush</a>
+                                                                <a href="#" class="dropdown-item">Blush</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Primer</a>
+                                                                <a href="#" class="dropdown-item">Primer</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Pó Compacto</a>
+                                                                <a href="#" class="dropdown-item">Pó Compacto</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Iluminador</a>
+                                                                <a href="#" class="dropdown-item">Iluminador</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Corretivo</a>
+                                                                <a href="#" class="dropdown-item">Corretivo</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Delineador</a>
+                                                                <a href="#" class="dropdown-item">Delineador</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Máscara</a>
+                                                                <a href="#" class="dropdown-item">Máscara</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Glitter</a>
+                                                                <a href="#" class="dropdown-item">Glitter</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Sombras</a>
+                                                                <a href="#" class="dropdown-item">Sombras</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Cílios</a>
+                                                                <a href="#" class="dropdown-item">Cílios</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Lápis</a>
+                                                                <a href="#" class="dropdown-item">Lápis</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Maletas</a>
+                                                                <a href="#" class="dropdown-item">Maletas</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Pincel</a>
+                                                                <a href="#" class="dropdown-item">Pincel</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Esmalte</a>
+                                                                <a href="#" class="dropdown-item">Esmalte</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Acessórios</a>
+                                                                <a href="#" class="dropdown-item">Acessórios</a>
                                                             </li>
                                                         </ul>
                                                     </li>
@@ -163,57 +158,49 @@
 
                                             <!-- Moda -->
                                             <li class="nav-item dropdown">
-                                                <a href="#" id="menu" data-toggle="dropdown" class="cormenu nav-link dropdown-toggle">Moda</a>
+                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Moda</a>
                                                 <ul class="dropdown-menu">
                                                     <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Masculino</a>
+                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Masculino</a>
                                                         <ul class="dropdown-menu">
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Cuecas</a>
+                                                                <a href="#" class="dropdown-item">Cuecas</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Sungas</a>
+                                                                <a href="#" class="dropdown-item">Sungas</a>
                                                             </li>
                                                         </ul>
                                                     </li>
-                                                    <li class="dropdown-item dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-toggle">Feminino</a>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Feminino</a>
                                                         <ul class="dropdown-menu">
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Vestido</a>
+                                                                <a href="#" class="dropdown-item">Vestido</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item">Conjunto</a>
+                                                                <a href="#" class="dropdown-item">Conjunto</a>
                                                             </li>
                                                         </ul>
 
                                                     </li>
                                                     <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Unissex</a>
-                                                        <ul class="dropdown-menu">
-                                                            <li>
-                                                                <a href="#" class="cormenu dropdown-item"></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="cormenu dropdown-item"></a>
-                                                            </li>
-                                                        </ul>
+                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Unissex</a>
                                                     </li>
                                                 </ul>
                                             </li>
 
                                             <!-- Tecnologia -->
                                             <li class="nav-item dropdown">
-                                                <a href="#" id="menu" data-toggle="dropdown" class="cormenu nav-link dropdown-toggle">Tecnologia</a>
+                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Tecnologia</a>
                                                 <ul class="dropdown-menu">
                                                     <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Eletrônica</a>
+                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Eletrônica</a>
                                                         <ul class="dropdown-menu">
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item"></a>
+                                                                <a href="#" class="dropdown-item"></a>
                                                             </li>
                                                             <li>
-                                                                <a href="#" class="cormenu dropdown-item"></a>
+                                                                <a href="#" class="dropdown-item"></a>
                                                             </li>
                                                         </ul>
                                                     </li>
@@ -222,16 +209,16 @@
 
                                             <!-- Promoção -->
                                             <li class="nav-item dropdown">
-                                                <a href="#" id="menu" data-toggle="dropdown" class="cormenu nav-link dropdown-toggle">Promoções</a>
+                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Promoções</a>
                                                 <ul class="dropdown-menu">
                                                     <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item">Kits e Combos</a>
+                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Kits e Combos</a>
                                                     </li>
                                                     <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item">Preço Baixo</a>
+                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Preço Baixo</a>
                                                     </li>
                                                     <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item">Outlet</a>
+                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Outlet</a>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -383,7 +370,7 @@
 </header>
 
 <script>
-    $('.dropdown-submenu > a').on("click", function(e) {
+    $('.dropdown-submenu > a').on("mouseover", function(e) {
         var submenu = $(this);
         $('.dropdown-submenu .dropdown-menu').removeClass('show');
         submenu.next('.dropdown-menu').addClass('show');

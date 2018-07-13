@@ -3,8 +3,8 @@
 @section('content')
 
     <!-- ****** Cart Area Start ****** -->
-    <div class="cart_area section_padding_100 clearfix">
-
+    <br><br><br>
+    <div class="cart_area clearfix">
         <div class="container">
 
            {{-- <div class="row">
@@ -55,6 +55,7 @@
                                 
                                 </thead>
                                 
+
                                 <tbody>
 
                                     <input type="hidden" name="qtdItensCarrinho" value="{{ Session::get('qtCartItems') }}">
@@ -108,7 +109,7 @@
                                                     
                                                     <input type="hidden" name="cod_produto_carrinho" value="{{ $key }}">
                                                     
-                                                    <button type="submit" class="btn btn-danger">
+                                                    <button type="submit" class="btn btn-danger" style="background-color: #d33889; border-radius:0px">
                                                         Excluir
                                                     </button>
                                                 </form>
@@ -299,6 +300,7 @@
 
         </div>
     </div>
+        <br><br><br><br>
     <!-- ****** Area final do carrinho ****** -->
 
     <script src="{{ asset('js/app/pagseguro.lightbox.js') }}"></script>

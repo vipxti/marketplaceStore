@@ -238,7 +238,6 @@
                         </div> --}}
 
                         <p>&nbsp;</p>
-                        <p>&nbsp;</p>
 
                         {{-- <div class="widget color mb-50">
                             <h6 class="widget-title">Cor</h6>
@@ -312,7 +311,7 @@
                 <form id="accordion" role="tablist">
                     <div class="card">
                         <div class="card-header" role="tab" id="headingOne">
-                            <h6 class="mb-0">
+                            <h6>
                                 <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Informação do produto</a>
                             </h6>
                         </div>
