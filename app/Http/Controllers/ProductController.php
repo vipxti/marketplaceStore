@@ -113,6 +113,10 @@ class ProductController extends Controller
         return response()->json($produtoCatSubCat);
     }
 
+    public function showShopFilterProductsPage(){
+
+    }
+
     public function showShopProductsPage()
     {
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(6);

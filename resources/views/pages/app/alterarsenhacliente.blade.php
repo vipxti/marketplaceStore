@@ -2,6 +2,7 @@
 
 @section('content')
 
+    <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
     <!-- ****** Quick View Modal Area Start ****** -->
     <div class="modal fade" id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -137,25 +138,25 @@
         <div class="container">
 
             <!-- Novo Senha  -->
-            <div class="col-md-8" style="padding-left: 34%">
-                <div>
-                    <div class="form-group">
-                        <label>Senha</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"></span>
-                            <input type="text" class="form-control" name="ds_senha" required maxlength="50">
+            <div class="row">
+                <div class="col-md-8" style="padding-left: 34%">
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="ds_senha" required maxlength="20">
+                            <label class="form-label">Senha</label>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Confirmar novo e-mail -->
-            <div class="col-md-8" style="padding-left: 34%">
-                <div>
-                    <div class="form-group">
-                        <label>Confirmar sua senha</label>
-                        <div class="input-group">
+
+            <div class="row">
+                <div class="col-md-8" style="padding-left: 34%">
+                    <div class="form-group form-float">
+                        <div class="form-line">
                             <input type="password" class="form-control" required maxlength="20">
+                            <label class="form-label">Confimar sua senha</label>
                         </div>
                     </div>
                 </div>
@@ -175,7 +176,10 @@
     </section>
     <br><br><br>
     <!-- ****** New Arrivals Area End ****** -->
-
+    <script src="{{asset('js/app/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('js/app/waves.js')}}"></script>
+    <script src="{{asset('js/app/input.js')}}"></script>
+    <script src="{{asset('js/app/form-validation.js')}}"></script>
     <script>
 
 

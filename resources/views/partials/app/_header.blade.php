@@ -38,65 +38,65 @@
                                     <div class="collapse navbar-collapse" id="navbar1" style="padding-right: 180px">
                                         <ul class="navbar-nav">
                                             <!-- Beleza e Saúde -->
-                                            <li class="nav-item dropdown">
-                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Beleza e Saúde</a>
-                                                <ul class="dropdown-menu">
+                                            <li class="nav-item dropdown menuLi">
+                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle corFundoPrincipal">Beleza e Saúde</a>
+                                                <ul class="dropdown-menu menuUl">
                                                     <li id="c" class="dropdown-submenu">
-                                                        <a id="8" href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle listagem">Maquiagem</a>
+                                                        <a id="10" href="#" data-toggle="dropdown" class="cormenu dropdown-item listagem">Maquiagem</a>
                                                         <ul class="dropdown-menu">
                                                             <li id="s">
-                                                                <a id="5" href="#" class="cormenu dropdown-item listagem">Batom</a>
+                                                                <a id="31" href="#" class="cormenu dropdown-item listagem">Batom</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Gloss</a>
+                                                            <li id="s">
+                                                                <a id="7" href="#" class="dropdown-item listagem">Gloss</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Base</a>
+                                                            <li id="s">
+                                                                <a id="8" href="#" class="dropdown-item listagem">Base</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Blush</a>
+                                                            <li id="s">
+                                                                <a id="9" href="#" class="dropdown-item listagem">Blush</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Primer</a>
+                                                            <li id="s">
+                                                                <a id="10" href="#" class="dropdown-item listagem">Primer</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Pó Compacto</a>
+                                                            <li id="s">
+                                                                <a id="11" href="#" class="dropdown-item listagem">Pó Compacto</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Iluminador</a>
+                                                            <li id="s">
+                                                                <a id="12" href="#" class="dropdown-item listagem">Iluminador</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Corretivo</a>
+                                                            <li id="s">
+                                                                <a id="13" href="#" class="dropdown-item listagem">Corretivo</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Delineador</a>
+                                                            <li id="s">
+                                                                <a id="14" href="#" class="dropdown-item listagem">Delineador</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Máscara</a>
+                                                            <li id="s">
+                                                                <a id="15" href="#" class="dropdown-item listagem">Máscara</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Glitter</a>
+                                                            <li id="s">
+                                                                <a id="16" href="#" class="dropdown-item listagem">Glitter</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Sombras</a>
+                                                            <li id="s">
+                                                                <a id="17" href="#" class="dropdown-item listagem">Sombras</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Cílios</a>
+                                                            <li id="s">
+                                                                <a id="18" href="#" class="dropdown-item listagem">Cílios</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Lápis</a>
+                                                            <li id="s">
+                                                                <a id="19" href="#" class="dropdown-item listagem">Lápis</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Maletas</a>
+                                                            <li id="s">
+                                                                <a id="20" href="#" class="dropdown-item listagem">Maletas</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Pincel</a>
+                                                            <li id="s">
+                                                                <a id="21" href="#" class="dropdown-item listagem">Pincel</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Esmalte</a>
+                                                            <li id="s">
+                                                                <a id="22" href="#" class="dropdown-item listagem">Esmalte</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Acessórios</a>
+                                                            <li id="s">
+                                                                <a id="23" href="#" class="dropdown-item listagem">Acessórios</a>
                                                             </li>
                                                         </ul>
                                                     </li>
@@ -104,50 +104,47 @@
                                             </li>
 
                                             <!-- Moda -->
-                                            <li class="nav-item dropdown">
-                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Moda</a>
-                                                <ul class="dropdown-menu">
-                                                    <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Masculino</a>
+                                            <li class="nav-item dropdown menuLi">
+                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle corFundoPrincipal">Moda</a>
+                                                <ul class="dropdown-menu menuUl">
+                                                    <li id="c" class="dropdown-submenu">
+                                                        <a id="14" href="#" data-toggle="dropdown" class="dropdown-item listagem">Masculino</a>
                                                         <ul class="dropdown-menu">
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Cuecas</a>
+                                                            <li id="s">
+                                                                <a id="24" href="#" class="dropdown-item listagem">Cuecas</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Sungas</a>
+                                                            <li id="s">
+                                                                <a id="25" href="#" class="dropdown-item listagem">Sungas</a>
                                                             </li>
                                                         </ul>
                                                     </li>
-                                                    <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Feminino</a>
+                                                    <li id="c" class="dropdown-submenu">
+                                                        <a id="15" href="#" data-toggle="dropdown" class="dropdown-item listagem">Feminino</a>
                                                         <ul class="dropdown-menu">
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Vestido</a>
+                                                            <li id="s">
+                                                                <a id="26" href="#" class="dropdown-item listagem">Vestido</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item">Conjunto</a>
+                                                            <li id="s">
+                                                                <a id="27" href="#" class="dropdown-item listagem">Conjunto</a>
                                                             </li>
                                                         </ul>
 
                                                     </li>
-                                                    <li class="dropdown-submenu">
+                                                    <li id="c" class="dropdown-submenu">
                                                         <a href="#" data-toggle="dropdown" class="dropdown-item">Unissex</a>
                                                     </li>
                                                 </ul>
                                             </li>
 
                                             <!-- Tecnologia -->
-                                            <li class="nav-item dropdown">
-                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Tecnologia</a>
-                                                <ul class="dropdown-menu">
-                                                    <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="dropdown-item">Eletrônica</a>
+                                            <li class="nav-item dropdown menuLi">
+                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle corFundoPrincipal">Tecnologia</a>
+                                                <ul class="dropdown-menu menuUl">
+                                                    <li id="c" class="dropdown-submenu">
+                                                        <a id="13" href="#" data-toggle="dropdown" class="dropdown-item">Eletrônica</a>
                                                         <ul class="dropdown-menu">
-                                                            <li>
-                                                                <a href="#" class="dropdown-item"></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="dropdown-item"></a>
+                                                            <li id="s">
+                                                                <a href="#" class="dropdown-item">LED</a>
                                                             </li>
                                                         </ul>
                                                     </li>
@@ -155,16 +152,16 @@
                                             </li>
 
                                             <!-- Promoção -->
-                                            <li class="nav-item dropdown">
-                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Promoções</a>
-                                                <ul class="dropdown-menu">
-                                                    <li class="dropdown-submenu">
+                                            <li class="nav-item dropdown menuLi">
+                                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle corFundoPrincipal">Promoções</a>
+                                                <ul class="dropdown-menu menuUl">
+                                                    <li id="c" class="dropdown-submenu">
                                                         <a href="#" data-toggle="dropdown" class="dropdown-item">Kits e Combos</a>
                                                     </li>
-                                                    <li class="dropdown-submenu">
+                                                    <li id="c" class="dropdown-submenu">
                                                         <a href="#" data-toggle="dropdown" class="dropdown-item">Preço Baixo</a>
                                                     </li>
-                                                    <li class="dropdown-submenu">
+                                                    <li id="c" class="dropdown-submenu">
                                                         <a href="#" data-toggle="dropdown" class="dropdown-item">Outlet</a>
                                                     </li>
                                                 </ul>
@@ -275,9 +272,36 @@
         $('.dropdown-submenu > ul').removeClass('show');
     });
 
+    /*$('.corFundoPrincipal').on('mouseover', function(){
+        //console.log($(this).siblings('.dropdown-menu'));
+        //$(this).siblings().find('.dropdown-menu').addClass('show');
+    });*/
+
     //esconder o menu e submenu quando o mouse sair dele
     $('.dropdown-menu').on('mouseleave', function(){
         $(this).removeClass('show');
+    });
+
+    $('.corFundoPrincipal').on('mouseover', function(){
+       /* $(this).css('background-color', '#d33889');
+        $(this).css('color', 'white');*/
+    });
+
+    $('.menuLi').on('mouseover', function(){
+        $(this).parent().addClass('show');
+        $(this).find('.menuUl').addClass('show');
+    });
+
+    $('.menuLi').on('mouseleave', function(){
+        $(this).parent().removeClass('show');
+        $('.menuLi').find('.menuUl').removeClass('show');
+    });
+
+    $('.corFundoPrincipal').on('mouseleave', function(){
+       /* $(this).css('background-color', '#f5f5f5');
+        $(this).css('color', '#212529');*/
+        /*$(this).parent().removeClass('show');
+        $(this).siblings('.dropdown-menu').removeClass('show');*/
     });
 </script>
 
