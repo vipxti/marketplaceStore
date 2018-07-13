@@ -23,8 +23,7 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     //mostar produto por cat/subcat
-    public function showShopProductsCatSubcat(Request $request)
-    {
+    public function showShopProductsCatSubcat(Request $request){
         $dVerificador = $request->id;
         //$dVerificador = 'c';
         //$catSubCat = 8;
@@ -33,9 +32,9 @@ class ProductController extends Controller
 
         //dd($request->all());
 
-        if ($dVerificador=="c") {
+        if($dVerificador=="c"){
             $produtoCatSubCat = Product::
-                  join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+            join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
                 ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
                 ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
                 ->join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
@@ -49,31 +48,31 @@ class ProductController extends Controller
                 ->leftJoin('sku_produto_img', 'sku_produto_img.cd_sku', '=', 'sku.cd_sku')
                 ->leftJoin('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
                 ->select(
-                            'produto.cd_produto',
-                            'sku.cd_nr_sku',
-                            'produto.cd_ean',
-                            'produto.nm_produto',
-                            'produto.ds_produto',
-                            'produto.nm_slug',
-                            'produto.vl_produto',
-                            'produto.qt_produto',
-                            'produto.cd_status_produto',
-                            'categoria.nm_categoria',
-                            'tamanho_num.nm_tamanho_num',
-                            'tamanho_letra.nm_tamanho_letra',
-                            'cor.nm_cor',
-                            'dimensao.ds_altura',
-                            'dimensao.ds_comprimento',
-                            'dimensao.ds_largura',
-                            'dimensao.ds_peso',
-                            'img_produto.im_produto'
+                    'produto.cd_produto',
+                    'sku.cd_nr_sku',
+                    'produto.cd_ean',
+                    'produto.nm_produto',
+                    'produto.ds_produto',
+                    'produto.nm_slug',
+                    'produto.vl_produto',
+                    'produto.qt_produto',
+                    'produto.cd_status_produto',
+                    'categoria.nm_categoria',
+                    'tamanho_num.nm_tamanho_num',
+                    'tamanho_letra.nm_tamanho_letra',
+                    'cor.nm_cor',
+                    'dimensao.ds_altura',
+                    'dimensao.ds_comprimento',
+                    'dimensao.ds_largura',
+                    'dimensao.ds_peso',
+                    'img_produto.im_produto'
                 )
                 ->where('img_produto.ic_img_principal', '=', 1)
                 ->where('categoria.cd_categoria', '=', $catSubCat)
                 ->get();
         } elseif ($dVerificador=="s") {
             $produtoCatSubCat = Product::
-                  join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+            join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
                 ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
                 ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
                 ->join('sub_categoria', 'categoria_subcat.cd_sub_categoria', '=', 'sub_categoria.cd_sub_categoria')
@@ -88,30 +87,36 @@ class ProductController extends Controller
                 ->leftJoin('sku_produto_img', 'sku_produto_img.cd_sku', '=', 'sku.cd_sku')
                 ->leftJoin('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
                 ->select(
-                            'produto.cd_produto',
-                            'sku.cd_nr_sku',
-                            'produto.cd_ean',
-                            'produto.nm_produto',
-                            'produto.ds_produto',
-                            'produto.nm_slug',
-                            'produto.vl_produto',
-                            'produto.qt_produto',
-                            'produto.cd_status_produto',
-                            'categoria.nm_categoria',
-                            'sub_categoria.nm_sub_categoria',
-                            'tamanho_num.nm_tamanho_num',
-                            'tamanho_letra.nm_tamanho_letra',
-                            'cor.nm_cor',
-                            'dimensao.ds_altura',
-                            'dimensao.ds_comprimento',
-                            'dimensao.ds_largura',
-                            'dimensao.ds_peso',
-                            'img_produto.im_produto'
+                    'produto.cd_produto',
+                    'sku.cd_nr_sku',
+                    'produto.cd_ean',
+                    'produto.nm_produto',
+                    'produto.ds_produto',
+                    'produto.nm_slug',
+                    'produto.vl_produto',
+                    'produto.qt_produto',
+                    'produto.cd_status_produto',
+                    'categoria.nm_categoria',
+                    'sub_categoria.nm_sub_categoria',
+                    'tamanho_num.nm_tamanho_num',
+                    'tamanho_letra.nm_tamanho_letra',
+                    'cor.nm_cor',
+                    'dimensao.ds_altura',
+                    'dimensao.ds_comprimento',
+                    'dimensao.ds_largura',
+                    'dimensao.ds_peso',
+                    'img_produto.im_produto'
                 )
                 ->where('img_produto.ic_img_principal', '=', 1)
                 ->where('sub_categoria.cd_sub_categoria', '=', $catSubCat)
                 ->get();
         }
+
+        //dd($produtoCatSubCat);
+
+        return view('pages.app.product.shopFilter', compact('produtoCatSubCat'));
+        //return response()->json($produtoCatSubCat);
+    }
 
         //dd($produtoCatSubCat);
 
@@ -134,7 +139,14 @@ class ProductController extends Controller
 
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->orderBy('produto.cd_produto')->paginate(6);
 
-        $imagemPrincipal = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+        $prod = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->get();
+
+        //$produtosVariacao = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
+
+        //dd($produtos);
+
+        foreach ($prod as $key => $p) {
+            $imagemPrincipal[$key] = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
                 ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
                 ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
                 ->select('img_produto.im_produto')
@@ -142,6 +154,13 @@ class ProductController extends Controller
                 ->where('produto.cd_status_produto', '=', 1)
                 ->orderBy('produto.cd_produto')
                 ->paginate(6);
+
+            $idxImgs[$key] = $key;
+        }
+
+        //dd($imagemPrincipal);
+
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(30);
 
         $imagemVariacao = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
             ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
@@ -170,6 +189,8 @@ class ProductController extends Controller
 
         $product = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->where('produto.nm_slug', '=', $slug)->firstOrFail();
 
+        //dd($product);
+
         $productImages = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
             ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
@@ -178,8 +199,7 @@ class ProductController extends Controller
             ->orderBy('sku_produto_img.cd_img')
             ->get()->toArray();
 
-        $productVariation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->leftJoin('produto_cor', 'sku.cd_sku', 'produto_cor.cd_sku')->leftJoin('produto_tamanho_num', 'sku.cd_sku', 'produto_tamanho_num.cd_sku')->leftJoin('produto_tamanho_letra', 'sku.cd_sku', 'produto_tamanho_letra.cd_sku')->where('produto_variacao.cd_produto', '=', $product->cd_produto)
-        ->where('produto_variacao.cd_status_produto_variacao', '=', 1)->get();
+        //dd($productImages);
 
         $productImagesVariation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('img_produto.im_produto')->where('sku.cd_nr_sku', '=', $product->cd_nr_sku)->orderBy('sku_produto_img.cd_img')->get()->toArray();
 

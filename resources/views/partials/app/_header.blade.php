@@ -26,13 +26,11 @@
                         <div class="top_logo">
                             <a href="{{ route('index')}}"><img style="width: 110px" src="{{ asset('img/app/core-img/logo.png') }}" alt=""></a>
                         </div>
-
                         <form id="enviaFiltro" action="{{route('productsFilterCatSubCat.page')}}" method="post">
                             {{csrf_field()}}
                             <input type="text" id="cdVerificador" name="catSubCat" hidden>
                             <input type="text" id="cdCatSub" name="id" hidden>
                         </form>
-
                         <!--Carrinho e Menu -->
                         <div class="header-cart-menu d-flex align-items-center ml-auto">
                             <div class="main-menu-area">
@@ -321,7 +319,6 @@
 
         console.log($('#cdVerificador').val());
         console.log($('#cdCatSub').val());
-
 
         $('#enviaFiltro').submit();
 
