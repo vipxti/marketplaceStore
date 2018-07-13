@@ -181,14 +181,14 @@
 
                                     <a href="{{ route('cart.page') }}" id="header-cart-btn">
                                         <span class="cart_quantity">0</span>
-                                        <i class="fa fa-shopping-cart"></i>Carrinho
+                                        <i class="fa fa-shopping-cart"></i>
                                     </a>
 
                                 @else
 
                                     <a href="{{ route('cart.page') }}" id="header-cart-btn">
                                         <span class="cart_quantity">{{ Session::get('qtCart') }}</span>
-                                        <i class="fa fa-shopping-cart"></i>Carrinho
+                                        <i class="fa fa-shopping-cart"></i>
                                     </a>
 
                                 @endif

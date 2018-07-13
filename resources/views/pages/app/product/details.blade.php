@@ -223,6 +223,14 @@
                             <i class="fa fa-star-o" aria-hidden="true"></i>
                         </div>
 
+                        <p>&nbsp;</p><p>&nbsp;</p>
+
+                        {{-- @if (count($productVariation) > 0)
+
+                            <p>Com variação</p>                          
+                            
+                        @endif --}}
+
                         {{-- <div class="widget size mb-30">
                             <h6 class="widget-title">Tamanho</h6>
                             <div class="widget-desc">
@@ -237,7 +245,7 @@
                             </div>
                         </div> --}}
 
-                        <p>&nbsp;</p>
+                        
 
                         {{-- <div class="widget color mb-50">
                             <h6 class="widget-title">Cor</h6>
