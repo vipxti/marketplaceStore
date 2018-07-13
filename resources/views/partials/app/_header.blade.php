@@ -42,10 +42,10 @@
                                                 <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Beleza e Saúde</a>
                                                 <ul class="dropdown-menu">
                                                     <li id="c" class="dropdown-submenu">
-                                                        <a href="#" id="8" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle listagem">Maquiagem</a>
-                                                        <ul id="ulPai" class="dropdown-menu">
+                                                        <a id="8" href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle listagem">Maquiagem</a>
+                                                        <ul class="dropdown-menu">
                                                             <li id="s">
-                                                                <a href="5" class="cormenu dropdown-item listagem">Batom</a>
+                                                                <a id="5" href="#" class="cormenu dropdown-item listagem">Batom</a>
                                                             </li>
                                                             <li>
                                                                 <a href="#" class="dropdown-item">Gloss</a>

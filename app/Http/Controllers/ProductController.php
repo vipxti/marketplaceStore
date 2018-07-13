@@ -43,7 +43,7 @@ class ProductController extends Controller
                             'produto.cd_sku',
                             'categoria.nm_categoria'
                 )
-                ->where('img_produto.ic_img_principal', '=', $catSubCat)
+                ->where('categoria.cd_categoria', '=', $catSubCat)
                 ->get();
         }
         elseif($dVerificador=="s"){
