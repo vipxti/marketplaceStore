@@ -19,8 +19,13 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             $telefoneCliente = Client::join('telefone', 'cliente.cd_telefone', 'telefone.cd_telefone')->select('telefone.cd_celular1')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get()->toArray();
+            $n = explode(' ', Auth::user()->nm_cliente);
+            $nome = $n[0];
+            $telefone = null;
         } else {
             $telefoneCliente = null;
+            $nome = null;
+
             if (!(Session::has('cartRoute'))) {
                 Session::put('cartRoute', 'cart.page');
             }
@@ -28,14 +33,21 @@ class CartController extends Controller
 
         $enderecoCliente = Client::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->join('bairro', 'bairro.cd_bairro', 'endereco.cd_bairro')->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->join('uf', 'uf.cd_uf', 'cidade.cd_uf')->join('pais', 'pais.cd_pais', 'uf.cd_pais')->select('endereco.cd_cep', 'endereco.ds_endereco', 'endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'pais.nm_pais')->where('cliente_endereco.ic_principal', '=', 1)->get();
 
-        $telefone = $telefoneCliente[0]['cd_celular1'];
+        //dd($enderecoCliente);
 
-        return view('pages.app.carrinho', compact('telefone', 'enderecoCliente'));
+        return view('pages.app.carrinho', compact('telefone', 'enderecoCliente', 'nome'));
     }
 
     public function showResultPage()
     {
-        return view('pages.app.cart.result');
+        if (Auth::check()) {
+            $n = explode(' ', Auth::user()->nm_cliente);
+            $nome = $n[0];
+        } else {
+            $nome = null;
+        }
+
+        return view('pages.app.cart.result', compact('nome'));
     }
 
     public function calcFrete($cep, $altura, $largura, $peso, $comprimento)
@@ -54,7 +66,7 @@ class CartController extends Controller
             'tipo'              => 'pac,sedex', // Separar opções por vírgula (,) caso queira consultar mais de um (1) serviço. > Opções: `sedex`, `sedex_a_cobrar`, `sedex_10`, `sedex_hoje`, `pac`, 'pac_contrato', 'sedex_contrato' , 'esedex'
             'formato'           => 'caixa', // opções: `caixa`, `rolo`, `envelope`
             'cep_destino'       => $cep, // Obrigatório
-            'cep_origem'        => '11365230', // Obrigatorio
+            'cep_origem'        => '11310060', // Obrigatorio
             //'empresa'         => '', // Código da empresa junto aos correios, não obrigatório.
             //'senha'           => '', // Senha da empresa junto aos correios, não obrigatório.
             'peso'              => $peso, // Peso em kilos
@@ -313,10 +325,13 @@ class CartController extends Controller
 
     public function finalizarCompra(Request $request)
     {
-        //dd($request->all());
-
-        $ddd = substr($request->telefone, 0, 2);
-        $telefone = substr($request->telefone, 2);
+        if ($request->telefone == null) {
+            $ddd = null;
+            $telefone = null;
+        } else {
+            $ddd = substr($request->telefone, 0, 2);
+            $telefone = substr($request->telefone, 2);
+        }
 
         if ($request->complemento_endereco == null) {
             $complemento = '';
@@ -415,7 +430,6 @@ class CartController extends Controller
         }
 
         $data['shippingType'] = $request->tipoServ;
-        $data['shippingCost'] = $request->freteval;
         $data['shippingAddressPostalCode'] = $request->cep;
         $data['shippingAddressStreet'] = $request->endereco;
         $data['shippingAddressNumber'] = $request->numero_endereco;

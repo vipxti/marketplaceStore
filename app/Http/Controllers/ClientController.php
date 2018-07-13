@@ -27,6 +27,13 @@ class ClientController extends Controller
     {
         $telCliente = null;
 
+        if (Auth::check()) {
+            $n = explode(' ', Auth::user()->nm_cliente);
+            $nome = $n[0];
+        } else {
+            $nome = null;
+        }
+
         try {
             $telCliente = Client::join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->select('telefone.cd_celular1', 'telefone.cd_celular2')->get();
         } catch (QueryException $e) {
@@ -39,7 +46,7 @@ class ClientController extends Controller
 
         $endereco = Client::join('cliente_endereco', 'cliente.cd_cliente', '=', 'cliente_endereco.cd_cliente')->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')->select('ds_endereco', 'cd_numero_endereco', 'ds_complemento', 'ds_ponto_referencia')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get();
 
-        return view('pages.app.painelcliente', compact('telCliente', 'endereco'));
+        return view('pages.app.painelcliente', compact('telCliente', 'endereco', 'nome'));
     }
 
     public function saveClientAddress(ClientAddressRequest $request)
