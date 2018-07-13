@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,16 @@ class HomeController extends Controller
             Session::put('qtCart', 0);
         }
 
-        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho'));
+        if (Auth::check()) {
+            $n = explode(' ', Auth::user()->nm_cliente);
+            $nome = $n[0];
+        } else {
+            $nome = null;
+        }
+
+        //dd($nome);
+
+        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome'));
     }
 
     public function showIndexAdminPage()
