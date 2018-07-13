@@ -27,6 +27,12 @@
                             <a href="{{ route('index')}}"><img style="width: 110px" src="{{ asset('img/app/core-img/logo.png') }}" alt=""></a>
                         </div>
 
+                        <form id="enviaFiltro" action="{{route('productsFilterCatSubCat.page')}}" method="post">
+                            {{csrf_field()}}
+                            <input type="text" id="cdVerificador" name="catSubCat" hidden>
+                            <input type="text" id="cdCatSub" name="id" hidden>
+                        </form>
+
                         <!--Carrinho e Menu -->
                         <div class="header-cart-menu d-flex align-items-center ml-auto">
                             <div class="main-menu-area">
@@ -163,14 +169,6 @@
                                                     </li>
                                                     <li id="c" class="dropdown-submenu">
                                                         <a href="#" data-toggle="dropdown" class="dropdown-item">Outlet</a>
-                                                    </li>
-                                                    <li id="c" class="dropdown-submenu">
-                                                        <a id="8" href="#" data-toggle="dropdown" class="dropdown-item listagem">Categoria</a>
-                                                        <ul class="dropdown-menu">
-                                                            <li id="s">
-                                                                <a id="5" href="#" class="dropdown-item listagem">Subcategoria</a>
-                                                            </li>
-                                                        </ul>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -311,9 +309,6 @@
         /*$(this).parent().removeClass('show');
         $(this).siblings('.dropdown-menu').removeClass('show');*/
     });
-</script>
-
-<script>
 
     $('.listagem').click(function(){
         var catSubCat= $(this).attr('id');
@@ -321,19 +316,15 @@
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        $.ajax({
-            url: '{{route('productsFilterCatSubCat.page')}}',
-            type: "POST",
-            data:{
-                _token: CSRF_TOKEN,
-                id: id,
-                catSubCat:catSubCat
-            },
-            dataType: 'JSON',
-            success: function(d) {
-                console.log(d)
-            }
-        });
+        $('#cdVerificador').val(catSubCat);
+        $('#cdCatSub').val(id);
+
+        console.log($('#cdVerificador').val());
+        console.log($('#cdCatSub').val());
+
+
+        $('#enviaFiltro').submit();
+
     });
 
     $(document).ready(function(){
@@ -343,4 +334,5 @@
             e.preventDefault();
         });
     });
+
 </script>
