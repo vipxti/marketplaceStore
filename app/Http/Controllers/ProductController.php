@@ -22,11 +22,8 @@ use Illuminate\Database\QueryException;
 class ProductController extends Controller
 {
     //mostar produto por cat/subcat
-
-    //dd($request->id, $request->catSubCat);
-    public function kk(Request $request)
-    {
-        $dV = $request->id;
+    public function showShopProductsCatSubcat(Request $request){
+        $dVerificador = $request->id;
         $catSubCat = $request->catSubCat;
         $produtoCatSubCat = null;
 
@@ -119,16 +116,31 @@ class ProductController extends Controller
 
     public function showShopProductsPage()
     {
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(6);
+        $idxImgs = [];
 
-        $imagemPrincipal = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+        $prod = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->get();
+
+        //$produtosVariacao = ProductVariation::where('cd_status_produto_variacao', '=', 1)->get();
+
+        //dd($produtos);
+
+        foreach ($prod as $key => $p) {
+            $imagemPrincipal[$key] = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
                 ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
                 ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
                 ->select('img_produto.im_produto')
                 ->where('img_produto.ic_img_principal', '=', 1)
                 ->where('produto.cd_status_produto', '=', 1)
+                ->where('sku.cd_nr_sku', '=', $p['cd_nr_sku'])
                 ->orderBy('sku_produto_img.cd_img')
-                ->paginate(6);
+                ->get()->toArray();
+
+            $idxImgs[$key] = $key;
+        }
+
+        //dd($imagemPrincipal);
+
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(30);
 
         $imagemVariacao = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
             ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
@@ -138,7 +150,11 @@ class ProductController extends Controller
             ->orderBy('sku_produto_img.cd_img')
             ->get();
 
-        return view('pages.app.product.index', compact('produtos', 'imagemPrincipal'));
+        //dd($produtos);
+
+        //$produtos = $p->merge($pv);
+
+        return view('pages.app.product.index', compact('produtos', 'imagemPrincipal', 'idxImgs'));
     }
 
     public function paginaAlteraremailcliente()
@@ -150,6 +166,8 @@ class ProductController extends Controller
     {
         $product = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->where('produto.nm_slug', '=', $slug)->firstOrFail();
 
+        //dd($product);
+
         $productImages = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
             ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
@@ -158,14 +176,9 @@ class ProductController extends Controller
             ->orderBy('sku_produto_img.cd_img')
             ->get()->toArray();
 
-        $productVariation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->leftJoin('produto_cor', 'sku.cd_sku', 'produto_cor.cd_sku')->leftJoin('produto_tamanho_num', 'sku.cd_sku', 'produto_tamanho_num.cd_sku')->leftJoin('produto_tamanho_letra', 'sku.cd_sku', 'produto_tamanho_letra.cd_sku')->where('produto_variacao.cd_produto', '=', $product->cd_produto)
-        ->where('produto_variacao.cd_status_produto_variacao', '=', 1)->get();
+        //dd($productImages);
 
-        $productImagesVariation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('img_produto.im_produto')->where('sku.cd_nr_sku', '=', $product->cd_nr_sku)->orderBy('sku_produto_img.cd_img')->get()->toArray();
-
-        //dd($productVariation);
-
-        return view('pages.app.product.details', compact('product', 'productImages', 'productVariation', 'productImagesvariation'));
+        return view('pages.app.product.details', compact('product', 'productImages'));
     }
 
     public function paginaAlterarsenhacliente()
