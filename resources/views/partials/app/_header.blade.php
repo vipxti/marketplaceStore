@@ -164,6 +164,14 @@
                                                     <li id="c" class="dropdown-submenu">
                                                         <a href="#" data-toggle="dropdown" class="dropdown-item">Outlet</a>
                                                     </li>
+                                                    <li id="c" class="dropdown-submenu">
+                                                        <a id="8" href="#" data-toggle="dropdown" class="dropdown-item listagem">Categoria</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li id="s">
+                                                                <a id="5" href="#" class="dropdown-item listagem">Subcategoria</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
                                                 </ul>
                                             </li>
                                         </ul>
