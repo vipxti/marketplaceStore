@@ -42,13 +42,28 @@ class CategoryController extends Controller
                 return redirect()->route('category.register')->with('success', 'Categoria cadastrada com Sucesso');
             }
         } elseif ($request->delCat == 1) {
-            try {
-                $this->delCat($request->cd_categoria);
-            } catch (\Exception $e) {
-                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Deletar a Categoria');
-            } finally {
-                return redirect()->route('category.register')->with('success', 'Categoria Deletada com Sucesso');
+
+            $resultado = $this->delCat($request->cd_categoria);
+
+            if(count($resultado) == 0){
+                return response()->json([
+                    'message' => false
+                ]);
             }
+
+            return response()->json([
+                'message' => true
+            ]);
+           /* try {
+
+            } catch (\Exception $e) {
+
+                //return redirect()->route('category.register')->with('nosuccess', 'Erro ao Deletar a Categoria');
+            }*/ /*finally {
+
+                //return redirect()->route('category.register')->with('success', 'Categoria Deletada com Sucesso');
+            }*/
+
         } else {
             try {
                 $this->atualizarCat($request->cd_categoria, $request->nm_categoria);
@@ -73,8 +88,15 @@ class CategoryController extends Controller
     }
     public function delCat($cdCategoria)
     {
-        DB::table('categoria_subcat')-> where('cd_categoria', '=', $cdCategoria)->delete();
-        Category::destroy($cdCategoria);
+        $resultado = DB::table('categoria')->select('cd_categoria')-> where('cd_categoria', '=', $cdCategoria)->get();
+
+        if(count($resultado) != 0){
+            DB::table('categoria_subcat')-> where('cd_categoria', '=', $cdCategoria)->delete();
+            Category::destroy($cdCategoria);
+        }
+
+        return $resultado;
+
     }
 
     public function crudSubCategoria(SubCategoryRequest $request)
@@ -89,13 +111,30 @@ class CategoryController extends Controller
                 return redirect()->route('category.register')->with('success', 'Sub-Categoria Cadastrada com Sucesso');
             }
         } elseif ($request->delSubCat == 1) {
-            try {
+
+            $resultado = $this->delSubCat($request->cd_sub_categoria);
+            //dd($resultado);
+            if (count($resultado) == 0){
+                return response()->json([
+                    'message' => false
+                ]);
+            }
+
+            return response()->json([
+                'message' => true
+            ]);
+
+           /* try {
                 $this->delSubCat($request->cd_sub_categoria);
             } catch (\Exception $e) {
-                return redirect()->route('category.register')->with('nosuccess', 'Erro ao Deletar a Sub-Categoria');
-            } finally {
-                return redirect()->route('category.register')->with('success', 'Sub-Categoria Deletada com Sucesso');
-            }
+
+                //return redirect()->route('category.register')->with('nosuccess', 'Erro ao Deletar a Sub-Categoria');
+            }*/ /*finally {
+
+                //return redirect()->route('category.register')->with('success', 'Sub-Categoria Deletada com Sucesso');
+            }*/
+
+
         } else {
             try {
                 $this->atualizaSubCat($request->cd_sub_categoria, $request->nm_sub_categoria);
@@ -120,8 +159,15 @@ class CategoryController extends Controller
     }
     public function delSubCat($cdSubCategoria)
     {
-        DB::table('categoria_subcat')-> where('cd_sub_categoria', '=', $cdSubCategoria)->delete();
-        SubCategory::destroy($cdSubCategoria);
+        //dd($cdSubCategoria);
+        $resultado = DB::table('sub_categoria')->select('cd_sub_categoria')-> where('cd_sub_categoria', '=', $cdSubCategoria)->get();
+
+        if(count($resultado) != 0){
+            DB::table('categoria_subcat')-> where('cd_sub_categoria', '=', $cdSubCategoria)->delete();
+            SubCategory::destroy($cdSubCategoria);
+        }
+
+        return $resultado;
     }
 
     public function associarCategoriaSubCategoria(CategorySubcategoryRequest $request)

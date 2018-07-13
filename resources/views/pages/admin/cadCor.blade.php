@@ -151,7 +151,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 8000);
+            setTimeout($.unblockUI, 12000);
         });
 
         //Campo pesquisa de produtos
@@ -291,7 +291,7 @@
                     success: function (e) {
                         console.log(e.message);
                         carregarCoresCadastradas();
-                        swal("Atualização", "Produto atualizado com sucesso.", "success");
+                        swal("Atualização", "Cor atualizada com sucesso!", "success");
                     }
                 });
 
@@ -323,24 +323,37 @@
                 var id = campoTR.find('#id_cor').text();
 
 
-                $.ajax({
-                    url: '{{ route('color.delete') }}',
-                    type: 'POST',
-                    data: {_token: CSRF_TOKEN, cd_cor: id, nm_cor: conteudoAtualizado},
-                    dataType: 'JSON',
-                    success: function (e) {
-                        console.log(e.message);
-                        campoTR.fadeOut(500, function () {
-                            $(this).remove();
-                            //cor branco
-                            $("table tbody tr:odd").css("background-color", "#fff");
-                            //cor cinza
-                            $("table tbody tr:even").css("background-color", "#f5f5f5");
+                swal({
+                    title: "Você tem certeza que deseja deletar ?",
+                    text: "Uma vez deletada, você não terá mais acesso a essa cor.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                url: '{{ route('color.delete') }}',
+                                type: 'POST',
+                                data: {_token: CSRF_TOKEN, cd_cor: id, nm_cor: conteudoAtualizado},
+                                dataType: 'JSON',
+                                success: function (e) {
+                                    console.log(e.message);
+                                    campoTR.fadeOut(500, function () {
+                                        $(this).remove();
+                                        //cor branco
+                                        $("table tbody tr:odd").css("background-color", "#fff");
+                                        //cor cinza
+                                        $("table tbody tr:even").css("background-color", "#f5f5f5");
 
-                            carregarCoresCadastradas();
-                        });
-                    }
-                });
+                                        carregarCoresCadastradas();
+                                        swal("Cor deletada com sucesso!", {
+                                            icon: "success",
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    });
 
 
 

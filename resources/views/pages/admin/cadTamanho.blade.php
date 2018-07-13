@@ -223,6 +223,7 @@
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/admin/jquery.inputmask.bundle.js') }}"></script>
     <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
+    <script src="{{asset('js/admin/sweetalert.min.js')}}"></script>
     <script>
 
         $('#btnSalvarNum').click(function(){
@@ -238,7 +239,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 8000);
+            setTimeout($.unblockUI, 12000);
         });
 
         $('#btnSalvarLetra').click(function(){
@@ -254,7 +255,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 6000);
+            setTimeout($.unblockUI, 12000);
         });
 
         $(document).ready(function(){
@@ -445,6 +446,7 @@
                         success: function (e) {
                             console.log(e.message);
                             carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
+                            swal("Atualização", "Tamanho do Número atualizado com sucesso!", "success");
                         }
                     });
                     console.log("tabela numero");
@@ -459,6 +461,7 @@
                         success: function (e) {
                             console.log(e.message);
                             carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
+                            swal("Atualização", "Tamanho da Letra atualizado com sucesso!", "success");
                         }
                     });
                     console.log("tabela letra");
@@ -492,24 +495,39 @@
                 var conteudo = campoTR.find('td:eq(1)').text();
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-                $.ajax({
-                    url: '{{ route('lettersize.delete') }}',
-                    type: 'POST',
-                    data: {_token: CSRF_TOKEN, cd_tamanho_letra: id, nm_tamanho_letra: conteudo},
-                    dataType: 'JSON',
-                    success: function (e) {
-                        console.log(e.message);
-                        campoTR.fadeOut(500, function () {
-                            $(this).remove();
-                            //cor branco
-                            $("table tbody#tam_letra tr:odd").css("background-color", "#fff");
-                            //cor cinza
-                            $("table tbody#tam_letra tr:even").css("background-color", "#f5f5f5");
-                            //carrega o array novamente
-                            carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
-                        });
-                    }
-                });
+                swal({
+                    title: "Você tem certeza que deseja deletar ?",
+                    text: "Uma vez deletada, você não terá mais acesso a esse tamanho de letra.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                url: '{{ route('lettersize.delete') }}',
+                                type: 'POST',
+                                data: {_token: CSRF_TOKEN, cd_tamanho_letra: id, nm_tamanho_letra: conteudo},
+                                dataType: 'JSON',
+                                success: function (e) {
+                                    console.log(e.message);
+                                    campoTR.fadeOut(500, function () {
+                                        $(this).remove();
+                                        //cor branco
+                                        $("table tbody#tam_letra tr:odd").css("background-color", "#fff");
+                                        //cor cinza
+                                        $("table tbody#tam_letra tr:even").css("background-color", "#f5f5f5");
+                                        //carrega o array novamente
+                                        carregaArray($("tbody#tam_letra td:nth-child(2)"), arrayLetra);
+
+                                        swal("Tamanho de Letra deletado com sucesso!", {
+                                            icon: "success",
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    });
 
             });
 
@@ -519,24 +537,41 @@
                 var conteudo = campoTR.find('td:eq(1)').text();
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-                $.ajax({
-                    url: '{{ route('numbersize.delete') }}',
-                    type: 'POST',
-                    data: {_token: CSRF_TOKEN, cd_tamanho_num: id, nm_tamanho_num: conteudo},
-                    dataType: 'JSON',
-                    success: function (e) {
-                        console.log(e.message);
-                        campoTR.fadeOut(500, function () {
-                            $(this).remove();
-                            //cor branco
-                            $("table tbody#tam_num tr:odd").css("background-color", "#fff");
-                            //cor cinza
-                            $("table tbody#tam_num tr:even").css("background-color", "#f5f5f5");
-                            //carrega o array novamente
-                            carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
-                        });
-                    }
-                });
+                swal({
+                    title: "Você tem certeza que deseja deletar ?",
+                    text: "Uma vez deletada, você não terá mais acesso a esse tamanho de número.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                url: '{{ route('numbersize.delete') }}',
+                                type: 'POST',
+                                data: {_token: CSRF_TOKEN, cd_tamanho_num: id, nm_tamanho_num: conteudo},
+                                dataType: 'JSON',
+                                success: function (e) {
+                                    console.log(e.message);
+                                    campoTR.fadeOut(500, function () {
+                                        $(this).remove();
+                                        //cor branco
+                                        $("table tbody#tam_num tr:odd").css("background-color", "#fff");
+                                        //cor cinza
+                                        $("table tbody#tam_num tr:even").css("background-color", "#f5f5f5");
+                                        //carrega o array novamente
+                                        carregaArray($("tbody#tam_num td:nth-child(2)"), arrayNum);
+
+                                        swal("Tamanho de Número deletado com sucesso!", {
+                                            icon: "success",
+                                        });
+                                    });
+                                }
+                            });
+
+                        }
+                    });
+
 
                 console.log(id);
                 console.log(campoTR);

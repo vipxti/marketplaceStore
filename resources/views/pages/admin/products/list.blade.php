@@ -391,6 +391,7 @@
             </div>
 
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
+    <script src="{{asset('js/admin/sweetalert.min.js')}}"></script>
     <script>
         //Campo pesquisa de produtos
         $(function () {
@@ -485,6 +486,7 @@
                 dataType: 'JSON',
                 success: function (e) {
                     console.log(e.message);
+                    swal("Atualização", "Quantidade de Estoque atualizado com sucesso!", "success");
                 }
             });
 

@@ -57,16 +57,17 @@
                                             <div class="input-group-prepend">
                                                     <input class="form-control" type="hidden" id="delCat" name="delCat" value="0">
                                                 <input class="form-control" type="hidden" id="cd_categoria" name="cd_categoria">
-                                                <div class="input-group">
+                                                <div class="input-group col-md-12">
                                                     <input type="text" id="nm_categoria" class="form-control" name="nm_categoria" maxlength="35">
-                                                    <span class="input-group-btn">
-                                                      <button id="btnDelCat" type="submit" class="btn  btn-flat" disabled><i class="fa fa-close"></i></button>
-                                                    </span>
+                                                    {{--<span class="input-group-btn">
+                                                      <button id="" type="submit" class="btn  btn-flat" disabled><i class="fa fa-close"></i></button>
+                                                    </span>--}}
                                                 </div>
 
                                             </div>
                                         </div>
                                         <button id="btnSalvarCat" type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                        <button id="btnDelCat" type="button" class="btn btn-danger pull-right" disabled style="margin-right: 10px"><i class="fa fa-trash"></i>&nbsp;&nbsp;Deletar</button>
                                     </div>
                                 </form>
                             </div>
@@ -107,15 +108,16 @@
                                         <div class="input-group-prepend">
                                             <input class="form-control" type="hidden" id="delSubCat" name="delSubCat" value="0">
                                             <input class="form-control" type="hidden" id="cat_sub_Id" name="cd_sub_categoria">
-                                            <div class="input-group">
+                                            <div class="input-group col-md-12">
                                                 <input type="text" id="nm_sub_categoria" class="form-control" name="nm_sub_categoria" maxlength="35">
-                                                <span class="input-group-btn">
-                                                      <button id="btnDelSubCat" type="submit" class="btn btn-flat" disabled><i class="fa fa-close"></i></button>
-                                                </span>
+                                               {{-- <span class="input-group-btn">
+                                                      <button id="" type="submit" class="btn btn-flat" disabled><i class="fa fa-close"></i></button>
+                                                </span>--}}
                                             </div>
                                         </div>
                                     </div>
                                     <button id="btnSalvarSub" type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                    <button id="btnDelSubCat" type="button" class="btn btn-danger pull-right" disabled style="margin-right: 10px"><i class="fa fa-trash"></i>&nbsp;&nbsp;Deletar</button>
                                 </div>
                             </form>
                         </div>
@@ -211,6 +213,7 @@
     <script src="{{ asset('js/admin/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/admin/TreeViewScript.js') }}"></script>
     <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
+    <script src="{{asset('js/admin/sweetalert.min.js')}}"></script>
     <script>
         var arrayCat = [];
         var verificaCat = false;
@@ -254,7 +257,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 6000);
+            setTimeout($.unblockUI, 12000);
         });
 
         $('#btnSalvarSub').click(function(){
@@ -270,7 +273,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 6000);
+            setTimeout($.unblockUI, 12000);
         });
 
         $('#btnSalvarAssoc').click(function(){
@@ -286,7 +289,7 @@
                     color: '#fff'
                 } });
 
-            setTimeout($.unblockUI, 8000);
+            setTimeout($.unblockUI, 12000);
         });
 
         $('#categorias').change(function (e) {
@@ -295,9 +298,9 @@
             $cd_categoria = $(this).val();
             if($cd_categoria == 0) {
                 $("#btnDelCat").attr("disabled", "disabled");
-                $("#btnDelCat").removeClass("btn-danger");
+                //$("#btnDelCat").removeClass("btn-danger");
             }else{
-                $("#btnDelCat").removeAttr("disabled").addClass("btn-danger");
+                $("#btnDelCat").removeAttr("disabled");//.addClass("btn-danger");
             }
             $("#delCat").val($('#delCat').val());
             $("#cd_categoria").val($('#categorias option:selected').val());
@@ -355,6 +358,57 @@
 
         $("#btnDelCat").click(function(){
             $("#delCat").val("1");
+            var delCat = $('#delCat').val();
+            var cdCat = $('#cd_categoria').val();
+            var nmCat = $('#nm_categoria').val();
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            console.log("Token: " + CSRF_TOKEN);
+            console.log("Id: " + cdCat);
+            console.log("Nome: " + nmCat);
+            console.log("Deleção: " + delCat);
+
+            swal({
+                title: "Você tem certeza que deseja deletar ?",
+                text: "Uma vez deletada, você não terá mais acesso a essa categoria.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        $.ajax({
+                            url: '{{route('category.save')}}',
+                            type: 'post',
+                            data: {_token: CSRF_TOKEN, cd_categoria: cdCat, nm_categoria: nmCat, delCat: delCat},
+                            dataType: 'json',
+                            success: function(e){
+                                console.log(e.message);
+
+                                if(e.message == true){
+                                    swal("Categoria deletada com sucesso!", {
+                                        icon: "success",
+                                    }).then(()=>{
+                                        window.location.href = '{{url('admin/category')}}';
+                                    });
+                                }
+                                else {
+                                    swal("Erro ao deletar a categoria!", {
+                                        icon: "warning",
+                                    }).then(()=>{
+                                        window.location.href = '{{url('admin/category')}}';
+                                    });
+                                }
+
+                            }
+                        });
+
+                    }
+                });
+
+
+
         });
 
         $("#subcategorias").change(function(){
@@ -362,16 +416,65 @@
             $('#btnSalvarSub').removeAttr("disabled");
             if(cdSubCat == 0) {
                 $("#btnDelSubCat").attr("disabled", "disabled");
-                $("#btnDelSubCat").removeClass("btn-danger");
+                //$("#btnDelSubCat").removeClass("btn-danger");
             }else{
-                $("#btnDelSubCat").removeAttr("disabled").addClass("btn-danger");
+                $("#btnDelSubCat").removeAttr("disabled");//.addClass("btn-danger");
             }
             $("#delSubCat").val($("#delSubCat").val());
             $("#cat_sub_Id").val($("#subcategorias option:selected").val());
             $("#nm_sub_categoria").val($("#subcategorias option:selected").text());
         });
+
         $("#btnDelSubCat").click(function(){
             $("#delSubCat").val("1");
+            var delSubCat = $('#delSubCat').val();
+            var cdSubCat = $('#cat_sub_Id').val();
+            var nmSubCat = $('#nm_sub_categoria').val();
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            console.log("Token: " + CSRF_TOKEN);
+            console.log("Id: " + cdSubCat);
+            console.log("Nome: " + nmSubCat);
+            console.log("Deleção: " + delSubCat);
+
+            swal({
+                title: "Você tem certeza que deseja deletar ?",
+                text: "Uma vez deletada, você não terá mais acesso a essa sub categoria.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: '{{route('subcategory.save')}}',
+                            type: 'post',
+                            data: {_token: CSRF_TOKEN, cd_sub_categoria: cdSubCat, nm_sub_categoria: nmSubCat, delSubCat: delSubCat},
+                            dataType: 'json',
+                            success: function(e){
+                                console.log(e.message);
+
+                                if(e.message == true){
+                                    swal("Sub Categoria deletada com sucesso!", {
+                                        icon: "success",
+                                    }).then(()=>{
+                                        window.location.href = '{{url('admin/category')}}';
+                                    });
+                                }
+                                else {
+                                    swal("Erro ao deletar a sub categoria!", {
+                                        icon: "warning",
+                                    }).then(()=>{
+                                        window.location.href = '{{url('admin/category')}}';
+                                    });
+                                }
+
+                            }
+                        });
+
+                    }
+                });
+
         });
 
         $(function(){
