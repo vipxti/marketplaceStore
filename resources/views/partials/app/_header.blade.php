@@ -26,7 +26,11 @@
                         <div class="top_logo">
                             <a href="{{ route('index')}}"><img style="width: 110px" src="{{ asset('img/app/core-img/logo.png') }}" alt=""></a>
                         </div>
-
+                        <form id="enviaFiltro" action="{{route('productsFilterCatSubCat.page')}}" method="post">
+                            {{csrf_field()}}
+                            <input type="text" id="cdVerificador" name="catSubCat" hidden>
+                            <input type="text" id="cdCatSub" name="id" hidden>
+                        </form>
                         <!--Carrinho e Menu -->
                         <div class="header-cart-menu d-flex align-items-center ml-auto">
                             <div class="main-menu-area">
@@ -321,19 +325,14 @@
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        $.ajax({
-            url: '{{route('productsFilterCatSubCat.page')}}',
-            type: "POST",
-            data:{
-                _token: CSRF_TOKEN,
-                id: id,
-                catSubCat:catSubCat
-            },
-            dataType: 'JSON',
-            success: function(d) {
-                console.log(d)
-            }
-        });
+        $('#cdVerificador').val(catSubCat);
+        $('#cdCatSub').val(id);
+
+        console.log($('#cdVerificador').val());
+        console.log($('#cdCatSub').val());
+
+        $('#enviaFiltro').submit();
+
     });
 
     $(document).ready(function(){

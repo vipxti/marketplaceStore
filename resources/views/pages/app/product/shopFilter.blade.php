@@ -2,7 +2,7 @@
 
 @section('content')
 
-    {{-- dd($imagemPrincipal) --}}
+    {{--dd($produtoCatSubCat)--}}
 
     <!-- ****** Quick View Modal Area Start ****** -->
     <div class="modal fade" id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
@@ -174,241 +174,241 @@
         </div>
 
     </section>--}}
-    
-        <section class="shop_grid_area section_padding_100">
-            <div class="container">
-                <div class="row">
-                    <!-- NavBar Lateral -->
-                    <div class="col-12 col-md-4 col-lg-3">
-                        <div class="shop_sidebar_area">
-                            <!-- Menu categorias lateral -->
-                            <div class="widget catagory mb-50">
-                                <!--  Side Nav  -->
-                                <div class="nav-side-menu">
-                                    <h6 class="mb-0">Categorias</h6>
-                                    <div class="menu-list">
-                                        <ul id="menu-content2" class="menu-content collapse out">
-                                            <!-- Acessórios -->
-                                            <li data-toggle="collapse" data-target="#women2">
-                                                <a href="#">Acessórios</a>
-                                                <ul class="sub-menu collapse show" id="women2">
-                                                    <li><a href="#">Bijuterias</a></li>
-                                                    <li><a href="#">Relógios</a></li>
-                                                    <li><a href="#">Música</a></li>
-                                                    <li><a href="#">TV e Áudio</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Informática -->
-                                            <li data-toggle="collapse" data-target="#man2" class="collapsed">
-                                                <a href="#">Informática</a>
-                                                <ul class="sub-menu collapse" id="man2">
-                                                    <li><a href="#">Computadores</a></li>
-                                                    <li><a href="#">Acessórios</a></li>
-                                                    <li><a href="#">Games</a></li>
-                                                    <li><a href="#">Celular</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Beleza -->
-                                            <li data-toggle="collapse" data-target="#kids2" class="collapsed">
-                                                <a href="#">Beleza</a>
-                                                <ul class="sub-menu collapse" id="kids2">
-                                                    <li><a href="#">Perfume</a></li>
-                                                    <li><a href="#">Maquiagem</a></li>
-                                                    <li><a href="#">Cabelos</a></li>
-                                                    <li><a href="#">Pele</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Moda -->
-                                            <li data-toggle="collapse" data-target="#bags2" class="collapsed">
-                                                <a href="#">Moda</a>
-                                                <ul class="sub-menu collapse" id="bags2">
-                                                    <li><a href="#">Feminina</a></li>
-                                                    <li><a href="#">Masculina</a></li>
-                                                    <li><a href="#">Infantil</a></li>
-                                                    <li><a href="#">Esportiva</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- Filtro de preço lateral -->
-                            <div class="widget price mb-50">
-                                <h6 class="widget-title mb-30">Filtro por preço</h6>
-                                <div class="widget-desc">
-                                    <div class="slider-range">
-                                        <div data-min="0" data-max="3000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="1350" data-label-result="Price:">
-                                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                        </div>
-                                        <div class="range-price">Preço: 0 - 1350</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Filtro de cor lateral -->
-                            <div class="widget color mb-70">
-                                <h6 class="widget-title mb-30">Filtro por cor</h6>
-                                <div class="widget-desc">
-                                    <ul class="d-flex justify-content-between">
-                                        <li class="gray"><a href="#"><span class="text-center"></span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="red"><a href="#"><span class="text-center"></span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="yellow"><a href="#"><span class="text-center"></span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="green"><a href="#"><span class="text-center"></span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="teal"><a href="#"><span class="text-center"></span></a></li>
-                                        &nbsp;&nbsp;
-                                        <li class="cyan"><a href="#"><span class="text-center"></span></a></li>
+    <section class="shop_grid_area section_padding_100">
+        <div class="container">
+            <div class="row">
+                <!-- NavBar Lateral -->
+                <div class="col-12 col-md-4 col-lg-3">
+                    <div class="shop_sidebar_area">
+                        <!-- Menu categorias lateral -->
+                        <div class="widget catagory mb-50">
+                            <!--  Side Nav  -->
+                            <div class="nav-side-menu">
+                                <h6 class="mb-0">Categorias</h6>
+                                <div class="menu-list">
+                                    <ul id="menu-content2" class="menu-content collapse out">
+                                        <!-- Acessórios -->
+                                        <li data-toggle="collapse" data-target="#women2">
+                                            <a href="#">Acessórios</a>
+                                            <ul class="sub-menu collapse show" id="women2">
+                                                <li><a href="#">Bijuterias</a></li>
+                                                <li><a href="#">Relógios</a></li>
+                                                <li><a href="#">Música</a></li>
+                                                <li><a href="#">TV e Áudio</a></li>
+                                            </ul>
+                                        </li>
+                                        <!-- Informática -->
+                                        <li data-toggle="collapse" data-target="#man2" class="collapsed">
+                                            <a href="#">Informática</a>
+                                            <ul class="sub-menu collapse" id="man2">
+                                                <li><a href="#">Computadores</a></li>
+                                                <li><a href="#">Acessórios</a></li>
+                                                <li><a href="#">Games</a></li>
+                                                <li><a href="#">Celular</a></li>
+                                            </ul>
+                                        </li>
+                                        <!-- Beleza -->
+                                        <li data-toggle="collapse" data-target="#kids2" class="collapsed">
+                                            <a href="#">Beleza</a>
+                                            <ul class="sub-menu collapse" id="kids2">
+                                                <li><a href="#">Perfume</a></li>
+                                                <li><a href="#">Maquiagem</a></li>
+                                                <li><a href="#">Cabelos</a></li>
+                                                <li><a href="#">Pele</a></li>
+                                            </ul>
+                                        </li>
+                                        <!-- Moda -->
+                                        <li data-toggle="collapse" data-target="#bags2" class="collapsed">
+                                            <a href="#">Moda</a>
+                                            <ul class="sub-menu collapse" id="bags2">
+                                                <li><a href="#">Feminina</a></li>
+                                                <li><a href="#">Masculina</a></li>
+                                                <li><a href="#">Infantil</a></li>
+                                                <li><a href="#">Esportiva</a></li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
-
-                            <!-- Tamanhos lateral -->
-                            <div class="widget size mb-50">
-                                <h6 class="widget-title mb-30">Filtro por tamanho</h6>
-                                <div class="widget-desc">
-                                    <ul class="d-flex justify-content-between">
-                                        <li><a href="#">PP</a></li>
-                                        <li><a href="#">P</a></li>
-                                        <li><a href="#">M</a></li>
-                                        <li><a href="#">G</a></li>
-                                        <li><a href="#">GG</a></li>
-                                        <li><a href="#">GGG</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Recomendados lateral -->
-                            {{--<div class="widget recommended">
-                                <h6 class="widget-title mb-30">Recomendado</h6>
-
-                                <div class="widget-desc">
-                                    <!-- Single Recommended Product -->
-                                    <div class="single-recommended-product d-flex mb-30">
-                                        <div class="single-recommended-thumb mr-3">
-                                            <img src="img/product-img/product-10.jpg" alt="">
-                                        </div>
-                                        <div class="single-recommended-desc">
-                                            <h6>Men’s T-shirt</h6>
-                                            <p>$ 39.99</p>
-                                        </div>
-                                    </div>
-                                    <!-- Single Recommended Product -->
-                                    <div class="single-recommended-product d-flex mb-30">
-                                        <div class="single-recommended-thumb mr-3">
-                                            <img src="img/product-img/product-11.jpg" alt="">
-                                        </div>
-                                        <div class="single-recommended-desc">
-                                            <h6>Blue mini top</h6>
-                                            <p>$ 19.99</p>
-                                        </div>
-                                    </div>
-                                    <!-- Single Recommended Product -->
-                                    <div class="single-recommended-product d-flex">
-                                        <div class="single-recommended-thumb mr-3">
-                                            <img src="img/product-img/product-12.jpg" alt="">
-                                        </div>
-                                        <div class="single-recommended-desc">
-
-                                            <h6>Women’s T-shirt</h6>
-                                            <p>$ 39.99</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>--}}
                         </div>
+
+                        <!-- Filtro de preço lateral -->
+                        <div class="widget price mb-50">
+                            <h6 class="widget-title mb-30">Filtro por preço</h6>
+                            <div class="widget-desc">
+                                <div class="slider-range">
+                                    <div data-min="0" data-max="3000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="1350" data-label-result="Price:">
+                                        <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
+                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                                    </div>
+                                    <div class="range-price">Preço: 0 - 1350</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Filtro de cor lateral -->
+                        <div class="widget color mb-70">
+                            <h6 class="widget-title mb-30">Filtro por cor</h6>
+                            <div class="widget-desc">
+                                <ul class="d-flex justify-content-between">
+                                    <li class="gray"><a href="#"><span class="text-center"></span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="red"><a href="#"><span class="text-center"></span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="yellow"><a href="#"><span class="text-center"></span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="green"><a href="#"><span class="text-center"></span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="teal"><a href="#"><span class="text-center"></span></a></li>
+                                    &nbsp;&nbsp;
+                                    <li class="cyan"><a href="#"><span class="text-center"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tamanhos lateral -->
+                        <div class="widget size mb-50">
+                            <h6 class="widget-title mb-30">Filtro por tamanho</h6>
+                            <div class="widget-desc">
+                                <ul class="d-flex justify-content-between">
+                                    <li><a href="#">PP</a></li>
+                                    <li><a href="#">P</a></li>
+                                    <li><a href="#">M</a></li>
+                                    <li><a href="#">G</a></li>
+                                    <li><a href="#">GG</a></li>
+                                    <li><a href="#">GGG</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Recomendados lateral -->
+                        {{--<div class="widget recommended">
+                            <h6 class="widget-title mb-30">Recomendado</h6>
+
+                            <div class="widget-desc">
+                                <!-- Single Recommended Product -->
+                                <div class="single-recommended-product d-flex mb-30">
+                                    <div class="single-recommended-thumb mr-3">
+                                        <img src="img/product-img/product-10.jpg" alt="">
+                                    </div>
+                                    <div class="single-recommended-desc">
+                                        <h6>Men’s T-shirt</h6>
+                                        <p>$ 39.99</p>
+                                    </div>
+                                </div>
+                                <!-- Single Recommended Product -->
+                                <div class="single-recommended-product d-flex mb-30">
+                                    <div class="single-recommended-thumb mr-3">
+                                        <img src="img/product-img/product-11.jpg" alt="">
+                                    </div>
+                                    <div class="single-recommended-desc">
+                                        <h6>Blue mini top</h6>
+                                        <p>$ 19.99</p>
+                                    </div>
+                                </div>
+                                <!-- Single Recommended Product -->
+                                <div class="single-recommended-product d-flex">
+                                    <div class="single-recommended-thumb mr-3">
+                                        <img src="img/product-img/product-12.jpg" alt="">
+                                    </div>
+                                    <div class="single-recommended-desc">
+
+                                        <h6>Women’s T-shirt</h6>
+                                        <p>$ 39.99</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>--}}
                     </div>
+                </div>
 
-                    <!-- Produtos e Contador páginas -->
-                    <div class="col-12 col-md-8 col-lg-9">
-                        <div class="shop_grid_product_area">
-                            <div class="row">
-                                <div class="row karl-new-arrivals">
-                                    @foreach($produtos as $key => $produto)
+                <!-- Produtos e Contador páginas -->
+                <div class="col-12 col-md-8 col-lg-9">
+                    <div class="shop_grid_product_area">
+                        <div class="row">
+                            <div class="row karl-new-arrivals">
+                                @foreach($produtoCatSubCat as $key => $produto)
 
-                                        <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
-                                            <div class="product-img">
-                                                <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$idxImgs[$key]][0]['im_produto'])  }}" alt="">
-                                                <div class="product-quicview">
-                                                    <a href="{{ route('products.details', $produto->nm_slug) }}"><i class="ti-plus"></i></a>
-                                                </div>
-                                            </div>
-
-                                            <div class="product-description">
-                                                <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
-                                                <p>{{ $produto->nm_produto }}</p>
-                                                <!-- Botão comprar -->
-
-                                                <form action="{{ route('cart.buy') }}" method="post">
-                                                {{ csrf_field() }}
-                                                    
-                                                    <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
-                                                    <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
-                                                    <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
-                                                    <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
-                                                    <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
-                                                    <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
-                                                    <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
-                                                    <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
-                                                    <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
-                                                    <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
-                                                    <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
-                                                    <input type="hidden" name="im_produto" value="{{ $imagemPrincipal[$idxImgs[$key]][0]['im_produto'] }}">
-
-                                                    @if($produto->qt_produto < 5)
-
-                                                        <br>
-                                                        <p>SEM ESTOQUE</p>
-
-                                                    @else
-
-                                                        <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
-
-                                                    @endif
-
-                                                </form>
+                                    <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
+                                        <div class="product-img">
+                                            <img src="{{ URL::asset('img/products' . '/' . $produto->im_produto)}}" alt="">
+                                            <div class="product-quicview">
+                                                <a href="{{ route('products.details', $produto->nm_slug) }}"><i class="ti-plus"></i></a>
                                             </div>
                                         </div>
 
-                                     @endforeach
-                                </div>
+                                        <div class="product-description">
+                                            <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
+                                            <p>{{ $produto->nm_produto }}</p>
+                                            <!-- Botão comprar -->
 
-                                <div class="d-flex justify-content-center">
+                                            <form action="{{ route('cart.buy') }}" method="post">
+                                                {{ csrf_field() }}
 
-                                    {{ $produtos->links("pagination::bootstrap-4") }}
+                                                <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
+                                                <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
+                                                <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
+                                                <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
+                                                <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
+                                                <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
+                                                <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
+                                                <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
+                                                <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
+                                                <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
+                                                <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
+                                                <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
 
-                                </div>
+                                                @if($produto->qt_produto < 5)
 
-                                <div>
-                                    <h5>Roupas femininas no Vip-x</h5>
-                                    <p>Para as mulheres que gostam de usar looks modernos e sempre atuais, comprar moda feminina online é a maneira mais fácil e simples de garantir as peças que são tendências na temporada. Além da praticidade e comodidade, a variedade de produtos é um diferencial para quem compra roupas na internet.</p>
-                                    <p>Aqui no vipx.com, as novidades em moda feminina não param de chegar! São blusas femininas, vestidos, calçados e acessórios para renovar seu guarda-roupa com preços que cabem no bolso. E você ainda conta com segurança e ótimo atendimento oferecidos pela equipe do Portal Vipx.</p>
-                                    <p>&nbsp;</p>
-                                </div>
+                                                    <br>
+                                                    <p>SEM ESTOQUE</p>
 
+                                                @else
 
-                                <div class="shop_pagination_area wow fadeInUp" data-wow-delay="1.1s">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination pagination-sm">
-                                            <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
+                                                    <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
 
+                                                @endif
+
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                @endforeach
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+
+                                {{-- $produtoCatSubCat->links("pagination::bootstrap-4") --}}
 
                             </div>
+
+                            <div>
+                                <h5>Roupas femininas no Vip-x</h5>
+                                <p>Para as mulheres que gostam de usar looks modernos e sempre atuais, comprar moda feminina online é a maneira mais fácil e simples de garantir as peças que são tendências na temporada. Além da praticidade e comodidade, a variedade de produtos é um diferencial para quem compra roupas na internet.</p>
+                                <p>Aqui no vipx.com, as novidades em moda feminina não param de chegar! São blusas femininas, vestidos, calçados e acessórios para renovar seu guarda-roupa com preços que cabem no bolso. E você ainda conta com segurança e ótimo atendimento oferecidos pela equipe do Portal Vipx.</p>
+                                <p>&nbsp;</p>
+                            </div>
+
+
+                            <div class="shop_pagination_area wow fadeInUp" data-wow-delay="1.1s">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination pagination-sm">
+                                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">02</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">03</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
