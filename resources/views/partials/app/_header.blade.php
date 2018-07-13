@@ -41,11 +41,11 @@
                                             <li class="nav-item dropdown">
                                                 <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle">Beleza e Saúde</a>
                                                 <ul class="dropdown-menu">
-                                                    <li class="dropdown-submenu">
-                                                        <a href="#" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle">Maquiagem</a>
-                                                        <ul class="dropdown-menu">
-                                                            <li>
-                                                                <a href="#" class="cormenu dropdown-item">Batom</a>
+                                                    <li id="c" class="dropdown-submenu">
+                                                        <a href="#" id="8" data-toggle="dropdown" class="cormenu dropdown-item dropdown-toggle listagem">Maquiagem</a>
+                                                        <ul id="ulPai" class="dropdown-menu">
+                                                            <li id="s">
+                                                                <a href="5" class="cormenu dropdown-item listagem">Batom</a>
                                                             </li>
                                                             <li>
                                                                 <a href="#" class="dropdown-item">Gloss</a>
@@ -257,6 +257,7 @@
 </header>
 
 <script>
+    //expande o submenu quando passar o mouse em cima do menu
     $('.dropdown-submenu > a').on("mouseover", function(e) {
         var submenu = $(this);
         $('.dropdown-submenu .dropdown-menu').removeClass('show');
@@ -264,9 +265,19 @@
         e.stopPropagation();
     });
 
+    //esconde os menus quando o pai fecha
     $('.dropdown').on("hidden.bs.dropdown", function() {
-        // hide any open menus when parent closes
         $('.dropdown-menu.show').removeClass('show');
+    });
+
+    //esconde o submenu quando o mouse sai dele
+    $('.dropdown-submenu > ul').on("mouseleave", function() {
+        $('.dropdown-submenu > ul').removeClass('show');
+    });
+
+    //esconder o menu e submenu quando o mouse sair dele
+    $('.dropdown-menu').on('mouseleave', function(){
+        $(this).removeClass('show');
     });
 </script>
 
@@ -292,8 +303,6 @@
             }
         });
     });
-
-
 
     $(document).ready(function(){
         $('.dropdown-submenu a.test').on("click", function(e){
