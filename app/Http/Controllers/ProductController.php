@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     //mostar produto por cat/subcat
-    public function showShopProductsCatSubcat(Request $request){
+    public function showShopProductsCatSubcat(Request $request)
+    {
         $dVerificador = $request->id;
         //$dVerificador = 'c';
         //$catSubCat = 8;
@@ -32,7 +33,7 @@ class ProductController extends Controller
 
         //dd($request->all());
 
-        if($dVerificador=="c"){
+        if ($dVerificador=="c") {
             $produtoCatSubCat = Product::
             join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
                 ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
@@ -111,12 +112,6 @@ class ProductController extends Controller
                 ->where('sub_categoria.cd_sub_categoria', '=', $catSubCat)
                 ->get();
         }
-
-        //dd($produtoCatSubCat);
-
-        return view('pages.app.product.shopFilter', compact('produtoCatSubCat'));
-        //return response()->json($produtoCatSubCat);
-    }
 
         //dd($produtoCatSubCat);
 
