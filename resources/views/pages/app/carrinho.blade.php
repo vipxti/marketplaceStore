@@ -153,7 +153,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12 col-md-6 col-lg-6">
+                    {{-- <div class="col-12 col-md-6 col-lg-6">
                         <div class="coupon-code-area mt-70">
                             <div class="cart-page-heading">
                                 <h5>Calcular Frete</h5>
@@ -177,7 +177,7 @@
                                 <p style="font-size: 0.90em" id="msgErroCep"></p>
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
 
                 <div class="col-12 col-md-6 col-lg-6" style="margin-top: 70px !important;">
                     <div class="col-md-12 col-lg-12">
@@ -224,14 +224,18 @@
 
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="cart-total-area mt-70">
-                        <div class="cart-page-heading">
-                            <h5>Total</h5>
-                            <p>Informações da compra</p>
-                        </div>
                         <ul class="cart-total-chart">
-                            <li><span>Subtotal</span> <span id="precoSubTotal">R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}</span></li>
-                            <li><span>Envio</span> <span id="precoCalcFrete">-</span></li>
-                        <li><span><strong>Total</strong></span> <span><strong id="precoCalcTotal">R$ {{ number_format(Session::get('totalPrice'), 2, ',', '.') }}</strong></span></li>
+                            <li>
+                                <span>
+                                    <strong>Subtotal</strong>
+                                </span>
+                                
+                                <span id="precoSubTotal">
+                                    <strong>R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}</strong>
+                                </span>
+                            </li>
+                            {{-- <li><span>Envio</span> <span id="precoCalcFrete">-</span></li>
+                            <li><span><strong>Total</strong></span> <span><strong id="precoCalcTotal">R$ {{ number_format(Session::get('totalPrice'), 2, ',', '.') }}</strong></span></li> --}}
                         </ul>
 
                         <form id="formComprar">
@@ -251,18 +255,9 @@
                                     
                             @endforeach
 
-                            <input type="hidden" name="fretecal" value="">
-                            <input id="freteForm" type="hidden" name="freteval" value="">
-                            <input id="tipoServForm" type="hidden" name="tipoServ" value="">
-
-                        <!-- array do cliente -->
-                            {{--  <input type="hidden" name="cep" value="{{ $cliente[0]->cd_cep }}">
-                              <input type="hidden" name="endereco" value="{{ $cliente[0]->ds_endereco }}">
-                              <input type="hidden" name="numero" value="{{ $cliente[0]->cd_numero_endereco }}">
-                              <input type="hidden" name="bairro" value="{{ $cliente[0]->nm_bairro }}">
-                              <input type="hidden" name="cidade" value="{{ $cliente[0]->nm_cidade }}">
-                              <input type="hidden" name="estado" value="{{ $cliente[0]->nm_uf }}">
-                              <input type="hidden" name="pais" value="{{ $cliente[0]->nm_pais }}">--}}
+                            {{-- <input type="hidden" name="fretecal" value=""> --}}
+                            {{-- <input id="freteForm" type="hidden" name="freteval" value=""> --}}
+                            <input id="tipoServForm" type="hidden" name="tipoServ" value="1">
 
                             @if(Auth::check())
 
@@ -270,28 +265,35 @@
                                 <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
                                 <input type="hidden" name="numero_cpf" value="{{ Auth::user()->cd_cpf_cnpj }}">
                                 <input type="hidden" name="telefone" value="{{ $telefone }}">
-                                <input type="hidden" name="cep" value="{{ $enderecoCliente[0]['cd_cep'] }}">
-                                <input type="hidden" name="endereco" value="{{ $enderecoCliente[0]['ds_endereco'] }}">
-                                <input type="hidden" name="complemento_endereco" value="{{ $enderecoCliente[0]['ds_complemento'] }}">
-                                <input type="hidden" name="numero_endereco" value="{{ $enderecoCliente[0]['cd_numero_endereco'] }}">
-                                <input type="hidden" name="cidade" value="{{ $enderecoCliente[0]['nm_cidade'] }}">
-                                <input type="hidden" name="bairro" value="{{ $enderecoCliente[0]['nm_bairro'] }}">
-                                <input type="hidden" name="estado" value="{{ $enderecoCliente[0]['sg_uf'] }}">
-                                <input type="hidden" name="pais" value="{{ $enderecoCliente[0]['nm_pais'] }}">
 
-                                <button type="button" id="finalizar" disabled class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
+                                @if (count($enderecoCliente) == 0)
+
+                                    <a href="{{ route('client.dashboard') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">É preciso cadastrar um endereço para finalizar a compra</button></a>
+
+                                @else
+
+                                    <input type="hidden" name="cep" value="{{ $enderecoCliente[0]['cd_cep'] }}">
+                                    <input type="hidden" name="endereco" value="{{ $enderecoCliente[0]['ds_endereco'] }}">
+                                    <input type="hidden" name="complemento_endereco" value="{{ $enderecoCliente[0]['ds_complemento'] }}">
+                                    <input type="hidden" name="numero_endereco" value="{{ $enderecoCliente[0]['cd_numero_endereco'] }}">
+                                    <input type="hidden" name="cidade" value="{{ $enderecoCliente[0]['nm_cidade'] }}">
+                                    <input type="hidden" name="bairro" value="{{ $enderecoCliente[0]['nm_bairro'] }}">
+                                    <input type="hidden" name="estado" value="{{ $enderecoCliente[0]['sg_uf'] }}">
+                                    <input type="hidden" name="pais" value="{{ $enderecoCliente[0]['nm_pais'] }}">
+
+                                    <button type="button" id="finalizar" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
+                                    
+                                @endif
 
                             @else
 
-                                <a href="{{ route('client.login') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Faça login para finalizar sua compra</button></a> 
+                                <a href="{{ route('client.login') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Faça login para finalizar sua compra</button></a>
 
                             @endif
 
-
                             {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
                             <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
-
-                            
+ 
                         </form>
                     </div>
                 </div>
@@ -382,159 +384,18 @@
             }
 
         });
-        
-        var totalCalc = false;
-        //CALCULO FRETE
-        $('#btnCalcFrete').click(function(){
 
-            $("#msgErroCep").html("");
-            //Nova variável "cep" somente com dígitos.
-            var cep = $('#campoCep').val().replace(/\D/g, '');
-            //Expressão regular para validar o CEP.
-            var validacep = /^[0-9]{8}$/;
-            //Valida o formato do CEP.
-            if(validacep.test(cep)) {
-                //Consulta o webservice viacep.com.br/
-                $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
-                    if (!("erro" in dados)) {
-                        //Atualiza os campos com os valores da consulta.
-
-                        consultaFrete($('#spinner_btn'));
-
-                    } //end if.
-                    else {
-                        //CEP pesquisado não foi encontrado.
-                        $("#msgErroCep").html("CEP não encontrado.").css("color", "red");
-                    }
-                });
-            } //end if.
-            else {
-                //cep é inválido.
-                $("#msgErroCep").html("Formato de CEP inválido.").css("color", "red");
-            } //end if.
-        });
-
-
-        //CONSULTA O WEBSERVICE OU OFFLINE O CEP
-        function consultaFrete(spinner){
+        $('#customRadio2').click(function (e) {
+            var tipoServ = $('#customRadio2').val();
             
-            var pesoTotal = $('#pesoTotal').val();
-            var alturaTotal = $('#alturaTotal').val();
-            var larguraTotal = $('#larguraTotal').val();
-            var comprimentoTotal = $('#comprimentoTotal').val();
-
-            console.log(pesoTotal);
-
-            pesoTotal = (pesoTotal / 1000);
-
-            $objF = {
-                cep: $('#campoCep').val(),
-                altura: parseFloat(alturaTotal).toFixed(2),
-                largura: parseFloat(larguraTotal).toFixed(2),
-                peso: parseFloat(pesoTotal).toFixed(2),
-                comprimento: parseFloat(comprimentoTotal).toFixed(2)
-            };
-
-            spinner.css('visibility', 'visible');
-            $('#finalizar').attr('disabled', 'disabled');
-
-            $.ajax({
-                url: '{{ url('/page/calculaFrete') }}/' + $objF.cep + ',' + $objF.altura + ',' + $objF.largura + ',' + $objF.peso  + ',' + $objF.comprimento,
-                type: 'GET',
-                success: function(data){
-                    console.log('oy');
-                    $('#precoPac').html('R$ ' + data.freteCalculado[0].valor.toFixed(2).toString().replace('.', ','));
-                    $('#diasPac').html(data.freteCalculado[0].prazo + ' dias');
-                    $('#precoSedex').html('R$ ' + data.freteCalculado[1].valor.toFixed(2).toString().replace('.', ','));
-                    $('#diasSedex').html(data.freteCalculado[1].prazo + ' dias');
-
-                    verificaFrete(spinner);
-
-                },
-                error: function(){
-                    console.log("Erro Correio");
-
-                    //CONSULTA OFFLINE CASO O WEBSERVICE NAO FUNCIONAR
-                    $.ajax({
-                        url: '{{url('/page/calculaFreteOffline')}}/' + $objF.cep + ',' + $objF.peso,
-                        type: 'GET',
-                        success: function (data) {
-                            console.log("yo");
-                            if (data.freteCalculado[0].metodo == "PAC") {
-                                $('#precoPac').html('R$ ' + data.freteCalculado[0].preco_frete.toString().replace('.', ','));
-                                $('#diasPac').html(data.freteCalculado[0].qtd_dias + ' dias');
-                                $('#precoSedex').html('R$ ' + data.freteCalculado[1].preco_frete.toString().replace('.', ','));
-                                $('#diasSedex').html(data.freteCalculado[1].qtd_dias + ' dias');
-                                $('#customRadio2').removeAttr('disabled');
-                                console.log("if");
-                            }
-                            else{
-                                $('#precoSedex').html('R$ ' + data.freteCalculado[0].preco_frete.toString().replace('.', ','));
-                                $('#diasSedex').html(data.freteCalculado[0].qtd_dias + ' dias');
-                                $('#precoPac').html('');
-                                $('#diasPac').html('');
-                                $('#customRadio2').attr('disabled', 'disabled');
-                            }
-
-                            verificaFrete(spinner);
-                        },
-                        error: function () {
-                            console.log("Erro");
-                        }
-                    });
-                }
-            });
-
-        }
-
-        function verificaFrete(spinner){
-            if ($('#customRadio1').is(':checked')) {
-                $('#precoCalcFrete').html($('#precoSedex').html().replace('.', ','));
-                $('#tipoServForm').val($('#customRadio1').val());
-            }
-            else {
-                $('#precoCalcFrete').html($('#precoPac').html().replace('.', ','));
-                $('#tipoServForm').val($('#customRadio2').val());
-            }
-
-            /*$('#precoSubTotal').html($('#valorTotal').html());
-            $('#qtdProd').val($('#qty').val());*/
-            totalCalc = true;
-
-            atualizaFrete();
-
-            /*$('#freteForm').val(precoFrete.toFixed(2));*/
-            $('#finalizar').removeAttr('disabled');
-            spinner.css('visibility', 'hidden');
-        }
-
-        //VERIFICA SE O SEDEX ESTA SELECIONADO
-        $('#customRadio1').on("click", function(){
-            $('#precoCalcFrete').html($('#precoSedex').html().replace('.', ','));
-            $('#tipoServForm').val($(this).val());
-            atualizaFrete();
+            $('#tipoServForm').val(tipoServ);
         });
 
-        //VERIFICA SE O PAC ESTA SELECIONADO
-        $('#customRadio2').on("click", function(){
-            $('#precoCalcFrete').html($('#precoPac').html().replace('.', ','));
-            $('#tipoServForm').val($(this).val());
-            atualizaFrete();
+        $('#customRadio1').click(function (e) {
+            var tipoServ = $('#customRadio1').val();
+            
+            $('#tipoServForm').val(tipoServ);
         });
-
-        //ATUALIZA FRETE
-        var precoSub;
-        var precoFrete;
-        function atualizaFrete(){
-            precoSub = $('#precoSubTotal').html().replace('R$', '').replace(',', '.');
-            precoFrete =  $('#precoCalcFrete').html().replace('R$', '').replace(',', '.');
-            precoSub = parseFloat(precoSub);
-            precoFrete = parseFloat(precoFrete);
-            var calcTotal = precoSub + precoFrete;
-
-            $('#precoCalcTotal').html('R$ ' + calcTotal.toFixed(2).toString().replace('.',','));
-            $('#freteForm').val(precoFrete.toFixed(2));
-        }
 
         //ABRE O LIGHTBOX DA PAGSEGURO
         $('#finalizar').click(function (e) {
@@ -543,13 +404,12 @@
             var cdCompra = null;
 
             $.ajax({
+
                 //url: '/pages/calculaFrete/' + objF,
                 url: '{{ url('page/pagseguro/redirect') }}',
                 type: 'POST',
                 data: $("#formComprar").serialize(),
                 success: function(codigoCompra){
-
-                    
 
                     $.each(codigoCompra, function () {
                         var key = Object.keys(this)[0];
@@ -579,19 +439,6 @@
 
             });
 
-            //SO HABILITA O CAMPO CEP SE ESTIVER PREENCHIDO
-            $('#campoCep').on("input", function(){
-                if($(this).length != 8){
-                    $('#precoCalcFrete').html("-");
-                    $('#precoCalcTotal').html("-");
-                    $('#precoSedex').html("");
-                    $('#precoPac').html("");
-                    $('#diasPac').html("");
-                    $('#diasSedex').html("");
-                    $('#finalizar').attr('disabled', 'disabled');
-                    totalCalc=false;
-                }
-            });
     </script>
 
 @stop

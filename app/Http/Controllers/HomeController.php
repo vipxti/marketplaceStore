@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function showIndexPage()
     {
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->limit(6)->get();
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->orderBy('produto.cd_produto', 'DESC')->limit(6)->get();
 
         //dd($produtos);
 
@@ -20,8 +20,10 @@ class HomeController extends Controller
             ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
             ->select('img_produto.im_produto')
             ->where('img_produto.ic_img_principal', '=', 1)
-            ->orderBy('sku_produto_img.cd_img')
-            ->get();
+            ->orderBy('produto.cd_produto', 'DESC')
+            ->limit(6)->get();
+
+        //dd($imagemPrincipal);
 
         if (!Session::has('qtCart')) {
             Session::put('qtCart', 0);

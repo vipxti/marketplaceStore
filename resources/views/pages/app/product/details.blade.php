@@ -170,9 +170,7 @@
 
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <a class="gallery_img" href="{{ URL::asset('img/products/' . $productImages[0]['im_produto']) }}">
-                                        <img class="d-block w-100" src="{{ URL::asset('img/products/' . $productImages[0]['im_produto']) }}" alt="First slide">
-                                    </a>
+                                    <img class="d-block w-100" src="{{ URL::asset('img/products/' . $productImages[0]['im_produto']) }}" alt="First slide">
                                 </div>
 
                                 @if(count($productImages) > 1)

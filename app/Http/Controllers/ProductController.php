@@ -18,6 +18,7 @@ use Image;
 use App\Image as Img;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -119,6 +120,13 @@ class ProductController extends Controller
 
     public function showShopProductsPage()
     {
+        if (Auth::check()) {
+            $n = explode(' ', Auth::user()->nm_cliente);
+            $nome = $n[0];
+        } else {
+            $nome = null;
+        }
+
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(6);
 
         $imagemPrincipal = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
@@ -138,7 +146,7 @@ class ProductController extends Controller
             ->orderBy('sku_produto_img.cd_img')
             ->get();
 
-        return view('pages.app.product.index', compact('produtos', 'imagemPrincipal'));
+        return view('pages.app.product.index', compact('produtos', 'imagemPrincipal', 'nome'));
     }
 
     public function paginaAlteraremailcliente()
@@ -148,6 +156,13 @@ class ProductController extends Controller
 
     public function showProductDetails($slug)
     {
+        if (Auth::check()) {
+            $n = explode(' ', Auth::user()->nm_cliente);
+            $nome = $n[0];
+        } else {
+            $nome = null;
+        }
+
         $product = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->where('produto.nm_slug', '=', $slug)->firstOrFail();
 
         $productImages = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
@@ -165,7 +180,7 @@ class ProductController extends Controller
 
         //dd($productVariation);
 
-        return view('pages.app.product.details', compact('product', 'productImages', 'productVariation', 'productImagesvariation'));
+        return view('pages.app.product.details', compact('product', 'productImages', 'productVariation', 'productImagesvariation', 'nome'));
     }
 
     public function paginaAlterarsenhacliente()
@@ -175,7 +190,7 @@ class ProductController extends Controller
 
     public function listaProduto()
     {
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('produto.cd_status_produto', '=', 1)->paginate(6);
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('produto.cd_status_produto', '=', 1)->paginate(25);
         $tamanhosLetras = LetterSize::all();
         $tamanhosNumeros = NumberSize::all();
         $cores = Color::all();

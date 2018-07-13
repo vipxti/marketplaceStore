@@ -234,7 +234,7 @@
                                     <a href="javascript:void(0);" class="dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                         @if(Auth::check())
-                                            <span>&nbsp;{{ Auth::user()->nm_cliente }}</span>
+                                            <span>&nbsp;{{ $nome }}</span>
                                         @endif
                                     </a>
 
