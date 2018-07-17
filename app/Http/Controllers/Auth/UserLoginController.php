@@ -19,7 +19,28 @@ class UserLoginController extends Controller
 
     public function showAdminLoginForm()
     {
-        return view('pages.admin.auth.login');
+        $menuNav =  Menu::all();
+
+        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+        foreach($menuNav as $key=>$menu){
+
+            $categoriaSubCat[$key] = Category::
+            leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                ->select(
+                    'categoria.cd_categoria',
+                    'categoria.nm_categoria',
+                    'sub_categoria.cd_sub_categoria',
+                    'sub_categoria.nm_sub_categoria'
+                )
+                ->where('menu.cd_menu', '=', $menu->cd_menu)
+                ->get();
+
+        }
+
+        return view('pages.admin.auth.login', compact('menuNav', 'categoriaSubCat'));
     }
 
     public function login(UserLoginRequest $request)

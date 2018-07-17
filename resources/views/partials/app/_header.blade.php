@@ -42,7 +42,77 @@
                                     <div class="collapse navbar-collapse" id="navbar1" style="padding-right: 180px">
                                         <ul class="navbar-nav">
                                             <!-- Beleza e Saúde -->
-                                            <li class="nav-item dropdown menuLi">
+
+                                            @for($i = 0; $i<sizeof($menuNav); $i++)
+
+                                                <li class="nav-item dropdown menuLi">
+                                                    <a href="javascript:void(0)" id="menu" data-toggle="dropdown"
+                                                       class="nav-link dropdown-toggle corFundoPrincipal">
+                                                        {{$menuNav[$i]->nm_menu}}
+                                                    </a>
+                                                    <ul class="dropdown-menu menuUl">
+                                                        @for($j = 0; $j < sizeof($categoriaSubCat[$i]); $j++)
+
+                                                            @if($j == 0 ||
+                                                                $categoriaSubCat[$i][$j]->nm_categoria != $categoriaSubCat[$i][$j - 1]->nm_categoria)
+                                                                <li id="c" class="dropdown-submenu">
+                                                                    <a id="{{$categoriaSubCat[$i][$j]->cd_categoria}}" href="javascript:void(0)"
+                                                                       data-toggle="dropdown"
+                                                                       class="cormenu dropdown-item listagem">
+                                                                        {{$categoriaSubCat[$i][$j]->nm_categoria}}
+
+                                                                    </a>
+                                                                    @if($categoriaSubCat[$i][$j]->cd_sub_categoria != null)
+                                                                        <ul class="dropdown-menu">
+                                                                            @for($k = 0; $k < sizeof($categoriaSubCat[$i]); $k++)
+                                                                                @if($categoriaSubCat[$i][$j]->cd_categoria == $categoriaSubCat[$i][$k]->cd_categoria)
+                                                                                    <li id="s">
+                                                                                        <a id="{{$categoriaSubCat[$i][$k]->cd_sub_categoria}}"
+                                                                                           href="javascript:void(0)"
+                                                                                           class="cormenu dropdown-item listagem">
+
+                                                                                            {{$categoriaSubCat[$i][$k]->nm_sub_categoria}}
+
+                                                                                        </a>
+                                                                                    </li>
+                                                                                @endif
+                                                                            @endfor
+                                                                        </ul>
+                                                                    @endif
+                                                                </li>
+                                                            @endif
+                                                        @endfor
+                                                    </ul>
+                                                </li>
+                                            @endfor
+
+                                            {{--@foreach($menuNav as $menu)
+                                                <li class="nav-item dropdown menuLi">
+                                                    <a href="javascript:void(0)" id="menu" data-toggle="dropdown"
+                                                       class="nav-link dropdown-toggle corFundoPrincipal">
+
+                                                        {{$menu->nm_menu}}
+
+                                                    </a>
+                                                    <ul class="dropdown-menu menuUl">
+
+                                                        @foreach($categoriaSubCat as $key=>$cat)
+                                                                --}}{{--dd($cat[$menu->cd_menu]['nm_categoria'])--}}{{--
+                                                            <li id="c" class="dropdown-submenu">
+                                                                <a id="{{$cat[$menu->cd_menu]['cd_categoria']}}" href="javascript:void(0)"
+                                                                   data-toggle="dropdown"
+                                                                   class="cormenu dropdown-item listagem">
+
+                                                                    {{$cat[$menu->cd_menu]['nm_categoria']}}
+                                                                    {{dd($menu->cd_menu)}}
+                                                                </a>
+                                                        @endforeach
+
+                                                    </ul>
+                                                </li>
+                                            @endforeach--}}
+
+                                            {{--<li class="nav-item dropdown menuLi">
                                                 <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle corFundoPrincipal">Beleza e Saúde</a>
                                                 <ul class="dropdown-menu menuUl">
                                                     <li id="c" class="dropdown-submenu">
@@ -169,7 +239,7 @@
                                                         <a href="#" data-toggle="dropdown" class="dropdown-item">Outlet</a>
                                                     </li>
                                                 </ul>
-                                            </li>
+                                            </li>--}}
 
                                             <li class="nav-item dropdown menuLi">
                                                 <a href="{{ route('products.page') }}" id="menu" class="nav-link corFundoPrincipal">Produtos</a>

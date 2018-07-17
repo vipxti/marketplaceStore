@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Menu;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,9 +46,31 @@ class ClientController extends Controller
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro');
         }
 
+
+        $menuNav =  Menu::all();
+
+        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+        foreach($menuNav as $key=>$menu){
+
+            $categoriaSubCat[$key] = Category::
+            leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                ->select(
+                    'categoria.cd_categoria',
+                    'categoria.nm_categoria',
+                    'sub_categoria.cd_sub_categoria',
+                    'sub_categoria.nm_sub_categoria'
+                )
+                ->where('menu.cd_menu', '=', $menu->cd_menu)
+                ->get();
+
+        }
+
         $endereco = Client::join('cliente_endereco', 'cliente.cd_cliente', '=', 'cliente_endereco.cd_cliente')->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')->select('ds_endereco', 'cd_numero_endereco', 'ds_complemento', 'ds_ponto_referencia')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get();
 
-        return view('pages.app.painelcliente', compact('telCliente', 'endereco', 'nome'));
+        return view('pages.app.painelcliente', compact('telCliente', 'endereco', 'nome', 'menuNav', 'categoriaSubCat'));
     }
 
     public function saveClientAddress(ClientAddressRequest $request)

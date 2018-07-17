@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\MenuRequest;
 use App\Menu;
 use App\SubMenu;

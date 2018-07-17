@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Menu;
 use App\Color;
 use App\Dimension;
 use App\Http\Requests\ProductRequest;
@@ -38,6 +39,27 @@ class ProductController extends Controller
             $nome = null;
         }
 
+
+        $menuNav =  Menu::all();
+
+        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+        foreach($menuNav as $key=>$menu){
+
+            $categoriaSubCat[$key] = Category::
+            leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                ->select(
+                    'categoria.cd_categoria',
+                    'categoria.nm_categoria',
+                    'sub_categoria.cd_sub_categoria',
+                    'sub_categoria.nm_sub_categoria'
+                )
+                ->where('menu.cd_menu', '=', $menu->cd_menu)
+                ->get();
+
+        }
 
         //dd($request->all());
 
@@ -123,7 +145,7 @@ class ProductController extends Controller
 
         //dd($produtoCatSubCat);
 
-        return view('pages.app.product.shopFilter', compact('produtoCatSubCat', 'nome'));
+        return view('pages.app.product.shopFilter', compact('produtoCatSubCat', 'nome', 'menuNav', 'categoriaSubCat'));
         //return response()->json($produtoCatSubCat);
     }
 
@@ -162,6 +184,26 @@ class ProductController extends Controller
         }
 
         //dd($imagemPrincipal);
+        $menuNav =  Menu::all();
+
+        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+        foreach($menuNav as $key=>$menu){
+
+            $categoriaSubCat[$key] = Category::
+            leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                ->select(
+                    'categoria.cd_categoria',
+                    'categoria.nm_categoria',
+                    'sub_categoria.cd_sub_categoria',
+                    'sub_categoria.nm_sub_categoria'
+                )
+                ->where('menu.cd_menu', '=', $menu->cd_menu)
+                ->get();
+
+        }
 
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->paginate(30);
 
@@ -173,7 +215,7 @@ class ProductController extends Controller
             ->orderBy('sku_produto_img.cd_img')
             ->get();
 
-        return view('pages.app.product.index', compact('produtos', 'imagemPrincipal', 'nome'));
+        return view('pages.app.product.index', compact('produtos', 'imagemPrincipal', 'nome', 'menuNav', 'categoriaSubCat'));
     }
 
     public function paginaAlteraremailcliente()
@@ -207,8 +249,29 @@ class ProductController extends Controller
         $productImagesVariation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('img_produto.im_produto')->where('sku.cd_nr_sku', '=', $product->cd_nr_sku)->orderBy('sku_produto_img.cd_img')->get()->toArray();
 
         //dd($productVariation);
+        $menuNav =  Menu::all();
 
-        return view('pages.app.product.details', compact('product', 'productImages', 'productVariation', 'productImagesvariation', 'nome'));
+        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+        foreach($menuNav as $key=>$menu){
+
+            $categoriaSubCat[$key] = Category::
+            leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                ->select(
+                    'categoria.cd_categoria',
+                    'categoria.nm_categoria',
+                    'sub_categoria.cd_sub_categoria',
+                    'sub_categoria.nm_sub_categoria'
+                )
+                ->where('menu.cd_menu', '=', $menu->cd_menu)
+                ->get();
+
+        }
+
+        return view('pages.app.product.details',
+            compact('product', 'productImages', 'productVariation', 'productImagesvariation', 'nome', 'menuNav', 'categoriaSubCat'));
     }
 
     public function paginaAlterarsenhacliente()
