@@ -136,7 +136,7 @@
                                         </div>
 
                                         <!-- Foto Cliente -->
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label></label>Foto</label>
@@ -147,7 +147,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <br><br><br>
 
                                         <!-- Botão Atualizar dados -->

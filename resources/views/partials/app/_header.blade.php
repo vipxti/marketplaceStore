@@ -14,7 +14,6 @@
 
 </style>
 
-
 <header class="header_area">
     <!-- Top Header Area Start -->
     <div class="top_header_area">
@@ -41,6 +40,22 @@
                                     </button>
                                     <div class="collapse navbar-collapse" id="navbar1" style="padding-right: 180px">
                                         <ul class="navbar-nav">
+
+                                            {{-- @foreach ($menus as $menu)
+                                                
+                                                <li class="nav-item dropdown menuLi">
+                                                    <a href="javascript:void(0)" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle corFundoPrincipal">{{ $menu->nm_menu }}</a>
+                                                    <ul class="dropdown-menu menuUl">
+                                                        @foreach ($categorias as $categoria)
+                                                            <li id="c" class="dropdown-submenu">
+                                                                <a id="10" href="#" data-toggle="dropdown" class="cormenu dropdown-item listagem">Maquiagem</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </li>
+
+                                            @endforeach --}}
+
                                             <!-- Beleza e Saúde -->
 
                                             @for($i = 0; $i<sizeof($menuNav); $i++)
@@ -223,10 +238,10 @@
                                                         </ul>
                                                     </li>
                                                 </ul>
-                                            </li>
+                                            </li> --}}
 
                                             <!-- Promoção -->
-                                            <li class="nav-item dropdown menuLi">
+                                            {{-- <li class="nav-item dropdown menuLi">
                                                 <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle corFundoPrincipal">Promoções</a>
                                                 <ul class="dropdown-menu menuUl">
                                                     <li id="c" class="dropdown-submenu">

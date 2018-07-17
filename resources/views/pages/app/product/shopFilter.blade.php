@@ -329,53 +329,67 @@
                     <div class="shop_grid_product_area">
                         <div class="row">
                             <div class="row karl-new-arrivals">
-                                @foreach($produtoCatSubCat as $key => $produto)
 
-                                    <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
-                                        <div class="product-img">
-                                            <img src="{{ URL::asset('img/products' . '/' . $produto->im_produto)}}" alt="">
-                                            <div class="product-quicview">
-                                                <a href="{{ route('products.details', $produto->nm_slug) }}"><i class="ti-plus"></i></a>
+                                @if (count($produtoCatSubCat) == 0)
+
+                                    <p>&nbsp;</p>
+                                        <p class="h2">Não há produtos nessa categoria</p>
+                                    <p>&nbsp;</p>
+                                    
+                                @else
+
+                                    @foreach($produtoCatSubCat as $key => $produto)
+
+                                        <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
+                                            <div class="product-img">
+                                                <img src="{{ URL::asset('img/products' . '/' . $produto->im_produto)}}" alt="">
+                                                <div class="product-quicview">
+                                                    <a href="{{ route('products.details', $produto->nm_slug) }}"><i class="ti-plus"></i></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-description">
+                                                <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
+                                                <p>{{ $produto->nm_produto }}</p>
+                                                <!-- Botão comprar -->
+
+                                                <form action="{{ route('cart.buy') }}" method="post">
+                                                    {{ csrf_field() }}
+
+                                                    <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
+                                                    <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
+                                                    <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
+                                                    <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
+                                                    <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
+                                                    <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
+                                                    <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
+                                                    <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
+                                                    <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
+                                                    <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
+                                                    <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
+                                                    <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
+
+                                                    @if($produto->qt_produto < 5)
+
+                                                        <br>
+                                                        <p>SEM ESTOQUE</p>
+
+                                                    @else
+
+                                                        <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+
+                                                    @endif
+
+                                                </form>
                                             </div>
                                         </div>
 
-                                        <div class="product-description">
-                                            <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
-                                            <p>{{ $produto->nm_produto }}</p>
-                                            <!-- Botão comprar -->
+                                    @endforeach
+                                    
+                                @endif
 
-                                            <form action="{{ route('cart.buy') }}" method="post">
-                                                {{ csrf_field() }}
 
-                                                <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
-                                                <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
-                                                <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
-                                                <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
-                                                <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
-                                                <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
-                                                <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
-                                                <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
-                                                <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
-                                                <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
-                                                <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
-                                                <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
 
-                                                @if($produto->qt_produto < 5)
-
-                                                    <br>
-                                                    <p>SEM ESTOQUE</p>
-
-                                                @else
-
-                                                    <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
-
-                                                @endif
-
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                @endforeach
                             </div>
 
                             <div class="d-flex justify-content-center">

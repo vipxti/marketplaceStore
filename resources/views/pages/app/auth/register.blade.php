@@ -5,6 +5,7 @@
 
     <!-- ****** Area do cadastro  ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
+
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -17,10 +18,10 @@
 
         <div class="container">
 
-            @include('partials.admin._alerts')
+            @include('partials.app._alerts')
 
-        <form id="form_advanced_validation" action="{{ route('client.save') }}" method="post" enctype="multipart/form-data">
-            {{ csrf_field() }}
+            <form id="form_advanced_validation" action="{{ route('client.save') }}" method="post" enctype="multipart/form-data">
+                {{ csrf_field() }}
                 <!-- Nome do Cliente  -->
                 <div class="row">
                     <div class="col-md-9" style="padding-left: 26%">
@@ -93,7 +94,7 @@
                 <br>
 
                 <!-- Foto Cliente -->
-                <div class="row">
+                {{--<div class="row">
                     <div class="col-md-12" style="padding-left: 26%">
                         <div class="form-group">
                             <label></label>Foto</label>
@@ -104,7 +105,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <p>&nbsp;</p>
 
@@ -120,7 +121,9 @@
                 <p>&nbsp;</p>
 
             </form>
+
         </div>
+
     </section>
     <!-- ****** Fim da area de cadastro ****** -->
 
@@ -141,12 +144,8 @@
         });
 
         $(function () {
-            //Initialize Select2 Elements
-            $('.select2').select2()
-
             //Money Euro
             $('[data-mask]').inputmask()
-
         })
 
         //Verificação e exibição de erros do campo CPF/CNPJ
