@@ -45,20 +45,20 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="sel1">Tipo de Pessoa &nbsp;<i style="color: red !important;">*</i></label>
-                                <select class="form-control" id="sel1" disabled name="ic_tipo_pessoa" required>
+                                <select class="form-control" id="sel1" readonly name="ic_tipo_pessoa" required>
                                     <option value="J" selected >Pessoa Júridica</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Cnpj &nbsp;<i style="color: red !important;">*</i></label>
+                                <label for="exampleInputEmail1">Cnpj&nbsp;&nbsp;<i style="color: red !important;">*</i></label>
                                 <input type="number" class="form-control" id="cd_cnpj" name="cd_cnpj" required maxlength="14">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Inscrição Estadual &nbsp;<i class="fa fa-info-circle" aria-hidden="true" title="Incrição Estadual do estabelecimento" style="color: #9e9e9e !important;"></i></label>
+                                <label for="exampleInputEmail1">Inscrição Estadual&nbsp;&nbsp;<i class="fa fa-info-circle" aria-hidden="true" title="Incrição Estadual do estabelecimento" style="color: #9e9e9e !important;"></i></label>
                                 <input type="text" class="form-control" id="cd_ie" name="cd_ie">
                             </div>
                         </div>
@@ -80,14 +80,14 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Cnae</label>
-                                <input type="text" class="form-control" id="nm_cnae" name="nm_cnae">
+                                <input type="text" class="form-control" id="nm_cnae" name="nm_cnae" >
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="sel1">Código de Regime Tributario</label>
-                                <select class="form-control" id="sel1" name="cd_regime_tributario" required>
-                                    <option value="0" selected></option>
+                                <label for="sel1">Código de Regime Tributario&nbsp;&nbsp;<i style="color: red !important;">*</i></label>
+                                <select class="form-control" id="sel1" name="cd_regime_tributario"  required>
+                                    <option value="" ></option>
                                     <option value="1">Simples nacional</option>
                                     <option value="2">Simples nacional - Excesso de sublimite de receita bruta</option>
                                     <option value="3">Regime normal</option>
@@ -96,13 +96,13 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="sel1">Código da Loja API Bling&nbsp;<i style="color: red !important;">*</i> &nbsp;<i class="fa fa-info-circle" aria-hidden="true" title="Código da loja utilizado na API do Bling no campo 'Número identificador da loja' para associar os envios." style="color: #9e9e9e !important;"></i></label>
+                                <label for="sel1">Código da Loja API Bling&nbsp;&nbsp;<i style="color: red !important;">*</i> &nbsp;<i class="fa fa-info-circle" aria-hidden="true" title="Código da loja utilizado na API do Bling no campo 'Número identificador da loja' para associar os envios." style="color: #9e9e9e !important;"></i></label>
                                 <input type="text" class="form-control" id="cd_api_bling" name="cd_api_bling" required>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>API key&nbsp;<i style="color: red !important;">*</i>&nbsp;<i class="fa fa-info-circle" aria-hidden="true" title="Código da segurança utilizado na API do Bling no campo 'Número identificador da API key' para associar os envios." style="color: #9e9e9e !important;"></i></label>
+                                <label>API key&nbsp;<i style="color: red !important;">*</i>&nbsp;&nbsp;<i class="fa fa-info-circle" aria-hidden="true" title="Código da segurança utilizado na API do Bling no campo 'Número identificador da API key' para associar os envios." style="color: #9e9e9e !important;"></i></label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                     <input class="form-control" type="text" id="cd_api_key" name="cd_api_key" required>
@@ -135,7 +135,7 @@
                         <div class="col-md-12">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Telefone</label>
+                                    <label>Telefone&nbsp;<i style="color: red !important;">*</i></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                                         <input type="text" id="campo_cel1" class="form-control" name="cd_tel" required
@@ -166,7 +166,7 @@
                         <div class="col-md-12">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Cep</label>
+                                    <label>Cep&nbsp;<i style="color: red !important;">*</i></label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                         <input type="text" id="campo_cep" maxlength="9" class="form-control" name="cd_cep"
@@ -197,7 +197,7 @@
                              <div class="form-group">
                                  <label>Numero</label>
                                  <div class="input-group">
-                                     <span class="input-group-addon"><i class="fa fa-bell"></i></span>
+                                     <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span>
                                      <input type="number" id="numero" class="form-control" name="ds_numero_endereco" min="0">
                                  </div>
                              </div>
@@ -301,26 +301,26 @@
                         if (!("erro" in dados)) {
                             //Atualiza os campos com os valores da consulta.
                             $("#rua").val(dados.logradouro);
-                            $("#rua").attr("disabled", "disabled");
+                            $("#rua").attr("readonly", "readonly");
                             $("#bairro").val(dados.bairro);
-                            $("#bairro").attr("disabled", "disabled");
+                            $("#bairro").attr("readonly", "readonly");
                             $("#cidade").val(dados.localidade);
-                            $("#cidade").attr("disabled", "disabled");
+                            $("#cidade").attr("readonly", "readonly");
                             $("#pais").val("Brasil");
-                            $("#pais").attr("disabled", "disabled");
+                            $("#pais").attr("readonly", "readonly");
                             $("#uf").val(dados.uf);
-                            $("#uf").attr("disabled", "disabled");
+                            $("#uf").attr("readonly", "readonly");
                             //$("#ibge").val(dados.ibge);
                         } //end if.
                         else {
                             //CEP pesquisado não foi encontrado.
                             limpa_formulario_cep();
                             $(".msg-cpf").html("CEP não encontrado.").css("color", "red");
-                            $("#rua").removeAttr("disabled");
-                            $("#bairro").removeAttr("disabled");
-                            $("#cidade").removeAttr("disabled");
-                            $("#pais").removeAttr("disabled");
-                            $("#uf").removeAttr("disabled");
+                            $("#rua").removeAttr("readonly");
+                            $("#bairro").removeAttr("readonly");
+                            $("#cidade").removeAttr("readonly");
+                            $("#pais").removeAttr("readonly");
+                            $("#uf").removeAttr("readonly");
                         }
                     });
                 } //end if.
@@ -328,21 +328,21 @@
                     //cep é inválido.
                     limpa_formulario_cep();
                     $(".msg-cpf").html("Formato de CEP inválido.").css("color", "red");
-                    $("#rua").removeAttr("disabled");
-                    $("#bairro").removeAttr("disabled");
-                    $("#cidade").removeAttr("disabled");
-                    $("#pais").removeAttr("disabled");
-                    $("#uf").removeAttr("disabled");
+                    $("#rua").removeAttr("readonly");
+                    $("#bairro").removeAttr("readonly");
+                    $("#cidade").removeAttr("readonly");
+                    $("#pais").removeAttr("readonly");
+                    $("#uf").removeAttr("readonly");
                 }
             } //end if.
             else {
                 //cep sem valor, limpa formulário.
                 limpa_formulario_cep();
-                $("#rua").removeAttr("disabled");
-                $("#bairro").removeAttr("disabled");
-                $("#cidade").removeAttr("disabled");
-                $("#pais").removeAttr("disabled");
-                $("#uf").removeAttr("disabled");
+                $("#rua").removeAttr("readonly");
+                $("#bairro").removeAttr("readonly");
+                $("#cidade").removeAttr("readonly");
+                $("#pais").removeAttr("readonly");
+                $("#uf").removeAttr("readonly");
             }
         });
 

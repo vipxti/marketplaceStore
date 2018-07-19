@@ -11,12 +11,14 @@ class ColorController extends Controller
     public function showColorForm()
     {
         $cores = Color::all();
-        return view('pages.admin.cadCor', compact('cores'));
+        $colorCount = $cores->count();
+
+        return view('pages.admin.cadCor', compact('cores', 'colorCount'));
     }
 
     public function addNewColor(ColorRequest $request)
     {
-
+        dd($request);
 
         DB::beginTransaction();
 
@@ -46,7 +48,7 @@ class ColorController extends Controller
         DB::beginTransaction();
 
         try {
-            $this->colorUpdate($request->cd_cor, $request->nm_cor);
+            $this->colorUpdate($request->cd_cor, $request->ic_ativo);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('color.page')->with('nosuccess', 'Erro ao atualizar a cor');
