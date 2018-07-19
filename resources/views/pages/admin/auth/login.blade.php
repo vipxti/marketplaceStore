@@ -20,14 +20,14 @@
                     <input type="password" class="form-control" name="password" placeholder="Senha" required minlength="6">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
-                <div class="row">
+                {{--<div class="row">
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
                                 <input type="checkbox" class="flat-red" style="right: 15px"  name="remember"> Lembrar de mim</label>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <div class="row">
                     <div class="col-xs-12">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
@@ -35,15 +35,15 @@
                 </div>
             </form>
 
-            <div class="social-auth-links text-center">
+            {{--<div class="social-auth-links text-center">
                 <p>- OU -</p>
                 <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>Entre usando o Facebook</a>
                 <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i>Entre usando o Google+</a>
-            </div>
+            </div>--}}
 
-
+            <br>
             <a href="{{ route('admin.password.request') }}">Esqueci a minha senha</a><br>
-            <a href="{{ route('admin.register' )}}" class="text-center">Registre uma nova conta</a>
+            {{--<a href="{{ route('admin.register' )}}" class="text-center">Registre uma nova conta</a>--}}
 
         </div>
     </div>

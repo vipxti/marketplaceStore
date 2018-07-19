@@ -45,15 +45,14 @@
                     </div>
                 </div>
                 
-                {{-- <div class="row">
+                 <div class="row">
                     <div class="col-md-8" style="padding-left: 34%">
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox" class="flat-red" name="remember"> Lembrar de mim
-                            </label>
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing" checked>
+                            <label class="custom-control-label" for="customControlAutosizing">Lembrar de mim</label>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <p>&nbsp;</p>
 
                 <!-- Botão Salvar -->
