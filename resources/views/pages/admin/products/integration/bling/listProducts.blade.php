@@ -32,7 +32,8 @@
                 </div>
                 <div class="box-body">
                     <div>
-                        <button id="btnBuscaProd" type="button" class="btn btn-primary">Buscar Produtos</button>
+                        <button id="btnBuscaProd" type="button" class="btn btn-primary" disabled>Buscar Produtos</button>
+                        <button id="btnCategoria" type="button" class="btn btn-info">Buscar Categorias</button>
                     </div>
                     <!-- Botão pesquisar -->
                     <div style="padding-left: 70%">
@@ -104,28 +105,13 @@
     </div>
 
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
+    <script src="{{asset('js/admin/sweetalert.min.js')}}"></script>
     {{--<script src="{{asset('js/admin/integracaoBling.js')}}"></script>--}}
     <script>
         //Campo pesquisa de produtos
         $(function () {
-            $( '#table' ).searchable({
-                striped: true,
-                oddRow: { 'background-color': '#f5f5f5' },
-                evenRow: { 'background-color': '#fff' },
-                searchType: 'fuzzy'
-            });
 
-            $( '#searchable-container' ).searchable({
-                searchField: '#container-search',
-                selector: '.row',
-                childSelector: '.col-xs-4',
-                show: function( elem ) {
-                    elem.slideDown(100);
-                },
-                hide: function( elem ) {
-                    elem.slideUp( 100 );
-                }
-            })
         });
 
         //Abrir o modal ao clicar no botão Atributos
@@ -151,10 +137,276 @@
             // });
         });
 
-        $('#btnBuscaProd').one("click", function(){
-            buscaProdutos();
+        $(document).ready(function(){
+            var arrayCat = [];
+            var arrayCatLoja = [];
+
+            //BOTÃO PARA BUSCAR TODAS AS CATEGORIAS CADASTRADAS NO BLING
+
+            var objCategoria = null;
+            var objCatLoja = null;
+            $('#btnCategoria').click(function(){
+                $(this).attr('disabled', 'disabled');
+
+                $.blockUI({
+                    message: 'Carregando...',
+                    css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    }
+                });
+
+                $.ajax({
+                    url: '{{route('category.api.bling')}}',
+                    type: 'get',
+                    //url: 'blingCategoria.php',
+                    //type: 'post',
+                    success: function(data){
+                        objCategoria = JSON.parse(data);
+                    }
+                })
+                    .done(function(){
+
+                        for(var i = 0; i<objCategoria.retorno.categorias.length; i++){
+                            arrayCat.push(objCategoria.retorno.categorias[i]);
+                        }
+                    })
+                    .done(function(){
+                        $('#btnArrayCat').removeAttr('disabled');
+                        ajaxCategoriaLoja();
+                    });
+            });
+
+            //=====================================================================================================
+            //FUNÇÃO PARA BUSCAR AS CATEGORIAS DA LOJA
+
+            function ajaxCategoriaLoja(){
+                $.ajax({
+                    url: '{{route('storeCategory.api.bling')}}',
+                    type: 'get',
+                    success: function(data){
+                        objCatLoja = JSON.parse(data);
+                    }
+                })
+                    .done(function(){
+
+                        for(var i = 0; i < objCatLoja.retorno.categoriasLoja.length; i++){
+                            arrayCatLoja.push(objCatLoja.retorno.categoriasLoja[i]);
+                        }
+
+                        //$('#btnCategoria').removeAttr('disabled');
+                        $('#btnBuscaProd').removeAttr('disabled');
+                        $.unblockUI();
+                    });
+            }
+
+            //=====================================================================================================
+            //BOTÃO BUSCAR PRODUTOS
+            var proxPag = 1;
+            $('#btnBuscaProd').on("click", function(){
+                swal({
+                    title: "Você tem certeza?",
+                    text: "Este pode ser um processo demorado e durar alguns minutos.",
+                    icon: "info",
+                    buttons: true,
+                })
+                    .then((vaiBuscar) => {
+                        if (vaiBuscar) {
+                            $.blockUI({
+                                message: 'Carregando...',
+                                css: {
+                                    border: 'none',
+                                    padding: '15px',
+                                    backgroundColor: '#000',
+                                    '-webkit-border-radius': '10px',
+                                    '-moz-border-radius': '10px',
+                                    opacity: .5,
+                                    color: '#fff'
+                                }
+                            });
+
+                            $(this).attr('disabled', 'disabled');
+                            buscaProdutos(proxPag);
+                        }
+                    });
+            });
+
+            //=====================================================================================================
+            //FUNÇÃO PARA BUSCAR OS PRODUTOS
+
+            var deuErro = false;
+            var entrouEach = false;
+            var contador = 0;
+            function buscaProdutos(pag){
+                if(!deuErro){
+                    var page = 'page=' + pag;
+
+                    console.log("****************PAGINA " + proxPag + "****************");
+
+                    $.ajax({
+                        url: '{{url('/admin/api/bling')}}/' + page,
+                        type: 'get',
+                        success: function(data){
+                            var objProd = JSON.parse(data);
+
+                            try{
+                                for(var i = 0; i < objProd.retorno.produtos.length; i++){
+                                    contador++;
+                                    var arrayHead = [];
+                                    var arrayBody = [];
+                                    var temCategoria = false;
+                                    var trBody = "<tr id='trProd" + contador + "'></tr>";
+                                    $('#resultProd').append(trBody);
+
+                                    $.each(objProd.retorno.produtos[i].produto, function(index, resultado){
+
+                                        if(index == "codigo" && resultado == ""){
+                                            return false;
+                                        }
+
+                                        if(index == "codigo" || index == "descricao" || index == "tipo" || index == "situacao" ||
+                                            index == "unidade" || index == "preco" || index == "descricaoCurta" ||
+                                            index == "marca" || index == "pesoLiq" || index == "pesoBruto" || index == "gtin" ||
+                                            index == "gtinEmbalagem" || index == "larguraProduto" || index == "alturaProduto" ||
+                                            index == "profundidadeProduto" || index == "imagem" || index == "estoqueAtual" ||
+                                            index == "produtoLoja"){
+
+                                            if(index == "produtoLoja"){
+                                                var categoriaProd = objProd.retorno.produtos[i].produto.produtoLoja.categoria;
+                                                var categoriaBling = null;
+                                                var pai = 0;
+                                                var paiDesc = null;
+                                                $.each(categoriaProd[categoriaProd.length - 1], function(categoria, respCat){
+
+                                                    if(categoria == "id"){
+                                                        categoriaBling = verificaCategoria(respCat);
+                                                    } else if (categoria == "idCategoriaPai" && respCat != "0"){
+                                                        pai = verificaCategoria(respCat);
+                                                        paiDesc = pai.descricaoVinculo;
+                                                        pai = pai.idVinculoLoja;
+                                                    }
+
+                                                    if(categoria == "descricao"){
+                                                        arrayHead.push(categoria + "Cat");
+                                                    }else{
+                                                        arrayHead.push(categoria);
+                                                    }
+
+                                                    temCategoria = true;
+                                                });
+                                                arrayHead.push("descCatPai");
+                                                arrayBody.push(categoriaBling.idVinculoLoja);
+                                                arrayBody.push(categoriaBling.descricaoVinculo);
+                                                arrayBody.push(pai);
+                                                arrayBody.push(paiDesc);
+                                            }
+                                            else{
+                                                arrayHead.push(index);
+                                                arrayBody.push(resultado);
+                                            }
+
+                                        }
+
+                                    });
+
+                                    if(temCategoria){
+                                        if(!entrouEach){
+                                            for(var iH = 0; iH<arrayHead.length; iH++){
+                                                if(arrayHead[iH]=="codigo" || arrayHead[iH]=="descricao" ||
+                                                    arrayHead[iH]=="tipo" || arrayHead[iH]=="preco" || arrayHead[iH]=="gtin" ||
+                                                    arrayHead[iH]=="descricaoCat" || arrayHead[iH]=="descCatPai" ||
+                                                    arrayHead[iH]=="estoqueAtual" ){
+                                                    var campoHead = "<td>" + arrayHead[iH] + "</td>";
+                                                    $('#indexProd').append(campoHead);
+                                                }
+                                            }
+                                            entrouEach = true;
+                                        }
+
+                                        for(var iB = 0; iB<arrayBody.length; iB++){
+                                            if(arrayHead[iB]=="codigo" || arrayHead[iB]=="descricao" ||
+                                                arrayHead[iB]=="tipo" || arrayHead[iB]=="preco" || arrayHead[iB]=="gtin" ||
+                                                arrayHead[iB]=="descricaoCat" || arrayHead[iB]=="descCatPai" ||
+                                                arrayHead[iB]=="estoqueAtual" ){
+                                                var tBody = "<td>" + arrayBody[iB] + "</td>";
+                                                $('#trProd' + contador).append(tBody);
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        $('#trProd'+contador).remove();
+                                    }
+                                }
+                            }catch(err){
+                                console.log(err);
+                                deuErro = true;
+                            }
+                        }
+                    })
+                        .done(function(){
+                            if(deuErro){
+                                $('#btnBusca').removeAttr('disabled');
+                                buscaInterativa();
+                                //cor branco
+                                $("table tbody tr:odd").css("background-color", "#fff");
+                                //cor cinza
+                                $("table tbody tr:even").css("background-color", "#f5f5f5");
+                                $.unblockUI();
+                            }
+                            else{
+                                proxPag++;
+                                buscaProdutos(proxPag);
+                            }
+                        });
+                }
+            }
+
+            //=====================================================================================================
+            //FUNÇÃO COMPARAR CATEGORIAS
+
+            function verificaCategoria(idCat){
+                var retorno = null;
+                for(var i=0; i<arrayCatLoja.length; i++){
+                    if(idCat == arrayCatLoja[i].categoria.idCategoria){
+                        retorno = arrayCatLoja[i].categoria;
+                    }
+                }
+
+                return retorno;
+            }
+
+            //=====================================================================================================
+            //FUNÇÃO PARA BUSCA DOS DADOS INTERATIVA NA TABELA
+
+            function buscaInterativa(){
+                $( '#table' ).searchable({
+                    striped: true,
+                    oddRow: { 'background-color': '#f5f5f5' },
+                    evenRow: { 'background-color': '#fff' },
+                    searchType: 'fuzzy'
+                });
+
+                $( '#searchable-container' ).searchable({
+                    searchField: '#container-search',
+                    selector: '.row',
+                    childSelector: '.col-xs-4',
+                    show: function( elem ) {
+                        elem.slideDown(100);
+                    },
+                    hide: function( elem ) {
+                        elem.slideUp( 100 );
+                    }
+                });
+            }
         });
 
+
+        {{--
         function buscaProdutos(){
             var numPag = 0;
             var numProds=0;
@@ -377,7 +629,7 @@
 
             return nomePai;
         }
-
+        --}}
     </script>
 
     <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
