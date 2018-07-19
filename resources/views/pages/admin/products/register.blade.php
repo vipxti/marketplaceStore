@@ -4,15 +4,16 @@
 
     <style>
         /* Estilo iOS */
-        .switch__container {
-            margin: 30px auto;
-            width: 120px;
-        }
 
+        .mHswitch{
+            cursor: pointer;
+            margin-left: 2% !important;
+        }
         .switch {
             visibility: hidden;
             position: absolute;
             margin-left: -9999px;
+
         }
 
         .switch + label {
@@ -25,8 +26,8 @@
 
         .switch--shadow + label {
             padding: 2px;
-            width: 120px;
-            height: 60px;
+            width: 45px;
+            height: 20px;
             background-color: #dddddd;
             border-radius: 60px;
         }
@@ -46,7 +47,7 @@
             transition: background 0.4s;
         }
         .switch--shadow + label:after {
-            width: 62px;
+            width: 18px;
             background-color: #fff;
             border-radius: 100%;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -56,7 +57,7 @@
             background-color: #8ce196;
         }
         .switch--shadow:checked + label:after {
-            transform: translateX(60px);
+            transform: translateX(26px);
         }
 
         /* Estilo Flat */
@@ -339,24 +340,19 @@
                                     </div>
 
                                 </div>
-
-                                <div class="col-md-6">
-
-                                    {{--<input type="checkbox" class="js-switch" name="status" checked/> Ativar/Desativar Produto--}}
-
-                                    <div class="switch__container">
-                                        <input id="switch-shadow" class="switch switch--shadow" type="checkbox" checked>
-                                        <label for="switch-shadow">Produto Ativado</label>
-                                    </div>
-
-                                </div>
-
                             </div>
 
                             <!-- Botões Salvar -->
                             <div class="row">
                                 <div class="col-md-12">
+                                    <div class="switch__container pull-left">
+                                        <input id="switch-shadow" class="switch switch--shadow" type="checkbox" checked>
+                                        <label for="switch-shadow"></label>
+                                    </div>
+                                    <label class="mHswitch" for="switch-shadow">Produto Ativado</label>
+
                                     <button type="submit" id="btn_salvar" class="btn btn-success pull-right" disabled><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                    <button type="button" id="btn_cancelar" class="btn btn-danger pull-right" style="margin-right: 1%!important;"><i class="fa fa-times"></i>&nbsp;&nbsp;Limpar</button>
                                 </div>
                             </div>
 
@@ -373,7 +369,6 @@
     </section>
 
 </div>
-
 
 <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
 <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
@@ -405,6 +400,18 @@
                 clicouSwitch = true;
             }
         });
+
+        var clicou=false;
+        $('.mHswitch').click(function () {
+            if(!clicou){
+                $(this).text("Produto Desativado");
+                clicou = true;
+            }
+            else {
+                $(this).text("Produto Ativado");
+                clicou = false;
+            }
+        })
 
     });
 
