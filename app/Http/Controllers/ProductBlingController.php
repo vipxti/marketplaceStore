@@ -30,7 +30,46 @@ class ProductBlingController extends Controller{
         return $response;
     }
 
-    public function searchCatFather($idCategoria){
+    public function getCategories(){
+        $apikey = "2a51570170237bfda75036d304640a61ba9c4330bc33e3551e39e8454ea4f838ceb58337";
+        $outputType = "json";
+        $url = 'https://bling.com.br/Api/v2/categorias/' . $outputType;
+
+        $retorno = $this->executeGetCategories($url, $apikey);
+        //echo $retorno;
+        return response()->json([$retorno]);
+    }
+
+    public function executeGetCategories($url, $apikey){
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL, $url . '&apikey=' . $apikey);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        return $response;
+    }
+
+    public function getStoreCategories(){
+        $apikey = "2a51570170237bfda75036d304640a61ba9c4330bc33e3551e39e8454ea4f838ceb58337";
+        $idLoja = "203208658";
+        $outputType = "json";
+        //$url = 'https://bling.com.br/Api/v2/categoriasLoja/' . $outputType;
+        $url = 'https://bling.com.br/Api/v2/categoriasLoja/' . $idLoja . '/' . $outputType;
+        $retorno = $this->executeGetStoreCategories($url, $apikey);
+        //echo $retorno;
+        return response()->json([$retorno]);
+    }
+
+    public function executeGetStoreCategories($url, $apikey){
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL, $url . '&apikey=' . $apikey);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        return $response;
+    }
+
+    /*public function searchCatFather($idCategoria){
         //$idCategoria = $_POST["idCategoria"];
         $apikey = "2a51570170237bfda75036d304640a61ba9c4330bc33e3551e39e8454ea4f838ceb58337";
         $outputType = "json";
@@ -47,7 +86,7 @@ class ProductBlingController extends Controller{
         $response = curl_exec($curl_handle);
         curl_close($curl_handle);
         return $response;
-    }
+    }*/
 }
 
 
