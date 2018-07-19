@@ -175,7 +175,7 @@
                     <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s" style="margin-bottom: 13% !important;">
                         <!-- Product Image -->
                         <div class="product-img">
-                            <img src="{{ URL::asset('img/products' . '/' . $imagemPrincipal[$key]->im_produto)  }}" alt="{{ $produto['nomeProduto'] }}">
+                            <img src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
                             <div class="product-quicview">
                                 <a href="{{ route('products.details', $produto->nm_slug)}}"><i class="fa fa-plus"></i></a>
                             </div>
@@ -199,7 +199,7 @@
                                 <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
                                 <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
                                 <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
-                                <input type="hidden" name="im_produto" value="{{ $imagemPrincipal[$key]->im_produto }}">
+                                <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
 
                                 @if($produto->qt_produto < 5)
 

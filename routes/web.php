@@ -131,7 +131,7 @@ Route::prefix('page')->group(function () {
         Route::get('/register', 'Auth\ClientRegisterController@showRegisterForm')->name('client.register');
         Route::get('/login', 'Auth\ClientLoginController@showClientLoginForm')->name('client.login');
         Route::post('/login', 'Auth\ClientLoginController@login')->name('client.login.submit');
-        Route::get('/dashboard', 'ClientController@showClientPage')->name('client.dashboard')/*->middleware('auth:web')*/;
+        Route::get('/dashboard', 'ClientController@showClientPage')->name('client.dashboard')->middleware('auth:web');
         Route::get('/logout', 'Auth\ClientLoginController@clientLogout')->name('client.logout');
         Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
     });

@@ -13,27 +13,12 @@ class HomeController extends Controller
 {
     public function showIndexPage()
     {
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('cd_status_produto', '=', 1)->orderBy('produto.cd_produto', 'DESC')->limit(6)->get();
-
-        //dd($produtos);
-
-        $imagemPrincipal = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
-            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
-            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
-            ->select('img_produto.im_produto')
-            ->where('img_produto.ic_img_principal', '=', 1)
-            ->orderBy('produto.cd_produto', 'DESC')
-            ->limit(6)->get();
-
-        /*$menuNav = Menu::join('menu_categoria', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
-            ->join('categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
-            ->get();*/
+        $menus = Menu::get();
 
         $menuNav =  Menu::all();
 
         //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach($menuNav as $key=>$menu){
-
+        foreach ($menuNav as $key=>$menu) {
             $categoriaSubCat[$key] = Category::
             leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
                 ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
@@ -47,11 +32,9 @@ class HomeController extends Controller
                 )
                 ->where('menu.cd_menu', '=', $menu->cd_menu)
                 ->get();
-
         }
 
-
-        //dd($imagemPrincipal);
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto', 'DESC')->limit(6)->get();
 
         if (!Session::has('qtCart')) {
             Session::put('qtCart', 0);
@@ -63,8 +46,6 @@ class HomeController extends Controller
         } else {
             $nome = null;
         }
-
-        //dd($nome);
 
         return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome', 'categoriaSubCat', 'menuNav'));
     }

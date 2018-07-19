@@ -88,7 +88,7 @@ class ClientRegisterController extends Controller
             $imagePath = $this->pastaImagemCliente();
             $realPath = $image->getRealPath();
             $ext = $image->getClientOriginalExtension();
-            $imageName = $request->cd_cpf_cnpj . $dtNascimento->day . $dtNascimento->month . $dtNascimento->year . '.' . $ext;
+            $imageName = uniqid() . $dtNascimento->day . $dtNascimento->month . $dtNascimento->year . '.' . $ext;
             $userWithImage = true;
         } else {
             $userWithImage = false;

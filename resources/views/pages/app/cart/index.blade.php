@@ -2,7 +2,7 @@
 
 @section('content')
 
-        <!-- ****** Cart Area Start ****** -->
+    <!-- ****** Cart Area Start ****** -->
     <div class="cart_area section_padding_100 clearfix">
         <div class="container">
             <div class="row">
@@ -39,34 +39,6 @@
                                     </td>
                                     
                                     <td class="total_price"><span id="valorTotal"></span></td>
-
-                                    {{-- Foreach aqui!!!!! --}}
-
-                                    {{-- {{ dd($produtos) }} --}}
-                                    {{-- {{ dd($imagem) }} --}}
-
-                                    {{-- @foreach($produtos as $key => $produto)
-
-                                        <p>{{ Session::get('qtd' . $produto['skuProduto']) }}</p>
-
-                                        <td class="cart_product_img d-flex align-items-center">
-                                            <a href="#"><img src="{{ asset('img/products/' . $imagem[$key]->im_produto) }}" alt="Product"></a>
-                                            <h6>{{ $produto['nomeProduto'] }}</h6>
-                                        </td>
-
-                                        <td class="price"><span id="precoProd">R$ {{ str_replace('.', ',', $produto['valorProduto']) }}</span></td>
-
-                                        <td class="qty">
-                                            <div class="quantity">
-                                                <span class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="{{ Session::get('qtd' . $produto['skuProduto']) }}">
-                                                <span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                <i id="spinner_qtd" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i>
-                                            </div>
-                                        </td>
-                                        <td class="total_price"><span id="valorTotal"></span></td>
-                                        
-                                    @endforeach --}}
                                     
                                 </tr>
 
@@ -123,14 +95,7 @@
                                 <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
                                     <span id="pac">Normal &nbsp;</span><span id="precoPac"></span><span id="diasPac"></span>
                                 </label>
-                            </div>{{--
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" checked>
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
-                                    <span>Retirar no Local</span>
-                                    <span>Grátis</span>
-                                </label>
-                            </div>--}}
+                            </div>
                         </div>
                     </div>
                 <div class="col-12 col-md-12 col-lg-12">
@@ -145,50 +110,17 @@
                             <li><span><strong>Total</strong></span> <span><strong id="precoCalcTotal">-</strong></span></li>
                         </ul>
 
-                        {{-- <form id="formComprar">
-                            {{ csrf_field() }}
+                        @if(Auth::check())
 
-                            @foreach($produtos as $key => $produto)
+                            <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
+                            <input type="hidden" name="nome" value="{{ Auth::user()->nm_cliente }}">
+                            <input type="hidden" name="numero_cpf" value="{{ Auth::user()->cd_cpf_cnpj }}">
 
-                                <!-- array dos produtos -->
-                                <input type="hidden" name="id[]" value="{{ $key + 1}}">
-                                <input type="hidden" name="code[]" id="code" value="{{ $produto['uidProduto'] }}" />
-                                <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
-                                <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
-                                <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
-                                <input type="hidden" name="peso[]" value="{{ $produto['pesoProduto'] }}">
-                                <input type="hidden" name="fretecal[]" value="">
-                                <input type="hidden" name="largura[]" value="{{ $produto['larguraProduto'] }}">
-                                <input type="hidden" name="altura[]" value="{{ $produto['alturaProduto'] }}">
-                                <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoProduto'] }}">
-                                <input id="freteForm" type="hidden" name="freteval[]" value="">
-                                <input id="tipoServForm" type="hidden" name="tipoServ[]" value="">
-
-                            @endforeach
-
-                            <!-- array do cliente -->
-                            {{--  <input type="hidden" name="cep" value="{{ $cliente[0]->cd_cep }}">
-                            <input type="hidden" name="endereco" value="{{ $cliente[0]->ds_endereco }}">
-                            <input type="hidden" name="numero" value="{{ $cliente[0]->cd_numero_endereco }}">
-                            <input type="hidden" name="bairro" value="{{ $cliente[0]->nm_bairro }}">
-                            <input type="hidden" name="cidade" value="{{ $cliente[0]->nm_cidade }}">
-                            <input type="hidden" name="estado" value="{{ $cliente[0]->nm_uf }}">
-                            <input type="hidden" name="pais" value="{{ $cliente[0]->nm_pais }}">--}}
-
-                            @if(Auth::check())
-
-                                <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
-                                <input type="hidden" name="nome" value="{{ Auth::user()->nm_cliente }}">
-                                <input type="hidden" name="numero_cpf" value="{{ Auth::user()->cd_cpf_cnpj }}">
-
-                            @endif
-
-                            
-                            {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
-                            <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
+                        @endif
 
                             <button type="button" id="finalizar" disabled class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
-                        </form> --}}
+                            
+                        </form>
                     </div>
                 </div>
             </div>
