@@ -1577,6 +1577,22 @@ img {
     background-color: #9ee7f4;
 }
 
+.widget.color .widget-desc ul li.marrom a {
+    background-color: brown;
+}
+
+.widget.color .widget-desc ul li.rosa-choque a {
+    background-color: #af4c9b;
+}
+
+.widget.color .widget-desc ul li.lilas a {
+    background-color: #4d1441;
+}
+
+.widget.color .widget-desc ul li.vermelho a {
+    background-color: #ff0000;
+}
+
 .widget.color .widget-desc ul li a:after {
     width: calc(100% + 6px);
     height: calc(100% + 6px);

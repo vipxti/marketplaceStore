@@ -127,8 +127,8 @@
 
                         <div class="cart-footer d-flex mt-30">
                             <div class="back-to-shop">
-                                
-                                <a href="{{ route('index') }}" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</a>
+
+                                <a href="{{ route('index') }}"><button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</button></a>
 
                             </div>
 
@@ -153,148 +153,127 @@
                 </div>
 
                 <div class="row">
-                    {{-- <div class="col-12 col-md-6 col-lg-6">
-                        <div class="coupon-code-area mt-70">
-                            <div class="cart-page-heading">
-                                <h5>Calcular Frete</h5>
-                                <p><b>Insira o CEP do endereço que deseja receber o produto.</b></p>
-                                <p>Assim você poderá calcular o frete e conhecer os serviços disponíveis</p>
-                            </div>
-                            <form>
 
-                                @if(Auth::check())
+                    <p>&nbsp;</p>
 
-                                    <input id="campoCep" type="text" name="cep_cliente" maxlength="8" value={{ $enderecoCliente[0]['cd_cep'] }} style="padding: 0 10px !important;">
-
-                                @else
-
-                                    <input id="campoCep" type="text" name="cep_cliente" maxlength="8" style="padding: 0 10px !important;">
-
-                                @endif
-
-                                <button class="btn btn-danger" id="btnCalcFrete" type="button" style="border-radius: 0px">Calcular</button>
-                                <i id="spinner_btn" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i><br>
-                                <p style="font-size: 0.90em" id="msgErroCep"></p>
-                            </form>
-                        </div>
-                    </div> --}}
-
-                <div class="col-12 col-md-6 col-lg-6" style="margin-top: 70px !important;">
-                    <div class="col-md-12 col-lg-12">
+                    <div class="col-12">
+                    
                         <div class="cart-page-heading">
                             <h5>Qual envio prefere?</h5>
                             <p>Escolha uma Opção</p>
                         </div>
+
                     </div>
 
-                    <div class="row">
-                        <div class="custom-control custom-radio">
-                            <div class="col-4 col-sm-4">
-                                <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input" checked>
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
-                                    <span id="pac">&nbsp;Normal</span>
-                                </label>
-                            </div>
+                </div>
 
-                            <div class="col-4 col-sm-4">
-                                <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                    <span id="sedex">&nbsp;Expresso</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                <span id="precoPac"></span>
-                            </div>
-                            <div class="w-100 d-none d-md-block"></div>
-                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                <span id="diasPac"></span>
-                            </div>
-                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                <span id="precoSedex"></span>
-                            </div>
-                            <div class="w-100 d-none d-md-block"></div>
-                            <div class="col-10 col-sm-10" style="height: 25px; !important;">
-                                <span id="diasSedex" ></span>
-                            </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input" checked>
+                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                <span id="pac">&nbsp;Normal</span>
+                            </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-12 col-md-12 col-lg-12">
-                    <div class="cart-total-area mt-30">
-                        <ul class="cart-total-chart">
-                            <li>
-                                <span>
-                                    <strong>Subtotal</strong>
-                                </span>
-                                
-                                <span id="precoSubTotal">
-                                    <strong>R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}</strong>
-                                </span>
-                            </li>
-                            {{-- <li><span>Envio</span> <span id="precoCalcFrete">-</span></li>
-                            <li><span><strong>Total</strong></span> <span><strong id="precoCalcTotal">R$ {{ number_format(Session::get('totalPrice'), 2, ',', '.') }}</strong></span></li> --}}
-                        </ul>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="custom-control custom-radio">   
+                            <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
+                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                <span id="sedex">&nbsp;Expresso</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-                        <form id="formComprar">
-                            {{ csrf_field() }}
+                <p>&nbsp;</p>
 
-                            @foreach(Session::get('cart') as $key => $produto)
+                <div class="row">
+                    <div class="col-10 col-sm-10">
+                        <p class="h6">Obs: O valor do frete será calculado pelo PagSeguro</p>
+                    </div> 
+                </div>
 
-                                <!-- array dos produtos -->
-                                <input type="hidden" name="id[]" value="{{ ($key + 1) }}">
-                                <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
-                                <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
-                                <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
-                                <input type="hidden" name="peso[]" value="{{ $produto['pesoTotalProduto'] }}">
-                                <input type="hidden" name="largura[]" value="{{ $produto['larguraTotalProduto'] }}">
-                                <input type="hidden" name="altura[]" value="{{ $produto['alturaTotalProduto'] }}">
-                                <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoTotalProduto'] }}">
+                <div class="row">
+                    <div class="col-12">
+                    
+                        <div class="cart-total-area mt-30">
+                        
+                            <ul class="cart-total-chart">
+                                <li>
+                                    <span>
+                                        <strong>Subtotal</strong>
+                                    </span>
                                     
-                            @endforeach
+                                    <span id="precoSubTotal">
+                                        <strong>R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}</strong>
+                                    </span>
+                                </li>
 
-                            {{-- <input type="hidden" name="fretecal" value=""> --}}
-                            {{-- <input id="freteForm" type="hidden" name="freteval" value=""> --}}
-                            <input id="tipoServForm" type="hidden" name="tipoServ" value="1">
+                            </ul>
 
-                            @if(Auth::check())
+                            <form id="formComprar">
+                                {{ csrf_field() }}
 
-                                <input type="hidden" name="nome" value="{{ Auth::user()->nm_cliente }}">
-                                <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
-                                <input type="hidden" name="numero_cpf" value="{{ Auth::user()->cd_cpf_cnpj }}">
-                                <input type="hidden" name="telefone" value="{{ $telefone }}">
+                                @foreach(Session::get('cart') as $key => $produto)
 
-                                @if (count($enderecoCliente) == 0)
+                                    <!-- array dos produtos -->
+                                    <input type="hidden" name="id[]" value="{{ ($key + 1) }}">
+                                    <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
+                                    <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
+                                    <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
+                                    <input type="hidden" name="peso[]" value="{{ $produto['pesoTotalProduto'] }}">
+                                    <input type="hidden" name="largura[]" value="{{ $produto['larguraTotalProduto'] }}">
+                                    <input type="hidden" name="altura[]" value="{{ $produto['alturaTotalProduto'] }}">
+                                    <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoTotalProduto'] }}">
+                                        
+                                @endforeach
 
-                                    <a href="{{ route('client.dashboard') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">É preciso cadastrar um endereço para finalizar a compra</button></a>
+                                {{-- <input type="hidden" name="fretecal" value=""> --}}
+                                {{-- <input id="freteForm" type="hidden" name="freteval" value=""> --}}
+                                <input id="tipoServForm" type="hidden" name="tipoServ" value="1">
+
+                                @if(Auth::check())
+
+                                    <input type="hidden" name="nome" value="{{ Auth::user()->nm_cliente }}">
+                                    <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
+                                    <input type="hidden" name="numero_cpf" value="{{ Auth::user()->cd_cpf_cnpj }}">
+                                    <input type="hidden" name="telefone" value="{{ $telefone }}">
+
+                                    @if (count($enderecoCliente) == 0)
+
+                                        <a href="{{ route('client.dashboard') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">É preciso cadastrar um endereço para finalizar a compra</button></a>
+
+                                    @else
+
+                                        <input type="hidden" name="cep" value="{{ $enderecoCliente[0]['cd_cep'] }}">
+                                        <input type="hidden" name="endereco" value="{{ $enderecoCliente[0]['ds_endereco'] }}">
+                                        <input type="hidden" name="complemento_endereco" value="{{ $enderecoCliente[0]['ds_complemento'] }}">
+                                        <input type="hidden" name="numero_endereco" value="{{ $enderecoCliente[0]['cd_numero_endereco'] }}">
+                                        <input type="hidden" name="cidade" value="{{ $enderecoCliente[0]['nm_cidade'] }}">
+                                        <input type="hidden" name="bairro" value="{{ $enderecoCliente[0]['nm_bairro'] }}">
+                                        <input type="hidden" name="estado" value="{{ $enderecoCliente[0]['sg_uf'] }}">
+                                        <input type="hidden" name="pais" value="{{ $enderecoCliente[0]['nm_pais'] }}">
+
+                                        <button type="button" id="finalizar" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
+                                        
+                                    @endif
 
                                 @else
 
-                                    <input type="hidden" name="cep" value="{{ $enderecoCliente[0]['cd_cep'] }}">
-                                    <input type="hidden" name="endereco" value="{{ $enderecoCliente[0]['ds_endereco'] }}">
-                                    <input type="hidden" name="complemento_endereco" value="{{ $enderecoCliente[0]['ds_complemento'] }}">
-                                    <input type="hidden" name="numero_endereco" value="{{ $enderecoCliente[0]['cd_numero_endereco'] }}">
-                                    <input type="hidden" name="cidade" value="{{ $enderecoCliente[0]['nm_cidade'] }}">
-                                    <input type="hidden" name="bairro" value="{{ $enderecoCliente[0]['nm_bairro'] }}">
-                                    <input type="hidden" name="estado" value="{{ $enderecoCliente[0]['sg_uf'] }}">
-                                    <input type="hidden" name="pais" value="{{ $enderecoCliente[0]['nm_pais'] }}">
+                                    <a href="{{ route('client.login') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Faça login para finalizar sua compra</button></a>
 
-                                    <button type="button" id="finalizar" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
-                                    
                                 @endif
 
-                            @else
+                                {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
+                                <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
+    
+                            </form>
 
-                                <a href="{{ route('client.login') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Faça login para finalizar sua compra</button></a>
-
-                            @endif
-
-                            {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
-                            <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
- 
-                        </form>
+                        </div>
                     </div>
                 </div>
 
@@ -302,7 +281,8 @@
 
         </div>
     </div>
-        <br><br><br><br>
+    
+    <br><br><br><br>
     <!-- ****** Area final do carrinho ****** -->
 
     <script src="{{ asset('js/app/pagseguro.lightbox.js') }}"></script>

@@ -18,8 +18,6 @@ class ColorController extends Controller
 
     public function addNewColor(ColorRequest $request)
     {
-        dd($request);
-
         DB::beginTransaction();
 
         try {
