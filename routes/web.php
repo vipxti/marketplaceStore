@@ -61,9 +61,7 @@ Route::prefix('admin')->group(function () {
 
     //Form cor e cadastro
     Route::get('/color', 'ColorController@showColorForm')->name('color.page')->middleware('auth:admin');
-    Route::post('/color/save', 'ColorController@addNewColor')->name('color.save');
     Route::post('/color/update', 'ColorController@updateColor')->name('color.update');
-    Route::post('/color/delete', 'ColorController@deleteColor')->name('color.delete');
 
     //Integração
     //Bling

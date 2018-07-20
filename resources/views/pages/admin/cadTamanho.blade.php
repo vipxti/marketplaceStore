@@ -133,9 +133,6 @@
             </div>
             </div>
 
-
-            @include('partials.admin._alerts')
-
             <div class="row">
                <!-- Lista de tamanhos por números -->
                <div class="col-md-6">
