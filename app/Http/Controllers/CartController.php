@@ -24,24 +24,24 @@ class CartController extends Controller
             $n = explode(' ', Auth::user()->nm_cliente);
             $nome = $n[0];
             $telefone = null;
+
+            $enderecoCliente = Client::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->join('bairro', 'bairro.cd_bairro', 'endereco.cd_bairro')->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->join('uf', 'uf.cd_uf', 'cidade.cd_uf')->join('pais', 'pais.cd_pais', 'uf.cd_pais')->select('endereco.cd_cep', 'endereco.ds_endereco', 'endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'pais.nm_pais')->where('cliente_endereco.ic_principal', '=', 1)->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get();
         } else {
             $telefoneCliente = null;
             $nome = null;
+            $enderecoCliente = null;
 
             if (!(Session::has('cartRoute'))) {
                 Session::put('cartRoute', 'cart.page');
             }
         }
 
-        $enderecoCliente = Client::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->join('bairro', 'bairro.cd_bairro', 'endereco.cd_bairro')->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->join('uf', 'uf.cd_uf', 'cidade.cd_uf')->join('pais', 'pais.cd_pais', 'uf.cd_pais')->select('endereco.cd_cep', 'endereco.ds_endereco', 'endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'pais.nm_pais')->where('cliente_endereco.ic_principal', '=', 1)->get();
-
         //dd($enderecoCliente);
 
         $menuNav =  Menu::all();
 
         //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach($menuNav as $key=>$menu){
-
+        foreach ($menuNav as $key=>$menu) {
             $categoriaSubCat[$key] = Category::
             leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
                 ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
@@ -55,7 +55,6 @@ class CartController extends Controller
                 )
                 ->where('menu.cd_menu', '=', $menu->cd_menu)
                 ->get();
-
         }
 
         return view('pages.app.carrinho', compact('telefone', 'enderecoCliente', 'nome', 'menuNav', 'categoriaSubCat'));

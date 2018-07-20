@@ -23,9 +23,6 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-
-        //dd($this->request);
-
         $rules = [
             'nm_produto' => 'required|string',
             'cd_ean' => 'nullable|string',
@@ -39,22 +36,9 @@ class ProductRequest extends FormRequest
             'ds_largura' => 'required|numeric',
             'ds_comprimento' => 'required|numeric',
             'ds_peso' => 'required|numeric',
-            'status' => 'required',
+            'status' => 'nullable',
             'images.*' => 'required|image|mimes:jpeg,bmp,png'
         ];
-
-//        if ($this->cd_tamanho_num == null) {
-//
-//            $rules['cd_tamanho_letra'] = 'required';
-//
-//        }
-//
-//        if ($this->cd_tamanho_letra == null) {
-//
-//            $rules['cd_tamanho_num'] = 'required';
-//
-//        }
-
         return $rules;
     }
 

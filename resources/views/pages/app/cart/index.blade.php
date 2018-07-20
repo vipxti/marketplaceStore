@@ -96,6 +96,7 @@
                                     <span id="pac">Normal &nbsp;</span><span id="precoPac"></span><span id="diasPac"></span>
                                 </label>
                             </div>
+                            
                         </div>
                     </div>
                 <div class="col-12 col-md-12 col-lg-12">

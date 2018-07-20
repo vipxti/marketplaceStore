@@ -23,9 +23,9 @@ class ColorRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this->request);
         return [
-            'nm_cor' => 'required|string'
+            'cd_cor' => 'required|numeric',
+            'ic_ativo' => 'required|numeric'
         ];
     }
 }

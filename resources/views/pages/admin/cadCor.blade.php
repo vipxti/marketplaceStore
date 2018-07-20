@@ -3,17 +3,101 @@
 @section('content')
     <link rel="stylesheet" href="{{asset('css/admin/sweetalert.css')}}">
     <style type="text/css">
-        /*deixar botão transparente*/
-        button {
-            background-color: Transparent;
-            background-repeat:no-repeat;
-            border: none;
-            cursor:pointer;
-            overflow: hidden;
-            outline:none;
+        /* Estilo iOS */
+        .mHswitch{
+            cursor: pointer;
+            margin-left: 2% !important;
+        }
+        .switch {
+            visibility: hidden;
+            position: absolute;
+            margin-left: -9999px;
+
+        }
+        .switch + label {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+            user-select: none;
         }
 
+        .switch--shadow + label {
+            padding: 2px;
+            width: 45px;
+            height: 20px;
+            background-color: #dddddd;
+            border-radius: 60px;
+        }
+        .switch--shadow + label:before,
+        .switch--shadow + label:after {
+            display: block;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            bottom: 1px;
+            content: "";
+        }
+        .switch--shadow + label:before {
+            right: 1px;
+            background-color: #f1f1f1;
+            border-radius: 60px;
+            transition: background 0.4s;
+        }
+        .switch--shadow + label:after {
+            width: 18px;
+            background-color: #fff;
+            border-radius: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s;
+        }
+        .switch--shadow:checked + label:before {
+            background-color: #8ce196;
+        }
+        .switch--shadow:checked + label:after {
+            transform: translateX(26px);
+        }
 
+        /* Estilo Flat */
+        .switch--flat + label {
+            padding: 2px;
+            width: 120px;
+            height: 60px;
+            background-color: #dddddd;
+            border-radius: 60px;
+            transition: background 0.4s;
+        }
+        .switch--flat + label:before,
+        .switch--flat + label:after {
+            display: block;
+            position: absolute;
+            content: "";
+        }
+        .switch--flat + label:before {
+            top: 2px;
+            left: 2px;
+            bottom: 2px;
+            right: 2px;
+            background-color: #fff;
+            border-radius: 60px;
+            transition: background 0.4s;
+        }
+        .switch--flat + label:after {
+            top: 4px;
+            left: 4px;
+            bottom: 4px;
+            width: 56px;
+            background-color: #dddddd;
+            border-radius: 52px;
+            transition: margin 0.4s, background 0.4s;
+        }
+        .switch--flat:checked + label {
+            background-color: #8ce196;
+        }
+        .switch--flat:checked + label:after {
+            margin-left: 60px;
+            background-color: #8ce196;
+        }
     </style>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -32,7 +116,7 @@
                 @include('partials.admin._alerts')
                 
                 <div class="row">
-                    <input type="hidden" id="countColor" name="countColor" value="{{$colorCount}}">
+
                     <!-- Alteração das cores -->
                     <div class="col-md-12">
 
@@ -66,7 +150,17 @@
                                             <td id="id_cor" style="vertical-align: inherit !important; width: 60px !important;"><div style="height: 15px; width: 35px; background-color:{{ $cor->hex }};"></div></td>
                                             <td id="nome_cor" class="text-left">{{ $cor->nm_cor }}</td>
                                             <td id="status" class="text-left">
-                                                <input id="{{ $cor->cd_cor }}" type="checkbox" class="js-switch" name="status"/>
+                                                @if($cor->ic_ativo == 0)
+                                                    <div class="switch__container pull-left">
+                                                        <input id="{{ $cor->cd_cor }}" class="switch switch--shadow" value="0" type="checkbox" name="status">
+                                                        <label for="{{ $cor->cd_cor }}"></label>
+                                                    </div>
+                                                @else
+                                                    <div class="switch__container pull-left">
+                                                        <input id="{{ $cor->cd_cor }}" class="switch switch--shadow" value="1" type="checkbox" name="status" checked>
+                                                        <label for="{{ $cor->cd_cor }}"></label>
+                                                    </div>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -89,16 +183,39 @@
 
         $(document).ready(function(){
 
-            for(i=0; i<($('#countColor').val());i++){
-                var elem = document.getElementById(i+1);
-                var init = new Switchery(elem);
-            }
+            //cor branco
+            $("table tbody tr:odd").css("background-color", "#fff");
+            //cor cinza
+            $("table tbody tr:even").css("background-color", "#f5f5f5");
+
+            $('.switch').click(function(e){
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                var id = e.target.id;
+                var status = null;
+                console.log(id);
+                console.log($(this).val());
+                if($(this).val()== '0'){
+                    $(this).val('1');
+                    status = 1;
+                }
+                else{
+                    $(this).val('0');
+                    status = 0;
+                }
+                $.ajax({
+                    url: '{{ route('color.update') }}',
+                    type: 'POST',
+                    data:{_token: CSRF_TOKEN, cd_cor: id, ic_ativo: status},
+                    dataType:'JSON',
+                    success:function (data) {
+                        console.log(data.message);
+                    }
+                });
+
+            });
 
         });
 
-        $('.switchery').click(function(){
-            console.log('oi');
-        });
 
         $('#btnSalvarCor').click(function(){
             $.blockUI({
@@ -138,199 +255,6 @@
             })
         });
 
-        $(document).ready(function(){
-
-            //Carrega as letras já cadastradas dentro de um array
-            var arrayCor = [];
-            function carregarCoresCadastradas(){
-                arrayCor = [];
-                $("tbody td:nth-child(2)").each(function () {
-                    arrayCor.push($(this).text().toUpperCase());
-                });
-            }
-
-            $('#nm_cor').one("click", function(){
-                carregarCoresCadastradas();
-            });
-
-            //Ao digitar faz a verificação se determinado número já existe
-            var verificaCor = false;
-            $('#nm_cor').on("input", function(){
-                var regInicio = new RegExp("^\\s+");
-                var regMeio = new RegExp("\\s+");
-                var regFinal = new RegExp("\\s+$");
-
-                for(var i=0; i<arrayCor.length; i++){
-                    if($(this).val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, " ") == arrayCor[i])
-                        verificaCor = true;
-                }
-                if(verificaCor)
-                    $('#btnSalvarCor').attr("disabled", "disabled");
-                else
-                    $('#btnSalvarCor').removeAttr("disabled");
-
-                verificaCor = false;
-            });
-
-            //Função chamada quando um input, para edição da cor, for gerado
-            function verificaCaixaEditar() {
-                //Carrega as letras já cadastradas dentro de um array
-                /*$('#caixa_editar').one("click", function () {
-                    if (arrayCor.length == 0) {
-                        carregarCoresCadastradas();
-                    }
-                });*/
-
-                //Ao digitar faz a verificação se determinado número já existe
-                $('#caixa_editar').on("input", function () {
-                    var regInicio = new RegExp("^\\s+");
-                    var regMeio = new RegExp("\\s+");
-                    var regFinal = new RegExp("\\s+$");
-
-                    for(var i=0; i<arrayCor.length; i++){
-                        if($(this).val().toUpperCase().replace(regInicio, "").replace(regFinal, "").replace(regMeio, " ") == arrayCor[i])
-                            verificaCor = true;
-                    }
-                    if(verificaCor)
-                        $(this).parent().parent().find('#colBotoes').find('#btn_salvar').attr("disabled", "disabled");
-                    else
-                        $(this).parent().parent().find('#colBotoes').find('#btn_salvar').removeAttr("disabled");
-
-                    verificaCor = false;
-                });
-            }
-
-            //cor branco
-            $("table tbody tr:odd").css("background-color", "#fff");
-            //cor cinza
-            $("table tbody tr:even").css("background-color", "#f5f5f5");
-
-            var conteudoOriginal;
-
-            //Ação de clicar no editar, pegando o conteudo e criando o input para edição
-            $('button#btn_editar').click(function(){
-                var campoTR = $(this).parent().parent();
-
-                var conteudo =  campoTR.find("td:eq(1)").text();
-                conteudoOriginal = conteudo;
-
-                var campo_cor = campoTR.find('#nome_cor');
-                carregarCoresCadastradas();
-                campo_cor.text("");
-
-                var campo_input = "<input id='caixa_editar' type='text' maxlength='40' ' value='" + conteudoOriginal + "'></input>";
-                campo_cor.append(campo_input);
-                campoTR.find('#caixa_editar').focus();
-                verificaCaixaEditar();
-
-                trocaBotoes(campoTR);
-
-                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").attr("disabled", "disabled");
-                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").attr("disabled", "disabled");
-            });
-
-            //Ação que salva o valor digitado dentro do input, e coloca o novo valor dentro do TD
-            $('button#btn_salvar').click(function(){
-                var campoTR = $(this).parent().parent();
-                var conteudoAtualizado = campoTR.find("#caixa_editar").val();
-                var campo_cor = campoTR.find("td:eq(1)");
-                var id = campoTR.find('#id_cor').text();
-                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-                if(conteudoAtualizado.length == 0){
-                    $("#caixa_editar").focus();
-
-                    return;
-                }
-
-                campo_cor.text(conteudoAtualizado);
-
-                $.ajax({
-                    url: '{{ route('color.update') }}',
-                    type: 'POST',
-                    data: {_token: CSRF_TOKEN, cd_cor: id, nm_cor: conteudoAtualizado},
-                    dataType: 'JSON',
-                    success: function (e) {
-                        console.log(e.message);
-                        carregarCoresCadastradas();
-                        swal("Atualização", "Cor atualizada com sucesso!", "success");
-                    }
-                });
-
-                campo_cor.remove('#caixa_editar');
-
-                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
-                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").removeAttr("disabled");
-                trocaBotoes(campoTR);
-            });
-
-
-            //Ação para cancelar as mudanças feitas dentro do input
-            $('button#btn_cancelar').click(function(){
-                var campoTR = $(this).parent().parent();
-                var campo_cor = campoTR.find("td:eq(1)");
-                campo_cor.remove("#caixa_editar");
-
-                campo_cor.text(conteudoOriginal);
-
-                campoTR.siblings().find('td:eq(2)').children("button#btn_editar").removeAttr("disabled");
-                campoTR.siblings().find('td:eq(2)').children("button#btn_excluir").removeAttr("disabled");
-                trocaBotoes(campoTR);
-            });
-
-            $('button#btn_excluir').click(function(){
-                var campoTR = $(this).parent().parent();
-                var conteudoAtualizado = campoTR.find("td:eq(1)").text();
-                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                var id = campoTR.find('#id_cor').text();
-
-
-                swal({
-                    title: "Você tem certeza que deseja deletar ?",
-                    text: "Uma vez deletada, você não terá mais acesso a essa cor.",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                }).then((willDelete) => {
-                        if (willDelete) {
-                            $.ajax({
-                                url: '{{ route('color.delete') }}',
-                                type: 'POST',
-                                data: {_token: CSRF_TOKEN, cd_cor: id, nm_cor: conteudoAtualizado},
-                                dataType: 'JSON',
-                                success: function (e) {
-                                    console.log(e.message);
-                                    campoTR.fadeOut(500, function () {
-                                        $(this).remove();
-                                        //cor branco
-                                        $("table tbody tr:odd").css("background-color", "#fff");
-                                        //cor cinza
-                                        $("table tbody tr:even").css("background-color", "#f5f5f5");
-
-                                        carregarCoresCadastradas();
-                                        swal("Cor deletada com sucesso!", {
-                                            icon: "success",
-                                        });
-                                    });
-                                }
-                            });
-                        }
-                    });
-
-
-
-            });
-
-            //Função para troca de botões, transição do display none para block
-            function trocaBotoes(campoTR){
-                campoTR.find('#btn_editar').toggle();
-                campoTR.find('#btn_salvar').toggle();
-                campoTR.find('#btn_cancelar').toggle();
-                campoTR.find('#btn_excluir').toggle();
-            }
-
-
-        });
     </script>
 
     <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
