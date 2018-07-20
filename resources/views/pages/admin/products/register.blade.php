@@ -2,9 +2,8 @@
 
 @section('content')
 
-    <style>
+    <style type="text/css">
         /* Estilo iOS */
-
         .mHswitch{
             cursor: pointer;
             margin-left: 2% !important;
@@ -15,7 +14,6 @@
             margin-left: -9999px;
 
         }
-
         .switch + label {
             display: block;
             position: relative;
@@ -346,7 +344,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="switch__container pull-left">
-                                        <input id="switch-shadow" class="switch switch--shadow" type="checkbox" checked>
+                                        <input id="switch-shadow" class="switch switch--shadow" type="checkbox" name="status" checked>
                                         <label for="switch-shadow"></label>
                                     </div>
                                     <label class="mHswitch" for="switch-shadow">Produto Ativado</label>
@@ -391,10 +389,12 @@
 
         $('.switch').click(function(){
             if(!clicou){
+                $(this).removeAttr('checked');
                 $('.mHswitch').text("Produto Desativado");
                 clicou = true;
             }
             else {
+                $(this).attr('checked','checked');
                 $('.mHswitch').text("Produto Ativado");
                 clicou = false;
             }
