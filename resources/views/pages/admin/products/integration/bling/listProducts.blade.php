@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div>
+                    <div id="botoesBling">
                         <button id="btnBuscaProd" type="button" class="btn btn-primary" disabled>Buscar Produtos</button>
                         <button id="btnCategoria" type="button" class="btn btn-info">Buscar Categorias</button>
                     </div>
@@ -349,9 +349,10 @@
                         }
                     })
                         .done(function(){
-                            if(deuErro){
+                            if(proxPag >=4){
                                 $('#btnBusca').removeAttr('disabled');
                                 buscaInterativa();
+                                criarBotaoSalvarProd();
                                 //cor branco
                                 $("table tbody tr:odd").css("background-color", "#fff");
                                 //cor cinza
@@ -403,6 +404,26 @@
                     }
                 });
             }
+
+            //=====================================================================================================
+            //FUNÇÃO PARA ADICIONAR O BOTÃO DE SALVAR
+
+            function criarBotaoSalvarProd(){
+            //<button id="btnCategoria" type="button" class="btn btn-info">Buscar Categorias</button>
+                var botaoSalvar = "<button id='btnSalvarProds' type='button' class='btn btn-info'>Salvar Produtos</button>";
+                $('#botoesBling').append(botaoSalvar);
+                AtivarBotaoSalvar();
+            }
+
+            //=====================================================================================================
+            //FUNÇÃO PARA ADICIONAR OS EVENTOS BOTÃO DE SALVAR
+
+            function AtivarBotaoSalvar(){
+                $('#btnSalvarProds').click(function(){
+                    console.log("oi");
+                });
+            }
+
         });
 
 

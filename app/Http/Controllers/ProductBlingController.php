@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use http\Env\Request;
 
 class ProductBlingController extends Controller{
@@ -67,6 +68,14 @@ class ProductBlingController extends Controller{
         $response = curl_exec($curl_handle);
         curl_close($curl_handle);
         return $response;
+    }
+
+    public function saveAllProducts(ProductRequest $request){
+
+    }
+
+    public function saveAllCategories(Request $request){
+
     }
 
     /*public function searchCatFather($idCategoria){

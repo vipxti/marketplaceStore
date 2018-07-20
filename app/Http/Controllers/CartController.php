@@ -362,8 +362,8 @@ class CartController extends Controller
             $complemento = $request->complemento_endereco;
         }
 
-        $data['token'] = '98911E4EC1494B7A8C3E8E7C4AD9F181';
-        $data['email'] = 'manoel@manoelcastro.com.br';
+        $data['token'] = '4D97A178277542CAAB150D1096002DF1';
+        $data['email'] = 'vendas@vipx.com.br';
         $data['currency'] = 'BRL';
 
         foreach ($request->largura as $key => $l) {
