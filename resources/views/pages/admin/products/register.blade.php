@@ -386,32 +386,19 @@
         $('#categorias').val("");
         $('#subcategorias').val("");
 
-        /*var elem = document.querySelector('.js-switch');
-        var init = new Switchery(elem);*/
-
-        var clicouSwitch = true;
-        $('#switch-shadow').click(function(){
-            if(clicouSwitch){
-                console.log("produto desativado");
-                clicouSwitch = false;
-            }
-            else{
-                console.log("produto ativado");
-                clicouSwitch = true;
-            }
-        });
 
         var clicou=false;
-        $('.mHswitch').click(function () {
+
+        $('.switch').click(function(){
             if(!clicou){
-                $(this).text("Produto Desativado");
+                $('.mHswitch').text("Produto Desativado");
                 clicou = true;
             }
             else {
-                $(this).text("Produto Ativado");
+                $('.mHswitch').text("Produto Ativado");
                 clicou = false;
             }
-        })
+        });
 
     });
 
