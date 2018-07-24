@@ -22,9 +22,7 @@ mix.styles([
     'public/css/app/core-style.css',
     'public/css/app/font-awesome.min.css',
     'public/css/app/jquery-ui.min.css',
-    'public/css/app/magnific-popup.css',
-    'public/css/app/nouislider.css',
-    'public/css/app/owl.carousel.css',
+    'public/css/app/magnific-popup.css'
     'public/css/app/responsive.css',
     'public/css/app/style.css',
     'public/css/app/paineluser.css',
@@ -38,11 +36,11 @@ mix.scripts([
     'public/js/app/bootstrap.min.js',
     'public/js/app/wow.min.js',
     'public/js/app/active.js',
-    //'public/js/app/instagram.js',
     'public/js/app/jquery.inputmask.js',
+    'public/js/app/jquery.countdown.min.js',
     'public/js/app/plugins.js',
     'public/js/app/web-animations.min.js'
-], 'public/js/app-js.js');
+],  'public/js/app-js.js');
 
 //Compiled styles for admin page
 mix.styles([
