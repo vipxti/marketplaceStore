@@ -28,21 +28,31 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <form action="{{route('company.register.data')}}" method="post">
+                    <form action="{{route('company.register.data')}}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Razão Social &nbsp;<i style="color: red !important;">*</i></label>
                                 <input type="text" class="form-control" id="nm_razao_social" name="nm_razao_social" required>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nome Fantasia</label>
                                 <input type="text" class="form-control" id="nm_fantasia" name="nm_fantasia">
                             </div>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Telefone&nbsp;<i style="color: red !important;">*</i></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    <input type="text" id="campo_cel1" class="form-control" name="cd_tel" required
+                                           data-inputmask='"mask": "(99) 9999-9999"' data-mask >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="sel1">Tipo de Pessoa &nbsp;<i style="color: red !important;">*</i></label>
                                 <select class="form-control" id="sel1" readonly name="ic_tipo_pessoa" required>
@@ -53,13 +63,13 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Cnpj&nbsp;&nbsp;<i style="color: red !important;">*</i></label>
-                                <input type="number" class="form-control" id="cd_cnpj" name="cd_cnpj" required maxlength="14">
+                                <input type="text" class="form-control" id="cd_cnpj" name="cd_cnpj" required maxlength="14">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Inscrição Estadual&nbsp;&nbsp;<i class="fa fa-info-circle" aria-hidden="true" title="Incrição Estadual do estabelecimento" style="color: #9e9e9e !important;"></i></label>
-                                <input type="text" class="form-control" id="cd_ie" name="cd_ie">
+                                <input type="text" class="form-control" id="cd_ie" name="cd_ie" maxlength="20">
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -74,7 +84,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Inscrição Municipal</label>
-                                <input type="number" class="form-control" id="cd_im" name="cd_im">
+                                <input type="text" class="form-control" id="cd_im" name="cd_im">
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -109,152 +119,90 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12" style="margin-top: 30px !important;">
-                            <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i>&nbsp; Cancelar</button>
-                            <button type="submit" class="btn btn-success pull-right" style="margin-right: 10px;"><i class="fa   fa-save"></i>&nbsp; Salvar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- CADASTRO END/EMPRESA -->
-        <section class="content">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Cadastrar/Alterar</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <form action="#" method="post">
-                        {{ csrf_field() }}
-                        <div class="col-md-12">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Telefone&nbsp;<i style="color: red !important;">*</i></label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                        <input type="text" id="campo_cel1" class="form-control" name="cd_tel" required
-                                        data-inputmask='"mask": "(99) 9999-9999"' data-mask >
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Celular 1</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-                                        <input type="text" id="campo_cel1" class="form-control" name="cd_celular1" required
-                                        data-inputmask='"mask": "(99) 99999-9999"' data-mask >
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Celular 2</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-                                        <input type="text" id="campo_cel2" class="form-control" name="cd_celular2" data-inputmask='"mask": "(99) 99999-9999"' data-mask>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Cep&nbsp;<i style="color: red !important;">*</i></label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="text" id="campo_cep" maxlength="9" class="form-control" name="cd_cep"
-                                        data-inputmask='"mask": "99999-999"' data-mask>
-                                    </div>
-                                    <p class="msg-cpf"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Cidade</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa  fa-map-signs"></i></span>
-                                    <input type="text" id="cidade" class="form-control" name="nm_cidade" maxlength="50">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Rua</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-home"></i></span>
-                                        <input type="text" id="rua" class="form-control" name="ds_endereco" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-3">
-                             <div class="form-group">
-                                 <label>Numero</label>
-                                 <div class="input-group">
-                                     <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span>
-                                     <input type="number" id="numero" class="form-control" name="ds_numero_endereco" min="0">
-                                 </div>
-                             </div>
-                         </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Complemento</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                        <input type="text" id="complemento" class="form-control" name="ds_complemento" maxlength="20">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                             <div class="form-group">
-                                 <label>Ponto de Referencia</label>
-                                 <div class="input-group">
-                                     <span class="input-group-addon"><i class="fa fa-map-pin"></i></span>
-                                     <input type="text" id="ponto_referencia" class="form-control" name="ds_ponto_referencia" maxlength="50">
-                                 </div>
-                             </div>
-                         </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-3">
-                                <label>Bairro</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-street-view"></i></span>
-                                    <input type="text" id="bairro" class="form-control" name="nm_bairro" maxlength="50">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Estado</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-map"></i></span>
-                                    <input type="text" id="uf" class="form-control" name="sg_uf" maxlength="4">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label>País</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-map"></i></span>
-                                    <input type="text" id="pais" class="form-control" name="nm_pais" maxlength="30">
-                                </div>
-                            </div>
-                         </div>
                         <div>&nbsp;</div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Cep&nbsp;<i style="color: red !important;">*</i></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    <input type="text" id="campo_cep" maxlength="9" class="form-control" name="cd_cep"
+                                           data-inputmask='"mask": "99999-999"' data-mask required>
+                                </div>
+                                <p class="msg-cpf"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Cidade&nbsp;<i style="color: red !important;">*</i></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa  fa-map-signs"></i></span>
+                                <input type="text" id="cidade" class="form-control" name="nm_cidade" maxlength="50" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Rua&nbsp;<i style="color: red !important;">*</i></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                    <input type="text" id="rua" class="form-control" name="ds_endereco" maxlength="100" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Numero&nbsp;<i style="color: red !important;">*</i></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span>
+                                    <input type="number" id="numero" class="form-control" name="ds_numero_endereco" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Complemento</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
+                                    <input type="text" id="complemento" class="form-control" name="ds_complemento" maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Ponto de Referencia</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-map-pin"></i></span>
+                                    <input type="text" id="ponto_referencia" class="form-control" name="ds_ponto_referencia" maxlength="50">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Bairro&nbsp;<i style="color: red !important;">*</i></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-street-view"></i></span>
+                                <input type="text" id="bairro" class="form-control" name="nm_bairro" maxlength="50" required>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <label>Estado&nbsp;<i style="color: red !important;">*</i></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-map"></i></span>
+                                <input type="text" id="uf" class="form-control" name="sg_uf" maxlength="4" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label>País&nbsp;<i style="color: red !important;">*</i></label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-map"></i></span>
+                                <input type="text" id="pais" class="form-control" name="nm_pais" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="margin-top: 30px !important;">
                             <div class="form-group">
                                 <label>Logo</label>
                                 <div class="input-group"><div class="file-loading">
-                                        <input id="input-41" name="image" type="file">
+                                        <input id="image" name="image" type="file" accept="image/png, image/jpeg, image/jpg">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-12" >
                             <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i>&nbsp; Cancelar</button>
                             <button type="submit" class="btn btn-success pull-right" style="margin-right: 10px;"><i class="fa   fa-save"></i>&nbsp; Salvar</button>
                         </div>

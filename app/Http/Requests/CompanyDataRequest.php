@@ -23,21 +23,29 @@ class CompanyDataRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this->request);
         return [
             'nm_razao_social' => 'required|string',
-            'nm_fantasia' => 'required|string',
+            'nm_fantasia' => 'nullable',
             'ic_tipo_pessoa' => 'required|string',
-            'cd_cnpj' => 'required|numeric',
-            'cd_ie' => 'required|numeric',
-            'ic_ie_isento' => 'required|numeric',
-            'cd_im' => 'required|numeric',
-            'nm_cnae' => 'required|string',
+            'cd_tel' => 'required|string',
+            'cd_cnpj' => 'required|string',
+            'cd_ie' => 'nullable',
+            'ic_ie_isento' => 'nullable',
+            'cd_im' => 'nullable',
+            'nm_cnae' => 'nullable',
             'cd_regime_tributario' => 'required|numeric',
             'cd_api_bling' => 'required|string',
             'cd_api_key' => 'required|string',
-            'fk_cd_telefone' => 'required|numeric',
-            'fk_cd_endereco' => 'required|numeric'
+            'cd_cep' => 'required|string',
+            'nm_cidade' => 'required|string',
+            'ds_endereco' => 'required|string',
+            'ds_numero_endereco' => 'required|numeric',
+            'ds_complemento' => 'nullable',
+            'ds_ponto_referencia' => 'nullable',
+            'nm_bairro' => 'required|string',
+            'sg_uf' => 'required|string',
+            'nm_pais' => 'required|string',
+            'image' => 'nullable',
         ];
     }
 }
