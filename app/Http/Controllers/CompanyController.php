@@ -108,7 +108,10 @@ class CompanyController extends Controller
             throw $e;
         }
         //ENDEREÇO
-        try {$endereco = $this->createAddress($replaceCep, $request->ds_endereco, $request->ds_numero_endereco, $bairro->toArray()[0]['cd_bairro']);
+        try {
+            //dd($bairro->cd_bairro);
+            $endereco = $this->createAddress($replaceCep, $request->ds_endereco, $request->ds_numero_endereco, $bairro->cd_bairro);
+
         } catch (ValidationException $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -153,6 +156,7 @@ class CompanyController extends Controller
         }
 
         try{
+            //dd($endereco->cd_endereco);
             $this->createCompany(
                 $request->nm_razao_social,
                 $request->nm_fantasia,
@@ -169,7 +173,7 @@ class CompanyController extends Controller
                 $request->ds_complemento,
                 $request->ds_ponto_referencia,
                 $phone->cd_telefone,
-                $endereco->toArray()[0]['cd_endereco']
+                $endereco->cd_endereco
             );
         }
         catch (ValidationException $e) {
@@ -195,6 +199,7 @@ class CompanyController extends Controller
         }
 
         DB::commit();
+        return view('pages.admin.cadDadosEmpresa');
     }
 
     //INSERT ENDERECO
@@ -240,11 +245,14 @@ class CompanyController extends Controller
     public function createNeighbour($nomeBairro, $codCidade)
     {
         $idBairro = Bairro::where('nm_bairro', 'like', '%'.$nomeBairro.'%')->select('cd_bairro')->get();
+        //dd($idBairro);
         if (count($idBairro) == 0){
-            return Bairro::create([
+            $insertCdBairro =  Bairro::create([
                 'nm_bairro' => $nomeBairro,
                 'cd_cidade' => $codCidade
             ]);
+
+            return $insertCdBairro;
         }else{
             return $idBairro;
         }
@@ -269,14 +277,14 @@ class CompanyController extends Controller
     //INSERT TELEFONE
     public function createPhone($cd_telefone_fixo)
     {
-        return Phone::Create([
+        return Phone::create([
             'cd_telefone_fixo' => $cd_telefone_fixo,
         ]);
     }
 
     //INSERT DADOS EMPRESSA
     public function createCompany($nm_razao_social, $nm_fantasia, $ic_tipo_pessoa, $cd_cnpj, $cd_ie, $ic_ie_isento, $cd_im, $nm_cnae, $cd_regime_tributario, $cd_api_bling, $cd_api_key, $image, $ds_complemento, $ds_ponto_referencia, $cd_tel, $cd_end){
-        return Company::Create([
+        return Company::create([
             'nm_razao_social' => $nm_razao_social,
             'nm_fantasia' => $nm_fantasia,
             'ic_tipo_pessoa' => $ic_tipo_pessoa,
