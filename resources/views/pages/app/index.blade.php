@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{asset('css/app/magnific.css')}}">
 
     <!-- ****** Top Catagory Area Start ****** -->
-    <section class="top_catagory_area d-md-flex clearfix">
+    {{--<section class="top_catagory_area d-md-flex clearfix">
         <!-- Single Catagory -->
         <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-2.jpg);">
             <div class="catagory-content">
@@ -23,7 +23,7 @@
                 <a href="#" class="btn karl-btn">Compre Agora</a>
             </div>
         </div>
-    </section>
+    </section>--}}
     <!-- ****** Top Catagory Area End ****** -->
 
     <!-- ****** New Arrivals Area Start ****** -->
