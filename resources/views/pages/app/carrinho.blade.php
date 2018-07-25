@@ -128,7 +128,7 @@
                         <div class="cart-footer d-flex mt-30">
                             <div class="back-to-shop">
 
-                                <a href="{{ route('index') }}"><button type="button" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889">Continuar Comprando</button></a>
+                                <a href="{{ route('index') }}">Continuar Comprando</a>
 
                             </div>
 
@@ -384,17 +384,16 @@
             var cdCompra = null;
 
             $.ajax({
-
                 //url: '/pages/calculaFrete/' + objF,
                 url: '{{ url('page/pagseguro/redirect') }}',
                 type: 'POST',
                 data: $("#formComprar").serialize(),
-                success: function(codigoCompra){
+                success: function (codigoCompra) {
 
                     $.each(codigoCompra, function () {
                         var key = Object.keys(this)[0];
                         cdCompra = this[key];
-                    })
+                    });
 
                     console.log(cdCompra);
 
@@ -403,22 +402,9 @@
                 error: function () {
                     console.log('erro');
                 }
-            });
-
-            // {{--$.ajax({--}}
-            // {{--//url: '/pages/calculaFrete/' + objF,--}}
-            // {{--url: '{{ url('/pagseguro/redirect') }}',--}}
-            // {{--type: 'POST',--}}
-            // {{--success: function(data){--}}
-            // {{--console.log(data.codigo_compra);--}}
-            // {{--},--}}
-            // {{--error: function () {--}}
-            // {{--console.log('erro');--}}
-            // {{--}--}}
-            // {{--});--}}
 
             });
-
+        });
     </script>
 
 @stop

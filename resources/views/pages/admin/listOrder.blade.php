@@ -130,7 +130,7 @@
                                             <div class="row">
                                                 <div class="col-xs-12">
                                                     <h2 class="page-header">
-                                                        <img style="width:108px; height:85px;" src=" {{ asset('img/app/core-img/logo.png') }}" alt="">
+                                                        <img style="width:112px; height:112px;" src=" {{ asset('img/company/nologo.png') }}" alt="">
                                                         <small class="pull-right">Data de Emissão: 02/10/2018</small>
                                                         <p>Vip-X galeria</p>
 

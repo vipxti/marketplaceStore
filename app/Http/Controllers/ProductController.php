@@ -198,6 +198,8 @@ class ProductController extends Controller
 
         $product = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('produto.cd_status_produto', '=', 1)->where('produto.nm_slug', '=', $slug)->first();
 
+        //dd($product);
+
         if ($product == null) {
             $isVariation = true;
 
@@ -211,20 +213,25 @@ class ProductController extends Controller
 
             $productImages = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('img_produto.im_produto')->where('sku.cd_nr_sku', '=', $product->cd_nr_sku)->orderBy('sku_produto_img.cd_img')->get()->toArray();
 
+
+
             $variations = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', 'sku.cd_dimensao')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('produto_variacao.cd_produto_variacao', 'produto_variacao.nm_produto_variacao', 'produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'produto_variacao.nm_slug_variacao', 'produto_variacao.qt_produto_variacao', 'produto_variacao.cd_status_produto_variacao', 'sku.cd_nr_sku', 'dimensao.ds_altura', 'dimensao.ds_largura', 'dimensao.ds_peso', 'dimensao.ds_comprimento', 'sku.cd_sku')->where('produto.cd_produto', '=', $product->cd_produto)->orderBy('produto_variacao.cd_produto_variacao')->get();
 
-            foreach ($variations as $key => $var) {
-                //dd($var->cd_sku);
-                $idsSku[$key] = $var->cd_sku;
+
+            if (count($variations->toArray()) > 0) {
+                foreach ($variations as $key => $var) {
+                    //dd($var->cd_sku);
+                    $idsSku[$key] = $var->cd_sku;
+                }
+
+                //dd($idsSku);
+
+                $colors = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->select('cor.nm_cor', 'cor.hex', DB::raw('sum(produto_variacao.qt_produto_variacao) as qt_total_cor'))->whereIn('produto_cor.cd_sku', $idsSku)->groupBy('cor.nm_cor', 'cor.hex')->get();
+
+                //dd($colors);
+
+                $totalCores = count($colors);
             }
-
-            //dd($idsSku);
-
-            $colors = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->select('cor.nm_cor', 'cor.hex', DB::raw('sum(produto_variacao.qt_produto_variacao) as qt_total_cor'))->whereIn('produto_cor.cd_sku', $idsSku)->groupBy('cor.nm_cor', 'cor.hex')->get();
-
-            //dd($colors);
-
-            $totalCores = count($colors);
         }
 
         if (count($variations->toArray()) > 0) {

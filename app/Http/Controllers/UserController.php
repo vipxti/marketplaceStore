@@ -32,7 +32,6 @@ class UserController extends Controller
 
     public function atualizaDadosUsuario(UserDataRequest $request)
     {
-
         //dd($request->all());
 
         $user = Auth::user();

@@ -12,6 +12,6 @@ class Phone extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'cd_celular1','cd_celular2'
+        'cd_celular1','cd_celular2','cd_telefone_fixo'
     ];
 }
