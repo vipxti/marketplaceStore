@@ -447,6 +447,176 @@ class ProductController extends Controller
         return redirect()->route('products.list')->with('success', 'Produto principal cadastrado com sucesso');
     }
 
+    public function cadastrarProdutosBling(Request $request){
+
+        //dd($request->images);
+
+        $v = strpos($request->vl_produto, ',');
+
+        $slugname = str_slug($request->nm_produto, '-');
+
+        if ($v !== false) {
+            $val = str_replace(',', '.', $request->vl_produto);
+        } else {
+            $val = $request->vl_produto;
+        }
+
+        if ($request->filled('status') == 'on') {
+            $status = 1;
+        } else {
+            $status = 0;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $dimensao = $this->createDimension($request->ds_largura, $request->ds_altura, $request->ds_comprimento, $request->ds_peso);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
+
+        try {
+            $sku = $this->createSku($request->cd_sku, $dimensao->cd_dimensao);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
+
+        try {
+            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname);
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
+
+        try {
+            $this->associateProductCategorySubcategory($produto->cd_produto, $this->getCategorySubcategoryId($request->cd_categoria, $request->cd_sub_categoria));
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
+
+        try {
+            //dd($request->images);
+            if ($request->images != null) {
+
+                //Cria o caminho físico das imagens
+                $images = $request->images;
+                $imagePath = $this->pastaProduto($this->getCategoryName($request->cd_categoria), $this->getSubcategoryName($request->cd_sub_categoria));
+                $dbPath = $this->getCategoryName($request->cd_categoria) . '/' . $this->getSubcategoryName($request->cd_sub_categoria);
+
+                //dd($images);
+                $namesOfImage = [];
+                $localImagesPath = [];
+                for($i = 0; $i<count($images); $i++){
+                    $ext = 'jpeg';
+                    $imageName = $request->cd_sku . '_' . ($i + 1) . '.' . $ext;
+                    array_push($namesOfImage, $imageName);
+                    $caminho = $dbPath . '/' . $imageName;
+                    array_push($localImagesPath, $caminho);
+                }
+
+                for($i = 0; $i<count($images); $i++) {
+                    file_put_contents($imagePath . '/' . $namesOfImage[$i], file_get_contents($images[$i]));
+                }
+
+
+                for($i = 0; $i < count($images); $i++){
+                    if($i == 0){
+                        $img = $this->createImage($localImagesPath[$i], 1);
+                    }
+                    else{
+                        $img = $this->createImage($localImagesPath[$i], 0);
+                    }
+
+                    $skuImagem = $this->associateSkuImage($sku->cd_sku, $img->cd_img);
+                    $imgsPath = $img->im_produto;
+                }
+
+
+                /*$ext = 'jpeg';
+                $imageName = $request->cd_sku . '_' . 1 . '.' . $ext;
+                //$imagePath = str_replace($imagePath, '/', '\\');
+                //$realPath = $images->getRealPath();
+                //dd($imagePath.'/'.$imageName);
+                file_put_contents($imagePath.'/'.$imageName, file_get_contents($images));
+
+                $localImagesPath = $dbPath . '/' . $imageName;
+                $img = $this->createImage($localImagesPath, 1);
+                $skuImagem = $this->associateSkuImage($sku->cd_sku, $img->cd_img);
+                $imgsPath = $img->im_produto;*/
+
+
+
+
+                /*foreach ($images as $key => $image) {
+                    $ext = $image->getClientOriginalExtension();
+                    $imageName = $request->cd_sku . '_' . ($key + 1) . '.' . $ext;
+
+                    $realPath = $image->getRealPath();
+
+                    $this->saveImageFile($imagePath, $imageName, $realPath);
+
+                    $localImagesPath[$key] = $dbPath . '/' . $imageName;
+                }
+
+                foreach ($localImagesPath as $key => $dbImage) {
+                    if ($key == 0) {
+                        $img = $this->createImage($dbImage, 1);
+                    } else {
+                        $img = $this->createImage($dbImage, 0);
+                    }
+
+                    $skuImagem = $this->associateSkuImage($sku->cd_sku, $img->cd_img);
+
+                    $imgsPath[$key] = $img->im_produto;
+                }*/
+            } else {
+
+                $img = $this->createImage('semprodutoview.png', 1);
+                $skuImagem = $this->associateSkuImage($sku->cd_sku, $img->cd_img);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            //$this->deleteImageFile($imgsPath);
+
+        }
+
+
+
+        DB::commit();
+
+        //return redirect()->route('products.list')->with('success', 'Produtos do Bling cadastrados com sucesso');
+        return response()->json([
+            'message' => 'produto cadastrado'
+        ]);
+    }
+
+    //consulta o sku antes de cadastrar os produtos no bling
+    public function consultaSku(Request $request){
+        //dd($request->all());
+
+        $resultado = DB::table('sku')
+                        ->select('cd_nr_sku')
+                        ->where('cd_nr_sku', '=', $request->cd_sku)
+                        ->get();
+
+        if(count($resultado) == 0){
+            return response()->json([
+                'message' => false
+                ]);
+        }
+
+        return response()->json([
+           'message' => true
+        ]);
+    }
+
     //Cadastrar variação do produto
     public function cadastrarVariacaoProduto(ProductVariationRequest $request)
     {

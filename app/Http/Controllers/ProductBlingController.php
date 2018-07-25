@@ -16,7 +16,7 @@ class ProductBlingController extends Controller{
         $apikey = "2a51570170237bfda75036d304640a61ba9c4330bc33e3551e39e8454ea4f838ceb58337";
         $loja = "203208658";
         $outputType = "json";
-        $url = 'https://bling.com.br/Api/v2/produtos/' . $pagina . '/' . $outputType . '&loja='. $loja .'&estoque=S';
+        $url = 'https://bling.com.br/Api/v2/produtos/' . $pagina . '/' . $outputType . '&imagem=S&loja='. $loja .'&estoque=S';
         $retorno = $this->executeGetProducts($url, $apikey);
         //echo $retorno;
         return response()->json([$retorno]);

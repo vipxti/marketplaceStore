@@ -184,4 +184,65 @@ class CategoryController extends Controller
         }
         return redirect()->route('category.register')->with('success', 'Associações realizadas com sucesso');
     }
+
+    public function verificaCatBling(CategoryRequest $request){
+        //dd($request->all());
+        $resultado = DB::table('categoria')
+                        ->select('cd_categoria')
+                        ->where('nm_categoria', '=', $request->nm_categoria)
+                        ->get();
+
+        //dd($resultado);
+        if(count($resultado) == 0){
+            $this->novaCat($request->nm_categoria);
+
+            $resultado = DB::table('categoria')
+                ->select('cd_categoria')
+                ->where('nm_categoria', '=', $request->nm_categoria)
+                ->get();
+        }
+
+        return response()->json([$resultado]);
+    }
+
+    public function verificaSubCatBling(SubCategoryRequest $request){
+        //dd($request->all());
+        $resultado = DB::table('sub_categoria')
+            ->select('cd_sub_categoria')
+            ->where('nm_sub_categoria', '=', $request->nm_sub_categoria)
+            ->get();
+
+        //dd($resultado);
+        if(count($resultado) == 0){
+            $this->novaSubCat($request->nm_sub_categoria);
+
+            $resultado = DB::table('sub_categoria')
+                ->select('cd_sub_categoria')
+                ->where('nm_sub_categoria', '=', $request->nm_sub_categoria)
+                ->get();
+        }
+
+        return response()->json([$resultado]);
+    }
+
+    public function associarCatSubCatBling(CategorySubcategoryRequest $request){
+
+        //dd($request->all());
+        try{
+            DB::table('categoria_subcat')->insert([
+                'cd_categoria' => $request->cd_categoria,
+                'cd_sub_categoria' => $request->cd_sub_categoria
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'message' => 'associação já existente'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'associação feita'
+        ]);
+
+    }
 }

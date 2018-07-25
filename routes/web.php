@@ -36,6 +36,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
     Route::post('/product/update', 'ProductController@updateProduct')->name('product.update');
     Route::get('/product', 'ProductController@showProductAdminPage')->name('product.register')->middleware('auth:admin');
+    Route::post('/blingproduct', 'ProductController@cadastrarProdutosBling')->name('bling.save.products');
+    Route::post('/bling/skuproduct', 'ProductController@consultaSku')->name('bling.sku.products');
 
     //Variação do produto
     Route::post('/product/variation', 'ProductController@cadastrarVariacaoProduto')->name('product.variation.save')->middleware('auth:admin');
@@ -46,6 +48,9 @@ Route::prefix('admin')->group(function () {
     Route::post('/category', 'CategoryController@crudCategoria')->name('category.save');
     Route::get('/subcat/{cd_categoria}', 'CategoryController@selectSubCategory')->name('category.subcategory')->middleware('auth:admin');
     Route::post('/subcategory', 'CategoryController@crudSubCategoria')->name('subcategory.save');
+    Route::post('/catbling', 'CategoryController@verificaCatBling')->name('category.bling.save');
+    Route::post('/subcatbling', 'CategoryController@verificaSubCatBling')->name('subcategory.bling.save');
+    Route::post('/assocbling', 'CategoryController@associarCatSubCatBling')->name('assoc.bling.save');
 
     //Associa categoria/subcategoria
     Route::post('/catsubcat', 'CategoryController@associarCategoriaSubCategoria')->name('catsubcat.associate');
@@ -70,6 +75,7 @@ Route::prefix('admin')->group(function () {
     Route::get('api/bling/cat/{id}', 'ProductBlingController@searchCatFather')->name('searchCat.api.bling')->middleware('auth:admin');
     Route::get('api/category', 'ProductBlingController@getCategories')->name('category.api.bling')->middleware('auth:admin');
     Route::get('api/storecat', 'ProductBlingController@getStoreCategories')->name('storeCategory.api.bling')->middleware('auth:admin');
+
 
     Route::get('/data', 'UserController@showUserForm')->name('admin.data')->middleware('auth:admin');
 
