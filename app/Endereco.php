@@ -14,7 +14,6 @@ class Endereco extends Model
     protected $fillable = [
         'cd_cep',
         'ds_endereco',
-        'cd_numero_endereco',
         'cd_bairro'
     ];
 }

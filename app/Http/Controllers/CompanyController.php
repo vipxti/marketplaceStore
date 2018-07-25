@@ -22,6 +22,8 @@ class CompanyController extends Controller
 
     public function registerComnpany(CompanyDataRequest $request)
     {
+        //dd($request->all());
+        //TRATAMENTO DO  CEP, TELEFONE IC ISENTO
         $stIcIeIsento = ($request->filled('ic_ie_isento') == 'on') ? $status = 1 : $status = 0;
         $replaceCep = str_replace('-', '',  $request->cd_cep);
         $replacePhone = str_replace('-', '',  $request->cd_tel);
@@ -29,8 +31,10 @@ class CompanyController extends Controller
         $replacePhone = str_replace(')', '',  $replacePhone);
         $replacePhone = str_replace(' ', '',  $replacePhone);
 
-        //ENDERECO
+
+
         DB::beginTransaction();
+
         //PAIS
         try {
             $pais = $this->createCountry($request->nm_pais);
@@ -47,6 +51,7 @@ class CompanyController extends Controller
             DB::rollBack();
             throw $e;
         }
+
         //UF
         try {
             $estado = $this->createState($request->sg_uf, $pais->toArray()[0]['cd_pais']);
@@ -65,6 +70,7 @@ class CompanyController extends Controller
             DB::rollBack();
             throw $e;
         }
+
         //CIDADE
         try {
             $cidade = $this->createCity($request->nm_cidade, $request->cd_ibge, $estado->toArray()[0]['cd_uf']);
@@ -73,7 +79,7 @@ class CompanyController extends Controller
             dd($e->getMessage());
 
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar a cidade');
-        }  catch (QueryException $e) {
+        } catch (QueryException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
@@ -87,6 +93,7 @@ class CompanyController extends Controller
             DB::rollBack();
             throw $e;
         }
+
         //BAIRRO
         try {
             $bairro = $this->createNeighbour($request->nm_bairro, $cidade->toArray()[0]['cd_cidade']);
@@ -107,11 +114,10 @@ class CompanyController extends Controller
             DB::rollBack();
             throw $e;
         }
+
         //ENDEREÇO
         try {
-            //dd($bairro->cd_bairro);
-            $endereco = $this->createAddress($replaceCep, $request->ds_endereco, $request->ds_numero_endereco, $bairro->cd_bairro);
-
+            $endereco = $this->createAddress($replaceCep, $request->ds_endereco, $bairro->toArray()[0]['cd_bairro']);
         } catch (ValidationException $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -133,30 +139,27 @@ class CompanyController extends Controller
         }
 
         //PHONE
-        try{
+        try {
             $phone = $this->createPhone($replacePhone);
-        }
-        catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o Telefone');
-        }
-        catch (QueryException $e) {
+        } catch (QueryException $e) {
             DB::rollBack();
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o Telefone');
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             DB::rollBack();
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao conectar com o banco de Telefone');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
-        try{
-            //dd($endereco->cd_endereco);
+        //EMPRESA
+        try {
+
             $this->createCompany(
                 $request->nm_razao_social,
                 $request->nm_fantasia,
@@ -170,36 +173,34 @@ class CompanyController extends Controller
                 $request->cd_api_bling,
                 $request->cd_api_key,
                 $request->image,
+                $request->cd_numero_endereco,
                 $request->ds_complemento,
                 $request->ds_ponto_referencia,
                 $phone->cd_telefone,
-                $endereco->cd_endereco
+                $endereco->toArray()[0]['cd_endereco']
             );
-        }
-        catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar os Dados');
-        }
-        catch (QueryException $e) {
+        } catch (QueryException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o Dados');
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             dd($e->getMessage());
             DB::rollBack();
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao conectar com o banco de Dados Empresa');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
         DB::commit();
         return view('pages.admin.cadDadosEmpresa');
+
     }
 
     //INSERT ENDERECO
@@ -207,10 +208,13 @@ class CompanyController extends Controller
     {
         $idPais = Pais::where('nm_pais', 'like', '%'.$nomePais.'%')->select('cd_pais')->get();
         if (count($idPais) == 0){
-            return Pais::create([
+            Pais::create([
                 'nm_pais' => $nomePais
             ]);
-        }else{
+            $idPais = Pais::where('nm_pais', 'like', '%'.$nomePais.'%')->select('cd_pais')->get();
+            return $idPais;
+        }
+        else{
             return $idPais;
         }
     }
@@ -219,11 +223,14 @@ class CompanyController extends Controller
     {
         $idUf = Uf::where('sg_uf', 'like', '%'.$siglaEstado.'%')->select('cd_uf')->get();
         if (count($idUf) == 0){
-            return Uf::create([
+             Uf::create([
                 'sg_uf' => $siglaEstado,
                 'cd_pais' => $codPais
             ]);
-        }else{
+            $idUf = Uf::where('sg_uf', 'like', '%'.$siglaEstado.'%')->select('cd_uf')->get();
+            return $idUf;
+        }
+        else{
             return $idUf;
         }
     }
@@ -231,13 +238,17 @@ class CompanyController extends Controller
     public function createCity($nomeCidade, $codIbge, $codEstado)
     {
         $idCidade = Cidade::where('nm_cidade', 'like', '%'.$nomeCidade.'%')->select('cd_cidade')->get();
+        //var_dump($idCidade);
         if (count($idCidade) == 0){
-            return Cidade::create([
+            Cidade::create([
                 'nm_cidade' => $nomeCidade,
                 'cd_ibge' => $codIbge,
                 'cd_uf' => $codEstado
             ]);
-        }else{
+            $idCidade = Cidade::where('nm_cidade', 'like', '%'.$nomeCidade.'%')->select('cd_cidade')->get();
+            return $idCidade;
+        }
+        else{
             return $idCidade;
         }
     }
@@ -245,31 +256,33 @@ class CompanyController extends Controller
     public function createNeighbour($nomeBairro, $codCidade)
     {
         $idBairro = Bairro::where('nm_bairro', 'like', '%'.$nomeBairro.'%')->select('cd_bairro')->get();
-        //dd($idBairro);
         if (count($idBairro) == 0){
-            $insertCdBairro =  Bairro::create([
+            Bairro::create([
                 'nm_bairro' => $nomeBairro,
                 'cd_cidade' => $codCidade
             ]);
-
-            return $insertCdBairro;
-        }else{
+            $idBairro = Bairro::where('nm_bairro', 'like', '%'.$nomeBairro.'%')->select('cd_bairro')->get();
+            return $idBairro;
+        }
+        else{
             return $idBairro;
         }
     }
 
-    public function createAddress($cep, $endereco, $numero, $codBairro)
+    public function createAddress($cep, $endereco, $codBairro)
     {
         $idEnd = Endereco::where('cd_cep', '=', $cep)->select('cd_endereco')->get();
         //dd($idEnd);
         if (count($idEnd) == 0){
-            return Endereco::create([
+            Endereco::create([
                 'cd_cep' => $cep,
                 'ds_endereco' => $endereco,
-                'cd_numero_endereco' => $numero,
                 'cd_bairro' => $codBairro
             ]);
-        }else{
+            $idEnd = Endereco::where('cd_cep', '=', $cep)->select('cd_endereco')->get();
+            return $idEnd;
+        }
+        else{
             return $idEnd;
         }
     }
@@ -283,7 +296,25 @@ class CompanyController extends Controller
     }
 
     //INSERT DADOS EMPRESSA
-    public function createCompany($nm_razao_social, $nm_fantasia, $ic_tipo_pessoa, $cd_cnpj, $cd_ie, $ic_ie_isento, $cd_im, $nm_cnae, $cd_regime_tributario, $cd_api_bling, $cd_api_key, $image, $ds_complemento, $ds_ponto_referencia, $cd_tel, $cd_end){
+    public function createCompany(
+        $nm_razao_social,
+        $nm_fantasia,
+        $ic_tipo_pessoa,
+        $cd_cnpj,
+        $cd_ie,
+        $ic_ie_isento,
+        $cd_im,
+        $nm_cnae,
+        $cd_regime_tributario,
+        $cd_api_bling,
+        $cd_api_key,
+        $image,
+        $numero,
+        $ds_complemento,
+        $ds_ponto_referencia,
+        $cd_tel, $cd_end
+    )
+    {
         return Company::create([
             'nm_razao_social' => $nm_razao_social,
             'nm_fantasia' => $nm_fantasia,
@@ -297,6 +328,7 @@ class CompanyController extends Controller
             'cd_api_bling' => $cd_api_bling,
             'cd_api_key' => $cd_api_key,
             '$image' => $image,
+            'cd_numero_endereco' => $numero,
             'ds_complemento' => $ds_complemento,
             'ds_ponto_referencia' => $ds_ponto_referencia,
             'fk_cd_telefone' => $cd_tel,

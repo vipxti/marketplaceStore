@@ -152,7 +152,7 @@
                                 <label>Numero&nbsp;<i style="color: red !important;">*</i></label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span>
-                                    <input type="number" id="numero" class="form-control" name="ds_numero_endereco" min="0" required>
+                                    <input type="number" id="numero" class="form-control" name="cd_numero_endereco" min="0" required>
                                 </div>
                             </div>
                         </div>
