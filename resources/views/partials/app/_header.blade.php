@@ -26,7 +26,7 @@
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <ul class="navbar-nav mx-auto">
                     <!-- Início -->
-                    <li class="nav-item dropdown"><a id="navbarHomeLink" href="{{ route('index')}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link active">Início</a>
+                    <li class="nav-item dropdown"><a id="navbarHomeLink" href="{{ route('index')}}" aria-haspopup="true" aria-expanded="false" class="nav-link active">Início</a>
                         <ul aria-labelledby="navbarDropdownHomeLink" class="dropdown-menu"></ul>
                     </li>
 
@@ -490,23 +490,22 @@
                     <!-- Cart Dropdown-->
                     <div class="cart dropdown show">
                         @if(Session::get('qtCart') == 0)
-                            <a id="cartdetails" href="{{ route('cart.page') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                            <a id="cartdetails" href="{{ route('cart.page') }}" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
                                 <i class="fa fa-shopping-cart"></i>
-
                             </a>
                         @else
-                            <a id="cartdetails" href="{{ route('cart.page') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                            <a id="cartdetails" href="{{ route('cart.page') }}" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
                                 <i class="fa fa-shopping-cart"></i>
                                 <div class="cart-no">{{ Session::get('qtCart') }}</div>
                             </a>
                         @endif
 
-                        <div aria-labelledby="cartdetails" class="dropdown-menu">
+                        <!-- cart itens-->
+                        {{--<div aria-labelledby="cartdetails" class="dropdown-menu">
                             @if(Session::get('qtCart') == 0)
                                 <!-- cart item-->
                                 <div class="cart-product">
                                     <small>NÃO HA PRODUTOS NO CARRINHO&nbsp;<i class="fa fa-shopping-cart fa-2x">&nbsp;</i></small>
-
                                 </div>
                             @else
                                 <!-- cart item-->
@@ -529,7 +528,7 @@
                                             Cart</a><a href="checkout1.html" class="btn btn-template wide">Checkout</a>
                                     </div>
                             @endif
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
             </div>
