@@ -1,0 +1,87 @@
+/* =======================================================
+       About
+   ======================================================= */
+
+.about-item {
+    margin-bottom: 5rem;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.about-icon {
+    line-height: 1;
+    padding: 0 2rem;
+    font-size: 5rem;
+    color: $brand-primary;
+    margin-right: auto;
+    margin-left: auto;
+    @media (max-width: 992px) {
+        padding: 0;
+        font-size: 4rem;
+    }
+}
+
+.team-member {
+    text-align: center;
+    margin-bottom: $grid-gutter-width;
+    h3 {
+        margin-top: 20px;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        a {
+            color: $body-color;
+            @include hover-focus {
+                color: $brand-primary;
+                text-decoration: none;
+            }
+        }
+    }
+    p.role {
+        color: $gray-500;
+        font-size: $font-size-sm;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    .social {
+        margin-bottom: 1rem;
+        a {
+            margin: 0 10px 0 0;
+            color: #fff;
+            display: inline-block;
+            width: 26px;
+            height: 26px;
+            border-radius: 13px;
+            line-height: 26px;
+            font-size: 15px;
+            text-align: center;
+            vertical-align: bottom;
+            i {
+                vertical-align: bottom;
+                line-height: 26px;
+            }
+            &.facebook {
+                background-color: #4460ae;
+            }
+            &.gplus {
+                background-color: #c21f25;
+            }
+            &.twitter {
+                background-color: #3cf;
+            }
+            &.instagram {
+                background-color: #cd4378;
+            }
+            &.email {
+                background-color: #4a7f45;
+            }
+        }
+    }
+    .text {
+        p {
+            color: $gray-500;
+            font-size: $font-size-sm;
+        }
+    }
+}

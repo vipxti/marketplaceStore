@@ -1,0 +1,181 @@
+/*
+* ===================================================
+*     PRODUCTS SIDEBAR
+* ===================================================
+*/
+.sidebar {
+    padding: 100px 0;
+
+    .block {
+        padding: 30px 0;
+        margin-right: 30px;
+        border-bottom: 1px solid #eee;
+
+        &:last-of-type {
+            border-bottom: 0;
+        }
+        &:first-of-type {
+            padding-top: 0;
+        }
+
+        & > ul > li > a {
+            color: #333;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 6px 20px;
+            border-radius: 50px;
+
+            &:hover {
+                background: #222;
+                color: #fff;
+
+                small {
+                    background: #fff;
+                    color: #333;
+                }
+            }
+        }
+    }
+    &.sidebar-right {
+        .block {
+            margin-right: 0;
+            margin-left: 30px;
+        }
+    }
+
+    h6 {
+        margin-bottom: 30px;
+    }
+
+    ul {
+        small {
+            padding: 0 12px;
+            border-radius: 50px;
+            background: #333;
+            color: #fff;
+            font-size: 0.7em;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+    }
+
+    ul ul {
+        margin-left: 20px;
+        a {
+            text-decoration: none;
+            padding: 5px 0;
+            font-size: 0.9em;
+            color: #656565;
+            font-weight: 300;
+            margin: 0;
+            padding: 5px 20px;
+            display: block;
+            border-radius: 30px;
+
+            &:hover {
+                color: #fff;
+                background: #333;
+            }
+        }
+    }
+
+    li.active > a {
+        border-radius: 50px;
+        background: #222;
+        color: #fff !important;
+
+        small {
+            background: #fff;
+            color: #333;
+        }
+    }
+
+    .value {
+        margin: 10px 0;
+        color: #555;
+        font-size: 0.9em;
+        font-weight: 300;
+    }
+
+    .example-val {
+        color: #333;
+        font-weight: 500;
+        font-weight: 400;
+    }
+
+    .filter-submit {
+        background: none;
+        border: none;
+        color: #333;
+        padding: 2px 20px;
+        font-weight: 300;
+        border-radius: 50px;
+        background: #222;
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none !important;
+    }
+}
+
+
+/* Products Sidebar Media Query ------------------------ */
+@media (max-width: 992px) {
+    .sidebar  {
+        .block {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+    }
+}
+@media (max-width: 575px) {
+    .sidebar, .products-grid {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}
+
+
+
+/*
+* ===================================================
+*     PRODUCTS GRID SECTION
+* ===================================================
+*/
+.products-grid {
+    padding: 100px 0;
+
+    .product {
+        margin-bottom: 30px;
+    }
+
+    h3 {
+        transition: all 0.3s;
+        &:hover {
+            color: $brand-primary;
+        }
+    }
+
+    header {
+        margin-bottom: 40px;
+
+        span.visible-items {
+            color: #555;
+            margin-right: 20px;
+        }
+    }
+}
+
+
+/* Products Grid Media Query ------------------------ */
+@media (max-width: 992px) {
+    .sidebar {
+        padding-bottom: 50px;
+    }
+    .products-grid.sidebar-left {
+        padding-top: 0;
+    }
+    .products-grid.sidebar-right {
+        padding-top: 100px;
+        padding-bottom: 0;
+    }
+}
