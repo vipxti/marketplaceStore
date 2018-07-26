@@ -38,6 +38,7 @@ class CompanyDataRequest extends FormRequest
             'cd_api_key' => 'required|string',
             'cd_cep' => 'required|string',
             'nm_cidade' => 'required|string',
+            'cd_ibge' => 'required',
             'ds_endereco' => 'required|string',
             'cd_numero_endereco' => 'required|numeric',
             'ds_complemento' => 'nullable',

@@ -421,7 +421,11 @@
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <p>{{ $product->ds_produto }}</p>
+                                    {{--<p>{{ $product->ds_produto }}</p>--}}
+                                    <input type="text" id="desc_prod" value="{{ $product->ds_produto }}" hidden>
+                                    <div id="texto_desc">
+
+                                    </div>
                                 </div>
                             </div>
                             
@@ -436,6 +440,11 @@
     </section>
 
     <script>
+
+        $(document).ready(function(){
+            var descricao = $('#desc_prod').val();
+            $('#texto_desc').html(descricao);
+        });
 
         $('.qty-plus').click(function(e){
 

@@ -12,7 +12,7 @@
                 <form action="#">
                     <div class="form-group">
                         <input type="search" name="search" id="search" placeholder="Pesquisar produto...">
-                        <button type="submit" class="submit"><i class="icon-search"></i></button>
+                        <button type="submit" class="submit"><i class="fa fa-search"></i></button>
                     </div>
                 </form>
             </div>
@@ -470,41 +470,65 @@
                     </li>
 
                     <!-- Produtos -->
-                    <li class="nav-item"><a href="contact.html" class="nav-link">Produtos</a>
+                    <li class="nav-item"><a href="{{route('products.page')}}" class="nav-link">Produtos</a>
                     </li>
                 </ul>
 
                 <div class="right-col d-flex align-items-lg-center flex-column flex-lg-row">
                     <!-- Search Button-->
-                    <div class="search"><i class="icon-search"></i></div>
+                    <div class="search"><i class="fa fa-search"></i></div>
                     <!-- User Not Logged - link to login page-->
-                    <div class="user"><a id="userdetails" href="customer-login.html" class="user-link"><i
-                                    class="icon-profile"> </i></a></div>
+                    @if(Auth::check())
+                        <div class="user">
+                            <a id="userdetails" href="{{route('client.logout')}}" class="user-link"><i class="fa fa-user"> </i></a>
+                        </div>
+                    @else
+                        <div class="user">
+                            <a id="userdetails" href="{{route('client.login')}}" class="user-link"><i class="fa fa-user"> </i></a>
+                        </div>
+                    @endif
                     <!-- Cart Dropdown-->
                     <div class="cart dropdown show">
-                        <a id="cartdetails" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                           class="dropdown-toggle"><i class="icon-cart"></i>
-                            <div class="cart-no">1</div>
-                        </a>
+                        @if(Session::get('qtCart') == 0)
+                            <a id="cartdetails" href="{{ route('cart.page') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                <i class="fa fa-shopping-cart"></i>
+
+                            </a>
+                        @else
+                            <a id="cartdetails" href="{{ route('cart.page') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                <i class="fa fa-shopping-cart"></i>
+                                <div class="cart-no">{{ Session::get('qtCart') }}</div>
+                            </a>
+                        @endif
+
                         <div aria-labelledby="cartdetails" class="dropdown-menu">
-                            <!-- cart item-->
-                            <div class="dropdown-item cart-product">
-                                <div class="d-flex align-items-center">
-                                    <div class="img"><img src="{{asset('img/hoodie-man-1.png')}}" class="img-fluid"></div>
-                                    <div class="details d-flex justify-content-between">
-                                        <div class="text"><a href="#"><strong>Heather Gray Hoodie</strong></a>
-                                            <small>Quantity: 1</small>
-                                            <span class="price">$75.00 </span></div>
-                                        <a href="#" class="delete"><i class="fa fa-trash-o"></i></a>
-                                    </div>
+                            @if(Session::get('qtCart') == 0)
+                                <!-- cart item-->
+                                <div class="cart-product">
+                                    <small>NÃO HA PRODUTOS NO CARRINHO&nbsp;<i class="fa fa-shopping-cart fa-2x">&nbsp;</i></small>
+
                                 </div>
-                            </div>
-                            <!-- total price-->
-                            <div class="dropdown-item total-price d-flex justify-content-between">
-                                <span>Total </span><strong class="text-primary">&nbsp;&nbsp;$75.00</strong></div>
-                            <!-- call to actions-->
-                            <div class="dropdown-item CTA d-flex"><a href="cart.html" class="btn btn-template wide">View
-                                    Cart</a><a href="checkout1.html" class="btn btn-template wide">Checkout</a></div>
+                            @else
+                                <!-- cart item-->
+                                    <div class="dropdown-item cart-product">
+                                        <div class="d-flex align-items-center">
+                                            <div class="img"><img src="{{asset('img/hoodie-man-1.png')}}" class="img-fluid"></div>
+                                            <div class="details d-flex justify-content-between">
+                                                <div class="text"><a href="#"><strong>Heather Gray Hoodie</strong></a>
+                                                    <small>Quantity: 1</small>
+                                                    <span class="price">$75.00 </span></div>
+                                                <a href="#" class="delete"><i class="fa fa-trash-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- total price-->
+                                    <div class="dropdown-item total-price d-flex justify-content-between">
+                                        <span>Total </span><strong class="text-primary">&nbsp;&nbsp;$75.00</strong></div>
+                                    <!-- call to actions-->
+                                    <div class="dropdown-item CTA d-flex"><a href="cart.html" class="btn btn-template wide">View
+                                            Cart</a><a href="checkout1.html" class="btn btn-template wide">Checkout</a>
+                                    </div>
+                            @endif
                         </div>
                     </div>
                 </div>

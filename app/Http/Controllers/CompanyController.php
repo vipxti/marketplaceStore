@@ -296,25 +296,7 @@ class CompanyController extends Controller
     }
 
     //INSERT DADOS EMPRESSA
-    public function createCompany(
-        $nm_razao_social,
-        $nm_fantasia,
-        $ic_tipo_pessoa,
-        $cd_cnpj,
-        $cd_ie,
-        $ic_ie_isento,
-        $cd_im,
-        $nm_cnae,
-        $cd_regime_tributario,
-        $cd_api_bling,
-        $cd_api_key,
-        $image,
-        $numero,
-        $ds_complemento,
-        $ds_ponto_referencia,
-        $cd_tel, $cd_end
-    )
-    {
+    public function createCompany($nm_razao_social, $nm_fantasia, $ic_tipo_pessoa, $cd_cnpj, $cd_ie, $ic_ie_isento, $cd_im, $nm_cnae, $cd_regime_tributario, $cd_api_bling,  $cd_api_key, $image, $numero, $ds_complemento, $ds_ponto_referencia, $cd_tel, $cd_end){
         return Company::create([
             'nm_razao_social' => $nm_razao_social,
             'nm_fantasia' => $nm_fantasia,
