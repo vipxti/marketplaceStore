@@ -166,7 +166,7 @@
             <!-- Botões Salvar -->
             <div class="col-md-12" style="padding-left: 34%">
                 <div>
-                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 350px; background-color: #d33889; border-radius: 0px">Salvar</button>
+                    <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 350px; background-color: #d89531; border-radius: 0px">Salvar</button>
                 </div>
             </div>
 

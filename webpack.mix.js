@@ -22,11 +22,18 @@ mix.styles([
     'public/css/app/core-style.css',
     'public/css/app/font-awesome.min.css',
     'public/css/app/jquery-ui.min.css',
-    'public/css/app/magnific-popup.css'
+    'public/css/app/magnific-popup.css',
     'public/css/app/responsive.css',
     'public/css/app/style.css',
     'public/css/app/paineluser.css',
-    'public/css/app/themify-icons.css'
+    'public/css/app/bootstrap-select.min.css',
+    'public/css/app/nouislider.css',
+    'public/css/app/custom-fonticons.css',
+    'public/css/app/owl.carousel.css',
+    'public/css/app/owl.theme.default.css',
+    'public/css/app/custom.css',
+    'public/css/app/themify-icons.css',
+    'public/css/app/style.default.css'
 ], 'public/css/app-styles.css');
 
 //Compiled js files for app
@@ -39,6 +46,14 @@ mix.scripts([
     'public/js/app/jquery.inputmask.js',
     'public/js/app/jquery.countdown.min.js',
     'public/js/app/plugins.js',
+    'public/js/app/modernizr.custom.79639.js',
+    'public/js/app/jquery.cookie.js',
+    'public/js/app/owl.carousel.min.js',
+    'public/js/app/owl.carousel2.thumbs.min.js',
+    'public/js/app/bootstrap-select.min.js',
+    'public/js/app/nouislider.min.js',
+    'public/js/app/jquery.countdownbar.min.js',
+    'public/js/app/front.js',
     'public/js/app/web-animations.min.js'
 ],  'public/js/app-js.js');
 

@@ -24,6 +24,7 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         return [
+            'nm_menu' => 'required|string'
 //            'nm_menu1' => 'string',
 //            'nm_sub_menu1.*' => 'string',
 //

@@ -101,7 +101,7 @@
             <div class="container">
                 <div class="row">
                     <div class="info col-lg-4">
-                        <div class="logo"><img src="img/logo.png" href="{{ route('index')}}"></div>
+                        <div class="logo"><img src="{{asset('img/logo.png')}}" href="{{ route('index')}}"></div>
                         <p></p>
                         <ul class="social-menu list-inline">
                             <li class="list-inline-item"><a href="https://twitter.com/vipxmarketplace" target="_blank" title="twitter"><i class="fa fa-twitter"></i></a></li>
@@ -129,7 +129,7 @@
                     </div>
                     <div class="newsletter col-lg-4">
                         <h5 class="text-uppercase">Assine a nossa newsletter</h5>
-                        <p>deixe seu e-mail e receba os melhores preços e ofertas.</p>
+                        <p style="color: #d59431">Deixe seu e-mail e receba os melhores preços e ofertas.</p>
                         <form action="#" id="newsletter-form">
                             <div class="form-group">
                                 <input type="email" name="subscribermail" placeholder="Digite seu email aqui">
@@ -148,10 +148,10 @@
                     </div>
                     <div class="payment col-md-6 clearfix">
                         <ul class="payment-list list-inline-item pull-right">
-                            <li class="list-inline-item"><img src="img/visa.svg" alt="..."></li>
-                            <li class="list-inline-item"><img src="img/mastercard.svg" alt="..."></li>
-                            <li class="list-inline-item"><img src="img/paypal.svg" alt="..."></li>
-                            <li class="list-inline-item"><img src="img/western-union.svg" alt="..."></li>
+                            <li class="list-inline-item"><img src="{{asset('img/visa.svg')}}"></li>
+                            <li class="list-inline-item"><img src="{{asset('img/mastercard.svg')}}"></li>
+                            <li class="list-inline-item"><img src="{{asset('img/paypal.svg')}}"></li>
+                            <li class="list-inline-item"><img src="{{asset('img/western-union.svg')}}"></li>
                         </ul>
                     </div>
                 </div>
