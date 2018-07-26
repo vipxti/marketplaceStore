@@ -29,7 +29,7 @@
 
                 <div class="row">
                     <div class="col-12 col-md-12 text-right">
-                        <a href="{{ route('index') }}" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #d33889; width: 100%;">Continuar Comprando</a>
+                        <a href="{{ route('index') }}" target="_blank" class="btn btn-template wide shop-now" style="width: 100%">Continuar Comprando</a>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                                                     
                                                     <input type="hidden" name="cod_produto_carrinho" value="{{ $key }}">
                                                     
-                                                    <button type="submit" class="btn btn-danger" style="background-color: #d33889; border-radius:0px">
+                                                    <button type="submit" class="btn btn-danger" style="background-color: #d89531; border-radius:0px">
                                                         Excluir
                                                     </button>
                                                 </form>

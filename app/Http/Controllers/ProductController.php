@@ -545,44 +545,6 @@ class ProductController extends Controller
                     $imgsPath = $img->im_produto;
                 }
 
-
-                /*$ext = 'jpeg';
-                $imageName = $request->cd_sku . '_' . 1 . '.' . $ext;
-                //$imagePath = str_replace($imagePath, '/', '\\');
-                //$realPath = $images->getRealPath();
-                //dd($imagePath.'/'.$imageName);
-                file_put_contents($imagePath.'/'.$imageName, file_get_contents($images));
-
-                $localImagesPath = $dbPath . '/' . $imageName;
-                $img = $this->createImage($localImagesPath, 1);
-                $skuImagem = $this->associateSkuImage($sku->cd_sku, $img->cd_img);
-                $imgsPath = $img->im_produto;*/
-
-
-
-
-                /*foreach ($images as $key => $image) {
-                    $ext = $image->getClientOriginalExtension();
-                    $imageName = $request->cd_sku . '_' . ($key + 1) . '.' . $ext;
-
-                    $realPath = $image->getRealPath();
-
-                    $this->saveImageFile($imagePath, $imageName, $realPath);
-
-                    $localImagesPath[$key] = $dbPath . '/' . $imageName;
-                }
-
-                foreach ($localImagesPath as $key => $dbImage) {
-                    if ($key == 0) {
-                        $img = $this->createImage($dbImage, 1);
-                    } else {
-                        $img = $this->createImage($dbImage, 0);
-                    }
-
-                    $skuImagem = $this->associateSkuImage($sku->cd_sku, $img->cd_img);
-
-                    $imgsPath[$key] = $img->im_produto;
-                }*/
             } else {
 
                 $img = $this->createImage('semprodutoview.png', 1);
@@ -591,13 +553,9 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             //$this->deleteImageFile($imgsPath);
-
         }
 
-
-
         DB::commit();
-
         //return redirect()->route('products.list')->with('success', 'Produtos do Bling cadastrados com sucesso');
         return response()->json([
             'message' => 'produto cadastrado'

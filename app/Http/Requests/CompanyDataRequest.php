@@ -39,7 +39,7 @@ class CompanyDataRequest extends FormRequest
             'cd_cep' => 'required|string',
             'nm_cidade' => 'required|string',
             'ds_endereco' => 'required|string',
-            'ds_numero_endereco' => 'required|numeric',
+            'cd_numero_endereco' => 'required|numeric',
             'ds_complemento' => 'nullable',
             'ds_ponto_referencia' => 'nullable',
             'nm_bairro' => 'required|string',

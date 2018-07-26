@@ -25,6 +25,7 @@ class Company extends Model
         'cd_api_bling',
         'cd_api_key',
         'im_logo',
+        'cd_numero_endereco',
         'ds_complemento',
         'ds_ponto_referencia',
         'fk_cd_telefone',

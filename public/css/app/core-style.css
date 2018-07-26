@@ -274,7 +274,7 @@ img {
 }
 
 #scrollUp {
-    background-color: #d33889;
+    background-color: #d59431;
     border-radius: 0;
     bottom: 0;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
@@ -320,8 +320,8 @@ img {
     min-width: 170px;
     height: 55px;
     color: #fff;
-    background-color: #d33889;
-    border: 3px solid #d33889;
+    background-color: #d59431;
+    border: 3px solid #d59431;
     border-radius: 2px;
     padding: 0 30px;
     text-transform: uppercase;
@@ -334,8 +334,8 @@ img {
 .karl-btn:focus {
     font-weight: 700;
     color: #fff;
-    background-color: #d33889;
-    border-color: #d33889;
+    background-color: #d59431;
+    border-color: #d59431;
 }
 
 /* -------------------
@@ -398,7 +398,7 @@ img {
 }
 
 .cart_quantity {
-    background-color: #d33889;
+    background-color: #d59431;
     border-radius: 50%;
     color: #fff;
     font-size: 11px;
@@ -433,7 +433,7 @@ img {
 
 .header-right-side-menu > a:focus,
 .header-right-side-menu > a:hover {
-    background-color: #d33889;
+    background-color: #d59431;
     color: #fff;
 }
 
@@ -504,7 +504,7 @@ img {
 
 .cart-list li .btn-checkout,
 .cart-list li .btn-cart {
-    background-color: #d33889;
+    background-color: #d59431;
     border-radius: 0;
     color: #fff;
     font-size: 13px;
@@ -542,7 +542,7 @@ img {
     width: auto;
     height: 35px;
     padding: 0 30px;
-    background-color: #d33889;
+    background-color: #d59431;
     color: #fff;
     display: block;
     line-height: 35px;
@@ -584,7 +584,7 @@ img {
 .dropdown-menu .dropdown-item:hover {
     color: #fff;
     text-decoration: none;
-    background-color: #d33889;
+    background-color: #d59431;
     font-weight: 700;
 }
 
@@ -621,7 +621,7 @@ img {
 }
 
 #sideMenuClose:hover {
-    background-color: #d33889;
+    background-color: #d59431;
 }
 
 .menu-list {
@@ -707,8 +707,8 @@ img {
 .menu-content > li > a:before {
     width: 10px;
     height: 10px;
-    border: 1px solid #d33889;
-    background-color: #d33889;
+    border: 1px solid #d59431;
+    background-color: #d59431;
     border-radius: 2px;
     display: inline-block;
     margin-right: 10px;
@@ -753,7 +753,7 @@ img {
 }
 
 .top-discount-area .single-discount-area:nth-child(2) {
-    background-color: #d33889;
+    background-color: #d59431;
 }
 
 .top-discount-area .single-discount-area:last-child {
@@ -831,8 +831,8 @@ img {
 }
 
 .welcome_slides.owl-carousel .owl-dot.active {
-    background-color: #d33889;
-    border-color: #d33889;
+    background-color: #d59431;
+    border-color: #d59431;
 }
 
 /* -----------------------------
@@ -945,7 +945,7 @@ img {
 }
 
 .quickview_body .cart-submit {
-    background-color: #d33889;
+    background-color: #d59431;
     border: medium none;
     color: #fff;
     cursor: pointer;
@@ -958,7 +958,7 @@ img {
 }
 
 .quickview_body .cart-submit:hover {
-    background-color: #d33889;
+    background-color: #d59431;
     color: #fff;
 }
 
@@ -971,7 +971,7 @@ img {
 
 .quickview_body .modal_pro_wishlist > a,
 .quickview_body .modal_pro_compare > a {
-    background-color: #e91e63;
+    background-color: #d59431;
     color: #fff;
     display: block;
     height: 35px;
@@ -1077,7 +1077,7 @@ img {
 
 .portfolio-menu > .btn:focus,
 .portfolio-menu > .btn.active {
-    color: #d33889;
+    color: #d59431;
     box-shadow: none;
 }
 
@@ -1165,9 +1165,9 @@ img {
 
 .product-description .add-to-cart-btn {
     margin-top: 10px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
-    color: #d33889;
+    color: #d59431;
     display: block;
 }
 
@@ -1195,7 +1195,7 @@ img {
     position: relative;
     z-index: 1;
     color: #fff;
-    font-size: 48px;
+    font-size: 40px;
     text-transform: uppercase;
     margin-bottom: 0;
 }
@@ -1207,7 +1207,7 @@ img {
     font-size: 11px;
     text-transform: uppercase;
     font-weight: 700;
-    background-color: #d33889;
+    background-color: #d59431;
     padding: 3px 10px;
     top: -30px;
     left: 10px;
@@ -1221,7 +1221,7 @@ img {
     height: 0;
     border-style: solid;
     border-width: 0 9px 9px 9px;
-    border-color: transparent transparent #d33889 transparent;
+    border-color: transparent transparent #d59431 transparent;
     bottom: -2px;
     left: -6px;
     -webkit-transform: rotate(-45deg);
@@ -1230,12 +1230,13 @@ img {
 
 .offer-content-area p {
     color: #fff;
+    padding-top: 15px;
     font-weight: 600;
     font-size: 14px;
 }
 
 .offer-product-price h3 {
-    color: #d33889;
+    color: #d59431;
 }
 
 .offer-product-price h3 span {
@@ -1252,7 +1253,7 @@ img {
 .single-testimonial-area .quote {
     font-size: 72px;
     font-weight: 700;
-    color: #d33889;
+    color: #d59431;
     line-height: 1;
 }
 
@@ -1290,7 +1291,7 @@ img {
     text-align: left;
     display: block;
     font-weight: 700;
-    color: #d33889;
+    color: #d59431;
 }
 
 .karl-testimonials-slides.owl-carousel .owl-dots {
@@ -1316,8 +1317,8 @@ img {
 }
 
 .karl-testimonials-slides.owl-carousel .owl-dot.active {
-    background-color: #d33889;
-    border-color: #d33889;
+    background-color: #d59431;
+    border-color: #d59431;
 }
 
 /* ----------------------
@@ -1347,7 +1348,7 @@ img {
 .footer_social_area > a:hover {
     -webkit-transform: translateY(-5px);
     transform: translateY(-5px);
-    color: #d33889;
+    color: #d59431;
 }
 
 .footer_widget_menu a {
@@ -1404,7 +1405,7 @@ img {
 }
 
 .subscribtion_form .submit:hover {
-    background-color: #d33889;
+    background-color: #d59431;
     color: #fff;
 }
 
@@ -1492,12 +1493,12 @@ img {
 
 .widget.size .widget-desc a:hover,
 .widget.size .widget-desc a:focus {
-    background-color: #d33889;
+    background-color: #d59431;
     color: #fff;
 }
 
 .widget.price .ui-slider-handle {
-    background-color: #d33889;
+    background-color: #d59431;
     border: none;
     border-radius: 0;
     top: -6px;
@@ -1573,7 +1574,7 @@ img {
     width: calc(100% + 6px);
     height: calc(100% + 6px);
     display: block;
-    border: 2px solid #d33889;
+    border: 2px solid #d59431;
     position: absolute;
     z-index: -1;
     top: -3px;
@@ -1614,8 +1615,8 @@ img {
     width: 37px;
     text-align: center;
     font-weight: 700;
-    color: #d33889;
-    border: 2px solid #d33889;
+    color: #d59431;
+    border: 2px solid #d59431;
     margin-right: 5px;
     background-color: transparent;
 }
@@ -1623,8 +1624,8 @@ img {
 .pagination-sm .page-link:hover,
 .pagination-sm .page-item.active .page-link,
 .pagination-sm .page-link:focus {
-    color: #d33889 !important;
-    border: 2px solid #d33889 !important;
+    color: #d59431 !important;
+    border: 2px solid #d59431 !important;
     background-color: transparent;
 }
 
@@ -1742,8 +1743,8 @@ img {
 
 .single_product_desc .widget.size .widget-desc a:hover,
 .single_product_desc .widget.size .widget-desc a:focus {
-    border: 2px solid #d33889;
-    background-color: #d33889;
+    border: 2px solid #d59431;
+    background-color: #d59431;
 }
 
 .single_product_desc .widget.size {
@@ -1793,7 +1794,7 @@ img {
 }
 
 .single_product_desc .cart .cart-submit {
-    background-color: #d33889;
+    background-color: #d59431;
     border: medium none;
     color: #fff;
     font-size: 14px;
@@ -1935,7 +1936,7 @@ img {
 
 .cart_area .update-checkout a,
 .cart_area .back-to-shop a {
-    background-color: #d33889;
+    background-color: #d59431;
     border-radius: 0;
     color: white;
     display: inline-block;
@@ -1946,7 +1947,7 @@ img {
     text-align: center;
     font-size: 14px;
     font-weight: 700;
-    border: 1px solid #d33889;
+    border: 1px solid #d59431;
     text-transform: capitalize;
 }
 
@@ -1996,7 +1997,7 @@ img {
     height: 35px;
     border: none;
     text-transform: capitalize;
-    background-color: #d33889;
+    background-color: #d59431;
     font-size: 14px;
     top: 0;
     color: #fff;
@@ -2032,7 +2033,7 @@ img {
 .karl-checkout-btn {
     width: 100%;
     height: 60px;
-    background-color: #d33889;
+    background-color: #d59431;
     border-radius: 0;
     color: #fff;
     text-transform: uppercase;
@@ -2059,7 +2060,7 @@ img {
 }
 
 .checkout_details_area form label span {
-    color: #d33889;
+    color: #d59431;
 }
 
 .checkout_details_area form .form-control,
