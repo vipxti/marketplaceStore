@@ -85,7 +85,12 @@ Route::prefix('admin')->group(function () {
 
     //Editar menus
     Route::get('/menu', 'MenuController@showEditMenuPage')->name('menu.edit')->middleware('auth:admin');
-    Route::post('/menu', 'MenuController@saveMenus')->name('menu.save');
+    Route::post('/menu', 'MenuController@saveMenus')->name('menu.save.non.use');
+    Route::post('/menu/save', 'MenuController@crudMenu')->name('menu.save');
+    Route::post('/menu/controlenav', 'MenuController@controleMenuNav')->name('menu.control.nav');
+
+    //Associa menu/categoria
+    Route::post('/menucat/associate', 'MenuController@associarMenuCategoria')->name('menucat.associate');
 
     Route::get('/productconfig', 'PageController@showConfigProductPage')->name('product.config');
 
