@@ -881,6 +881,7 @@ nav.navbar .right-col .cart {
 }
 
 nav.navbar .cart-no {
+  padding-top: 5px;
   min-width: 20px;
   min-height: 20px;
   border-radius: 50%;
