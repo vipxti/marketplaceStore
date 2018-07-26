@@ -146,6 +146,7 @@ Route::prefix('page')->group(function () {
         Route::get('/dashboard', 'ClientController@showClientPage')->name('client.dashboard')->middleware('auth:web');
         Route::get('/logout', 'Auth\ClientLoginController@clientLogout')->name('client.logout');
         Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
+        Route::post('/register/verify/email', 'Auth\ClientRegisterController@verificaEmail')->name('client.verify.email');
     });
     
     Route::get('/calculaFrete/{cep},{altura},{largura},{peso},{comprimento}', 'CartController@calcFrete');
