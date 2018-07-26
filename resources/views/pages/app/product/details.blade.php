@@ -10,15 +10,7 @@
                     <ol class="breadcrumb d-flex align-items-center">
                     <li class="breadcrumb-item"><a href="{{ route('products.page') }}">Início</a></li>
 
-                        @if ($isVariation)
-
-                            <li class="breadcrumb-item active">{{ $product->nm_produto_variacao }}</li>
-                            
-                        @else
-
-                            <li class="breadcrumb-item active">{{ $product->nm_produto }}</li>
-                            
-                        @endif
+                        <li class="breadcrumb-item active">{{ $product[0]['nm_produto'] }}</li>
    
                     </ol>
                     <!-- btn -->
@@ -32,6 +24,7 @@
     <section class="single_product_details_area section_padding_0_100">
 
         <div class="container">
+
             <div class="row">
 
                 <div class="col-12 col-md-6">
@@ -40,57 +33,41 @@
 
                             <ol class="carousel-indicators">
 
-                                <li class="active" data-target="#product_details_slider" data-slide-to="0" style="{{ 'background-image: url(' . URL::asset('img/products/' . $productImages[0]['im_produto']) . ');' }}">
+                                <li class="active" id="thumb1Carrossel" data-target="#product_details_slider" data-slide-to="0" style="{{ 'background-image: url(' . URL::asset('img/products/' . $images[0]['im_produto']) . ');' }}">
                                 </li>
 
-                                @if(count($productImages) > 1)
+                                @if(count($images) > 1)
 
-                                    @if ($isVariation)
+                                    @foreach($images as $key => $image)
 
-                                        @foreach($productImages as $key => $pImages)
+                                        @if($key > 0)
 
-                                            @if($key > 0)
+                                            <li id="{{ 'thumb' . ($key + 1) . 'Carrossel' }}" data-target="#product_details_slider" data-slide-to="{{ $key }}" style="{{ 'background-image: url(' . URL::asset('img/products/' . $image['im_produto']) . ');' }}">
+                                            </li>
 
-                                                <li data-target="#product_details_slider" data-slide-to="{{ $key }}" style="{{ 'background-image: url(' . URL::asset('img/products/' . $pImages['im_produto']) . ');' }}">
-                                                </li>
+                                        @endif
 
-                                            @endif
-
-                                        @endforeach
-                                        
-                                    @else
-
-                                        @foreach($productImages as $key => $pImages)
-
-                                            @if($key > 0)
-
-                                                <li data-target="#product_details_slider" data-slide-to="{{ $key }}" style="{{ 'background-image: url(' . URL::asset('img/products/' . $pImages['im_produto']) . ');' }}">
-                                                </li>
-
-                                            @endif
-
-                                        @endforeach
-                                        
-                                    @endif    
+                                    @endforeach
 
                                 @endif
 
                             </ol>
 
                             <div class="carousel-inner">
+
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="{{ URL::asset('img/products/' . $productImages[0]['im_produto']) }}" alt="First slide">
+                                    <img id="fotoGrande1" class="d-block w-100" src="{{ URL::asset('img/products/' . $images[0]['im_produto']) }}" alt="First slide">
                                 </div>
 
-                                @if(count($productImages) > 1)
+                                @if(count($images) > 1)
 
-                                    @foreach($productImages as $key => $pImages)
+                                    @foreach($images as $key => $image)
 
                                         @if($key > 0)
 
                                             <div class="carousel-item">
-                                                <a class="gallery_img" href="{{ URL::asset('img/products/' . $pImages['im_produto']) }}">
-                                                <img class="d-block w-100" src="{{ URL::asset('img/products/' . $pImages['im_produto']) }}" alt="slide">
+                                                <a class="gallery_img" href="{{ URL::asset('img/products/' . $image['im_produto']) }}">
+                                                <img id="{{ 'fotoGrande' . ($key + 1) }}" class="d-block w-100" src="{{ URL::asset('img/products/' . $image['im_produto']) }}" alt="slide">
                                                 </a>
                                             </div>
 
@@ -109,20 +86,34 @@
 
                     <div class="single_product_desc">
 
-                        @if ($isVariation)
+                        <h4 id="nomeProduto" class="title">{{ $product[0]['nm_produto'] }}</h4>
 
-                            <h4 class="title">{{ $product->nm_produto_variacao }}</h4>
+                            <h4 id="precoProduto" class="price">R$ {{ number_format($product[0]['vl_produto'], 2, ',', '.') }}</h4>
 
-                            <h4 class="price">R$ {{ number_format($product->vl_produto_variacao, 2, ',', '.') }}</h4>
+                            @if ($hasVariation)
 
-                            @if($product->qt_produto_variacao > 5)
+                                @if($product[0]['qt_produto_variacao'] > 5)
 
-                                <p class="available">Disponibilidade: <span class="text-muted">Em estoque</span></p>
+                                    <p class="available">Disponibilidade: <span class="disponivel" class="text-muted">Em estoque</span></p>
 
+                                @else
+
+                                    <p class="available">Disponibilidade: <span class="disponivel" class="text-muted">Não disponível</span></p>
+
+                                @endif
+                                
                             @else
 
-                                <p class="available">Disponibilidade: <span class="text-muted">Não disponível</span></p>
+                                @if($product[0]['qt_produto'] > 5)
 
+                                    <p class="available">Disponibilidade: <span class="disponivel" class="text-muted">Em estoque</span></p>
+
+                                @else
+
+                                    <p class="available">Disponibilidade: <span class="disponivel" class="text-muted">Não disponível</span></p>
+
+                                @endif
+                                
                             @endif
 
                             <div class="single_product_ratings mb-15">
@@ -135,113 +126,74 @@
 
                             <p>&nbsp;</p>
 
-                            @if (count($variations) > 0)
+                            @if ($hasVariation)
 
-                                @if ($totalCores > 0)
+                                @if (count($variations) > 0)
 
-                                    <div class="widget color mb-50">
-                                        <h6 class="widget-title">Cor</h6>
+                                    @if ($totalCores > 0)
 
-                                        <div class="widget-desc">
-                                        
-                                            <ul class="d-flex justify-content-between">
+                                        <div class="widget color mb-50">
+                                            <h6 class="widget-title">Cor</h6>
 
-                                                @foreach ($colors as $color)
+                                            <div class="widget-desc">
+                                            
+                                                <ul class="d-flex justify-content-between">
 
-                                                    <li class="{{ str_slug($color->nm_cor, '-') }}"><a href="{{ route('products.details', '') }}" style="background-color: {{ $color->hex }} !important;"><span class="text-center">({{ $color->qt_total_cor }})</span></a></li>
-                                                    &nbsp;&nbsp;
-                                                    
-                                                @endforeach
+                                                    @foreach ($codProds as $c)
 
-                                                {{-- @foreach ($variations as $key => $variation)
+                                                        <input type="hidden" name="cod[]" value="{{ $c }}">
+                                                        
+                                                    @endforeach
 
-                                                    @if (count($productColors[$key]) > 0)
+                                                    @foreach ($colors as $key => $color)
 
-                                                        @foreach ($productColors[$key] as $color)
-                                                            <li class="{{ str_slug($color['nm_cor'], '-') }}"><a href="{{ route('products.details', $variation->nm_slug_variacao) }}" style="background-color: {{ $color['hex'] }} !important;"><span class="text-center">({{ $variation->qt_produto_variacao }})</span></a></li>
-                                                            &nbsp;&nbsp;
-                                                            
-                                                        @endforeach
+                                                        <li>
 
-                                                    @endif
+                                                            <a href="javascript:void(0)" id="{{ $color->cd_cor }}" name="btn_color[]" style="background-color: {{ $color->hex }};"></a>
 
-                                                @endforeach --}}
+                                                        </li>&nbsp;&nbsp;
+                                                                
+                                                    @endforeach
 
-                                            </ul>
-                                
-                                        </div>
-
-                                    </div>
+                                                </ul>
                                     
-                                @endif
-
-                                @if ($totalNumeros > 0)
-
-                                    <div class="widget size mb-30">
-                                        <h6 class="widget-title">Tamanho</h6>
-
-                                        <div class="widget-desc">
-                                            <ul>
-
-                                                @foreach ($variations as $key => $variation)
-
-                                                    @if (count($productNumberSizes[$key]) > 0)
-
-                                                        @foreach ($productNumberSizes[$key] as $number)
-                                                        
-                                                            <li><a href="{{ route('products.details', $variation->nm_slug_variacao) }}">{{ $number['nm_tamanho_num'] }}</a></li>
-
-                                                        @endforeach
-
-                                                    @endif
-                                                    
-                                                @endforeach
-
-                                            </ul>
+                                            </div>
 
                                         </div>
-                                
-                                    </div>
+                                        
+                                    @endif
 
                                 @endif
 
-                                @if ($totalLetras > 0)
-
-                                    <div class="widget size mb-30">
-                                        <h6 class="widget-title">Tamanho</h6>
-
-                                        <div class="widget-desc">
-                                            <ul>
-
-                                                @foreach ($variations as $key => $variation)
-
-                                                    @if (count($productLetterSizes[$key]) > 0)
-
-                                                        @foreach ($productLetterSizes[$key] as $letter)
-
-                                                        {{ $letter }}
-                                                        
-                                                            <li><a href="{{ route('products.details', $variation->nm_slug_variacao) }}">{{ $letter['nm_tamanho_letra'] }}</a></li>
-
-                                                        @endforeach
-
-                                                    @endif
-                                                    
-                                                @endforeach
-
-                                            </ul>
-
-                                        </div>
+                                <div id="tamanhos" class="widget size mb-50">
                                 
+                                    <h6 class="widget-title">Tamanho</h6>
+
+                                    <div class="widget-desc">
+                                    
+                                        <ul class="listaDeTamanhos"> 
+                                    
+                                            @foreach ($sizes as $size)
+                                                
+                                                <li>
+                                                
+                                                    <a id="{{ $size['cd_nr_sku'] }}" name="sizes[]" href="javascript:void(0);">{{ $size['nm_tamanho_num'] }}</a>
+                                                
+                                                </li>&nbsp;&nbsp;
+                                            
+                                            @endforeach
+                                    
+                                        </ul>
+                                    
                                     </div>
-
-                                @endif
-
+                                
+                                </div>
+                                
                             @endif
 
                             <p>&nbsp;</p>
 
-                            @if($product->qt_produto_variacao <= 5)
+                            @if($product[0]['qt_produto'] <= 5)
 
                                 <p>SEM ESTOQUE</p>
 
@@ -251,18 +203,37 @@
                                 <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
                                     {{ csrf_field() }}
 
-                                    <input type="hidden" name="cd_produto" value="{{ $product->cd_produto_variacao }}">
-                                    <input type="hidden" name="nm_produto" value="{{ $product->nm_produto_variacao }}">
-                                    <input type="hidden" name="ds_produto" value="{{ $product->ds_produto_variacao }}">
-                                    <input type="hidden" name="vl_produto" value="{{ $product->vl_produto_variacao }}">
-                                    <input id="qtProdEstoque" type="hidden" name="qt_produto" value="{{ $product->qt_produto_variacao }}">
-                                    <input type="hidden" name="sku_produto" value="{{ $product->cd_nr_sku }}">
-                                    <input type="hidden" name="slug_produto" value="{{ $product->nm_slug_variacao }}">
-                                    <input type="hidden" name="ds_altura" value="{{ $product->ds_altura }}">
-                                    <input type="hidden" name="ds_largura" value="{{ $product->ds_largura }}">
-                                    <input type="hidden" name="ds_comprimento" value="{{ $product->ds_comprimento }}">
-                                    <input type="hidden" name="ds_peso" value="{{ $product->ds_peso }}">
-                                    <input type="hidden" name="im_produto" value="{{ $productImages[0]['im_produto'] }}">
+                                    @if ($hasVariation)
+
+                                        <input type="hidden" name="cd_produto" value="">
+                                        <input type="hidden" name="nm_produto" value="">
+                                        <input type="hidden" name="ds_produto" value="">
+                                        <input type="hidden" name="vl_produto" value="">
+                                        <input id="qtProdEstoque" type="hidden" name="qt_produto" value="">
+                                        <input type="hidden" name="sku_produto" value="">
+                                        <input type="hidden" name="slug_produto" value="">
+                                        <input type="hidden" name="ds_altura" value="">
+                                        <input type="hidden" name="ds_largura" value="">
+                                        <input type="hidden" name="ds_comprimento" value="">
+                                        <input type="hidden" name="ds_peso" value="">
+                                        <input type="hidden" name="im_produto" value="">
+                                        
+                                    @else
+
+                                        <input type="hidden" name="cd_produto" value="{{ $product->cd_produto }}">
+                                        <input type="hidden" name="nm_produto" value="{{ $product->nm_produto }}">
+                                        <input type="hidden" name="ds_produto" value="{{ $product->ds_produto }}">
+                                        <input type="hidden" name="vl_produto" value="{{ $product->vl_produto }}">
+                                        <input id="qtProdEstoque" type="hidden" name="qt_produto" value="{{ $product->qt_produto }}">
+                                        <input type="hidden" name="sku_produto" value="{{ $product->cd_nr_sku }}">
+                                        <input type="hidden" name="slug_produto" value="{{ $product->nm_slug }}">
+                                        <input type="hidden" name="ds_altura" value="{{ $product->ds_altura }}">
+                                        <input type="hidden" name="ds_largura" value="{{ $product->ds_largura }}">
+                                        <input type="hidden" name="ds_comprimento" value="{{ $product->ds_comprimento }}">
+                                        <input type="hidden" name="ds_peso" value="{{ $product->ds_peso }}">
+                                        <input type="hidden" name="im_produto" value="{{ $images[0]['im_produto'] }}">
+                                        
+                                    @endif
 
                                     {{-- <div class="quantity">
                                         <span id="1" class="qty-minus">
@@ -274,121 +245,11 @@
                                         </span>
                                     </div> --}}
 
-                                    <button type="submit" class="btn cart-submit d-block">Comprar</button>       
-                                </form>
-
-                            @endif
-                            
-                        @else
-
-                            <h4 class="title">{{ $product->nm_produto }}</h4>
-
-                            <h4 class="price">R$ {{ number_format($product->vl_produto, 2, ',', '.') }}</h4>
-
-                            @if($product->qt_produto > 5)
-
-                                <p class="available">Disponibilidade: <span class="text-muted">Em estoque</span></p>
-
-                            @else
-
-                                <p class="available">Disponibilidade: <span class="text-muted">Não disponível</span></p>
-
-                            @endif
-
-                            <div class="single_product_ratings mb-15">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                            </div>
-
-                            <p>&nbsp;</p>
-
-                            @if (count($variations) > 0)
-
-                                @if ($totalCores > 0)
-
-                                    <div class="widget color mb-50">
-                                        <h6 class="widget-title">Cor</h6>
-
-                                        <div class="widget-desc">
-                                        
-                                            <ul class="d-flex justify-content-between">
-
-                                                @foreach ($colors as $color)
-
-                                                    <li class="{{ str_slug($color->nm_cor, '-') }}"><a href="{{ route('products.details', '') }}" style="background-color: {{ $color->hex }} !important;"><span class="text-center">({{ $color->qt_total_cor }})</span></a></li>
-                                                    &nbsp;&nbsp;
-                                                    
-                                                @endforeach
-
-                                                {{-- @foreach ($variations as $key => $variation)
-
-                                                    @if (count($productColors[$key]) > 0)
-
-                                                        @foreach ($productColors[$key] as $color)
-                                                            <li class="{{ str_slug($color['nm_cor'], '-') }}"><a href="{{ route('products.details', $variation->nm_slug_variacao) }}" style="background-color: {{ $color['hex'] }} !important;"><span class="text-center">({{ $variation->qt_produto_variacao }})</span></a></li>
-                                                            &nbsp;&nbsp;
-                                                            
-                                                        @endforeach
-
-                                                    @endif
-
-                                                @endforeach --}}
-
-                                            </ul>
-                                
-                                        </div>
-
-                                    </div>
-                                    
-                                @endif
-
-                            @endif
-
-                            <p>&nbsp;</p>
-
-                            @if($product->qt_produto <= 5)
-
-                                <p>SEM ESTOQUE</p>
-
-                            @else
-
-                                <!-- Botão adicionar carrinho -->
-                                <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
-                                    {{ csrf_field() }}
-
-                                    <input type="hidden" name="cd_produto" value="{{ $product->cd_produto }}">
-                                    <input type="hidden" name="nm_produto" value="{{ $product->nm_produto }}">
-                                    <input type="hidden" name="ds_produto" value="{{ $product->ds_produto }}">
-                                    <input type="hidden" name="vl_produto" value="{{ $product->vl_produto }}">
-                                    <input id="qtProdEstoque" type="hidden" name="qt_produto" value="{{ $product->qt_produto }}">
-                                    <input type="hidden" name="sku_produto" value="{{ $product->cd_nr_sku }}">
-                                    <input type="hidden" name="slug_produto" value="{{ $product->nm_slug }}">
-                                    <input type="hidden" name="ds_altura" value="{{ $product->ds_altura }}">
-                                    <input type="hidden" name="ds_largura" value="{{ $product->ds_largura }}">
-                                    <input type="hidden" name="ds_comprimento" value="{{ $product->ds_comprimento }}">
-                                    <input type="hidden" name="ds_peso" value="{{ $product->ds_peso }}">
-                                    <input type="hidden" name="im_produto" value="{{ $productImages[0]['im_produto'] }}">
-
-                                    {{-- <div class="quantity">
-                                        <span id="1" class="qty-minus">
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1" disabled>
-                                        <span id="1" class="qty-plus">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </span>
-                                    </div> --}}
-
-                                    <button type="submit" class="btn cart-submit d-block">Comprar</button>       
+                                    <button type="submit" id="btnComprar" class="btn cart-submit d-block" disabled>Comprar</button>
                                     
                                 </form>
 
                             @endif
-                            
-                        @endif
 
                     </div>
 
@@ -409,11 +270,11 @@
                             </h6>
                         </div>
 
-                        @if ($isVariation)
+                        @if ($hasVariation)
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <p>{{ $product->ds_produto_variacao }}</p>
+                                    <p>{{ $product[0]['ds_produto_variacao'] }}</p>
                                 </div>
                             </div>
 
@@ -421,7 +282,7 @@
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <p>{{ $product->ds_produto }}</p>
+                                    <p>{{ $product[0]['ds_produto'] }}</p>
                                 </div>
                             </div>
                             
@@ -436,6 +297,18 @@
     </section>
 
     <script>
+
+        let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        let codigos = new Array();
+        let sizeSelected = false;
+
+        let selectedProductSku = '';
+
+        let prod = new Array();
+
+        $.each($('input[name="cod[]"]'), function(i, v){
+            codigos[i] = v.value;
+        });
 
         $('.qty-plus').click(function(e){
 
@@ -504,6 +377,70 @@
             }
 
         });
+
+        $('a[name="btn_color[]"]').click(function (){
+
+            $.ajax({
+
+                url: '{{ route('product.sizes') }}',
+                type: 'POST',
+                data: {_token: CSRF_TOKEN, cds_produto: codigos, cd_cor: this.id},
+                success: function (d) {
+
+                    if (d.data.length > 0) {
+
+                        let rootPath = '{{ asset('img/products') }}' + '/'
+
+                        $('#thumb1Carrossel').css('background-image','url(' + rootPath + d.images[0].im_produto + ')');
+                        $('#fotoGrande1').attr('src', '' + rootPath + d.images[0].im_produto +'');
+
+                        $('#tamanhos').removeClass('d-none');
+                        $('.listaDeTamanhos').empty();
+                        
+                        $.each(d.data, function (i, v) {
+
+                            if (d.sizeType == 'N') {
+                                $('.listaDeTamanhos').append('<li><a id="' + v.cd_nr_sku + '" name="sizes[]" href="javascript:void(0);">' + v.nm_tamanho_num + '</a></li>&nbsp;&nbsp;');
+                            }
+
+                            if (d.sizeType == 'L') {
+                                $('.listaDeTamanhos').append('<li><a id="' + v.cd_nr_sku + '" name="sizes[]" href="javascript:void(0);">' + v.nm_tamanho_letra + '</a></li>&nbsp;&nbsp;');
+                            }
+
+                        })
+
+                        $.each(d.images, function (i, v) {
+
+                            if (i > 0) {
+                                $('#thumb' + (i + 1) + 'Carrossel').css('background-image','url(' + rootPath + v.im_produto + ')');
+                                $('#fotoGrande' + (i + 1)).attr('src', '' + rootPath + v.im_produto +'');
+                            }
+                            
+                        });
+                    }
+
+                }
+            });
+
+        });
+
+        $('.listaDeTamanhos').on('click', 'li a', function () {
+
+            selectedProductSku = this.id;
+
+            $.ajax({
+                url: '{{ route('product.variation.data') }}',
+                type: 'POST',
+                data: {_token: CSRF_TOKEN, sku: selectedProductSku},
+                success: function (d) {
+
+                    console.log(d);
+                    
+                }
+            });
+
+
+        })
 
     </script>
 
