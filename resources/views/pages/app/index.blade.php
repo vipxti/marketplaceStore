@@ -26,6 +26,65 @@
     </section>--}}
     <!-- ****** Top Catagory Area End ****** -->
 
+
+    <!-- Banner Principal-->
+    <section class="hero hero-home no-padding">
+        <div class="owl-carousel owl-theme hero-slider">
+            <!-- Banner 1 -->
+            <div style="background: url(img/hero-bg.png);" class="item d-flex align-items-center has-pattern">
+                <div class="container">
+                    <div class="row" style="color: #fff">
+                        <div class="col-lg-6">
+                            <h1 style="color: #d59431">Blush Vult</h1>
+                            <ul class="lead">
+                                <li><strong>Vult Blush Compacto</strong> Tradicional</li>
+                                <li><strong>Cor</strong> 04</li>
+                                <li><strong>R$ 16,99</strong> Imperdível</li>
+                            </ul>
+                            <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner 2 -->
+            <div style="background: url(img/hero-bg-2.png);" class="item d-flex align-items-center has-pattern">
+                <div class="container">
+                    <div class="row" style="color: #fff">
+                        <div class="col-lg-6">
+                            <h1 style="color: #d59431">Batom Vult</h1>
+                            <ul class="lead">
+                                <li><strong>Vult Batom Matte</strong> Rosa Queimado</li>
+                                <li><strong>Cor</strong> 07</li>
+                                <li><strong>R$ 15,99</strong> Imperdível</li>
+                            </ul>
+                            <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner 3 -->
+            <div style="background: url(img/hero-bg-3.png);" class="item d-flex align-items-center has-pattern">
+                <div class="container">
+                    <div class="row" style="color: #fff">
+                        <div class="col-lg-6">
+                            <h1 style="color: #d59431">Batom Vult</h1>
+                            <ul class="lead">
+                                <li><strong>Vult Batom Matte</strong> Nude</li>
+                                <li><strong>Cor</strong> 27</li>
+                                <li><strong>R$ 12,99</strong> Imperdível</li>
+                            </ul>
+                            <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
     <!-- ****** New Arrivals Area Start ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
         {{-- <div class="karl-projects-menu mb-50">
@@ -114,7 +173,7 @@
                         <div class="offer-product-price">
                             <h3><span class="regular-price">R$126,99</span> R$106,00</h3>
                         </div>
-                        <a href="{{ route('products.details', 'catharine-hill-paleta-de-sombras-variadas-30-cores') }}" target="_blank"  class="btn karl-btn mt-30">Compre Agora</a>
+                        <a href="{{ route('products.details', 'catharine-hill-paleta-de-sombras-variadas-30-cores') }}" target="_blank" class="btn btn-template wide shop-now">Comprar Agora</a>
                     </div>
                 </div>
             </div>

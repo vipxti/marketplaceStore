@@ -59,7 +59,7 @@
                 <div class="row">
                     <div class="col-12 text-center">
                         <div>
-                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 290px; background-color: #d33889; border-radius: 0px">Logar</button>
+                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 290px; background-color: #d89531; border-radius: 0px">Logar</button>
                         </div>
                     </div>
                 </div>

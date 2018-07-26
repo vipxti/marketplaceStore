@@ -22,7 +22,7 @@ mix.styles([
     'public/css/app/core-style.css',
     'public/css/app/font-awesome.min.css',
     'public/css/app/jquery-ui.min.css',
-    'public/css/app/magnific-popup.css'
+    'public/css/app/magnific-popup.css',
     'public/css/app/responsive.css',
     'public/css/app/style.css',
     'public/css/app/paineluser.css',
@@ -31,9 +31,9 @@ mix.styles([
     'public/css/app/custom-fonticons.css',
     'public/css/app/owl.carousel.css',
     'public/css/app/owl.theme.default.css',
-    'public/css/app/style.default.css',
     'public/css/app/custom.css',
-    'public/css/app/themify-icons.css'
+    'public/css/app/themify-icons.css',
+    'public/css/app/style.default.css'
 ], 'public/css/app-styles.css');
 
 //Compiled js files for app
