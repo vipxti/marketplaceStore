@@ -8,10 +8,14 @@
         <div class="search-area">
             <div class="search-area-inner d-flex align-items-center justify-content-center">
                 <div class="close-btn"><i class="icon-close"></i></div>
-                <form action="#">
+                <form id="formPesquisa" action="{{route('productsFilterCatSubCat.page')}}" method="POST">
+                    {{csrf_field()}}
                     <div class="form-group">
+
                         <input type="search" name="search" id="search" placeholder="Pesquisar produto...">
-                        <button type="submit" class="submit"><i class="fa fa-search"></i></button>
+                        <input type="search" name="id" id="idProd" hidden>
+                        <input type="search" name="catSubCat" id="catSubCatProd" hidden>
+                        <button id="btnPesquisaProd" type="button" class="submit"><i class="fa fa-search"></i></button>
                     </div>
                 </form>
             </div>
@@ -549,3 +553,26 @@
         </div>
     </nav>
 </header>
+
+<script>
+    $('#btnPesquisaProd').click(function(){
+        enviarDadoPesquisa();
+    });
+
+    function enviarDadoPesquisa(){
+        var nomeProd = $('#search').val();
+        $('#idProd').val('pesquisa');
+        $('#catSubCatProd').val(nomeProd);
+
+        $('#formPesquisa').submit();
+    }
+
+    $('#search').keypress(function(event){
+
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            enviarDadoPesquisa();
+        }
+
+    });
+</script>

@@ -29,7 +29,7 @@
 
                 <div class="row">
                     <div class="col-12 col-md-12 text-right">
-                        <a href="{{ route('index')}}" target="_blank" class="btn btn-template" style="width: 100%">Continuar Comprando</a>
+                        <a href="{{ route('products.page')}}" class="btn btn-template" style="width: 100%">Continuar Comprando</a>
                     </div>
                 </div>
 
@@ -120,7 +120,7 @@
 
                         <div class="cart-footer d-flex mt-30">
                             <div>
-                                <button type="submit" href="{{ route('index') }}" class="btn btn-template" style="font-size: 14px;">Continuar Comprando</button>
+                                <a href="{{ route('products.page') }}" class="btn btn-template" style="font-size: 14px;">Continuar Comprando</a>
                             </div>
 
                             <div class="update-checkout w-50">

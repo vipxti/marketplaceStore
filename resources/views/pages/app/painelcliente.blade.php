@@ -68,7 +68,7 @@
 
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <input type="button" class="btn btn-danger" value="Compre agora" style="width: 150px; background-color: #d33889">
+                                            <a href="{{route('products.page')}}" class="btn btn-danger" style="width: 150px; background-color: #d59431">Compre agora</a>
                                         </div>
                                     </div>
                                 </div>
@@ -153,7 +153,7 @@
                                         <!-- Botão Atualizar dados -->
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <input type="button" class="btn btn-danger" value="Atualizar dados" style="width: 150px; background-color: #d33889">
+                                                <input type="button" class="btn btn-danger" value="Atualizar dados" style="width: 150px; background-color: #d59431">
                                             </div>
                                         </div>
 
@@ -163,6 +163,143 @@
 
                                     <p>&nbsp;</p>
 
+                                    @if(count($endereco) > 0)
+                                        <form action="{{ route('client.address.save') }}" method="post">
+                                            {{ csrf_field() }}
+
+                                            <input type="hidden" id="ibge" name="cd_ibge" value="">
+                                            <input type="hidden" id="pais" name="nm_pais" value="">
+
+                                            <!-- Nome do destinatário -->
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">
+                                                            <input type="text" class="form-control" name="nm_destinatario" readonly required maxlength="50" value="{{$endereco[0]->nm_destinatario}}">
+                                                            <label class="form-label">Nome do destinatário</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <!-- CEP -->
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">
+                                                            <input type="number" id="campo_cep" value="{{$endereco[0]->cd_cep}}" disabled class="form-control" name="cd_cep" required>
+                                                            <label class="form-label">CEP</label>
+                                                        </div>
+                                                    </div>
+                                                    <p class="msg-cpf" style="font-size:14px"></p>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Estado e Cidade -->
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">
+                                                            <input type="text" id="uf" class="form-control" value="{{$endereco[0]->sg_uf}}" readonly name="sg_uf" required>
+                                                            <label class="form-label">Estado</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">
+                                                            <input type="text" id="cidade" value="{{$endereco[0]->nm_cidade}}" readonly class="form-control" name="nm_cidade" required>
+                                                            <label class="form-label">Cidade</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+
+                                                <!-- Complemnto -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">
+                                                            <input type="text" id="rua" value="{{$endereco[0]->ds_endereco}}" readonly class="form-control" name="ds_endereco" required>
+                                                            <label class="form-label">Rua/Avenida</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">
+                                                            <input type="numero" class="form-control" value="{{$endereco[0]->cd_numero_endereco}}" readonly name="cd_numero_endereco" required>
+                                                            <label class="form-label">Número</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+
+                                                <!-- Complemento -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">
+                                                            <input type="text" class="form-control" value="{{$endereco[0]->ds_complemento}}" readonly name="ds_complemento">
+                                                            <label class="form-label">Complemento</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Complemento -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">
+                                                            <input type="text" class="form-control" value="{{$endereco[0]->ds_ponto_referencia}}" readonly name="ds_ponto_referencia">
+                                                            <label class="form-label">Ponto de referência</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="row">
+                                                <!-- Bairro -->
+                                                <div class="col-md-12">
+                                                    <div class="form-group form-float">
+                                                        <div class="form-line">
+                                                            <input type="text" id="bairro" value="{{$endereco[0]->nm_bairro}}" readonly class="form-control" name="nm_bairro" required>
+                                                            <label class="form-label">Bairro</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br><br>
+
+                                            <!-- Botões Salvar -->
+                                            <div class="row" style="padding: 8px">
+                                                <div class="col-md-2" style="padding: 10px">
+                                                    <button type="submit" disabled class="btn btn-primary" style="background-color: #d59431">Adicionar Endereço</button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    @else
                                     <form action="{{ route('client.address.save') }}" method="post">
                                         {{ csrf_field() }}
 
@@ -293,11 +430,12 @@
                                         <!-- Botões Salvar -->
                                         <div class="row" style="padding: 8px">
                                             <div class="col-md-2" style="padding: 10px">
-                                                <button type="submit" class="btn btn-primary" style="background-color: #d33889">Adicionar Endereço</button>
+                                                <button type="submit" class="btn btn-primary" style="background-color: #d59431">Adicionar Endereço</button>
                                             </div>
                                         </div>                                        
 
                                     </form>
+                                    @endif
 
                                 </div>
                                 <div class="tab-pane" id="tab_default_5">

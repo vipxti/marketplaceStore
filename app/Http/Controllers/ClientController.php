@@ -68,8 +68,24 @@ class ClientController extends Controller
 
         }
 
-        $endereco = Client::join('cliente_endereco', 'cliente.cd_cliente', '=', 'cliente_endereco.cd_cliente')->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')->select('ds_endereco', 'cd_numero_endereco', 'ds_complemento', 'ds_ponto_referencia')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get();
+        $endereco = Client::join('cliente_endereco', 'cliente.cd_cliente', '=', 'cliente_endereco.cd_cliente')
+            ->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')
+            ->join('bairro', 'endereco.cd_bairro', '=', 'bairro.cd_bairro')
+            ->join('cidade', 'bairro.cd_cidade', '=', 'cidade.cd_cidade')
+            ->join('uf', 'cidade.cd_uf', '=', 'uf.cd_uf')
+            ->select('ds_endereco',
+                'cd_cep',
+                'cd_numero_endereco',
+                'ds_complemento',
+                'ds_ponto_referencia',
+                'nm_destinatario',
+                'nm_bairro',
+                'nm_cidade',
+                'sg_uf')
+            ->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)
+            ->get();
 
+        //dd($endereco);
         return view('pages.app.painelcliente', compact('telCliente', 'endereco', 'nome', 'menuNav', 'categoriaSubCat'));
     }
 
