@@ -1,7 +1,145 @@
 <!-- Tweaks for older IEs--><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
 <![endif]-->
+
+{{--<style type="text/css">
+    /* General menu styling */
+    .nav {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        line-height: 22px;
+    }
+    /* The main navigation link containers */
+    .nav>li {
+        display: block;
+        float: left; /* Displaying them on the same line */
+        margin: 0;
+        padding: 0;
+    }
+    /* The main navigation links */
+    .nav>li>a {
+        /* Layout */
+        display: block;
+        position: relative;
+        padding: 10px 20px;
+        /* Text */
+        font-family: "Open Sans Condensed", Arial, Helvetica, sans-serif;
+        color: #fff;
+        font-size: 22px;
+        text-decoration: none;
+        /* Background */
+        background: black; /* For older browsers */
+        background: rgba(0, 0, 0, .6); /* Transparent background for modern browsers */
+        /* Making the color to change on hover with a transition */
+        -webkit-transition: color .3s ease-in;
+        -moz-transition: color .3s ease-in;
+        -o-transition: color .3s ease-in;
+        -ms-transition: color .3s ease-in;
+    }
+    /* Changing the color on hover */
+    .nav>li>a:hover, .nav>li:hover>a {
+        color: #0fd0f9;
+    }
+    /* The links which contain dropdowns menu are wider, because they have a little arrow */
+    .nav>.dropdown>a {
+        padding: 10px 30px 10px 20px;
+    }
+    /* The arrow indicating the dropdown */
+    .dropdown>a::after {
+        content: "";
+        position: absolute;
+        top: 17px;
+        right: 10px;
+        width: 7px;
+        height: 7px;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        border-bottom: 1px solid #fff;
+        border-right: 1px solid #fff;
+    }
+    /* Changing the color of the arrow on hover */
+    .dropdown>a:hover::after, .dropdown:hover>a::after {
+        border-color: #0fd0f9;
+    }
+    /* The submenus */
+    .nav ul {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: block;
+    }
+    /* General layout settings for the link containers of the submenus */
+    .nav ul li {
+        position: absolute;
+        top: -9999px; /* Hiding them */
+        height: 0px;
+        display: block;
+        margin: 0;
+        padding: 0;
+        /* Making them to expand their height with a transition, for a slide effect */
+        -webkit-transition: height .2s ease-in;
+        -moz-transition: height .2s ease-in;
+        -o-transition: height .2s ease-in;
+        -ms-transition: height .2s ease-in;
+    }
+    /* Displays the submenu links, by expading their containers (with a transition, previously defined) and by repositioning them */
+    .dropdown:hover>ul>li {
+        height: 30px;
+        position: relative;
+        top: auto;
+    }
+    /* The submenu links */
+    .nav ul li a {
+        /* Layout */
+        padding: 4px 20px;
+        width: 120px;
+        display: block;
+        position: relative;
+        /* Text */
+        font-family: "Open Sans Condensed", Arial, Helvetica, sans-serif;
+        color: #bbb;
+        text-decoration: none;
+        font-size: 16px;
+        /* Background & effects */
+        background: black;
+        background: rgba(0, 0, 0, .6);
+        -webkit-transition: color .3s ease-in, background .3s ease-in;
+        -moz-transition: color .3s ease-in, background .3s ease-in;
+        -o-transition: color .3s ease-in, background .3s ease-in;
+        -ms-transition: color .3s ease-in, background .3s ease-in;
+    }
+    /* Changing the link's color and background on hover */
+    .nav ul li:hover>a, .nav ul li a:hover {
+        color: #0fd0f9;
+        background: rgba(0, 0, 0, .75);
+    }
+    /* Making the level 2 (or higher) submenus to appear at the right of their parent */
+    .nav ul .dropdown:hover ul {
+        left: 160px;
+        top: 0px;
+    }
+    /* The submenu links have a different arrow which indicates another dropdown submenu */
+    .nav ul .dropdown a::after {
+        width: 6px;
+        height: 6px;
+        border-bottom: 0;
+        border-right: 1px solid #fff;
+        border-top: 1px solid #fff;
+        top: 12px;
+    }
+    /* Changing the color of the arrow on hover */
+    .nav ul .dropdown:hover>a::after, .nav ul .dropdown>a:hover::after {
+        border-right: 1px solid #0fd0f9;
+        border-top: 1px solid #0fd0f9;
+    }
+</style>--}}
+
 
 <!-- navbar-->
 <header class="header">
@@ -478,15 +616,38 @@
                     <!-- Search Button-->
                     <div class="search"><i class="fa fa-search"></i></div>
                     <!-- User Not Logged - link to login page-->
-                    @if(Auth::check())
-                        <div class="user">
+                    <div class="user dropdown show">
+                        <a id="" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fa fa-user"></i>
+                        </a>
+                        <div aria-labelledby="cartdetails" class="dropdown-menu">
+                            <!-- user menu-->
+                            @if(Auth::check())
+                                    <div class="dropdown-submenu">
+                                        href="{{ route('client.dashboard') }}">Minha Conta</a>
+                                    </div>
+                                    <div class="dropdown-submenu">
+                                        <a href="{{ route('client.logout') }}">Sair</a>
+                                    </div>
+                            @else
+                                    <div class="dropdown-submenu">
+                                        <a href="{{ route('client.login') }}">Fazer login</a>
+                                    </div>
+                                    <div class="dropdown-submenu">
+                                        <a href="{{ route('client.register') }}">Cadastrar</a>
+                                    </div>
+                            @endif
+                        </div>
+                    </div>
+{{--                   @if(Auth::check())
+                        <div class="user dropdown show">
                             <a id="userdetails" href="{{route('client.logout')}}" class="user-link"><i class="fa fa-user"> </i></a>
                         </div>
                     @else
                         <div class="user">
                             <a id="userdetails" href="{{route('client.login')}}" class="user-link"><i class="fa fa-user"> </i></a>
                         </div>
-                    @endif
+                    @endif--}}
                     <!-- Cart Dropdown-->
                     <div class="cart dropdown show">
                         @if(Session::get('qtCart') == 0)
