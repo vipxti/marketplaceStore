@@ -141,10 +141,7 @@
                                 <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
 
                                 @if($produto->qt_produto < 5)
-
-                                    <br>
-                                    <p>SEM ESTOQUE</p>
-
+                                    <p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>
                                 @else
 
                                     <div class="col-12 col-md-12 d-flex justify-content-center">

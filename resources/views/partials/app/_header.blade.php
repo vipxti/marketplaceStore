@@ -27,6 +27,12 @@
                 <i class="fa fa-bars"></i>
             </button>
 
+            <form id="formLista" action="{{route('productsFilterCatSubCat.page')}}" method="post">
+                {{csrf_field()}}
+                <input type="search" name="id" id="idProdLista" hidden>
+                <input type="search" name="catSubCat" id="catSubCatProdLista" hidden>
+            </form>
+
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <ul class="navbar-nav mx-auto">
                     <!-- Início -->
@@ -43,29 +49,29 @@
                                         <!-- Face -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Face</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Base</a></li>
-                                                <li><a href="">Corretivo</a></li>
-                                                <li><a href="">Pó</a></li>
-                                                <li><a href="">Blush</a></li>
-                                                <li><a href="">Primer</a></li>
-                                                <li><a href="">Sérum</a></li>
-                                                <li><a href="">Iluminador</a></li>
-                                                <li><a href="">BB Cleam</a></li>
-                                                <li><a href="">Bronzeador</a></li>
-                                                <li><a href="">Demaquilante</a></li>
+                                                <li id="s"><a id="1" href="javascript:void(0)" class="listagem">Base</a></li>
+                                                <li id="s"><a id="2" href="javascript:void(0)" class="listagem">Corretivo</a></li>
+                                                <li id="s"><a id="3" href="javascript:void(0)" class="listagem">Pó</a></li>
+                                                <li id="s"><a id="4" href="javascript:void(0)" class="listagem">Blush</a></li>
+                                                <li id="s"><a id="6" href="javascript:void(0)" class="listagem">Primer</a></li>
+                                                <li id="s"><a id="7" href="javascript:void(0)" class="listagem">Sérum</a></li>
+                                                <li id="s"><a id="8" href="javascript:void(0)" class="listagem">Iluminador</a></li>
+                                                <li id="s"><a id="9" href="javascript:void(0)" class="listagem">BB Cleam</a></li>
+                                                <li id="s"><a id="10" href="javascript:void(0)" class="listagem">Bronzeador</a></li>
+                                                <li id="s"><a id="11" href="javascript:void(0)" class="listagem">Demaquilante</a></li>
                                             </ul>
                                         </div>
 
                                         <!-- Lábios -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Lábios</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Batom Matte</a></li>
-                                                <li><a href="">Batom Líquido Matte</a></li>
-                                                <li><a href="">Batom Cremoso</a></li>
-                                                <li><a href="">Contorno Labial</a></li>
-                                                <li><a href="">Gloss</a></li>
-                                                <li><a href="">Hidratante</a></li>
-                                                <li><a href="">Batom Líquido Matte Metalizado</a></li>
+                                                <li id="s"><a id="12" href="javascript:void(0)" class="listagem">Batom Matte</a></li>
+                                                <li id="s"><a id="13" href="javascript:void(0)" class="listagem">Batom Líquido Matte</a></li>
+                                                <li id="s"><a id="14" href="javascript:void(0)" class="listagem">Batom Cremoso</a></li>
+                                                <li id="s"><a id="15" href="javascript:void(0)" class="listagem">Contorno Labial</a></li>
+                                                <li id="s"><a id="16" href="javascript:void(0)" class="listagem">Gloss</a></li>
+                                                <li id="s"><a id="17" href="javascript:void(0)" class="listagem">Hidratante</a></li>
+                                                <li id="s"><a id="18" href="javascript:void(0)" class="listagem">Batom Líquido Matte Metalizado</a></li>
                                                 <!--<li><a href="index2.html"><span class="badge badge-success ml-2">New</span></a></li>
                                                 <li><a href="index3.html"><span class="badge badge-success ml-2">New</span></a></li>-->
                                             </ul>
@@ -74,24 +80,24 @@
                                         <!-- Olhos -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Olhos</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Delineador</a></li>
-                                                <li><a href="">Máscara de Cílios</a></li>
-                                                <li><a href="">Fixador | Primer</a></li>
-                                                <li><a href="">Lápis</a></li>
-                                                <li><a href="">Pigmento</a></li>
-                                                <li><a href="">Glitter</a></li>
-                                                <li><a href="">Sombras</a></li>
+                                                <li id="s"><a id="19" href="javascript:void(0)" class="listagem">Delineador</a></li>
+                                                <li id="s"><a id="20" href="javascript:void(0)" class="listagem">Máscara de Cílios</a></li>
+                                                <li id="s"><a id="21" href="javascript:void(0)" class="listagem">Fixador | Primer</a></li>
+                                                <li id="s"><a id="22" href="javascript:void(0)" class="listagem">Lápis</a></li>
+                                                <li id="s"><a id="23" href="javascript:void(0)" class="listagem">Pigmento</a></li>
+                                                <li id="s"><a id="24" href="javascript:void(0)" class="listagem">Glitter</a></li>
+                                                <li id="s"><a id="25" href="javascript:void(0)" class="listagem">Sombras</a></li>
                                             </ul>
                                         </div>
 
                                         <!-- Sobrancelhas -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Sobrancelhas</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Iluminador</a></li>
-                                                <li><a href="">Lápis</a></li>
-                                                <li><a href="">Sombra</a></li>
-                                                <li><a href="">Acessórios</a></li>
-                                                <li><a href="">Delineador</a></li>
+                                                <li id="s"><a id="26" href="javascript:void(0)" class="listagem">Iluminador</a></li>
+                                                <li id="s"><a id="27" href="javascript:void(0)" class="listagem">Lápis</a></li>
+                                                <li id="s"><a id="28" href="javascript:void(0)" class="listagem">Sombra</a></li>
+                                                <li id="s"><a id="29" href="javascript:void(0)" class="listagem">Acessórios</a></li>
+                                                <li id="s"><a id="42" href="javascript:void(0)" class="listagem">Delineador</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -555,6 +561,16 @@
 </header>
 
 <script>
+
+    $('.listagem').click(function(){
+        var catSubCat= $(this).attr('id');
+        var id = $(this).parent().attr('id');
+
+        $('#idProdLista').val(id);
+        $('#catSubCatProdLista').val(catSubCat);
+        $('#formLista').submit();
+    });
+
     $('#btnPesquisaProd').click(function(){
         enviarDadoPesquisa();
     });
