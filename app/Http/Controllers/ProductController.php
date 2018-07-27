@@ -270,7 +270,8 @@ class ProductController extends Controller
 
     public function listaProduto()
     {
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('produto.cd_status_produto', '=', 1)->paginate(25);
+        //$produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('produto.cd_status_produto', '=', 1)->paginate(25);
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->paginate(25);
         $tamanhosLetras = LetterSize::all();
         $tamanhosNumeros = NumberSize::all();
         $cores = Color::all();
@@ -932,22 +933,108 @@ class ProductController extends Controller
         return $prod_cat_subcat->cd_categoria_subcat;
     }
 
-    //Atualiza a quantidade de produtos
-    public function productUpdate($codProduct, $qtProduct)
+    //=============================================================================================
+    //FUNÇÃO QUE ATUALIZA OS DADOS DOS PRODUTOS
+    public function productUpdate($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $sku, $slugname)
     {
-        $product = Product::find($codProduct);
-        $product->qt_produto = $qtProduct;
+        $codSku = Sku::where('cd_nr_sku', '=', $sku)->get();
 
-        $product->save();
+        $produto =Product::where('cd_sku', '=', $codSku[0]->cd_sku)->get();
+
+        //dd($produto);
+        $produto[0]->cd_ean = $eanProd;
+        $produto[0]->nm_produto = $nomeProd;
+        $produto[0]->ds_produto = $descProd;
+        $produto[0]->nm_slug = $slugname;
+        $produto[0]->vl_produto = $valorProd;
+        $produto[0]->qt_produto = $qtProd;
+        $produto[0]->cd_status_produto = $statusProd;
+
+        $produto[0]->save();
+
+        return $produto[0]->cd_produto;
     }
 
-    //Chama a função para atualizar a quantidade dos produtos
-    public function updateProduct(Request $request)
+    //=============================================================================================
+    //FUNÇÃO QUE ATUALIZA A ASSOCIAÇÃO DAS CATEGORIAS DO PRODUTO
+    public function updateAssociationProductCategorySubcategory($codProduto, $codCategoriaSubCategoria)
     {
+        $prodCatSub = DB::table('produto_categoria_subcat')
+                        ->where('cd_produto', '=', $codProduto)
+                        ->update(['cd_categoria_subcat' => $codCategoriaSubCategoria]);
+
+        //dd($prodCatSub[0]->cd_categoria_subcat, $codCategoriaSubCategoria);
+        //$prodCatSub[0]->cd_categoria_subcat = $codCategoriaSubCategoria;
+        //dd($prodCatSub[0]->cd_categoria_subcat);
+        //$prodCatSub[0]->save();
+
+    }
+
+    //=============================================================================================
+    //FUNÇÃO QUE ATUALIZA A DIMENSÃO DOS PRODUTOS
+    public function updateDimension($largura, $altura, $comprimento, $peso, $sku){
+        $dimensionData =DB::table('sku')
+            ->join('dimensao', 'sku.cd_dimensao', '=', 'dimensao.cd_dimensao')
+            ->where('sku.cd_nr_sku', '=', $sku)
+            ->get();
+
+        //dd($dimensionData[0]->cd_nr_sku);
+
+        $dimension = Dimension::find($dimensionData[0]->cd_dimensao);
+        $dimension->ds_altura = $altura;
+        $dimension->ds_largura = $largura;
+        $dimension->ds_comprimento = $comprimento;
+        $dimension->ds_peso = $peso;
+
+        $dimension->save();
+
+    }
+
+
+    //Chama a função para atualizar a quantidade dos produtos
+    public function updateProduct(ProductRequest $request)
+    {
+        //dd($request->all());
+        $v = strpos($request->vl_produto, ',');
+
+        $slugname = str_slug($request->nm_produto, '-');
+
+        if ($v !== false) {
+            $val = str_replace(',', '.', $request->vl_produto);
+        } else {
+            $val = $request->vl_produto;
+        }
+
+        if ($request->filled('status') == 'on') {
+            $status = 1;
+        } else {
+            $status = 0;
+        }
+
         DB::beginTransaction();
 
+        //=============================================================================================
+        //ATUALIZA A DIMENSÃO DOS PRODUTOS
         try {
-            $this->productUpdate($request->cd_produto, $request->qt_produto);
+            $dimensao = $this->updateDimension($request->ds_largura, $request->ds_altura, $request->ds_comprimento, $request->ds_peso, $request->cd_sku);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar tamanho do produto');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar tamanho do produto');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        //=============================================================================================
+        //ATUALIZA OS DADOS DO PRODUTO
+        try {
+            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar o produto');
@@ -956,7 +1043,25 @@ class ProductController extends Controller
             return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar o produto');
         } catch (\PDOException $e) {
             DB::rollBack();
-            return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar com o banco de dados');
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        //=============================================================================================
+        //ATUALIZA A ASSOCIAÇÃO DA CATEORIA E SUBCATEGORIA DO PRODUTO
+        try {
+            $this->updateAssociationProductCategorySubcategory($produto, $this->getCategorySubcategoryId($request->cd_categoria, $request->cd_sub_categoria));
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar a associação da categoria do produto');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar a associação da categoria do produto');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao conectar com o banco de dados');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -964,12 +1069,53 @@ class ProductController extends Controller
 
         DB::commit();
 
-        $response = [
-            'status' => 'success',
-            'message' => 'Produto atualizado com sucesso'
-        ];
+        return redirect()->route('products.list')->with('success', 'Produto Atualizado com Sucesso');
+    }
 
-        return response()->json($response);
+    public function getProductData(Request $request){
+
+        $resultado = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('dimensao', 'sku.cd_dimensao', '=', 'dimensao.cd_dimensao')
+            ->join('produto_categoria_subcat', 'produto.cd_produto', '=', 'produto_categoria_subcat.cd_produto')
+            ->join('categoria_subcat', 'produto_categoria_subcat.cd_categoria_subcat', '=', 'categoria_subcat.cd_categoria_subcat')
+            ->join('categoria', 'categoria_subcat.cd_categoria', '=', 'categoria.cd_categoria')
+            ->join('sub_categoria', 'categoria_subcat.cd_sub_categoria', '=', 'sub_categoria.cd_sub_categoria')
+            ->select('produto.nm_produto',
+                    'produto.cd_ean',
+                    'produto.ds_produto',
+                    'produto.vl_produto',
+                    'produto.qt_produto',
+                    'produto.cd_status_produto',
+                    'sku.cd_nr_sku',
+                    'dimensao.ds_altura',
+                    'dimensao.ds_largura',
+                    'dimensao.ds_peso',
+                    'dimensao.ds_comprimento',
+                    'categoria.cd_categoria',
+                    'categoria.nm_categoria',
+                    'sub_categoria.cd_sub_categoria',
+                    'sub_categoria.nm_sub_categoria')
+            ->where('sku.cd_nr_sku', '=', $request->sku)
+            ->get();
+
+        //dd($resultado);
+
+        return $resultado;
+
+    }
+
+    public function getCategory(){
+
+        $resultado = Category::all();
+
+        //dd($resultado);
+        return response()->json([
+            "categoria" => $resultado
+        ]);
+    }
+
+    public function getSubCategory(){
+
     }
 //    public function generateSKU($ean, $cat, $color, $price) {
 //
@@ -981,4 +1127,6 @@ class ProductController extends Controller
 //        return $sku1.$sku2.$sku3.$sku4;
 //
 //    }
+
+
 }
