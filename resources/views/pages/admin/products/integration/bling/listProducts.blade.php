@@ -493,10 +493,11 @@
                         url: '{{url('/admin/api/bling')}}/' + page,
                         type: 'get',
                         success: function(data){
-                            var objProd = JSON.parse(data);
-                            //console.log(objProd);
-
                             try{
+                                var objProd = JSON.parse(data);
+                                //console.log(objProd);
+
+
                                 for(var i = 0; i < objProd.retorno.produtos.length; i++){
                                     contador++;
                                     var arrayHead = [];
