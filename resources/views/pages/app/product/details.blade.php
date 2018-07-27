@@ -88,11 +88,19 @@
 
                         <h4 id="nomeProduto" class="title">{{ $product[0]['nm_produto'] }}</h4>
 
-                            <h4 id="precoProduto" class="price">R$ {{ number_format($product[0]['vl_produto'], 2, ',', '.') }}</h4>
+                            @if ($isVariation)
 
-                            @if ($hasVariation)
+                                <h4 id="precoProduto" class="price">R$ {{ number_format($variations[0]['vl_produto_variacao'], 2, ',', '.') }}</h4>
+                                
+                            @else
 
-                                @if($product[0]['qt_produto_variacao'] > 5)
+                                <h4 id="precoProduto" class="price">R$ {{ number_format($product[0]['vl_produto'], 2, ',', '.') }}</h4>
+                                
+                            @endif
+
+                            @if ($isVariation)
+
+                                @if($variations[0]['qt_produto_variacao'] > 5)
 
                                     <p class="available">Disponibilidade: <span class="disponivel" class="text-muted">Em estoque</span></p>
 
@@ -128,41 +136,37 @@
 
                             @if ($hasVariation)
 
-                                @if (count($variations) > 0)
+                                @if ($totalCores > 0)
 
-                                    @if ($totalCores > 0)
+                                    <div class="widget color mb-50">
+                                        <h6 class="widget-title">Cor</h6>
 
-                                        <div class="widget color mb-50">
-                                            <h6 class="widget-title">Cor</h6>
-
-                                            <div class="widget-desc">
-                                            
-                                                <ul class="d-flex justify-content-between">
-
-                                                    @foreach ($codProds as $c)
-
-                                                        <input type="hidden" name="cod[]" value="{{ $c }}">
-                                                        
-                                                    @endforeach
-
-                                                    @foreach ($colors as $key => $color)
-
-                                                        <li>
-
-                                                            <a href="javascript:void(0)" id="{{ $color->cd_cor }}" name="btn_color[]" style="background-color: {{ $color->hex }};"></a>
-
-                                                        </li>&nbsp;&nbsp;
-                                                                
-                                                    @endforeach
-
-                                                </ul>
-                                    
-                                            </div>
-
-                                        </div>
+                                        <div class="widget-desc">
                                         
-                                    @endif
+                                            <ul class="d-flex justify-content-between">
 
+                                                @foreach ($codProds as $c)
+
+                                                    <input type="hidden" name="cod[]" value="{{ $c }}">
+                                                    
+                                                @endforeach
+
+                                                @foreach ($colors as $key => $color)
+
+                                                    <li>
+
+                                                        <a href="javascript:void(0)" id="{{ $color->cd_cor }}" name="btn_color[]" style="background-color: {{ $color->hex }};"></a>
+
+                                                    </li>&nbsp;&nbsp;
+                                                            
+                                                @endforeach
+
+                                            </ul>
+                                
+                                        </div>
+
+                                    </div>
+                                    
                                 @endif
 
                                 <div id="tamanhos" class="widget size mb-50">
@@ -193,17 +197,16 @@
 
                             <p>&nbsp;</p>
 
-                            @if($product[0]['qt_produto'] <= 5)
+                            @if ($isVariation)
 
-                                <p>SEM ESTOQUE</p>
+                                @if($variations[0]['qt_produto_variacao'] <= 5)
 
-                            @else
+                                    <p>SEM ESTOQUE</p>
 
-                                <!-- Botão adicionar carrinho -->
-                                <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
+                                @else
+
+                                    <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
                                     {{ csrf_field() }}
-
-                                    @if ($hasVariation)
 
                                         <input type="hidden" name="cd_produto" value="">
                                         <input type="hidden" name="nm_produto" value="">
@@ -218,9 +221,32 @@
                                         <input type="hidden" name="ds_peso" value="">
                                         <input type="hidden" name="im_produto" value="">
 
-                                        <button type="submit" id="btnComprar" class="btn cart-submit d-block">Comprar</button>
-                                        
-                                    @else
+                                        <button type="submit" id="btnComprar" class="btn cart-submit d-block" disabled>Comprar</button>
+
+                                    </form>
+
+                                    {{-- <div class="quantity">
+                                        <span id="1" class="qty-minus">
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                        </span>
+                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1" disabled>
+                                        <span id="1" class="qty-plus">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </span>
+                                    </div> --}}
+
+                                @endif
+                                
+                            @else
+
+                                @if($product[0]['qt_produto'] <= 5)
+
+                                    <p>SEM ESTOQUE</p>
+
+                                @else
+
+                                    <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
+                                    {{ csrf_field() }}
 
                                         <input type="hidden" name="cd_produto" value="{{ $product[0]['cd_produto'] }}">
                                         <input type="hidden" name="nm_produto" value="{{ $product[0]['nm_produto'] }}">
@@ -234,8 +260,10 @@
                                         <input type="hidden" name="ds_comprimento" value="{{ $product[0]['ds_comprimento'] }}">
                                         <input type="hidden" name="ds_peso" value="{{ $product[0]['ds_peso'] }}">
                                         <input type="hidden" name="im_produto" value="{{ $images[0]['im_produto'] }}">
-                                        
-                                    @endif
+
+                                        <button type="submit" id="btnComprar" class="btn cart-submit d-block" disabled>Comprar</button>
+
+                                    </form>
 
                                     {{-- <div class="quantity">
                                         <span id="1" class="qty-minus">
@@ -247,10 +275,8 @@
                                         </span>
                                     </div> --}}
 
-                                    <button type="submit" id="btnComprar" class="btn cart-submit d-block">Comprar</button>
-                                    
-                                </form>
-
+                                @endif
+                                
                             @endif
 
                     </div>
@@ -272,11 +298,11 @@
                             </h6>
                         </div>
 
-                        @if ($hasVariation)
+                        @if ($isVariation)
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <p>{{ $product[0]['ds_produto_variacao'] }}</p>
+                                    <p>{{ $variations[0]['ds_produto_variacao'] }}</p>
                                 </div>
                             </div>
 
