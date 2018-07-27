@@ -1,0 +1,67 @@
+/*
+* ===================================================
+*    CUSTOMER SECTION
+* ===================================================
+*/
+
+.customer-profile {
+    text-align: center;
+    background: #f5f5f5;
+    border: $list-group-border-width solid $gray-200;
+    border-bottom: none;
+    @include border-top-radius(1.25rem);
+    padding: 2rem;
+}
+
+.customer-image {
+    padding: 0.5rem;
+    background: #fff;
+    border: solid 1px $list-group-border-color;
+    max-width: 10rem;
+    margin-bottom: 1.5rem;
+}
+
+.customer-nav {
+    .list-group-item {
+        border: $list-group-border-width solid $gray-200;
+        color: $gray-700;
+        font-weight: 500;
+        font-size: 0.9rem;
+        &:first-child {
+            @include border-top-radius(0);
+        }
+        @include hover-focus {
+            background: $gray-100;
+        }
+        .icon,
+        .fa {
+            margin-right: 0.5rem;
+        }
+        &.active {
+            background: $brand-primary;
+            border-color: $brand-primary;
+            color: #fff;
+        }
+    }
+}
+
+.content-block {
+    margin-bottom: 4rem;
+}
+
+.basket-customer-order {
+    margin-bottom: 4rem;
+}
+
+
+/* Customer zone mediaquery -------------------------- */
+
+@media (max-width: 992px) {
+    .basket-customer-order {
+        width: 100% !important;
+        overflow-x: scroll;
+        .basket-holder {
+            min-width: 991px;
+        }
+    }
+}

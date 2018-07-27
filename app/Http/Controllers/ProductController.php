@@ -186,8 +186,6 @@ class ProductController extends Controller
     public function showProductDetails($slug)
     {
         $totalCores = 0;
-        $totalLetras = 0;
-        $totalNumeros = 0;
 
         if (Auth::check()) {
             $n = explode(' ', Auth::user()->nm_cliente);
@@ -196,62 +194,46 @@ class ProductController extends Controller
             $nome = null;
         }
 
-        $product = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('produto.cd_status_produto', '=', 1)->where('produto.nm_slug', '=', $slug)->first();
+        $product = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('produto.cd_status_produto', '=', 1)->where('produto.nm_slug', '=', $slug)->get();
 
         //dd($product);
 
-        if ($product == null) {
-            $isVariation = true;
-
-            $product = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->where('produto_variacao.cd_status_produto_variacao', '=', 1)->where('produto_variacao.nm_slug_variacao', '=', $slug)->first();
-
-            $productImages = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('img_produto.im_produto')->where('sku.cd_nr_sku', '=', $product->cd_nr_sku)->orderBy('sku_produto_img.cd_img')->get()->toArray();
-
-            $variations = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('produto_variacao.cd_produto_variacao', 'produto_variacao.nm_produto_variacao', 'produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'produto_variacao.nm_slug_variacao', 'produto_variacao.qt_produto_variacao', 'produto_variacao.cd_status_produto_variacao', 'sku.cd_nr_sku', 'dimensao.ds_altura', 'dimensao.ds_largura', 'dimensao.ds_peso', 'dimensao.ds_comprimento')->where('produto.cd_produto', '=', $product->cd_produto)->where('sku.cd_nr_sku', '<>', $product->cd_nr_sku)->orderBy('produto_variacao.cd_produto_variacao')->get();
-        } else {
-            $isVariation = false;
-
-            $productImages = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('img_produto.im_produto')->where('sku.cd_nr_sku', '=', $product->cd_nr_sku)->orderBy('sku_produto_img.cd_img')->get()->toArray();
-
-
-
-            $variations = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', 'sku.cd_dimensao')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('produto_variacao.cd_produto_variacao', 'produto_variacao.nm_produto_variacao', 'produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'produto_variacao.nm_slug_variacao', 'produto_variacao.qt_produto_variacao', 'produto_variacao.cd_status_produto_variacao', 'sku.cd_nr_sku', 'dimensao.ds_altura', 'dimensao.ds_largura', 'dimensao.ds_peso', 'dimensao.ds_comprimento', 'sku.cd_sku')->where('produto.cd_produto', '=', $product->cd_produto)->orderBy('produto_variacao.cd_produto_variacao')->get();
-
-
-            if (count($variations->toArray()) > 0) {
-                foreach ($variations as $key => $var) {
-                    //dd($var->cd_sku);
-                    $idsSku[$key] = $var->cd_sku;
-                }
-
-                //dd($idsSku);
-
-                $colors = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->select('cor.nm_cor', 'cor.hex', DB::raw('sum(produto_variacao.qt_produto_variacao) as qt_total_cor'))->whereIn('produto_cor.cd_sku', $idsSku)->groupBy('cor.nm_cor', 'cor.hex')->get();
-
-                //dd($colors);
-
-                $totalCores = count($colors);
-            }
-        }
+        $variations = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', 'sku.cd_dimensao')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('produto_variacao.cd_produto_variacao', 'produto_variacao.nm_produto_variacao', 'produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'produto_variacao.nm_slug_variacao', 'produto_variacao.qt_produto_variacao', 'produto_variacao.cd_status_produto_variacao', 'sku.cd_nr_sku', 'dimensao.ds_altura', 'dimensao.ds_largura', 'dimensao.ds_peso', 'dimensao.ds_comprimento', 'sku.cd_sku')->where('produto.cd_produto', '=', $product->toArray()[0]['cd_produto'])->orderBy('produto_variacao.cd_produto_variacao')->get();
 
         if (count($variations->toArray()) > 0) {
-            foreach ($variations as $key => $variation) {
-                $productColors[$key] = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->select('cor.nm_cor', 'cor.hex')->where('sku.cd_nr_sku', '=', $variation['cd_nr_sku'])->orderBy('produto_variacao.cd_produto_variacao')->get()->toArray();
-
-                $totalCores += count($productColors[$key]);
-
-                $productNumberSizes[$key] = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_tamanho_num', 'sku.cd_sku', '=', 'produto_tamanho_num.cd_sku')->join('tamanho_num', 'produto_tamanho_num.cd_tamanho_num', '=', 'tamanho_num.cd_tamanho_num')->select('tamanho_num.nm_tamanho_num')->where('sku.cd_nr_sku', '=', $variation['cd_nr_sku'])->orderBy('produto_variacao.cd_produto_variacao')->get()->toArray();
-
-                $totalNumeros += count($productNumberSizes[$key]);
-
-                $productLetterSizes[$key] = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_tamanho_letra', 'sku.cd_sku', '=', 'produto_tamanho_letra.cd_sku')->join('tamanho_letra', 'produto_tamanho_letra.cd_tamanho_letra', '=', 'tamanho_letra.cd_tamanho_letra')->select('tamanho_letra.nm_tamanho_letra')->where('sku.cd_nr_sku', '=', $variation['cd_nr_sku'])->orderBy('produto_variacao.cd_produto_variacao')->get()->toArray();
-
-                $totalLetras += count($productLetterSizes[$key]);
+            $hasVariation = true;
+            foreach ($variations as $key => $var) {
+                $codProds[$key] = $var->cd_produto_variacao;
             }
+
+            $colors = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->select('cor.cd_cor', 'cor.nm_cor', 'cor.hex')->whereIn('produto_variacao.cd_produto_variacao', $codProds)->groupBy('cor.cd_cor', 'cor.nm_cor', 'cor.hex')->get();
+
+            $images = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->select('img_produto.im_produto')->where('sku.cd_nr_sku', '=', $variations->toArray()[0]['cd_nr_sku'])->where('cor.cd_cor', '=', $colors->toArray()[0]['cd_cor'])->orderBy('sku_produto_img.cd_img')->get()->toArray();
+
+            $numbers = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->join('produto_tamanho_num', 'produto_tamanho_num.cd_sku', 'sku.cd_sku')->join('tamanho_num', 'tamanho_num.cd_tamanho_num', 'produto_tamanho_num.cd_tamanho_num')->select('tamanho_num.nm_tamanho_num', 'sku.cd_nr_sku')->whereIn('produto_variacao.cd_produto_variacao', $codProds)->where('cor.cd_cor', '=', $colors->toArray()[0]['cd_cor'])->get()->toArray();
+
+            $letters = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->join('produto_tamanho_letra', 'produto_tamanho_letra.cd_sku', 'sku.cd_sku')->join('tamanho_letra', 'tamanho_letra.cd_tamanho_letra', 'produto_tamanho_letra.cd_tamanho_letra')->select('tamanho_letra.nm_tamanho_letra', 'sku.cd_nr_sku')->whereIn('produto_variacao.cd_produto_variacao', $codProds)->where('cor.cd_cor', '=', $colors->toArray()[0]['cd_cor'])->get()->toArray();
+
+            if (count($numbers) > 0) {
+                $sizes = $numbers;
+            }
+
+            if (count($letters) > 0) {
+                $sizes = $letters;
+            }
+
+            $totalCores = count($colors);
+            $totalImagens = count($images);
         } else {
-            $productColors = null;
-            $productNumberSizes = null;
-            $productLetterSizes = null;
+            $hasVariation = false;
+
+            $images = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('img_produto.im_produto')->where('sku.cd_nr_sku', '=', $product->cd_nr_sku)->orderBy('sku_produto_img.cd_img')->get()->toArray();
+
+            $totalImagens = count($images);
+
+            $codProds = null;
+            $colors = null;
+            $sizes = null;
         }
 
         $menuNav =  Menu::all();
@@ -261,11 +243,55 @@ class ProductController extends Controller
             $categoriaSubCat[$key] = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')->select('categoria.cd_categoria', 'categoria.nm_categoria', 'sub_categoria.cd_sub_categoria', 'sub_categoria.nm_sub_categoria')->where('menu.cd_menu', '=', $menu->cd_menu)->get();
         }
 
-        return view('pages.app.product.details', compact('product', 'productImages', 'variations', 'totalCores', 'colors', 'totalLetras', 'totalNumeros', 'productColors', 'productNumberSizes', 'productLetterSizes', 'nome', 'menuNav', 'categoriaSubCat', 'isVariation'));
+        return view('pages.app.product.details', compact('product', 'images', 'variations', 'totalCores', 'totalImagens', 'sizes', 'colors', 'codProds', 'nome', 'menuNav', 'categoriaSubCat', 'hasVariation'));
     }
 
-    public function showProductVariationDetails($slug)
+    public function getSizes(Request $request)
     {
+        $numbers = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->join('produto_tamanho_num', 'produto_tamanho_num.cd_sku', 'sku.cd_sku')->join('tamanho_num', 'tamanho_num.cd_tamanho_num', 'produto_tamanho_num.cd_tamanho_num')->select('tamanho_num.nm_tamanho_num', 'sku.cd_nr_sku')->where('cor.cd_cor', '=', $request->cd_cor)->whereIn('produto_variacao.cd_produto_variacao', $request->cds_produto)->get();
+
+        $letters = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->join('produto_tamanho_letra', 'produto_tamanho_letra.cd_sku', 'sku.cd_sku')->join('tamanho_letra', 'tamanho_letra.cd_tamanho_letra', 'produto_tamanho_letra.cd_tamanho_letra')->select('tamanho_letra.nm_tamanho_letra', 'sku.cd_nr_sku')->where('cor.cd_cor', '=', $request->cd_cor)->whereIn('produto_variacao.cd_produto_variacao', $request->cds_produto)->get();
+
+        if (count($letters) > 0) {
+            $sizes = $letters;
+
+            foreach ($letters as $key => $l) {
+                $images = Sku::join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->select('img_produto.ic_img_principal', 'img_produto.im_produto')->where('sku.cd_nr_sku', '=', $l->cd_nr_sku)->get();
+            }
+
+            $sizeType = 'L';
+        }
+        
+        if (count($numbers) > 0) {
+            $sizes = $numbers;
+
+            foreach ($numbers as $key => $n) {
+                $images = Sku::join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->select('img_produto.ic_img_principal', 'img_produto.im_produto')->where('sku.cd_nr_sku', '=', $n->cd_nr_sku)->get();
+            }
+
+            $sizeType = 'N';
+        }
+
+        $response = [
+            'data' => $sizes,
+            'images' => $images,
+            'sizeType' => $sizeType
+        ];
+
+        return response()->json($response);
+    }
+
+    public function getVariationData(Request $request)
+    {
+        //dd($request->all());
+
+        $variation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->join('dimensao', 'sku.cd_dimensao', 'dimensao.cd_dimensao')->select('produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'dimensao.ds_peso', 'dimensao.ds_comprimento', 'dimensao.ds_altura', 'dimensao.ds_largura', 'produto_variacao.nm_produto_variacao', 'produto_variacao.qt_produto_variacao')->where('sku.cd_nr_sku', '=', $request->sku)->get()->toArray();
+
+        $response = [
+            'variation' => $variation
+        ];
+
+        return response()->json($response);
     }
 
     public function listaProduto()

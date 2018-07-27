@@ -1,7 +1,6 @@
-<!-- Tweaks for older IEs--><!--[if lt IE 9]>
+<!-- Tweaks for older IEs--><!--[if lt IE 9] ]-->
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 
 <!-- navbar-->
 <header class="header">
@@ -20,13 +19,14 @@
         <div class="container-fluid">
             <a href="{{ route('index')}}" class="navbar-brand"><img src="{{asset('img/logo.png')}}"></a>
             <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
-                    aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i
-                        class="fa fa-bars"></i></button>
+                    aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">
+                <i class="fa fa-bars"></i>
+            </button>
 
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <ul class="navbar-nav mx-auto">
                     <!-- Início -->
-                    <li class="nav-item dropdown"><a id="navbarHomeLink" href="{{ route('index')}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link active">Início</a>
+                    <li class="nav-item dropdown"><a id="navbarHomeLink" href="{{ route('index')}}" aria-haspopup="true" aria-expanded="false" class="nav-link active">Início</a>
                         <ul aria-labelledby="navbarDropdownHomeLink" class="dropdown-menu"></ul>
                     </li>
 
@@ -478,35 +478,48 @@
                     <!-- Search Button-->
                     <div class="search"><i class="fa fa-search"></i></div>
                     <!-- User Not Logged - link to login page-->
-                    @if(Auth::check())
-                        <div class="user">
-                            <a id="userdetails" href="{{route('client.logout')}}" class="user-link"><i class="fa fa-user"> </i></a>
+                    <div class="user dropdown show">
+                        <a id="" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fa fa-user"></i>
+                        </a>
+                        <div aria-labelledby="" class="dropdown-menu">
+                            <!-- user menu-->
+                            @if(Auth::check())
+                                    <div class="dropdown-submenu">
+                                        <a href="{{ route('client.dashboard') }}">Minha Conta</a>
+                                    </div>
+                                    <div class="dropdown-submenu">
+                                        <a href="{{ route('client.logout') }}">Sair</a>
+                                    </div>
+                            @else
+                                    <div class="dropdown-submenu">
+                                        <a href="{{ route('client.login') }}">Fazer login</a>
+                                    </div>
+                                    <div class="dropdown-submenu">
+                                        <a href="{{ route('client.register') }}">Cadastrar</a>
+                                    </div>
+                            @endif
                         </div>
-                    @else
-                        <div class="user">
-                            <a id="userdetails" href="{{route('client.login')}}" class="user-link"><i class="fa fa-user"> </i></a>
-                        </div>
-                    @endif
+                    </div>
                     <!-- Cart Dropdown-->
                     <div class="cart dropdown show">
                         @if(Session::get('qtCart') == 0)
-                            <a id="cartdetails" href="{{ route('cart.page') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                            <a id="cartdetails" href="{{ route('cart.page') }}" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
                                 <i class="fa fa-shopping-cart"></i>
-
                             </a>
                         @else
-                            <a id="cartdetails" href="{{ route('cart.page') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                            <a id="cartdetails" href="{{ route('cart.page') }}" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
                                 <i class="fa fa-shopping-cart"></i>
                                 <div class="cart-no">{{ Session::get('qtCart') }}</div>
                             </a>
                         @endif
 
-                        <div aria-labelledby="cartdetails" class="dropdown-menu">
+                        <!-- cart itens-->
+                        {{--<div aria-labelledby="cartdetails" class="dropdown-menu">
                             @if(Session::get('qtCart') == 0)
                                 <!-- cart item-->
                                 <div class="cart-product">
                                     <small>NÃO HA PRODUTOS NO CARRINHO&nbsp;<i class="fa fa-shopping-cart fa-2x">&nbsp;</i></small>
-
                                 </div>
                             @else
                                 <!-- cart item-->
@@ -529,7 +542,7 @@
                                             Cart</a><a href="checkout1.html" class="btn btn-template wide">Checkout</a>
                                     </div>
                             @endif
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
             </div>

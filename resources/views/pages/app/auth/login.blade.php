@@ -23,7 +23,7 @@
             
                 <!-- E-mail login  -->
                 <div class="row">
-                    <div class="col-12 col-md-4 offset-md-4">
+                    <div class="offset-md-4 col-md-4 offset-md-2">
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="email" class="form-control" name="email" required maxlength="50">
@@ -35,7 +35,7 @@
 
                 <!-- Senha login -->
                 <div class="row">
-                    <div class="col-12 col-md-4 offset-md-4">
+                    <div class="offset-md-4 col-md-4 offset-md-2">
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="password" class="form-control" name="password" required maxlength="50" width="">
@@ -46,7 +46,7 @@
                 </div>
                 
                  <div class="row">
-                    <div class="col-md-8" style="padding-left: 34%">
+                    <div class="offset-md-4 col-md-4 offset-md-2">
                         <div class="custom-control custom-checkbox mr-sm-2">
                             <input type="checkbox" class="custom-control-input" id="customControlAutosizing" checked>
                             <label class="custom-control-label" for="customControlAutosizing">Lembrar de mim</label>
@@ -57,9 +57,9 @@
 
                 <!-- Botão Logar -->
                 <div class="row">
-                    <div class="col-12 text-center">
+                    <div class="offset-md-4 col-md-4 offset-md-2 text-center">
                         <div>
-                            <button type="submit" id="btn_salvar" class="btn btn-danger" style="width: 290px; background-color: #d89531; border-radius: 0px">Logar</button>
+                            <button type="submit" id="btn_salvar" class="btn btn-template" style="width: 100%">Logar</button>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                 <br>
 
                 <div class="row">
-                    <div class="col-12 text-center">
+                    <div class="offset-md-4 col-md-4 offset-md-2 text-left" style="text-decoration: none">
                         <div class="checkbox icheck">
                             <a href="{{ route('client.register') }}">Registre uma nova conta</a>
                         </div>

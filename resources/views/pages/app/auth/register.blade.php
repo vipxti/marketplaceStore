@@ -24,7 +24,7 @@
                 {{ csrf_field() }}
                 <!-- Nome do Cliente  -->
                 <div class="row">
-                    <div class="col-md-9" style="padding-left: 26%">
+                    <div class="offset-md-2 col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input id="nomeCliente" type="text" class="form-control" name="nm_cliente" required maxlength="50">
@@ -32,11 +32,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- E-mail -->
-                <div class="row">
-                    <div class="col-md-9" style="padding-left: 26%">
+                    <div class="col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input id="emailCliente" type="email" class="form-control" name="email" required maxlength="50">
@@ -49,7 +45,7 @@
 
                 <!-- Senha e data de nascimento -->
                 <div class="row">
-                    <div class="col-md-6" style="padding-left: 26%">
+                    <div class="offset-md-2 col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="password" class="form-control campo_senha" name="password" required maxlength="20">
@@ -60,7 +56,7 @@
 
                     </div>
 
-                    <div class="col-md-6" style="padding-right: 26%">
+                    <div class="col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input  type="text" id="data_nasc" class="form-control" name="dt_nascimento"
@@ -75,7 +71,7 @@
 
                 <!-- CNPJ/CPF e Telefone -->
                 <div class="row">
-                    <div class="col-md-6" style="padding-left: 26%">
+                    <div class="offset-md-2 col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input id="cpf_cnpj" type="number" class="form-control" name="cd_cpf_cnpj" required maxlength="20">
@@ -86,7 +82,7 @@
 
                     </div>
 
-                    <div class="col-md-6" style="padding-right: 26%">
+                    <div class="col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="text" class="form-control" name="cd_celular1"
@@ -116,9 +112,9 @@
 
                 <!-- Botão Salvar -->
                 <div class="row">
-                    <div class="col-md-12 text-center">
+                    <div class="offset-md-2 col-md-8 text-center">
                         <div>
-                            <button type="button" id="btn_salvar" class="btn btn-danger" style="width: 547px; background-color: #d33889; border-radius: 0px"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
+                            <button type="button" id="btn_salvar" class="btn btn-template" style="width: 100%"><i class="fa fa-save"></i>&nbsp;&nbsp;Cadastrar</button>
                         </div>
                     </div>
                 </div>

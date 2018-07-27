@@ -52,12 +52,10 @@ class ClientRegisterController extends Controller
 
     public function showRegisterForm()
     {
-
         $menuNav =  Menu::all();
 
         //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach($menuNav as $key=>$menu){
-
+        foreach ($menuNav as $key=>$menu) {
             $categoriaSubCat[$key] = Category::
             leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
                 ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
@@ -71,16 +69,12 @@ class ClientRegisterController extends Controller
                 )
                 ->where('menu.cd_menu', '=', $menu->cd_menu)
                 ->get();
-
         }
 
         return view('pages.app.auth.register', compact('menuNav', 'categoriaSubCat'));
     }
 
-    protected function create(ClientRequest $request)
-    {
-        //dd($request->all());
-
+    protected function create(ClientRequest $request){
         $telefone = $this->formataTelefone($request->cd_celular1);
         $dtNascimento = $this->formataData($request->dt_nascimento);
 
@@ -98,36 +92,36 @@ class ClientRegisterController extends Controller
 
         DB::beginTransaction();
 
-        try {
-            $telefone = $this->createPhone($telefone);
-        } catch (QueryException $e) {
-            DB::rollBack();
-            return redirect()->route('client.register')->with('nosuccess', 'Erro ao cadastrar o telefone do cliente');
-        } catch (\PDOException $e) {
-            DB::rollBack();
-            return redirect()->route('client.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
+            try {
+                $telefone = $this->createPhone($telefone);
+            } catch (QueryException $e) {
+                DB::rollBack();
+                return redirect()->route('client.register')->with('nosuccess', 'Erro ao cadastrar o telefone do cliente');
+            } catch (\PDOException $e) {
+                DB::rollBack();
+                return redirect()->route('client.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
 
-        try {
-            $cliente = $this->createClient($request->cd_cpf_cnpj, $request->nm_cliente, $request->email, $request->password, $dtNascimento->toDateString(), $imageName, $telefone->cd_telefone);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->route('client.register')->with('nosuccess', 'Erro ao cadastrar os dados do cliente');
-        } catch (\PDOException $e) {
-            DB::rollBack();
-            return redirect()->route('client.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
-
-
-        if ($userWithImage) {
-            $this->saveImageFile($imagePath, $imageName, $realPath);
-        }
+            try {
+                $cliente = $this->
+                createClient($request->cd_cpf_cnpj, $request->nm_cliente, $request->email, $request->password, $dtNascimento->
+                toDateString(), $imageName, $telefone->cd_telefone);
+            }
+            catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->route('client.register')->with('nosuccess', 'Erro ao cadastrar os dados do cliente');
+            }
+            catch (\PDOException $e) {
+                DB::rollBack();
+                return redirect()->route('client.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            }
+            catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
 
         DB::commit();
         Auth::login($cliente);
@@ -165,15 +159,14 @@ class ClientRegisterController extends Controller
         return response()->json([ 'cpf_cnpj' => $cpf_cpnj_achado ]);
     }
 
-    public function verificaEmail(Request $request){
-        //dd($request->all());
+    public function verificaEmail(Request $request)
+{
+    //dd($request->all());
 
-        $email = DB::table('cliente')
-                ->select('email')
-                ->where('email', '=', $request->email)
-                ->get();
-
-        //dd($email);
+    $email = DB::table('cliente')
+        ->select('email')
+        ->where('email', '=', $request->email)
+        ->get();
 
         if(count($email) == 0){
             return response()->json([

@@ -1,0 +1,144 @@
+/*
+* ===================================================
+*     SHOPPING CART SECTION
+* ===================================================
+*/
+
+.basket {
+    .basket-header {
+        text-transform: uppercase;
+        font-weight: 500;
+        padding: 20px 30px;
+        border-radius: 50px;
+        background: #f5f5f5;
+    }
+    .basket-body {
+        padding: 0 30px;
+        span {
+            font-size: 1.1em;
+            color: #656565;
+        }
+    }
+    .basket-footer {
+        padding: 0 30px;
+        .item {
+            padding: 15px 0;
+        }
+    }
+    .item {
+        padding: 25px 0;
+        border-bottom: 1px solid #ddd;
+        img {
+            max-width: 80px;
+        }
+    }
+    i.delete {
+        cursor: pointer;
+    }
+    .title {
+        margin-left: 20px;
+        span {
+            font-size: 0.9em;
+        }
+    }
+    a {
+        color: #333 !important;
+        text-decoration: none !important;
+    }
+    h5 {
+        font-weight: 400;
+        margin-bottom: 5px;
+    }
+}
+
+section.shopping-cart {
+    .CTAs {
+        margin-top: 40px;
+        a {
+            margin-left: 15px;
+        }
+    }
+}
+
+.block-header {
+    padding: 20px 30px;
+    border-radius: 50px;
+    background: #f5f5f5;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-bottom: 0;
+    }
+}
+
+.block-body {
+    padding: 20px 30px;
+    p {
+        color: #656565;
+        line-height: 1.7em;
+        font-weight: 300;
+    }
+    input,
+    textarea {
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        width: 100%;
+        outline: none
+    }
+}
+
+.cart-black-button {
+    background: #222;
+    border: none;
+    color: #fff;
+    text-align: center;
+    padding: 10px 15px;
+    font-weight: 300;
+    font-size: 0.8em;
+    min-width: 150px;
+    text-align: center;
+    cursor: pointer;
+}
+
+ul.order-menu {
+    li {
+        padding: 20px 0;
+        border-bottom: 1px solid #eee;
+    }
+    span {
+        color: #555;
+    }
+    strong {
+        font-weight: 500;
+        color: #555;
+        &.price-total {
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+    }
+}
+
+.CTAs {
+    margin-top: 40px;
+    a {
+        margin-bottom: 10px;
+    }
+}
+
+
+/* Shopping cart mediaquery -------------------------- */
+
+@media (max-width: 992px) {
+    .shopping-cart {
+        .container:first-of-type {
+            width: 100% !important;
+            overflow-x: scroll;
+            .basket-holder {
+                min-width: 991px;
+            }
+        }
+    }
+}

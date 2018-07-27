@@ -118,7 +118,8 @@ Route::prefix('page')->group(function () {
         Route::get('/shop', 'ProductController@showShopProductsPage')->name('products.page');
         Route::post('/filter', 'ProductController@showShopProductsCatSubcat')->name('productsFilterCatSubCat.page');
         Route::get('/{slug}', 'ProductController@showProductDetails')->name('products.details');
-        Route::get('/var/{slug}', 'ProductController@showProductVariationDetails')->name('products.variation.details');
+        Route::post('/sizes', 'ProductController@getSizes')->name('product.sizes');
+        Route::post('/getvariationdata', 'ProductController@getVariationData')->name('product.variation.data');
     });
 
     Route::prefix('cart')->group(function () {
