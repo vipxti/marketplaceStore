@@ -314,8 +314,15 @@
                                 }
                             });
 
-                            $(this).attr('disabled', 'disabled');
-                            buscaProdutos(proxPag);
+                            try{
+                                $(this).attr('disabled', 'disabled');
+                                buscaProdutos(proxPag);
+                            }
+                            catch(Exception){
+                                $.unblockUI();
+                                swal("Erro", "Ocorreu um erro no processo de busca dos produtos, tente novamente mais tarde.", "warning");
+                            }
+
                         }
                     });
             });
@@ -740,6 +747,10 @@
                                 console.log(err);
                                 deuErro = true;
                             }
+                        },
+                        error: function(){
+                            $.unblockUI();
+                            swal("Erro", "Ocorreu um erro no processo de busca dos produtos, tente novamente mais tarde.", "warning");
                         }
                     })
                         .done(function(){
@@ -851,7 +862,27 @@
             function AtivarBotaoSalvar(){
                 $('#btnSalvarProds').click(function(){
                     console.log("oi");
-                    colunaProdutos();
+
+                    $.blockUI({
+                        message: 'Carregando...',
+                        css: {
+                            border: 'none',
+                            padding: '15px',
+                            backgroundColor: '#000',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            opacity: .5,
+                            color: '#fff'
+                        }
+                    });
+
+                    try{
+                        colunaProdutos();
+                    }
+                    catch(Exception){
+                        $.unblockUI();
+                        swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
+                    }
                 });
             }
 
@@ -883,6 +914,8 @@
                         return false;
                     }
                 }
+
+                $.unblockUI();
             }
 
             //=====================================================================================================
@@ -898,6 +931,10 @@
                     dataType: 'JSON',
                     success: function(data){
                         existeSku = data.message;
+                    },
+                    error: function(){
+                        $.unblockUI();
+                        swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){
                     if(!existeSku){
@@ -928,6 +965,10 @@
                     success: function(data){
                         console.log(data[0][0].cd_categoria);
                         cd_categoria = data[0][0].cd_categoria;
+                    },
+                    error: function(){
+                        $.unblockUI();
+                        swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function () {
                     salvarSubCat(CSRF_TOKEN, array[11], cd_categoria, array);
@@ -946,6 +987,10 @@
                     success: function (data) {
                         console.log(data[0][0].cd_sub_categoria);
                         cd_sub_categoria = data[0][0].cd_sub_categoria;
+                    },
+                    error: function(){
+                        $.unblockUI();
+                        swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){
                     salvarAssoc(CSRF_TOKEN, cd_categoria, cd_sub_categoria, array);
@@ -960,6 +1005,10 @@
                     data: {_token: CSRF_TOKEN, cd_categoria: cd_categoria, cd_sub_categoria: cd_sub_categoria},
                     success: function(data){
                         console.log(data.message);
+                    },
+                    error: function(){
+                        $.unblockUI();
+                        swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){
                     var qt_prod = array[14];
@@ -1002,6 +1051,10 @@
                             qt_produto: qt_prod, status: 'on', images: urls},
                     success: function(data){
 
+                    },
+                    error: function(){
+                        $.unblockUI();
+                        swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){
                     colunaProdutos();

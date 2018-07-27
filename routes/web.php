@@ -38,6 +38,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/product', 'ProductController@showProductAdminPage')->name('product.register')->middleware('auth:admin');
     Route::post('/blingproduct', 'ProductController@cadastrarProdutosBling')->name('bling.save.products');
     Route::post('/bling/skuproduct', 'ProductController@consultaSku')->name('bling.sku.products');
+    Route::post('/product/verify/sku', 'ProductController@getProductData')->name('verify.sku.products');
+    Route::get('/product/verify/category', 'ProductController@getCategory')->name('verify.category.products');
+    Route::get('/product/verify/subcategory', 'ProductController@getSubCategory')->name('verify.subcategory.products');
 
     //Variação do produto
     Route::post('/product/variation', 'ProductController@cadastrarVariacaoProduto')->name('product.variation.save')->middleware('auth:admin');
