@@ -209,7 +209,7 @@
                                         <input type="hidden" name="nm_produto" value="">
                                         <input type="hidden" name="ds_produto" value="">
                                         <input type="hidden" name="vl_produto" value="">
-                                        <input id="qtProdEstoque" type="hidden" name="qt_produto" value="">
+                                        <input type="hidden" name="qt_produto" value="">
                                         <input type="hidden" name="sku_produto" value="">
                                         <input type="hidden" name="slug_produto" value="">
                                         <input type="hidden" name="ds_altura" value="">
@@ -217,20 +217,22 @@
                                         <input type="hidden" name="ds_comprimento" value="">
                                         <input type="hidden" name="ds_peso" value="">
                                         <input type="hidden" name="im_produto" value="">
+
+                                        <button type="submit" id="btnComprar" class="btn cart-submit d-block">Comprar</button>
                                         
                                     @else
 
-                                        <input type="hidden" name="cd_produto" value="{{ $product->cd_produto }}">
-                                        <input type="hidden" name="nm_produto" value="{{ $product->nm_produto }}">
-                                        <input type="hidden" name="ds_produto" value="{{ $product->ds_produto }}">
-                                        <input type="hidden" name="vl_produto" value="{{ $product->vl_produto }}">
-                                        <input id="qtProdEstoque" type="hidden" name="qt_produto" value="{{ $product->qt_produto }}">
-                                        <input type="hidden" name="sku_produto" value="{{ $product->cd_nr_sku }}">
-                                        <input type="hidden" name="slug_produto" value="{{ $product->nm_slug }}">
-                                        <input type="hidden" name="ds_altura" value="{{ $product->ds_altura }}">
-                                        <input type="hidden" name="ds_largura" value="{{ $product->ds_largura }}">
-                                        <input type="hidden" name="ds_comprimento" value="{{ $product->ds_comprimento }}">
-                                        <input type="hidden" name="ds_peso" value="{{ $product->ds_peso }}">
+                                        <input type="hidden" name="cd_produto" value="{{ $product[0]['cd_produto'] }}">
+                                        <input type="hidden" name="nm_produto" value="{{ $product[0]['nm_produto'] }}">
+                                        <input type="hidden" name="ds_produto" value="{{ $product[0]['ds_produto'] }}">
+                                        <input type="hidden" name="vl_produto" value="{{ $product[0]['vl_produto'] }}">
+                                        <input id="qtProdEstoque" type="hidden" name="qt_produto" value="{{ $product[0]['qt_produto'] }}">
+                                        <input type="hidden" name="sku_produto" value="{{ $product[0]['cd_nr_sku'] }}">
+                                        <input type="hidden" name="slug_produto" value="{{ $product[0]['nm_slug'] }}">
+                                        <input type="hidden" name="ds_altura" value="{{ $product[0]['ds_altura'] }}">
+                                        <input type="hidden" name="ds_largura" value="{{ $product[0]['ds_largura'] }}">
+                                        <input type="hidden" name="ds_comprimento" value="{{ $product[0]['ds_comprimento'] }}">
+                                        <input type="hidden" name="ds_peso" value="{{ $product[0]['ds_peso'] }}">
                                         <input type="hidden" name="im_produto" value="{{ $images[0]['im_produto'] }}">
                                         
                                     @endif
@@ -245,7 +247,7 @@
                                         </span>
                                     </div> --}}
 
-                                    <button type="submit" id="btnComprar" class="btn cart-submit d-block" disabled>Comprar</button>
+                                    <button type="submit" id="btnComprar" class="btn cart-submit d-block">Comprar</button>
                                     
                                 </form>
 
