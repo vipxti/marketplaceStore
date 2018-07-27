@@ -101,19 +101,19 @@
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Frete Grátis</span>
-                                                    <small>Compras acima de R$ 300,00</small>
+                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
+                                                    <small>Entrega via Correio</small>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 d-flex">
+                                        {{--<div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-coin text-primary"></i></div>
                                                 <div class="text"><span class="text-uppercase">5% de Desconto</span>
                                                     <small>Boleto, depósito ou transferência</small>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--}}
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-headphones text-primary"></i></div>
@@ -205,19 +205,19 @@
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Frete Grátis</span>
-                                                    <small>Compras acima de R$ 300,00</small>
+                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
+                                                    <small>Entrega via Correio</small>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 d-flex">
+                                        {{--<div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-coin text-primary"></i></div>
                                                 <div class="text"><span class="text-uppercase">5% de Desconto</span>
                                                     <small>Boleto, depósito ou transferência</small>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--}}
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-headphones text-primary"></i></div>
@@ -278,19 +278,19 @@
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Frete Grátis</span>
-                                                    <small>Compras acima de R$ 300,00</small>
+                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
+                                                    <small>Entrega via Correio</small>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 d-flex">
+                                        {{--<div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-coin text-primary"></i></div>
                                                 <div class="text"><span class="text-uppercase">5% de Desconto</span>
                                                     <small>Boleto, depósito ou transferência</small>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--}}
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-headphones text-primary"></i></div>
@@ -361,19 +361,19 @@
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Frete Grátis</span>
-                                                    <small>Compras acima de R$ 300,00</small>
+                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
+                                                    <small>Entrega via Correio</small>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 d-flex">
+                                        {{--<div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-coin text-primary"></i></div>
                                                 <div class="text"><span class="text-uppercase">5% de Desconto</span>
                                                     <small>Boleto, depósito ou transferência</small>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--}}
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-headphones text-primary"></i></div>
@@ -434,19 +434,19 @@
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Frete Grátis</span>
-                                                    <small>Compras acima de R$ 300,00</small>
+                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
+                                                    <small>Entrega via Correio</small>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 d-flex">
+                                        {{--<div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-coin text-primary"></i></div>
                                                 <div class="text"><span class="text-uppercase">5% de Desconto</span>
                                                     <small>Boleto, depósito ou transferência</small>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--}}
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-headphones text-primary"></i></div>
@@ -500,7 +500,7 @@
                                         <a href="{{ route('client.login') }}">Fazer login</a>
                                     </div>
                                     <div class="dropdown-submenu">
-                                        <a href="{{ route('client.register') }}">Cadastrar</a>
+                                        <a href="{{ route('client.register') }}">Criar nova Conta</a>
                                     </div>
                             @endif
                         </div>

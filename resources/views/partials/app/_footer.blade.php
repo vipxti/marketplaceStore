@@ -69,7 +69,7 @@
                         <div class="item d-flex align-items-center">
                             <div class="icon"><i class="icon-truck"></i></div>
                             <div class="text">
-                                <h6 class="no-margin text-uppercase">Frete Grátis</h6><span>Compras acima de R$ 300,00</span>
+                                <h6 class="no-margin text-uppercase">Entregamos em todo Pais</h6><span>Entrega via Correio</span>
                             </div>
                         </div>
                     </div>
@@ -111,20 +111,34 @@
                         </ul>
                     </div>
                     <div class="site-links col-lg-2 col-md-6">
-                        <h5 class="text-uppercase">Shopping</h5>
+                        <h5 class="text-uppercase">Dúvidas</h5>
                         <ul class="list-unstyled">
-                            <li> <a href="#">Mulheres</a></li>
-                            <li> <a href="#">Homens</a></li>
-                            <li> <a href="#">Produtos</a></li>
-                            <li> <a href="#">Unissex</a></li>
+                            <li> <a href="#">Frete Grátis</a></li>
+                            <li> <a href="#">Trocas e Devoluções</a></li>
+                            <li> <a href="#">Prazos e Envios</a></li>
+                            <li><a href="#">Loja Segura</a></li>
                         </ul>
                     </div>
                     <div class="site-links col-lg-2 col-md-6">
                         <h5 class="text-uppercase">Empresa</h5>
                         <ul class="list-unstyled">
-                            <li> <a href="#">Login</a></li>
-                            <li> <a href="#">Cadastrar</a></li>
-                            <li> <a href="#">Atendimento</a></li>
+                            <li><a href="#">Central de Atendimento</a></li>
+                            <li><a href="#">Quem Somos</a></li>
+                            @if(Auth::check())
+                                <li>
+                                    <a href="{{ route('client.dashboard') }}">Minha Conta</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('client.logout') }}">Sair</a>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="{{ route('client.login') }}">Fazer login</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('client.register') }}">Cadastrar-se</a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                     <div class="newsletter col-lg-4">

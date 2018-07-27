@@ -3732,13 +3732,11 @@ body {
 }
 
 a {
-  color: #d59431;
   text-decoration: none;
 }
 
 a:focus, a:hover {
   color: #d59431;
-  text-decoration: underline;
 }
 
 h1,
