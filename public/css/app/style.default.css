@@ -1066,7 +1066,7 @@ nav.navbar .menu-large {
 .right-col .dropdown-menu {
   left: auto;
   right: 0;
-  margin-top: 35px;
+  margin-top: -9px;
 }
 
 .right-col .dropdown-item:hover {
@@ -3085,7 +3085,7 @@ STYLE SWITCHER FOR DEMO
   line-height: 1;
   color: #fff;
   border: 1px solid transparent;
-  border-radius: 25px;
+
 }
 
 .navbar-light .navbar-brand {
