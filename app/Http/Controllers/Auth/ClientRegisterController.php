@@ -52,12 +52,10 @@ class ClientRegisterController extends Controller
 
     public function showRegisterForm()
     {
-
         $menuNav =  Menu::all();
 
         //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach($menuNav as $key=>$menu){
-
+        foreach ($menuNav as $key=>$menu) {
             $categoriaSubCat[$key] = Category::
             leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
                 ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
@@ -71,7 +69,6 @@ class ClientRegisterController extends Controller
                 )
                 ->where('menu.cd_menu', '=', $menu->cd_menu)
                 ->get();
-
         }
 
         return view('pages.app.auth.register', compact('menuNav', 'categoriaSubCat'));
@@ -124,9 +121,10 @@ class ClientRegisterController extends Controller
             throw $e;
         }
 
-
-        if ($userWithImage) {
-            $this->saveImageFile($imagePath, $imageName, $realPath);
+            DB::commit();
+            
+            Auth::login($cliente);
+            return redirect()->route('client.dashboard')->with('success', 'Cadastro realizado com sucesso');
         }
 
         DB::commit();
