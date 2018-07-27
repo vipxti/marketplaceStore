@@ -138,6 +138,7 @@
                                 <input type="text" id="cidade" class="form-control" name="nm_cidade" maxlength="50" required>
                             </div>
                         </div>
+                        <input type="hidden" id="ibge" name="cd_ibge" value="">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Rua&nbsp;<i style="color: red !important;">*</i></label>
@@ -226,6 +227,7 @@
             $("#ibge").val("");
             $("#uf").val("");
         }
+
         //Quando o campo cep perde o foco.
         $("#campo_cep").focusout(function() {
 
@@ -248,27 +250,32 @@
                     $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
                         if (!("erro" in dados)) {
                             //Atualiza os campos com os valores da consulta.
+                            $("#rua").parent().addClass("focused");
                             $("#rua").val(dados.logradouro);
-                            $("#rua").attr("readonly", "readonly");
+                            //$("#rua").attr("disabled", "disabled");
+                            $("#bairro").parent().addClass("focused");
                             $("#bairro").val(dados.bairro);
-                            $("#bairro").attr("readonly", "readonly");
+                            //$("#bairro").attr("disabled", "disabled");
+                            $("#cidade").parent().addClass("focused");
                             $("#cidade").val(dados.localidade);
-                            $("#cidade").attr("readonly", "readonly");
-                            $("#pais").val("Brasil");
-                            $("#pais").attr("readonly", "readonly");
+                            //$("#cidade").attr("disabled", "disabled");
+                            $("#pais").parent().addClass("focused");
+                            $("#pais").val('Brasil');
+                            //$("#pais").attr("disabled", "disabled");
+                            $("#uf").parent().addClass("focused");
                             $("#uf").val(dados.uf);
-                            $("#uf").attr("readonly", "readonly");
-                            //$("#ibge").val(dados.ibge);
+                            //$("#uf").attr("disabled", "disabled");
+                            $("#ibge").val(dados.ibge);
                         } //end if.
                         else {
                             //CEP pesquisado não foi encontrado.
                             limpa_formulario_cep();
                             $(".msg-cpf").html("CEP não encontrado.").css("color", "red");
-                            $("#rua").removeAttr("readonly");
-                            $("#bairro").removeAttr("readonly");
-                            $("#cidade").removeAttr("readonly");
-                            $("#pais").removeAttr("readonly");
-                            $("#uf").removeAttr("readonly");
+                            $("#rua").removeAttr("disabled");
+                            $("#bairro").removeAttr("disabled");
+                            $("#cidade").removeAttr("disabled");
+                            $("#pais").removeAttr("disabled");
+                            $("#uf").removeAttr("disabled");
                         }
                     });
                 } //end if.
@@ -276,21 +283,21 @@
                     //cep é inválido.
                     limpa_formulario_cep();
                     $(".msg-cpf").html("Formato de CEP inválido.").css("color", "red");
-                    $("#rua").removeAttr("readonly");
-                    $("#bairro").removeAttr("readonly");
-                    $("#cidade").removeAttr("readonly");
-                    $("#pais").removeAttr("readonly");
-                    $("#uf").removeAttr("readonly");
+                    $("#rua").removeAttr("disabled");
+                    $("#bairro").removeAttr("disabled");
+                    $("#cidade").removeAttr("disabled");
+                    $("#pais").removeAttr("disabled");
+                    $("#uf").removeAttr("disabled");
                 }
             } //end if.
             else {
                 //cep sem valor, limpa formulário.
                 limpa_formulario_cep();
-                $("#rua").removeAttr("readonly");
-                $("#bairro").removeAttr("readonly");
-                $("#cidade").removeAttr("readonly");
-                $("#pais").removeAttr("readonly");
-                $("#uf").removeAttr("readonly");
+                $("#rua").removeAttr("disabled");
+                $("#bairro").removeAttr("disabled");
+                $("#cidade").removeAttr("disabled");
+                $("#pais").removeAttr("disabled");
+                $("#uf").removeAttr("disabled");
             }
         });
 

@@ -42,6 +42,7 @@
                                 <input id="emailCliente" type="email" class="form-control" name="email" required maxlength="50">
                                 <label class="form-label">Email</label>
                             </div>
+                            <p class="msg-email"></p>
                         </div>
                     </div>
                 </div>
@@ -62,11 +63,11 @@
                     <div class="col-md-6" style="padding-right: 26%">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input  type="text" class="form-control" name="dt_nascimento"
-                                        data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20"
-                                        pattern="/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/">
+                                <input  type="text" id="data_nasc" class="form-control" name="dt_nascimento"
+                                        data-inputmask='"mask": "99/99/9999"' data-mask required maxlength="20">
                                 <label class="form-label">Data de Nascimento</label>
                             </div>
+                            <p class="msg-data"></p>
                         </div>
                     </div>
 
@@ -152,10 +153,74 @@
             $('[data-mask]').inputmask()
         });
 
-        //verifica se campos estão corretos
-        function verificaCampos(){
+        $('#data_nasc').blur(function(){
+            var pattern = new RegExp(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/);
+            var data = $(this).val();
 
+            $('.msg-data').html("");
+            $('#data_nasc').parent().removeClass("error");
+
+            if(!pattern.exec(data)){
+                $('.msg-data').html("Data inválida.").css("color", "red").css("font-size", "small");
+                $('#data_nasc').parent().addClass("error");
+                $("#btn_salvar").attr("disabled", "disabled");
+            }
+
+            verificaTodosCampos();
+        });
+
+        function verificaTodosCampos(){
+            if($('#data_nasc').parent().hasClass('error')){
+                $("#btn_salvar").attr("disabled", "disabled");
+            }
+            else if($('#cpf_cnpj').parent().hasClass('error')){
+                $("#btn_salvar").attr("disabled", "disabled");
+            }
+            else if($('.campo_senha').parent().hasClass('error')){
+                $("#btn_salvar").attr("disabled", "disabled");
+            }
+            else{
+                $("#btn_salvar").removeAttr("disabled");
+            }
         }
+
+        //verifica se campo email esta correto
+        var temEmail = null;
+        function verificaEmail(){
+            var email = $('#emailCliente').val();
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            temEmail = false;
+            $('.msg-email').html("");
+            $('#emailCliente').parent().removeClass('error');
+
+            $.ajax({
+                url: '{{route('client.verify.email')}}',
+                type: 'POST',
+                data: {_token: CSRF_TOKEN, email: email},
+                success: function(data){
+                    var existeEmail = data.message;
+                    console.log(existeEmail);
+
+                    if(existeEmail){
+                        $('.msg-email').html("Email já existente").css("color", "red").css("font-size", "small");
+                        $('#emailCliente').parent().addClass("error");
+                        $("#btn_salvar").attr("disabled", "disabled");
+                        temEmail = true;
+                    }
+                }
+            });
+            verificaTodosCampos();
+        }
+
+        $('#emailCliente').on("input", function(){
+            verificaEmail();
+        });
+
+        $('#emailCliente').on("blur", function(){
+            if(temEmail || $(this).val().length == 0)
+                $('#emailCliente').parent().addClass("error");
+        });
 
         $('#btn_salvar').click(function(){
 
@@ -176,7 +241,6 @@
 
             $('.msg-erro').html("");
             $(this).parent().removeClass("error");
-            $("#btn_salvar").removeAttr("disabled");
 
             if(cpf_cnpj.length > 14){
                 $('.msg-erro').html("Limite de 14 caracteres excedido.").css("color", "red").css("font-size", "small");
@@ -200,6 +264,8 @@
                 $(this).parent().addClass("error");
                 $("#btn_salvar").attr("disabled", "disabled");
             }
+
+            verificaTodosCampos();
         });
 
         $('#cpf_cnpj').blur(function(e){
@@ -248,6 +314,8 @@
                 });
             }
 
+            verificaTodosCampos();
+
         });
 
         //VALIDAÇÃO DA SENHA E EXEBIÇÃO DE ERROS
@@ -256,7 +324,6 @@
             var reg = new RegExp("^(?=.*[A-Z])(?=.{6,})");
 
             $('.msg-senha').html("");
-            $("#btn_salvar").removeAttr("disabled");
             $(this).parent().removeClass("error");
 
             if(!reg.exec(campo) && campo != "") {
@@ -264,6 +331,8 @@
                 $(this).parent().addClass("error");
                 $("#btn_salvar").attr("disabled", "disabled");
             }
+
+            verificaTodosCampos();
 
         });
 

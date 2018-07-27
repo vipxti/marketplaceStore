@@ -158,46 +158,6 @@
                                         </div>
 
                                     </form>
-
-                                    {{--<form action="#" method="post">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6" style="border: 1px solid black;">
-                                                <p class="h3 text-center">Endereço Principal</p>
-                                                <div class="row">
-                                                    <div class="col-md-8 col-xs-8">
-                                                        <div class="row">
-                                                            Teste
-                                                        </div>
-
-                                                        <div class="row">
-                                                            Teste
-                                                        </div>
-
-                                                        <div class="row">
-                                                            Teste
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-md-6" style="border: 1px solid black;">
-                                                <p class="h3 text-center">Endereço Principal</p>
-                                                <div class="row">
-                                                    <div class="col-md-8 col-xs-8">
-                                                        <div class="row">
-                                                            Teste
-                                                        </div>
-                                                        <div class="row">
-                                                            Teste
-                                                        </div>
-                                                        <div class="row">
-                                                            Teste
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>--}}
                                 </div>
                                 <div class="tab-pane" id="tab_default_4">
 
@@ -351,6 +311,7 @@
                 </div>
             </div>
             <br><br><br><br><br><br>
+        </div>
     </section>
 
     <script src="{{asset('js/app/jquery.validate.min.js')}}"></script>
@@ -359,89 +320,88 @@
     <script src="{{asset('js/app/form-validation.js')}}"></script>
 
     <script>
+        function limpa_formulario_cep() {
+            // Limpa valores do formulário de cep.
+            $("#rua").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+            $("#pais").val("");
+            $("#ibge").val("");
+            $("#uf").val("");
+        }
 
-            function limpa_formulario_cep() {
-                // Limpa valores do formulário de cep.
-                $("#rua").val("");
-                $("#bairro").val("");
-                $("#cidade").val("");
-                $("#pais").val("");
-                $("#ibge").val("");
-                $("#uf").val("");
-            }
+        //Quando o campo cep perde o foco.
+        $("#campo_cep").focusout(function() {
 
-            //Quando o campo cep perde o foco.
-            $("#campo_cep").focusout(function() {
-
-                $(".msg-cpf").html("");
-                //Nova variável "cep" somente com dígitos.
-                var cep = $(this).val().replace(/\D/g, '');
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        $("#rua").val("...");
-                        $("#bairro").val("...");
-                        $("#cidade").val("...");
-                        $("#pais").val("...");
-                        $("#uf").val("...");
-                        //Consulta o webservice viacep.com.br/
-                        $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
-                            if (!("erro" in dados)) {
-                                //Atualiza os campos com os valores da consulta.
-                                $("#rua").parent().addClass("focused");
-                                $("#rua").val(dados.logradouro);
-                                //$("#rua").attr("disabled", "disabled");
-                                $("#bairro").parent().addClass("focused");
-                                $("#bairro").val(dados.bairro);
-                                //$("#bairro").attr("disabled", "disabled");
-                                $("#cidade").parent().addClass("focused");
-                                $("#cidade").val(dados.localidade);
-                                //$("#cidade").attr("disabled", "disabled");
-                                $("#pais").parent().addClass("focused");
-                                $("#pais").val('Brasil');
-                                //$("#pais").attr("disabled", "disabled");
-                                $("#uf").parent().addClass("focused");
-                                $("#uf").val(dados.uf);
-                                //$("#uf").attr("disabled", "disabled");
-                                $("#ibge").val(dados.ibge);
-                            } //end if.
-                            else {
-                                //CEP pesquisado não foi encontrado.
-                                limpa_formulario_cep();
-                                $(".msg-cpf").html("CEP não encontrado.").css("color", "red");
-                                $("#rua").removeAttr("disabled");
-                                $("#bairro").removeAttr("disabled");
-                                $("#cidade").removeAttr("disabled");
-                                $("#pais").removeAttr("disabled");
-                                $("#uf").removeAttr("disabled");
-                            }
-                        });
-                    } //end if.
-                    else {
-                        //cep é inválido.
-                        limpa_formulario_cep();
-                        $(".msg-cpf").html("Formato de CEP inválido.").css("color", "red");
-                        $("#rua").removeAttr("disabled");
-                        $("#bairro").removeAttr("disabled");
-                        $("#cidade").removeAttr("disabled");
-                        $("#pais").removeAttr("disabled");
-                        $("#uf").removeAttr("disabled");
-                    }
+            $(".msg-cpf").html("");
+            //Nova variável "cep" somente com dígitos.
+            var cep = $(this).val().replace(/\D/g, '');
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    $("#rua").val("...");
+                    $("#bairro").val("...");
+                    $("#cidade").val("...");
+                    $("#pais").val("...");
+                    $("#uf").val("...");
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+                        if (!("erro" in dados)) {
+                            //Atualiza os campos com os valores da consulta.
+                            $("#rua").parent().addClass("focused");
+                            $("#rua").val(dados.logradouro);
+                            //$("#rua").attr("disabled", "disabled");
+                            $("#bairro").parent().addClass("focused");
+                            $("#bairro").val(dados.bairro);
+                            //$("#bairro").attr("disabled", "disabled");
+                            $("#cidade").parent().addClass("focused");
+                            $("#cidade").val(dados.localidade);
+                            //$("#cidade").attr("disabled", "disabled");
+                            $("#pais").parent().addClass("focused");
+                            $("#pais").val('Brasil');
+                            //$("#pais").attr("disabled", "disabled");
+                            $("#uf").parent().addClass("focused");
+                            $("#uf").val(dados.uf);
+                            //$("#uf").attr("disabled", "disabled");
+                            $("#ibge").val(dados.ibge);
+                        } //end if.
+                        else {
+                            //CEP pesquisado não foi encontrado.
+                            limpa_formulario_cep();
+                            $(".msg-cpf").html("CEP não encontrado.").css("color", "red");
+                            $("#rua").removeAttr("disabled");
+                            $("#bairro").removeAttr("disabled");
+                            $("#cidade").removeAttr("disabled");
+                            $("#pais").removeAttr("disabled");
+                            $("#uf").removeAttr("disabled");
+                        }
+                    });
                 } //end if.
                 else {
-                    //cep sem valor, limpa formulário.
+                    //cep é inválido.
                     limpa_formulario_cep();
+                    $(".msg-cpf").html("Formato de CEP inválido.").css("color", "red");
                     $("#rua").removeAttr("disabled");
                     $("#bairro").removeAttr("disabled");
                     $("#cidade").removeAttr("disabled");
                     $("#pais").removeAttr("disabled");
                     $("#uf").removeAttr("disabled");
                 }
-            });
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulario_cep();
+                $("#rua").removeAttr("disabled");
+                $("#bairro").removeAttr("disabled");
+                $("#cidade").removeAttr("disabled");
+                $("#pais").removeAttr("disabled");
+                $("#uf").removeAttr("disabled");
+            }
+        });
 
 
         $('#quickview').on('show', function (e) {

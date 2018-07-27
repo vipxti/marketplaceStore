@@ -77,118 +77,129 @@ class ClientController extends Controller
     {
         //dd($request->all());
 
+        $replaceCep = str_replace('-', '',  $request->cd_cep);
+
         DB::beginTransaction();
 
+        //PAIS
         try {
             $pais = $this->createCountry($request->nm_pais);
         } catch (ValidationException $e) {
             DB::rollBack();
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o país');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o país');
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o país');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o país');
         } catch (\PDOException $e) {
             DB::rollBack();
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao conectar com o banco de dados pais');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
+        //UF
         try {
-            $estado = $this->createState($request->sg_uf, $pais->cd_pais);
+            $estado = $this->createState($request->sg_uf, $pais->toArray()[0]['cd_pais']);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o estado');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o estado');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao conectar com o banco de dados Uf');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        //CIDADE
+        try {
+            $cidade = $this->createCity($request->nm_cidade, $request->cd_ibge, $estado->toArray()[0]['cd_uf']);
         } catch (ValidationException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o estado');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar a cidade');
         } catch (QueryException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o estado');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar a cidade');
         } catch (\PDOException $e) {
             DB::rollBack();
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            dd($e->getMessage());
+
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao conectar com o banco de dados Cidade');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
+        //BAIRRO
         try {
-            $cidade = $this->createCity($request->nm_cidade, $request->cd_ibge, $estado->cd_uf);
+            $bairro = $this->createNeighbour($request->nm_bairro, $cidade->toArray()[0]['cd_cidade']);
         } catch (ValidationException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar a cidade');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o bairro');
         } catch (QueryException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar a cidade');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o bairro');
         } catch (\PDOException $e) {
             DB::rollBack();
-            dd($e->getMessage());
-
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao conectar com o banco de dados Bairro');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
+        //ENDEREÇO
         try {
-            $bairro = $this->createNeighbour($request->nm_bairro, $cidade->cd_cidade);
+            $endereco = $this->createAddress($replaceCep, $request->ds_endereco, $bairro->toArray()[0]['cd_bairro']);
         } catch (ValidationException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o bairro');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o endereço');
         } catch (QueryException $e) {
             DB::rollBack();
             dd($e->getMessage());
 
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o bairro');
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o endereço');
         } catch (\PDOException $e) {
             DB::rollBack();
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            dd($e->getMessage());
+
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao conectar com o banco de dados Endereço');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
-        try {
-            $endereco = $this->createAddress($request->cd_cep, $request->ds_endereco, $request->cd_numero_endereco, $bairro->cd_bairro);
-        } catch (ValidationException $e) {
-            DB::rollBack();
-            dd($e->getMessage());
-
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o endereço');
-        } catch (QueryException $e) {
-            DB::rollBack();
-            dd($e->getMessage());
-
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao cadastrar o endereço');
-        } catch (\PDOException $e) {
-            DB::rollBack();
-            dd($e->getMessage());
-
-            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
-
+        //ASSOCIA CLIENTE COM ENDERECO
         try {
             $existeEnderecoNoCliente = DB::table('cliente_endereco')->where('cd_cliente', '=', Auth::user()->cd_cliente)->count();
 
-            if ($existeEnderecoNoCliente > 0) {
-                $endPrincipal = 0;
-            } else {
-                $endPrincipal = 1;
-            }
+            ($existeEnderecoNoCliente > 0) ? $endPrincipal = 0 : $endPrincipal = 1;
 
-            $this->associateClientAddress($endereco->cd_endereco, Auth::user()->cd_cliente, $endPrincipal, $request->nm_destinatario, $request->ds_complemento, $request->ds_ponto_referencia);
+            $this->associateClientAddress(
+                $endPrincipal,
+                $request->nm_destinatario,
+                $request->cd_numero_endereco,
+                $request->ds_complemento,
+                $request->ds_ponto_referencia,
+                $endereco->toArray()[0]['cd_endereco'],
+                Auth::user()->cd_cliente
+            );
+
         } catch (ValidationException $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -212,57 +223,108 @@ class ClientController extends Controller
         return redirect()->route('client.dashboard')->with('success', 'Endereço cadastrado com sucesso');
     }
 
+    //INSERT ENDERECO
     public function createCountry($nomePais)
     {
-        return Pais::firstOrCreate([
-            'nm_pais' => $nomePais
-        ]);
+        $idPais = Pais::where('nm_pais', 'like', '%'.$nomePais.'%')->select('cd_pais')->get();
+        if (count($idPais) == 0){
+            Pais::create([
+                'nm_pais' => $nomePais
+            ]);
+            $idPais = Pais::where('nm_pais', 'like', '%'.$nomePais.'%')->select('cd_pais')->get();
+            return $idPais;
+        }
+        else{
+            return $idPais;
+        }
     }
 
     public function createState($siglaEstado, $codPais)
     {
-        return Uf::firstOrCreate([
-            'sg_uf' => $siglaEstado,
-            'cd_pais' => $codPais
-        ]);
+        $idUf = Uf::where('sg_uf', 'like', '%'.$siglaEstado.'%')->select('cd_uf')->get();
+        if (count($idUf) == 0){
+            Uf::create([
+                'sg_uf' => $siglaEstado,
+                'cd_pais' => $codPais
+            ]);
+            $idUf = Uf::where('sg_uf', 'like', '%'.$siglaEstado.'%')->select('cd_uf')->get();
+            return $idUf;
+        }
+        else{
+            return $idUf;
+        }
     }
 
     public function createCity($nomeCidade, $codIbge, $codEstado)
     {
-        return Cidade::firstOrcreate([
-            'nm_cidade' => $nomeCidade,
-            'cd_ibge' => $codIbge,
-            'cd_uf' => $codEstado
-        ]);
+        $idCidade = Cidade::where('nm_cidade', 'like', '%'.$nomeCidade.'%')->select('cd_cidade')->get();
+        //var_dump($idCidade);
+        if (count($idCidade) == 0){
+            Cidade::create([
+                'nm_cidade' => $nomeCidade,
+                'cd_ibge' => $codIbge,
+                'cd_uf' => $codEstado
+            ]);
+            $idCidade = Cidade::where('nm_cidade', 'like', '%'.$nomeCidade.'%')->select('cd_cidade')->get();
+            return $idCidade;
+        }
+        else{
+            return $idCidade;
+        }
     }
 
     public function createNeighbour($nomeBairro, $codCidade)
     {
-        return Bairro::firstOrCreate([
-            'nm_bairro' => $nomeBairro,
-            'cd_cidade' => $codCidade
-        ]);
+        $idBairro = Bairro::where('nm_bairro', 'like', '%'.$nomeBairro.'%')->select('cd_bairro')->get();
+        if (count($idBairro) == 0){
+            Bairro::create([
+                'nm_bairro' => $nomeBairro,
+                'cd_cidade' => $codCidade
+            ]);
+            $idBairro = Bairro::where('nm_bairro', 'like', '%'.$nomeBairro.'%')->select('cd_bairro')->get();
+            return $idBairro;
+        }
+        else{
+            return $idBairro;
+        }
     }
 
-    public function createAddress($cep, $endereco, $numero, $codBairro)
+    public function createAddress($cep, $endereco, $codBairro)
     {
-        return Endereco::create([
-            'cd_cep' => $cep,
-            'ds_endereco' => $endereco,
-            'cd_numero_endereco' => $numero,
-            'cd_bairro' => $codBairro
-        ]);
+        $idEnd = Endereco::where('cd_cep', '=', $cep)->select('cd_endereco')->get();
+        //dd($idEnd);
+        if (count($idEnd) == 0){
+            Endereco::create([
+                'cd_cep' => $cep,
+                'ds_endereco' => $endereco,
+                'cd_bairro' => $codBairro
+            ]);
+            $idEnd = Endereco::where('cd_cep', '=', $cep)->select('cd_endereco')->get();
+            return $idEnd;
+        }
+        else{
+            return $idEnd;
+        }
     }
 
-    public function associateClientAddress($codEndereco, $codCliente, $principal, $nomeDestinatario, $complemento, $pontoReferencia)
+    public function associateClientAddress(
+        $principal,
+        $nomeDestinatario,
+        $numero,
+        $complemento,
+        $pontoReferencia,
+        $codEndereco,
+        $codCliente
+    )
     {
         DB::table('cliente_endereco')->insert([
-            'cd_endereco' => $codEndereco,
-            'cd_cliente' => $codCliente,
             'ic_principal' => $principal,
             'nm_destinatario' => $nomeDestinatario,
+            'cd_numero_endereco' => $numero,
             'ds_complemento' => $complemento,
             'ds_ponto_referencia' => $pontoReferencia,
+            'cd_endereco' => $codEndereco,
+            'cd_cliente' => $codCliente,
         ]);
     }
 }

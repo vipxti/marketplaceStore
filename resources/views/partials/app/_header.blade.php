@@ -1,25 +1,3 @@
-<!-- Bootstrap CSS-->
-<link rel="stylesheet" href="{{asset('css/app/bootstrap.min.css')}}">
-<!-- Font Awesome CSS-->
-{{--<link rel="stylesheet" href="{{asset('css/app/font-awesome.min.css')}}">--}}
-<!-- Bootstrap Select-->
-<link rel="stylesheet" href="{{asset('css/app/bootstrap-select.min.css')}}">
-<!-- Price Slider Stylesheets -->
-<link rel="stylesheet" href="{{asset('css/app/nouislider.css')}}">
-<!-- Custom font icons-->
-<link rel="stylesheet" href="{{asset('css/app/custom-fonticons.css')}}">
-{{--<!-- Google fonts - Poppins-->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700">--}}
-<!-- owl carousel-->
-<link rel="stylesheet" href="{{asset('css/app/owl.carousel.css')}}">
-<link rel="stylesheet" href="{{asset('css/app/owl.theme.default.css')}}">
-<!-- theme stylesheet-->
-<link rel="stylesheet" href="{{asset('css/app/style.default.css')}}" {{--id="theme-stylesheet"--}}>
-<!-- Custom stylesheet - for your changes-->
-<link rel="stylesheet" href="{{asset('css/app/custom.css')}}">
-
-<!-- Modernizr-->
-<script src="{{asset('js/app/modernizr.custom.79639.js')}}"></script>
 <!-- Tweaks for older IEs--><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -34,13 +12,13 @@
                 <form action="#">
                     <div class="form-group">
                         <input type="search" name="search" id="search" placeholder="Pesquisar produto...">
-                        <button type="submit" class="submit"><i class="icon-search"></i></button>
+                        <button type="submit" class="submit"><i class="fa fa-search"></i></button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="container-fluid">
-            <a href="index.html" class="navbar-brand"><img src="img/logo.png" href="{{ route('index')}}"></a>
+            <a href="{{ route('index')}}" class="navbar-brand"><img src="{{asset('img/logo.png')}}"></a>
             <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
                     aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i
                         class="fa fa-bars"></i></button>
@@ -48,15 +26,12 @@
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <ul class="navbar-nav mx-auto">
                     <!-- Início -->
-                    <li class="nav-item dropdown"><a id="navbarHomeLink" href="{{ route('index')}}"
-                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                     class="nav-link active">Início</a>
+                    <li class="nav-item dropdown"><a id="navbarHomeLink" href="{{ route('index')}}" aria-haspopup="true" aria-expanded="false" class="nav-link active">Início</a>
                         <ul aria-labelledby="navbarDropdownHomeLink" class="dropdown-menu"></ul>
                     </li>
 
                     <!-- Maquiagem -->
-                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Maquiagem<i
-                                    class="fa fa-angle-down"></i></a>
+                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Maquiagem<i class="fa fa-angle-down"></i></a>
                         <div class="dropdown-menu megamenu">
                             <div class="row">
                                 <div class="col-lg-9">
@@ -155,15 +130,12 @@
                                 </div>
 
                                 <!-- Produto Destaque -->
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href=""
-                                                                                                class="product-image"><img
-                                                src="img/product1.png" class="img-fluid"></a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product1.png')}}" class="img-fluid"></a>
                                     <h6 class="text-uppercase product-heading"><a href="">Catharine Hill Sombras 30
                                             cores</a></h6>
                                     <ul class="rate list-inline">
                                     </ul>
-                                    <strong class="price text-primary">R$ 106,00</strong><a
-                                            href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM"
+                                    <strong class="price text-primary">R$ 106,00</strong><a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM"
                                             class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>
                                 </div>
                             </div>
@@ -171,8 +143,7 @@
                     </li>
 
                     <!-- Pincel -->
-                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown"
-                                                                class="nav-link">Pincel<i class="fa fa-angle-down"></i></a>
+                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Pincel<i class="fa fa-angle-down"></i></a>
                         <div class="dropdown-menu megamenu">
                             <div class="row">
                                 <div class="col-lg-9">
@@ -261,9 +232,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href=""
-                                                                                                class="product-image"><img
-                                                src="img/product3.png" class="img-fluid"></a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product3.png')}}" class="img-fluid"></a>
                                     <h6 class="text-uppercase product-heading"><a href="">Kit 12 Pinceis Pincel Macrilan
                                             Maquiagem E Necessaire Rosa</a></h6>
                                     <ul class="rate list-inline">
@@ -277,8 +246,7 @@
                     </li>
 
                     <!-- Paleta -->
-                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Paletas<i
-                                    class="fa fa-angle-down"></i></a>
+                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Paletas<i class="fa fa-angle-down"></i></a>
                         <div class="dropdown-menu megamenu">
                             <div class="row">
                                 <div class="col-lg-9">
@@ -337,9 +305,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href=""
-                                                                                                class="product-image"><img
-                                                src="img/product2.png" class="img-fluid"></a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product2.png')}}" class="img-fluid"></a>
                                     <h6 class="text-uppercase product-heading"><a href="">Ruby Rose Base Liquida Matte
                                             L3</a></h6>
                                     <ul class="rate list-inline">
@@ -353,8 +319,7 @@
                     </li>
 
                     <!-- Acessório -->
-                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Acessórios<i
-                                    class="fa fa-angle-down"></i></a>
+                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Acessórios<i class="fa fa-angle-down"></i></a>
                         <div class="dropdown-menu megamenu">
                             <div class="row">
                                 <div class="col-lg-9">
@@ -423,9 +388,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href=""
-                                                                                                class="product-image"><img
-                                                src="img/product4.png" class="img-fluid"></a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product4.png')}}" class="img-fluid"></a>
                                     <h6 class="text-uppercase product-heading"><a href="">Kiss Delineador Em Gel 24h
                                             Preto</a></h6>
                                     <ul class="rate list-inline">
@@ -439,8 +402,7 @@
                     </li>
 
                     <!-- Queridinhos -->
-                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Queridinhos<i
-                                    class="fa fa-angle-down"></i></a>
+                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Queridinhos<i class="fa fa-angle-down"></i></a>
                         <div class="dropdown-menu megamenu">
                             <div class="row">
                                 <div class="col-lg-9">
@@ -499,9 +461,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href=""
-                                                                                                class="product-image"><img
-                                                src="img/product5.png" class="img-fluid"></a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product5.png')}}" class="img-fluid"></a>
                                     <h6 class="text-uppercase product-heading"><a href=""></a></h6>
                                     <ul class="rate list-inline"></ul>
                                 </div>
@@ -510,114 +470,68 @@
                     </li>
 
                     <!-- Produtos -->
-                    <li class="nav-item"><a href="contact.html" class="nav-link">Produtos</a>
+                    <li class="nav-item"><a href="{{route('products.page')}}" class="nav-link">Produtos</a>
                     </li>
                 </ul>
 
                 <div class="right-col d-flex align-items-lg-center flex-column flex-lg-row">
                     <!-- Search Button-->
-                    <div class="search"><i class="icon-search"></i></div>
+                    <div class="search"><i class="fa fa-search"></i></div>
                     <!-- User Not Logged - link to login page-->
-                    <div class="user"><a id="userdetails" href="customer-login.html" class="user-link"><i
-                                    class="icon-profile"> </i></a></div>
+                    @if(Auth::check())
+                        <div class="user">
+                            <a id="userdetails" href="{{route('client.logout')}}" class="user-link"><i class="fa fa-user"> </i></a>
+                        </div>
+                    @else
+                        <div class="user">
+                            <a id="userdetails" href="{{route('client.login')}}" class="user-link"><i class="fa fa-user"> </i></a>
+                        </div>
+                    @endif
                     <!-- Cart Dropdown-->
                     <div class="cart dropdown show">
-                        <a id="cartdetails" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                           class="dropdown-toggle"><i class="icon-cart"></i>
-                            <div class="cart-no">1</div>
-                        </a>
-                        <div aria-labelledby="cartdetails" class="dropdown-menu">
-                            <!-- cart item-->
-                            <div class="dropdown-item cart-product">
-                                <div class="d-flex align-items-center">
-                                    <div class="img"><img src="img/hoodie-man-1.png" class="img-fluid"></div>
-                                    <div class="details d-flex justify-content-between">
-                                        <div class="text"><a href="#"><strong>Heather Gray Hoodie</strong></a>
-                                            <small>Quantity: 1</small>
-                                            <span class="price">$75.00 </span></div>
-                                        <a href="#" class="delete"><i class="fa fa-trash-o"></i></a>
-                                    </div>
+                        @if(Session::get('qtCart') == 0)
+                            <a id="cartdetails" href="{{ route('cart.page') }}" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        @else
+                            <a id="cartdetails" href="{{ route('cart.page') }}" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                <i class="fa fa-shopping-cart"></i>
+                                <div class="cart-no">{{ Session::get('qtCart') }}</div>
+                            </a>
+                        @endif
+
+                        <!-- cart itens-->
+                        {{--<div aria-labelledby="cartdetails" class="dropdown-menu">
+                            @if(Session::get('qtCart') == 0)
+                                <!-- cart item-->
+                                <div class="cart-product">
+                                    <small>NÃO HA PRODUTOS NO CARRINHO&nbsp;<i class="fa fa-shopping-cart fa-2x">&nbsp;</i></small>
                                 </div>
-                            </div>
-                            <!-- total price-->
-                            <div class="dropdown-item total-price d-flex justify-content-between">
-                                <span>Total</span><strong class="text-primary">$75.00</strong></div>
-                            <!-- call to actions-->
-                            <div class="dropdown-item CTA d-flex"><a href="cart.html" class="btn btn-template wide">View
-                                    Cart</a><a href="checkout1.html" class="btn btn-template wide">Checkout</a></div>
-                        </div>
+                            @else
+                                <!-- cart item-->
+                                    <div class="dropdown-item cart-product">
+                                        <div class="d-flex align-items-center">
+                                            <div class="img"><img src="{{asset('img/hoodie-man-1.png')}}" class="img-fluid"></div>
+                                            <div class="details d-flex justify-content-between">
+                                                <div class="text"><a href="#"><strong>Heather Gray Hoodie</strong></a>
+                                                    <small>Quantity: 1</small>
+                                                    <span class="price">$75.00 </span></div>
+                                                <a href="#" class="delete"><i class="fa fa-trash-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- total price-->
+                                    <div class="dropdown-item total-price d-flex justify-content-between">
+                                        <span>Total </span><strong class="text-primary">&nbsp;&nbsp;$75.00</strong></div>
+                                    <!-- call to actions-->
+                                    <div class="dropdown-item CTA d-flex"><a href="cart.html" class="btn btn-template wide">View
+                                            Cart</a><a href="checkout1.html" class="btn btn-template wide">Checkout</a>
+                                    </div>
+                            @endif
+                        </div>--}}
                     </div>
                 </div>
             </div>
         </div>
     </nav>
 </header>
-
-<!-- Banner Principal-->
-<section class="hero hero-home no-padding">
-    <div class="owl-carousel owl-theme hero-slider">
-        <!-- Banner 1 -->
-        <div style="background: url(img/hero-bg.png);" class="item d-flex align-items-center has-pattern">
-            <div class="container">
-                <div class="row" style="color: #fff">
-                    <div class="col-lg-6">
-                        <h1 style="color: #d59431">Blush Vult</h1>
-                        <ul class="lead">
-                            <li><strong>Vult Blush Compacto</strong> Tradicional</li>
-                            <li><strong>Cor</strong> 04</li>
-                            <li><strong>R$ 16,99</strong> Imperdível</li>
-                        </ul>
-                        <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Banner 2 -->
-        <div style="background: url(img/hero-bg-2.png);" class="item d-flex align-items-center has-pattern">
-            <div class="container">
-                <div class="row" style="color: #fff">
-                    <div class="col-lg-6">
-                        <h1 style="color: #d59431">Batom Vult</h1>
-                        <ul class="lead">
-                            <li><strong>Vult Batom Matte</strong> Rosa Queimado</li>
-                            <li><strong>Cor</strong> 07</li>
-                            <li><strong>R$ 15,99</strong> Imperdível</li>
-                        </ul>
-                        <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Banner 3 -->
-        <div style="background: url(img/hero-bg-3.png);" class="item d-flex align-items-center has-pattern">
-            <div class="container">
-                <div class="row" style="color: #fff">
-                    <div class="col-lg-6">
-                        <h1 style="color: #d59431">Batom Vult</h1>
-                        <ul class="lead">
-                            <li><strong>Vult Batom Matte</strong> Nude</li>
-                            <li><strong>Cor</strong> 27</li>
-                            <li><strong>R$ 12,99</strong> Imperdível</li>
-                        </ul>
-                        <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<!-- JavaScript files-->
-
-{{--<script src="{{asset('vendor/popper.js/umd/popper.min.js')}}"></script>--}}
-<script src="{{asset('js/app/jquery.cookie.js')}}"></script>
-<script src="{{asset('js/app/owl.carousel.min.js')}}"></script>
-<script src="{{asset('js/app/owl.carousel2.thumbs.min.js')}}"></script>
-<script src="{{asset('js/app/bootstrap-select.min.js')}}"></script>
-<script src="{{asset('js/app/nouislider.min.js')}}"></script>
-<script src="{{asset('js/app/jquery.countdownbar.min.js')}}"></script>
-
-<script src="{{asset('js/app/front.js')}}"></script>

@@ -6,6 +6,7 @@ use App\Category;
 use App\Menu;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\ClientRequest;
@@ -118,16 +119,18 @@ class ClientRegisterController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
-        } finally {
-            if ($userWithImage) {
-                $this->saveImageFile($imagePath, $imageName, $realPath);
-            }
+        }
 
             DB::commit();
             
             Auth::login($cliente);
             return redirect()->route('client.dashboard')->with('success', 'Cadastro realizado com sucesso');
         }
+
+        DB::commit();
+        Auth::login($cliente);
+        return redirect()->route('client.dashboard')->with('success', 'Cadastro realizado com sucesso');
+
     }
 
     public function createPhone($numTelefone)
@@ -158,6 +161,27 @@ class ClientRegisterController extends Controller
             ->get();
 
         return response()->json([ 'cpf_cnpj' => $cpf_cpnj_achado ]);
+    }
+
+    public function verificaEmail(Request $request){
+        //dd($request->all());
+
+        $email = DB::table('cliente')
+                ->select('email')
+                ->where('email', '=', $request->email)
+                ->get();
+
+        //dd($email);
+
+        if(count($email) == 0){
+            return response()->json([
+                'message' => false
+            ]);
+        }
+
+        return response()->json([
+            'message' => true
+        ]);
     }
 
     public function formataTelefone($numeroTelefone)

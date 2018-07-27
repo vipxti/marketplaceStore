@@ -1,0 +1,47 @@
+/* =======================================================
+       Blog Pages
+   ======================================================= */
+
+h4.comments-heading {
+    margin-bottom: 2rem;
+}
+.comment {
+    margin-bottom: 2rem;
+    p.posted {
+        color: $gray-600;
+        font-size: 90%;
+    }
+    p {
+        color: $gray-500;
+    }
+}
+
+.comment-form {
+    h4 {
+        margin-bottom: 2rem;
+    }
+}
+
+.post-item {
+    margin-bottom: 2rem;
+    .image {
+        margin-bottom: 20px;
+    }
+    .intro {
+        color: $gray-700;
+        font-weight: 300;
+    }
+    h4 {
+        font-size: $h5-font-size;
+        a {
+            color: $gray-900;
+            @include hover-focus {
+                color: $brand-primary;
+            }
+        }
+    }
+}
+
+.pagination-lg {
+    font-weight: 300;
+}

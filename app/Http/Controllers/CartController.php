@@ -25,7 +25,15 @@ class CartController extends Controller
             $nome = $n[0];
             $telefone = null;
 
-            $enderecoCliente = Client::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->join('bairro', 'bairro.cd_bairro', 'endereco.cd_bairro')->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->join('uf', 'uf.cd_uf', 'cidade.cd_uf')->join('pais', 'pais.cd_pais', 'uf.cd_pais')->select('endereco.cd_cep', 'endereco.ds_endereco', 'endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'pais.nm_pais')->where('cliente_endereco.ic_principal', '=', 1)->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get();
+            $enderecoCliente = Client::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->
+            join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->
+            join('bairro', 'bairro.cd_bairro', 'endereco.cd_bairro')->
+            join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->
+            join('uf', 'uf.cd_uf', 'cidade.cd_uf')->
+            join('pais', 'pais.cd_pais', 'uf.cd_pais')->
+            select('endereco.cd_cep', 'endereco.ds_endereco', 'cliente_endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'pais.nm_pais')->
+            where('cliente_endereco.ic_principal', '=', 1)->
+            where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get();
         } else {
             $telefoneCliente = null;
             $nome = null;

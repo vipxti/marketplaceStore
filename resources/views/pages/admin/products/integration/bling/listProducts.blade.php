@@ -473,6 +473,8 @@
                 'ic_ativo'];
             var arrayImagens = [];
             var imagens = [];
+            var arrayDesc = [];
+            var descricao = [];
 
             function buscaProdutos(pag){
                 if(!deuErro){
@@ -493,6 +495,7 @@
                                     var arrayHead = [];
                                     var arrayBody = [];
                                     imagens = [];
+                                    descricao = [];
                                     var temCategoria = false;
                                     var trBody = "<tr id='trProd" + contador + "'></tr>";
                                     var trBodyHidden = "<tr id='trProdHidden" + contador + "'></tr>";
@@ -586,7 +589,14 @@
                                                         }
                                                     });
                                                 }*/
-                                            }else{
+                                            }
+                                            /*else if(index == "descricaoCurta"){
+                                                arrayHead.push(index);
+                                                arrayBody.push(resultado);
+                                                //console.log("INDEX RESULTADO: " + resultado);
+                                                descricao.push(resultado);
+                                            }*/
+                                            else{
                                                 arrayHead.push(index);
                                                 arrayBody.push(resultado);
                                             }
@@ -649,7 +659,24 @@
                                                     var tBody = "<td>" + urls + "</td>";
                                                     $('#trProdHidden' + contador).append(tBody);
 
-                                                }else{
+                                                }
+                                                /*else if(arrayHead[iB] == "descricaoCurta"){
+
+                                                    if(descricao[0] != null){
+                                                        //var novaDesc = descricao[0].replace(/<p>/gi, "");
+                                                        //novaDesc = novaDesc.replace(/<\/p>/gi, "\n");
+                                                        //arrayDesc.push(novaDesc);
+                                                        //console.log("DESCRIÇÃO: " + novaDesc);
+                                                        arrayDesc.push(descricao[0]);
+                                                    }
+                                                    else{
+                                                        arrayDesc.push(descricao[0]);
+                                                    }
+
+                                                    var tBody = "<td>" + arrayBody[iB] + "</td>";
+                                                    $('#trProdHidden' + contador).append(tBody);
+                                                }*/
+                                                else{
                                                     var tBody = "<td>" + arrayBody[iB] + "</td>";
                                                     $('#trProdHidden' + contador).append(tBody);
                                                 }
@@ -716,8 +743,8 @@
                         }
                     })
                         .done(function(){
-                            if(proxPag >=5){
-                            //if(deuErro){
+                            //if(proxPag >=7){
+                            if(deuErro){
                                 $('#btnBusca').removeAttr('disabled');
                                 //cor branco
                                 $("table tbody tr:odd").css("background-color", "#fff");
@@ -840,7 +867,11 @@
                             if( j == 9 ){
                                 arrayProduto.push(arrayImagens[i]);
                                 console.log(arrayImagens[i]);
-                            }
+                            }/*
+                            else if( j == 3){
+                                arrayProduto.push(arrayDesc[i]);
+                                console.log(arrayDesc[i]);
+                            }*/
                             else{
                                 arrayProduto.push($('#resultProdHidden').find('tr:eq(' + i + ')').find('td:eq(' + j + ')').html());
                                 console.log($('#resultProdHidden').find('tr:eq(' + i + ')').find('td:eq(' + j + ')').html());

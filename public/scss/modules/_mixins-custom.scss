@@ -1,0 +1,34 @@
+@mixin ondrTransition($duration: 0.2s, $ease: ease-out) {
+    -webkit-transition: all $duration $ease;
+    -moz-transition: all $duration $ease;
+    transition: all $duration $ease;
+}
+
+@mixin textShadow ($x-axis: 0, $y-axis: 1px, $blur: 1px, $color: #fff) {
+    text-shadow: $x-axis $y-axis $blur $color;
+}
+
+@mixin rounded($radius: 5px) {
+    -moz-border-radius: $radius;
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin uppercase() {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+@mixin no-uppercase() {
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+@mixin horizontal-gradient ($startColor: #eee, $endColor: white) {
+    background-color: $startColor;
+    background-image: -webkit-gradient(linear, left top, right top, from($startColor), to($endColor));
+    background-image: -webkit-linear-gradient(left, $startColor, $endColor);
+    background-image: -moz-linear-gradient(left, $startColor, $endColor);
+    background-image: -ms-linear-gradient(left, $startColor, $endColor);
+    background-image: -o-linear-gradient(left, $startColor, $endColor);
+}

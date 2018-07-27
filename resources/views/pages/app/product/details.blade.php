@@ -298,6 +298,11 @@
 
     <script>
 
+        $(document).ready(function(){
+            var descricao = $('#desc_prod').val();
+            $('#texto_desc').html(descricao);
+        });
+
         let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         let codigos = new Array();
         let sizeSelected = false;
