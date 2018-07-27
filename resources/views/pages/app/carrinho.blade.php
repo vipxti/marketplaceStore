@@ -29,7 +29,7 @@
 
                 <div class="row">
                     <div class="col-12 col-md-12 text-right">
-                        <a href="{{ route('index') }}" target="_blank" class="btn btn-template wide shop-now" style="width: 100%">Continuar Comprando</a>
+                        <a href="{{ route('index')}}" target="_blank" class="btn btn-template" style="width: 100%">Continuar Comprando</a>
                     </div>
                 </div>
 
@@ -44,7 +44,6 @@
                             <table class="table table-responsive">
                                 
                                 <thead>
-
                                     <tr>
                                         <th>Produto</th>
                                         <th>Valor</th>
@@ -52,7 +51,6 @@
                                         <th>Total</th>
                                         <th></th>
                                     </tr>
-                                
                                 </thead>
                                 
 
@@ -76,7 +74,7 @@
                                                 <a href="{{ route('products.details', $produto['slugProduto']) }}">
                                                     <img src="{{ URL::asset('img/products' . '/' . $produto['imagemProduto']) }}" alt="Product">
                                                 </a>
-                                                <h5>{{ $produto['nomeProduto'] }}</h5>
+                                                <p style="font-size: 16px">{{ $produto['nomeProduto'] }}</p>
                                             </td>
 
                                             <td class="price"><span id="{{ 'precoProd' . $key }}">R$ {{ number_format($produto['valorProduto'], 2, ',', '.') }}</span></td>
@@ -108,10 +106,7 @@
                                                     {{ csrf_field() }}
                                                     
                                                     <input type="hidden" name="cod_produto_carrinho" value="{{ $key }}">
-                                                    
-                                                    <button type="submit" class="btn btn-danger" style="background-color: #d89531; border-radius:0px">
-                                                        Excluir
-                                                    </button>
+                                                    <button type="submit" class="btn btn-template">Excluir</button>
                                                 </form>
                                             </td>
 
@@ -120,16 +115,12 @@
                                     @endforeach
 
                                 </tbody>
-                            
                             </table>
-                        
                         </div>
 
                         <div class="cart-footer d-flex mt-30">
-                            <div class="back-to-shop">
-
-                                <a href="{{ route('index') }}">Continuar Comprando</a>
-
+                            <div>
+                                <button type="submit" href="{{ route('index') }}" class="btn btn-template" style="font-size: 14px;">Continuar Comprando</button>
                             </div>
 
                             <div class="update-checkout w-50">
@@ -142,14 +133,12 @@
 
                                     @endforeach
 
-                                    <button type="submit" class="btn btn-danger" style="border-radius: 0px; font-size: 14px; background-color: #3a3a3a">Limpar Carrinho</button>
+                                    <button type="submit" class="btn btn-template" style="font-size: 14px; border-color: #3a3a3a; background-color: #3a3a3a">Limpar Carrinho</button>
 
                                 </form>
                             </div>
                         </div>
-
                     </div>
-                    
                 </div>
 
                 <div class="row">
@@ -193,7 +182,7 @@
 
                 <div class="row">
                     <div class="col-10 col-sm-10">
-                        <p class="h6">Obs: O valor do frete será calculado pelo PagSeguro</p>
+                        <p style="font-size: 16px"><i style="color: red">Obs:</i> O valor do frete será calculado pelo PagSeguro</p>
                     </div> 
                 </div>
 
@@ -245,7 +234,7 @@
 
                                     @if (count($enderecoCliente) == 0)
 
-                                        <a href="{{ route('client.dashboard') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">É preciso cadastrar um endereço para finalizar a compra</button></a>
+                                        <a href="{{ route('client.dashboard') }}"><button type="button" id="fazerlogin" class="btn btn-template">É preciso cadastrar um endereço para finalizar a compra</button></a>
 
                                     @else
 
@@ -258,13 +247,13 @@
                                         <input type="hidden" name="estado" value="{{ $enderecoCliente[0]['sg_uf'] }}">
                                         <input type="hidden" name="pais" value="{{ $enderecoCliente[0]['nm_pais'] }}">
 
-                                        <button type="button" id="finalizar" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Finalizar Compra</button>
+                                        <button type="button" id="finalizar" class="btn btn-template">Finalizar Compra</button>
                                         
                                     @endif
 
                                 @else
 
-                                    <a href="{{ route('client.login') }}"><button type="button" id="fazerlogin" class="btn btn-danger" style="width: 100%; border-radius: 0px; font-weight: 700; font-size: 14px; background-color: #d33889">Faça login para finalizar sua compra</button></a>
+                                    <a href="{{ route('client.login') }}"><button type="button" id="fazerlogin" class="btn btn-template">Faça login para finalizar sua compra</button></a>
 
                                 @endif
 
