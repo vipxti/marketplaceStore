@@ -493,7 +493,7 @@
                     console.log(d.variation[0])
 
                     $('input[name="cd_produto"]').val(d.variation[0].cd_produto);
-                    $('input[name="nm_produto"]').val(d.variation[0].nm_produto);
+                    $('input[name="nm_produto"]').val(d.variation[0].nm_produto_variacao);
                     $('input[name="ds_produto"]').val(d.variation[0].ds_produto_variacao);
                     $('input[name="vl_produto"]').val(d.variation[0].vl_produto_variacao);
                     $('input[name="qt_produto"]').val(d.variation[0].qt_produto_variacao);
