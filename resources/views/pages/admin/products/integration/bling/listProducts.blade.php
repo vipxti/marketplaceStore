@@ -156,45 +156,11 @@
                     <table class="table" id="table">
                         <thead>
                             <tr id="indexProd">
-                                {{--<th style="text-align: left">SKU</th>
-                                <th style="text-align: left">Gtin</th>
-                                <th style="text-align: left">Gtin Embalagem</th>
-                                <th style="text-align: left">Nome</th>
-                                <th style="text-align: left">Tipo</th>
-                                <th style="text-align: left">Un</th>
-                                <th style="text-align: left">Preço</th>
-                                <th style="text-align: left">Ps Liquido</th>
-                                <th style="text-align: left">Ps Bruto</th>
-                                <th style="text-align: left">Imagen</th>
-                                <th style="text-align: left">Descrição</th>
-                                <th style="text-align: left">LarG Produo</th>
-                                <th style="text-align: left">Alt Produto</th>
-                                <th style="text-align: left">Comprimento</th>
-                                <th style="text-align: left">Situação</th>--}}
+
                             </tr>
                         </thead>
                         <tbody id="resultProd">
-                            {{--<tr>
-                                <td></td>
-                                <td>T74747474747</td>
-                                <td>0998876654635</td>
-                                <td>0998876654665</td>
-                                <td>PROD TESTE</td>
-                                <td>PRODUTO<BR>SERVICO</td>
-                                <td>Un</td>
-                                <td>Preço</td>
-                                <td>UN<BR>
-                                    PC<BR>
-                                    CX<BR>
-                                    KIT<BR>
-                                </td>
-                                <td>R$ 300,00</td>
-                                <td>IMG</td>
-                                <td>2CM</td>
-                                <td>3CM</td>
-                                <td>4CM</td>
-                                <td>ATIVO<BR>INATIVO</td>
-                            </tr>--}}
+
                         </tbody>
                     </table>
 
@@ -229,42 +195,67 @@
 
             var objCategoria = null;
             var objCatLoja = null;
+            var existeDadosEmpresa = false;
             $('#btnCategoria').click(function(){
                 try{
-                    $(this).attr('disabled', 'disabled');
-
-                    $.blockUI({
-                        message: 'Carregando...',
-                        css: {
-                            border: 'none',
-                            padding: '15px',
-                            backgroundColor: '#000',
-                            '-webkit-border-radius': '10px',
-                            '-moz-border-radius': '10px',
-                            opacity: .5,
-                            color: '#fff'
-                        }
-                    });
 
                     $.ajax({
-                        url: '{{route('category.api.bling')}}',
-                        type: 'get',
-                        //url: 'blingCategoria.php',
-                        //type: 'post',
+                        url: '{{route('verify.company.data')}}',
+                        type: 'GET',
                         success: function(data){
-                            objCategoria = JSON.parse(data);
+                            existeDadosEmpresa = data.message;
                         }
-                    })
-                        .done(function(){
+                    }).done(function(){
+                        if(existeDadosEmpresa){
+                            $(this).attr('disabled', 'disabled');
 
-                            for(var i = 0; i<objCategoria.retorno.categorias.length; i++){
-                                arrayCat.push(objCategoria.retorno.categorias[i]);
-                            }
-                        })
-                        .done(function(){
-                            $('#btnArrayCat').removeAttr('disabled');
-                            ajaxCategoriaLoja();
-                        });
+                            $.blockUI({
+                                message: 'Carregando...',
+                                css: {
+                                    border: 'none',
+                                    padding: '15px',
+                                    backgroundColor: '#000',
+                                    '-webkit-border-radius': '10px',
+                                    '-moz-border-radius': '10px',
+                                    opacity: .5,
+                                    color: '#fff'
+                                }
+                            });
+
+                            $.ajax({
+                                url: '{{route('category.api.bling')}}',
+                                type: 'get',
+                                //url: 'blingCategoria.php',
+                                //type: 'post',
+                                success: function(data){
+                                    objCategoria = JSON.parse(data);
+                                    console.log(objCategoria);
+                                }
+                            })
+                                .done(function(){
+
+                                    try{
+                                        for(var i = 0; i<objCategoria.retorno.categorias.length; i++){
+                                            arrayCat.push(objCategoria.retorno.categorias[i]);
+                                        }
+
+                                        $('#btnArrayCat').removeAttr('disabled');
+                                        ajaxCategoriaLoja();
+                                    }
+                                    catch(Exception){
+                                        $.unblockUI();
+                                        swal("Ops", "A Api Key é inválida.", "warning");
+                                    }
+                                });
+                        }
+                        //END IF
+                        else{
+                            swal("Ops", "Cadastre os dados da empresa antes de buscar produtos no Bling.", "warning");
+                        }
+
+                    });
+
+
                 }
                 catch(Exception){
                     swal("Erro", "Ocorreu um erro no processo de busca das categorias, tente novamente mais tarde.", "warning");
@@ -336,135 +327,6 @@
             //=====================================================================================================
             //FUNÇÃO PARA BUSCAR OS PRODUTOS
 
-            /*var deuErro = false;
-            var entrouEach = false;
-            var contador = 0;*/
-
-            {{--function buscaProdutos(pag){
-                if(!deuErro){
-                    var page = 'page=' + pag;
-
-                    console.log("****************PAGINA " + proxPag + "****************");
-
-                    $.ajax({
-                        url: '{{url('/admin/api/bling')}}/' + page,
-                        type: 'get',
-                        success: function(data){
-                            var objProd = JSON.parse(data);
-
-                            try{
-                                for(var i = 0; i < objProd.retorno.produtos.length; i++){
-                                    contador++;
-                                    var arrayHead = [];
-                                    var arrayBody = [];
-                                    var temCategoria = false;
-                                    var trBody = "<tr id='trProd" + contador + "'></tr>";
-                                    $('#resultProd').append(trBody);
-
-                                    $.each(objProd.retorno.produtos[i].produto, function(index, resultado){
-
-                                        if(index == "codigo" && resultado == ""){
-                                            return false;
-                                        }
-
-                                        if(index == "codigo" || index == "descricao" || index == "tipo" || index == "situacao" ||
-                                            index == "unidade" || index == "preco" || index == "descricaoCurta" ||
-                                            index == "marca" || index == "pesoLiq" || index == "pesoBruto" || index == "gtin" ||
-                                            index == "gtinEmbalagem" || index == "larguraProduto" || index == "alturaProduto" ||
-                                            index == "profundidadeProduto" || index == "imagem" || index == "estoqueAtual" ||
-                                            index == "produtoLoja"){
-
-                                            if(index == "produtoLoja"){
-                                                var categoriaProd = objProd.retorno.produtos[i].produto.produtoLoja.categoria;
-                                                var categoriaBling = null;
-                                                var pai = 0;
-                                                var paiDesc = null;
-                                                $.each(categoriaProd[categoriaProd.length - 1], function(categoria, respCat){
-
-                                                    if(categoria == "id"){
-                                                        categoriaBling = verificaCategoria(respCat);
-                                                    } else if (categoria == "idCategoriaPai" && respCat != "0"){
-                                                        pai = verificaCategoria(respCat);
-                                                        paiDesc = pai.descricaoVinculo;
-                                                        pai = pai.idVinculoLoja;
-                                                    }
-
-                                                    if(categoria == "descricao"){
-                                                        arrayHead.push(categoria + "Cat");
-                                                    }else{
-                                                        arrayHead.push(categoria);
-                                                    }
-
-                                                    temCategoria = true;
-                                                });
-                                                arrayHead.push("descCatPai");
-                                                arrayBody.push(categoriaBling.idVinculoLoja);
-                                                arrayBody.push(categoriaBling.descricaoVinculo);
-                                                arrayBody.push(pai);
-                                                arrayBody.push(paiDesc);
-                                            }
-                                            else{
-                                                arrayHead.push(index);
-                                                arrayBody.push(resultado);
-                                            }
-
-                                        }
-
-                                    });
-
-                                    if(temCategoria){
-                                        if(!entrouEach){
-                                            for(var iH = 0; iH<arrayHead.length; iH++){
-                                                if(arrayHead[iH]=="codigo" || arrayHead[iH]=="descricao" ||
-                                                    arrayHead[iH]=="tipo" || arrayHead[iH]=="preco" || arrayHead[iH]=="gtin" ||
-                                                    arrayHead[iH]=="descricaoCat" || arrayHead[iH]=="descCatPai" ||
-                                                    arrayHead[iH]=="estoqueAtual" ){
-                                                    var campoHead = "<td>" + arrayHead[iH] + "</td>";
-                                                    $('#indexProd').append(campoHead);
-                                                }
-                                            }
-                                            entrouEach = true;
-                                        }
-
-                                        for(var iB = 0; iB<arrayBody.length; iB++){
-                                            if(arrayHead[iB]=="codigo" || arrayHead[iB]=="descricao" ||
-                                                arrayHead[iB]=="tipo" || arrayHead[iB]=="preco" || arrayHead[iB]=="gtin" ||
-                                                arrayHead[iB]=="descricaoCat" || arrayHead[iB]=="descCatPai" ||
-                                                arrayHead[iB]=="estoqueAtual" ){
-                                                var tBody = "<td>" + arrayBody[iB] + "</td>";
-                                                $('#trProd' + contador).append(tBody);
-                                            }
-                                        }
-                                    }
-                                    else{
-                                        $('#trProd'+contador).remove();
-                                    }
-                                }
-                            }catch(err){
-                                console.log(err);
-                                deuErro = true;
-                            }
-                        }
-                    })
-                        .done(function(){
-                            if(proxPag >=4){
-                                $('#btnBusca').removeAttr('disabled');
-                                buscaInterativa();
-                                criarBotaoSalvarProd();
-                                //cor branco
-                                $("table tbody tr:odd").css("background-color", "#fff");
-                                //cor cinza
-                                $("table tbody tr:even").css("background-color", "#f5f5f5");
-                                $.unblockUI();
-                            }
-                            else{
-                                proxPag++;
-                                buscaProdutos(proxPag);
-                            }
-                        });
-                }
-            }--}}
-
             var deuErro = false;
             var entrouEach = false;
             var contador = 0;
@@ -523,18 +385,11 @@
                                             return false;
                                         }
 
-                                        /* if(index == "codigo" || index == "descricao" || index == "tipo" || index == "situacao" ||
-                                        index == "unidade" || index == "preco" || index == "descricaoCurta" ||
-                                        index == "marca" || index == "pesoLiq" || index == "pesoBruto" || index == "gtin" ||
-                                        index == "gtinEmbalagem" || index == "larguraProduto" || index == "alturaProduto" ||
-                                        index == "profundidadeProduto" || index == "imagem" || index == "estoqueAtual" ||
-                                        index == "produtoLoja"){ */
                                         if(index == "codigo" || index == "descricao" || index == "situacao" ||
                                             index == "preco" || index == "descricaoCurta" || index == "pesoBruto" ||
                                             index == "gtin" || index == "larguraProduto" || index == "alturaProduto" ||
                                             index == "profundidadeProduto" || index == "imagem" || index == "estoqueAtual" ||
                                             index == "produtoLoja"){
-                                            //console.log(index + " : " + resultado);
 
                                             if(index == "produtoLoja"){
                                                 var categoriaProd = objProd.retorno.produtos[i].produto.produtoLoja.categoria;
@@ -551,8 +406,6 @@
                                                         paiDesc = pai.descricaoVinculo;
                                                         pai = pai.idVinculoLoja;
                                                     }
-                                                    /* console.log(categoria + " : " + respCat);
-                                                    console.log(categoriaBling); */
 
                                                     if(categoria == "descricao"){
                                                         arrayHead.push(categoria + "Cat");
@@ -589,27 +442,12 @@
 
                                                     arrayBody.push(linkFinal);
                                                 }
-                                                /*arrayHead.push(index);
-
-                                                if(resultado == ""){
-                                                    arrayBody.push("");
-                                                }else{
-                                                    console.log("index imagem: " + index.length);
-
-                                                    $.each(objProd.retorno.produtos[i].produto.imagem[0], function(img, link){
-                                                        if(img == "link"){
-                                                            //console.log(img + " : " + link);
-                                                            arrayBody.push(link);
-                                                        }
-                                                    });
-                                                }*/
                                             }
-                                            /*else if(index == "descricaoCurta"){
+                                            else if(index == "pesoBruto"){
                                                 arrayHead.push(index);
-                                                arrayBody.push(resultado);
-                                                //console.log("INDEX RESULTADO: " + resultado);
-                                                descricao.push(resultado);
-                                            }*/
+                                                var pesoEmGramas = resultado * 1000;
+                                                arrayBody.push(pesoEmGramas);
+                                            }
                                             else{
                                                 arrayHead.push(index);
                                                 arrayBody.push(resultado);
@@ -629,8 +467,6 @@
                                     console.log("============================================");
 
                                     if(temCategoria){
-
-                                        //criarObjeto();
 
                                         if(!entrouEach){
 

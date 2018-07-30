@@ -12,8 +12,18 @@ class ProductBlingController extends Controller{
         return view('pages.admin.products.integration.bling.listProducts');
     }
 
-    public function getCompanyData(){
+    public function CompanyData(){
+        $dadoUsuario = DB::table('dados_empresa')->get();
 
+        if(count($dadoUsuario) == 0){
+            return response()->json([
+                'message' => false
+            ]);
+        }
+
+        return response()->json([
+            'message' => true
+        ]);
     }
 
     public function searchProds($pagina){

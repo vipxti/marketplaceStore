@@ -162,7 +162,7 @@
                                         <label>Código (SKU)</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                            <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" required maxlength="20" style="text-transform: uppercase">
+                                            <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" required maxlength="20">
 
                                         </div>
                                             <i class="msg_sku"></i>
