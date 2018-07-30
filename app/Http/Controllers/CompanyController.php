@@ -17,7 +17,25 @@ use Illuminate\Support\Facades\DB;
 class CompanyController extends Controller
 {
     public function showCompanyForm(){
-        return view('pages.admin.cadDadosEmpresa');
+
+        $dadosEmpresa = $this->CompanyData();
+
+        //dd($dadosEmpresa);
+
+        return view('pages.admin.cadDadosEmpresa', compact('dadosEmpresa'));
+    }
+
+    public function CompanyData(){
+        $dadosEmpresa = DB::table('dados_empresa')
+            ->join('endereco', 'dados_empresa.fk_cd_endereco', '=', 'endereco.cd_endereco')
+            ->join('bairro', 'endereco.cd_bairro', '=', 'bairro.cd_bairro')
+            ->join('cidade', 'bairro.cd_cidade', '=', 'cidade.cd_cidade')
+            ->join('uf', 'cidade.cd_uf', '=', 'uf.cd_uf')
+            ->join('pais', 'uf.cd_pais', '=', 'pais.cd_pais')
+            ->join('telefone', 'dados_empresa.fk_cd_telefone', '=', 'telefone.cd_telefone')
+            ->get();
+
+        return $dadosEmpresa;
     }
 
     public function registerComnpany(CompanyDataRequest $request)
@@ -199,6 +217,9 @@ class CompanyController extends Controller
         }
 
         DB::commit();
+
+        //$dadosEmpresa = $this->CompanyData();
+
         return view('pages.admin.cadDadosEmpresa');
 
     }
