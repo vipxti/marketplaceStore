@@ -230,40 +230,46 @@
             var objCategoria = null;
             var objCatLoja = null;
             $('#btnCategoria').click(function(){
-                $(this).attr('disabled', 'disabled');
+                try{
+                    $(this).attr('disabled', 'disabled');
 
-                $.blockUI({
-                    message: 'Carregando...',
-                    css: {
-                        border: 'none',
-                        padding: '15px',
-                        backgroundColor: '#000',
-                        '-webkit-border-radius': '10px',
-                        '-moz-border-radius': '10px',
-                        opacity: .5,
-                        color: '#fff'
-                    }
-                });
+                    $.blockUI({
+                        message: 'Carregando...',
+                        css: {
+                            border: 'none',
+                            padding: '15px',
+                            backgroundColor: '#000',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            opacity: .5,
+                            color: '#fff'
+                        }
+                    });
 
-                $.ajax({
-                    url: '{{route('category.api.bling')}}',
-                    type: 'get',
-                    //url: 'blingCategoria.php',
-                    //type: 'post',
-                    success: function(data){
-                        objCategoria = JSON.parse(data);
-                    }
-                })
-                    .done(function(){
-
-                        for(var i = 0; i<objCategoria.retorno.categorias.length; i++){
-                            arrayCat.push(objCategoria.retorno.categorias[i]);
+                    $.ajax({
+                        url: '{{route('category.api.bling')}}',
+                        type: 'get',
+                        //url: 'blingCategoria.php',
+                        //type: 'post',
+                        success: function(data){
+                            objCategoria = JSON.parse(data);
                         }
                     })
-                    .done(function(){
-                        $('#btnArrayCat').removeAttr('disabled');
-                        ajaxCategoriaLoja();
-                    });
+                        .done(function(){
+
+                            for(var i = 0; i<objCategoria.retorno.categorias.length; i++){
+                                arrayCat.push(objCategoria.retorno.categorias[i]);
+                            }
+                        })
+                        .done(function(){
+                            $('#btnArrayCat').removeAttr('disabled');
+                            ajaxCategoriaLoja();
+                        });
+                }
+                catch(Exception){
+                    swal("Erro", "Ocorreu um erro no processo de busca das categorias, tente novamente mais tarde.", "warning");
+                }
+
             });
 
             //=====================================================================================================
