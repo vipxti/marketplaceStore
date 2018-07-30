@@ -988,7 +988,9 @@ class ProductController extends Controller
     {
         $category = Category::find($codCategoria);
 
-        return str_replace(' ', '', $category->nm_categoria);
+        $categoryName = $this->removeSpecialCharacters($category->nm_categoria);
+
+        return strtolower(str_replace(' ', '', $categoryName));
     }
 
     //Retorna o nome da Subcategoria fazendo a pesquisa pelo Código
@@ -996,7 +998,14 @@ class ProductController extends Controller
     {
         $subcategory = Category::join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $codSubcategory)->first();
 
-        return str_replace(' ', '', $subcategory->nm_sub_categoria);
+        $subcategoryName = $this->removeSpecialCharacters($subcategory->nm_sub_categoria);
+
+        return strtolower(str_replace(' ', '', $subcategoryName));
+    }
+
+    public function removeSpecialCharacters($palavra)
+    {
+        return strtr($palavra, 'áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ', 'aaaaeeiooouucAAAAEEIOOOUUC');
     }
 
     //Seleciona o id correspondente dos forms categoria e subcategoria na tabela categoria_subcat
