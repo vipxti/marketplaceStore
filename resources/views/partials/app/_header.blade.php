@@ -53,25 +53,25 @@
                                                 <li id="s"><a id="2" href="javascript:void(0)" class="listagem">Corretivo</a></li>
                                                 <li id="s"><a id="3" href="javascript:void(0)" class="listagem">Pó</a></li>
                                                 <li id="s"><a id="4" href="javascript:void(0)" class="listagem">Blush</a></li>
-                                                <li id="s"><a id="6" href="javascript:void(0)" class="listagem">Primer</a></li>
-                                                <li id="s"><a id="7" href="javascript:void(0)" class="listagem">Sérum</a></li>
-                                                <li id="s"><a id="8" href="javascript:void(0)" class="listagem">Iluminador</a></li>
-                                                <li id="s"><a id="9" href="javascript:void(0)" class="listagem">BB Cleam</a></li>
-                                                <li id="s"><a id="10" href="javascript:void(0)" class="listagem">Bronzeador</a></li>
-                                                <li id="s"><a id="11" href="javascript:void(0)" class="listagem">Demaquilante</a></li>
+                                                <li id="s"><a id="5" href="javascript:void(0)" class="listagem">Primer</a></li>
+                                                <li id="s"><a id="6" href="javascript:void(0)" class="listagem">Sérum</a></li>
+                                                <li id="s"><a id="7" href="javascript:void(0)" class="listagem">Iluminador</a></li>
+                                                <li id="s"><a id="8" href="javascript:void(0)" class="listagem">BB Cleam</a></li>
+                                                <li id="s"><a id="9" href="javascript:void(0)" class="listagem">Bronzeador</a></li>
+                                                <li id="s"><a id="10" href="javascript:void(0)" class="listagem">Demaquilante</a></li>
                                             </ul>
                                         </div>
 
                                         <!-- Lábios -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Lábios</strong>
                                             <ul class="list-unstyled">
-                                                <li id="s"><a id="12" href="javascript:void(0)" class="listagem">Batom Matte</a></li>
-                                                <li id="s"><a id="13" href="javascript:void(0)" class="listagem">Batom Líquido Matte</a></li>
-                                                <li id="s"><a id="14" href="javascript:void(0)" class="listagem">Batom Cremoso</a></li>
-                                                <li id="s"><a id="15" href="javascript:void(0)" class="listagem">Contorno Labial</a></li>
-                                                <li id="s"><a id="16" href="javascript:void(0)" class="listagem">Gloss</a></li>
-                                                <li id="s"><a id="17" href="javascript:void(0)" class="listagem">Hidratante</a></li>
-                                                <li id="s"><a id="18" href="javascript:void(0)" class="listagem">Batom Líquido Matte Metalizado</a></li>
+                                                <li id="s"><a id="11" href="javascript:void(0)" class="listagem">Batom Matte</a></li>
+                                                <li id="s"><a id="12" href="javascript:void(0)" class="listagem">Batom Líquido Matte</a></li>
+                                                <li id="s"><a id="13" href="javascript:void(0)" class="listagem">Batom Cremoso</a></li>
+                                                <li id="s"><a id="14" href="javascript:void(0)" class="listagem">Contorno Labial</a></li>
+                                                <li id="s"><a id="15" href="javascript:void(0)" class="listagem">Gloss</a></li>
+                                                <li id="s"><a id="16" href="javascript:void(0)" class="listagem">Hidratante</a></li>
+                                                <li id="s"><a id="17" href="javascript:void(0)" class="listagem">Batom Líquido Matte Metalizado</a></li>
                                                 <!--<li><a href="index2.html"><span class="badge badge-success ml-2">New</span></a></li>
                                                 <li><a href="index3.html"><span class="badge badge-success ml-2">New</span></a></li>-->
                                             </ul>
@@ -80,24 +80,24 @@
                                         <!-- Olhos -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Olhos</strong>
                                             <ul class="list-unstyled">
-                                                <li id="s"><a id="19" href="javascript:void(0)" class="listagem">Delineador</a></li>
-                                                <li id="s"><a id="20" href="javascript:void(0)" class="listagem">Máscara de Cílios</a></li>
-                                                <li id="s"><a id="21" href="javascript:void(0)" class="listagem">Fixador | Primer</a></li>
-                                                <li id="s"><a id="22" href="javascript:void(0)" class="listagem">Lápis</a></li>
-                                                <li id="s"><a id="23" href="javascript:void(0)" class="listagem">Pigmento</a></li>
-                                                <li id="s"><a id="24" href="javascript:void(0)" class="listagem">Glitter</a></li>
-                                                <li id="s"><a id="25" href="javascript:void(0)" class="listagem">Sombras</a></li>
+                                                <li id="s"><a id="18" href="javascript:void(0)" class="listagem">Delineador</a></li>
+                                                <li id="s"><a id="19" href="javascript:void(0)" class="listagem">Máscara de Cílios</a></li>
+                                                <li id="s"><a id="20" href="javascript:void(0)" class="listagem">Fixador | Primer</a></li>
+                                                <li id="s"><a id="21" href="javascript:void(0)" class="listagem">Lápis</a></li>
+                                                <li id="s"><a id="22" href="javascript:void(0)" class="listagem">Pigmento</a></li>
+                                                <li id="s"><a id="23" href="javascript:void(0)" class="listagem">Glitter</a></li>
+                                                <li id="s"><a id="24" href="javascript:void(0)" class="listagem">Sombras</a></li>
                                             </ul>
                                         </div>
 
                                         <!-- Sobrancelhas -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Sobrancelhas</strong>
                                             <ul class="list-unstyled">
-                                                <li id="s"><a id="26" href="javascript:void(0)" class="listagem">Iluminador</a></li>
-                                                <li id="s"><a id="27" href="javascript:void(0)" class="listagem">Lápis</a></li>
-                                                <li id="s"><a id="28" href="javascript:void(0)" class="listagem">Sombra</a></li>
-                                                <li id="s"><a id="29" href="javascript:void(0)" class="listagem">Acessórios</a></li>
-                                                <li id="s"><a id="42" href="javascript:void(0)" class="listagem">Delineador</a></li>
+                                                <li id="s"><a id="25" href="javascript:void(0)" class="listagem">Iluminador</a></li>
+                                                <li id="s"><a id="26" href="javascript:void(0)" class="listagem">Lápis</a></li>
+                                                <li id="s"><a id="27" href="javascript:void(0)" class="listagem">Sombra</a></li>
+                                                <li id="s"><a id="28" href="javascript:void(0)" class="listagem">Acessórios</a></li>
+                                                <li id="s"><a id="29" href="javascript:void(0)" class="listagem">Delineador</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -161,47 +161,47 @@
                                         <!-- Individual -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Individual</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Para Sombra</a></li>
-                                                <li><a href="">Para Sombra</a></li>
-                                                <li><a href="">Para Lábios</a></li>
-                                                <li><a href="">Para Sobrancelhas</a></li>
-                                                <li><a href="">Para Pó</a></li>
-                                                <li><a href="">Para Blush | Contorno</a></li>
-                                                <li><a href="">Para Base | Primer</a></li>
-                                                <li><a href="">Para Delinear</a></li>
-                                                <li><a href="">Para Iluminador</a></li>
-                                                <li><a href="">Para Corretivo</a></li>
-                                                <li><a href="">Para Aplicador | Esponja</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Sombra</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Sombra</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Lábios</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Sobrancelhas</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Pó</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Blush | Contorno</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Base | Primer</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Delinear</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Iluminador</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Corretivo</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Para Aplicador | Esponja</a></li>
                                             </ul>
                                         </div>
 
                                         <!-- Kit -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Kit</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Para Face</a></li>
-                                                <li><a href="">Para Olhos</a></li>
-                                                <li><a href="">Completo</a></li>
-                                                <li><a href="">Monte Seu Kit</a></li>
+                                                <li id="s"><a href="">Para Face</a></li>
+                                                <li id="s"><a href="">Para Olhos</a></li>
+                                                <li id="s"><a href="">Completo</a></li>
+                                                <li id="s"><a href="">Monte Seu Kit</a></li>
                                             </ul>
                                         </div>
 
                                         <!-- Higienizador -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Higienizador</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Pincel para Limpeza</a></li>
-                                                <li><a href="">Algodão</a></li>
-                                                <li><a href="">Esponja</a></li>
-                                                <li><a href="">Spray</a></li>
-                                                <li><a href="">Tapete</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Pincel para Limpeza</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Algodão</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Esponja</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Spray</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Tapete</a></li>
                                             </ul>
                                         </div>
 
                                         <!-- Tratamento Facial -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Tratamento Facial</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Pele Mista | Oleosa</a></li>
-                                                <li><a href="">Pele com Acne</a></li>
-                                                <li><a href="">Todo Tipo de Pele</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Pele Mista | Oleosa</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Pele com Acne</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Todo Tipo de Pele</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -265,16 +265,16 @@
                                         <div class="col-lg-3"><strong class="text-uppercase">Paletas Para
                                                 Maquiagem</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Paleta de Base/Corretivo</a></li>
-                                                <li><a href="">Paleta de Sombra</a></li>
-                                                <li><a href="">Paleta de Base</a></li>
-                                                <li><a href="">Paleta de Pó</a></li>
-                                                <li><a href="">Paleta de Blush</a></li>
-                                                <li><a href="">Paleta de Contorno</a></li>
-                                                <li><a href="">Paleta de Iluminador</a></li>
-                                                <li><a href="">&nbsp;</a></li>
-                                                <li><a href="">&nbsp;</a></li>
-                                                <li><a href="">&nbsp;</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Paleta de Base/Corretivo</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Paleta de Sombra</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Paleta de Base</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Paleta de Pó</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Paleta de Blush</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Paleta de Contorno</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Paleta de Iluminador</a></li>
+                                                <li id="s"><a href="">&nbsp;</a></li>
+                                                <li id="s"><a href="">&nbsp;</a></li>
+                                                <li id="s"><a href="">&nbsp;</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -337,16 +337,16 @@
                                         <!-- Maquiagem -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Maquiagem</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Esponja | Aplicador</a></li>
-                                                <li><a href="">Espelho</a></li>
-                                                <li><a href="">Curvex</a></li>
-                                                <li><a href="">Apontador</a></li>
-                                                <li><a href="">Uso Profissional</a></li>
-                                                <li><a href="">&nbsp;</a></li>
-                                                <li><a href="">&nbsp;</a></li>
-                                                <li><a href="">&nbsp;</a></li>
-                                                <li><a href="">&nbsp;</a></li>
-                                                <li><a href="">&nbsp;</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Esponja | Aplicador</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Espelho</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Curvex</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Apontador</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Uso Profissional</a></li>
+                                                <li id="s"><a href="">&nbsp;</a></li>
+                                                <li id="s"><a href="">&nbsp;</a></li>
+                                                <li id="s"><a href="">&nbsp;</a></li>
+                                                <li id="s"><a href="">&nbsp;</a></li>
+                                                <li id="s"><a href="">&nbsp;</a></li>
                                                 <br>
 
                                             </ul>
@@ -355,9 +355,9 @@
                                         <!-- Organizador -->
                                         <div class="col-lg-3"><strong class="text-uppercase">Organizador</strong>
                                             <ul class="list-unstyled">
-                                                <li><a href="">Maletas de Maquiagem</a></li>
-                                                <li><a href="">Acrílicos</a></li>
-                                                <li><a href="">Nécessario | Case</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Maletas de Maquiagem</a></li>
+                                                <li id="s"><a href="javascript:void(0)" class="listagem">Acrílicos</a></li>
+                                                <li id="s"><ahref="javascript:void(0)" class="listagem">Nécessario | Case</a></li>
                                             </ul>
                                         </div>
                                     </div>
