@@ -482,7 +482,7 @@
 
         $('.listaDeTamanhos').on('click', 'li a', function () {
 
-            selectedProductSku = this.id;
+            let selectedProductSku = this.id;
 
             $.ajax({
                 url: '{{ route('product.variation.data') }}',
