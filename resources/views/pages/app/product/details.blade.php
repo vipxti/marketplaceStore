@@ -176,16 +176,34 @@
                                     <div class="widget-desc">
                                     
                                         <ul class="listaDeTamanhos"> 
-                                    
-                                            @foreach ($sizes as $size)
+
+                                            @if ($sizeType == 'N')
+
+                                                @foreach ($sizes as $size)
                                                 
-                                                <li class="{{ $size['cd_nr_sku'] }}">
+                                                    <li class="{{ $size['cd_nr_sku'] }}">
+                                                    
+                                                        <a id="{{ $size['cd_nr_sku'] }}" name="sizes[]" href="javascript:void(0);">{{ $size['nm_tamanho_num'] }}</a>
+                                                    
+                                                    </li>&nbsp;&nbsp;
                                                 
-                                                    <a id="{{ $size['cd_nr_sku'] }}" name="sizes[]" href="javascript:void(0);">{{ $size['nm_tamanho_num'] }}</a>
+                                                @endforeach
                                                 
-                                                </li>&nbsp;&nbsp;
-                                            
-                                            @endforeach
+                                            @endif
+
+                                            @if ($sizeType == 'L')
+
+                                                @foreach ($sizes as $size)
+                                                
+                                                    <li class="{{ $size['cd_nr_sku'] }}">
+                                                    
+                                                        <a id="{{ $size['cd_nr_sku'] }}" name="sizes[]" href="javascript:void(0);">{{ $size['nm_tamanho_letra'] }}</a>
+                                                    
+                                                    </li>&nbsp;&nbsp;
+                                                
+                                                @endforeach
+                                                
+                                            @endif
                                     
                                         </ul>
                                     
@@ -422,6 +440,8 @@
                 type: 'POST',
                 data: {_token: CSRF_TOKEN, cds_produto: codigos, cd_cor: this.id},
                 success: function (d) {
+
+                    console.log(d);
 
                     if (d.data.length > 0) {
 
