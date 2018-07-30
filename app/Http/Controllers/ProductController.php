@@ -223,11 +223,9 @@ class ProductController extends Controller
 
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto')->paginate(25);
 
-        // $variation = ProductVariation::join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('')->paginate(25);
+        $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('produto_variacao.cd_produto', 'produto.nm_slug')->paginate(25);
 
-        // dd($variation);
-
-        return view('pages.app.product.index', compact('produtos', 'nome', 'menuNav', 'categoriaSubCat'));
+        return view('pages.app.product.index', compact('produtos', 'variation', 'nome', 'menuNav', 'categoriaSubCat'));
     }
 
     public function showProductDetails($slug)
@@ -338,7 +336,7 @@ class ProductController extends Controller
     {
         //dd($request->all());
 
-        $variation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->join('dimensao', 'sku.cd_dimensao', 'dimensao.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('produto_variacao.cd_produto', 'produto.nm_produto', 'produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'produto_variacao.qt_produto_variacao', 'sku.cd_nr_sku', 'produto.nm_slug', 'img_produto.im_produto', 'dimensao.ds_peso', 'dimensao.ds_comprimento', 'dimensao.ds_altura', 'dimensao.ds_largura')->where('sku.cd_nr_sku', '=', $request->sku)->where('img_produto.ic_img_principal', '=', 1)->get()->toArray();
+        $variation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->join('dimensao', 'sku.cd_dimensao', 'dimensao.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('produto_variacao.cd_produto', 'produto_variacao.nm_produto_variacao', 'produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'produto_variacao.qt_produto_variacao', 'sku.cd_nr_sku', 'produto.nm_slug', 'img_produto.im_produto', 'dimensao.ds_peso', 'dimensao.ds_comprimento', 'dimensao.ds_altura', 'dimensao.ds_largura')->where('sku.cd_nr_sku', '=', $request->sku)->where('img_produto.ic_img_principal', '=', 1)->get()->toArray();
 
         $response = [
             'variation' => $variation

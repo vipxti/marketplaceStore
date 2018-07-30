@@ -22,30 +22,46 @@
                                             <div class="product-description text-center">
                                                 <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
                                                 <p>{{ $produto->nm_produto }}</p>
-                                                <!-- Botão comprar -->
-                                                <form action="{{ route('cart.buy') }}" method="post">
-                                                    {{ csrf_field() }}
-                                                    <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
-                                                    <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
-                                                    <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
-                                                    <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
-                                                    <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
-                                                    <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
-                                                    <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
-                                                    <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
-                                                    <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
-                                                    <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
-                                                    <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
-                                                    <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
+
+                                                @if ($variation[$key]->cd_produto != null)
 
                                                     @if($produto->qt_produto < 5)
                                                         <p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>
                                                     @else
                                                         <div class="col-12 col-md-12 d-flex justify-content-center">
-                                                            <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none; padding: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                                            <a class="btn btn-link add-to-cart-btn" href="{{ route('products.details', $produto->nm_slug) }}" style="text-decoration: none; padding: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a>
                                                         </div>
                                                     @endif
-                                                </form>
+                                                    
+                                                @else
+
+                                                    <!-- Botão comprar -->
+                                                    <form action="{{ route('cart.buy') }}" method="post">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
+                                                        <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
+                                                        <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
+                                                        <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
+                                                        <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
+                                                        <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
+                                                        <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
+                                                        <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
+                                                        <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
+                                                        <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
+                                                        <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
+                                                        <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
+
+                                                        @if($produto->qt_produto < 5)
+                                                            <p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>
+                                                        @else
+                                                            <div class="col-12 col-md-12 d-flex justify-content-center">
+                                                                <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none; padding: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                                            </div>
+                                                        @endif
+                                                    </form>
+                                                    
+                                                @endif
+                                                
                                             </div>
                                         </div>
                                     @endforeach
@@ -66,18 +82,5 @@
                 </div>
             </div>
         </section>
-
-    <script>
-
-        $('#quickview').on('show', function (e) {
-
-            var link = e.relatedTarget(),
-                $modal = $(this)
-
-            console.log($modal);
-
-        });
-
-    </script>
 
 @stop
