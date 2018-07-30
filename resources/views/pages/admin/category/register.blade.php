@@ -318,6 +318,14 @@
         var verificaCat = false;
         $('#nm_categoria').on("input", function(){
             verificaArray($('#nm_categoria'), arrayCadCat, verificaCat, $('#btnSalvarCat'));
+            var regLetraNumEspaco = new RegExp(/^[a-zA-Z0-9 ]+$/);
+
+            if(!regLetraNumEspaco.exec($(this).val())){
+                $('#btnSalvarCat').attr('disabled', 'disabled');
+            }
+            else{
+                $('#btnSalvarCat').removeAttr('disabled');
+            }
         });
 
         //Carrega as categorias já cadastrados dentro de um array
@@ -330,6 +338,15 @@
         var verificaSub = false;
         $('#nm_sub_categoria').on("input", function(){
             verificaArray($('#nm_sub_categoria'), arrayCadSub, verificaSub, $('#btnSalvarSub'));
+
+            var regLetraNumEspaco = new RegExp(/^[a-zA-Z0-9 ]+$/);
+
+            if(!regLetraNumEspaco.exec($(this).val())){
+                $('#btnSalvarSub').attr('disabled', 'disabled');
+            }
+            else{
+                $('#btnSalvarSub').removeAttr('disabled');
+            }
         });
 
         //Função para carregar os arrays

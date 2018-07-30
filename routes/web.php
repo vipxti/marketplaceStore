@@ -42,6 +42,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/product/verify/category', 'ProductController@getCategory')->name('verify.category.products');
     Route::get('/product/verify/subcategory', 'ProductController@getSubCategory')->name('verify.subcategory.products');
 
+
     //Variação do produto
     Route::post('/product/variation', 'ProductController@cadastrarVariacaoProduto')->name('product.variation.save')->middleware('auth:admin');
     Route::get('/product/variation/{cd_produto}', 'ProductController@showProductPageVariation')->middleware('auth:admin');
@@ -78,7 +79,7 @@ Route::prefix('admin')->group(function () {
     Route::get('api/bling/cat/{id}', 'ProductBlingController@searchCatFather')->name('searchCat.api.bling')->middleware('auth:admin');
     Route::get('api/category', 'ProductBlingController@getCategories')->name('category.api.bling')->middleware('auth:admin');
     Route::get('api/storecat', 'ProductBlingController@getStoreCategories')->name('storeCategory.api.bling')->middleware('auth:admin');
-
+    Route::get('/product/verify/companydata', 'ProductBlingController@CompanyData')->name('verify.company.data');
 
     Route::get('/data', 'UserController@showUserForm')->name('admin.data')->middleware('auth:admin');
 
