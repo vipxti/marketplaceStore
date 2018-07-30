@@ -355,8 +355,6 @@ class CartController extends Controller
 
     public function finalizarCompra(Request $request)
     {
-        dd($request->cep);
-
         if ($request->telefone == null) {
             $ddd = null;
             $telefone = null;

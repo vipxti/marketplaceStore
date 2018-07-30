@@ -56,7 +56,7 @@
                             <div class="carousel-inner">
 
                                 <div class="carousel-item active">
-                                    <img id="fotoGrande1" class="d-block w-100" src="{{ URL::asset('img/products/' . $images[0]['im_produto']) }}" alt="First slide">
+                                    <img id="fotoGrande1" class="d-block w-100" src="{{ URL::asset('img/products/' . $images[0]['im_produto']) }}" alt="First slide" style="width: 1000px; heigth: 1444px;">
                                 </div>
 
                                 @if(count($images) > 1)
@@ -67,7 +67,7 @@
 
                                             <div class="carousel-item">
                                                 <a class="gallery_img" href="{{ URL::asset('img/products/' . $image['im_produto']) }}">
-                                                <img id="{{ 'fotoGrande' . ($key + 1) }}" class="d-block w-100" src="{{ URL::asset('img/products/' . $image['im_produto']) }}" alt="slide">
+                                                <img id="{{ 'fotoGrande' . ($key + 1) }}" class="d-block" src="{{ URL::asset('img/products/' . $image['im_produto']) }}" alt="slide" style="width: 1000px; heigth: 1444px;">
                                                 </a>
                                             </div>
 
@@ -176,16 +176,34 @@
                                     <div class="widget-desc">
                                     
                                         <ul class="listaDeTamanhos"> 
-                                    
-                                            @foreach ($sizes as $size)
+
+                                            @if ($sizeType == 'N')
+
+                                                @foreach ($sizes as $size)
                                                 
-                                                <li>
+                                                    <li class="{{ $size['cd_nr_sku'] }}">
+                                                    
+                                                        <a id="{{ $size['cd_nr_sku'] }}" name="sizes[]" href="javascript:void(0);">{{ $size['nm_tamanho_num'] }}</a>
+                                                    
+                                                    </li>&nbsp;&nbsp;
                                                 
-                                                    <a id="{{ $size['cd_nr_sku'] }}" name="sizes[]" href="javascript:void(0);">{{ $size['nm_tamanho_num'] }}</a>
+                                                @endforeach
                                                 
-                                                </li>&nbsp;&nbsp;
-                                            
-                                            @endforeach
+                                            @endif
+
+                                            @if ($sizeType == 'L')
+
+                                                @foreach ($sizes as $size)
+                                                
+                                                    <li class="{{ $size['cd_nr_sku'] }}">
+                                                    
+                                                        <a id="{{ $size['cd_nr_sku'] }}" name="sizes[]" href="javascript:void(0);">{{ $size['nm_tamanho_letra'] }}</a>
+                                                    
+                                                    </li>&nbsp;&nbsp;
+                                                
+                                                @endforeach
+                                                
+                                            @endif
                                     
                                         </ul>
                                     
@@ -261,7 +279,7 @@
                                         <input type="hidden" name="ds_peso" value="{{ $product[0]['ds_peso'] }}">
                                         <input type="hidden" name="im_produto" value="{{ $images[0]['im_produto'] }}">
 
-                                        <button type="submit" id="btnComprar" class="btn cart-submit d-block" disabled>Comprar</button>
+                                        <button type="submit" id="btnComprar" class="btn cart-submit d-block">Comprar</button>
 
                                     </form>
 
@@ -302,7 +320,7 @@
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <p>{{ $variations[0]['ds_produto_variacao'] }}</p>
+                                    <p class="infoProduto">{{ $variations[0]['ds_produto_variacao'] }}</p>
                                 </div>
                             </div>
 
@@ -310,7 +328,7 @@
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <p>{{ $product[0]['ds_produto'] }}</p>
+                                    <p class="infoProduto">{{ $product[0]['ds_produto'] }}</p>
                                 </div>
                             </div>
                             
@@ -329,6 +347,9 @@
         $(document).ready(function(){
             var descricao = $('#desc_prod').val();
             $('#texto_desc').html(descricao);
+
+
+
         });
 
         let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -420,6 +441,8 @@
                 data: {_token: CSRF_TOKEN, cds_produto: codigos, cd_cor: this.id},
                 success: function (d) {
 
+                    console.log(d);
+
                     if (d.data.length > 0) {
 
                         let rootPath = '{{ asset('img/products') }}' + '/'
@@ -433,11 +456,11 @@
                         $.each(d.data, function (i, v) {
 
                             if (d.sizeType == 'N') {
-                                $('.listaDeTamanhos').append('<li><a id="' + v.cd_nr_sku + '" name="sizes[]" href="javascript:void(0);">' + v.nm_tamanho_num + '</a></li>&nbsp;&nbsp;');
+                                $('.listaDeTamanhos').append('<li class="' + v.cd_nr_sku + '"><a id="' + v.cd_nr_sku + '" name="sizes[]" href="javascript:void(0);">' + v.nm_tamanho_num + '</a></li>&nbsp;&nbsp;');
                             }
 
                             if (d.sizeType == 'L') {
-                                $('.listaDeTamanhos').append('<li><a id="' + v.cd_nr_sku + '" name="sizes[]" href="javascript:void(0);">' + v.nm_tamanho_letra + '</a></li>&nbsp;&nbsp;');
+                                $('.listaDeTamanhos').append('<li class="' + v.cd_nr_sku + '"><a id="' + v.cd_nr_sku + '" name="sizes[]" href="javascript:void(0);">' + v.nm_tamanho_letra + '</a></li>&nbsp;&nbsp;');
                             }
 
                         })
@@ -467,7 +490,26 @@
                 data: {_token: CSRF_TOKEN, sku: selectedProductSku},
                 success: function (d) {
 
-                    console.log(d);
+                    console.log(d.variation[0])
+
+                    $('input[name="cd_produto"]').val(d.variation[0].cd_produto);
+                    $('input[name="nm_produto"]').val(d.variation[0].nm_produto_variacao);
+                    $('input[name="ds_produto"]').val(d.variation[0].ds_produto_variacao);
+                    $('input[name="vl_produto"]').val(d.variation[0].vl_produto_variacao);
+                    $('input[name="qt_produto"]').val(d.variation[0].qt_produto_variacao);
+                    $('input[name="sku_produto"]').val(d.variation[0].cd_nr_sku);
+                    $('input[name="slug_produto"]').val(d.variation[0].nm_slug);
+                    $('input[name="ds_altura"]').val(d.variation[0].ds_altura);
+                    $('input[name="ds_largura"]').val(d.variation[0].ds_largura);
+                    $('input[name="ds_comprimento"]').val(d.variation[0].ds_comprimento);
+                    $('input[name="ds_peso"]').val(d.variation[0].ds_peso);
+                    $('input[name="im_produto"]').val(d.variation[0].im_produto);
+
+                    $('#precoProduto').html('R$ ' + (d.variation[0].vl_produto_variacao).replace('.', ','));
+
+                    $('.infoProduto').html(d.variation[0].ds_produto_variacao);
+
+                    $('#btnComprar').removeAttr('disabled');
                     
                 }
             });

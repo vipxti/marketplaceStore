@@ -223,12 +223,15 @@ class ProductController extends Controller
 
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto')->paginate(25);
 
-        return view('pages.app.product.index', compact('produtos', 'nome', 'menuNav', 'categoriaSubCat'));
+        $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('produto_variacao.cd_produto', 'produto.nm_slug')->paginate(25);
+
+        return view('pages.app.product.index', compact('produtos', 'variation', 'nome', 'menuNav', 'categoriaSubCat'));
     }
 
     public function showProductDetails($slug)
     {
         $totalCores = 0;
+        $sizeType = '';
 
         if (Auth::check()) {
             $n = explode(' ', Auth::user()->nm_cliente);
@@ -258,10 +261,12 @@ class ProductController extends Controller
             $letters = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->join('produto_tamanho_letra', 'produto_tamanho_letra.cd_sku', 'sku.cd_sku')->join('tamanho_letra', 'tamanho_letra.cd_tamanho_letra', 'produto_tamanho_letra.cd_tamanho_letra')->select('tamanho_letra.nm_tamanho_letra', 'sku.cd_nr_sku')->where('cor.cd_cor', '=', $colors[0]['cd_cor'])->whereIn('produto_variacao.cd_produto_variacao', $codProds)->get();
 
             if (count($letters) > 0) {
+                $sizeType = 'L';
                 $sizes = $letters;
             }
 
             if (count($numbers) > 0) {
+                $sizeType = 'N';
                 $sizes = $numbers;
             }
 
@@ -287,7 +292,9 @@ class ProductController extends Controller
             $categoriaSubCat[$key] = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')->select('categoria.cd_categoria', 'categoria.nm_categoria', 'sub_categoria.cd_sub_categoria', 'sub_categoria.nm_sub_categoria')->where('menu.cd_menu', '=', $menu->cd_menu)->get();
         }
 
-        return view('pages.app.product.details', compact('product', 'images', 'sizes', 'variations', 'totalCores', 'totalImagens', 'colors', 'codProds', 'nome', 'menuNav', 'categoriaSubCat', 'hasVariation', 'isVariation'));
+        //dd($sizeType);
+
+        return view('pages.app.product.details', compact('product', 'images', 'sizes', 'sizeType', 'variations', 'totalCores', 'totalImagens', 'colors', 'codProds', 'nome', 'menuNav', 'categoriaSubCat', 'hasVariation', 'isVariation'));
     }
 
     public function getSizes(Request $request)
@@ -329,7 +336,7 @@ class ProductController extends Controller
     {
         //dd($request->all());
 
-        $variation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->join('dimensao', 'sku.cd_dimensao', 'dimensao.cd_dimensao')->select('produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'dimensao.ds_peso', 'dimensao.ds_comprimento', 'dimensao.ds_altura', 'dimensao.ds_largura', 'produto_variacao.nm_produto_variacao', 'produto_variacao.qt_produto_variacao')->where('sku.cd_nr_sku', '=', $request->sku)->get()->toArray();
+        $variation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->join('dimensao', 'sku.cd_dimensao', 'dimensao.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('produto_variacao.cd_produto', 'produto_variacao.nm_produto_variacao', 'produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'produto_variacao.qt_produto_variacao', 'sku.cd_nr_sku', 'produto.nm_slug', 'img_produto.im_produto', 'dimensao.ds_peso', 'dimensao.ds_comprimento', 'dimensao.ds_altura', 'dimensao.ds_largura')->where('sku.cd_nr_sku', '=', $request->sku)->where('img_produto.ic_img_principal', '=', 1)->get()->toArray();
 
         $response = [
             'variation' => $variation
@@ -979,7 +986,9 @@ class ProductController extends Controller
     {
         $category = Category::find($codCategoria);
 
-        return $category->nm_categoria;
+        $categoryName = $this->removeSpecialCharacters($category->nm_categoria);
+
+        return strtolower(str_replace(' ', '', $categoryName));
     }
 
     //Retorna o nome da Subcategoria fazendo a pesquisa pelo Código
@@ -987,7 +996,14 @@ class ProductController extends Controller
     {
         $subcategory = Category::join('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')->select('sub_categoria.nm_sub_categoria')->where('categoria_subcat.cd_sub_categoria', '=', $codSubcategory)->first();
 
-        return $subcategory->nm_sub_categoria;
+        $subcategoryName = $this->removeSpecialCharacters($subcategory->nm_sub_categoria);
+
+        return strtolower(str_replace(' ', '', $subcategoryName));
+    }
+
+    public function removeSpecialCharacters($palavra)
+    {
+        return strtr($palavra, 'áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ', 'aaaaeeiooouucAAAAEEIOOOUUC');
     }
 
     //Seleciona o id correspondente dos forms categoria e subcategoria na tabela categoria_subcat
