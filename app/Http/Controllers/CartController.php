@@ -157,8 +157,6 @@ class CartController extends Controller
                 }
             }
 
-            //dd($prod);
-
             $index = $prod['indiceProduto'];
 
             $alturaTotal = Session::get('totalHeight');
