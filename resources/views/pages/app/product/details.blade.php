@@ -2,6 +2,17 @@
 
 @section('content')
 
+    <style>
+        .quebra {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 400;
+            overflow-x: auto;
+            white-space: -moz-pre-wrap;
+            white-space: -o-pre-wrap;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
     <!-- Nav bar do produto -->
     <div class="breadcumb_area">
         <div class="container">
@@ -320,7 +331,7 @@
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <p class="infoProduto">{{ $variations[0]['ds_produto_variacao'] }}</p>
+                                    <pre class="infoProduto quebra">{{ $variations[0]['ds_produto_variacao'] }}</pre>
                                 </div>
                             </div>
 
@@ -328,7 +339,7 @@
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <p class="infoProduto">{{ $product[0]['ds_produto'] }}</p>
+                                    <pre class="infoProduto quebra">{{ $product[0]['ds_produto'] }}</pre>
                                 </div>
                             </div>
                             

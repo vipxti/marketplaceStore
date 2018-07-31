@@ -444,6 +444,12 @@
                                                     arrayBody.push(linkFinal);
                                                 }
                                             }
+                                            else if(index == "descricaoCurta"){
+                                                arrayHead.push(index);
+                                                arrayBody.push(resultado);
+                                                //console.log("INDEX RESULTADO: " + resultado);
+                                                descricao.push(resultado);
+                                            }
                                             else if(index == "pesoBruto"){
                                                 arrayHead.push(index);
                                                 var pesoEmGramas = resultado * 1000;
@@ -511,14 +517,14 @@
                                                     $('#trProdHidden' + contador).append(tBody);
 
                                                 }
-                                                /*else if(arrayHead[iB] == "descricaoCurta"){
+                                                else if(arrayHead[iB] == "descricaoCurta"){
 
                                                     if(descricao[0] != null){
-                                                        //var novaDesc = descricao[0].replace(/<p>/gi, "");
-                                                        //novaDesc = novaDesc.replace(/<\/p>/gi, "\n");
-                                                        //arrayDesc.push(novaDesc);
-                                                        //console.log("DESCRIÇÃO: " + novaDesc);
-                                                        arrayDesc.push(descricao[0]);
+                                                        var novaDesc = descricao[0].replace(/<p>/gi, "");
+                                                        novaDesc = novaDesc.replace(/<\/p>/gi, "\n");
+                                                        arrayDesc.push(novaDesc);
+                                                        console.log("DESCRIÇÃO: " + novaDesc);
+                                                        //arrayDesc.push(descricao[0]);
                                                     }
                                                     else{
                                                         arrayDesc.push(descricao[0]);
@@ -526,7 +532,7 @@
 
                                                     var tBody = "<td>" + arrayBody[iB] + "</td>";
                                                     $('#trProdHidden' + contador).append(tBody);
-                                                }*/
+                                                }
                                                 else{
                                                     var tBody = "<td>" + arrayBody[iB] + "</td>";
                                                     $('#trProdHidden' + contador).append(tBody);
@@ -745,11 +751,11 @@
                             if( j == 9 ){
                                 arrayProduto.push(arrayImagens[i]);
                                 console.log(arrayImagens[i]);
-                            }/*
+                            }
                             else if( j == 3){
                                 arrayProduto.push(arrayDesc[i]);
-                                console.log(arrayDesc[i]);
-                            }*/
+                                console.log("Array Desc: " + arrayDesc[i]);
+                            }
                             else{
                                 arrayProduto.push($('#resultProdHidden').find('tr:eq(' + i + ')').find('td:eq(' + j + ')').html());
                                 console.log($('#resultProdHidden').find('tr:eq(' + i + ')').find('td:eq(' + j + ')').html());
@@ -896,9 +902,15 @@
                 }
 
 
-                if(array[3].length > 1500){
-                    array[3] = array[3].substr(0, 1500);
+                if(array[3] != null){
+                    if(array[3].length > 1500){
+                        array[3] = array[3].substr(0, 1500);
+                    }
                 }
+                else{
+                    array[3] = array[1];
+                }
+
 
                 $.ajax({
                     url: '{{route('bling.save.products')}}',
