@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
-    public function showCompanyForm(){
+    public function showCompanyForm()
+    {
 
         $dadosEmpresa = $this->CompanyData();
 
@@ -25,7 +26,8 @@ class CompanyController extends Controller
         return view('pages.admin.cadDadosEmpresa', compact('dadosEmpresa'));
     }
 
-    public function CompanyData(){
+    public function CompanyData()
+    {
         $dadosEmpresa = DB::table('dados_empresa')
             ->join('endereco', 'dados_empresa.fk_cd_endereco', '=', 'endereco.cd_endereco')
             ->join('bairro', 'endereco.cd_bairro', '=', 'bairro.cd_bairro')
@@ -36,6 +38,171 @@ class CompanyController extends Controller
             ->get();
 
         return $dadosEmpresa;
+    }
+
+    public function updateDataCompany($nm_razao_social, $nm_fantasia, $ic_tipo_pessoa, $cd_cnpj, $cd_ie, $ic_ie_isento, $cd_im, $nm_cnae, $cd_regime_tributario, $cd_api_bling, $cd_api_key, $numero, $ds_complemento, $ds_ponto_referencia, $endereco){
+
+        //dd($nm_razao_social, $nm_fantasia, $ic_tipo_pessoa, $cd_cnpj, $cd_ie, $ic_ie_isento, $cd_im, $nm_cnae, $cd_regime_tributario, $cd_api_bling, $cd_api_key, $numero, $ds_complemento, $ds_ponto_referencia, $endereco);
+
+       /* DB::table('dados_empresa')
+                            ->where('cd_dados_empresa', '=', 1)
+                            ->update(['nm_razao_social' => $nm_razao_social,
+                                'nm_fantasia' => $nm_fantasia,
+                                'ic_tipo_pessoa' => $ic_tipo_pessoa,
+                                'cd_cnpj' => $cd_cnpj,
+                                'cd_ie' => $cd_ie,
+                                'ic_ie_isento' => $ic_ie_isento,
+                                'cd_im' => $cd_im,
+                                'nm_cnae' => $nm_cnae,
+                                'cd_regime_tributario' => $cd_regime_tributario,
+                                'cd_api_bling' => $cd_api_bling,
+                                'cd_api_key' => $cd_api_key,
+                                'cd_numero_endereco' => $numero,
+                                'ds_complemento' => $ds_complemento,
+                                'ds_ponto_referencia' => $ds_ponto_referencia,
+                                'fk_cd_endereco' => $endereco
+                                ]);*/
+
+
+
+        $dadosEmpresa = Company::find(1);
+
+        $dadosEmpresa->nm_razao_social = $nm_razao_social;
+        $dadosEmpresa->nm_fantasia = $nm_fantasia;
+        $dadosEmpresa->ic_tipo_pessoa = $ic_tipo_pessoa;
+        $dadosEmpresa->cd_cnpj = $cd_cnpj;
+        $dadosEmpresa->cd_ie = $cd_ie;
+        $dadosEmpresa->ic_ie_isento = $ic_ie_isento;
+        $dadosEmpresa->cd_im = $cd_im;
+        $dadosEmpresa->nm_cnae = $nm_cnae;
+        $dadosEmpresa->cd_regime_tributario = $cd_regime_tributario;
+        $dadosEmpresa->cd_api_bling = $cd_api_bling;
+        $dadosEmpresa->cd_api_key = $cd_api_key;
+        $dadosEmpresa->cd_numero_endereco = $numero;
+        $dadosEmpresa->ds_complemento = $ds_complemento;
+        $dadosEmpresa->ds_ponto_referencia = $ds_ponto_referencia;
+        $dadosEmpresa->fk_cd_endereco = $endereco;
+        $dadosEmpresa->save();
+
+        //dd($dadosEmpresa);
+        //return $dadosEmpresa->fk_cd_telefone;
+    }
+
+    public function updatePhone($cd_tel, $num_tel){
+        $telefone = Phone::find($cd_tel);
+
+        $telefone->cd_telefone_fixo = $num_tel;
+
+        $telefone->save();
+    }
+
+    public function cdPhone(){
+        $dadosEmpresa = Company::find(1);
+
+        return $dadosEmpresa['fk_cd_telefone'];
+    }
+
+    public function updateCompany(CompanyDataRequest $request){
+
+        //TRATAMENTO DO  CEP, TELEFONE IC ISENTO
+        $stIcIeIsento = ($request->filled('ic_ie_isento') == 'on') ? $status = 1 : $status = 0;
+        $replaceCep = str_replace('-', '',  $request->cd_cep);
+        $replacePhone = str_replace('-', '',  $request->cd_tel);
+        $replacePhone = str_replace('(', '',  $replacePhone);
+        $replacePhone = str_replace(')', '',  $replacePhone);
+        $replacePhone = str_replace(' ', '',  $replacePhone);
+
+        //dd($request->all());
+
+        DB::beginTransaction();
+
+
+        //ATUALIZAR DADOS DO ENDERECO DA EMPRESA
+        //ATUALIZAR PAIS
+        try {
+            $pais = $this->createCountry($request->nm_pais);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao atualizar os dados do pais.');
+        }
+
+        //ATUALIZAR UF
+        try {
+            $estado = $this->createState($request->sg_uf, $pais->toArray()[0]['cd_pais']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao atualizar os dados da uf.');
+        }
+
+        //ATUALIZAR CIDADE
+        try {
+            $cidade = $this->createCity($request->nm_cidade, $request->cd_ibge, $estado->toArray()[0]['cd_uf']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao atualizar os dados da cidade.');
+        }
+
+        //ATUALIZAR BAIRRO
+        try {
+            $bairro = $this->createNeighbour($request->nm_bairro, $cidade->toArray()[0]['cd_cidade']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao atualizar os dados do bairro.');
+        }
+
+        //ATUALIZAR ENDEREÇO
+        try {
+            $endereco = $this->createAddress($replaceCep, $request->ds_endereco, $bairro->toArray()[0]['cd_bairro']);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao atualizar os dados da empresa.');
+        }
+
+        //ATUALIZAR DADOS DA EMPRESA
+        try{
+            $this->updateDataCompany(
+                $request->nm_razao_social,
+                $request->nm_fantasia,
+                $request->ic_tipo_pessoa,
+                $request->cd_cnpj,
+                $request->cd_ie,
+                $stIcIeIsento,
+                $request->cd_im,
+                $request->nm_cnae,
+                $request->cd_regime_tributario,
+                $request->cd_api_bling,
+                $request->cd_api_key,
+                $request->cd_numero_endereco,
+                $request->ds_complemento,
+                $request->ds_ponto_referencia,
+                $endereco->toArray()[0]['cd_endereco']
+            );
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao atualizar os dados da empresa.');
+        }
+
+        //ATUALIZAR TELEFONE
+        try{
+            $cd_tel = $this->cdPhone();
+            $this->updatePhone($cd_tel, $replacePhone);
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            return redirect()->route('company.data')->with('nosuccess', 'Erro ao atualizar os dados do telefone.');
+        }
+
+        //dd(Company::find(1));
+
+        return redirect()->route('product.list.bling')->with('success', 'Dados da empresa atualizado com sucesso.');
+
+        //$dadosEmpresa = $this->CompanyData();
+
+        //dd($dadosEmpresa);
+
+        //return view('pages.admin.cadDadosEmpresa', compact('dadosEmpresa'));
     }
 
     public function registerComnpany(CompanyDataRequest $request)

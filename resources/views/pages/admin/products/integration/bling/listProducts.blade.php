@@ -191,6 +191,7 @@
             var arrayCat = [];
             var arrayCatLoja = [];
 
+            //=====================================================================================================
             //BOTÃO PARA BUSCAR TODAS AS CATEGORIAS CADASTRADAS NO BLING
 
             var objCategoria = null;
@@ -729,6 +730,9 @@
                 });
             }
 
+            //=====================================================================================================
+            //FUNÇÃO QUE PASSA ATRAVEZ DAS COLUNAS DA TABELA PARA SALVAR OS PRODUTOS
+
             var posProd = -1;
             function colunaProdutos(){
                 posProd++;
@@ -762,7 +766,7 @@
             }
 
             //=====================================================================================================
-            //FUNÇÃO PARA SALVAR OS PRODUTOS
+            //FUNÇÃO PARA CONSULTAR O SKU DOS PRODUTOS
 
             function consultaSku(array){
                 var existeSku = false;
@@ -793,6 +797,9 @@
                 })
             }
 
+            //=====================================================================================================
+            //FUNÇÃO PARA SALVAR AS CATEGORIAS
+
             function salvarCategoria(array){
                 console.log('/*/*/*/*/*/*/*/*');
                 console.log(array[12]);
@@ -820,6 +827,10 @@
                 console.log('/*/*/*/*/*/*/*/*');
             }
 
+
+            //=====================================================================================================
+            //FUNÇÃO PARA SALVAR AS CATEGORIAS DA LOJA
+
             function salvarSubCat(CSRF_TOKEN, nm_sub_cat, cd_categoria, array){
                 var cd_sub_categoria = null;
                 $.ajax({
@@ -839,6 +850,9 @@
                     salvarAssoc(CSRF_TOKEN, cd_categoria, cd_sub_categoria, array);
                 });
             }
+
+            //=====================================================================================================
+            //FUNÇÃO PARA SALVAR AS ASSOCIAÇÕES DE CATEGORIAS
 
             function salvarAssoc(CSRF_TOKEN, cd_categoria, cd_sub_categoria, array){
                 $.ajax({
@@ -862,6 +876,9 @@
                     salvarProd(CSRF_TOKEN, cd_categoria, cd_sub_categoria, array, qt_prod);
                 });
             }
+
+            //=====================================================================================================
+            //FUNÇÃO PARA SALVAR OS PRODUTOS
 
             function salvarProd(CSRF_TOKEN, cd_categoria, cd_sub_categoria, array, qt_prod){
                 console.log(array.length);
@@ -906,237 +923,9 @@
 
         });
 
-
-        {{--
-        function buscaProdutos(){
-            var numPag = 0;
-            var numProds=0;
-            var num = 1;
-            var erro = false;
-            var erroMsg = "Sem erros por enquanto";
-            var primeiroProd = true;
-            var entrouEach = false;
-            var contadorProd = 0;
-
-            while(!erro){
-                numPag++;
-                var pagina = 'page=' + numPag;
-
-
-                $.ajax({
-                    url: '{{url('/admin/api/bling')}}/' + pagina,
-                    type: 'GET',
-                    //data: {pagina: pagina},
-                    async: false,
-                    success: function(data){
-                        var obj = JSON.parse(data);
-
-                        try{
-
-                            for(var i=0; i<obj.retorno.produtos.length ; i++){
-                                //obj.retorno.produtos.length
-                                var arrayHead = [];
-                                var arrayBody = [];
-                                numProds++;
-                                var temCategoria = false;
-                                var trBody = "<tr id='trProd" + i + "'></tr>";
-                                $('#resultProd').append(trBody);
-
-                                $.each(obj.retorno.produtos[i].produto, function(index, resposta){
-                                    if(index == "codigo" && resposta == ""){
-                                        return false;
-                                    }
-
-                                    if(index == "codigo" || index == "descricao" || index == "tipo" || index == "situacao" ||
-                                        index == "unidade" || index == "preco" || index == "descricaoCurta" ||
-                                        index == "marca" || index == "pesoLiq" || index == "pesoBruto" || index == "gtin" ||
-                                        index == "gtinEmbalagem" || index == "larguraProduto" || index == "alturaProduto" ||
-                                        index == "profundidadeProduto" || index == "imagem" || index == "estoqueAtual" ||
-                                        index == "produtoLoja"){
-
-                                        if(index == "produtoLoja"){
-                                            var nomeId;
-                                            var nomeDesc;
-                                            var nomeIdPai;
-                                            var nomeDescPai;
-                                            for(var j = 0; j < index.length; j++){
-                                                $.each(obj.retorno.produtos[i].produto.produtoLoja.categoria[j], function(cate){
-
-                                                    if(cate == "id"){
-                                                        nomeId = cate + "Categoria";
-                                                    }
-                                                    else if(cate == "descricao") {
-                                                        nomeDesc = cate + "Categoria";
-                                                    }
-                                                    else{
-                                                        nomeIdPai = cate;
-                                                        nomeDescPai = "descCatPai";
-                                                    }
-                                                });
-                                            }
-                                            arrayHead.push(nomeId);
-                                            arrayHead.push(nomeDesc);
-                                            arrayHead.push(nomeIdPai);
-                                            arrayHead.push(nomeDescPai);
-                                        }
-                                        else{
-                                            arrayHead.push(index);
-                                        }
-
-
-                                        if(index=="imagem"){
-                                            if(resposta == ""){
-                                                arrayBody.push("");
-                                            }
-                                            for(var j = 0; j < index.length; j++){
-                                                $.each(obj.retorno.produtos[i].produto.imagem[j], function(img, link){
-                                                    if(img == "link"){
-                                                        arrayBody.push(link);
-                                                    }
-                                                });
-
-                                            }
-                                        }
-                                        else if(index == "produtoLoja"){
-                                            var idProd = "kk";
-                                            var descProd = "ppp";
-                                            var paiProd = 0;
-                                            var nomePai = "";
-                                            //100 é a qntd de produto por pagina que o bling disponibiliza
-                                            for(var j = contadorProd; j < 100; j++){
-                                                $.each(obj.retorno.produtos[i].produto.produtoLoja.categoria[j], function(cate, campo){
-                                                    if(cate == "id"){
-                                                        idProd = campo;
-                                                    }
-                                                    else if(cate == "descricao"){
-                                                        descProd = campo;
-                                                    }
-                                                    else{
-                                                        paiProd = campo;
-                                                    }
-
-                                                });
-
-                                            }
-
-                                            arrayBody.push(idProd);
-                                            arrayBody.push(descProd);
-
-                                            if(paiProd != 0){
-                                                nomePai = buscarCategoriaPai(paiProd);
-                                                arrayBody.push(paiProd);
-                                                arrayBody.push(nomePai);
-                                            }
-                                            else{
-                                                arrayBody.push(null);
-                                                arrayBody.push(null);
-                                            }
-
-                                            contadorProd++;
-                                        }
-                                        else {
-                                            arrayBody.push(resposta);
-                                        }
-
-                                    }
-
-                                });
-
-                                for(var iH = 0; iH < arrayHead.length; iH++){
-                                    if(arrayHead[iH] == "idCategoria"){
-                                        temCategoria = true;
-                                    }
-                                }
-
-                                if(temCategoria){
-                                    if(!entrouEach){
-                                        for(var iH = 0; iH < arrayHead.length; iH++){
-                                            if(arrayHead[iH] == "codigo" || arrayHead[iH] == "descricao" ||
-                                                arrayHead[iH] == "tipo" || arrayHead[iH] == "preco" || arrayHead[iH] == "gtin" ||
-                                                arrayHead[iH] == "descricaoCategoria" || arrayHead[iH] == "descCatPai" ||
-                                                arrayHead[iH] == "estoqueAtual"){
-                                                var campoHead = "<td>" + arrayHead[iH] + "</td>";
-                                                $('#indexProd').append(campoHead);
-                                            }
-                                            entrouEach = true;
-                                        }
-                                    }
-
-                                    console.log("PRODUTO " + numProds);
-                                    for(var iH = 0; iH < arrayBody.length; iH++){
-                                        if(arrayHead[iH] == "codigo" || arrayHead[iH] == "descricao" ||
-                                            arrayHead[iH] == "tipo" || arrayHead[iH] == "preco" || arrayHead[iH] == "gtin" ||
-                                            arrayHead[iH] == "descricaoCategoria" || arrayHead[iH] == "descCatPai" ||
-                                            arrayHead[iH] == "estoqueAtual"){
-
-                                            console.log(arrayBody[iH]);
-                                            var tdBody = "<td>" + arrayBody[iH] + "</td>";
-                                            $('#trProd' + i).append(tdBody);
-                                        }
-                                    }
-                                    console.log("---------------------------------------");
-                                }
-
-                            }
-
-                        }
-                        catch(err){
-                            erroMsg = err;
-                        }
-
-                        try{
-                            $.each(obj.retorno.erros[0].erro, function(index, resposta){
-                                if(resposta == "14"){
-                                    console.log(index + ":" + resposta);
-                                }
-                            });
-                            erro = true;
-                        }
-                        catch(err){
-                            erroMsg = err;
-                        }
-
-                    }
-                });
-
-                if(erro){
-                    console.log("Erro: " + erro);
-                    console.log(erroMsg);
-                }
-            }
-        }
-
-        function buscarCategoriaPai(id){
-            var idCat = id;
-            var nomePai = "";
-
-            $.ajax({
-                url: "{{url('admin/api/bling/cat')}}/" + idCat,
-                type: "GET",
-                //data: {idCategoria: idCat},
-                async: false,
-                success: function(data){
-                    var obj = JSON.parse(data);
-
-                    for(var i = 0; i < obj.retorno.categorias.length; i++){
-                        $.each(obj.retorno.categorias[i].categoria, function(index, dado){
-                            if(index == "descricao"){
-                                nomePai = dado;
-                            }
-                        });
-                    }
-                }
-            });
-
-            return nomePai;
-        }
-        --}}
     </script>
 
     <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script>
-
-
-
 
 @stop
 
