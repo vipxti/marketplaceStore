@@ -29,13 +29,6 @@ class ClientController extends Controller
     {
         $telCliente = null;
 
-        if (Auth::check()) {
-            $n = explode(' ', Auth::user()->nm_cliente);
-            $nome = $n[0];
-        } else {
-            $nome = null;
-        }
-
         try {
             $telCliente = Client::join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->select('telefone.cd_celular1', 'telefone.cd_celular2')->get();
         } catch (QueryException $e) {
@@ -46,12 +39,10 @@ class ClientController extends Controller
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro');
         }
 
-
         $menuNav =  Menu::all();
 
         //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach($menuNav as $key=>$menu){
-
+        foreach ($menuNav as $key=>$menu) {
             $categoriaSubCat[$key] = Category::
             leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
                 ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
@@ -65,7 +56,6 @@ class ClientController extends Controller
                 )
                 ->where('menu.cd_menu', '=', $menu->cd_menu)
                 ->get();
-
         }
 
         $endereco = Client::join('cliente_endereco', 'cliente.cd_cliente', '=', 'cliente_endereco.cd_cliente')
@@ -73,7 +63,8 @@ class ClientController extends Controller
             ->join('bairro', 'endereco.cd_bairro', '=', 'bairro.cd_bairro')
             ->join('cidade', 'bairro.cd_cidade', '=', 'cidade.cd_cidade')
             ->join('uf', 'cidade.cd_uf', '=', 'uf.cd_uf')
-            ->select('ds_endereco',
+            ->select(
+                'ds_endereco',
                 'cd_cep',
                 'cd_numero_endereco',
                 'ds_complemento',
@@ -81,19 +72,20 @@ class ClientController extends Controller
                 'nm_destinatario',
                 'nm_bairro',
                 'nm_cidade',
-                'sg_uf')
+                'sg_uf'
+            )
             ->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)
             ->get();
 
         //dd($endereco);
-        return view('pages.app.painelcliente', compact('telCliente', 'endereco', 'nome', 'menuNav', 'categoriaSubCat'));
+        return view('pages.app.client.dashboard', compact('telCliente', 'endereco', 'menuNav', 'categoriaSubCat'));
     }
 
     public function saveClientAddress(ClientAddressRequest $request)
     {
         //dd($request->all());
 
-        $replaceCep = str_replace('-', '',  $request->cd_cep);
+        $replaceCep = str_replace('-', '', $request->cd_cep);
 
         DB::beginTransaction();
 
@@ -215,7 +207,6 @@ class ClientController extends Controller
                 $endereco->toArray()[0]['cd_endereco'],
                 Auth::user()->cd_cliente
             );
-
         } catch (ValidationException $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -243,14 +234,13 @@ class ClientController extends Controller
     public function createCountry($nomePais)
     {
         $idPais = Pais::where('nm_pais', 'like', '%'.$nomePais.'%')->select('cd_pais')->get();
-        if (count($idPais) == 0){
+        if (count($idPais) == 0) {
             Pais::create([
                 'nm_pais' => $nomePais
             ]);
             $idPais = Pais::where('nm_pais', 'like', '%'.$nomePais.'%')->select('cd_pais')->get();
             return $idPais;
-        }
-        else{
+        } else {
             return $idPais;
         }
     }
@@ -258,15 +248,14 @@ class ClientController extends Controller
     public function createState($siglaEstado, $codPais)
     {
         $idUf = Uf::where('sg_uf', 'like', '%'.$siglaEstado.'%')->select('cd_uf')->get();
-        if (count($idUf) == 0){
+        if (count($idUf) == 0) {
             Uf::create([
                 'sg_uf' => $siglaEstado,
                 'cd_pais' => $codPais
             ]);
             $idUf = Uf::where('sg_uf', 'like', '%'.$siglaEstado.'%')->select('cd_uf')->get();
             return $idUf;
-        }
-        else{
+        } else {
             return $idUf;
         }
     }
@@ -275,7 +264,7 @@ class ClientController extends Controller
     {
         $idCidade = Cidade::where('nm_cidade', 'like', '%'.$nomeCidade.'%')->select('cd_cidade')->get();
         //var_dump($idCidade);
-        if (count($idCidade) == 0){
+        if (count($idCidade) == 0) {
             Cidade::create([
                 'nm_cidade' => $nomeCidade,
                 'cd_ibge' => $codIbge,
@@ -283,8 +272,7 @@ class ClientController extends Controller
             ]);
             $idCidade = Cidade::where('nm_cidade', 'like', '%'.$nomeCidade.'%')->select('cd_cidade')->get();
             return $idCidade;
-        }
-        else{
+        } else {
             return $idCidade;
         }
     }
@@ -292,15 +280,14 @@ class ClientController extends Controller
     public function createNeighbour($nomeBairro, $codCidade)
     {
         $idBairro = Bairro::where('nm_bairro', 'like', '%'.$nomeBairro.'%')->select('cd_bairro')->get();
-        if (count($idBairro) == 0){
+        if (count($idBairro) == 0) {
             Bairro::create([
                 'nm_bairro' => $nomeBairro,
                 'cd_cidade' => $codCidade
             ]);
             $idBairro = Bairro::where('nm_bairro', 'like', '%'.$nomeBairro.'%')->select('cd_bairro')->get();
             return $idBairro;
-        }
-        else{
+        } else {
             return $idBairro;
         }
     }
@@ -309,7 +296,7 @@ class ClientController extends Controller
     {
         $idEnd = Endereco::where('cd_cep', '=', $cep)->select('cd_endereco')->get();
         //dd($idEnd);
-        if (count($idEnd) == 0){
+        if (count($idEnd) == 0) {
             Endereco::create([
                 'cd_cep' => $cep,
                 'ds_endereco' => $endereco,
@@ -317,8 +304,7 @@ class ClientController extends Controller
             ]);
             $idEnd = Endereco::where('cd_cep', '=', $cep)->select('cd_endereco')->get();
             return $idEnd;
-        }
-        else{
+        } else {
             return $idEnd;
         }
     }
@@ -331,8 +317,7 @@ class ClientController extends Controller
         $pontoReferencia,
         $codEndereco,
         $codCliente
-    )
-    {
+    ) {
         DB::table('cliente_endereco')->insert([
             'ic_principal' => $principal,
             'nm_destinatario' => $nomeDestinatario,

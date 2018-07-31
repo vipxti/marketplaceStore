@@ -21,8 +21,7 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             $telefoneCliente = Client::join('telefone', 'cliente.cd_telefone', 'telefone.cd_telefone')->select('telefone.cd_celular1')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get()->toArray();
-            $n = explode(' ', Auth::user()->nm_cliente);
-            $nome = $n[0];
+
             $telefone = null;
 
             $enderecoCliente = Client::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->
@@ -36,15 +35,12 @@ class CartController extends Controller
             where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get();
         } else {
             $telefoneCliente = null;
-            $nome = null;
             $enderecoCliente = null;
 
             if (!(Session::has('cartRoute'))) {
                 Session::put('cartRoute', 'cart.page');
             }
         }
-
-        //dd($enderecoCliente);
 
         $menuNav =  Menu::all();
 
@@ -65,19 +61,12 @@ class CartController extends Controller
                 ->get();
         }
 
-        return view('pages.app.carrinho', compact('telefone', 'enderecoCliente', 'nome', 'menuNav', 'categoriaSubCat'));
+        return view('pages.app.cart.index', compact('telefone', 'enderecoCliente', 'menuNav', 'categoriaSubCat'));
     }
 
     public function showResultPage()
     {
-        if (Auth::check()) {
-            $n = explode(' ', Auth::user()->nm_cliente);
-            $nome = $n[0];
-        } else {
-            $nome = null;
-        }
-
-        return view('pages.app.cart.result', compact('nome'));
+        return view('pages.app.cart.result');
     }
 
     public function calcFrete($cep, $altura, $largura, $peso, $comprimento)
@@ -145,7 +134,7 @@ class CartController extends Controller
         //verificar se o produto acrescentado é diferente
         //Se for, fazer a lógica de acrecentar na tabela do carrinho
 
-        if ($this->verificaProduto($request->sku_produto)) {
+        if ($this->checkIfProductExistsInCart($request->sku_produto)) {
             //$index = Session::get('idx' . $request->sku_produto);
             $produtosCarrinho = Session::get('cart');
 
@@ -348,7 +337,7 @@ class CartController extends Controller
         return redirect()->route('cart.page')->with('success', 'Item adicionado ao carrinho');
     }
 
-    public function verificaProduto($skuProduto)
+    public function checkIfProductExistsInCart($skuProduto)
     {
         if (Session::has('cart')) {
             $carrinho = Session::get('cart');

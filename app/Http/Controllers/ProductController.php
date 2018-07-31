@@ -186,12 +186,8 @@ class ProductController extends Controller
 
         //dd($produtoCatSubCat);
 
-        return view('pages.app.product.shopFilter', compact('produtoCatSubCat', 'nome', 'menuNav', 'categoriaSubCat'));
+        return view('pages.app.product.filter', compact('produtoCatSubCat', 'nome', 'menuNav', 'categoriaSubCat'));
         //return response()->json($produtoCatSubCat);
-    }
-
-    public function showShopFilterProductsPage()
-    {
     }
 
     public function showShopProductsPage()

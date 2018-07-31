@@ -489,12 +489,29 @@
                     <div class="search"><i class="fa fa-search"></i></div>
                     <!-- User Not Logged - link to login page-->
                     <div class="user dropdown show">
-                        <a id="" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fa fa-user"></i>
-                        </a>
+
+                        @if (Auth::check())
+
+                            <a id="" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                <i class="fa fa-user" style="color: #d59431;"></i>
+                            </a>
+                            
+                        @else
+
+                            <a id="" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                                <i class="fa fa-user"></i>
+                            </a>
+                            
+                        @endif
+
+                        
                         <div aria-labelledby="" class="dropdown-menu">
                             <!-- user menu-->
                             @if(Auth::check())
+                                    <div class="dropdown-submenu">
+                                        <a href="javascript:void(0);">{{ Auth::user()->nm_cliente }}</a>
+                                    </div>
+                                    <hr>
                                     <div class="dropdown-submenu">
                                         <a href="{{ route('client.dashboard') }}">Minha Conta</a>
                                     </div>
