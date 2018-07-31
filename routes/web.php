@@ -131,10 +131,10 @@ Route::prefix('page')->group(function () {
         Route::post('/delete', 'CartController@deleteProduct')->name('cart.product.delete');
         Route::post('/clear', 'CartController@clearCart')->name('cart.clear');
         Route::get('/minus/{idx}', 'CartController@removeQuantityCart')->name('minus.quantity');
-        Route::get('/minus/details/{sku}', 'CartController@removeQuantityFromDetails')->name('minus.details.quantity');
         Route::get('/plus/{idx}', 'CartController@addQuantityCart')->name('plus.quantity');
         Route::post('/plus/details', 'CartController@addQuantityFromDetails')->name('plus.details.quantity');
         Route::get('/result', 'CartController@showResultPage')->name('cart.result.page');
+        Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
     });
 
     //Compra
@@ -152,16 +152,7 @@ Route::prefix('page')->group(function () {
         Route::get('/dashboard', 'ClientController@showClientPage')->name('client.dashboard')->middleware('auth:web');
         Route::get('/logout', 'Auth\ClientLoginController@clientLogout')->name('client.logout');
         Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
+        Route::post('/address', 'ClientController@saveClientAddress')->name('client.address.save');
         Route::post('/register/verify/email', 'Auth\ClientRegisterController@verificaEmail')->name('client.verify.email');
     });
-    
-    Route::get('/calculaFrete/{cep},{altura},{largura},{peso},{comprimento}', 'CartController@calcFrete');
-    Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
-    Route::get('/calculaFreteOffline/{cep},{peso}', 'CartController@calcFreteOffline');
-
-    Route::post('/client/address', 'ClientController@saveClientAddress')->name('client.address.save');
 });
-
-Route::get('/alteraremailcliente', 'ProductController@paginaAlteraremailcliente')->name('alteraremailcliente.page');
-Route::get('/alterarsenhacliente', 'ProductController@paginaAlterarsenhacliente')->name('alterarsenhacliente.page');
-Route::get('/descproduto', 'ProductController@paginaDescproduto')->name('descproduto.page');

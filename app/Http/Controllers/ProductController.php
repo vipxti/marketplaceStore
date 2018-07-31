@@ -1003,7 +1003,9 @@ class ProductController extends Controller
 
     public function removeSpecialCharacters($palavra)
     {
-        return strtr($palavra, 'áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ', 'aaaaeeiooouucAAAAEEIOOOUUC');
+        $caracteresEspeciais = [ 'á' => 'a', 'Á' => 'A', 'à' => 'a', 'À' => 'A', 'â' => 'a', 'Â' => 'A', 'é' => 'e', 'É' => 'E', 'ê' => 'e', 'Ê' => 'E', 'í' => 'i', 'Í' => 'i', 'ó' => 'o', 'Ó' => 'O', 'õ' => 'o', 'Õ' => 'O', 'ô' => 'o', 'Ô' => 'O', 'ú' => 'u', 'Ú' => 'U', 'ü' => 'u', 'Ü' => 'U', 'ç' => 'c' ];
+
+        return strtr($palavra, $caracteresEspeciais);
     }
 
     //Seleciona o id correspondente dos forms categoria e subcategoria na tabela categoria_subcat
