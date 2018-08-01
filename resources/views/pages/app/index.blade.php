@@ -5,33 +5,11 @@
     <link rel="stylesheet" href="{{asset('css/app/estiloInstagram.css')}}">
     <link rel="stylesheet" href="{{asset('css/app/magnific.css')}}">
 
-    <!-- ****** Top Catagory Area Start ****** -->
-    {{--<section class="top_catagory_area d-md-flex clearfix">
-        <!-- Single Catagory -->
-        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-2.jpg);">
-            <div class="catagory-content">
-                <h6>Os melhores preços e acessórios</h6>
-                <h2>Sapatos 30%</h2>
-                <a href="#" class="btn karl-btn">Compre Agora</a>
-            </div>
-        </div>
-        <!-- Single Catagory -->
-        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(img/app/bg-img/bg-3.png);">
-            <div class="catagory-content">
-                <h6>Os melhores produtos e maquiagens</h6>
-                <h2>Novidades Beleza </h2>
-                <a href="#" class="btn karl-btn">Compre Agora</a>
-            </div>
-        </div>
-    </section>--}}
-    <!-- ****** Top Catagory Area End ****** -->
-
-
     <!-- Banner Principal-->
     <section class="hero hero-home no-padding">
         <div class="owl-carousel owl-theme hero-slider">
             <!-- Banner 1 -->
-            <div style="background: url(img/hero-bg.png);" class="item d-flex align-items-center has-pattern">
+            <div style="background: url({{asset('img/app/bg-img/hero-bg.png')}});" class="item d-flex align-items-center has-pattern">
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
@@ -41,14 +19,14 @@
                                 <li><strong>Cor</strong> 04</li>
                                 <li><strong>R$ 16,99</strong> Imperdível</li>
                             </ul>
-                            <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>
+                            {{--<a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>--}}
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Banner 2 -->
-            <div style="background: url(img/hero-bg-2.png);" class="item d-flex align-items-center has-pattern">
+            <div style="background: url({{asset('img/app/bg-img/hero-bg-2.png')}});" class="item d-flex align-items-center has-pattern">
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
@@ -58,14 +36,14 @@
                                 <li><strong>Cor</strong> 07</li>
                                 <li><strong>R$ 15,99</strong> Imperdível</li>
                             </ul>
-                            <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>
+                            {{--<a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>--}}
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Banner 3 -->
-            <div style="background: url(img/hero-bg-3.png);" class="item d-flex align-items-center has-pattern">
+            <div style="background: url({{asset('img/app/bg-img/hero-bg-3.png')}});" class="item d-flex align-items-center has-pattern">
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
@@ -75,7 +53,7 @@
                                 <li><strong>Cor</strong> 27</li>
                                 <li><strong>R$ 12,99</strong> Imperdível</li>
                             </ul>
-                            <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>
+                           {{-- <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>--}}
                         </div>
                     </div>
                 </div>
@@ -83,20 +61,8 @@
         </div>
     </section>
 
-
-
     <!-- ****** New Arrivals Area Start ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
-        {{-- <div class="karl-projects-menu mb-50">
-            <div class="text-center portfolio-menu">
-                <button class="btn active" data-filter="*">Todos</button>
-                <button class="btn" data-filter=".women">Mulher</button>
-                <button class="btn" data-filter=".man">Homem</button>
-                <button class="btn" data-filter=".access">Acessórios</button>
-                <button class="btn" data-filter=".shoes">Sapatos</button>
-                <button class="btn" data-filter=".kids">Kids</button>
-            </div>
-        </div> --}}
         <p>&nbsp;</p>
         <div class="container">
             <div class="row">
@@ -148,8 +114,6 @@
                                       <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none; padding: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
                                     </div>
                                 @endif
-
-                                
                                 {{-- <a href="{{ route('cart.buy') }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a> --}}
                             </form> 
                         </div>
@@ -161,7 +125,7 @@
     <!-- ****** New Arrivals Area End ****** -->
 
     <!-- ****** Offer Area Start ****** -->
-    <section class="offer_area height-700 section_padding_100 bg-img" style="background-image: url(img/app/bg-img/bg-5.png);">
+    <section class="offer_area height-700 section_padding_100 bg-img" style="background-image: url({{asset('img/app/bg-img/bg-5.png')}});">
         <div class="container h-100">
             <div class="row h-100 align-items-end justify-content-end">
                 <div class="col-12 col-md-8 col-lg-6">
