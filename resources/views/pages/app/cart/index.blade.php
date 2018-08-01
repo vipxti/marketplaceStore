@@ -49,7 +49,7 @@
                                         <th>Valor</th>
                                         <th>Quantidade</th>
                                         <th>Total</th>
-                                        <th></th>
+                                        <th>Excluir</th>
                                     </tr>
                                 </thead>
                                 
@@ -106,7 +106,7 @@
                                                     {{ csrf_field() }}
                                                     
                                                     <input type="hidden" name="cod_produto_carrinho" value="{{ $key }}">
-                                                    <button type="submit" class="btn btn-template">Excluir</button>
+                                                    <button type="submit" class="btn btn-link" style="color: #d59431;"><i class="fa fa-trash"></i></button>
                                                 </form>
                                             </td>
 

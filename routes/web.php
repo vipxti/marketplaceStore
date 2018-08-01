@@ -133,6 +133,7 @@ Route::prefix('page')->group(function () {
         Route::get('/minus/{idx}', 'CartController@removeQuantityCart')->name('minus.quantity');
         Route::get('/plus/{idx}', 'CartController@addQuantityCart')->name('plus.quantity');
         Route::post('/plus/details', 'CartController@addQuantityFromDetails')->name('plus.details.quantity');
+        Route::post('/minus/details', 'CartController@removeQuantityFromDetails')->name('minus.details.quantity');
         Route::get('/result', 'CartController@showResultPage')->name('cart.result.page');
         Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
     });

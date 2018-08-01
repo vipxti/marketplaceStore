@@ -13,7 +13,6 @@ use App\Client;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
 
 class CartController extends Controller
 {
@@ -125,6 +124,7 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
+        //dd($request->all());
         //dd($this->verificaProduto($request->sku_produto));
 
         //Verificar se já tem produto no carrinho
@@ -135,10 +135,9 @@ class CartController extends Controller
         //Se for, fazer a lógica de acrecentar na tabela do carrinho
 
         if ($this->checkIfProductExistsInCart($request->sku_produto)) {
-            //$index = Session::get('idx' . $request->sku_produto);
             $produtosCarrinho = Session::get('cart');
 
-            //dd($produtosCarrinho);
+            $qtdProdutosCarrinho = intval(Session::get('qtCart'));
 
             foreach ($produtosCarrinho as $key => $p) {
                 if (in_array($request->sku_produto, $p)) {
@@ -146,8 +145,6 @@ class CartController extends Controller
                     $index = $key;
                 }
             }
-
-            //dd($produto);
 
             $alturaTotal = Session::get('totalHeight');
             $larguraTotal = Session::get('totalWidth');
@@ -171,31 +168,33 @@ class CartController extends Controller
             $larguraTotalIndividual += $produto['larguraProduto'];
             $comprimentoTotalIndividual += $produto['comprimentoProduto'];
             $pesoTotalIndividual += $produto['pesoProduto'];
-
-            //dd($produtosCarrinho);
             
             $qtdIndividual = intval($produto['qtdIndividual']);
-            $qtdIndividual++;
-            $qtdProdutosCarrinho = intval(Session::get('qtCart'));
 
-            $valorTotal = $produto['valorProduto'] * $qtdIndividual;
-            $qtdProdutosCarrinho++;
-            //dd($valorTotal);
+            if ($request->has('qt_produto_detalhes')) {
+                $qtdIndividual += intval($request->qt_produto_detalhes);
+                $val = doubleval($produto['valorProduto']) * intval($request->qt_produto_detalhes);
+                $qtdProdutosCarrinho += intval($request->qt_produto_detalhes);
+            } else {
+                $qtdIndividual++;
+                $val = doubleval($produto['valorProduto']);
+                $qtdProdutosCarrinho += 1;
+            }
+
+            $valorTotalProduto = doubleval($produto['valorProduto']) * $qtdIndividual;
+
+            $precoTotal += $val;
+            $precoSubTotal += $val;
 
             $produto['qtdIndividual'] = intval($qtdIndividual);
-            $produto['valorTotalProduto'] = doubleval($valorTotal);
+            $produto['valorTotalProduto'] = doubleval($valorTotalProduto);
 
             $produto['alturaTotalProduto'] = doubleval($alturaTotalIndividual);
             $produto['larguraTotalProduto'] = doubleval($larguraTotalIndividual);
             $produto['comprimentoTotalProduto'] = doubleval($comprimentoTotalIndividual);
             $produto['pesoTotalProduto'] = doubleval($pesoTotalIndividual);
 
-            $precoSubTotal += $produto['valorProduto'];
-            $precoTotal += $produto['valorProduto'];
-
             $produtosCarrinho[$index] = $produto;
-
-            //dd($produtosCarrinho);
 
             session([ 'totalHeight' => $alturaTotal ]);
             session([ 'totalWidth' => $larguraTotal ]);
@@ -208,6 +207,8 @@ class CartController extends Controller
             session([ 'qtCart' => $qtdProdutosCarrinho ]);
             session([ 'cart' => $produtosCarrinho ]);
 
+            Session::save();
+
         //dd(Session::get('cart'));
         } else {
             if (Session::get('qtCart') == 0) {
@@ -216,6 +217,16 @@ class CartController extends Controller
                 $qtdProdutosCarrinho = Session::get('qtCart');
                 
                 $qtdItensCarrinho = 1;
+
+                if ($request->has('qt_produto_detalhes')) {
+                    $qtdIndividual = $request->qt_produto_detalhes;
+                    $qtdProdutosCarrinho += $qtdIndividual;
+                } else {
+                    $qtdIndividual = 1;
+                    $qtdProdutosCarrinho++;
+                }
+
+                $valorTotalProduto = doubleval($request->vl_produto) * $qtdIndividual;
 
                 $alturaTotal = 0;
                 $larguraTotal = 0;
@@ -233,7 +244,7 @@ class CartController extends Controller
                     'valorProduto' => doubleval($request->vl_produto),
                     'slugProduto' => $request->slug_produto,
                     'qtdProdutoEstoque' => intval($request->qt_produto),
-                    'qtdIndividual' => 1,
+                    'qtdIndividual' => intval($qtdIndividual),
                     'imagemProduto' => $request->im_produto,
                     'pesoProduto' => doubleval($request->ds_peso),
                     'pesoTotalProduto' => doubleval($request->ds_peso),
@@ -243,17 +254,17 @@ class CartController extends Controller
                     'larguraTotalProduto' => doubleval($request->ds_largura),
                     'comprimentoProduto' => doubleval($request->ds_comprimento),
                     'comprimentoTotalProduto' => doubleval($request->ds_comprimento),
-                    'valorTotalProduto' => doubleval($request->vl_produto)
+                    'valorTotalProduto' => $valorTotalProduto
                 ];
 
                 Session::push('cart', $produtosCarrinho);
 
-                $precoSubTotal += $request->vl_produto;
+                $precoSubTotal = $valorTotalProduto;
                 $alturaTotal += $request->ds_altura;
                 $larguraTotal += $request->ds_largura;
                 $comprimentoTotal += $request->ds_comprimento;
                 $pesoTotal += $request->ds_peso;
-                $precoTotal += $request->vl_produto;
+                $precoTotal = $valorTotalProduto;
 
                 Session::put('totalHeight', $alturaTotal);
                 Session::put('totalWidth', $larguraTotal);
@@ -266,14 +277,23 @@ class CartController extends Controller
                 //Session::put('idx' . $request->sku_produto, $index);
                 Session::put('qtCartItems', $qtdItensCarrinho);
 
-                $qtdProdutosCarrinho++;
-
                 Session::put('qtCart', $qtdProdutosCarrinho);
+
+                Session::save();
             } else {
                 $qtdProdutosCarrinho = intval(Session::get('qtCart'));
 
                 $qtdItensCarrinho = intval(Session::get('qtCartItems'));
 
+                if ($request->has('qt_produto_detalhes')) {
+                    $qtdIndividual = intval($request->qt_produto_detalhes);
+                } else {
+                    $qtdIndividual = 1;
+                }
+
+                $valorTotalProduto = doubleval($request->vl_produto) * $qtdIndividual;
+                $qtdProdutosCarrinho += $qtdIndividual;
+                
                 $alturaTotal = Session::get('totalHeight');
                 $larguraTotal = Session::get('totalWidth');
                 $comprimentoTotal = Session::get('totalLength');
@@ -281,8 +301,6 @@ class CartController extends Controller
 
                 $precoSubTotal = Session::get('subtotalPrice');
                 $precoTotal = Session::get('totalPrice');
-
-                //dd($produtosCarrinho);
 
                 $produtosCarrinho = [
                     'codProduto' => $request->cd_produto,
@@ -292,7 +310,7 @@ class CartController extends Controller
                     'valorProduto' => $request->vl_produto,
                     'slugProduto' => $request->slug_produto,
                     'qtdProdutoEstoque' => $request->qt_produto,
-                    'qtdIndividual' => 1,
+                    'qtdIndividual' => $qtdIndividual,
                     'imagemProduto' => $request->im_produto,
                     'pesoProduto' => $request->ds_peso,
                     'pesoTotalProduto' => $request->ds_peso,
@@ -302,23 +320,19 @@ class CartController extends Controller
                     'larguraTotalProduto' => $request->ds_largura,
                     'comprimentoProduto' => $request->ds_comprimento,
                     'comprimentoTotalProduto' => $request->ds_comprimento,
-                    'valorTotalProduto' => $request->vl_produto
+                    'valorTotalProduto' => $valorTotalProduto
                 ];
-
-                //dd($produtosCarrinho);
 
                 Session::push('cart', $produtosCarrinho);
 
-                $precoSubTotal += $request->vl_produto;
-                $precoTotal += $request->vl_produto;
+                $precoSubTotal += $valorTotalProduto;
+                $precoTotal += $valorTotalProduto;
+                
                 $alturaTotal += $request->ds_altura;
                 $larguraTotal += $request->ds_largura;
                 $comprimentoTotal += $request->ds_comprimento;
                 $pesoTotal += $request->ds_peso;
 
-                //dd($produtosCarrinho);
-
-                $qtdProdutosCarrinho++;
                 $qtdItensCarrinho++;
 
                 session([ 'totalHeight' => $alturaTotal ]);
@@ -331,6 +345,8 @@ class CartController extends Controller
 
                 session([ 'qtCart' => $qtdProdutosCarrinho ]);
                 session([ 'qtCartItems' => $qtdItensCarrinho ]);
+
+                Session::save();
             }
         }
 
@@ -794,8 +810,14 @@ class CartController extends Controller
         ]);
     }
 
-    public function removeQuantityFromDetails($sku)
+    public function removeQuantityFromDetails(Request $request)
     {
-        dd($sku);
+        $qtd = $request->qtd;
+
+        $qtd--;
+
+        return response([
+            'qtd' => $qtd
+        ]);
     }
 }
