@@ -2,6 +2,34 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
+<!--logo-->
+<style type="text/css">
+    #logoMK {
+        display: inline-block;
+        margin-left: 10%;
+    }
+    .maktub {
+        font-family: "Jonah_DEMO"!important;
+        font-weight: bold;
+        font-stretch: expanded;
+        font-size: 1.8em !important;
+        color: rgb(213, 148, 49);
+        -moz-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
+        -webkit-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
+        -ms-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
+        margin: 0 0 0 0 !important;
+    }
+    .beauty {
+        margin: -15% 0 0 58%;
+        font-family: "Jonah_DEMO"!important;
+        font-size: 1.5em !important;
+        color: rgb(255, 255, 255);
+        -moz-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
+        -webkit-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
+        -ms-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
+    }
+</style>
+
 <!-- navbar-->
 <header class="header">
     <nav class="navbar navbar-expand-lg">
@@ -11,7 +39,6 @@
                 <form id="formPesquisa" action="{{route('productsFilterCatSubCat.page')}}" method="POST">
                     {{csrf_field()}}
                     <div class="form-group">
-
                         <input type="search" name="search" id="search" placeholder="Pesquisar produto...">
                         <input type="search" name="id" id="idProd" hidden>
                         <input type="search" name="catSubCat" id="catSubCatProd" hidden>
@@ -21,7 +48,13 @@
             </div>
         </div>
         <div class="container-fluid">
-            <a href="{{ route('index')}}" class="navbar-brand"><img src="{{asset('img/logo.png')}}"></a>
+            <a href="{{ route('index')}}" class="navbar-brand">
+                <div id="logoMK">
+                    <div class="maktub">MAKTUB</div>
+                    <div class="beauty">BEAUTY</div>
+                </div>
+            {{--<img src="{{asset('img/app/core-img/logo.png')}}">--}}
+            </a>
             <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
                     aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">
                 <i class="fa fa-bars"></i>
@@ -140,13 +173,14 @@
                                 </div>
 
                                 <!-- Produto Destaque -->
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product1.png')}}" class="img-fluid"></a>
-                                    <h6 class="text-uppercase product-heading"><a href="">Catharine Hill Sombras 30
-                                            cores</a></h6>
-                                    <ul class="rate list-inline">
-                                    </ul>
-                                    <strong class="price text-primary">R$ 106,00</strong><a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM"
-                                            class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down">
+                                    <a href="" class="product-image">
+                                        <img src="{{asset('img/app/bg-img/menu/product1.png')}}" class="img-fluid"></a>
+                                    <h6 class="text-uppercase product-heading"><a href="">Catharine Hill Sombras 30 cores</a>
+                                    </h6>
+                                    <ul class="rate list-inline"></ul>
+                                    <strong class="price text-primary">R$ 106,00</strong>
+                                    {{--<a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
                                 </div>
                             </div>
                         </div>
@@ -242,14 +276,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product3.png')}}" class="img-fluid"></a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/app/bg-img/menu/product3.png')}}" class="img-fluid"></a>
                                     <h6 class="text-uppercase product-heading"><a href="">Kit 12 Pinceis Pincel Macrilan
                                             Maquiagem E Necessaire Rosa</a></h6>
                                     <ul class="rate list-inline">
                                     </ul>
-                                    <strong class="price text-primary">R$ 27,00</strong><a
-                                            href="https://produto.mercadolivre.com.br/MLB-1023235686-kit-12-pinceis-pincel-macrilan-maquiagem-e-necessaire-rosa-_JM"
-                                            class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>
+                                    <strong class="price text-primary">R$ 27,00</strong>
+                                    {{--<a href="https://produto.mercadolivre.com.br/MLB-1023235686-kit-12-pinceis-pincel-macrilan-maquiagem-e-necessaire-rosa-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
                                 </div>
                             </div>
                         </div>
@@ -315,14 +348,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product2.png')}}" class="img-fluid"></a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/app/bg-img/menu/product2.png')}}" class="img-fluid"></a>
                                     <h6 class="text-uppercase product-heading"><a href="">Ruby Rose Base Liquida Matte
                                             L3</a></h6>
                                     <ul class="rate list-inline">
                                     </ul>
-                                    <strong class="price text-primary">R$ 14,99</strong><a
-                                            href="https://produto.mercadolivre.com.br/MLB-1044322474-ruby-rose-base-liquida-matte-l3-_JM"
-                                            class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>
+                                    <strong class="price text-primary">R$ 14,99</strong>
+                                    {{--<a href="https://produto.mercadolivre.com.br/MLB-1044322474-ruby-rose-base-liquida-matte-l3-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
                                 </div>
                             </div>
                         </div>
@@ -398,14 +430,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product4.png')}}" class="img-fluid"></a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/app/bg-img/menu/product4.png')}}" class="img-fluid"></a>
                                     <h6 class="text-uppercase product-heading"><a href="">Kiss Delineador Em Gel 24h
                                             Preto</a></h6>
                                     <ul class="rate list-inline">
                                     </ul>
-                                    <strong class="price text-primary">R$ 99,99</strong><a
-                                            href="https://produto.mercadolivre.com.br/MLB-1024854469-le-vengee-kit-pincel-de-unicornio-c-10-_JM"
-                                            class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>
+                                    <strong class="price text-primary">R$ 99,99</strong>{{--<a href="https://produto.mercadolivre.com.br/MLB-1024854469-le-vengee-kit-pincel-de-unicornio-c-10-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
                                 </div>
                             </div>
                         </div>
@@ -471,7 +501,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/product5.png')}}" class="img-fluid"></a>
+                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/app/bg-img/menu/product5.png')}}" class="img-fluid"></a>
                                     <h6 class="text-uppercase product-heading"><a href=""></a></h6>
                                     <ul class="rate list-inline"></ul>
                                 </div>
@@ -495,36 +525,36 @@
                             <a id="" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
                                 <i class="fa fa-user" style="color: #d59431;"></i>
                             </a>
-                            
+
                         @else
 
                             <a id="" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
                                 <i class="fa fa-user"></i>
                             </a>
-                            
+
                         @endif
 
-                        
+
                         <div aria-labelledby="" class="dropdown-menu">
                             <!-- user menu-->
                             @if(Auth::check())
-                                    <div class="dropdown-submenu">
-                                        <a href="javascript:void(0);">{{ Auth::user()->nm_cliente }}</a>
-                                    </div>
-                                    <hr>
-                                    <div class="dropdown-submenu">
-                                        <a href="{{ route('client.dashboard') }}">Minha Conta</a>
-                                    </div>
-                                    <div class="dropdown-submenu">
-                                        <a href="{{ route('client.logout') }}">Sair</a>
-                                    </div>
+                                <div class="dropdown-submenu">
+                                    <a href="javascript:void(0);">{{ Auth::user()->nm_cliente }}</a>
+                                </div>
+                                <hr>
+                                <div class="dropdown-submenu">
+                                    <a href="{{ route('client.dashboard') }}">Minha Conta</a>
+                                </div>
+                                <div class="dropdown-submenu">
+                                    <a href="{{ route('client.logout') }}">Sair</a>
+                                </div>
                             @else
-                                    <div class="dropdown-submenu">
-                                        <a href="{{ route('client.login') }}">Fazer login</a>
-                                    </div>
-                                    <div class="dropdown-submenu">
-                                        <a href="{{ route('client.register') }}">Criar nova Conta</a>
-                                    </div>
+                                <div class="dropdown-submenu">
+                                    <a href="{{ route('client.login') }}">Fazer login</a>
+                                </div>
+                                <div class="dropdown-submenu">
+                                    <a href="{{ route('client.register') }}">Criar nova Conta</a>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -540,36 +570,6 @@
                                 <div class="cart-no">{{ Session::get('qtCart') }}</div>
                             </a>
                         @endif
-
-                        <!-- cart itens-->
-                        {{--<div aria-labelledby="cartdetails" class="dropdown-menu">
-                            @if(Session::get('qtCart') == 0)
-                                <!-- cart item-->
-                                <div class="cart-product">
-                                    <small>NÃO HA PRODUTOS NO CARRINHO&nbsp;<i class="fa fa-shopping-cart fa-2x">&nbsp;</i></small>
-                                </div>
-                            @else
-                                <!-- cart item-->
-                                    <div class="dropdown-item cart-product">
-                                        <div class="d-flex align-items-center">
-                                            <div class="img"><img src="{{asset('img/hoodie-man-1.png')}}" class="img-fluid"></div>
-                                            <div class="details d-flex justify-content-between">
-                                                <div class="text"><a href="#"><strong>Heather Gray Hoodie</strong></a>
-                                                    <small>Quantity: 1</small>
-                                                    <span class="price">$75.00 </span></div>
-                                                <a href="#" class="delete"><i class="fa fa-trash-o"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- total price-->
-                                    <div class="dropdown-item total-price d-flex justify-content-between">
-                                        <span>Total </span><strong class="text-primary">&nbsp;&nbsp;$75.00</strong></div>
-                                    <!-- call to actions-->
-                                    <div class="dropdown-item CTA d-flex"><a href="cart.html" class="btn btn-template wide">View
-                                            Cart</a><a href="checkout1.html" class="btn btn-template wide">Checkout</a>
-                                    </div>
-                            @endif
-                        </div>--}}
                     </div>
                 </div>
             </div>

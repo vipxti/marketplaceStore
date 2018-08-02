@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@showIndexPage')->name('index');
 
+//Admin
 Route::prefix('admin')->group(function () {
 
     //Cadastro dos dados da Empresa
@@ -113,6 +114,7 @@ Route::prefix('admin')->group(function () {
     //----------------
 });
 
+//App
 Route::prefix('page')->group(function () {
     
     //Produtos
@@ -156,5 +158,10 @@ Route::prefix('page')->group(function () {
         Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
         Route::post('/address', 'ClientController@saveClientAddress')->name('client.address.save');
         Route::post('/register/verify/email', 'Auth\ClientRegisterController@verificaEmail')->name('client.verify.email');
+    });
+
+    //Terms
+    Route::prefix('terms')->group(function () {
+        Route::get('/', 'TermsController@companyTerms')->name('company.terms');
     });
 });
