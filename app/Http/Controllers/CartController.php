@@ -63,6 +63,11 @@ class CartController extends Controller
         return view('pages.app.cart.index', compact('telefone', 'enderecoCliente', 'menuNav', 'categoriaSubCat'));
     }
 
+    public function showCheckoutPage()
+    {
+        return view('pages.app.cart.checkout');
+    }
+
     public function showResultPage()
     {
         return view('pages.app.cart.result');
@@ -120,6 +125,59 @@ class CartController extends Controller
         ]);
 
         return response()->json([ 'freteCalculado' => $frete ]);
+    }
+
+    public function checkout(Request $request)
+    {
+        $data['token'] ='4D97A178277542CAAB150D1096002DF1';
+        $emailPagseguro = 'vendas@vipx.com.br';
+        
+        $data = http_build_query($data);
+        $url = 'https://ws.pagseguro.uol.com.br/v2/sessions';
+        
+        $curl = curl_init();
+
+        $headers = array('Content-Type: application/x-www-form-urlencoded; charset=ISO-8859-1');
+
+        curl_setopt($curl, CURLOPT_URL, $url . '?email=' . $emailPagseguro);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        //curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        $xml = curl_exec($curl);
+
+        curl_close($curl);
+
+        //dd($xml);
+
+        $xml = simplexml_load_string($xml);
+        $idSessao = $xml->id;
+        
+        $response = [ 'idSessao' => $idSessao];
+
+        return response()->json($response);
+    }
+
+    public function ticketPayment(Request $request)
+    {
+        # code...
+    }
+
+    public function creditCardPayment(Request $request)
+    {
+        $data = [
+            'cardNumber' => $request->card_number,
+            'cvv' => $request->cvv,
+            'expirationMonth' => $request->months,
+            'expirationYear' => $request->years
+        ];
+
+        $response = [ 'data' => $data];
+
+        return response()->json($request);
     }
 
     public function addToCart(Request $request)

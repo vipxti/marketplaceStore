@@ -132,8 +132,9 @@ Route::prefix('page')->group(function () {
         Route::post('/clear', 'CartController@clearCart')->name('cart.clear');
         Route::get('/minus/{idx}', 'CartController@removeQuantityCart')->name('minus.quantity');
         Route::get('/plus/{idx}', 'CartController@addQuantityCart')->name('plus.quantity');
-        Route::post('/plus/details', 'CartController@addQuantityFromDetails')->name('plus.details.quantity');
-        Route::post('/minus/details', 'CartController@removeQuantityFromDetails')->name('minus.details.quantity');
+        Route::get('/checkout', 'CartController@showCheckoutPage')->name('cart.checkout');
+        Route::post('/checkout', 'CartController@checkout')->name('cart.checkout.submit');
+        Route::post('/checkout/creditcard', 'CartController@creditCardPayment')->name('cart.checkout.creditcard');
         Route::get('/result', 'CartController@showResultPage')->name('cart.result.page');
         Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
     });
