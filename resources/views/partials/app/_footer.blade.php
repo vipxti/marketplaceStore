@@ -1,3 +1,37 @@
+<!--logo-->
+<style type="text/css">
+    #logoMK {
+        display: inline-block;
+        margin-left: 10%;
+    }
+    .maktub {
+        font-family: "Jonah_DEMO"!important;
+        font-weight: bold;
+        font-stretch: expanded;
+        font-size: 2.8em !important;
+        color: rgb(213, 148, 49);
+        -moz-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
+        -webkit-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
+        -ms-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
+        margin: 0 0 0 0 !important;
+    }
+    .beauty {
+        margin: -5% 0 0 58%;
+        font-family: "Jonah_DEMO"!important;
+        font-size: 2.2em !important;
+        color: rgb(255, 255, 255);
+        -moz-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
+        -webkit-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
+        -ms-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
+    }
+    footer.main-footer .main-block{
+        padding-bottom: 4% !important;
+    }
+    .text-uppercase{
+        margin-top: 15px !important;
+    }
+</style>
+
 <!-- Footer-->
 <footer class="main-footer">
     <!-- Service Block-->
@@ -41,17 +75,23 @@
         <div class="container">
             <div class="row">
                 <div class="info col-lg-4">
-                    <div class="logo"><img src="{{asset('img/app/core-img/logo.png')}}" href="{{ route('index')}}"></div>
+                    <a href="{{ route('index')}}" class="navbar-brand">
+                        <div id="logoMK">
+                            <div class="maktub">MAKTUB</div>
+                            <div class="beauty">BEAUTY</div>
+                        </div>
+                        {{--<img src="{{asset('img/app/core-img/logo.png')}}">--}}
+                    </a>
                     <p></p>
                     <ul class="social-menu list-inline">
                         <li class="list-inline-item"><a href="https://www.facebook.com/MaktubBeauty/?ref=br_rs" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                         <li class="list-inline-item" ><a href="https://www.instagram.com/maktubbeauty/" target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                        <li class="list-inline-item" ><a href="#" target="_blank" title="Instagram"><i class="fa fa-google-plus"></i></a></li>
                     </ul>
                 </div>
                 <div class="site-links col-lg-2 col-md-6">
                     <h5 class="text-uppercase">Dúvidas</h5>
                     <ul class="list-unstyled">
-                        <li> <a href="#">Frete Grátis</a></li>
                         <li> <a href="#">Trocas e Devoluções</a></li>
                         <li> <a href="#">Prazos e Envios</a></li>
                         <li><a href="#">Loja Segura</a></li>
@@ -60,8 +100,8 @@
                 <div class="site-links col-lg-2 col-md-6">
                     <h5 class="text-uppercase">Empresa</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#">Central de Atendimento</a></li>
-                        <li><a href="#">Quem Somos</a></li>
+                        {{--<li><a href="#">Central de Atendimento</a></li>--}}
+                        <li><a href="{{route('company.terms')}}">Quem Somos</a></li>
                         @if(Auth::check())
                             <li>
                                 <a href="{{ route('client.dashboard') }}">Minha Conta</a>

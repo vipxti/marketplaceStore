@@ -2,6 +2,34 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
+<!--logo-->
+<style type="text/css">
+    #logoMK {
+        display: inline-block;
+        margin-left: 10%;
+    }
+    .maktub {
+        font-family: "Jonah_DEMO"!important;
+        font-weight: bold;
+        font-stretch: expanded;
+        font-size: 1.8em !important;
+        color: rgb(213, 148, 49);
+        -moz-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
+        -webkit-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
+        -ms-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
+        margin: 0 0 0 0 !important;
+    }
+    .beauty {
+        margin: -15% 0 0 58%;
+        font-family: "Jonah_DEMO"!important;
+        font-size: 1.5em !important;
+        color: rgb(255, 255, 255);
+        -moz-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
+        -webkit-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
+        -ms-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
+    }
+</style>
+
 <!-- navbar-->
 <header class="header">
     <nav class="navbar navbar-expand-lg">
@@ -11,7 +39,6 @@
                 <form id="formPesquisa" action="{{route('productsFilterCatSubCat.page')}}" method="POST">
                     {{csrf_field()}}
                     <div class="form-group">
-
                         <input type="search" name="search" id="search" placeholder="Pesquisar produto...">
                         <input type="search" name="id" id="idProd" hidden>
                         <input type="search" name="catSubCat" id="catSubCatProd" hidden>
@@ -21,7 +48,13 @@
             </div>
         </div>
         <div class="container-fluid">
-            <a href="{{ route('index')}}" class="navbar-brand"><img src="{{asset('img/app/core-img/logo.png')}}"></a>
+            <a href="{{ route('index')}}" class="navbar-brand">
+                <div id="logoMK">
+                    <div class="maktub">MAKTUB</div>
+                    <div class="beauty">BEAUTY</div>
+                </div>
+            {{--<img src="{{asset('img/app/core-img/logo.png')}}">--}}
+            </a>
             <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
                     aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">
                 <i class="fa fa-bars"></i>
