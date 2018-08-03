@@ -22,13 +22,13 @@
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
-                            <h1 style="color: #d59431">Blush Vult</h1>
+                            <h1 style="color: #d59431;font-size: 2.0rem">Make Up</h1>
                             <ul class="lead">
-                                <li><strong>Vult Blush Compacto</strong> Tradicional</li>
-                                <li><strong>Cor</strong> 04</li>
-                                <li><strong>R$ 16,99</strong> Imperdível</li>
+                                <li><strong>Vult</strong></li>
+                                <li><strong>Pó</strong> Compacto</li>
+                                <li><strong>R$ 21,99</strong> Imperdível</li>
                             </ul>
-                            {{--<a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>--}}
+                            <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
                         </div>
                     </div>
                 </div>
@@ -39,13 +39,13 @@
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
-                            <h1 style="color: #d59431">Batom Vult</h1>
+                            <h1 style="color: #d59431; font-size: 2.0rem">Feminices</h1>
                             <ul class="lead">
-                                <li><strong>Vult Batom Matte</strong> Rosa Queimado</li>
-                                <li><strong>Cor</strong> 07</li>
-                                <li><strong>R$ 15,99</strong> Imperdível</li>
+                                <li><strong>Bruna</strong> Tavares</li>
+                                <li><strong>Base</strong> Cremosa</li>
+                                <li><strong>R$ 34,99</strong> Imperdível</li>
                             </ul>
-                            {{--<a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>--}}
+                            <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
                         </div>
                     </div>
                 </div>
@@ -56,13 +56,13 @@
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
-                            <h1 style="color: #d59431">Batom Vult</h1>
+                            <h1 style="color: #d59431; font-size: 2.0rem">Inspiration</h1>
                             <ul class="lead">
-                                <li><strong>Vult Batom Matte</strong> Nude</li>
-                                <li><strong>Cor</strong> 27</li>
-                                <li><strong>R$ 12,99</strong> Imperdível</li>
+                                <li><strong>Ruby</strong> Rose</li>
+                                <li><strong>Paleta de</strong> Sombra</li>
+                                <li><strong>R$ 109,99</strong> Imperdível</li>
                             </ul>
-                           {{-- <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>--}}
+                            <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                     <!-- Single gallery Item Start -->
                     <div class="col-12 col-sm-4 col-md-3 single_gallery_item" style="margin-bottom: 13% !important;">
                         <!-- Product Image -->
-                        <div class="product-img">
+                        <div class="product-img" style="width: 275px !important; height: 375px !important;">
                             <img src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
                             <div class="product-quicview">
                                 <a href="{{ route('products.details', $produto->nm_slug)}}"><i class="fa fa-plus"></i></a>
@@ -97,7 +97,7 @@
                         <!-- Product Description -->
                         <div class="product-description">
                             <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
-                            <p>{{ $produto->nm_produto }}</p>
+                            <p style="min-height: 66px !important;">{{ $produto->nm_produto }}</p>
                             <!-- Add to Cart -->
                             <form action="{{ route('cart.buy') }}" method="post">
                                 {{ csrf_field() }}
@@ -114,16 +114,11 @@
                                 <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
                                 <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
                                 <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
-
                                 @if($produto->qt_produto < 5)
-                                    <p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>
+                                    <p class="btn" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none;">SEM ESTOQUE</p>
                                 @else
-
-                                    <div class="col-12 col-md-12 d-flex justify-content-center">
-                                      <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none; padding: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
-                                    </div>
+                                    <button type="submit" class="btn" style=" width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none; border: none !important;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
                                 @endif
-                                {{-- <a href="{{ route('cart.buy') }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a> --}}
                             </form> 
                         </div>
                     </div>
@@ -142,7 +137,7 @@
                         <h2>Oferta Especial <span class="karl-level">Hot</span></h2>
                         <p>Catharine Hill Sombras Variadas 1017 - Paleta De Sombras Com 30 Cores Diferentes De Acabamentos Opacos E Cintilantes.</p>
                         <div class="offer-product-price">
-                            <h3><span class="regular-price">R$126,99</span> R$106,00</h3>
+                            <h3><span class="regular-price">R$126,99</span> R$106,99</h3>
                         </div>
                         <a href="{{ route('products.details', 'catharine-hill-paleta-de-sombras-variadas-30-cores') }}" target="_blank" class="btn btn-template wide shop-now">Comprar Agora</a>
                     </div>
