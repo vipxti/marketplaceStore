@@ -88,7 +88,7 @@
                         <!-- Product Description -->
                         <div class="product-description">
                             <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
-                            <p>{{ $produto->nm_produto }}</p>
+                            <p style="min-height: 66px !important;">{{ $produto->nm_produto }}</p>
                             <!-- Add to Cart -->
                             <form action="{{ route('cart.buy') }}" method="post">
                                 {{ csrf_field() }}
@@ -105,16 +105,11 @@
                                 <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
                                 <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
                                 <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
-
                                 @if($produto->qt_produto < 5)
-                                    <p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>
+                                    <p class="btn" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none;">SEM ESTOQUE</p>
                                 @else
-
-                                    <div class="col-12 col-md-12 d-flex justify-content-center">
-                                      <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none; padding: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
-                                    </div>
+                                    <button type="submit" class="btn" style=" width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none; border: none !important;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
                                 @endif
-                                {{-- <a href="{{ route('cart.buy') }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a> --}}
                             </form> 
                         </div>
                     </div>

@@ -7,7 +7,7 @@
                 <!-- Produtos e Contador páginas -->
                 <div class="col-12 col-md-8 col-lg-12 d-flex justify-content-center">
                     <div class="row">
-                        <div class="row karl-new-arrivals">
+                        <div class="row karl-new-arrivals text-center">
                             @if (count($produtoCatSubCat) == 0)
                                 <h5 style="text-align: center !important; margin: 60px 0 60px 0 !important;">NÃO HÁ PRODUTOS NESSA CATEGORIA</h5>
                             @else
@@ -21,9 +21,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="product-description">
+                                        <div class="product-description" style="padding: 0 5%">
                                             <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
-                                            <p style="min-height: 44px !important;">{{ $produto->nm_produto }}</p>
+                                            <p style="min-height: 66px !important;">{{ $produto->nm_produto }}</p>
                                             <!-- Botão comprar -->
                                             <form action="{{ route('cart.buy') }}" method="post">
                                                 {{ csrf_field() }}
@@ -40,11 +40,9 @@
                                                 <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
                                                 <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
                                                 @if($produto->qt_produto < 5)
-                                                    <p class="btn btn-link add-to-cart-btn" style="text-decoration: none;  margin: 0 0 0 0 !important;">SEM ESTOQUE</p>
-                                                    {{--<p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>--}}
+                                                    <p class="btn" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none;">SEM ESTOQUE</p>
                                                 @else
-                                                    <p></p>
-                                                    <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none; margin: 0 0 0 0 !important;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                                    <button type="submit" class="btn" style=" width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none; border: none !important;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
                                                 @endif
                                             </form>
                                         </div>
