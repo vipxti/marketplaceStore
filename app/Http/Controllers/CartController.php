@@ -74,6 +74,11 @@ class CartController extends Controller
         return redirect()->route('client.login');
     }
 
+    public function showOrderDetailsPage()
+    {
+        return view('pages.app.cart.orderdetails');
+    }
+
     public function showResultPage()
     {
         return view('pages.app.cart.result');
@@ -172,7 +177,7 @@ class CartController extends Controller
         # code...
     }
 
-    public function creditCardPayment(Request $request)
+    public function generateCreditCardToken(Request $request)
     {
         $data = [
             'cardNumber' => $request->card_number,

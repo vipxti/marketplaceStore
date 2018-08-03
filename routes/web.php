@@ -136,7 +136,8 @@ Route::prefix('page')->group(function () {
         Route::get('/plus/{idx}', 'CartController@addQuantityCart')->name('plus.quantity');
         Route::get('/checkout', 'CartController@showCheckoutPage')->name('cart.checkout');
         Route::post('/checkout', 'CartController@createSessionId')->name('cart.checkout.session.id');
-        Route::post('/checkout/creditcard', 'CartController@creditCardPayment')->name('cart.checkout.creditcard');
+        Route::get('/checkout/details', 'CartController@showOrderDetailsPage')->name('cart.order.details');
+        Route::post('/checkout/creditcard', 'CartController@generateCreditCardToken')->name('cart.checkout.creditcard.token');
         Route::get('/result', 'CartController@showResultPage')->name('cart.result.page');
         Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
     });

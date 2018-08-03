@@ -12,40 +12,40 @@
 
         <p>&nbsp;</p>
 
-        <nav class="nav-justified">
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
-                    Boleto
-                </a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Cartão de crédito</a>
+        <div class="row text-center">
+            <div class="col-12 col-md-6">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="ticketPayment" name="customRadio" class="custom-control-input" checked>
+                    <label class="custom-control-label" for="ticketPayment">Boleto</label>
+                </div>
             </div>
-        </nav>
-    
-        <div class="tab-content" id="nav-tabContent">
+            <div class="col-12 col-md-6">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="creditCardPayment" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="creditCardPayment">Cartão de crédito</label>
+                </div>
+            </div>
+        </div>
 
-            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div id="ticket" class="row">          
+
+            <div class="col-12 col-md-6 col-sm-8 offset-md-3">
 
                 <p>&nbsp;</p>
 
-                <p class="text-justify">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit laboriosam, enim id totam incidunt quaerat blanditiis non! Assumenda, asperiores a. Esse blanditiis cum sit molestias sapiente saepe corrupti unde accusamus?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error fuga neque nam enim provident odit ratione minima quas obcaecati aspernatur quam, quibusdam libero laboriosam aut excepturi reprehenderit consequatur? Accusantium, obcaecati?
+                <p class="h5 text-justify">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod odio perferendis inventore, aut qui fuga labore voluptates, sed repellat vel itaque excepturi quam quos velit quas dolorem. Et, ipsa dignissimos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus voluptas cumque sit, voluptatibus voluptatum quia officiis facere omnis assumenda nam optio, odit aperiam vero libero. Quia dolore quisquam quo inventore.
                 </p>
 
-                <p>&nbsp;</p>
-
-                <div class="col-12 col-md-4 offset-md-4 d-flex justify-content-center">
-
-                    <button id="ticketPayment" class="btn btn-template w-100">Finalizar compra</button>
-
-                </div>
-
-                <p>&nbsp;</p>
-
             </div>
 
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        </div>
 
-                <p>&nbsp;</p>
+        <div id="creditCard" class="row d-none">
+
+            <p>&nbsp;</p>
+
+            <div class="col-12">
 
                 <form id="formCreditCard">
                     {{ csrf_field() }}
@@ -142,19 +142,33 @@
 
                     </div>
 
-                    <p>&nbsp;</p>
-
-                    <div id="finalizar" class="col-12 col-md-4 offset-md-4 d-flex justify-content-center">
-
-                        <button type="button" id="creditCardPayment" class="btn btn-template w-100 d-none">Finalizar compra</button>
-
-                    </div>
-
                 </form>
 
-                <p>&nbsp;</p>
+            </div>
 
-                
+        </div>
+
+        <div class="row">
+
+            <p>&nbsp;</p>
+
+            <div class="col-12">
+
+                <div id="finalizar" class="col-12 col-md-3 offset-md-7 justify-content-right">
+
+                    <button type="button" id="btnProssegir" class="btn btn-template w-100">Prossegir</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="cardBrands" class="row d-none">
+
+            <div class="col-12">
+
+                <p>&nbsp;</p>
 
                 <div class="card">
 
@@ -172,12 +186,10 @@
                     </div>
 
                 </div>
-
-                <p>&nbsp;</p>
-
             </div>
-
         </div>
+
+        <p>&nbsp;</p>
 
     </div>
     
@@ -255,9 +267,19 @@
                 }
             });
 
-            
-
         });
+
+        $('#ticketPayment').click(function () {
+            $('#creditCard').addClass('d-none')
+            $('#ticket').removeClass('d-none')
+            $('#cardBrands').addClass('d-none')
+        })
+
+        $('#creditCardPayment').click(function () {
+            $('#ticket').addClass('d-none')
+            $('#creditCard').removeClass('d-none')
+            $('#cardBrands').removeClass('d-none')
+        })
 
         $('#generateInstallments').click(function () {
 
@@ -276,13 +298,17 @@
                         brand: brandName,
                         success: function (v) {
 
+                            let total = 0
+
                             $.each(v.installments, function (i, values) {
                                 $.each(values, function (id, val) {
+
+                                    total = parseFloat(val.installmentAmount).toFixed(10) * val.quantity
                                     
                                     if (val.quantity > 3) {
-                                        $('#installmentsOptions').append('<option value="' + val.quantity + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' com juros (R$ '+ (val.installmentAmount * val.quantity).toFixed(2).replace('.', ',') +')</option>');
+                                        $('#installmentsOptions').append('<option value="' + val.quantity + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' com juros (R$ '+ (total).toFixed(2).replace('.', ',') +')</option>');
                                     } else {
-                                        $('#installmentsOptions').append('<option value="' + val.quantity + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' sem juros (R$ '+ (val.installmentAmount * val.quantity).toFixed(2).replace('.', ',') +')</option>');
+                                        $('#installmentsOptions').append('<option value="' + val.quantity + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' sem juros (R$ '+ Math.round((total)).toFixed(2).replace('.', ',') +')</option>');
                                     }
 
                                     
@@ -290,9 +316,6 @@
                                 
                             })
 
-                        },
-                        error: function (d) {
-                            
                         }
                     });
 
@@ -304,42 +327,56 @@
 
         });
 
-        $('#creditCardPayment').click(function (e) {
+        $('#btnProssegir').click(function (e) {
             e.preventDefault();
 
-            PagSeguroDirectPayment.onSenderHashReady(function(response){
-                if(response.status == 'error') {
-                    return false;
-                }
+            if ($('#creditCardPayment').is(':checked')) {
 
-                $('#senderHash').val(response.senderHash);
-
-            });
-
-            $.ajax({
-
-                url: '{{ route('cart.checkout.creditcard') }}',
-                type: 'POST',
-                data: $('#formCreditCard').serialize(),
-                success: function (d) {
-
-                    let cardData = {
-                        cardNumber: d.data.cardNumber,
-                        cvv: d.data.cvv,
-                        expirationMonth: d.data.expirationMonth,
-                        expirationYear: d.data.expirationYear,
-                        success: function (response) {
-                            $('#cardToken').val(response.card.token);
-                        }
+                PagSeguroDirectPayment.onSenderHashReady(function(response){
+                    if(response.status == 'error') {
+                        return false;
                     }
 
-                    PagSeguroDirectPayment.createCardToken(cardData)
-                },
-                error: function (response) {
-                    console.log(response.message)
-                }
+                    $('#senderHash').val(response.senderHash);
 
-            });
+                });
+
+                $.ajax({
+
+                    url: '{{ route('cart.checkout.creditcard.token') }}',
+                    type: 'POST',
+                    data: $('#formCreditCard').serialize(),
+                    success: function (d) {
+
+                        console.log(d);
+                        
+
+                        let cardData = {
+                            cardNumber: d.data.cardNumber,
+                            cvv: d.data.cvv,
+                            expirationMonth: d.data.expirationMonth,
+                            expirationYear: d.data.expirationYear,
+                            success: function (response) {
+                                $('#cardToken').val(response.card.token);
+                            }
+                        }
+
+                        PagSeguroDirectPayment.createCardToken(cardData)
+                    },
+                    error: function (response) {
+                        console.log(response.message)
+                    },
+                    complete: function () {
+
+                        $.get('{{ route('cart.order.details') }}', function (data) {
+                            window.location(data)
+                        })
+                    
+                    }
+
+                });
+                
+            }
 
         });
 
