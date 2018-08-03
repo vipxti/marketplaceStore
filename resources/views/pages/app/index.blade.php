@@ -19,7 +19,7 @@
                                 <li><strong>Cor</strong> 04</li>
                                 <li><strong>R$ 16,99</strong> Imperdível</li>
                             </ul>
-                            {{--<a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>--}}
+                            <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                                 <li><strong>Cor</strong> 07</li>
                                 <li><strong>R$ 15,99</strong> Imperdível</li>
                             </ul>
-                            {{--<a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>--}}
+                            <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                                 <li><strong>Cor</strong> 27</li>
                                 <li><strong>R$ 12,99</strong> Imperdível</li>
                             </ul>
-                           {{-- <a href="#" class="btn btn-template wide shop-now">Comprar Agora</a>--}}
+                            <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                     <!-- Single gallery Item Start -->
                     <div class="col-12 col-sm-4 col-md-3 single_gallery_item" style="margin-bottom: 13% !important;">
                         <!-- Product Image -->
-                        <div class="product-img">
+                        <div class="product-img" style="width: 275px !important; height: 375px !important;">
                             <img src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
                             <div class="product-quicview">
                                 <a href="{{ route('products.details', $produto->nm_slug)}}"><i class="fa fa-plus"></i></a>

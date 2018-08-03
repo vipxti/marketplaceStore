@@ -13,9 +13,9 @@
                             @else
                                 @foreach($produtoCatSubCat as $key => $produto)
 
-                                    <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
-                                        <div class="product-img">
-                                            <img src="{{ URL::asset('img/products' . '/' . $produto->im_produto)}}" alt="">
+                                    <div class="col-12 col-sm-4 col-md-3 single_gallery_item">
+                                        <div class="product-img img-fluid mx-auto d-block" >
+                                            <img class="w-100 mx-auto d-block" style="width: 285px !important; height: 375px !important;" src="{{ URL::asset('img/products' . '/' . $produto->im_produto)}}" alt="">
                                             <div class="product-quicview">
                                                 <a href="{{ route('products.details', $produto->nm_slug) }}"><i class="ti-plus"></i></a>
                                             </div>
@@ -23,9 +23,8 @@
 
                                         <div class="product-description">
                                             <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
-                                            <p>{{ $produto->nm_produto }}</p>
+                                            <p style="min-height: 44px !important;">{{ $produto->nm_produto }}</p>
                                             <!-- Botão comprar -->
-
                                             <form action="{{ route('cart.buy') }}" method="post">
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
@@ -41,9 +40,11 @@
                                                 <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
                                                 <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
                                                 @if($produto->qt_produto < 5)
-                                                    <p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>
+                                                    <p class="btn btn-link add-to-cart-btn" style="text-decoration: none;  margin: 0 0 0 0 !important;">SEM ESTOQUE</p>
+                                                    {{--<p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>--}}
                                                 @else
-                                                    <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                                    <p></p>
+                                                    <button type="submit" class="btn btn-link add-to-cart-btn" style="text-decoration: none; margin: 0 0 0 0 !important;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
                                                 @endif
                                             </form>
                                         </div>

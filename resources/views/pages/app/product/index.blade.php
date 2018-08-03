@@ -9,10 +9,10 @@
                 <div class="col-12 col-md-12 col-lg-12 justify-content-center">
                     <div class="shop_grid_product_area">
                         <div class="row">
-                            <div class="row karl-new-arrivals d-flex justify-content-center">
+                            <div class="row karl-new-arrivals d-flex">
                                 @foreach($produtos as $key => $produto)
-                                    <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
-                                        <div class="product-img">
+                                    <div class="col-12 col-sm-4 col-md-3 single_gallery_item pull-left">
+                                        <div class="product-img" style="width: 275px !important; height: 395px !important;">
                                             <img src="{{ URL::asset('img/products' . '/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
                                             <div class="product-quicview">
                                                 <a href="{{ route('products.details', $produto->nm_slug) }}"><i class="ti-plus"></i></a>

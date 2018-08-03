@@ -2,36 +2,15 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
-<!--logo-->
-<style type="text/css">
-    #logoMK {
-        display: inline-block;
-        margin-left: 10%;
-    }
-    .maktub {
-        font-family: "Jonah_DEMO"!important;
-        font-weight: bold;
-        font-stretch: expanded;
-        font-size: 1.8em !important;
-        color: rgb(213, 148, 49);
-        -moz-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
-        -webkit-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
-        -ms-transform: matrix( 1.29504084392096,0,0,1.07351221611133,0,0);
-        margin: 0 0 0 0 !important;
-    }
-    .beauty {
-        margin: -15% 0 0 58%;
-        font-family: "Jonah_DEMO"!important;
-        font-size: 1.5em !important;
-        color: rgb(255, 255, 255);
-        -moz-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
-        -webkit-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
-        -ms-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);
-    }
-</style>
-
 <!-- navbar-->
 <header class="header">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-K88JHSV');</script>
+    <!-- End Google Tag Manager -->
     <nav class="navbar navbar-expand-lg">
         <div class="search-area">
             <div class="search-area-inner d-flex align-items-center justify-content-center">
@@ -49,11 +28,7 @@
         </div>
         <div class="container-fluid">
             <a href="{{ route('index')}}" class="navbar-brand">
-                <div id="logoMK">
-                    <div class="maktub">MAKTUB</div>
-                    <div class="beauty">BEAUTY</div>
-                </div>
-            {{--<img src="{{asset('img/app/core-img/logo.png')}}">--}}
+                <img src="{{asset('img/app/core-img/logo.png')}}">
             </a>
             <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
                     aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">
