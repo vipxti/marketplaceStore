@@ -4,7 +4,7 @@
         margin-left: 6%;
     }
     .maktub {
-        font-family: "Jonah_DEMO"!important;
+        font-family: "Jonah_DEMO" !important;
         font-size: 2.5em !important;
         color: rgb(213, 148, 49);
         line-height: 1.2;
@@ -14,7 +14,7 @@
     }
     .beauty {
         margin-left: 78%;
-        font-family: "Jonah_DEMO"!important;
+        font-family: "Jonah_DEMO" !important;
         font-size: 1.5em !important;
         color: rgb(0, 0, 0);
         line-height: 1.2;

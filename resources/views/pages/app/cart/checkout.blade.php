@@ -58,7 +58,7 @@
                         <div class="col-12 col-md-4 col-sm-6 offset-md-2">
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" name="client_name" required maxlength="50">
+                                    <input id="ownerName" type="text" class="form-control" name="client_name" required maxlength="50">
                                     <label class="form-label">Nome do titular</label>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                         <div class="col-12 col-md-4 col-sm-6">
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" name="card_number" required maxlength="16">
+                                    <input id="cardNumber" type="text" class="form-control" name="card_number" required maxlength="16">
                                     <label class="form-label">Número do cartão</label>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                         <div class="col-12 col-md-3 col-sm-4 offset-md-2">
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" name="cvv" required maxlength="3" style="font-size: 0.7rem;">
+                                    <input id="cvv" type="text" class="form-control" name="cvv" required maxlength="3" style="font-size: 0.7rem;">
                                     <label class="form-label" style="font-size: 0.7rem;">CVV</label>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label" style="font-size: 0.7rem;">Mês vencimento</label>
-                                    <select id="months" name="months" class="form-control" style="font-size: 0.7rem;">
+                                    <select id="months" name="months" class="form-control" style="font-size: 0.9rem; padding-top: 7px; padding-bottom: 7px;">
                                     </select>                                    
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label" style="font-size: 0.7rem;">Ano vencimento</label>
-                                    <select id="years" name="years" class="form-control" style="font-size: 0.7rem;">
+                                    <select id="years" name="years" class="form-control" style="font-size: 0.9rem; padding-top: 7px; padding-bottom: 7px;">
                                     </select> 
                                 </div>
                             </div>
@@ -107,9 +107,46 @@
 
                     <p>&nbsp;</p>
 
-                    <div class="col-12 col-md-4 offset-md-4 d-flex justify-content-center">
+                    <div class="row">
 
-                        <button type="button" id="creditCardPayment" class="btn btn-template w-100">Finalizar compra</button>
+                        <div class="col-12 col-md-4 offset-md-4 d-flex justify-content-center">
+
+                            <button id="generateInstallments" type="button" class="btn btn-template">
+
+                                Gerar parcelamento
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <p>&nbsp;</p>
+
+                    <div id="installments" class="row d-none">
+
+                        <div class="col-12 col-md-8 col-sm-6 offset-md-2">
+
+                            <div class="form-group form-float">
+
+                                <div class="form-line">
+
+                                    <label class="form-label" style="font-size: 0.9rem;">Parcelas</label>
+                                    <select id="installmentsOptions" name="installments" class="form-control" style="font-size: 0.9rem; padding-top: 7px; padding-bottom: 7px;"></select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <p>&nbsp;</p>
+
+                    <div id="finalizar" class="col-12 col-md-4 offset-md-4 d-flex justify-content-center">
+
+                        <button type="button" id="creditCardPayment" class="btn btn-template w-100 d-none">Finalizar compra</button>
 
                     </div>
 
@@ -117,11 +154,13 @@
 
                 <p>&nbsp;</p>
 
+                
+
                 <div class="card">
 
                     <div class="card-header text-center">
 
-                        Cartões Disponíveis
+                        Cartões Disponíveis para pagamento
                     
                     </div>
 
@@ -156,6 +195,13 @@
             let months = [];
             let iniitalYear = (new Date).getFullYear()
 
+            if ($('#ownerName').val() == '' || $('#cardNumber').val() == '' || $('#cvv').val() == '' || $('#months').val() == '' || $('#years').val() == '') {
+                $('#generateInstallments').attr('disabled')
+            }
+            else {
+                $('#generateInstallments').removeAttr('disabled')
+            }
+
             for (let j = 0; j < 12; j++) {
                months[j] = (j + 1);
             }
@@ -180,7 +226,7 @@
             })
             
             $.ajax({
-                url: '{{ route('cart.checkout.submit') }}',
+                url: '{{ route('cart.checkout.session.id') }}',
                 type: 'POST',
                 data: {_token: CSRF_TOKEN},
                 success: function (d) {
@@ -213,16 +259,46 @@
 
         });
 
-        $('input[name="card_number"]').blur(function () {
+        $('#generateInstallments').click(function () {
+
+            $('#installments').removeClass('d-none')
+            $('#creditCardPayment').removeClass('d-none')
 
             PagSeguroDirectPayment.getBrand({
-            cardBin: $(this).val().substr(0, 6),
+            cardBin: $('#cardNumber').val().substr(0, 6),
                 success: function (d) {
-                    binCard = d.brand.name
+
+                    let brandName = d.brand.name
+
+                    PagSeguroDirectPayment.getInstallments({
+                        amount: 500,
+                        maxInstallmentNoInterest: 3,
+                        brand: brandName,
+                        success: function (v) {
+
+                            $.each(v.installments, function (i, values) {
+                                $.each(values, function (id, val) {
+                                    
+                                    if (val.quantity > 3) {
+                                        $('#installmentsOptions').append('<option value="' + val.quantity + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' com juros (R$ '+ (val.installmentAmount * val.quantity).toFixed(2).replace('.', ',') +')</option>');
+                                    } else {
+                                        $('#installmentsOptions').append('<option value="' + val.quantity + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' sem juros (R$ '+ (val.installmentAmount * val.quantity).toFixed(2).replace('.', ',') +')</option>');
+                                    }
+
+                                    
+                                })
+                                
+                            })
+
+                        },
+                        error: function (d) {
+                            
+                        }
+                    });
+
                 },
                 error: function (response) {
                     binCard = ''
-                    $('input[name="card_number"]').val('Cartão inválido').addClass('text-danger')
                 }
             });
 
@@ -238,21 +314,7 @@
 
                 $('#senderHash').val(response.senderHash);
 
-                let cardData = {
-                    cardNumber: $('input[name="card_number"]').val(),
-                    cvv: $('input[name="cvv"]').val(),
-                    expirationMonth: $('#months').val(),
-                    expirationYear: $('#years').val(),
-                    success: function (response) {
-                        console.log(response.card.token);
-                    }
-                }
-
-                PagSeguroDirectPayment.createCardToken(cardData)
-
             });
-
-            
 
             $.ajax({
 
@@ -260,7 +322,18 @@
                 type: 'POST',
                 data: $('#formCreditCard').serialize(),
                 success: function (d) {
-                    PagSeguroDirectPayment.createCardToken(d)
+
+                    let cardData = {
+                        cardNumber: d.data.cardNumber,
+                        cvv: d.data.cvv,
+                        expirationMonth: d.data.expirationMonth,
+                        expirationYear: d.data.expirationYear,
+                        success: function (response) {
+                            $('#cardToken').val(response.card.token);
+                        }
+                    }
+
+                    PagSeguroDirectPayment.createCardToken(cardData)
                 },
                 error: function (response) {
                     console.log(response.message)

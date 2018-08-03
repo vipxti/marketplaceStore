@@ -194,7 +194,7 @@
 
                 <div class="row">
                     <div class="col-12 col-md-11 text-right">
-                        <a href="{{ route('cart.checkout') }}" class="btn btn-template w-25">Checkout</a>
+                        <a href="{{ route('cart.checkout') }}" class="btn btn-template w-25">Concluir compra</a>
                     </div>
                 </div>
 

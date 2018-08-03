@@ -23,8 +23,7 @@ class ClientLoginController extends Controller
         $menuNav =  Menu::all();
 
         //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach($menuNav as $key=>$menu){
-
+        foreach ($menuNav as $key=>$menu) {
             $categoriaSubCat[$key] = Category::
             leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
                 ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
@@ -38,7 +37,6 @@ class ClientLoginController extends Controller
                 )
                 ->where('menu.cd_menu', '=', $menu->cd_menu)
                 ->get();
-
         }
 
         return view('pages.app.auth.login', compact('menuNav', 'categoriaSubCat'));
@@ -46,18 +44,16 @@ class ClientLoginController extends Controller
 
     public function login(ClientLoginRequest $request)
     {
-        if (Session::has('cartRoute')) {
-            $route = Session::get('cartRoute');
-        } else {
-            $route = 'client.dashboard';
-        }
+        $route = 'client.dashboard';
 
-        //dd($route);
+        if (Session::has('checkoutRoute')) {
+            $route = Session::get('checkoutRoute');
+        }
 
         //Faz o login do cliente
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'))) {
             //Redireciona o cliente caso consiga logar
-            Session::forget('cartRoute');
+            Session::forget('checkoutRoute');
             return redirect()->route($route)->with('success', 'Bem vindo');
         }
 
@@ -69,6 +65,6 @@ class ClientLoginController extends Controller
     {
         Auth::guard('web')->logout();
 
-        return redirect()->route('client.login');
+        return redirect()->route('index');
     }
 }

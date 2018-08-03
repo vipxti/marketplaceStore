@@ -65,7 +65,13 @@ class CartController extends Controller
 
     public function showCheckoutPage()
     {
-        return view('pages.app.cart.checkout');
+        if (Auth::check()) {
+            return view('pages.app.cart.checkout');
+        }
+
+        Session::put('checkoutRoute', 'cart.checkout');
+
+        return redirect()->route('client.login');
     }
 
     public function showResultPage()
@@ -127,7 +133,7 @@ class CartController extends Controller
         return response()->json([ 'freteCalculado' => $frete ]);
     }
 
-    public function checkout(Request $request)
+    public function createSessionId(Request $request)
     {
         $data['token'] ='4D97A178277542CAAB150D1096002DF1';
         $emailPagseguro = 'vendas@vipx.com.br';
@@ -177,7 +183,7 @@ class CartController extends Controller
 
         $response = [ 'data' => $data];
 
-        return response()->json($request);
+        return response()->json($response);
     }
 
     public function addToCart(Request $request)

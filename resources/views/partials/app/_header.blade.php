@@ -4,12 +4,13 @@
 
 <!--logo-->
 <style type="text/css">
+
     #logoMK {
         display: inline-block;
         margin-left: 10%;
     }
     .maktub {
-        font-family: "Jonah_DEMO"!important;
+        font-family: "Jonah_DEMO" !important;
         font-weight: bold;
         font-stretch: expanded;
         font-size: 1.8em !important;
@@ -21,7 +22,7 @@
     }
     .beauty {
         margin: -15% 0 0 58%;
-        font-family: "Jonah_DEMO"!important;
+        font-family: "Jonah_DEMO" !important;
         font-size: 1.5em !important;
         color: rgb(255, 255, 255);
         -moz-transform: matrix( 0.78480609431106,0,0,0.78480609431106,0,0);

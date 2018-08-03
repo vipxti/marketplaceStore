@@ -2,6 +2,15 @@
 
 @section('content')
 
+    <style>
+    
+        @font-face {
+            font-family: Jonah_DEMO;
+            src: url('{{ public_path('fonts/jonahDemo.ttf') }}');
+        }
+    
+    </style>
+
     <link rel="stylesheet" href="{{asset('css/app/estiloInstagram.css')}}">
     <link rel="stylesheet" href="{{asset('css/app/magnific.css')}}">
 
