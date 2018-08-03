@@ -49,11 +49,11 @@
         </div>
         <div class="container-fluid">
             <a href="{{ route('index')}}" class="navbar-brand">
-                <div id="logoMK">
+                {{--<div id="logoMK">
                     <div class="maktub">MAKTUB</div>
                     <div class="beauty">BEAUTY</div>
-                </div>
-            {{--<img src="{{asset('img/app/core-img/logo.png')}}">--}}
+                </div>--}}
+            <img src="{{asset('img/app/core-img/logo.png')}}">
             </a>
             <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
                     aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">
