@@ -54,7 +54,8 @@ mix.scripts([
     'public/js/app/nouislider.min.js',
     'public/js/app/jquery.countdownbar.min.js',
     'public/js/app/front.js',
-    'public/js/app/web-animations.min.js'
+    'public/js/app/web-animations.min.js',
+    'public/js/app/pagseguro.directpayment.js'
 ],  'public/js/app-js.js');
 
 //Compiled styles for admin page

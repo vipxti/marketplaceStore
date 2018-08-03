@@ -5,6 +5,7 @@
     <!-- ****** Cart Area Start ****** -->
     <br><br><br>
     <div class="cart_area clearfix">
+
         <div class="container">
 
            {{-- <div class="row">
@@ -52,8 +53,7 @@
                                         <th>Excluir</th>
                                     </tr>
                                 </thead>
-                                
-
+                            
                                 <tbody>
 
                                     <input type="hidden" name="qtdItensCarrinho" value="{{ Session::get('qtCartItems') }}">
@@ -141,69 +141,69 @@
                     </div>
                 </div>
 
+                <p>&nbsp;</p>
+
                 <div class="row">
+
+                    <div class="col-12 col-md-5" style="border: 1px solid gold;">
+                    
+                        <div class="cart-page-heading">
+                            <br>
+                            <h5>Qual envio prefere?</h5>
+                            <p>Escolha uma Opção</p>
+                            <p>&nbsp;</p>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input" checked>
+                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                    <span id="pac">&nbsp;Normal</span>
+                                </label>
+                            </div>
+                            <div class="custom-control custom-radio">   
+                                <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
+                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                    <span id="sedex">&nbsp;Expresso</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
 
                     <p>&nbsp;</p>
 
-                    <div class="col-12">
-                    
-                        <div class="cart-page-heading">
-                            <h5>Qual envio prefere?</h5>
-                            <p>Escolha uma Opção</p>
-                        </div>
+                    <div class="col-12 offset-md-1 col-md-5 d-flex text-justify" style="border: 1px solid gold;">
+
+                        <ul class="cart-total-chart w-100">
+
+                            <li>
+                                <span>
+                                    <strong>Subtotal</strong>
+                                </span>
+                                
+                                <span id="precoSubTotal">
+                                    <strong>R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}</strong>
+                                </span>
+                            </li>
+
+                        </ul>
 
                     </div>
 
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input" checked>
-                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
-                                <span id="pac">&nbsp;Normal</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="custom-control custom-radio">   
-                            <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
-                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                <span id="sedex">&nbsp;Expresso</span>
-                            </label>
-                        </div>
-                    </div>
                 </div>
 
                 <p>&nbsp;</p>
 
                 <div class="row">
-                    <div class="col-10 col-sm-10">
-                        <p style="font-size: 16px"><i style="color: red">Obs:</i> O valor do frete será calculado pelo PagSeguro</p>
-                    </div> 
+                    <div class="col-12 col-md-11 text-right">
+                        <a href="{{ route('cart.checkout') }}" class="btn btn-template w-25">Checkout</a>
+                    </div>
                 </div>
 
                 <div class="row">
+
                     <div class="col-12">
                     
-                        <div class="cart-total-area mt-30">
+                        <div class="cart-total-area mt-30 d-flex justify-content-right">
                         
-                            <ul class="cart-total-chart">
-                                <li>
-                                    <span>
-                                        <strong>Subtotal</strong>
-                                    </span>
-                                    
-                                    <span id="precoSubTotal">
-                                        <strong>R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}</strong>
-                                    </span>
-                                </li>
-
-                            </ul>
-
                             <form id="formComprar">
                                 {{ csrf_field() }}
 

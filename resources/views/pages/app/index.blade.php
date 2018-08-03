@@ -13,11 +13,11 @@
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
-                            <h1 style="color: #d59431">Blush Vult</h1>
+                            <h1 style="color: #d59431;font-size: 2.0rem">Make Up</h1>
                             <ul class="lead">
-                                <li><strong>Vult Blush Compacto</strong> Tradicional</li>
-                                <li><strong>Cor</strong> 04</li>
-                                <li><strong>R$ 16,99</strong> Imperdível</li>
+                                <li><strong>Vult</strong></li>
+                                <li><strong>Pó</strong> Compacto</li>
+                                <li><strong>R$ 21,99</strong> Imperdível</li>
                             </ul>
                             <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
                         </div>
@@ -30,11 +30,11 @@
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
-                            <h1 style="color: #d59431">Batom Vult</h1>
+                            <h1 style="color: #d59431; font-size: 2.0rem">Feminices</h1>
                             <ul class="lead">
-                                <li><strong>Vult Batom Matte</strong> Rosa Queimado</li>
-                                <li><strong>Cor</strong> 07</li>
-                                <li><strong>R$ 15,99</strong> Imperdível</li>
+                                <li><strong>Bruna</strong> Tavares</li>
+                                <li><strong>Base</strong> Cremosa</li>
+                                <li><strong>R$ 34,99</strong> Imperdível</li>
                             </ul>
                             <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
                         </div>
@@ -47,11 +47,11 @@
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
-                            <h1 style="color: #d59431">Batom Vult</h1>
+                            <h1 style="color: #d59431; font-size: 2.0rem">Inspiration</h1>
                             <ul class="lead">
-                                <li><strong>Vult Batom Matte</strong> Nude</li>
-                                <li><strong>Cor</strong> 27</li>
-                                <li><strong>R$ 12,99</strong> Imperdível</li>
+                                <li><strong>Ruby</strong> Rose</li>
+                                <li><strong>Paleta de</strong> Sombra</li>
+                                <li><strong>R$ 109,99</strong> Imperdível</li>
                             </ul>
                             <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
                         </div>
@@ -133,7 +133,7 @@
                         <h2>Oferta Especial <span class="karl-level">Hot</span></h2>
                         <p>Catharine Hill Sombras Variadas 1017 - Paleta De Sombras Com 30 Cores Diferentes De Acabamentos Opacos E Cintilantes.</p>
                         <div class="offer-product-price">
-                            <h3><span class="regular-price">R$126,99</span> R$106,00</h3>
+                            <h3><span class="regular-price">R$126,99</span> R$106,99</h3>
                         </div>
                         <a href="{{ route('products.details', 'catharine-hill-paleta-de-sombras-variadas-30-cores') }}" target="_blank" class="btn btn-template wide shop-now">Comprar Agora</a>
                     </div>
