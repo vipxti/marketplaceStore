@@ -126,6 +126,7 @@ Route::prefix('page')->group(function () {
         Route::post('/getvariationdata', 'ProductController@getVariationData')->name('product.variation.data');
     });
 
+    //Carrinho
     Route::prefix('cart')->group(function () {
         Route::get('/', 'CartController@showCartPage')->name('cart.page');
         Route::post('/', 'CartController@addToCart')->name('cart.buy');
@@ -134,19 +135,20 @@ Route::prefix('page')->group(function () {
         Route::post('/clear', 'CartController@clearCart')->name('cart.clear');
         Route::get('/minus/{idx}', 'CartController@removeQuantityCart')->name('minus.quantity');
         Route::get('/plus/{idx}', 'CartController@addQuantityCart')->name('plus.quantity');
-        Route::get('/checkout', 'CartController@showCheckoutPage')->name('cart.checkout');
-        Route::post('/checkout', 'CartController@createSessionId')->name('cart.checkout.session.id');
-        Route::get('/checkout/details', 'CartController@showOrderDetailsPage')->name('cart.order.details');
-        Route::post('/checkout/creditcard', 'CartController@generateCreditCardToken')->name('cart.checkout.creditcard.token');
-        Route::get('/result', 'CartController@showResultPage')->name('cart.result.page');
-        Route::post('/pagseguro/redirect', 'CartController@finalizarCompra')->name('finalizar.compra');
+        Route::post('/shipping', 'CartController@calculateShipping')->name('shipping.calculate');
+        Route::post('/shipping/data', 'CartController@getShippingData')->name('shipping.data');
     });
 
-    //Compra
-    Route::get('/checkout', 'PageController@showCheckout')->name('checkout.page');
-    Route::get('/endereco', 'PageController@showEndereco')->name('endereco.page');
-    Route::get('/cartao', 'PageController@showCartao')->name('cartao.page');
-    Route::get('/boleto', 'PageController@showBoleto')->name('boleto.page');
+    //Pagamento
+    Route::prefix('payment')->group(function () {
+        Route::post('/checkout', 'PaymentController@createSessionId')->name('payment.checkout.session.id');
+        Route::get('/checkout', 'PaymentController@showCheckoutPage')->name('payment.checkout');
+        Route::get('/checkout/details/ticket', 'PaymentController@showOrderDetailsPage')->name('payment.order.ticket.details');
+        Route::get('/checkout/details/creditcard', 'PaymentController@showOrderDetailsPage')->name('payment.order.creditcard.details');
+        Route::post('/creditcard/saveinfo', 'PaymentController@saveCreditCardInformation')->name('payment.creditcard.info');
+        Route::post('/ticket', 'PaymentController@ticketPayment')->name('payment.ticket');
+        Route::post('/creditcard', 'PaymentController@creditCardPayment')->name('payment.creditcard');
+    });
 
     //Cliente
     Route::prefix('client')->group(function () {

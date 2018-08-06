@@ -7,9 +7,8 @@ use App\Category;
 use Cagartner\CorreiosConsulta\CorreiosConsulta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cookie;
 use App\Product;
-use App\Client;
+use App\Client as Cli;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -19,26 +18,9 @@ class CartController extends Controller
     public function showCartPage()
     {
         if (Auth::check()) {
-            $telefoneCliente = Client::join('telefone', 'cliente.cd_telefone', 'telefone.cd_telefone')->select('telefone.cd_celular1')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get()->toArray();
-
-            $telefone = null;
-
-            $enderecoCliente = Client::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->
-            join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->
-            join('bairro', 'bairro.cd_bairro', 'endereco.cd_bairro')->
-            join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->
-            join('uf', 'uf.cd_uf', 'cidade.cd_uf')->
-            join('pais', 'pais.cd_pais', 'uf.cd_pais')->
-            select('endereco.cd_cep', 'endereco.ds_endereco', 'cliente_endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'pais.nm_pais')->
-            where('cliente_endereco.ic_principal', '=', 1)->
-            where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get();
+            $cep = Cli::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->select('endereco.cd_cep')->where('cliente_endereco.ic_principal', '=', 1)->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get()->toArray();
         } else {
-            $telefoneCliente = null;
-            $enderecoCliente = null;
-
-            if (!(Session::has('cartRoute'))) {
-                Session::put('cartRoute', 'cart.page');
-            }
+            $cep = null;
         }
 
         $menuNav =  Menu::all();
@@ -60,28 +42,60 @@ class CartController extends Controller
                 ->get();
         }
 
-        return view('pages.app.cart.index', compact('telefone', 'enderecoCliente', 'menuNav', 'categoriaSubCat'));
+        return view('pages.app.cart.index', compact('cep', 'menuNav', 'categoriaSubCat'));
     }
 
-    public function showCheckoutPage()
+    public function calculateShipping(Request $request)
     {
-        if (Auth::check()) {
-            return view('pages.app.cart.checkout');
+        if (Session::has('shippingOptions')) {
+            Session::forget('shippingOptions');
         }
 
-        Session::put('checkoutRoute', 'cart.checkout');
+        Session::put('shippingOptions', []);
 
-        return redirect()->route('client.login');
-    }
+        $url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
+        $url .= 'nCdEmpresa=';
+        $url .= '&sDsSenha=';
+        $url .= '&nCdServico=04510,04014'; //04510 - PAC / 04014 - Sedex
+        $url .= '&sCepOrigem=11310061';
+        $url .= '&sCepDestino=11705740';
+        $url .= '&nVlPeso=2';
+        $url .= '&nCdFormato=1';
+        $url .= '&nVlComprimento=20';
+        $url .= '&nVlAltura=6';
+        $url .= '&nVlLargura=20';
+        $url .= '&nVlDiametro=0';
+        $url .= '&sCdMaoPropria=n';
+        $url .= '&nVlValorDeclarado=100';
+        $url .= '&sCdAvisoRecebimento=n';
+        $url .= '&StrRetorno=xml';
 
-    public function showOrderDetailsPage()
-    {
-        return view('pages.app.cart.orderdetails');
-    }
+        $xml = simplexml_load_file($url);
 
-    public function showResultPage()
-    {
-        return view('pages.app.cart.result');
+        $fretes['pac'] = [
+            'valor' => $xml->cServico[0]->Valor,
+            'prazo' => (int) $xml->cServico[0]->PrazoEntrega
+        ];
+
+        $fretes['sedex'] = [
+            'valor' => $xml->cServico[1]->Valor,
+            'prazo' => (int) $xml->cServico[1]->PrazoEntrega
+        ];
+
+        $f = [
+            'valorPac' => strval($xml->cServico[0]->Valor),
+            'prazoPac' => ((int) $xml->cServico[0]->PrazoEntrega) + 3,
+            'valorSedex' => strval($xml->cServico[1]->Valor),
+            'prazoSedex' => ((int) $xml->cServico[1]->PrazoEntrega) + 3
+        ];
+
+        Session::push('shippingOptions', $f);
+
+        Session::save();
+
+        $response = $fretes;
+
+        return response()->json([ 'fretes' => $fretes ]);
     }
 
     public function calcFrete($cep, $altura, $largura, $peso, $comprimento)
@@ -127,6 +141,35 @@ class CartController extends Controller
         return response()->json([ 'freteCalculado' => $frete ]);
     }
 
+    public function getShippingData(Request $request)
+    {
+        $subTotal = Session::get('subtotalPrice');
+
+        if (Session::has('shippingData')) {
+            Session::forget('shippingData');
+        }
+
+        $total = $subTotal + $request->shippingPrice;
+
+        Session::put('shippingData', []);
+
+        $shippingData = [
+            'tipo' => $request->shippingType,
+            'valor' => $request->shippingPrice,
+            'precoTotal' => strval($total)
+        ];
+
+        Session::push('shippingData', $shippingData);
+
+        session([ 'totalPrice' => $total ]);
+
+        Session::save();
+
+        $response = $shippingData;
+
+        return response()->json([ 'shippingData' => $response ]);
+    }
+
     public function calcFreteOffline($cep, $peso)
     {
         //$e = DB::select('CALL buscarFrete('.$cep.','.$peso.')');
@@ -136,59 +179,6 @@ class CartController extends Controller
         ]);
 
         return response()->json([ 'freteCalculado' => $frete ]);
-    }
-
-    public function createSessionId(Request $request)
-    {
-        $data['token'] ='4D97A178277542CAAB150D1096002DF1';
-        $emailPagseguro = 'vendas@vipx.com.br';
-        
-        $data = http_build_query($data);
-        $url = 'https://ws.pagseguro.uol.com.br/v2/sessions';
-        
-        $curl = curl_init();
-
-        $headers = array('Content-Type: application/x-www-form-urlencoded; charset=ISO-8859-1');
-
-        curl_setopt($curl, CURLOPT_URL, $url . '?email=' . $emailPagseguro);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        //curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        $xml = curl_exec($curl);
-
-        curl_close($curl);
-
-        //dd($xml);
-
-        $xml = simplexml_load_string($xml);
-        $idSessao = $xml->id;
-        
-        $response = [ 'idSessao' => $idSessao];
-
-        return response()->json($response);
-    }
-
-    public function ticketPayment(Request $request)
-    {
-        # code...
-    }
-
-    public function generateCreditCardToken(Request $request)
-    {
-        $data = [
-            'cardNumber' => $request->card_number,
-            'cvv' => $request->cvv,
-            'expirationMonth' => $request->months,
-            'expirationYear' => $request->years
-        ];
-
-        $response = [ 'data' => $data];
-
-        return response()->json($response);
     }
 
     public function addToCart(Request $request)
@@ -791,25 +781,6 @@ class CartController extends Controller
             ]);
     }
 
-    public function addQuantityFromDetails(Request $request)
-    {
-        if (Session::has('qtDetails')) {
-            $qtdAnterior = Session::get('qtDetails');
-        } else {
-            $qtdAnterior = 0;
-        }
-
-        $qtdAnterior += $request->qtd;
-
-        Session::put('qtDetails', $qtdAnterior);
-
-        Session::save();
-
-        return response([
-            'qtd' => $qtdAnterior
-        ]);
-    }
-
     public function removeQuantityCart($idx)
     {
         $carrinho = Session::get('cart');
@@ -876,17 +847,6 @@ class CartController extends Controller
             'qtProdEstoque' => $carrinho[$idx]['qtdProdutoEstoque'],
             'subTotal' => Session::get('subtotalPrice'),
             'total' => Session::get('totalPrice')
-        ]);
-    }
-
-    public function removeQuantityFromDetails(Request $request)
-    {
-        $qtd = $request->qtd;
-
-        $qtd--;
-
-        return response([
-            'qtd' => $qtd
         ]);
     }
 }

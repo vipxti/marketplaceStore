@@ -146,43 +146,130 @@
                 <div class="row">
 
                     <div class="col-12 col-md-5" style="border: 1px solid gold;">
-                    
+
                         <div class="cart-page-heading">
-                            <br>
-                            <h5>Qual envio prefere?</h5>
-                            <p>Escolha uma Opção</p>
+
                             <p>&nbsp;</p>
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio2" name="customRadio" value="1" class="custom-control-input" checked>
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
-                                    <span id="pac">&nbsp;Normal</span>
-                                </label>
-                            </div>
-                            <div class="custom-control custom-radio">   
-                                <input type="radio" id="customRadio1" name="customRadio" value="2" class="custom-control-input" >
-                                <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                    <span id="sedex">&nbsp;Expresso</span>
-                                </label>
-                            </div>
+
+                            <p class="h2 text-justify">Digite seu CEP</p>
+
+                            <p>&nbsp;</p>
+
+                            <form>
+
+                                <label for="cep">CEP:&nbsp;</label>
+
+                                @if (Auth::check())
+
+                                    <input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">
+                                    <input type="text" name="cep" id="cep" value="{{ $cep[0]['cd_cep'] }}">
+
+                                @else
+
+                                    <input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">
+                                    <input type="text" name="cep" id="cep" value="">
+                                    
+                                @endif
+
+                                <button id="calculateShipping" type="button"><i class="fa fa-search"></i></button>
+
+                            </form>
+                            
+                            
                         </div>
 
                     </div>
 
                     <p>&nbsp;</p>
 
-                    <div class="col-12 offset-md-1 col-md-5 d-flex text-justify" style="border: 1px solid gold;">
+                    <div class="col-12 offset-md-1 col-md-5 d-flex text-justify d-none" style="border: 1px solid gold;">
 
-                        <ul class="cart-total-chart w-100">
+                        <ul class="cart-page-heading w-100">
 
-                            <li>
-                                <span>
-                                    <strong>Subtotal</strong>
-                                </span>
+                            <h5>Qual envio prefere?</h5>
+                            <p>Escolha uma Opção</p>
+
+                            @if (Session::has('shippingData'))
+
+                                @if (Session::get('shippingData')[0]['tipo'] == 1)
+
+                                    <p>&nbsp;</p>
+                                    <div class="custom-control custom-radio">
+
+                                        <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input" checked>
+                                        <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+
+                                            @if (Session::get('shippingOptions')[0]['prazoPac'] == 1)
+
+                                                <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac">R$ {{ Session::get('shippingOptions')[0]['valorPac'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac">{{ Session::get('shippingOptions')[0]['prazoPac'] . ' dia útil ' }}</span>
+
+                                            @else
+
+                                                <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac">R$ {{ Session::get('shippingOptions')[0]['valorPac'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac">{{ Session::get('shippingOptions')[0]['prazoPac'] . ' dias úteis ' }}</span>
+                                                
+                                            @endif
+
+                                        </label>
+                                        
+                                    </div>
+
+                                    <div class="custom-control custom-radio">
+
+                                        <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input">
+                                        <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+
+                                            @if (Session::get('shippingOptions')[0]['prazoSedex'] == 1)
+
+                                                <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dia útil ' }}</span>
+
+                                            @else
+
+                                                <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
+                                                
+                                            @endif
+
+                                        </label>
+
+                                    </div>
+                                    
+                                @else
+
+                                    <p>&nbsp;</p>
+                                    <div class="custom-control custom-radio">
+
+                                        <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input">
+                                        <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                            <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
+                                        </label>
+                                        
+                                    </div>
+                                    <div class="custom-control custom-radio">   
+                                        <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input" checked>
+                                        <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                            <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
+                                        </label>
+                                    </div>
+                                    
+                                @endif
+    
+                            @else
+
+                                <p>&nbsp;</p>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input" disabled>
+                                    <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                        <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
+                                    </label>
+                                    
+                                </div>
+                                <div class="custom-control custom-radio">   
+                                    <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input" disabled>
+                                    <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                        <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
+                                    </label>
+                                </div>
                                 
-                                <span id="precoSubTotal">
-                                    <strong>R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}</strong>
-                                </span>
-                            </li>
+                            @endif
 
                         </ul>
 
@@ -193,77 +280,67 @@
                 <p>&nbsp;</p>
 
                 <div class="row">
-                    <div class="col-12 col-md-11 text-right">
-                        <a href="{{ route('cart.checkout') }}" class="btn btn-template w-25">Concluir compra</a>
-                    </div>
-                </div>
 
-                <div class="row">
+                    <div class="col-12 offset-md-6 col-md-5" style="border: 1px solid gold;">
 
-                    <div class="col-12">
-                    
-                        <div class="cart-total-area mt-30 d-flex justify-content-right">
-                        
-                            <form id="formComprar">
-                                {{ csrf_field() }}
+                        <ul class="cart-total-chart w-100">
 
-                                @foreach(Session::get('cart') as $key => $produto)
+                            <li>
+                                <span>Subtotal</span>
+                                
+                                <span id="precoSubTotal">
+                                    R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}
+                                </span>
+                            </li>
 
-                                    <!-- array dos produtos -->
-                                    <input type="hidden" name="id[]" value="{{ ($key + 1) }}">
-                                    <input type="hidden" id="qtdProd" name="quantidade[]" value="{{ $produto['qtdIndividual'] }}">
-                                    <input type="hidden" name="descricao[]" value="{{ $produto['nomeProduto'] }}">
-                                    <input type="hidden" name="valor[]" value="{{ $produto['valorProduto'] }}">
-                                    <input type="hidden" name="peso[]" value="{{ $produto['pesoTotalProduto'] }}">
-                                    <input type="hidden" name="largura[]" value="{{ $produto['larguraTotalProduto'] }}">
-                                    <input type="hidden" name="altura[]" value="{{ $produto['alturaTotalProduto'] }}">
-                                    <input type="hidden" name="comprimento[]" value="{{ $produto['comprimentoTotalProduto'] }}">
-                                        
-                                @endforeach
+                            <li>
 
-                                {{-- <input type="hidden" name="fretecal" value=""> --}}
-                                {{-- <input id="freteForm" type="hidden" name="freteval" value=""> --}}
-                                <input id="tipoServForm" type="hidden" name="tipoServ" value="1">
+                                <span>Frete</span>
 
-                                @if(Auth::check())
+                                @if (Session::has('shippingData'))
 
-                                    <input type="hidden" name="nome" value="{{ Auth::user()->nm_cliente }}">
-                                    <input type="hidden" name="email_cliente" value="{{ Auth::user()->email }}">
-                                    <input type="hidden" name="numero_cpf" value="{{ Auth::user()->cd_cpf_cnpj }}">
-                                    <input type="hidden" name="telefone" value="{{ $telefone }}">
-
-                                    @if (count($enderecoCliente) == 0)
-
-                                        <a href="{{ route('client.dashboard') }}"><button type="button" id="fazerlogin" class="btn btn-template">É preciso cadastrar um endereço para finalizar a compra</button></a>
-
-                                    @else
-
-                                        <input type="hidden" name="cep" value="{{ $enderecoCliente[0]['cd_cep'] }}">
-                                        <input type="hidden" name="endereco" value="{{ $enderecoCliente[0]['ds_endereco'] }}">
-                                        <input type="hidden" name="complemento_endereco" value="{{ $enderecoCliente[0]['ds_complemento'] }}">
-                                        <input type="hidden" name="numero_endereco" value="{{ $enderecoCliente[0]['cd_numero_endereco'] }}">
-                                        <input type="hidden" name="cidade" value="{{ $enderecoCliente[0]['nm_cidade'] }}">
-                                        <input type="hidden" name="bairro" value="{{ $enderecoCliente[0]['nm_bairro'] }}">
-                                        <input type="hidden" name="estado" value="{{ $enderecoCliente[0]['sg_uf'] }}">
-                                        <input type="hidden" name="pais" value="{{ $enderecoCliente[0]['nm_pais'] }}">
-
-                                        <button type="button" id="finalizar" class="btn btn-template">Finalizar Compra</button>
-                                        
-                                    @endif
-
+                                    <span id="precoFrete">
+                                        R$ {{ number_format(Session::get('shippingData')[0]['valor'], 2, ',', '.') }}
+                                    </span>
+                                    
                                 @else
 
-                                    <a href="{{ route('client.login') }}"><button type="button" id="fazerlogin" class="btn btn-template">Faça login para finalizar sua compra</button></a>
-
+                                    <span id="precoFrete">
+                                        R$ ---
+                                    </span>
+                                    
                                 @endif
+                                
+                            </li>
 
-                                {{--<input type="hidden" name="telefone" value="{{ $cliente[0]->fk_cd_telefone }}">
-                                <input type="hidden" name="data_nascimento" value="{{ $cliente[0]->dt_nascimento }}">--}}
-    
-                            </form>
+                            <li>
+
+                                <span><strong>Valor total</strong></span>
+
+                                <input type="hidden"  id="valorTotal" name="valorTotal" value="{{ Session::get('totalPrice') }}">
+                                
+                                <span id="precoTotal">
+                                    <strong>R$ {{ number_format(Session::get('totalPrice'), 2, ',', '.') }}</strong>
+                                </span>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <p>&nbsp;</p>
+
+                    <div class="col-12 offset-md-9 col-md-7">
+
+                        <div class="cart-total-area mt-30">
+
+                            <a href="{{ route('payment.checkout') }}" class="btn btn-template w-25">Concluir compra</a>
 
                         </div>
+                        
                     </div>
+
                 </div>
 
             @endif
@@ -272,11 +349,16 @@
     </div>
     
     <br><br><br><br>
-    <!-- ****** Area final do carrinho ****** -->
-
-    <script src="{{ asset('js/app/pagseguro.lightbox.js') }}"></script>
 
     <script>
+
+        let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $(function () {
+            
+            
+
+        })
 
         //Aumenta a quantidade de cada item no carrinho
         $('.qty-plus').click(function(e){
@@ -354,46 +436,106 @@
 
         });
 
-        $('#customRadio2').click(function (e) {
-            var tipoServ = $('#customRadio2').val();
-            
-            $('#tipoServForm').val(tipoServ);
-        });
-
-        $('#customRadio1').click(function (e) {
-            var tipoServ = $('#customRadio1').val();
-            
-            $('#tipoServForm').val(tipoServ);
-        });
-
-        //ABRE O LIGHTBOX DA PAGSEGURO
-        $('#finalizar').click(function (e) {
-            //e.preventDefault();
-
-            var cdCompra = null;
+        $('#calculateShipping').click(function () {
 
             $.ajax({
-                //url: '/pages/calculaFrete/' + objF,
-                url: '{{ url('page/pagseguro/redirect') }}',
+                url: '{{ route('shipping.calculate') }}',
                 type: 'POST',
-                data: $("#formComprar").serialize(),
-                success: function (codigoCompra) {
-
-                    $.each(codigoCompra, function () {
-                        var key = Object.keys(this)[0];
-                        cdCompra = this[key];
-                    });
-
-                    console.log(cdCompra);
-
-                    PagSeguroLightbox(cdCompra);
+                data: {
+                    _token: CSRF_TOKEN,
+                    cep: $('#cep').val(),
+                    width: $('#larguraTotal').val(),
+                    height: $('#alturaTotal').val(),
+                    length: $('#comprimentoTotal').val(),
+                    weight: $('#pesoTotal').val(),
+                    price: $('#valorTotal').val()
                 },
-                error: function () {
-                    console.log('erro');
-                }
+                success: function (values) {
 
-            });
+                    $('#customRadio1').removeAttr('disabled')
+                    $('#customRadio2').removeAttr('disabled')
+
+                    let prazoPac = values.fretes.pac.prazo + 3;
+                    let prazoSedex = values.fretes.sedex.prazo + 3;
+
+                    if (prazoPac == 1) {
+                        
+                        $('#prazoPac').html(prazoPac + ' dia útil');
+
+                    } else {
+
+                        $('#prazoPac').html(prazoPac + ' dias úteis');
+
+                    }
+
+                    $('#precoPac').html('R$ ' + values.fretes.pac.valor[0]);
+
+                    if (prazoSedex == 1) {
+                        
+                        $('#prazoSedex').html(prazoSedex + ' dia útil');
+
+                    } else {
+
+                        $('#prazoSedex').html(prazoSedex + ' dias úteis');
+
+                    }
+
+                    $('#precoSedex').html('R$ ' + values.fretes.sedex.valor[0]);
+
+                }
+            })
+
+        })
+
+        $('#customRadio1').click(function () {
+
+            let shippingPrice = $('#precoPac').html().replace('R$ ', '').replace(',', '.');
+            let days = $('#prazoPac').html().substring(0, 1);                      
+
+            $.ajax({
+                url: '{{ route('shipping.data') }}',
+                type: 'POST',
+                data: {
+                    _token: CSRF_TOKEN,
+                    shippingType: $(this).val(),
+                    shippingPrice: shippingPrice,
+                    shippingDays: days,
+                    totalPrice: $('#valorTotal').val()
+                },
+                success: function (value) {
+
+                    $('#precoFrete').html('R$ ' + (value.shippingData.valor).replace('.', ','))
+                    $('#precoTotal').html('<strong>R$ ' + (value.shippingData.precoTotal).replace('.', ',') + '</strong>')
+
+                }
+            })
         });
+
+        $('#customRadio2').click(function () {
+
+            let shippingPrice = $('#precoSedex').html().replace('R$ ', '').replace(',', '.');
+            let days = $('#prazoSedex').html().substring(0, 1);
+
+            $.ajax({
+                url: '{{ route('shipping.data') }}',
+                type: 'POST',
+                data: {
+                    _token: CSRF_TOKEN,
+                    shippingType: $(this).val(),
+                    shippingPrice: shippingPrice,
+                    shippingDays: days,
+                    totalPrice: $('#valorTotal').val()
+                },
+                success: function (value) {
+
+                    $('#precoFrete').html('R$ ' + (value.shippingData.valor).replace('.', ','))
+                    $('#precoTotal').html('<strong>R$ ' + (value.shippingData.precoTotal).replace('.', ',') + '</strong>')
+
+                }
+            })
+
+        });
+
     </script>
 
 @stop
