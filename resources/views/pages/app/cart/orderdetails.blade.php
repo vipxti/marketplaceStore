@@ -109,19 +109,32 @@
                                         </tr>
                                         
                                     @endif
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="2"><strong>TOTAL</strong></td>
+                                        <td class="total_price align-middle">
+                                            <span id="valorTotal">
+                                                <strong>R$ {{ number_format($creditCardInfo[0]['totalAmount'], 2, ',', '.') }}</strong>
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                @else
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="2"><strong>TOTAL</strong></td>
+                                        <td class="total_price align-middle">
+                                            <span id="valorTotal">
+                                                <strong>R$ {{ number_format( ($produto['valorTotalProduto'] + $shippingData[0]['valor']), 2, ',', '.') }}</strong>
+                                            </span>
+                                        </td>
+
+                                    </tr>
  
                                 @endif
-
-                                <tr>
-
-                                    <td class="text-right" colspan="2"><strong>TOTAL</strong></td>
-                                    <td class="total_price align-middle">
-                                        <span id="valorTotal">
-                                            <strong>R$ {{ number_format($creditCardInfo[0]['totalAmount'], 2, ',', '.') }}</strong>
-                                        </span>
-                                    </td>
-
-                                </tr>
 
                         </tbody>
 

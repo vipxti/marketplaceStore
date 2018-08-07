@@ -181,6 +181,7 @@ class PaymentController extends Controller
             'codigo' => strval($xml->code),
             'dataCompra' => strval($xml->date),
             'tipoPagamento' => 'boleto',
+            'statusCompra' => strval($xml->status),
             'linkBoleto' => strval($xml->paymentLink),
             'valorTotal' => strval($xml->grossAmount),
             'valorFrete' => strval($xml->shipping->cost)
@@ -190,12 +191,6 @@ class PaymentController extends Controller
             $orderData['tipoFrete'] = 'Pac';
         } else {
             $orderData['tipoFrete'] = 'Sedex';
-        }
-
-        if (strval($xml->status) == '1') {
-            $orderData['statusCompra'] = 'Ok';
-        } else {
-            $orderData['statusCompra'] = 'Erro';
         }
 
         Session::push('orderData', $orderData);
