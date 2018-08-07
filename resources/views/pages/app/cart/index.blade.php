@@ -289,7 +289,7 @@
                                 <span>Subtotal</span>
                                 
                                 <span id="precoSubTotal">
-                                    R$ {{ number_format(Session::get('subtotalPrice'), 2, ',', '.') }}
+                                    R$ {{ number_format(strval(Session::get('subtotalPrice')), 2, ',', '.') }}
                                 </span>
                             </li>
 
@@ -300,7 +300,7 @@
                                 @if (Session::has('shippingData'))
 
                                     <span id="precoFrete">
-                                        R$ {{ number_format(Session::get('shippingData')[0]['valor'], 2, ',', '.') }}
+                                        R$ {{ number_format(strval(Session::get('shippingData')[0]['valor']), 2, ',', '.') }}
                                     </span>
                                     
                                 @else
@@ -320,7 +320,7 @@
                                 <input type="hidden"  id="valorTotal" name="valorTotal" value="{{ Session::get('totalPrice') }}">
                                 
                                 <span id="precoTotal">
-                                    <strong>R$ {{ number_format(Session::get('totalPrice'), 2, ',', '.') }}</strong>
+                                    <strong>R$ {{ number_format(strval(Session::get('totalPrice')), 2, ',', '.') }}</strong>
                                 </span>
 
                             </li>
@@ -504,8 +504,11 @@
                 },
                 success: function (value) {
 
-                    $('#precoFrete').html('R$ ' + (value.shippingData.valor).replace('.', ','))
-                    $('#precoTotal').html('<strong>R$ ' + (value.shippingData.precoTotal).replace('.', ',') + '</strong>')
+                    let precoTotal = parseFloat(value.shippingData.precoTotal).toFixed(2);
+                    let precoFrete = parseFloat(value.shippingData.valor).toFixed(2);
+                    
+                    $('#precoFrete').html('R$ ' + precoFrete.replace('.', ','))
+                    $('#precoTotal').html('<strong>R$ ' + precoTotal.replace('.', ',') + '</strong>')
 
                 }
             })
@@ -528,8 +531,11 @@
                 },
                 success: function (value) {
 
-                    $('#precoFrete').html('R$ ' + (value.shippingData.valor).replace('.', ','))
-                    $('#precoTotal').html('<strong>R$ ' + (value.shippingData.precoTotal).replace('.', ',') + '</strong>')
+                    let precoTotal = parseFloat(value.shippingData.precoTotal).toFixed(2);
+                    let precoFrete = parseFloat(value.shippingData.valor).toFixed(2);
+
+                    $('#precoFrete').html('R$ ' + precoFrete.replace('.', ','))
+                    $('#precoTotal').html('<strong>R$ ' + precoTotal.replace('.', ',') + '</strong>')
 
                 }
             })

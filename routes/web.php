@@ -148,6 +148,7 @@ Route::prefix('page')->group(function () {
         Route::post('/creditcard/saveinfo', 'PaymentController@saveCreditCardInformation')->name('payment.creditcard.info');
         Route::post('/ticket', 'PaymentController@ticketPayment')->name('payment.ticket');
         Route::post('/creditcard', 'PaymentController@creditCardPayment')->name('payment.creditcard');
+        Route::get('/result', 'PaymentController@showResultPage')->name('payment.result');
     });
 
     //Cliente

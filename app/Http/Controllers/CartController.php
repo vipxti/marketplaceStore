@@ -689,10 +689,6 @@ class CartController extends Controller
 
     public function clearCart(Request $request)
     {
-        foreach ($request->idx as $key => $sku) {
-            Session::forget('idx' . $sku);
-        }
-
         Session::forget('cart');
         Session::forget('qtCart');
         Session::forget('qtCartItens');
@@ -702,7 +698,11 @@ class CartController extends Controller
         Session::forget('totalLength');
         Session::forget('totalWeight');
 
+        Session::forget('orderData');
+        Session::forget('creditCardInfo');
+
         Session::forget('subtotalPrice');
+        Session::forget('totalPrice');
 
         return redirect()->route('cart.page')->with('success', 'Itens excluídos do carrinho');
     }
