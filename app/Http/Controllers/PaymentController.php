@@ -177,6 +177,8 @@ class PaymentController extends Controller
 
         $xml = simplexml_load_string($xml);
 
+        dd($xml);
+
         $orderData = [
             'codigo' => strval($xml->code),
             'dataCompra' => strval($xml->date),
@@ -351,5 +353,9 @@ class PaymentController extends Controller
     public function getClientData($codCliente)
     {
         return Cli::join('telefone', 'telefone.cd_telefone', 'cliente.cd_telefone')->join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'cliente_endereco.cd_endereco', 'endereco.cd_endereco')->join('bairro', 'endereco.cd_bairro', 'bairro.cd_bairro')->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->join('uf', 'cidade.cd_uf', 'uf.cd_uf')->select('cliente.nm_cliente', 'cliente.cd_cpf_cnpj', 'endereco.ds_endereco', 'cliente_endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'endereco.cd_cep', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'cliente.email', 'telefone.cd_celular1')->where('cliente.cd_cliente', '=', $codCliente)->where('cliente_endereco.ic_principal', '=', 1)->get()->toArray();
+    }
+
+    public function saveOrder()
+    {
     }
 }
