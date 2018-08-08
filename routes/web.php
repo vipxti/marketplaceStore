@@ -37,6 +37,7 @@ Route::prefix('admin')->group(function () {
     //Produto
     Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
     Route::post('/product/update', 'ProductController@updateProduct')->name('product.update');
+    Route::post('/blingproduct/update', 'ProductController@updateBlingProduct')->name('bling.product.update');
     Route::get('/product', 'ProductController@showProductAdminPage')->name('product.register')->middleware('auth:admin');
     Route::post('/blingproduct', 'ProductController@cadastrarProdutosBling')->name('bling.save.products');
     Route::post('/bling/skuproduct', 'ProductController@consultaSku')->name('bling.sku.products');
