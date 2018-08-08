@@ -243,7 +243,6 @@
 
                         },
                         error: function(response) {
-                            location.reload()
                             console.log(response);
                         }
                     });
@@ -275,9 +274,9 @@
                                 $.each(values, function (id, val) {                                                                 
                                     
                                     if (val.quantity > 3) {
-                                        $('#installmentsOptions').append('<option value="' + val.totalAmount + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' com juros (R$ '+ (val.totalAmount).toFixed(2).replace('.', ',') +')</option>');
+                                        $('#installmentsOptions').append('<option value="' + val.installmentAmount + '_' + val.totalAmount + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' com juros (R$ '+ (val.totalAmount).toFixed(2).replace('.', ',') +')</option>');
                                     } else {
-                                        $('#installmentsOptions').append('<option value="' + val.totalAmount + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' sem juros (R$ '+ (val.totalAmount).toFixed(2).replace('.', ',') +')</option>');
+                                        $('#installmentsOptions').append('<option value="' + val.installmentAmount + '_' + val.totalAmount + '">' + val.quantity + 'x de R$ ' + (val.installmentAmount).toFixed(2).replace('.', ',') + ' sem juros (R$ '+ (val.totalAmount).toFixed(2).replace('.', ',') +')</option>');
                                     }
 
                                 })
@@ -313,11 +312,11 @@
                             expirationMonth: $('#months option:selected').text(),
                             expirationYear: $('#years option:selected').text(),
                             quantity: 1,
-                            amount: $('#orderValue').val(),
+                            installmentAmount: $('#orderValue').val(),
+                            totalAmount: $('#orderValue').val(),
                             newToken: true
                         },
                         success: function () {
-                            $('#installmentsOptions option')[0].selected = true;
                         }
                     })
 
@@ -331,6 +330,11 @@
 
         $('#installmentsOptions').on('change', function () {
 
+            let installmentValues = ($('#installmentsOptions option:selected').val()).split('_');
+
+            let installmentAmount = installmentValues[0]
+            let totalAmount = installmentValues[1]
+
             $.ajax({
                 url: '{{ route('payment.creditcard.info') }}',
                 type: 'POST',
@@ -342,10 +346,10 @@
                     expirationMonth: $('#months option:selected').text(),
                     expirationYear: $('#years option:selected').text(),
                     quantity: ($('#installmentsOptions option:selected').index() + 1),
-                    amount: $('#installmentsOptions option:selected').val()
+                    installmentAmount: installmentAmount,
+                    totalAmount: totalAmount,
                 },
                 success: function () {
-                    console.log('Ok')
                 }
             })
             

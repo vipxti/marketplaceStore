@@ -29,15 +29,14 @@
                         <thead>
                             <tr>
                                 <th>Produto</th>
-                                <th>Valor</th>
                                 <th>Quantidade</th>
-                                <th>Total</th>
+                                <th>Valor</th>
                             </tr>
                         </thead>
                     
                         <tbody>
 
-                            @foreach(Session::get('cart') as $key => $produto)
+                            @foreach($cart as $key => $produto)
 
                                 <tr>
 
@@ -50,8 +49,6 @@
 
                                     </td>
 
-                                    <td class="price align-middle align-items-center"><span id="{{ 'precoProd' . $key }}">R$ {{ number_format($produto['valorProduto'], 2, ',', '.') }}</span></td>
-
                                     <td class="qty align-middle text-center">
                                         <div class="quantity">
 
@@ -60,8 +57,8 @@
                                         </div>
                                     </td>
 
-                                    <td class="total_price align-middle">
-                                        <span id="{{ 'valorTotal' . $key }}">
+                                    <td class="price align-middle align-items-center">
+                                        <span id="{{ 'precoTotalProd' . $key }}">
                                             R$ {{ number_format($produto['valorTotalProduto'], 2, ',', '.') }}
                                         </span>
                                     </td>
@@ -69,6 +66,75 @@
                                 </tr>
 
                             @endforeach
+
+                                <tr>
+
+                                    @if ($shippingData[0]['tipo'] == 1)
+
+                                        <td class="text-right" colspan="2">Frete escolhido: PAC</td>
+
+                                        <td class="price align-middle align-items-center">
+                                            <span id="precoFrete">
+                                                R$ {{ number_format(strval($shippingData[0]['valor']), 2, ',', '.') }}
+                                            </span>
+                                        </td>
+
+                                    @else
+
+                                        <td class="text-right" colspan="2">Frete escolhido: Sedex</td>
+
+                                        <td class="price align-middle align-items-center">
+                                            <span id="precoFrete">
+                                                R$ {{ number_format(strval($shippingData[0]['valor']), 2, ',', '.') }}
+                                            </span>
+                                        </td>
+                                        
+                                    @endif
+
+                                </tr>
+
+                                @if ($paymentType == 'cartao')
+
+                                    @if ($creditCardInfo[0]['installmentQuantity'] > 3)
+
+                                        <tr>
+
+                                            <td class="text-right" colspan="2">Juros parcelamento:</td>
+                                            <td class="price align-middle align-items-center">
+                                                <span id="precoJuros">
+                                                    R$ {{ number_format(($creditCardInfo[0]['totalAmount'] - Session::get('totalPrice')) , 2, ',', '.') }}
+                                                </span>
+                                            </td>
+
+                                        </tr>
+                                        
+                                    @endif
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="2"><strong>TOTAL</strong></td>
+                                        <td class="total_price align-middle">
+                                            <span id="valorTotal">
+                                                <strong>R$ {{ number_format($creditCardInfo[0]['totalAmount'], 2, ',', '.') }}</strong>
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                @else
+
+                                    <tr>
+
+                                        <td class="text-right" colspan="2"><strong>TOTAL</strong></td>
+                                        <td class="total_price align-middle">
+                                            <span id="valorTotal">
+                                                <strong>R$ {{ number_format( ($produto['valorTotalProduto'] + $shippingData[0]['valor']), 2, ',', '.') }}</strong>
+                                            </span>
+                                        </td>
+
+                                    </tr>
+ 
+                                @endif
 
                         </tbody>
 
@@ -88,7 +154,7 @@
 
                 <div class="col-12">
 
-                    <p>Forma de pagamento: Boleto</p>
+                    <p>Forma de pagamento: Boleto bancário</p>
 
                 </div>
                 
@@ -96,13 +162,13 @@
 
                 <div class="col-12">
 
-                    @if (Session::get('creditCardInfo')[0]['installmentQuantity'] > 3)
+                    @if ($creditCardInfo[0]['installmentQuantity'] > 3)
 
-                        <p>Forma de pagamento: {{ Session::get('creditCardInfo')[0]['installmentQuantity'] }}x com juros no cartão de crédito (R$&nbsp;{{ number_format(Session::get('creditCardInfo')[0]['installmentAmount'], 2, ',', '.') }})</p>
+                        <p>Forma de pagamento: {{ $creditCardInfo[0]['installmentQuantity'] }}x com juros no cartão de crédito (R$&nbsp;{{ number_format($creditCardInfo[0]['totalAmount'], 2, ',', '.') }})</p>
                         
                     @else
 
-                        <p>Forma de pagamento: {{ Session::get('creditCardInfo')[0]['installmentQuantity'] }}x sem juros no cartão de crédito (R$&nbsp;{{ number_format(Session::get('creditCardInfo')[0]['installmentAmount'], 2, ',', '.') }})</p>
+                        <p>Forma de pagamento: {{ $creditCardInfo[0]['installmentQuantity'] }}x sem juros no cartão de crédito (R$&nbsp;{{ number_format($creditCardInfo[0]['totalAmount'], 2, ',', '.') }})</p>
                         
                     @endif
 
@@ -116,34 +182,46 @@
 
         <div class="row">
 
-            @if ($paymentType == 'boleto')
+            <div class="col-12 col-md-2">
 
-                <form action="{{ route('payment.ticket') }}" method="post">
-                    {{ csrf_field() }}
+                 <a href="{{ route('cart.page') }}" class="btn btn-template">Revisar pedido</a>
 
-                    <input type="hidden" class="senderHash" name="senderHash" value="">
-                    <input type="hidden" name="cd_cliente" value="{{ Auth::user()->cd_cliente }}">
+            </div>
 
-                    <button type="submit" class="btn btn-template">Finalizar compra</button>
+            <div class="col-12 col-md-3">
 
-                </form>
+                @if ($paymentType == 'boleto')
+
+                    <form action="{{ route('payment.ticket') }}" method="post">
+                        {{ csrf_field() }}
+
+                        <input type="hidden" class="senderHash" name="senderHash" value="">
+                        <input type="hidden" name="cd_cliente" value="{{ Auth::user()->cd_cliente }}">
+
+                        <button type="submit" class="btn btn-template">Finalizar compra</button>
+
+                    </form>
+                    
+                @else
+
+                    <form action="{{ route('payment.creditcard') }}" method="post">
+                        {{ csrf_field() }}
+
+                        <input type="hidden" class="senderHash" name="senderHash" value="">
+                        <input type="hidden" name="cardToken" value="{{ $creditCardInfo[0]['cardToken'] }}">
+                        <input type="hidden" name="cd_cliente" value="{{ Auth::user()->cd_cliente }}">
+
+                        <button type="submit" class="btn btn-template">Finalizar compra</button>
+
+                    </form>
                 
-            @else
+                @endif
 
-                <form action="#" method="post">
-
-                    <input type="hidden" class="senderHash" name="senderHash" value="">
-                    <input type="hidden" name="cardToken" value="{{ Session::get('creditCardInfo')[0]['cardToken'] }}">
-                    <input type="hidden" name="cd_cliente" value="{{ Auth::user()->cd_cliente }}">
-
-                    <button type="submit" class="btn btn-template">Finalizar compra</button>
-
-                </form>
-                
-            @endif
-
+            </div>
 
         </div>
+
+        <p>&nbsp;</p>
 
     </div>
 
@@ -154,7 +232,6 @@
             PagSeguroDirectPayment.onSenderHashReady(function(response){
 
                 if(response.status == 'error') {
-                    location.reload()
                     return false;
                 }
 
