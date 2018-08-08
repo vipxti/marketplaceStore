@@ -1150,6 +1150,66 @@ class ProductController extends Controller
         return redirect()->route('products.list')->with('success', 'Produto Atualizado com Sucesso');
     }
 
+    public function updateBlingProduct(Request $request){
+        
+        //dd($request->all());
+
+        $v = strpos($request->vl_produto, ',');
+
+        $slugname = str_slug($request->nm_produto, '-');
+
+        if ($v !== false) {
+            $val = str_replace(',', '.', $request->vl_produto);
+        } else {
+            $val = $request->vl_produto;
+        }
+
+        
+        $status = 1;
+
+        DB::beginTransaction();
+
+        //=============================================================================================
+        //ATUALIZA A DIMENSÃO DOS PRODUTOS
+        try {
+            $dimensao = $this->updateDimension($request->ds_largura, $request->ds_altura, $request->ds_comprimento, $request->ds_peso, $request->cd_sku);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar tamanho do produto');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar tamanho do produto');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        //=============================================================================================
+        //ATUALIZA OS DADOS DO PRODUTO
+        try {
+            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar o produto');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar o produto');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        DB::commit();
+
+        return redirect()->route('products.list')->with('success', 'Produto Atualizado com Sucesso');
+    }
+
     public function getProductData(Request $request)
     {
         $resultado = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
