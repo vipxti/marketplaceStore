@@ -9,6 +9,7 @@ use App\Dimension;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductVariationRequest;
 use App\LetterSize;
+use App\NavigationMenu;
 use App\Product;
 use App\NumberSize;
 use App\ProductVariation;
@@ -42,23 +43,43 @@ class ProductController extends Controller
         }
 
 
+
         $menuNav =  Menu::all();
 
-        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach ($menuNav as $key=>$menu) {
-            $categoriaSubCat[$key] = Category::
-            leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
-                ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
-                ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
-                ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
-                ->select(
-                    'categoria.cd_categoria',
-                    'categoria.nm_categoria',
-                    'sub_categoria.cd_sub_categoria',
-                    'sub_categoria.nm_sub_categoria'
-                )
-                ->where('menu.cd_menu', '=', $menu->cd_menu)
-                ->get();
+        $menuNavegacao = NavigationMenu::all();
+        //dd($menuNavegacao[0]->menu_ativo);
+
+        if(count($menuNavegacao) > 0) {
+            if ($menuNavegacao[0]->menu_ativo == 1) {
+                //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+                foreach ($menuNav as $key => $menu) {
+                    $categoriaSubCat[$key] = Category::
+                    leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                        ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                        ->select(
+                            'categoria.cd_categoria',
+                            'categoria.nm_categoria',
+                            'sub_categoria.cd_sub_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                        )
+                        ->where('menu.cd_menu', '=', $menu->cd_menu)
+                        ->get();
+                }
+            } else {
+                $categoriaSubCat = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                    ->join('ordem_categoria', 'ordem_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                    ->select(
+                        'categoria.cd_categoria',
+                        'categoria.nm_categoria',
+                        'sub_categoria.cd_sub_categoria',
+                        'sub_categoria.nm_sub_categoria'
+                    )
+                    ->orderBy('ordem_categoria.cd_ordem_categoria')
+                    ->get();
+            }
         }
 
         //dd($request->all());
@@ -98,8 +119,11 @@ class ProductController extends Controller
                     'dimensao.ds_peso',
                     'img_produto.im_produto'
                 )
+                ->where('produto.cd_status_produto', '=', 1)
                 ->where('img_produto.ic_img_principal', '=', 1)
                 ->where('categoria.cd_categoria', '=', $catSubCat)
+                ->orderBy('produto.cd_produto')
+                //->paginate(28);
                 ->get();
         } elseif ($dVerificador=="s") {
             $produtoCatSubCat = Product::
@@ -138,9 +162,12 @@ class ProductController extends Controller
                     'dimensao.ds_peso',
                     'img_produto.im_produto'
                 )
-                ->where('img_produto.ic_img_principal', '=', 1)
                 ->where('sub_categoria.cd_sub_categoria', '=', $catSubCat)
+                ->where('produto.cd_status_produto', '=', 1)
+                ->where('img_produto.ic_img_principal', '=', 1)
+                ->orderBy('produto.cd_produto')
                 ->get();
+                //->paginate(28);
         } elseif ($dVerificador == "pesquisa") {
             //dd($dVerificador);
             $produtoCatSubCat = Product::
@@ -179,14 +206,17 @@ class ProductController extends Controller
                     'dimensao.ds_peso',
                     'img_produto.im_produto'
                 )
-                ->where('img_produto.ic_img_principal', '=', 1)
                 ->where('produto.nm_produto', 'like', '%'.$catSubCat.'%')
+                ->where('produto.cd_status_produto', '=', 1)
+                ->where('img_produto.ic_img_principal', '=', 1)
+                ->orderBy('produto.cd_produto')
                 ->get();
+                //->paginate(28);
         }
 
         //dd($produtoCatSubCat);
 
-        return view('pages.app.product.filter', compact('produtoCatSubCat', 'nome', 'menuNav', 'categoriaSubCat'));
+        return view('pages.app.product.filter', compact('produtoCatSubCat', 'nome', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
         //return response()->json($produtoCatSubCat);
     }
 
@@ -199,29 +229,49 @@ class ProductController extends Controller
             $nome = null;
         }
 
-        $menuNav = Menu::all();
+        $menuNav =  Menu::all();
 
-        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach ($menuNav as $key => $menu) {
-            $categoriaSubCat[$key] = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
-                ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
-                ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
-                ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
-                ->select(
-                    'categoria.cd_categoria',
-                    'categoria.nm_categoria',
-                    'sub_categoria.cd_sub_categoria',
-                    'sub_categoria.nm_sub_categoria'
-                )
-                ->where('menu.cd_menu', '=', $menu->cd_menu)
-                ->get();
+        $menuNavegacao = NavigationMenu::all();
+        //dd($menuNavegacao[0]->menu_ativo);
+
+        if(count($menuNavegacao) > 0) {
+            if ($menuNavegacao[0]->menu_ativo == 1) {
+                //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+                foreach ($menuNav as $key => $menu) {
+                    $categoriaSubCat[$key] = Category::
+                    leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                        ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                        ->select(
+                            'categoria.cd_categoria',
+                            'categoria.nm_categoria',
+                            'sub_categoria.cd_sub_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                        )
+                        ->where('menu.cd_menu', '=', $menu->cd_menu)
+                        ->get();
+                }
+            } else {
+                $categoriaSubCat = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                    ->join('ordem_categoria', 'ordem_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                    ->select(
+                        'categoria.cd_categoria',
+                        'categoria.nm_categoria',
+                        'sub_categoria.cd_sub_categoria',
+                        'sub_categoria.nm_sub_categoria'
+                    )
+                    ->orderBy('ordem_categoria.cd_ordem_categoria')
+                    ->get();
+            }
         }
 
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto')->paginate(25);
 
         $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('produto_variacao.cd_produto', 'produto.nm_slug')->paginate(25);
 
-        return view('pages.app.product.index', compact('produtos', 'variation', 'nome', 'menuNav', 'categoriaSubCat'));
+        return view('pages.app.product.index', compact('produtos', 'variation', 'nome', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
     }
 
     public function showProductDetails($slug)
@@ -283,14 +333,44 @@ class ProductController extends Controller
 
         $menuNav =  Menu::all();
 
-        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach ($menuNav as $key => $menu) {
-            $categoriaSubCat[$key] = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')->select('categoria.cd_categoria', 'categoria.nm_categoria', 'sub_categoria.cd_sub_categoria', 'sub_categoria.nm_sub_categoria')->where('menu.cd_menu', '=', $menu->cd_menu)->get();
+        $menuNavegacao = NavigationMenu::all();
+        //dd($menuNavegacao[0]->menu_ativo);
+        if(count($menuNavegacao) > 0) {
+            if ($menuNavegacao[0]->menu_ativo == 1) {
+                //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+                foreach ($menuNav as $key => $menu) {
+                    $categoriaSubCat[$key] = Category::
+                    leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                        ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                        ->select(
+                            'categoria.cd_categoria',
+                            'categoria.nm_categoria',
+                            'sub_categoria.cd_sub_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                        )
+                        ->where('menu.cd_menu', '=', $menu->cd_menu)
+                        ->get();
+                }
+            } else {
+                $categoriaSubCat = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                    ->join('ordem_categoria', 'ordem_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                    ->select(
+                        'categoria.cd_categoria',
+                        'categoria.nm_categoria',
+                        'sub_categoria.cd_sub_categoria',
+                        'sub_categoria.nm_sub_categoria'
+                    )
+                    ->orderBy('ordem_categoria.cd_ordem_categoria')
+                    ->get();
+            }
         }
 
         //dd($sizeType);
 
-        return view('pages.app.product.details', compact('product', 'images', 'sizes', 'sizeType', 'variations', 'totalCores', 'totalImagens', 'colors', 'codProds', 'nome', 'menuNav', 'categoriaSubCat', 'hasVariation', 'isVariation'));
+        return view('pages.app.product.details', compact('product', 'images', 'sizes', 'sizeType', 'variations', 'totalCores', 'totalImagens', 'colors', 'codProds', 'nome', 'menuNav', 'categoriaSubCat', 'hasVariation', 'isVariation', 'menuNavegacao'));
     }
 
     public function getSizes(Request $request)
@@ -383,7 +463,43 @@ class ProductController extends Controller
 
         //dd($ultimoProduto);
 
-        return view('pages.admin.cadProdutoVariacao', compact('categorias', 'cores', 'tamanhosLetras', 'tamanhosNumeros', 'ultimoProduto'));
+        $menuNav =  Menu::all();
+
+        $menuNavegacao = NavigationMenu::all();
+        //dd($menuNavegacao[0]->menu_ativo);
+        if(count($menuNavegacao) > 0) {
+            if ($menuNavegacao[0]->menu_ativo == 1) {
+                //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+                foreach ($menuNav as $key => $menu) {
+                    $categoriaSubCat[$key] = Category::
+                    leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                        ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                        ->select(
+                            'categoria.cd_categoria',
+                            'categoria.nm_categoria',
+                            'sub_categoria.cd_sub_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                        )
+                        ->where('menu.cd_menu', '=', $menu->cd_menu)
+                        ->get();
+                }
+            } else {
+                $categoriaSubCat = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                    ->select(
+                        'categoria.cd_categoria',
+                        'categoria.nm_categoria',
+                        'sub_categoria.cd_sub_categoria',
+                        'sub_categoria.nm_sub_categoria'
+                    )
+                    ->get();
+            }
+        }
+
+
+        return view('pages.admin.cadProdutoVariacao', compact('categorias', 'cores', 'tamanhosLetras', 'tamanhosNumeros', 'ultimoProduto', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
     }
 
     //CRUD
@@ -861,6 +977,72 @@ class ProductController extends Controller
         unlink($rootProductsPath . $caminhoImagem);
     }
 
+    public function apagarImagem(Request $request){
+        //dd($request->all());
+
+        $img = DB::table('img_produto')
+            ->where('im_produto', '=', $request->img_path)
+            ->get();
+
+        $sku_produto = DB::table('sku')
+            ->join('sku_produto_img', 'sku_produto_img.cd_sku', '=', 'sku.cd_sku')
+            ->join('img_produto', 'img_produto.cd_img', '=', 'sku_produto_img.cd_img')
+            ->where('sku.cd_nr_sku', '=', $request->cd_sku)
+            ->get();
+
+        try{
+            //dd($request->all());
+
+            if($request->img_path == 'semprodutoview.png'){
+                //dd($request->img_path);
+                if (count($sku_produto) > 1) {
+                    if ($sku_produto[0]->im_produto == $request->img_path) {
+                        DB::table('img_produto')
+                            ->where('im_produto', '=', $sku_produto[1]->im_produto)
+                            ->update(['ic_img_principal' => 1]);
+                    }
+                }
+
+                DB::table('sku_produto_img')
+                    ->where('cd_img', '=', $img[0]->cd_img)
+                    ->where('cd_sku', '=', $sku_produto[0]->cd_sku)
+                    ->delete();
+            }
+            else {
+                $this->deleteImageFile($request->img_path);
+
+                //dd($sku_produto, $sku_produto[0]->im_produto, $request->img_path);
+
+                if (count($sku_produto) > 1) {
+                    if ($sku_produto[0]->im_produto == $request->img_path) {
+                        DB::table('img_produto')
+                            ->where('im_produto', '=', $sku_produto[1]->im_produto)
+                            ->update(['ic_img_principal' => 1]);
+                    }
+                } else {
+                    $img_none = $this->createImage('semprodutoview.png', 1);
+                    $skuImagem = $this->associateSkuImage($sku_produto[0]->cd_sku, $img_none->cd_img);
+                }
+
+                DB::table('sku_produto_img')
+                    ->where('cd_img', '=', $img[0]->cd_img)
+                    ->where('cd_sku', '=', $sku_produto[0]->cd_sku)
+                    ->delete();
+                DB::table('img_produto')->where('cd_img', '=', $img[0]->cd_img)->delete();
+            }
+
+        }
+        catch(\Exception $ex){
+            return response()->json([
+                'deuErro' => true
+            ]);
+        }
+
+        return response()->json([
+            'deuErro' => false
+        ]);
+    }
+
     public function pastaProduto($categoria, $subcategoria)
     {
         $rootProductsPath = public_path('img/products/');
@@ -1145,6 +1327,123 @@ class ProductController extends Controller
             throw $e;
         }
 
+        //=============================================================================================
+        //SALVA NOVAS IMAGENS AO PRODUTO
+
+        $qtd_images = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+            ->select(
+                'sku.cd_sku',
+                'img_produto.cd_img',
+                'img_produto.im_produto',
+                'img_produto.ic_img_principal')
+            ->where('sku.cd_nr_sku', '=', $request->cd_sku)
+            ->orderBy('img_produto.cd_img')
+            ->get();
+
+
+        try {
+            if ($request->hasFile('images')) {
+
+                //dd(count($request->images));
+                //dd($request->cd_sku);
+                //Cria o caminho físico das imagens
+                $images = $request->images;
+                $imagePath = $this->pastaProduto($this->getCategoryName($request->cd_categoria), $this->getSubcategoryName($request->cd_sub_categoria));
+                $dbPath = $this->getCategoryName($request->cd_categoria) . '/' . $this->getSubcategoryName($request->cd_sub_categoria);
+
+
+                if(count($qtd_images) > 0) {
+                    $num_img = count($qtd_images);
+                    $contador = $num_img;
+                    //dd($num_img);
+
+                    //dd($qtd_images);
+
+                    foreach ($images as $key => $image) {
+                        $ext = $image->getClientOriginalExtension();
+                        $imageName = $request->cd_sku . '_' . ($contador + 1) . '.' . $ext;
+                        $caminhoImagem = $dbPath.'/'.$imageName;
+
+                        $erro = false;
+
+                        do {
+
+                            $erro = false;
+                            foreach ($qtd_images as $qtd) {
+                                //dd($qtd->im_produto, $caminhoImagem);
+                                if ($qtd->im_produto == $caminhoImagem) {
+                                    $contador++;
+                                    $imageName = $request->cd_sku . '_' . ($contador + 1) . '.' . $ext;
+                                    $caminhoImagem = $dbPath . '/' . $imageName;
+                                    $erro = true;
+                                }
+                            }
+
+                        }while($erro == true);
+
+
+                        //dd($imageName);
+                        //dd($dbPath);
+                        //dd($dbPath.'/'.$imageName);
+                        $realPath = $image->getRealPath();
+                        //dd($realPath);
+                        $this->saveImageFile($imagePath, $imageName, $realPath);
+
+                        $localImagesPath[$key] = $dbPath . '/' . $imageName;
+                        //dd($localImagesPath[$key]);
+                        $contador++;
+                    }
+
+                    //dd($localImagesPath);
+
+                    foreach ($localImagesPath as $key => $dbImage) {
+                        if ($num_img == 0) {
+                            $img = $this->createImage($dbImage, 1);
+                        } else {
+                            $img = $this->createImage($dbImage, 0);
+                        }
+
+                        //dd($request->cd_sku);
+                        //dd($qtd_images[0]->cd_sku);
+                        //dd($img->cd_img);
+
+                        $skuImagem = $this->associateSkuImage($qtd_images[0]->cd_sku, $img->cd_img);
+
+                        //dd($skuImagem);
+
+                        $imgsPath[$key] = $img->im_produto;
+                    }
+                }else {
+                    $qtd_images = Product::join('sku', 'sku.cd_sku', '=', 'produto.cd_sku')
+                                    ->where('sku.cd_nr_sku', '=', $request->cd_sku)
+                                    ->get();
+
+                    //dd($qtd_images);
+
+                    $img = $this->createImage('semprodutoview.png', 1);
+                    $skuImagem = $this->associateSkuImage($qtd_images[0]->cd_sku, $img->cd_img);
+
+                }
+            }
+        } catch (QueryException $e) {
+            DB::rollBack();
+            foreach ($imgsPath as $key => $imPath) {
+                $this->deleteImageFile($imPath);
+            }
+            return redirect()->route('product.register')->with('nosuccess', 'Erro ao cadastrar tamanho do produto');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            foreach ($imgsPath as $key => $imPath) {
+                $this->deleteImageFile($imPath);
+            }
+            return redirect()->route('product.register')->with('nosuccess', 'Erro ao cadastrar a imagem');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        }
+
         DB::commit();
 
         return redirect()->route('products.list')->with('success', 'Produto Atualizado com Sucesso');
@@ -1238,9 +1537,22 @@ class ProductController extends Controller
             ->where('sku.cd_nr_sku', '=', $request->sku)
             ->get();
 
+        $images = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+            ->select('img_produto.im_produto', 'img_produto.ic_img_principal')
+            ->where('sku.cd_nr_sku', '=', $resultado[0]['cd_nr_sku'])
+            ->orderBy('sku_produto_img.cd_img')
+            ->get()
+            ->toArray();
+
+        //dd($images);
         //dd($resultado);
 
-        return $resultado;
+        $dados = ["0" => $resultado, "1" => $images];
+        //dd($dados);
+
+        return $dados;
     }
 
     public function getCategory()

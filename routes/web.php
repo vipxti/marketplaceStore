@@ -37,6 +37,7 @@ Route::prefix('admin')->group(function () {
     //Produto
     Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
     Route::post('/product/update', 'ProductController@updateProduct')->name('product.update');
+    Route::post('/product/delete/image', 'ProductController@apagarImagem')->name('product.delete.image');
     Route::post('/blingproduct/update', 'ProductController@updateBlingProduct')->name('bling.product.update');
     Route::get('/product', 'ProductController@showProductAdminPage')->name('product.register')->middleware('auth:admin');
     Route::post('/blingproduct', 'ProductController@cadastrarProdutosBling')->name('bling.save.products');
@@ -94,6 +95,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/menu', 'MenuController@showEditMenuPage')->name('menu.edit')->middleware('auth:admin');
     Route::post('/menu', 'MenuController@saveMenus')->name('menu.save.non.use');
     Route::post('/menu/save', 'MenuController@crudMenu')->name('menu.save');
+    Route::post('/menu/save/categoryorder', 'MenuController@salvarOrdemCategoria')->name('menu.save.category.order');
+    Route::get('/menu/consult/categoryorder', 'MenuController@consultarOrdemCategorias')->name('menu.consult.category.order');
     Route::post('/menu/controlenav', 'MenuController@controleMenuNav')->name('menu.control.nav');
 
     //Associa menu/categoria

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Menu;
+use App\NavigationMenu;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -32,12 +35,51 @@ class PaymentController extends Controller
                 $years[$j] = $initialYear++;
             }
 
-            return view('pages.app.cart.checkout', compact('months', 'years'));
+            $menuNav =  Menu::all();
+
+            $menuNavegacao = NavigationMenu::all();
+            //dd($menuNavegacao[0]->menu_ativo);
+
+            if(count($menuNavegacao) > 0) {
+                if ($menuNavegacao[0]->menu_ativo == 1) {
+                    //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+                    foreach ($menuNav as $key => $menu) {
+                        $categoriaSubCat[$key] = Category::
+                        leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                            ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                            ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                            ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                            ->select(
+                                'categoria.cd_categoria',
+                                'categoria.nm_categoria',
+                                'sub_categoria.cd_sub_categoria',
+                                'sub_categoria.nm_sub_categoria'
+                            )
+                            ->where('menu.cd_menu', '=', $menu->cd_menu)
+                            ->get();
+                    }
+                } else {
+                    $categoriaSubCat = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->join('ordem_categoria', 'ordem_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                        ->select(
+                            'categoria.cd_categoria',
+                            'categoria.nm_categoria',
+                            'sub_categoria.cd_sub_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                        )
+                        ->orderBy('ordem_categoria.cd_ordem_categoria')
+                        ->get();
+                }
+            }
+
+            return view('pages.app.cart.checkout', compact('months', 'years', 'menuNav', 'menuNavegacao', 'categoriaSubCat'));
         }
 
         Session::put('checkoutRoute', 'payment.checkout');
 
         Session::save();
+
 
         return redirect()->route('client.login');
     }
@@ -58,7 +100,45 @@ class PaymentController extends Controller
             }
         }
 
-        return view('pages.app.cart.orderdetails', compact('cart', 'shippingData', 'creditCardInfo', 'paymentType'));
+        $menuNav =  Menu::all();
+
+        $menuNavegacao = NavigationMenu::all();
+        //dd($menuNavegacao[0]->menu_ativo);
+
+        if(count($menuNavegacao) > 0) {
+            if ($menuNavegacao[0]->menu_ativo == 1) {
+                //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+                foreach ($menuNav as $key => $menu) {
+                    $categoriaSubCat[$key] = Category::
+                    leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                        ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                        ->select(
+                            'categoria.cd_categoria',
+                            'categoria.nm_categoria',
+                            'sub_categoria.cd_sub_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                        )
+                        ->where('menu.cd_menu', '=', $menu->cd_menu)
+                        ->get();
+                }
+            } else {
+                $categoriaSubCat = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                    ->join('ordem_categoria', 'ordem_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                    ->select(
+                        'categoria.cd_categoria',
+                        'categoria.nm_categoria',
+                        'sub_categoria.cd_sub_categoria',
+                        'sub_categoria.nm_sub_categoria'
+                    )
+                    ->orderBy('ordem_categoria.cd_ordem_categoria')
+                    ->get();
+            }
+        }
+
+        return view('pages.app.cart.orderdetails', compact('cart', 'shippingData', 'creditCardInfo', 'paymentType', 'menuNav', 'menuNavegacao', 'categoriaSubCat'));
     }
 
     public function showResultPage()
@@ -70,7 +150,45 @@ class PaymentController extends Controller
             return redirect()->route('cart.page');
         }
 
-        return view('pages.app.cart.result', compact('orderData'));
+        $menuNav =  Menu::all();
+
+        $menuNavegacao = NavigationMenu::all();
+        //dd($menuNavegacao[0]->menu_ativo);
+
+        if(count($menuNavegacao) > 0) {
+            if ($menuNavegacao[0]->menu_ativo == 1) {
+                //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+                foreach ($menuNav as $key => $menu) {
+                    $categoriaSubCat[$key] = Category::
+                    leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                        ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                        ->select(
+                            'categoria.cd_categoria',
+                            'categoria.nm_categoria',
+                            'sub_categoria.cd_sub_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                        )
+                        ->where('menu.cd_menu', '=', $menu->cd_menu)
+                        ->get();
+                }
+            } else {
+                $categoriaSubCat = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                    ->join('ordem_categoria', 'ordem_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                    ->select(
+                        'categoria.cd_categoria',
+                        'categoria.nm_categoria',
+                        'sub_categoria.cd_sub_categoria',
+                        'sub_categoria.nm_sub_categoria'
+                    )
+                    ->orderBy('ordem_categoria.cd_ordem_categoria')
+                    ->get();
+            }
+        }
+
+        return view('pages.app.cart.result', compact('orderData', 'menuNav', 'menuNavegacao', 'categoriaSubCat'));
     }
 
     public function createSessionId(Request $request)

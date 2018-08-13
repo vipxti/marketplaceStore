@@ -10,6 +10,9 @@
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-K88JHSV');</script>
+
+    {{--dd($menuNav)--}}
+    {{--dd($menuNavegacao)--}}
     <!-- End Google Tag Manager -->
     <nav class="navbar navbar-expand-lg">
         <div class="search-area">
@@ -48,374 +51,236 @@
                         <ul aria-labelledby="navbarDropdownHomeLink" class="dropdown-menu"></ul>
                     </li>
 
-                    <!-- Maquiagem -->
-                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Maquiagem<i class="fa fa-angle-down"></i></a>
-                        <div class="dropdown-menu megamenu">
-                            <div class="row">
-                                <div class="col-lg-9">
+            @if(count($menuNavegacao) > 0)
+                @if($menuNavegacao[0]['menu_ativo'] === 0)
+
+                    <!-- APRESENTAÇÃO DO MENU EM FORMA DE CATEGORIAS -->
+                    @for($i = 0; $i < sizeof($categoriaSubCat); $i++)
+                        @if($i == 0 || $categoriaSubCat[$i]->nm_categoria != $categoriaSubCat[$i-1]->nm_categoria)
+                            {{--<p>{{$categoriaSubCat[$i]->nm_categoria}}</p>--}}
+                            <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">{{$categoriaSubCat[$i]->nm_categoria}}<i class="fa fa-angle-down"></i></a>
+                                <div class="dropdown-menu megamenu">
                                     <div class="row">
-                                        <!-- Face -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Face</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="1" href="javascript:void(0)" class="listagem">Base</a></li>
-                                                <li id="s"><a id="2" href="javascript:void(0)" class="listagem">Corretivo</a></li>
-                                                <li id="s"><a id="3" href="javascript:void(0)" class="listagem">Pó</a></li>
-                                                <li id="s"><a id="4" href="javascript:void(0)" class="listagem">Blush</a></li>
-                                                <li id="s"><a id="5" href="javascript:void(0)" class="listagem">Primer</a></li>
-                                                <li id="s"><a id="6" href="javascript:void(0)" class="listagem">Sérum</a></li>
-                                                <li id="s"><a id="7" href="javascript:void(0)" class="listagem">Iluminador</a></li>
-                                                <li id="s"><a id="8" href="javascript:void(0)" class="listagem">BB Cleam</a></li>
-                                                <li id="s"><a id="9" href="javascript:void(0)" class="listagem">Bronzeador</a></li>
-                                                <li id="s"><a id="10" href="javascript:void(0)" class="listagem">Demaquilante</a></li>
-                                            </ul>
-                                        </div>
+                                        <div class="col-lg-9">
+                                            <div class="row">
+                                                <p hidden>{{$contador = 0}}</p>
+                                                <p hidden>{{$flag = 0}}</p>
+                                                <p hidden>{{$primeiro = 0}}</p>
+                                                @for($j = 0; $j < sizeof($categoriaSubCat); $j++)
+                                                    @if($categoriaSubCat[$i]->cd_categoria == $categoriaSubCat[$j]->cd_categoria)
+                                                        @if($j==0 || $primeiro == 0)
+                                                            <p hidden>{{$flag = 1}}</p>
+                                                            <p hidden>{{$primeiro = 1}}</p>
+                                                            <div class="col-lg-3">
 
-                                        <!-- Lábios -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Lábios</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="11" href="javascript:void(0)" class="listagem">Batom Matte</a></li>
-                                                <li id="s"><a id="12" href="javascript:void(0)" class="listagem">Batom Líquido Matte</a></li>
-                                                <li id="s"><a id="13" href="javascript:void(0)" class="listagem">Batom Cremoso</a></li>
-                                                <li id="s"><a id="14" href="javascript:void(0)" class="listagem">Contorno Labial</a></li>
-                                                <li id="s"><a id="15" href="javascript:void(0)" class="listagem">Gloss</a></li>
-                                                <li id="s"><a id="16" href="javascript:void(0)" class="listagem">Hidratante</a></li>
-                                                <li id="s"><a id="17" href="javascript:void(0)" class="listagem">Batom Líquido Matte Metalizado</a></li>
-                                                <!--<li><a href="index2.html"><span class="badge badge-success ml-2">New</span></a></li>
-                                                <li><a href="index3.html"><span class="badge badge-success ml-2">New</span></a></li>-->
-                                            </ul>
-                                        </div>
+                                                                <ul style="margin-bottom: 0 !important;">
+                                                                    <li id="c">
+                                                                        <a id="{{$categoriaSubCat[$j]->cd_categoria}}"
+                                                                           href="javascript:void(0)"
+                                                                           class="listagem">
+                                                                            <strong class="text-uppercase" style="font-size: 16px">{{$categoriaSubCat[$j]->nm_categoria}}</strong>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
 
-                                        <!-- Olhos -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Olhos</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="18" href="javascript:void(0)" class="listagem">Delineador</a></li>
-                                                <li id="s"><a id="19" href="javascript:void(0)" class="listagem">Máscara de Cílios</a></li>
-                                                <li id="s"><a id="20" href="javascript:void(0)" class="listagem">Fixador | Primer</a></li>
-                                                <li id="s"><a id="21" href="javascript:void(0)" class="listagem">Lápis</a></li>
-                                                <li id="s"><a id="22" href="javascript:void(0)" class="listagem">Pigmento</a></li>
-                                                <li id="s"><a id="23" href="javascript:void(0)" class="listagem">Glitter</a></li>
-                                                <li id="s"><a id="24" href="javascript:void(0)" class="listagem">Sombras</a></li>
-                                            </ul>
-                                        </div>
+                                                                <ul class="list-unstyled">
+                                                        @elseif(is_int($contador/10))
+                                                            <p hidden>{{$flag = 1}}</p>
+                                                            <div class="col-lg-3">
 
-                                        <!-- Sobrancelhas -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Sobrancelhas</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="25" href="javascript:void(0)" class="listagem">Iluminador</a></li>
-                                                <li id="s"><a id="26" href="javascript:void(0)" class="listagem">Lápis</a></li>
-                                                <li id="s"><a id="27" href="javascript:void(0)" class="listagem">Sombra</a></li>
-                                                <li id="s"><a id="28" href="javascript:void(0)" class="listagem">Acessórios</a></li>
-                                                <li id="s"><a id="29" href="javascript:void(0)" class="listagem">Delineador</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                                                <ul class="list-unstyled">
+                                                        @endif
 
-                                    <!-- Icons de descontos -->
-                                    <div class="row services-block">
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
-                                                    <small>Entrega via Correio</small>
+                                                            <li id="s"><a id="{{$categoriaSubCat[$j]->cd_sub_categoria}}" href="javascript:void(0)" class="listagem">{{$categoriaSubCat[$j]->nm_sub_categoria}}</a></li>
+                                                            <p hidden>{{$contador++}}</p>
+
+                                                        @if(is_int($contador/10))
+                                                                </ul>
+                                                            </div>
+                                                            <p hidden>{{$flag = 0}}</p>
+                                                        @endif
+                                                    @endif
+                                                @endfor
+                                                @if($flag==1)
+                                                        </ul>
+                                                    </div>
+                                                @endif
+
+                                            </div>
+
+                                            <!-- Icons de descontos -->
+                                            <div class="row services-block">
+                                                <div class="col-xl-3 col-lg-6 d-flex">
+                                                    <div class="item d-flex align-items-center">
+                                                        <div class="icon"><i class="icon-truck text-primary"></i></div>
+                                                        <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
+                                                            <small>Entrega via Correio</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-3 col-lg-6 d-flex">
+                                                    <div class="item d-flex align-items-center">
+                                                        <div class="icon"><i class="icon-headphones text-primary"></i></div>
+                                                        <div class="text"><span class="text-uppercase">13 97424-8882</span>
+                                                            <small>Suporte de Segunda à Sábado</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-3 col-lg-6 d-flex">
+                                                    <div class="item d-flex align-items-center">
+                                                        <div class="icon"><i class="icon-secure-shield text-primary"></i></div>
+                                                        <div class="text"><span class="text-uppercase">Pagamento Seguro</span>
+                                                            <small>PagSeguro</small>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        {{--<div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-coin text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">5% de Desconto</span>
-                                                    <small>Boleto, depósito ou transferência</small>
-                                                </div>
-                                            </div>
-                                        </div>--}}
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-headphones text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">13 97424-8882</span>
-                                                    <small>Suporte de Segunda à Sábado</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-secure-shield text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Pagamento Seguro</span>
-                                                    <small>PagSeguro</small>
-                                                </div>
-                                            </div>
+
+                                        <!-- Produto Destaque -->
+                                        <div class="col-lg-3 text-center product-col hidden-lg-down">
+                                            <a href="" class="product-image">
+                                                <img src="{{asset('img/app/bg-img/menu/product1.png')}}" class="img-fluid"></a>
+                                            <h6 class="text-uppercase product-heading"><a href="">Catharine Hill Sombras 30 cores</a>
+                                            </h6>
+                                            <ul class="rate list-inline"></ul>
+                                            <strong class="price text-primary">R$ 106,00</strong>
+                                            {{--<a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
                                         </div>
                                     </div>
                                 </div>
+                            </li>
+                        @endif
+                    @endfor
+                @else
+                    <!-- APRESENTAÇÃO DO MENU EM FORMA DE TÓPICOS -->
 
-                                <!-- Produto Destaque -->
-                                <div class="col-lg-3 text-center product-col hidden-lg-down">
-                                    <a href="" class="product-image">
-                                        <img src="{{asset('img/app/bg-img/menu/product1.png')}}" class="img-fluid"></a>
-                                    <h6 class="text-uppercase product-heading"><a href="">Catharine Hill Sombras 30 cores</a>
-                                    </h6>
-                                    <ul class="rate list-inline"></ul>
-                                    <strong class="price text-primary">R$ 106,00</strong>
-                                    {{--<a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
+                    @for($i = 0; $i<sizeof($menuNav); $i++)
+                        {{--<p>{{$menuNav[$i]->nm_menu}}</p>--}}
+                        <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">{{$menuNav[$i]->nm_menu}}<i class="fa fa-angle-down"></i></a>
+                            <div class="dropdown-menu megamenu">
+                                <div class="row">
+                                    <div class="col-lg-9">
+                                        <div class="row">
+                                            <p hidden>{{$contador = 0}}</p>
+                                            <p hidden>{{$flag = 0}}</p>
+                                            @for($j = 0; $j < sizeof($categoriaSubCat[$i]); $j++)
+
+
+                                                {{--<p>{{$categoriaSubCat[$i][$j]->nm_categoria}}</p>--}}
+                                                @if($categoriaSubCat[$i][$j]->cd_sub_categoria != null)
+
+                                                    @if($j == 0 ||
+                                                        $categoriaSubCat[$i][$j]->nm_categoria != $categoriaSubCat[$i][$j - 1]->nm_categoria)
+                                                        <p hidden>{{$contador = 0}}</p>
+                                                        <p hidden>{{$flag = 1}}</p>
+                                                        <div class="col-lg-3">
+
+                                                                <ul style="margin-bottom: 0 !important;">
+                                                                    <li id="c">
+                                                                        <a id="{{$categoriaSubCat[$i][$j]->cd_categoria}}"
+                                                                           href="javascript:void(0)"
+                                                                           class="listagem">
+                                                                            <strong class="text-uppercase" style="font-size: 16px">{{$categoriaSubCat[$i][$j]->nm_categoria}}</strong>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+
+
+                                                            <ul class="list-unstyled">
+                                                    @elseif(is_int($contador/10))
+                                                        <p hidden>{{$flag = 1}}</p>
+                                                        <div class="col-lg-3">
+                                                            <ul class="list-unstyled">
+                                                    @endif
+
+                                                        <li id="s">
+                                                            <a id="{{$categoriaSubCat[$i][$j]->cd_sub_categoria}}"
+                                                               href="javascript:void(0)"
+                                                               class="listagem">
+                                                                    {{$categoriaSubCat[$i][$j]->nm_sub_categoria}}
+                                                            </a>
+                                                        </li>
+                                                        <p hidden>{{$contador++}}</p>
+
+                                                           {{-- </ul>
+                                                        </div>--}}
+
+                                                        @if(is_int($contador/10))
+                                                                </ul>
+                                                            </div>
+                                                            <p hidden>{{$flag = 0}}</p>
+                                                        @endif
+
+                                                        @if(($j + 1) < sizeof($categoriaSubCat[$i]))
+                                                            @if($categoriaSubCat[$i][$j]->nm_categoria != $categoriaSubCat[$i][$j + 1]->nm_categoria)
+                                                                @if($flag == 1)
+                                                                        </ul>
+                                                                    </div>
+                                                                    <p hidden>{{$flag = 0}}</p>
+                                                                @endif
+                                                            @endif
+                                                        @endif
+
+                                                @endif
+
+                                            @endfor
+
+                                            @if($flag==1)
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <!-- Icons de descontos -->
+                                        <div class="row services-block">
+                                            <div class="col-xl-3 col-lg-6 d-flex">
+                                                <div class="item d-flex align-items-center">
+                                                    <div class="icon"><i class="icon-truck text-primary"></i></div>
+                                                    <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
+                                                        <small>Entrega via Correio</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-3 col-lg-6 d-flex">
+                                                <div class="item d-flex align-items-center">
+                                                    <div class="icon"><i class="icon-headphones text-primary"></i></div>
+                                                    <div class="text"><span class="text-uppercase">13 97424-8882</span>
+                                                        <small>Suporte de Segunda à Sábado</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-3 col-lg-6 d-flex">
+                                                <div class="item d-flex align-items-center">
+                                                    <div class="icon"><i class="icon-secure-shield text-primary"></i></div>
+                                                    <div class="text"><span class="text-uppercase">Pagamento Seguro</span>
+                                                        <small>PagSeguro</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Produto Destaque -->
+                                    <div class="col-lg-3 text-center product-col hidden-lg-down">
+                                        <a href="" class="product-image">
+                                            <img src="{{asset('img/app/bg-img/menu/product1.png')}}" class="img-fluid"></a>
+                                        <h6 class="text-uppercase product-heading"><a href="">Catharine Hill Sombras 30 cores</a>
+                                        </h6>
+                                        <ul class="rate list-inline"></ul>
+                                        <strong class="price text-primary">R$ 106,00</strong>
+                                        {{--<a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-
-                    <!-- Pincel -->
-                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Pincel<i class="fa fa-angle-down"></i></a>
-                        <div class="dropdown-menu megamenu">
-                            <div class="row">
-                                <div class="col-lg-9">
-                                    <div class="row">
-                                        <!-- Individual -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Individual</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="30" href="javascript:void(0)" class="listagem">Para Sombra</a></li>
-                                                <li id="s"><a id="30" href="javascript:void(0)" class="listagem">Para Sombra</a></li>
-                                                <li id="s"><a id="32" href="javascript:void(0)" class="listagem">Para Lábios</a></li>
-                                                <li id="s"><a id="33" href="javascript:void(0)" class="listagem">Para Sobrancelhas</a></li>
-                                                <li id="s"><a id="34" href="javascript:void(0)" class="listagem">Para Pó</a></li>
-                                                <li id="s"><a id="35" href="javascript:void(0)" class="listagem">Para Blush | Contorno</a></li>
-                                                <li id="s"><a id="36" href="javascript:void(0)" class="listagem">Para Base | Primer</a></li>
-                                                <li id="s"><a id="37" href="javascript:void(0)" class="listagem">Para Delinear</a></li>
-                                                <li id="s"><a id="38" href="javascript:void(0)" class="listagem">Para Iluminador</a></li>
-                                                <li id="s"><a id="39" href="javascript:void(0)" class="listagem">Para Corretivo</a></li>
-                                                <li id="s"><a id="40" href="javascript:void(0)" class="listagem">Para Aplicador | Esponja</a></li>
-                                            </ul>
-                                        </div>
-
-                                        <!-- Kit -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Kit</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="41" href="javascript:void(0)" class="listagem">Para Face</a></li>
-                                                <li id="s"><a id="42" href="javascript:void(0)" class="listagem">Para Olhos</a></li>
-                                                <li id="s"><a id="43" href="javascript:void(0)" class="listagem">Completo</a></li>
-                                                <li id="s"><a href="">Monte Seu Kit</a></li>
-                                            </ul>
-                                        </div>
-
-                                        <!-- Higienizador -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Higienizador</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="44" href="javascript:void(0)" class="listagem">Pincel para Limpeza</a></li>
-                                                <li id="s"><a id="45" href="javascript:void(0)" class="listagem">Algodão</a></li>
-                                                <li id="s"><a id="46" href="javascript:void(0)" class="listagem">Esponja</a></li>
-                                                <li id="s"><a id="47" href="javascript:void(0)" class="listagem">Spray</a></li>
-                                                <li id="s"><a id="48" href="javascript:void(0)" class="listagem">Tapete</a></li>
-                                            </ul>
-                                        </div>
-
-                                        <!-- Tratamento Facial -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Tratamento Facial</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="49" href="javascript:void(0)" class="listagem">Pele Mista | Oleosa</a></li>
-                                                <li id="s"><a id="50" href="javascript:void(0)" class="listagem">Pele com Acne</a></li>
-                                                <li id="s"><a id="51" href="javascript:void(0)" class="listagem">Todo Tipo de Pele</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <!-- Icons de descontos -->
-                                    <div class="row services-block">
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
-                                                    <small>Entrega via Correio</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{--<div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-coin text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">5% de Desconto</span>
-                                                    <small>Boleto, depósito ou transferência</small>
-                                                </div>
-                                            </div>
-                                        </div>--}}
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-headphones text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">13 97424-8882</span>
-                                                    <small>Suporte de Segunda à Sábado</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-secure-shield text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Pagamento Seguro</span>
-                                                    <small>PagSeguro</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/app/bg-img/menu/product3.png')}}" class="img-fluid"></a>
-                                    <h6 class="text-uppercase product-heading"><a href="">Kit 12 Pinceis Pincel Macrilan
-                                            Maquiagem E Necessaire Rosa</a></h6>
-                                    <ul class="rate list-inline">
-                                    </ul>
-                                    <strong class="price text-primary">R$ 27,00</strong>
-                                    {{--<a href="https://produto.mercadolivre.com.br/MLB-1023235686-kit-12-pinceis-pincel-macrilan-maquiagem-e-necessaire-rosa-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <!-- Paleta -->
-                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Paletas<i class="fa fa-angle-down"></i></a>
-                        <div class="dropdown-menu megamenu">
-                            <div class="row">
-                                <div class="col-lg-9">
-                                    <div class="row">
-                                        <!-- Face -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Paletas Para
-                                                Maquiagem</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="52" href="javascript:void(0)" class="listagem">Paleta de Base/Corretivo</a></li>
-                                                <li id="s"><a id="53" href="javascript:void(0)" class="listagem">Paleta de Sombra</a></li>
-                                                <li id="s"><a id="54" href="javascript:void(0)" class="listagem">Paleta de Base</a></li>
-                                                <li id="s"><a id="55" href="javascript:void(0)" class="listagem">Paleta de Pó</a></li>
-                                                <li id="s"><a id="56" href="javascript:void(0)" class="listagem">Paleta de Blush</a></li>
-                                                <li id="s"><a id="57" href="javascript:void(0)" class="listagem">Paleta de Contorno</a></li>
-                                                <li id="s"><a id="58" href="javascript:void(0)" class="listagem">Paleta de Iluminador</a></li>
-                                                <li id="s"><a href="">&nbsp;</a></li>
-                                                <li id="s"><a href="">&nbsp;</a></li>
-                                                <li id="s"><a href="">&nbsp;</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <!-- Icons de descontos -->
-                                    <div class="row services-block">
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
-                                                    <small>Entrega via Correio</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{--<div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-coin text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">5% de Desconto</span>
-                                                    <small>Boleto, depósito ou transferência</small>
-                                                </div>
-                                            </div>
-                                        </div>--}}
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-headphones text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">13 97424-8882</span>
-                                                    <small>Suporte de Segunda à Sábado</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-secure-shield text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Pagamento Seguro</span>
-                                                    <small>PagSeguro</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/app/bg-img/menu/product2.png')}}" class="img-fluid"></a>
-                                    <h6 class="text-uppercase product-heading"><a href="">Ruby Rose Base Liquida Matte
-                                            L3</a></h6>
-                                    <ul class="rate list-inline">
-                                    </ul>
-                                    <strong class="price text-primary">R$ 14,99</strong>
-                                    {{--<a href="https://produto.mercadolivre.com.br/MLB-1044322474-ruby-rose-base-liquida-matte-l3-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <!-- Acessório -->
-                    <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Acessórios<i class="fa fa-angle-down"></i></a>
-                        <div class="dropdown-menu megamenu">
-                            <div class="row">
-                                <div class="col-lg-9">
-                                    <div class="row">
-                                        <!-- Maquiagem -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Maquiagem</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="59" href="javascript:void(0)" class="listagem">Esponja | Aplicador</a></li>
-                                                <li id="s"><a id="60" href="javascript:void(0)" class="listagem">Espelho</a></li>
-                                                <li id="s"><a id="61" href="javascript:void(0)" class="listagem">Curvex</a></li>
-                                                <li id="s"><a id="62" href="javascript:void(0)" class="listagem">Apontador</a></li>
-                                                <li id="s"><a id="63" href="javascript:void(0)" class="listagem">Uso Profissional</a></li>
-                                                <li id="s"><a href="">&nbsp;</a></li>
-                                                <li id="s"><a href="">&nbsp;</a></li>
-                                                <li id="s"><a href="">&nbsp;</a></li>
-                                                <li id="s"><a href="">&nbsp;</a></li>
-                                                <li id="s"><a href="">&nbsp;</a></li>
-                                                <br>
-
-                                            </ul>
-                                        </div>
-
-                                        <!-- Organizador -->
-                                        <div class="col-lg-3"><strong class="text-uppercase">Organizador</strong>
-                                            <ul class="list-unstyled">
-                                                <li id="s"><a id="64" href="javascript:void(0)" class="listagem">Maletas de Maquiagem</a></li>
-                                                <li id="s"><a id="65" href="javascript:void(0)" class="listagem">Acrílicos</a></li>
-                                                <li id="s"><a id="66" href="javascript:void(0)" class="listagem">Necessaire | Case</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <!-- Icons de descontos -->
-                                    <div class="row services-block">
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
-                                                    <small>Entrega via Correio</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{--<div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-coin text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">5% de Desconto</span>
-                                                    <small>Boleto, depósito ou transferência</small>
-                                                </div>
-                                            </div>
-                                        </div>--}}
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-headphones text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">13 97424-8882</span>
-                                                    <small>Suporte de Segunda à Sábado</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-lg-6 d-flex">
-                                            <div class="item d-flex align-items-center">
-                                                <div class="icon"><i class="icon-secure-shield text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Pagamento Seguro</span>
-                                                    <small>PagSeguro</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 text-center product-col hidden-lg-down"><a href="" class="product-image"><img src="{{asset('img/app/bg-img/menu/product4.png')}}" class="img-fluid"></a>
-                                    <h6 class="text-uppercase product-heading"><a href="">Kiss Delineador Em Gel 24h
-                                            Preto</a></h6>
-                                    <ul class="rate list-inline">
-                                    </ul>
-                                    <strong class="price text-primary">R$ 99,99</strong>{{--<a href="https://produto.mercadolivre.com.br/MLB-1024854469-le-vengee-kit-pincel-de-unicornio-c-10-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
+                        </li>
+                    @endfor
+                @endif
+            @endif
                     <!-- Queridinhos -->
                     <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Queridinhos<i class="fa fa-angle-down"></i></a>
                         <div class="dropdown-menu megamenu">

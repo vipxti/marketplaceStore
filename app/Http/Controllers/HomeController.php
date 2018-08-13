@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Menu;
+use App\NavigationMenu;
 use App\Product;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
@@ -17,26 +18,50 @@ class HomeController extends Controller
 
         $menuNav =  Menu::all();
 
-        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach ($menuNav as $key=>$menu) {
-            $categoriaSubCat[$key] = Category::
-            leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
-                ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
-                ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
-                ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
-                ->select(
-                    'categoria.cd_categoria',
-                    'categoria.nm_categoria',
-                    'sub_categoria.cd_sub_categoria',
-                    'sub_categoria.nm_sub_categoria'
-                )
-                ->where('menu.cd_menu', '=', $menu->cd_menu)
-                ->get();
+        $menuNavegacao = NavigationMenu::all();
+        //dd($menuNavegacao[0]->menu_ativo);
+        //dd(count($menuNavegacao));
+
+        if(count($menuNavegacao) > 0) {
+            if ($menuNavegacao[0]->menu_ativo == 1) {
+                //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+                foreach ($menuNav as $key => $menu) {
+                    $categoriaSubCat[$key] = Category::
+                    leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                        ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                        ->select(
+                            'categoria.cd_categoria',
+                            'categoria.nm_categoria',
+                            'sub_categoria.cd_sub_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                        )
+                        ->where('menu.cd_menu', '=', $menu->cd_menu)
+                        ->get();
+                }
+            } else {
+                $categoriaSubCat = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                    ->join('ordem_categoria', 'ordem_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                    ->select(
+                        'categoria.cd_categoria',
+                        'categoria.nm_categoria',
+                        'sub_categoria.cd_sub_categoria',
+                        'sub_categoria.nm_sub_categoria'
+                    )
+                    ->orderBy('ordem_categoria.cd_ordem_categoria')
+                    ->get();
+            }
         }
+
+        //dd($categoriaSubCat);
 
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto', 'DESC')->limit(20); //Por que 20? Pq o Felipe quiz
 
-        if (count($produtos->get()->toArray()) > 0) {
+        //dd($produtos->get());
+
+        if (count($produtos->get()->toArray()) > 8) {
             $produtos = $produtos->get()->random(8);
         }
         
@@ -51,7 +76,7 @@ class HomeController extends Controller
             $nome = null;
         }
 
-        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome', 'categoriaSubCat', 'menuNav'));
+        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome', 'categoriaSubCat', 'menuNav', 'menuNavegacao'));
     }
 
     public function showIndexAdminPage()

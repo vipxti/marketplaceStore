@@ -478,7 +478,7 @@
                     buscaProdutos(proxPag);
                 }
                 else{
-                    swal("Ops", "Escohla uma página válida", "info");
+                    swal("Ops", "Escolha uma página válida", "info");
                 }
             });
 
@@ -810,7 +810,7 @@
                             var objProd = JSON.parse(data);
 
                             if(objProd.retorno.erros[0].erro.cod == 14){
-                                swal("Ops", "Esta é a ultima página.", "info");
+                                swal("Ops", "Esta página não existe.", "info");
                                 proxPag--;
                             }
 

@@ -1,6 +1,7 @@
 @extends('layouts.admin.app')
 
 @section('content')
+    <!-- ESTILO DO BOTÃO TRANSPARENTE NA TABLE -->
     <style type="text/css">
         /*deixar botão transparente*/
         button {
@@ -29,6 +30,7 @@
         }
     </style>
 
+    <!-- ESTILO DO CHECKBOX DA APPLE -->
     <style type="text/css">
         /* Estilo iOS */
         .mHswitch{
@@ -124,6 +126,20 @@
         .switch--flat:checked + label:after {
             margin-left: 60px;
             background-color: #8ce196;
+        }
+    </style>
+
+    <!-- ESTILO DA APRESENTAÇÃO DAS IMAGENS -->
+    <style type="text/css">
+        .imagem_produto:hover{
+            opacity: 0.5;
+            cursor: pointer;
+        }
+
+        .imagem_principal{
+            border-style: dashed;
+            border-color: #0f0f0f;
+            border-width: 3px;
         }
     </style>
     <link rel="stylesheet" href="{{ asset('css/admin/btInterativo.css') }}">
@@ -268,7 +284,7 @@
                                                             <label>Código (SKU)</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                                                                <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" required maxlength="20">
+                                                                <input id="campo_sku" type="text" class="form-control campo_sku" name="cd_sku" required readonly maxlength="20">
 
                                                             </div>
                                                             <i class="msg_sku"></i>
@@ -430,20 +446,39 @@
 
                                                 </div>
 
+                                                <p>&nbsp;</p>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Imagens já salvas: (clique sobre a imagem para apagar)</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="divImages" class="row">
+                                                    {{--<div class="col-md-3 imagem_produto">
+                                                        <img src="{{ URL::asset('img/products/Maquiagem/labios/L701 Arrumar6_1.jpeg') }}"
+                                                             alt="Imagem"
+                                                             style="width: 150px; height: 220px;">
+                                                    </div>--}}
+
+                                                </div>
+                                                <p>&nbsp;</p>
+
                                                 <!-- Imagens e Status -->
-                                                {{--<div class="row">
+                                                <div class="row">
 
                                                     <div class="col-md-6">
 
                                                         <div class="form-group">
-                                                            <label>Imagens</label>
+                                                            <label>Adicionar imagens</label>
                                                             <div class="file-loading">
                                                                 <input id="input-41" name="images[]" type="file" accept="image/*" multiple>
                                                             </div>
                                                         </div>
 
                                                     </div>
-                                                </div>--}}
+                                                </div>
 
                                                 <!-- Botões Salvar -->
                                                 <div class="row">
@@ -512,6 +547,67 @@
 
         var clicou=false;
 
+        $('#modal-default').on('hide.bs.modal', function(){
+            $('#divImages').empty();
+            console.log("modal fechou");
+        });
+
+        function ativaEventos(){
+            $('.imagem_produto').click(function(){
+                let caminho_imagem = $(this).find('img').attr('value');
+                let url_atual = window.location.href;
+                let div_img = $(this);
+                //console.log(div_img);
+
+                swal({
+                    title: "Atenção",
+                    text: "Deseja deletar esta imagem?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                            var sku = $('#campo_sku').val();
+                            console.log('deletou');
+                            console.log(caminho_imagem);
+
+                            $.ajax({
+                                url: '{{route('product.delete.image')}}',
+                                type: 'post',
+                                data: {_token: CSRF_TOKEN, cd_sku: sku, img_path: caminho_imagem},
+                                success: function(data){
+                                    console.log(data);
+                                    if(data.deuErro === false){
+                                        //window.location.href = url_atual;
+                                        /*div_img.fadeOut(1000);
+                                        div_img.remove();*/
+
+                                        div_img.fadeOut(1000,function(){
+                                            console.log('desapareceu');
+                                            div_img.remove();
+                                        });
+                                    }
+                                    else{
+                                        swal('Ops', 'Ocorreu um erro ao tentar apagar a imagem.', 'warning');
+                                    }
+
+                                },
+                                error: function(data){
+
+                                }
+                            })
+                        }
+                    });
+            });
+
+            $('.campo_desc').on("input", function () {
+                contarPalavras();
+            });
+        }
+
+
         $('.switch').click(function(){
             if(!clicou){
                 $(this).removeAttr('checked');
@@ -552,35 +648,57 @@
             //$('.mHswitch').click();
         });
 
+        function msgAguarde(){
+            $('#categorias').empty();
+            $('#subcategorias').empty();
+            $('#categorias').append(`<option value="">Aguarde...</option>`);
+            $('#subcategorias').append(`<option value="">Aguarde...</option>`);
+            $('.campo_nome').val('Aguarde...');
+            $('#campo_sku').val('Aguarde...');
+            $('#campo_ean').val('Aguarde...');
+            $('.campo_preco').val('Aguarde...');
+            $('.campo_qtd').val('Aguarde...');
+            $('.campo_largura').val('Aguarde...');
+            $('.campo_altura').val('Aguarde...');
+            $('.campo_comprimento').val('Aguarde...');
+            $('.campo_peso').val('Aguarde...');
+        }
+
         var categoriaProd = "";
         var cdCategoriaProd = "";
+        var subCategoriaProd = "";
         var clicouOriginal = clicou;
         $('button#btn_editar').click(function(){
             var campoTR = $(this).parent().parent();
             var sku = campoTR.find('td:eq(1)').html();
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             clicouOriginal = clicou;
+
+            msgAguarde();
+
             $.ajax({
                 url: '{{route('verify.sku.products')}}',
                 type: 'POST',
                 data: {_token: CSRF_TOKEN, sku: sku},
                 success: function(data){
                     console.log(data);
-                    console.log(data[0].nm_produto);
+                    /*console.log(data[0][0].nm_produto);
+                    console.log(data[1]);*/
 
-                    $('.campo_nome').val(data[0].nm_produto);
-                    $('#campo_sku').val(data[0].cd_nr_sku);
-                    $('#campo_ean').val(data[0].cd_ean);
-                    categoriaProd = data[0].nm_categoria;
-                    cdCategoriaProd = data[0].cd_categoria;
-                    $('.campo_preco').val(data[0].vl_produto);
-                    $('.campo_qtd').val(data[0].qt_produto);
-                    $('.campo_largura').val(data[0].ds_largura);
-                    $('.campo_altura').val(data[0].ds_altura);
-                    $('.campo_comprimento').val(data[0].ds_comprimento);
-                    $('.campo_peso').val(data[0].ds_peso);
+                    $('.campo_nome').val(data[0][0].nm_produto);
+                    $('#campo_sku').val(data[0][0].cd_nr_sku);
+                    $('#campo_ean').val(data[0][0].cd_ean);
+                    categoriaProd = data[0][0].nm_categoria;
+                    cdCategoriaProd = data[0][0].cd_categoria;
+                    subCategoriaProd = data[0][0].nm_sub_categoria;
+                    $('.campo_preco').val(data[0][0].vl_produto);
+                    $('.campo_qtd').val(data[0][0].qt_produto);
+                    $('.campo_largura').val(data[0][0].ds_largura);
+                    $('.campo_altura').val(data[0][0].ds_altura);
+                    $('.campo_comprimento').val(data[0][0].ds_comprimento);
+                    $('.campo_peso').val(data[0][0].ds_peso);
 
-                    if(data[0].cd_status_produto == 1){
+                    if(data[0][0].cd_status_produto == 1){
                         console.log("Produto Ativado");
                         $('#switch-shadow').attr('checked', 'checked');
                         $('.mHswitch').text("Produto Ativado");
@@ -594,12 +712,43 @@
                     }
 
                     $('.campo_desc').text("");
-                    $('.campo_desc').text(data[0].ds_produto);
+                    $('.campo_desc').text(data[0][0].ds_produto);
                     contarPalavras();
 
-                    $('.campo_desc').on("input", function () {
-                        contarPalavras();
+                    $.each(data[1], function(i, v){
+                        console.log("indice: " + i + " : valor: "+ v.im_produto);
+                        console.log("imagem principal: " + v.ic_img_principal);
+                        let caminho = v.im_produto;
+
+                        $('#divImages').append('<div id="divImProd' + i + '" class="col-md-3 imagem_produto"></div>');
+
+                        let img;
+                        if(v.ic_img_principal == 1) {
+                            img = $('<img />', {
+                                id: 'idImagem',
+                                src: '{{ URL::asset('img/products' . '/') }}' + '/' + caminho,
+                                //src: v.im_produto,
+                                alt: data[0][0].nm_produto,
+                                class: 'imagem_principal',
+                                value: caminho,
+                                style: 'width: 150px; height: 220px;'
+                            });
+                        }
+                        else{
+                            img = $('<img />', {
+                                id: 'idImagem',
+                                src: '{{ URL::asset('img/products' . '/') }}' + '/' + caminho,
+                                //src: v.im_produto,
+                                alt: data[0][0].nm_produto,
+                                value: caminho,
+                                style: 'width: 150px; height: 220px;'
+                            });
+                        }
+
+                        img.appendTo($('#divImProd'+i));
                     });
+
+                    ativaEventos();
 
                 }
             }).done(function(){
@@ -617,16 +766,38 @@
                             $('#categorias').append(`<option value="` + categoria.cd_categoria + `">` + categoria.nm_categoria + `</option>`);
 
                             if(categoriaProd == categoria.nm_categoria){
-                                $('option[value=' + categoria.cd_categoria + ']').prop('selected', 'true');
+                                $('#categorias option[value=' + categoria.cd_categoria + ']').prop('selected', 'true');
                             }
                         });
                     }
                 }).done(function(){
-                    buscaSubCategoria(cdCategoriaProd);
+                    buscaSubCatModal(cdCategoriaProd, subCategoriaProd);
                 });
 
             });
         });
+
+        function buscaSubCatModal(cdCategoria, subCategoriaProd){
+            $.ajax({
+                url: '{{ url('/admin/subcat') }}/' + cdCategoria,
+                type: 'GET',
+                success: function (data) {
+
+                    $('#subcategorias').empty();
+
+                    $.each(data.subcat, function(index, subcategoria) {
+
+                        $('#subcategorias').append(`<option value="` + subcategoria.cd_sub_categoria + `">` + subcategoria.nm_sub_categoria + `</option>`);
+
+
+                        if(subCategoriaProd == subcategoria.nm_sub_categoria){
+                            $('#subcategorias option[value=' + subcategoria.cd_sub_categoria + ']').prop('selected', 'true');
+                        }
+                    });
+
+                }
+            });
+        }
 
         $('#categorias').change(function(){
             var cdCategoria = $(this).val();

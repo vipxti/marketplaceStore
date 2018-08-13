@@ -134,8 +134,9 @@
 
             </div>
 
-            <div class="row">
 
+            <div class="row">
+                <!-- FORMA DE APRESENTAÇÃO -->
                 <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -148,10 +149,16 @@
                         </div>
                         <div class="box-body">
                             <div class="col-md-12">
-                                <label>Escolha a forma de apresentação do menu de navegação no site:</label>
+                                <p class="form-group">Escolha a forma de apresentação do menu de navegação no site:</p>
                                 <div class="form-group">
-                                    <div class="col-md-6">
-                                        @if($menuNavegacao == 1)
+                                    <div class="col-md-12">
+
+                                        @if(count($menuNavegacao) == 0)
+                                            <input type="radio" id="radioMenu" name="radioNav" val="1">
+                                            <label for="radioMenu">Menu</label><br>
+                                            <input type="radio" id="radioCat" name="radioNav" val="0">
+                                            <label for="radioCat">Categoria</label>
+                                        @elseif($menuNavegacao == 1)
                                             <input type="radio" id="radioMenu" name="radioNav" val="1" checked>
                                             <label for="radioMenu">Menu</label><br>
                                             <input type="radio" id="radioCat" name="radioNav" val="0">
@@ -163,11 +170,93 @@
                                             <label for="radioCat">Categoria</label>
                                         @endif
                                     </div>
+                                    <p>&nbsp;</p>
+                                    <div class="col-md-12">
+
+                                        <button id="btnFormaApresentacao"
+                                                type="button"
+                                                class="btn btn-success pull-right">
+                                                <i class="fa fa-save"></i>
+                                                &nbsp;&nbsp;Salvar Escolha
+                                        </button>
+                                        <button id="btnEscolhaCat"
+                                                type="button"
+                                                class="btn btn-primary"
+                                                data-toggle="modal"
+                                                data-target="#modal-default"
+                                                style="display:none;">
+                                                <i class="fa fa-bars"></i>
+                                                &nbsp;&nbsp;Escolher Categorias
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- MODAL ESCOLHA DE CATEGORIAS -->
+                <form action="{{route('menu.save.category.order')}}" method="post" enctype="multipart/form-data">
+
+                    <div class="modal fade" id="modal-default">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Escolher categorias para o menu</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+
+                                        {{ csrf_field() }}
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Escolha as categorias e sua ordem para aparecer no menu do site.</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- FOR DO SELECT DAS CATEGORIA -->
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <div class="form-group">
+                                                            <label>{{$i}}ª Categoria</label>
+                                                            <div class="input-group">
+                                                                <input id="ordemCategoria{{$i}}" type="text" hidden value="{{$i}}" name="ordem_categoria">
+                                                                <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                                                                <select id="fkCodCategoria{{$i}}" class="form-control form-control select2-selection select2-selection--single" style="width: 100%;" name="fk_cd_categoria">
+                                                                    <option selected value=""></option>
+                                                                    @foreach($categorias as $categoria)
+                                                                        <option value="{{ $categoria->cd_categoria }}">{{ $categoria->nm_categoria }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endfor
+
+                                        </div>
+                                        <!-- .col-md-12-->
+                                    </div>
+                                    <!-- .row-->
+                                </div>
+                                <!-- .modal-body-->
+                                <div class="modal-footer">
+                                    <button id="btnSairModal" type="button" class="btn btn-default pull-left" data-dismiss="modal">Sair</button>
+                                    <button id="btnUpdateEscolha" type="button" class="btn btn-primary">Salvar Escolhas</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+                </form>
 
                 <!-- Lista das categorias cadastradas -->
                 <div class="col-md-6">
@@ -236,10 +325,143 @@
             verificaCat = false;
         }
 
-       $('#radioMenu').click(function(){
-            $.ajax({
+        $('#radioCat').click(function(){
+            verificaRadioCat();
+        });
 
-            })
+        $('#radioMenu').click(function(){
+            verificaRadioCat();
+        });
+
+        $('#btnUpdateEscolha').click(function(){
+            console.log("oi");
+            $('#btnSairModal').click();
+            $.blockUI({
+                message: 'Salvando...',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                }
+            });
+
+            salvarOrdemCategoria(1);
+        });
+
+        $('#btnEscolhaCat').click(function(){
+            consultadOrdemCategoria()
+        });
+
+        function consultadOrdemCategoria(){
+            $.ajax({
+                url: '{{route('menu.consult.category.order')}}',
+                type: 'GET',
+                success: function(data){
+                    $.each(data.ordem, function(i, v){
+
+                        $('#fkCodCategoria'+v.cd_ordem_categoria+' option[value='+v.fk_cd_categoria+']').prop('selected', 'true');
+
+                    });
+                }
+            });
+        }
+
+        var deuErro;
+        function salvarOrdemCategoria(contador){
+            let ordem = $('#ordemCategoria' + contador).val();
+            let cdCategoria = $('#fkCodCategoria' + contador).val();
+            let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            console.log(ordem);
+            console.log(cdCategoria);
+
+            if(cdCategoria == ''){
+                console.log(ordem + ': Vazio');
+            }
+
+
+            $.ajax({
+                url: '{{route('menu.save.category.order')}}',
+                type: 'POST',
+                data: {
+                    _token: CSRF_TOKEN, ordem_categoria: ordem,
+                    fk_cd_categoria: cdCategoria, codVerificador: contador
+                },
+                success: function(data) {
+                    console.log(data.deuErro);
+                    deuErro = data.deuErro;
+                },
+                error: function() {
+
+                }
+            }).done(function() {
+                if(contador<5)
+                    salvarOrdemCategoria(++contador);
+                else
+                    window.location.href = '{{route('menu.edit')}}';
+            });
+
+        }
+
+        $(function () {
+            verificaRadioCat();
+        });
+
+        function verificaRadioCat(){
+            if($('#radioCat').is(':checked')){
+                $('#btnEscolhaCat').css('display', 'block');
+            }
+            else{
+                $('#btnEscolhaCat').css('display', 'none');
+            }
+        }
+
+       $('#btnFormaApresentacao').click(function(){
+           console.log("oi");
+           var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+           let valor_menu;
+
+           if($('#radioMenu').is(':checked')){
+               valor_menu = 1;
+           }
+           else{
+            valor_menu = 0;
+           }
+
+           $.blockUI({
+               message: 'Salvando...',
+               css: {
+                   border: 'none',
+                   padding: '15px',
+                   backgroundColor: '#000',
+                   '-webkit-border-radius': '10px',
+                   '-moz-border-radius': '10px',
+                   opacity: .5,
+                   color: '#fff'
+               }
+           });
+
+            $.ajax({
+               url: "{{route('menu.control.nav')}}",
+               type: 'POST',
+               data: {_token: CSRF_TOKEN, menu_ativo: valor_menu},
+               success: function(data){
+                    console.log("menu salvo: " + data.message);
+                   $.unblockUI();
+                   if(data.message == "sucesso")
+                       swal("Sucesso", "Forma de apresentação salva com sucesso!", "success");
+                   else
+                       swal("Erro", "Ocorreu um erro ao tentar salvar forma de apresentação!", "error");
+               },
+               error: function(data){
+                   console.log("ocorreu erro: " + data.message);
+                   $.unblockUI();
+                   swal("Erro", "Ocorreu um erro ao tentar salvar forma de apresentação!", "error");
+               }
+            });
        });
 
         $('#btnSalvarCat').click(function(){

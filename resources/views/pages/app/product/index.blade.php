@@ -63,7 +63,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 d-flex justify-content-center">
-                                <div class="shop_pagination_area wow fadeInUp" data-wow-delay="1.1s">
+                                <div class="shop_pagination_area wow" data-wow-delay="1.1s">
                                     <nav aria-label="Page navigation">
                                         {{ $produtos->links() }}
                                     </nav>

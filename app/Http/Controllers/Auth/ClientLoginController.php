@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Menu;
+use App\NavigationMenu;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientLoginRequest;
@@ -22,24 +23,45 @@ class ClientLoginController extends Controller
     {
         $menuNav =  Menu::all();
 
-        //Carrega as categorias e subcategorias para serem apresentadas no menu nav
-        foreach ($menuNav as $key=>$menu) {
-            $categoriaSubCat[$key] = Category::
-            leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
-                ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
-                ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
-                ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
-                ->select(
-                    'categoria.cd_categoria',
-                    'categoria.nm_categoria',
-                    'sub_categoria.cd_sub_categoria',
-                    'sub_categoria.nm_sub_categoria'
-                )
-                ->where('menu.cd_menu', '=', $menu->cd_menu)
-                ->get();
+        $menuNavegacao = NavigationMenu::all();
+        //dd($menuNavegacao[0]->menu_ativo);
+
+        if(count($menuNavegacao) > 0) {
+            if ($menuNavegacao[0]->menu_ativo == 1) {
+                //Carrega as categorias e subcategorias para serem apresentadas no menu nav
+                foreach ($menuNav as $key => $menu) {
+                    $categoriaSubCat[$key] = Category::
+                    leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->leftJoin('menu_categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                        ->leftJoin('menu', 'menu.cd_menu', '=', 'menu_categoria.fk_cd_menu')
+                        ->select(
+                            'categoria.cd_categoria',
+                            'categoria.nm_categoria',
+                            'sub_categoria.cd_sub_categoria',
+                            'sub_categoria.nm_sub_categoria'
+                        )
+                        ->where('menu.cd_menu', '=', $menu->cd_menu)
+                        ->get();
+                }
+            } else {
+                $categoriaSubCat = Category::leftJoin('categoria_subcat', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->leftJoin('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                    ->join('ordem_categoria', 'ordem_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                    ->select(
+                        'categoria.cd_categoria',
+                        'categoria.nm_categoria',
+                        'sub_categoria.cd_sub_categoria',
+                        'sub_categoria.nm_sub_categoria'
+                    )
+                    ->orderBy('ordem_categoria.cd_ordem_categoria')
+                    ->get();
+            }
         }
 
-        return view('pages.app.auth.login', compact('menuNav', 'categoriaSubCat'));
+
+
+        return view('pages.app.auth.login', compact('menuNav', 'categoriaSubCat', 'menuNavegacao'));
     }
 
     public function login(ClientLoginRequest $request)

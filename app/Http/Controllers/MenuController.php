@@ -9,6 +9,7 @@ use App\Http\Requests\MenuRequest;
 use App\Http\Requests\MenuCategoryRequest;
 use App\NavigationMenu;
 use App\SubMenu;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MenuController extends Controller
@@ -18,13 +19,87 @@ class MenuController extends Controller
         $menus = Menu::all();
         $categorias = Category::all();
         $menuNavegacao = NavigationMenu::all();
-        $menuNavegacao = $menuNavegacao->toArray()[0]['menu_ativo'];
+
+        if(count($menuNavegacao) != 0){
+            $menuNavegacao = $menuNavegacao->toArray()[0]['menu_ativo'];
+        }
 
         return view('pages.admin.indexMenu', compact('menus', 'categorias', 'menuNavegacao'));
 
     }
 
+    public function salvarOrdemCategoria(Request $request){
+        //dd($request->all());
+
+        if($request->codVerificador == 1){
+            DB::table('ordem_categoria')->delete();
+        }
+
+        $ordem = DB::table('ordem_categoria')
+                    ->where('fk_cd_categoria', '=', $request->fk_cd_categoria)
+                    ->get();
+
+        if(count($ordem) > 0){
+            return response()->json([
+                'deuErro' => true
+            ]);
+        }
+        else{
+            if($request->fk_cd_categoria != '') {
+                DB::table('ordem_categoria')->insert([
+                    'cd_ordem_categoria' => $request->ordem_categoria,
+                    'fk_cd_categoria' => $request->fk_cd_categoria
+                ]);
+            }
+        }
+
+        return response()->json([
+            'deuErro' => false
+        ]);
+    }
+
+    public function consultarOrdemCategorias(){
+        $resultado = DB::table('ordem_categoria')->get();
+
+        //dd($resultado);
+
+        return response()->json([
+            "ordem" => $resultado
+        ]);
+    }
+
     public function controleMenuNav(NavigationMenuRequest $request){
+
+        $menuNavegacao = NavigationMenu::all();
+
+        if(count($menuNavegacao) == 0){
+            try{
+                NavigationMenu::firstOrCreate([
+                    'menu_ativo' => $request->menu_ativo
+                ]);
+                $mensagem = "sucesso";
+            }
+            catch(\Exception $ex){
+                $mensagem = "erro";
+            }
+        }
+        else{
+            try{
+                DB::table('menu_ou_categoria')
+                    ->where('menu_ativo', '=', $menuNavegacao->toArray()[0]['menu_ativo'])
+                    ->update(['menu_ativo' => $request->menu_ativo]);
+
+                $mensagem = "sucesso";
+            }
+            catch(\Exception $ex){
+                $mensagem = "erro";
+            }
+
+        }
+
+        return response()->json([
+            "message" => $mensagem
+        ]);
 
     }
 
@@ -65,6 +140,7 @@ class MenuController extends Controller
             }
         }
     }
+
     public function novoMenu($nomeMenu)
     {
         $qtd_menus = $this->consultaMenu();
@@ -97,6 +173,7 @@ class MenuController extends Controller
         $menu->nm_menu= $nomeMenu;
         $menu->save();
     }
+
     public function delMenu($cdMenu)
     {
         $resultado = DB::table('menu')->select('cd_menu')-> where('cd_menu', '=', $cdMenu)->get();
@@ -115,16 +192,39 @@ class MenuController extends Controller
 
         foreach ($request->fk_cd_categorias as $cd_categoria) {
 
-            try {
-                DB::table('menu_categoria')->insert([
-                    'fk_cd_menu' => $request->fk_cd_menu,
-                    'fk_cd_categoria' => $cd_categoria
-                ]);
-            } catch (\Exception $e) {
-                return redirect()->route('menu.edit')->with('nosuccess', 'Erro ao realizar a associação');
+            $temAssociacao =  $this->consultaAssociacaoMenus($request->fk_cd_menu, $cd_categoria);
+
+            if(!$temAssociacao) {
+                try {
+                    DB::table('menu_categoria')->insert([
+                        'fk_cd_menu' => $request->fk_cd_menu,
+                        'fk_cd_categoria' => $cd_categoria
+                    ]);
+                } catch (\Exception $e) {
+                    return redirect()->route('menu.edit')->with('nosuccess', 'Erro ao realizar a associação');
+                }
+            }
+            else{
+                return redirect()->route('menu.edit')->with('nosuccess', 'Associação '.$request->fk_cd_menu.' -> '.$cd_categoria.' já é existente.');
             }
         }
         return redirect()->route('menu.edit')->with('success', 'Associações realizadas com sucesso');
+    }
+
+    public function consultaAssociacaoMenus($cd_menu, $cd_categoria){
+
+        $menu = DB::table('menu_categoria')
+            ->where('fk_cd_menu', '=', $cd_menu)
+            ->where('fk_cd_categoria', '=', $cd_categoria)
+            ->get();
+
+        if(count($menu) > 0)
+            $temAssociacao = true;
+        else
+            $temAssociacao = false;
+
+        return $temAssociacao;
+
     }
 
     public function saveMenus(MenuRequest $request) {
