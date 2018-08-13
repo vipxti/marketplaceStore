@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
+    //GERA ID DO VENDEDOR
+    public function showSalesman (){
+        $idSalesman = '';
+        $cnpj = '' ;
+        $dadosCompany = $this-> getCompanyData();
+        $names = explode(' ' ,$dadosCompany[0]->nm_razao_social);
+        foreach ($names as $name){$idSalesman .= substr($name,0,1);}
+        $cnpj = $dadosCompany[0]->cd_cnpj;
+        $cnpj = substr($cnpj,12, 2);
+        $idSalesman = $idSalesman.$cnpj.'-';
+        return $idSalesman;
+    }
+
     public function showCheckoutPage()
     {
         $cart = Session::get('cart');
@@ -135,8 +148,12 @@ class PaymentController extends Controller
             $pagSeguroData['itemQuantity' . ($key + 1)] = strval($product['qtdIndividual']);
         }
 
+        //HASH DE PAGAMENTO
         $pagSeguroData['notificationURL'] = '';
-        $pagSeguroData['reference'] = uniqid('maktub', true);
+        $pagSeguroData['reference'] = uniqid($this->showSalesman(), true);
+
+        $pagSeguroData['notificationURL'] = '';
+        $pagSeguroData['reference'] = uniqid($this->showSalesman(), true);
 
         $clientData = $this->getClientData($request->cd_cliente);
 
@@ -245,8 +262,6 @@ class PaymentController extends Controller
 
     public function creditCardPayment(Request $request)
     {
-        //dd($request->all());
-
         $pagSeguroData = [];
         $cartProducts = Session::get('cart');
         $shippingData = Session::get('shippingData');
@@ -273,7 +288,7 @@ class PaymentController extends Controller
         }
 
         $pagSeguroData['notificationURL'] = '';
-        $pagSeguroData['reference'] = uniqid('cp', true);
+        $pagSeguroData['reference'] = uniqid($this->showSalesman(), true);
 
         $clientData = $this->getClientData($request->cd_cliente);
 
@@ -394,6 +409,11 @@ class PaymentController extends Controller
     public function getClientData($codCliente)
     {
         return Cli::join('telefone', 'telefone.cd_telefone', 'cliente.cd_telefone')->join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'cliente_endereco.cd_endereco', 'endereco.cd_endereco')->join('bairro', 'endereco.cd_bairro', 'bairro.cd_bairro')->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->join('uf', 'cidade.cd_uf', 'uf.cd_uf')->select('cliente.nm_cliente', 'cliente.cd_cpf_cnpj', 'endereco.ds_endereco', 'cliente_endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'endereco.cd_cep', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'cliente.email', 'telefone.cd_celular1')->where('cliente.cd_cliente', '=', $codCliente)->where('cliente_endereco.ic_principal', '=', 1)->get()->toArray();
+    }
+
+    public function getCompanyData(){
+        $company =  DB::table('dados_empresa')->get()->toArray();
+        return $company;
     }
 
     public function saveOrder($valorTotal, $codStatus, $codReferencia, $codPagSeguro, $dataCompra, $valorFrete, $codCliente)

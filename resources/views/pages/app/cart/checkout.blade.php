@@ -5,57 +5,22 @@
     <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
 
     <div class="container">
-
         <input type="hidden" id="orderValue" name="orderValue" value="{{ Session::get('totalPrice') }}">
         <input type="hidden" id="cardToken" name="cardToken" value="">
-
         <p>&nbsp;</p>
-
         <p class="h3 text-center">Formas de pagamento</p>
-
         <p>&nbsp;</p>
-
         <ul class="nav nav-tabs nav-fill">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#ticket">Boleto</a>
+                <a class="nav-link active" data-toggle="tab" href="#creditCard">Cartão de crédito</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#creditCard">Cartão de crédito</a>
+                <a class="nav-link " data-toggle="tab" href="#ticket">Boleto</a>
             </li>
         </ul>
-
         <!-- Tab panes -->
-        <div class="tab-content">
-
-            <div class="tab-pane container active" id="ticket">
-
-                <div class="row">
-
-                    <div class="col-12 col-md-8 offset-md-2">
-
-                        <p>&nbsp;</p>
-
-                        <p class="h5 text-justify">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod odio perferendis inventore, aut qui fuga labore voluptates, sed repellat vel itaque excepturi quam quos velit quas dolorem. Et, ipsa dignissimos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus voluptas cumque sit, voluptatibus voluptatum quia officiis facere omnis assumenda nam optio, odit aperiam vero libero. Quia dolore quisquam quo inventore.
-                        </p>
-
-                    </div>
-
-                    <div class="col-12 col-md-8 offset-md-2">
-
-                        <p>&nbsp;</p>
-
-                        <a href="{{ route('payment.order.ticket.details')}}" class="btn btn-template col-12 col-md-6 offset-md-6" style="width: 100%">Prosseguir</a>
-
-                    </div>
-
-                </div>
-
-                <p>&nbsp;</p>
-
-            </div>
-
-            <div class="tab-pane container fade" id="creditCard">
+        <div class="tab-content" style="border-left: 1px solid #dee2e6; border-right: 1px solid #dee2e6; border-bottom: 1px solid #dee2e6; margin-bottom: 2.5%;" >
+            <div class="tab-pane container  active" id="creditCard">
 
                 <div class="col-12">
 
@@ -108,7 +73,7 @@
                                                     <option value="{{ $month }}">{{ $month }}</option>
                                                 @endif
                                             @endforeach
-                                        </select>                                    
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +87,7 @@
                                             @foreach ($years as $year)
                                                 <option value="{{ $year }}">{{ $year }}</option>
                                             @endforeach
-                                        </select> 
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -134,11 +99,7 @@
 
                             <div class="col-12 col-md-4 offset-md-4 d-flex justify-content-center">
 
-                                <button id="generateInstallments" type="button" class="btn btn-template">
-
-                                    Gerar parcelamento
-
-                                </button>
+                                <button id="generateInstallments" type="button" class="btn btn-template">Escolher Parcelas</button>
 
                             </div>
 
@@ -159,7 +120,8 @@
                                 <div class="form-line">
 
                                     <label class="form-label" style="font-size: 0.9rem;">Parcelas</label>
-                                    <select id="installmentsOptions" name="installments" class="form-control" style="font-size: 0.9rem; padding-top: 7px; padding-bottom: 7px;"></select>
+                                    <select id="installmentsOptions" name="installments" class="form-control" style="font-size: 0.9rem; padding-top: 7px; padding-bottom: 7px;">
+                                    </select>
 
                                 </div>
 
@@ -188,11 +150,11 @@
                             <div class="card-header text-center">
 
                                 Cartões disponíveis para pagamento
-                        
+
                             </div>
 
                             <div class="card-body">
-                            
+
                                 <div id="imagesCard" class="col-12 col-md-8 offset-md-2 text-center"></div>
 
                             </div>
@@ -204,9 +166,29 @@
                 </div>
 
             </div>
-            
+            <div class="tab-pane container fade" id="ticket">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <br>
+                        <div class="text-justify" style="padding: 0 15px">
+                            <h3>IMPORTANTE</h3>
+                            <p>O Boleto Bancário será exibido após a confirmação da sua compra e poderá ser impresso para pagamento em qualquer agência bancária ou casas lotéricas.</p>
+                            <p>Para sua comodidade, você poderá reimprimir seu boleto acessando a página “Meus Pedidos”, Você terá 2 dias úteis para efetuar o pagamento do boleto.</p>
+                            <p>O pagamento do boleto não pode ser parcelado. O pedido só será aprovado se o pagamento for realizado no valor integral do boleto.</p>
+                            <p>Não pague outro valor. O prazo de entrega, dos pedidos com boleto, começa a contar após a confirmação do pagamento pela instituição financeira.</p>
+                            <p>Em caso de não pagamento do boleto, seu pedido será cancelado. O boleto será válido somente para este pedido.</p>
+                            <p>Caso você queira repetir a compra, não pague o boleto novamente, realize um novo pedido.</p>
+                            <p><b>*Tarifa de boleto: R$ 1,00.</b></p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <p> </p>
+                        <a href="{{ route('payment.order.ticket.details')}}" class="btn btn-template col-12 col-md-6 offset-md-6" style="width: 100%">Prosseguir</a>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+            </div>
         </div>
-
     </div>
     
     <script src="{{asset('js/app/waves.js')}}"></script>
