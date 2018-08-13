@@ -16,6 +16,26 @@
                 </div>
             </div>--}}
 
+            @if (Auth::check())
+                
+                <input type="hidden" id="logged" name="logged" value="true">
+
+            @else
+
+                <input type="hidden" id="logged" name="logged" value="false">
+
+            @endif
+
+            @if ($cep == null)
+                
+                <input type="hidden" id="no_address" name="no_address" value="true">
+
+            @else
+
+                <input type="hidden" id="no_address" name="no_address" value="false">
+                
+            @endif
+
             <p>&nbsp;</p>
 
             @if(Session::get('cart') == null)
@@ -161,12 +181,21 @@
 
                                 @if (Auth::check())
 
-                                    <input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">
-                                    <input type="text" name="cep" id="cep" value="{{ $cep[0]['cd_cep'] }}">
+                                    @if ($cep == null)
+
+                                        <input type="hidden" id="cd_cep" name="cd_cep" value="">
+                                        <input type="text" name="cep" id="cep" value="">
+                                        
+                                    @else
+
+                                        <input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">
+                                        <input type="text" name="cep" id="cep" value="{{ $cep[0]['cd_cep'] }}">
+                                        
+                                    @endif                                    
 
                                 @else
 
-                                    <input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">
+                                    <input type="hidden" id="cd_cep" name="cd_cep" value="">
                                     <input type="text" name="cep" id="cep" value="">
                                     
                                 @endif
@@ -287,6 +316,8 @@
 
                             <li>
                                 <span>Subtotal</span>
+
+                                <input type="hidden" id="valorSubtotal" name="valorSubtotal" value="{{ Session::get('subtotalPrice') }}">
                                 
                                 <span id="precoSubTotal">
                                     R$ {{ number_format(strval(Session::get('subtotalPrice')), 2, ',', '.') }}
@@ -300,13 +331,13 @@
                                 @if (Session::has('shippingData'))
 
                                     <span id="precoFrete">
-                                        R$ {{ number_format(strval(Session::get('shippingData')[0]['valor']), 2, ',', '.') }}
+                                        R$ {{ number_format(Session::get('shippingData')[0]['valor'], 2, ',', '.') }}
                                     </span>
                                     
                                 @else
 
                                     <span id="precoFrete">
-                                        R$ ---
+                                        ---
                                     </span>
                                     
                                 @endif
@@ -320,7 +351,7 @@
                                 <input type="hidden"  id="valorTotal" name="valorTotal" value="{{ Session::get('totalPrice') }}">
                                 
                                 <span id="precoTotal">
-                                    <strong>R$ {{ number_format(strval(Session::get('totalPrice')), 2, ',', '.') }}</strong>
+                                    <strong>R$ {{ number_format(Session::get('totalPrice'), 2, ',', '.') }}</strong>
                                 </span>
 
                             </li>
@@ -356,7 +387,77 @@
 
         $(function () {
             
+            if (($('#logged').val() == 'true') && ($('#no_address').val() == 'false')) {
             
+                $.ajax({
+                    url: '{{ route('shipping.calculate') }}',
+                    type: 'POST',
+                    data: {
+                        _token: CSRF_TOKEN,
+                        cep: $('#cep').val(),
+                        width: $('#larguraTotal').val(),
+                        height: $('#alturaTotal').val(),
+                        length: $('#comprimentoTotal').val(),
+                        weight: $('#pesoTotal').val(),
+                        price: $('#valorTotal').val()
+                    },
+                    success: function (values) {
+
+                        $('#customRadio1').removeAttr('disabled')
+                        $('#customRadio2').removeAttr('disabled')
+
+                        let prazoPac = values.fretes.pac.prazo + 3;
+                        let prazoSedex = values.fretes.sedex.prazo + 3;
+
+                        if (prazoPac == 1) {
+                            
+                            $('#prazoPac').html(prazoPac + ' dia útil');
+
+                        } else {
+
+                            $('#prazoPac').html(prazoPac + ' dias úteis');
+
+                        }
+
+                        $('#precoPac').html('R$ ' + values.fretes.pac.valor[0]);
+
+                        if (prazoSedex == 1) {
+                            
+                            $('#prazoSedex').html(prazoSedex + ' dia útil');
+
+                        } else {
+
+                            $('#prazoSedex').html(prazoSedex + ' dias úteis');
+
+                        }
+
+                        $('#precoSedex').html('R$ ' + values.fretes.sedex.valor[0]);
+
+                    }
+                })
+
+            }
+            else {
+
+                let precoTotal = parseFloat($('#valorSubtotal').val()).toFixed(2)
+
+                console.log(precoTotal)
+
+                $('#cep').val('')
+
+                $('#precoPac').html('')
+                $('#prazoPac').html('')
+
+                $('#precoSedex').html('')
+                $('#prazoSedex').html('')
+                
+                $('#customRadio1').attr('disabled')
+                $('#customRadio2').attr('disabled')
+
+                $('#precoTotal').html('<strong>R$ ' + precoTotal.replace('.', ',') + '</strong>')
+
+                $('#precoFrete').html('---')
+            }
 
         })
 

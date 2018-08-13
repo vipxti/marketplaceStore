@@ -6,6 +6,12 @@
 
         <div class="row">
 
+            @include('partials.app._alerts')
+
+        </div>
+
+        <div class="row">
+
             <p>&nbsp;</p>
 
             <div class="col-12">

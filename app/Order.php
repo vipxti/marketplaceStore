@@ -12,6 +12,6 @@ class Order extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'vl_total', 'cd_status', 'dt_emissao', 'dt_ult_alteracao', 'cd_end_entrega', 'cd_pagseguro',
+        'vl_total', 'cd_status','cd_referencia', 'cd_pagseguro', 'dt_compra', 'vl_frete', 'cd_cliente'
     ];
 }

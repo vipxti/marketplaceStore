@@ -36,8 +36,10 @@ class HomeController extends Controller
 
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto', 'DESC')->limit(20); //Por que 20? Pq o Felipe quiz
 
-        if (count($produtos->get()->toArray()) > 0) {
+        if (count($produtos->get()->toArray()) >= 8) {
             $produtos = $produtos->get()->random(8);
+        } else {
+            $produtos = $produtos->get();
         }
         
         if (!Session::has('qtCart')) {

@@ -17,6 +17,7 @@ use App\Cidade;
 use App\Bairro;
 use App\Pais;
 use App\Endereco;
+use App\Order;
 
 class ClientController extends Controller
 {
@@ -38,6 +39,37 @@ class ClientController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro');
         }
+
+        //Consulta PagSeguro por código de referência e código da compra
+        $pagSeguroData['token'] ='4D97A178277542CAAB150D1096002DF1';
+        $pagSeguroData['email'] = 'vendas@vipx.com.br';
+
+        $orders = Order::where('cd_cliente', '=', Auth::user()->cd_cliente)->select('cd_referencia', 'cd_pagseguro')->get()->toArray();
+
+        $url = 'https://ws.pagseguro.uol.com.br/v2/transactions/';
+
+        foreach ($orders as $key => $order) {
+            $url .= $order['cd_pagseguro'];
+            $pagSeguroData['reference'] = $order['cd_referencia'];
+
+            $data = http_build_query($pagSeguroData);
+
+            $curl = curl_init($url);
+
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_URL, $url . '?' . $data);
+            curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+
+            $xml = curl_exec($curl);
+
+            curl_close($curl);
+
+            $xml = [ simplexml_load_string($xml) ];
+        }
+
+        dd($xml);
+
 
         $menuNav =  Menu::all();
 

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Phone;
 use App\Client as Cli;
+use App\Order;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -134,7 +136,7 @@ class PaymentController extends Controller
         }
 
         $pagSeguroData['notificationURL'] = '';
-        $pagSeguroData['reference'] = uniqid('cp', true);
+        $pagSeguroData['reference'] = uniqid('maktub', true);
 
         $clientData = $this->getClientData($request->cd_cliente);
 
@@ -177,11 +179,12 @@ class PaymentController extends Controller
 
         $xml = simplexml_load_string($xml);
 
-        dd($xml);
+        $orderDay = explode('T', strval($xml->date));
 
         $orderData = [
             'codigo' => strval($xml->code),
-            'dataCompra' => strval($xml->date),
+            'referencia' => strval($xml->reference),
+            'dataCompra' => $orderDay[0],
             'tipoPagamento' => 'boleto',
             'statusCompra' => strval($xml->status),
             'linkBoleto' => strval($xml->paymentLink),
@@ -198,6 +201,44 @@ class PaymentController extends Controller
         Session::push('orderData', $orderData);
 
         Session::save();
+
+        DB::beginTransaction();
+
+        try {
+            $order = $this->saveOrder($orderData['valorTotal'], $orderData['statusCompra'], $orderData['referencia'], $orderData['codigo'], $orderData['dataCompra'], $orderData['valorFrete'], $request->cd_cliente);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Houve um problema ao processar sua compra - Order');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Houve um problema ao processar sua compra - Order');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Erro ao conectar com o banco de dados - Order');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        try {
+            foreach ($cartProducts as $key => $product) {
+                $this->saveOrderItem($order->cd_pedido, $product['codProduto'], 1, $product['qtdIndividual']);
+            }
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Houve um problema ao processar sua compra - Item');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Houve um problema ao processar sua compra - Item');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Erro ao conectar com o banco de dados - Item');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        DB::commit();
 
         return redirect()->route('payment.result');
     }
@@ -355,7 +396,26 @@ class PaymentController extends Controller
         return Cli::join('telefone', 'telefone.cd_telefone', 'cliente.cd_telefone')->join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'cliente_endereco.cd_endereco', 'endereco.cd_endereco')->join('bairro', 'endereco.cd_bairro', 'bairro.cd_bairro')->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->join('uf', 'cidade.cd_uf', 'uf.cd_uf')->select('cliente.nm_cliente', 'cliente.cd_cpf_cnpj', 'endereco.ds_endereco', 'cliente_endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'endereco.cd_cep', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'cliente.email', 'telefone.cd_celular1')->where('cliente.cd_cliente', '=', $codCliente)->where('cliente_endereco.ic_principal', '=', 1)->get()->toArray();
     }
 
-    public function saveOrder()
+    public function saveOrder($valorTotal, $codStatus, $codReferencia, $codPagSeguro, $dataCompra, $valorFrete, $codCliente)
     {
+        return Order::create([
+            'vl_total' => floatval($valorTotal),
+            'cd_status' => $codStatus,
+            'cd_referencia' => $codReferencia,
+            'cd_pagseguro' => $codPagSeguro,
+            'dt_compra' => $dataCompra,
+            'vl_frete' => floatval($valorFrete),
+            'cd_cliente' => $codCliente
+        ]);
+    }
+
+    public function saveOrderItem($codPedido, $codProduto, $codTipoPagamento, $qtdProduto)
+    {
+        DB::table('pedido_produto')->insert([
+            'cd_pedido' => intval($codPedido),
+            'cd_produto' => intval($codProduto),
+            'cd_tipo_pagto' => $codTipoPagamento,
+            'qt_produto' => intval($qtdProduto)
+        ]);
     }
 }
