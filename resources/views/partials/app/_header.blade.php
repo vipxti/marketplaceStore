@@ -18,8 +18,8 @@
         <div class="search-area">
             <div class="search-area-inner d-flex align-items-center justify-content-center">
                 <div class="close-btn"><i class="icon-close"></i></div>
-                <form id="formPesquisa" action="{{route('productsFilterCatSubCat.page')}}" method="POST">
-                    {{csrf_field()}}
+                <form id="formPesquisa" action="{{route('productsFilterCatSubCat.page')}}" method="get">
+
                     <div class="form-group">
                         <input type="search" name="search" id="search" placeholder="Pesquisar produto...">
                         <input type="search" name="id" id="idProd" hidden>
@@ -38,8 +38,8 @@
                 <i class="fa fa-bars"></i>
             </button>
 
-            <form id="formLista" action="{{route('productsFilterCatSubCat.page')}}" method="post">
-                {{csrf_field()}}
+            <form id="formLista" action="{{route('productsFilterCatSubCat.page')}}" method="get">
+
                 <input type="search" name="id" id="idProdLista" hidden>
                 <input type="search" name="catSubCat" id="catSubCatProdLista" hidden>
             </form>
