@@ -53,16 +53,16 @@
                 <div class="site-links col-lg-2 col-md-6">
                     <h5 class="text-uppercase">Dúvidas</h5>
                     <ul class="list-unstyled">
-                        <li> <a href="#">Trocas e Devoluções</a></li>
-                        <li> <a href="#">Prazos e Envios</a></li>
-                        <li><a href="#">Loja Segura</a></li>
+                        <li> <a href="{{url('/page/terms#swapDevices')}}">Trocas e Devoluções</a></li>
+                        <li> <a href="{{url('/page/terms#deliveryTime')}}">Prazos e Envios</a></li>
+                        <li><a href="{{url('/page/terms#policies')}}">Loja Segura</a></li>
+                        <li><a href="{{url('/page/terms#contactForm')}}">Contato</a></li>
                     </ul>
                 </div>
                 <div class="site-links col-lg-2 col-md-6">
                     <h5 class="text-uppercase">Empresa</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#">Central de Atendimento</a></li>
-                        {{--<li><a href="{{route('company.terms')}}">Quem Somos</a></li>--}}
+                        <li><a href="{{route('company.terms')}}">Quem Somos</a></li>
                         @if(Auth::check())
                             <li>
                                 <a href="{{ route('client.dashboard') }}">Minha Conta</a>
@@ -80,15 +80,10 @@
                         @endif
                     </ul>
                 </div>
-                <div class="newsletter col-lg-4">
-                    <h5 class="text-uppercase">Assine a nossa newsletter</h5>
-                    <p style="color: #d59431">Deixe seu e-mail e receba os melhores preços e ofertas.</p>
-                    <form action="#" id="newsletter-form">
-                        <div class="form-group">
-                            <input type="email" name="subscribermail" placeholder="Digite seu email aqui">
-                            <button type="submit"> <i class="fa fa-paper-plane"></i></button>
-                        </div>
-                    </form>
+                <div class="newsletter col-md-4">
+                    <h5 class="text-uppercase">Nossa Loaja Fisica</h5>
+                    <div style="color: inherit;">CNPJ: 28.947.354/0001-67</div>
+                    <div style="color: inherit;">R. Frei Gaspar, 535a<br>Centro, São Vicente - SP, 11310-010</div>
                 </div>
             </div>
         </div>

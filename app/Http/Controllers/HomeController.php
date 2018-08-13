@@ -63,6 +63,8 @@ class HomeController extends Controller
 
         if (count($produtos->get()->toArray()) > 8) {
             $produtos = $produtos->get()->random(8);
+        } else {
+            $produtos = $produtos->get();
         }
         
         if (!Session::has('qtCart')) {

@@ -24,6 +24,10 @@ class CartController extends Controller
             $cep = null;
         }
 
+        if ($cep == null) {
+            $this->clearShippingData();
+        }
+
         $menuNav =  Menu::all();
 
         $menuNavegacao = NavigationMenu::all();
@@ -67,30 +71,38 @@ class CartController extends Controller
 
     public function calculateShipping(Request $request)
     {
+        //dd($request->all());
+        
         if (Session::has('shippingOptions')) {
             Session::forget('shippingOptions');
         }
 
         Session::put('shippingOptions', []);
 
+        $pesoCubico = ($request->length * $request->height * $request->width) / 6000;
+
+        //dd($pesoCubico);
+
         $url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
         $url .= 'nCdEmpresa=';
         $url .= '&sDsSenha=';
         $url .= '&nCdServico=04510,04014'; //04510 - PAC / 04014 - Sedex
         $url .= '&sCepOrigem=11310061';
-        $url .= '&sCepDestino=11705740';
-        $url .= '&nVlPeso=2';
+        $url .= '&sCepDestino=' . $request->cep;
+        $url .= '&nVlPeso=' . 10;
         $url .= '&nCdFormato=1';
-        $url .= '&nVlComprimento=20';
-        $url .= '&nVlAltura=6';
-        $url .= '&nVlLargura=20';
+        $url .= '&nVlComprimento=' . $request->length;
+        $url .= '&nVlAltura=' . $request->height;
+        $url .= '&nVlLargura=' . $request->width;
         $url .= '&nVlDiametro=0';
         $url .= '&sCdMaoPropria=n';
-        $url .= '&nVlValorDeclarado=100';
+        $url .= '&nVlValorDeclarado=' . $request->price;
         $url .= '&sCdAvisoRecebimento=n';
         $url .= '&StrRetorno=xml';
 
         $xml = simplexml_load_file($url);
+
+        //dd($xml);
 
         $fretes['pac'] = [
             'valor' => $xml->cServico[0]->Valor,
@@ -725,6 +737,11 @@ class CartController extends Controller
         Session::forget('totalPrice');
 
         return redirect()->route('cart.page')->with('success', 'Itens excluídos do carrinho');
+    }
+
+    public function clearShippingData()
+    {
+        Session::forget('shippingData');
     }
 
     public function addQuantityCart($idx)
