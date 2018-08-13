@@ -34,9 +34,9 @@
                                     </div>
                                 </td>
                                 <td class="price align-middle align-items-center">
-                                        <span id="{{ 'precoTotalProd' . $key }}">
-                                            R$ {{ number_format($produto['valorTotalProduto'], 2, ',', '.') }}
-                                        </span>
+                                    <span id="{{ 'precoTotalProd' . $key }}">
+                                        R$ {{ number_format($produto['valorTotalProduto'], 2, ',', '.') }}
+                                    </span>
                                 </td>
                             </tr>
                         @endforeach
@@ -44,16 +44,16 @@
                             @if ($shippingData[0]['tipo'] == 1)
                                 <td class="text-right" colspan="2"><b>FRETE ESCOLHIDO:</b> PAC</td>
                                 <td class="price align-middle align-items-center">
-                                            <span id="precoFrete">
-                                                R$ {{ number_format(($shippingData[0]['valor']), 2, ',', '.') }}
-                                            </span>
+                                    <span id="precoFrete">
+                                        R$ {{ number_format(($shippingData[0]['valor']), 2, ',', '.') }}
+                                    </span>
                                 </td>
                             @else
                                 <td class="text-right" colspan="2"><b>FRETE ESCOLHIDO:</b></b> SEDEX</td>
                                 <td class="price align-middle align-items-center">
-                                            <span id="precoFrete">
-                                                R$ {{ number_format(($shippingData[0]['valor']), 2, ',', '.') }}
-                                            </span>
+                                    <span id="precoFrete">
+                                        R$ {{ number_format(($shippingData[0]['valor']), 2, ',', '.') }}
+                                    </span>
                                 </td>
                             @endif
                         </tr>
@@ -62,27 +62,27 @@
                                 <tr>
                                     <td class="text-right" colspan="2"><b>JUROS PARCELAMENTO:</b></td>
                                     <td class="price align-middle align-items-center">
-                                                <span id="precoJuros">
-                                                    R$ {{ number_format(($creditCardInfo[0]['totalAmount'] - Session::get('totalPrice')) , 2, ',', '.') }}
-                                                </span>
+                                        <span id="precoJuros">
+                                            R$ {{ number_format(($creditCardInfo[0]['totalAmount'] - Session::get('totalPrice')) , 2, ',', '.') }}
+                                        </span>
                                     </td>
                                 </tr>
                             @endif
                             <tr>
                                 <td class="text-right" colspan="2"><strong>TOTAL</strong></td>
                                 <td class="total_price align-middle">
-                                            <span id="valorTotal">
-                                                <strong>R$ {{ number_format($creditCardInfo[0]['totalAmount'], 2, ',', '.') }}</strong>
-                                            </span>
+                                    <span id="valorTotal">
+                                        <strong>R$ {{ number_format($creditCardInfo[0]['totalAmount'], 2, ',', '.') }}</strong>
+                                    </span>
                                 </td>
                             </tr>
                         @else
                             <tr>
                                 <td class="text-right" colspan="2"><strong>TOTAL</strong></td>
                                 <td class="total_price align-middle">
-                                            <span id="valorTotal">
-                                                <strong>R$ {{ number_format( ($produto['valorTotalProduto'] + $shippingData[0]['valor']), 2, ',', '.') }}</strong>
-                                            </span>
+                                    <span id="valorTotal">
+                                        <strong>R$ {{ number_format( ($produto['valorTotalProduto'] + $shippingData[0]['valor']), 2, ',', '.') }}</strong>
+                                    </span>
                                 </td>
                             </tr>
                         @endif
@@ -136,5 +136,5 @@
             })
         })
     </script>
-    
+
 @stop

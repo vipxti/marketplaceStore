@@ -70,7 +70,6 @@ class ClientController extends Controller
 
         //dd($xml);
 
-
         $menuNav =  Menu::all();
 
         //Carrega as categorias e subcategorias para serem apresentadas no menu nav
