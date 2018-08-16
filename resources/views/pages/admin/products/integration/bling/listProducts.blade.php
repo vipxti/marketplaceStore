@@ -101,11 +101,11 @@
 
     <div class="content-wrapper">
         <section class="content-header">
-            <h1><i class="fa fa-list-alt"></i>&nbsp;&nbsp;Lista de Produtos</h1>
+            <h1><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar Produtos Bling</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li><a href="#">Produtos</a></li>
-                <li class="active">Lista de Produtos</li>
+                <li><a href="#">Integração</a></li>
+                <li class="active">Buscar Produtos</li>
             </ol>
         </section>
 
@@ -116,12 +116,10 @@
         <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
+                    <h3 class="box-title">Produtos Bling</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                             <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                            <i class="fa fa-times"></i>
                         </button>
                     </div>
                 </div>
@@ -140,66 +138,58 @@
 
                     </div>
                     <p></p>
-                    <!-- Botão pesquisar -->
-                    <div style="padding-left: 70%">
-                        <div>
-                            <input type="search" id="search" value="" class="form-control">
-                        </div>
-                    </div>
-                    <div>&nbsp;</div>
-
-                    <div class="dataTables_length" style="padding-left: 90%" id="example1_length">
-                        <select name="example1_length" aria-controls="example1" class="form-control form-control-sm">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </div>
 
                     <div class="row">
-                        <div class="col-md-2">
-                            <p class="paragrafoPag" hidden>Escolha a página que você quer ir: </p>
-                        </div>
-                        <div class="col-md-2">
-                            <input id="inputEscolhaPag" type="text" class="form-control" style="display: none">
-                        </div>
-                        <div class="col-md-2">
-                            <button id="btnEscolhaPag" type="button" class="btn btn-warning btnPaginacao" style="display: none">Ir para página</button>
+                        <div class="col-md-4 pull-right paragrafoPag" hidden>
+                            <label>Escolha a página que você deseja:</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="inputEscolhaPag" type="text" class="form-control">
+                                    <span class="input-group-addon" title="Pesquisar Página">
+                                        <a id="btnEscolhaPag" href="javascript:void(0)">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <button id="btnPagAnt" type="button" class="btn btn-success btnPaginacao" style="display: none;">Página Anterior</button>
+                    <div class="row paragrafoPag" hidden>
+                        <div class="col-md-12">
+                            {{--<button id="btnPagAnt" type="button" class="btn btn-success btnPaginacao pull-right" style="display: none;">Página Anterior</button>--}}
+                            <p class="paragrafoPag text-center" hidden>
+                                <a id="btnPagAnt" href="javascript:void(0)" title="Página Anterior">
+                                    <span class="fa fa-chevron-circle-left" style="font-size: 17px;"></span>
+                                </a>
+                                &nbsp;
+                                Página <span id="spanNumPag"></span>
+                                &nbsp;
+                                {{--<button id="btnProxPag" type="button" class="btn btn-success btnPaginacao" style="display: none;">Próxima Página</button>--}}
+                                <a id="btnProxPag" href="javascript:void(0)" title="Próxima Página">
+                                    <span class="fa fa-chevron-circle-right" style="font-size: 17px;"></span>
+                                </a>
+                            </p>
                         </div>
-
-                        <div class="col-md-1 text-center">
-                            <p class="paragrafoPag" hidden>Página <span id="spanNumPag"></span></p>
-                        </div>
-
-                        <div class="col-md-2">
-                            <button id="btnProxPag" type="button" class="btn btn-success btnPaginacao" style="display: none;">Próxima Página</button>
-                        </div>
-
                     </div>
 
-                    <label id="texto_informativo" hidden style="font-size: 12px; color"><i style="color: red !important;">*</i>&nbsp;OS PRODUTOS QUE POSSUEM A SITUAÇÃO DESABILITADA É PORQUE UM DOS CAMPOS NECESSÁRIOS PARA SALVAR O PRODUTO NÃO FOI PREENCHIDO CORRETAMENTE NO BLING</label>
+                    <label id="texto_informativo" hidden style="font-size: 12px;"><i style="color: red !important;">*</i>&nbsp;OS PRODUTOS QUE POSSUEM A SITUAÇÃO DESABILITADA É PORQUE UM DOS CAMPOS NECESSÁRIOS PARA SALVAR O PRODUTO NÃO FOI PREENCHIDO CORRETAMENTE NO BLING</label>
 
 
                     <!-- Tabelas dos produtos -->
 
-                    <table class="table" id="table">
-                        <thead>
-                        <tr id="indexProd">
+                    <div class="table-responsive">
+                        <table class="table" id="table">
+                            <thead>
+                            <tr id="indexProd">
 
-                        </tr>
-                        </thead>
-                        <tbody id="resultProd">
+                            </tr>
+                            </thead>
+                            <tbody id="resultProd">
 
-                        </tbody>
-                    </table>
-
+                            </tbody>
+                        </table>
+                    </div>
                     <table id="tabelaEscondida" hidden class="table">
                         <thead class="table-bordered">
                         <tr id="indexProdHidden">
@@ -211,7 +201,18 @@
                         </tbody>
                     </table>
 
-                    <!-- Moda Variações -->
+                    <p>&nbsp;</p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="btnSalvarProds"
+                                    type="button"
+                                    class="btn btn-success pull-right"
+                                    style="display: none;">
+                                <i class="fa fa-save"></i>
+                                &nbsp;&nbsp;Salvar Produtos
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -302,6 +303,22 @@
 
             //=====================================================================================================
             //FUNÇÃO PARA BUSCAR AS CATEGORIAS DA LOJA
+
+            $('#buscaCategorias').click(function(){
+
+                for(let i = 0; i<arrayCat.length; i++){
+                    console.log("CATEGORIA BLING: " + arrayCat[i].categoria.id);
+                    console.log("DESCRIÇÃO CATEGORIA BLING: " + arrayCat[i].categoria.descricao);
+                }
+
+                console.log('=============================================================');
+
+                for(var i=0; i<arrayCatLoja.length; i++){
+                    console.log("CATEGORIA LOJA: " + arrayCatLoja[i].categoria.idCategoria);
+                    console.log("DESCRIÇÃO CATEGORIA LOJA: " + arrayCatLoja[i].categoria.descricaoVinculo);
+                }
+
+            });
 
             function ajaxCategoriaLoja(){
                 $.ajax({
@@ -525,6 +542,31 @@
 
                         }
                     });
+            });
+
+            $('#btnSalvarProds').click(function(){
+                console.log("oi");
+
+                $.blockUI({
+                    message: 'Carregando...',
+                    css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    }
+                });
+
+                try{
+                    colunaProdutos(0);
+                }
+                catch(Exception){
+                    $.unblockUI();
+                    swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
+                }
             });
 
             //=====================================================================================================
@@ -972,7 +1014,7 @@
 
             function criarBotaoSalvarProd(){
                 //<button id="btnCategoria" type="button" class="btn btn-info">Buscar Categorias</button>
-                var botaoSalvar = "<button id='btnSalvarProds' type='button' class='btn btn-info'>Salvar Produtos</button>";
+               /* var botaoSalvar = "<button id='btnSalvarProds' type='button' class='btn btn-info'>Salvar Produtos</button>";*/
                 /*var inputMarcarTodos = "<input type='checkbox' id='selecionar_todos'>" +
                     "<label for='selecionar_todos'>&nbsp;Marcar Todos</label>";
                 var inputDesmarcarTodos = "<input type='checkbox' id='desmarcar_todos'>" +
@@ -980,11 +1022,15 @@
                 var inputNovosProdutos = "<input type='checkbox' id='marcar_novos'>" +
                     "<label for='marcar_novos'>&nbsp;Marcar Novos Produtos</label>";*/
 
-                $('#botoesBling').append(botaoSalvar);
+                /*$('#botoesBling').append(botaoSalvar);*/
                 /*$('#botoesBling').append(inputMarcarTodos);
                 $('#botoesBling').append(inputDesmarcarTodos);
                 $('#botoesBling').append(inputNovosProdutos);*/
-                AtivarBotaoSalvar();
+                /*AtivarBotaoSalvar();*/
+
+                $('#botoesBling').attr('hidden', true);
+                $("#btnBuscaProd").css("display", "none");
+                $("#btnSalvarProds").css("display", "block");
                 $('#texto_informativo').removeAttr('hidden');
             }
 

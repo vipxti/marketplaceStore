@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\ProductRequest;
 use http\Env\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,13 @@ class ProductBlingController extends Controller{
 
     public function importFromBling(){
         return view('pages.admin.products.integration.bling.listProducts');
+    }
+
+    public function vinculoCategorias(){
+
+        $categorias = Category::all();
+
+        return view('pages.admin.products.integration.bling.categoryBond', compact('categorias'));
     }
 
     public function CompanyData(){

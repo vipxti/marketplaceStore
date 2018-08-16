@@ -38,6 +38,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/product', 'ProductController@cadastrarProduto')->name('product.save');
     Route::post('/product/update', 'ProductController@updateProduct')->name('product.update');
     Route::post('/product/delete/image', 'ProductController@apagarImagem')->name('product.delete.image');
+    Route::post('/product/update/image', 'ProductController@atualizarImagemPrincipal')->name('product.update.image');
     Route::post('/blingproduct/update', 'ProductController@updateBlingProduct')->name('bling.product.update');
     Route::get('/product', 'ProductController@showProductAdminPage')->name('product.register')->middleware('auth:admin');
     Route::post('/blingproduct', 'ProductController@cadastrarProdutosBling')->name('bling.save.products');
@@ -79,6 +80,7 @@ Route::prefix('admin')->group(function () {
     //Integração
     //Bling
     Route::get('/product/bling', 'ProductBlingController@importFromBling')->name('product.list.bling')->middleware('auth:admin');
+    Route::get('/product/bling/bondcategory', 'ProductBlingController@vinculoCategorias')->name('bond.category.bling')->middleware('auth:admin');
     Route::get('api/bling/{pagina}', 'ProductBlingController@searchProds')->name('search.api.bling')->middleware('auth:admin');
     Route::get('api/bling/cat/{id}', 'ProductBlingController@searchCatFather')->name('searchCat.api.bling')->middleware('auth:admin');
     Route::get('api/category', 'ProductBlingController@getCategories')->name('category.api.bling')->middleware('auth:admin');
@@ -102,10 +104,15 @@ Route::prefix('admin')->group(function () {
     //Associa menu/categoria
     Route::post('/menucat/associate', 'MenuController@associarMenuCategoria')->name('menucat.associate');
 
+    //Sorteio
+    Route::get('lottery/participant', 'LotteryController@showViewParticipant')->name('lottery.participant.page')->middleware('auth:admin');
+    Route::get('lottery/prize', 'LotteryController@showViewPrize')->name('lottery.prize.page')->middleware('auth:admin');
+
     Route::get('/productconfig', 'PageController@showConfigProductPage')->name('product.config');
 
     Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
     Route::get('/products/list', 'ProductController@listaProduto')->name('products.list')->middleware('auth:admin');
+    Route::get('/products/list/query', 'ProductController@consultaProduto')->name('products.list.query')->middleware('auth:admin');
 
     //Faz o logout do usuário
     Route::get('/logout', 'Auth\UserLoginController@userLogout')->name('admin.logout');

@@ -1043,6 +1043,35 @@ class ProductController extends Controller
         ]);
     }
 
+    public function atualizarImagemPrincipal(Request $request){
+
+        try {
+            DB::table('img_produto')
+                ->join('sku_produto_img', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+                ->join('sku', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+                ->where('sku.cd_nr_sku', '=', $request->cd_nr_sku)
+                ->where('img_produto.im_produto', '=', $request->img_prod)
+                ->update(['img_produto.ic_img_principal' => 1]);
+
+            DB::table('img_produto')
+                ->join('sku_produto_img', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
+                ->join('sku', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+                ->where('sku.cd_nr_sku', '=', $request->cd_nr_sku)
+                ->where('img_produto.im_produto', '<>', $request->img_prod)
+                ->update(['img_produto.ic_img_principal' => 0]);
+        }
+        catch (\Exception $ex){
+            return response()->json([
+                "deuErro" => true
+            ]);
+        }
+
+        return response()->json([
+            "deuErro" => false
+        ]);
+
+    }
+
     public function pastaProduto($categoria, $subcategoria)
     {
         $rootProductsPath = public_path('img/products/');
@@ -1446,7 +1475,26 @@ class ProductController extends Controller
 
         DB::commit();
 
-        return redirect()->route('products.list')->with('success', 'Produto Atualizado com Sucesso');
+        //return redirect()->route('products.list')->with('success', 'Produto Atualizado com Sucesso');
+        return redirect()->back()->with('success', 'Produto Atualizado com Sucesso');
+    }
+
+    public function consultaProduto(Request $request){
+        //dd($request->all());
+
+        $produto = Product::join('sku', 'sku.cd_sku', '=', 'produto.cd_sku')
+                ->select('produto.cd_produto', 'produto.nm_produto', 'produto.vl_produto',
+                    'produto.qt_produto', 'sku.cd_nr_sku')
+                ->where('produto.nm_produto', 'like', '%'. $request->searchData .'%')
+                ->orWhere('sku.cd_nr_sku', '=', $request->searchData)
+                ->orderBy('produto.cd_produto')
+                ->get();
+        //dd($produto);
+
+        if($request->searchData == null)
+            $produto = $produto->take(25);
+
+        return $produto;
     }
 
     public function updateBlingProduct(Request $request){

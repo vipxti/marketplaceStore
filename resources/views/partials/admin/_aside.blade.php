@@ -133,7 +133,41 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ route('product.list.bling') }}"><i class="fa fa fa-exclamation" style="color: #a1bf1a !important;"></i>Bling</a></li>
+                            <li class="treeview">
+                                <a href="javascript:void(0)">
+                                    <i class="fa fa fa-exclamation" style="color: #a1bf1a !important;"></i><span>Bling</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{{route('bond.category.bling')}}">
+                                            <i class="fa fa-tags"></i>
+                                            Vincular Categorias
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('product.list.bling')}}">
+                                            <i class="fa fa-search"></i>
+                                            Buscar Produtos
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class><a href="{{ route('product.list.bling') }}"><i class="fa fa fa-exclamation" style="color: #a1bf1a !important;"></i>Bling</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-trophy"></i><span>Sorteio</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ route('lottery.participant.page') }}"><i class="fa fa-user-plus"></i>Cadastrar Participante</a></li>
+                            <li><a href="{{ route('lottery.prize.page') }}"><i class="fa fa-check-square-o"></i>Gerar Sorteio</a></li>
                         </ul>
                     </li>
         </ul>

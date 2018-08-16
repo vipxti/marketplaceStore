@@ -165,71 +165,91 @@
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                             <i class="fa fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                            <i class="fa fa-times"></i>
-                        </button>
                     </div>
                 </div>
                 <div class="box-body">
 
                         <!-- Botão pesquisar -->
 
-                    <div style="padding-left: 70%">
+                    <div class="row">
+
+                        <div class="col-md-4 pull-right">
+
+                            <label>Consulte o produto:</label>
+                            <div class="form-group">
+                                <div class="input-group">
+
+                                    <input id="search_input" type="text" class="form-control" maxlength="50">
+                                    <span class="input-group-addon" title="Pesquisar Produto">
+                                        <a id="search_button" href="javascript:void(0)">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {{--<div style="padding-left: 70%">
                         <div>
                             <input type="search" id="search" value="" class="form-control">
                         </div>
                     </div>
-                    <div>&nbsp;</div>
+                    <div>&nbsp;</div>--}}
 
 
-                    <div class="dataTables_length" style="padding-left: 90%" id="example1_length">
+                    {{--<div class="dataTables_length" style="padding-left: 90%" id="example1_length">
                         <select name="example1_length" aria-controls="example1" class="form-control form-control-sm">
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
-                    </div>
+                    </div>--}}
 
                     <!-- Tabelas dos produtos -->
 
-                    <table class="table" id="table">
-                        <thead>
-                        <tr>
-                            <th style="text-align: left">Nº</th>
-                            <th style="text-align: left">SKU</th>
-                            <th style="text-align: left">Nome</th>
-                            <th style="text-align: left">Preço</th>
-                            <th style="text-align: left">Qtd</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        @foreach($produtos as $produto)
-                                {{--{{dd($produto)}}--}}
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table">
+                            <thead>
                             <tr>
-                                <td>{{ $produto->cd_produto }} </td>
-                                <td>{{ $produto->cd_nr_sku }} </td>
-                                <td>{{ $produto->nm_produto }} </td>
-                                <td>R$ {{ str_replace('.', ',', $produto->vl_produto) }} </td>
-                                <td id="qt_produto">{{ str_replace('.', ',', $produto->qt_produto) }} </td>
-                                <td id="colBotoes" class="text-right">
-                                    <button id="btn_editar" class="fa fa-pencil btn btn-outline-warning" data-toggle="modal" data-target="#modal-default" style="color: #367fa9"></button>
-                                    <button type="submit" id="btn_atributos" class="fa fa-plus btn btn-outline-success" onclick="pagVariacao({{$produto->cd_produto}});" style="color: #008d4c;">
-                                        {{--<a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}">
-                                            <i class="fa fa-plus"></i>
-                                        </a>--}}
-                                    </button>
-                                    <button id="btn_excluir" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
-                                </td>
-                                {{--<td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>--}}
-
+                                <th style="text-align: left">Nº</th>
+                                <th style="text-align: left">SKU</th>
+                                <th style="text-align: left">Nome</th>
+                                <th style="text-align: left">Preço</th>
+                                <th style="text-align: left">Qtd</th>
                             </tr>
+                            </thead>
+
+                            <tbody>
+                            @foreach($produtos as $produto)
+                                    {{--{{dd($produto)}}--}}
+                                <tr>
+                                    <td>{{ $produto->cd_produto }} </td>
+                                    <td>{{ $produto->cd_nr_sku }} </td>
+                                    <td>{{ $produto->nm_produto }} </td>
+                                    <td>R$ {{ str_replace('.', ',', $produto->vl_produto) }} </td>
+                                    <td id="qt_produto">{{ str_replace('.', ',', $produto->qt_produto) }} </td>
+                                    <td id="colBotoes" class="text-right">
+                                        <button id="btn_editar" title="Atualizar Produto" class="fa fa-pencil btn btn-outline-warning" data-toggle="modal" data-target="#modal-default" style="color: #367fa9"></button>
+                                        <button type="submit" title="Adicionar Variação" id="btn_atributos" class="fa fa-plus btn btn-outline-success" onclick="pagVariacao({{$produto->cd_produto}});" style="color: #008d4c;">
+                                            {{--<a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}">
+                                                <i class="fa fa-plus"></i>
+                                            </a>--}}
+                                        </button>
+                                        <button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
+                                    </td>
+                                    {{--<td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>--}}
+
+                                </tr>
 
 
-                        @endforeach
-                        </tbody>
-                    </table>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
 
 
@@ -542,6 +562,195 @@
                 }
             });
 
+            ativaEditar();
+
+            function msgAguarde(){
+                $('#categorias').empty();
+                $('#subcategorias').empty();
+                $('#categorias').append(`<option value="">Aguarde...</option>`);
+                $('#subcategorias').append(`<option value="">Aguarde...</option>`);
+                $('.campo_nome').val('Aguarde...');
+                $('#campo_sku').val('Aguarde...');
+                $('#campo_ean').val('Aguarde...');
+                $('.campo_preco').val('Aguarde...');
+                $('.campo_qtd').val('Aguarde...');
+                $('.campo_largura').val('Aguarde...');
+                $('.campo_altura').val('Aguarde...');
+                $('.campo_comprimento').val('Aguarde...');
+                $('.campo_peso').val('Aguarde...');
+            }
+
+            var categoriaProd = "";
+            var cdCategoriaProd = "";
+            var subCategoriaProd = "";
+            var clicouOriginal = clicou;
+            function ativaEditar() {
+                $('button#btn_editar').click(function () {
+                    console.log('clicou editar');
+                    var campoTR = $(this).parent().parent();
+                    var sku = campoTR.find('td:eq(1)').html();
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                    clicouOriginal = clicou;
+
+                    msgAguarde();
+
+                    $.ajax({
+                        url: '{{route('verify.sku.products')}}',
+                        type: 'POST',
+                        data: {_token: CSRF_TOKEN, sku: sku},
+                        success: function (data) {
+                            console.log(data);
+                            /*console.log(data[0][0].nm_produto);
+                            console.log(data[1]);*/
+
+                            $('.campo_nome').val(data[0][0].nm_produto);
+                            $('#campo_sku').val(data[0][0].cd_nr_sku);
+                            $('#campo_ean').val(data[0][0].cd_ean);
+                            categoriaProd = data[0][0].nm_categoria;
+                            cdCategoriaProd = data[0][0].cd_categoria;
+                            subCategoriaProd = data[0][0].nm_sub_categoria;
+                            $('.campo_preco').val(data[0][0].vl_produto);
+                            $('.campo_qtd').val(data[0][0].qt_produto);
+                            $('.campo_largura').val(data[0][0].ds_largura);
+                            $('.campo_altura').val(data[0][0].ds_altura);
+                            $('.campo_comprimento').val(data[0][0].ds_comprimento);
+                            $('.campo_peso').val(data[0][0].ds_peso);
+
+                            if (data[0][0].cd_status_produto == 1) {
+                                console.log("Produto Ativado");
+                                $('#switch-shadow').attr('checked', 'checked');
+                                $('.mHswitch').text("Produto Ativado");
+                                clicou = false;
+                            }
+                            else {
+                                console.log("Produto Desativado");
+                                $('#switch-shadow').removeAttr('checked');
+                                $('.mHswitch').text("Produto Desativado");
+                                clicou = true;
+                            }
+
+                            $('.campo_desc').text("");
+                            $('.campo_desc').text(data[0][0].ds_produto);
+                            contarPalavras();
+
+                            $.each(data[1], function (i, v) {
+                                console.log("indice: " + i + " : valor: " + v.im_produto);
+                                console.log("imagem principal: " + v.ic_img_principal);
+                                let caminho = v.im_produto;
+
+                                $('#divImages').append('<div id="divImProd' + i + '" class="col-md-3 imagem_produto"></div>');
+
+                                let img;
+                                if (v.ic_img_principal == 1) {
+                                    img = $('<img />', {
+                                        id: 'idImagem',
+                                        src: '{{ URL::asset('img/products' . '/') }}' + '/' + caminho,
+                                        //src: v.im_produto,
+                                        alt: data[0][0].nm_produto,
+                                        class: 'imagem_principal',
+                                        value: caminho,
+                                        style: 'width: 150px; height: 220px;'
+                                    });
+                                }
+                                else {
+                                    img = $('<img />', {
+                                        id: 'idImagem',
+                                        src: '{{ URL::asset('img/products' . '/') }}' + '/' + caminho,
+                                        //src: v.im_produto,
+                                        alt: data[0][0].nm_produto,
+                                        value: caminho,
+                                        style: 'width: 150px; height: 220px;'
+                                    });
+                                }
+
+                                img.appendTo($('#divImProd' + i));
+                            });
+
+                            ativaEventos();
+
+                        }
+                    }).done(function () {
+
+                        $.ajax({
+                            url: '{{route('verify.category.products')}}',
+                            type: 'GET',
+                            success: function (data) {
+                                console.log(data.categoria);
+                                $('#categorias').empty();
+
+                                $.each(data.categoria, function (index, categoria) {
+
+
+                                    $('#categorias').append(`<option value="` + categoria.cd_categoria + `">` + categoria.nm_categoria + `</option>`);
+
+                                    if (categoriaProd == categoria.nm_categoria) {
+                                        $('#categorias option[value=' + categoria.cd_categoria + ']').prop('selected', 'true');
+                                    }
+                                });
+                            }
+                        }).done(function () {
+                            buscaSubCatModal(cdCategoriaProd, subCategoriaProd);
+                        });
+
+                    });
+                });
+            }
+
+            $('#search_button').click(function(){
+                pesquisarProduto();
+            });
+
+            $('#search_input').keypress(function(event){
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if(keycode == '13'){
+                    pesquisarProduto();
+                }
+            });
+
+            function pesquisarProduto(){
+                console.log("oi");
+                let valor_pesquisa = $('#search_input').val();
+                console.log(valor_pesquisa);
+                $('table>tbody').find('tr').remove();
+
+                $.ajax({
+                    url: '{{route('products.list.query')}}',
+                    type: 'get',
+                    data: {searchData: valor_pesquisa},
+                    success: function(data){
+                        console.log(data);
+
+                        for(let i = 0; i<data.length; i++){
+                            console.log(data[i]);
+                            let tr = $('<tr></tr>');
+                            let tdCdProd = $('<td></td>').text(data[i].cd_produto);
+                            let tdSku = $('<td></td>').text(data[i].cd_nr_sku);
+                            let tdNmProd = $('<td></td>').text(data[i].nm_produto);
+                            let tdVlProd = $('<td></td>').text(data[i].vl_produto);
+                            let tdQtdProd = $('<td></td>').text(data[i].qt_produto);
+                            let tdBotoes = '<td id="colBotoes" class="text-right">' +
+                                '<button id="btn_editar" title="Atualizar Produto" class="fa fa-pencil btn btn-outline-warning" data-toggle="modal" data-target="#modal-default" style="color: #367fa9"></button>' +
+                                '<button type="submit" title="Adicionar Variação" id="btn_atributos" class="fa fa-plus btn btn-outline-success" onclick="pagVariacao('+data[i].cd_produto+');" style="color: #008d4c;"></button>' +
+                                '<button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>' +
+                                '</td>';
+
+                            tr.append(tdCdProd, tdSku, tdNmProd, tdVlProd, tdQtdProd, tdBotoes);
+                            $('table>tbody').append(tr);
+
+                        }
+
+                        ativaEditar();
+
+                    },
+                    error: function(data){
+
+                    }
+                });
+            }
+
+        });
+
+        $('button#btn_excluir').click(function(){
 
         });
 
@@ -557,19 +766,40 @@
                 let caminho_imagem = $(this).find('img').attr('value');
                 let url_atual = window.location.href;
                 let div_img = $(this);
-                //console.log(div_img);
+                let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                let sku = $('#campo_sku').val();
+                console.log(div_img);
+                console.log(div_img.parent());
+                console.log($('#divImages').find('div').find('img'));
+                console.log(div_img.find('img'));
 
                 swal({
                     title: "Atenção",
-                    text: "Deseja deletar esta imagem?",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                            var sku = $('#campo_sku').val();
+                    text: "O que deseja fazer com esta imagem?",
+                    icon: "info",
+                    buttons: {
+                        cancel:{
+                            text: "Cancelar",
+                            value: 0,
+                            visible: true
+                        },
+                        excluir: {
+                            text:"Excluir",
+                            value: 1,
+                            visible: true,
+                            className: "swal-button--danger"
+                        },
+                        principal: {
+                            text:"Definir como principal",
+                            value: 2,
+                            visible: true
+                        }
+                    }
+                }).then((valor) => {
+                    switch(valor){
+                        case 1:
+                            console.log("excluir");
+
                             console.log('deletou');
                             console.log(caminho_imagem);
 
@@ -580,13 +810,10 @@
                                 success: function(data){
                                     console.log(data);
                                     if(data.deuErro === false){
-                                        //window.location.href = url_atual;
-                                        /*div_img.fadeOut(1000);
-                                        div_img.remove();*/
-
                                         div_img.fadeOut(1000,function(){
                                             console.log('desapareceu');
                                             div_img.remove();
+                                            swal('Sucesso', 'Imagem deletada com sucesso!', 'success');
                                         });
                                     }
                                     else{
@@ -595,18 +822,45 @@
 
                                 },
                                 error: function(data){
-
+                                    swal('Ops', 'Ocorreu um erro ao tentar apagar a imagem.', 'warning');
                                 }
-                            })
-                        }
-                    });
+                            });
+                            break;
+
+                        case 2:
+                            console.log("definir principal");
+
+                            $.ajax({
+                                url: '{{route('product.update.image')}}',
+                                type: 'post',
+                                data: {_token: CSRF_TOKEN, cd_nr_sku: sku, img_prod: caminho_imagem},
+                                success: function(data){
+                                    console.log(data);
+                                    if(data.deuErro === false) {
+                                        swal('Sucesso', 'Imagem definida como principal com sucesso!', 'success');
+                                        $('#divImages').find('div').find('img').removeClass('imagem_principal');
+                                        div_img.find('img').addClass('imagem_principal');
+                                    }
+                                    else{
+                                        swal('Ops', 'Ocorreu um erro ao tentar definir a imagem como principal.', 'warning');
+                                    }
+                                },
+                                error: function(data){
+                                    swal('Ops', 'Ocorreu um erro ao tentar definir a imagem como principal.', 'warning');
+                                }
+                            });
+
+                            break;
+
+                    }
+                });
+
             });
 
             $('.campo_desc').on("input", function () {
                 contarPalavras();
             });
         }
-
 
         $('.switch').click(function(){
             if(!clicou){
@@ -646,135 +900,6 @@
             clicou = clicouOriginal;
 
             //$('.mHswitch').click();
-        });
-
-        function msgAguarde(){
-            $('#categorias').empty();
-            $('#subcategorias').empty();
-            $('#categorias').append(`<option value="">Aguarde...</option>`);
-            $('#subcategorias').append(`<option value="">Aguarde...</option>`);
-            $('.campo_nome').val('Aguarde...');
-            $('#campo_sku').val('Aguarde...');
-            $('#campo_ean').val('Aguarde...');
-            $('.campo_preco').val('Aguarde...');
-            $('.campo_qtd').val('Aguarde...');
-            $('.campo_largura').val('Aguarde...');
-            $('.campo_altura').val('Aguarde...');
-            $('.campo_comprimento').val('Aguarde...');
-            $('.campo_peso').val('Aguarde...');
-        }
-
-        var categoriaProd = "";
-        var cdCategoriaProd = "";
-        var subCategoriaProd = "";
-        var clicouOriginal = clicou;
-        $('button#btn_editar').click(function(){
-            var campoTR = $(this).parent().parent();
-            var sku = campoTR.find('td:eq(1)').html();
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            clicouOriginal = clicou;
-
-            msgAguarde();
-
-            $.ajax({
-                url: '{{route('verify.sku.products')}}',
-                type: 'POST',
-                data: {_token: CSRF_TOKEN, sku: sku},
-                success: function(data){
-                    console.log(data);
-                    /*console.log(data[0][0].nm_produto);
-                    console.log(data[1]);*/
-
-                    $('.campo_nome').val(data[0][0].nm_produto);
-                    $('#campo_sku').val(data[0][0].cd_nr_sku);
-                    $('#campo_ean').val(data[0][0].cd_ean);
-                    categoriaProd = data[0][0].nm_categoria;
-                    cdCategoriaProd = data[0][0].cd_categoria;
-                    subCategoriaProd = data[0][0].nm_sub_categoria;
-                    $('.campo_preco').val(data[0][0].vl_produto);
-                    $('.campo_qtd').val(data[0][0].qt_produto);
-                    $('.campo_largura').val(data[0][0].ds_largura);
-                    $('.campo_altura').val(data[0][0].ds_altura);
-                    $('.campo_comprimento').val(data[0][0].ds_comprimento);
-                    $('.campo_peso').val(data[0][0].ds_peso);
-
-                    if(data[0][0].cd_status_produto == 1){
-                        console.log("Produto Ativado");
-                        $('#switch-shadow').attr('checked', 'checked');
-                        $('.mHswitch').text("Produto Ativado");
-                        clicou = false;
-                    }
-                    else{
-                        console.log("Produto Desativado");
-                        $('#switch-shadow').removeAttr('checked');
-                        $('.mHswitch').text("Produto Desativado");
-                        clicou = true;
-                    }
-
-                    $('.campo_desc').text("");
-                    $('.campo_desc').text(data[0][0].ds_produto);
-                    contarPalavras();
-
-                    $.each(data[1], function(i, v){
-                        console.log("indice: " + i + " : valor: "+ v.im_produto);
-                        console.log("imagem principal: " + v.ic_img_principal);
-                        let caminho = v.im_produto;
-
-                        $('#divImages').append('<div id="divImProd' + i + '" class="col-md-3 imagem_produto"></div>');
-
-                        let img;
-                        if(v.ic_img_principal == 1) {
-                            img = $('<img />', {
-                                id: 'idImagem',
-                                src: '{{ URL::asset('img/products' . '/') }}' + '/' + caminho,
-                                //src: v.im_produto,
-                                alt: data[0][0].nm_produto,
-                                class: 'imagem_principal',
-                                value: caminho,
-                                style: 'width: 150px; height: 220px;'
-                            });
-                        }
-                        else{
-                            img = $('<img />', {
-                                id: 'idImagem',
-                                src: '{{ URL::asset('img/products' . '/') }}' + '/' + caminho,
-                                //src: v.im_produto,
-                                alt: data[0][0].nm_produto,
-                                value: caminho,
-                                style: 'width: 150px; height: 220px;'
-                            });
-                        }
-
-                        img.appendTo($('#divImProd'+i));
-                    });
-
-                    ativaEventos();
-
-                }
-            }).done(function(){
-
-                $.ajax({
-                    url: '{{route('verify.category.products')}}',
-                    type: 'GET',
-                    success: function(data){
-                        console.log(data.categoria);
-                        $('#categorias').empty();
-
-                        $.each(data.categoria, function(index, categoria){
-
-
-                            $('#categorias').append(`<option value="` + categoria.cd_categoria + `">` + categoria.nm_categoria + `</option>`);
-
-                            if(categoriaProd == categoria.nm_categoria){
-                                $('#categorias option[value=' + categoria.cd_categoria + ']').prop('selected', 'true');
-                            }
-                        });
-                    }
-                }).done(function(){
-                    buscaSubCatModal(cdCategoriaProd, subCategoriaProd);
-                });
-
-            });
         });
 
         function buscaSubCatModal(cdCategoria, subCategoriaProd){
