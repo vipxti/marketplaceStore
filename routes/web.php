@@ -107,6 +107,10 @@ Route::prefix('admin')->group(function () {
     //Sorteio
     Route::get('lottery/participant', 'LotteryController@showViewParticipant')->name('lottery.participant.page')->middleware('auth:admin');
     Route::get('lottery/prize', 'LotteryController@showViewPrize')->name('lottery.prize.page')->middleware('auth:admin');
+    Route::post('lottery/save/participant', 'LotteryController@registerParticipant')->name('lottery.save.participant')->middleware('auth:admin');
+    Route::post('lottery/consult', 'LotteryController@verificaCpfCnpj')->name('lottery.consult.cpf.participant')->middleware('auth:admin');
+    Route::post('lottery/update/participant', 'LotteryController@updateParticipantData')->name('lottery.update.participant')->middleware('auth:admin');
+    Route::post('lottery/oldparticipant/save', 'LotteryController@oldParticipantLottery')->name('old.participant.lottery')->middleware('auth:admin');
 
     Route::get('/productconfig', 'PageController@showConfigProductPage')->name('product.config');
 
