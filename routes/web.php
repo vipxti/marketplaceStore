@@ -111,6 +111,9 @@ Route::prefix('admin')->group(function () {
     Route::post('lottery/consult', 'LotteryController@verificaCpfCnpj')->name('lottery.consult.cpf.participant')->middleware('auth:admin');
     Route::post('lottery/update/participant', 'LotteryController@updateParticipantData')->name('lottery.update.participant')->middleware('auth:admin');
     Route::post('lottery/oldparticipant/save', 'LotteryController@oldParticipantLottery')->name('old.participant.lottery')->middleware('auth:admin');
+    Route::post('lottery/public/save', 'LotteryController@savePublic')->name('lottery.save.public')->middleware('auth:admin');
+    Route::post('lottery/winner/save', 'LotteryController@saveWinner')->name('lottery.save.winner')->middleware('auth:admin');
+    Route::post('lottery/winner/reset', 'LotteryController@resetWinners')->name('lottery.reset.winner')->middleware('auth:admin');
 
     Route::get('/productconfig', 'PageController@showConfigProductPage')->name('product.config');
 

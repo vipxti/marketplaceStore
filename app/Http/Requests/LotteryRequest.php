@@ -25,9 +25,10 @@ class LotteryRequest extends FormRequest
     {
         return [
             'nome' => 'required|string',
-            'email' => 'required|string',
+            'email' => 'nullable',
             'cpf'=> 'required',
-            'celular' => 'required'
+            'celular' => 'required',
+            'genero' => 'required'
         ];
     }
 }

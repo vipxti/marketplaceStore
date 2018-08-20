@@ -12,6 +12,6 @@ class Lottery extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nome', 'email', 'cpf', 'celular'
+        'nome', 'email', 'cpf', 'celular', 'ic_genero'
     ];
 }

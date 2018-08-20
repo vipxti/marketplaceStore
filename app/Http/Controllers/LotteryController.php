@@ -22,7 +22,34 @@ class LotteryController extends Controller
                         ->get();
         //dd($cupom);
 
-        return view('pages.admin.gerarGanhador', compact('cupom'));
+        $publico =DB::table('configuracao_sorteio')->get();
+
+        if(count($publico) > 0) {
+            if($publico[0]->ic_configuracao_sorteio != 2) {
+                $participantes_sorteio = Lottery::join('sorteio', 'sorteio.fk_id_cliente', '=', 'dado_cliente_sorteio.id')
+                    ->where('dado_cliente_sorteio.ic_genero', '=', $publico[0]->ic_configuracao_sorteio)
+                    ->where('dado_cliente_sorteio.ic_ganhador', '=', '0')
+                    ->orderBy('sorteio.id_sorteio')
+                    ->get();
+            }
+            else{
+                $participantes_sorteio = Lottery::join('sorteio', 'sorteio.fk_id_cliente', '=', 'dado_cliente_sorteio.id')
+                    ->where('dado_cliente_sorteio.ic_ganhador', '=', '0')
+                    ->orderBy('sorteio.id_sorteio')
+                    ->get();
+            }
+        }
+        else{
+            $participantes_sorteio = Lottery::join('sorteio', 'sorteio.fk_id_cliente', '=', 'dado_cliente_sorteio.id')
+                ->where('dado_cliente_sorteio.ic_ganhador', '=', '0')
+                ->orderBy('sorteio.id_sorteio')
+                ->get();
+        }
+
+        //dd($publico);
+        //dd($participantes_sorteio);
+
+        return view('pages.admin.gerarGanhador', compact('cupom', 'publico', 'participantes_sorteio'));
     }
 
     public function cpfFormat($numCPF){
@@ -77,7 +104,7 @@ class LotteryController extends Controller
     }
 
     public function registerParticipant(LotteryRequest $request){
-
+        //dd($request->all());
         //$cupom = '';
         $cpf_formatado = $this->cpfFormat($request->cpf);
         $cpf_achado = Lottery::where('cpf', $cpf_formatado)->get();
@@ -93,7 +120,11 @@ class LotteryController extends Controller
                 $dados_cliente->email = $request->email;
                 $dados_cliente->cpf = $cpf_formatado;
                 $dados_cliente->celular = $celular_formatado;
+                $dados_cliente->ic_genero = $request->genero;
 
+                //dd($dados_cliente);
+
+                //dd($dados_cliente);
                 $dados_cliente->save();
 
                 $cupom = $this->registerParticipantLottery($cpf_formatado);
@@ -129,6 +160,7 @@ class LotteryController extends Controller
             $dado_atualizado->nome = $request->nome;
             $dado_atualizado->email = $request->email;
             $dado_atualizado->celular = $celular_formatado;
+            $dado_atualizado->ic_genero = $request->genero;
 
             $dado_atualizado->save();
         }
@@ -143,7 +175,65 @@ class LotteryController extends Controller
     {
         $cpf_achado = Lottery::where('cpf', $request->cpf)->get();
 
+        //dd($cpf_achado);
+
         return response()->json([ 'cpf_cnpj' => $cpf_achado ]);
+    }
+
+    public function savePublic(Request $request){
+        //dd($request->all());
+
+        $publico = DB::table('configuracao_sorteio')->get();
+
+        //dd($publico);
+
+        try {
+            if (count($publico) == 0) {
+                DB::table('configuracao_sorteio')->insert(['ic_configuracao_sorteio' => $request->publico]);
+            } else {
+                DB::table('configuracao_sorteio')->where('ic_configuracao_sorteio', '=', $publico[0]->ic_configuracao_sorteio)
+                    ->update(['ic_configuracao_sorteio' => $request->publico]);
+            }
+        }
+        catch(\Exception $ex){
+            return response()->json(['deuErro' => true]);
+        }
+
+        return response()->json(['deuErro' => false]);
+
+    }
+
+    public function saveWinner(Request $request){
+        //dd($request->all());
+
+        try {
+            $dados_ganhador = Lottery::join('sorteio', 'sorteio.fk_id_cliente', '=', 'dado_cliente_sorteio.id')
+                ->where('sorteio.id_sorteio', '=', $request->cupom)
+                ->get();
+
+            //dd($dados_ganhador);
+
+            $ganhador = Lottery::find($dados_ganhador[0]->id);
+
+            $ganhador->ic_ganhador = 1;
+
+            $ganhador->save();
+        }
+        catch(\Exception $exception){
+            return response()->json(['deuErro' => true]);
+        }
+        //dd($ganhador);
+        return response()->json(['deuErro' => false]);
+    }
+
+    public function resetWinners(Request $request){
+        try {
+            DB::table('dado_cliente_sorteio')->update(['ic_ganhador' => 0]);
+        }
+        catch (\Exception $exception){
+            return response()->json(['deuErro' => true]);
+        }
+        return response()->json(['deuErro' => false]);
     }
 
 }
