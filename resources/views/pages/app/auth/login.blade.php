@@ -94,12 +94,12 @@
     <script src="{{asset('js/admin/jquery.inputmask.js')}}"></script>
 
     <script>
-        function(){
+        $(function(){
             //Flat red color scheme for iCheck
             $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
                 checkboxClass: 'icheckbox_flat-blue'
             })
-        }
+        })
     </script>
 
 @stop
