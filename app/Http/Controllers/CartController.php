@@ -18,6 +18,10 @@ class CartController extends Controller
 {
     public function showCartPage()
     {
+        if (Session::has('cartRoute')) {
+            Session::forget('cartRoute');
+        }
+
         if (Auth::check()) {
             $cep = Cli::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->select('endereco.cd_cep', 'cliente_endereco.ic_principal', 'cliente_endereco.nm_destinatario', 'endereco.ds_endereco', 'cliente_endereco.cd_numero_endereco')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get()->toArray();
         } else {
