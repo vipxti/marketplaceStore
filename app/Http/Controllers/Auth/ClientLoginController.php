@@ -26,7 +26,7 @@ class ClientLoginController extends Controller
         $menuNavegacao = NavigationMenu::all();
         //dd($menuNavegacao[0]->menu_ativo);
 
-        if(count($menuNavegacao) > 0) {
+        if (count($menuNavegacao) > 0) {
             if ($menuNavegacao[0]->menu_ativo == 1) {
                 //Carrega as categorias e subcategorias para serem apresentadas no menu nav
                 foreach ($menuNav as $key => $menu) {
@@ -68,15 +68,15 @@ class ClientLoginController extends Controller
     {
         $route = 'client.dashboard';
 
-        if (Session::has('checkoutRoute')) {
-            $route = Session::get('checkoutRoute');
+        if (Session::has('cartRoute')) {
+            $route = Session::get('cartRoute');
         }
 
         //Faz o login do cliente
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'))) {
             //Redireciona o cliente caso consiga logar
-            Session::forget('checkoutRoute');
-            return redirect()->route($route)->with('success', 'Bem vindo');
+            Session::forget('cartRoute');
+            return redirect()->route($route)->with('success', 'Bem vindo, ' . Auth::user()->nm_cliente);
         }
 
         //Retorna para a tela de login com o campo email preenchido
@@ -86,6 +86,8 @@ class ClientLoginController extends Controller
     public function clientLogout()
     {
         Auth::guard('web')->logout();
+
+        Session::forget('shippingData');
 
         return redirect()->route('index');
     }

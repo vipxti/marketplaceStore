@@ -18,6 +18,10 @@
 
             <p>&nbsp;</p>
 
+            @include('partials.app._alerts')
+
+            <p>&nbsp;</p>
+
             <form action="{{ route('client.login.submit') }}" method="post">
                 {{ csrf_field() }}
             

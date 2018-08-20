@@ -19,6 +19,7 @@ use App\Bairro;
 use App\Pais;
 use App\Endereco;
 use App\Order;
+use Illuminate\Support\Facades\Session;
 
 class ClientController extends Controller
 {
@@ -75,7 +76,7 @@ class ClientController extends Controller
 
         $menuNavegacao = NavigationMenu::all();
         //dd($menuNavegacao[0]->menu_ativo);
-        if(count($menuNavegacao) > 0) {
+        if (count($menuNavegacao) > 0) {
             if ($menuNavegacao[0]->menu_ativo == 1) {
                 //Carrega as categorias e subcategorias para serem apresentadas no menu nav
                 foreach ($menuNav as $key => $menu) {
@@ -114,15 +115,16 @@ class ClientController extends Controller
             ->join('cidade', 'bairro.cd_cidade', '=', 'cidade.cd_cidade')
             ->join('uf', 'cidade.cd_uf', '=', 'uf.cd_uf')
             ->select(
-                'ds_endereco',
-                'cd_cep',
-                'cd_numero_endereco',
-                'ds_complemento',
-                'ds_ponto_referencia',
-                'nm_destinatario',
-                'nm_bairro',
-                'nm_cidade',
-                'sg_uf'
+                'endereco.ds_endereco',
+                'endereco.cd_cep',
+                'cliente_endereco.cd_numero_endereco',
+                'cliente_endereco.ic_principal',
+                'cliente_endereco.ds_complemento',
+                'cliente_endereco.ds_ponto_referencia',
+                'cliente_endereco.nm_destinatario',
+                'bairro.nm_bairro',
+                'cidade.nm_cidade',
+                'uf.sg_uf'
             )
             ->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)
             ->get();
@@ -134,6 +136,12 @@ class ClientController extends Controller
     public function saveClientAddress(ClientAddressRequest $request)
     {
         //dd($request->all());
+
+        $route = 'client.dashboard';
+
+        if (Session::has('cartRoute')) {
+            $route = Session::get('cartRoute');
+        }
 
         $replaceCep = str_replace('-', '', $request->cd_cep);
 
@@ -161,11 +169,9 @@ class ClientController extends Controller
             $estado = $this->createState($request->sg_uf, $pais->toArray()[0]['cd_pais']);
         } catch (ValidationException $e) {
             DB::rollBack();
-            dd($e->getMessage());
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o estado');
         } catch (QueryException $e) {
             DB::rollBack();
-            dd($e->getMessage());
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o estado');
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -180,18 +186,12 @@ class ClientController extends Controller
             $cidade = $this->createCity($request->nm_cidade, $request->cd_ibge, $estado->toArray()[0]['cd_uf']);
         } catch (ValidationException $e) {
             DB::rollBack();
-            dd($e->getMessage());
-
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar a cidade');
         } catch (QueryException $e) {
             DB::rollBack();
-            dd($e->getMessage());
-
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar a cidade');
         } catch (\PDOException $e) {
             DB::rollBack();
-            dd($e->getMessage());
-
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao conectar com o banco de dados Cidade');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -203,12 +203,10 @@ class ClientController extends Controller
             $bairro = $this->createNeighbour($request->nm_bairro, $cidade->toArray()[0]['cd_cidade']);
         } catch (ValidationException $e) {
             DB::rollBack();
-            dd($e->getMessage());
 
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o bairro');
         } catch (QueryException $e) {
             DB::rollBack();
-            dd($e->getMessage());
 
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o bairro');
         } catch (\PDOException $e) {
@@ -224,17 +222,14 @@ class ClientController extends Controller
             $endereco = $this->createAddress($replaceCep, $request->ds_endereco, $bairro->toArray()[0]['cd_bairro']);
         } catch (ValidationException $e) {
             DB::rollBack();
-            dd($e->getMessage());
 
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o endereço');
         } catch (QueryException $e) {
             DB::rollBack();
-            dd($e->getMessage());
 
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao cadastrar o endereço');
         } catch (\PDOException $e) {
             DB::rollBack();
-            dd($e->getMessage());
 
             return redirect()->route('company.data')->with('nosuccess', 'Erro ao conectar com o banco de dados Endereço');
         } catch (\Exception $e) {
@@ -259,12 +254,10 @@ class ClientController extends Controller
             );
         } catch (ValidationException $e) {
             DB::rollBack();
-            dd($e->getMessage());
 
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao associar o endereço ao cliente');
         } catch (QueryException $e) {
             DB::rollBack();
-            dd($e->getMessage());
 
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao associar o endereço ao cliente');
         } catch (\PDOException $e) {
@@ -277,7 +270,7 @@ class ClientController extends Controller
 
         DB::commit();
 
-        return redirect()->route('client.dashboard')->with('success', 'Endereço cadastrado com sucesso');
+        return redirect()->route($route)->with('success', 'Endereço cadastrado com sucesso');
     }
 
     //INSERT ENDERECO

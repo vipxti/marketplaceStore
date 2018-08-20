@@ -152,6 +152,7 @@ Route::prefix('page')->group(function () {
         Route::get('/plus/{idx}', 'CartController@addQuantityCart')->name('plus.quantity');
         Route::post('/shipping', 'CartController@calculateShipping')->name('shipping.calculate');
         Route::post('/shipping/data', 'CartController@getShippingData')->name('shipping.data');
+        Route::post('/save/route', 'CartController@saveCartRoute')->name('cart.route');
     });
 
     //Pagamento

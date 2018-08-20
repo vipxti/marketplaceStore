@@ -19,7 +19,7 @@ class CartController extends Controller
     public function showCartPage()
     {
         if (Auth::check()) {
-            $cep = Cli::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->select('endereco.cd_cep')->where('cliente_endereco.ic_principal', '=', 1)->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get()->toArray();
+            $cep = Cli::join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'endereco.cd_endereco', 'cliente_endereco.cd_endereco')->select('endereco.cd_cep', 'cliente_endereco.ic_principal', 'cliente_endereco.nm_destinatario', 'endereco.ds_endereco', 'cliente_endereco.cd_numero_endereco')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->get()->toArray();
         } else {
             $cep = null;
         }
@@ -32,7 +32,7 @@ class CartController extends Controller
 
         $menuNavegacao = NavigationMenu::all();
         //dd($menuNavegacao[0]->menu_ativo);
-        if(count($menuNavegacao) > 0) {
+        if (count($menuNavegacao) > 0) {
             if ($menuNavegacao[0]->menu_ativo == 1) {
                 //Carrega as categorias e subcategorias para serem apresentadas no menu nav
                 foreach ($menuNav as $key => $menu) {
@@ -64,7 +64,6 @@ class CartController extends Controller
                     ->get();
             }
         }
-
 
         return view('pages.app.cart.index', compact('cep', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
     }
@@ -885,5 +884,16 @@ class CartController extends Controller
             'subTotal' => Session::get('subtotalPrice'),
             'total' => Session::get('totalPrice')
         ]);
+    }
+
+    public function saveCartRoute(Request $request)
+    {
+        if (!(Session::has('cartRoute'))) {
+            Session::put('cartRoute', 'cart.page');
+        }
+
+        Session::save();
+
+        return response()->json([ 'result' => 'Ok' ]);
     }
 }

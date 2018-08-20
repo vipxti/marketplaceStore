@@ -17,14 +17,17 @@ use Illuminate\Support\Facades\DB;
 class PaymentController extends Controller
 {
     //GERA ID DO VENDEDOR
-    public function showSalesman (){
+    public function showSalesman()
+    {
         $idSalesman = '';
         $cnpj = '' ;
-        $dadosCompany = $this-> getCompanyData();
-        $names = explode(' ' ,$dadosCompany[0]->nm_razao_social);
-        foreach ($names as $name){$idSalesman .= substr($name,0,1);}
+        $dadosCompany = $this->getCompanyData();
+        $names = explode(' ', $dadosCompany[0]->nm_razao_social);
+        foreach ($names as $name) {
+            $idSalesman .= substr($name, 0, 1);
+        }
         $cnpj = $dadosCompany[0]->cd_cnpj;
-        $cnpj = substr($cnpj,12, 2);
+        $cnpj = substr($cnpj, 12, 2);
         $idSalesman = $idSalesman.$cnpj.'-';
         return $idSalesman;
     }
@@ -55,7 +58,7 @@ class PaymentController extends Controller
             $menuNavegacao = NavigationMenu::all();
             //dd($menuNavegacao[0]->menu_ativo);
 
-            if(count($menuNavegacao) > 0) {
+            if (count($menuNavegacao) > 0) {
                 if ($menuNavegacao[0]->menu_ativo == 1) {
                     //Carrega as categorias e subcategorias para serem apresentadas no menu nav
                     foreach ($menuNav as $key => $menu) {
@@ -91,10 +94,9 @@ class PaymentController extends Controller
             return view('pages.app.cart.checkout', compact('months', 'years', 'menuNav', 'menuNavegacao', 'categoriaSubCat'));
         }
 
-        Session::put('checkoutRoute', 'payment.checkout');
+        Session::put('cartRoute', 'cart.page');
 
         Session::save();
-
 
         return redirect()->route('client.login');
     }
@@ -120,7 +122,7 @@ class PaymentController extends Controller
         $menuNavegacao = NavigationMenu::all();
         //dd($menuNavegacao[0]->menu_ativo);
 
-        if(count($menuNavegacao) > 0) {
+        if (count($menuNavegacao) > 0) {
             if ($menuNavegacao[0]->menu_ativo == 1) {
                 //Carrega as categorias e subcategorias para serem apresentadas no menu nav
                 foreach ($menuNav as $key => $menu) {
@@ -170,7 +172,7 @@ class PaymentController extends Controller
         $menuNavegacao = NavigationMenu::all();
         //dd($menuNavegacao[0]->menu_ativo);
 
-        if(count($menuNavegacao) > 0) {
+        if (count($menuNavegacao) > 0) {
             if ($menuNavegacao[0]->menu_ativo == 1) {
                 //Carrega as categorias e subcategorias para serem apresentadas no menu nav
                 foreach ($menuNav as $key => $menu) {
@@ -529,7 +531,8 @@ class PaymentController extends Controller
         return Cli::join('telefone', 'telefone.cd_telefone', 'cliente.cd_telefone')->join('cliente_endereco', 'cliente.cd_cliente', 'cliente_endereco.cd_cliente')->join('endereco', 'cliente_endereco.cd_endereco', 'endereco.cd_endereco')->join('bairro', 'endereco.cd_bairro', 'bairro.cd_bairro')->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')->join('uf', 'cidade.cd_uf', 'uf.cd_uf')->select('cliente.nm_cliente', 'cliente.cd_cpf_cnpj', 'endereco.ds_endereco', 'cliente_endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento', 'endereco.cd_cep', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf', 'cliente.email', 'telefone.cd_celular1')->where('cliente.cd_cliente', '=', $codCliente)->where('cliente_endereco.ic_principal', '=', 1)->get()->toArray();
     }
 
-    public function getCompanyData(){
+    public function getCompanyData()
+    {
         $company =  DB::table('dados_empresa')->get()->toArray();
         return $company;
     }
