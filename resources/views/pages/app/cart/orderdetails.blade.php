@@ -92,7 +92,7 @@
             </div>
 
             <div class="col-12 col-md-12">
-                <div class="col-6 col-md-6 pull-left">
+                <div class="col-11 col-md-11">
                     @if ($paymentType == 'boleto')
                         <p><b>FORMA DE PAGAMENTO:</b>&nbsp;BOLETO BANCÁRIO</p>
                     @else
@@ -103,7 +103,9 @@
                         @endif
                     @endif
                 </div>
-                <div class="col-4 col-md-4 pull-right">
+            </div>
+            <div class="col-12 col-md-12">
+                <div class="col-12 col-md-12">
                     <a href="{{ route('cart.page') }}" class="btn btn-template pull-left">Revisar pedido</a>
                     @if ($paymentType == 'boleto')
                         <form action="{{ route('payment.ticket') }}" method="post">

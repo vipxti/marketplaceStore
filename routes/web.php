@@ -87,6 +87,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/product/bling', 'ProductBlingController@importFromBling')->name('product.list.bling')->middleware('auth:admin');
     Route::get('/product/bling/bondcategory', 'ProductBlingController@vinculoCategorias')->name('bond.category.bling')->middleware('auth:admin');
     Route::get('api/bling/{pagina}', 'ProductBlingController@searchProds')->name('search.api.bling')->middleware('auth:admin');
+    Route::get('api/bling/codigo/{code}', 'ProductBlingController@searchProdByName')->name('search.code.api.bling')->middleware('auth:admin');
     Route::get('api/bling/cat/{id}', 'ProductBlingController@searchCatFather')->name('searchCat.api.bling')->middleware('auth:admin');
     Route::get('api/category', 'ProductBlingController@getCategories')->name('category.api.bling')->middleware('auth:admin');
     Route::get('api/storecat', 'ProductBlingController@getStoreCategories')->name('storeCategory.api.bling')->middleware('auth:admin');

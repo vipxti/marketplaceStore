@@ -90,6 +90,30 @@ class ProductBlingController extends Controller{
     }
 
     //======================================================================================================
+    //BUSCA O PRODUTO POR CÓDIGO NA API DO BLING
+    public function searchProdByName($code){
+        $dadoUsuario = DB::table('dados_empresa')->get();
+
+        $apikey = $dadoUsuario[0]->cd_api_key;
+        $loja = $dadoUsuario[0]->cd_api_bling;
+
+        $outputType = "json";
+        $url = 'https://bling.com.br/Api/v2/produto/' . $code . '/' . $outputType . '&imagem=S&loja='. $loja .'&estoque=S';
+        $retorno = $this->executeGetProduct($url, $apikey);
+
+        return response()->json([$retorno]);
+    }
+
+    function executeGetProduct($url, $apikey){
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL, $url . '&apikey=' . $apikey);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        return $response;
+    }
+
+    //======================================================================================================
     //BUSCA OS PRODUTOS POR PÁGINA NA API DO BLING
     public function searchProds($pagina){
         //$pagina = $_POST["pagina"];
@@ -324,17 +348,22 @@ class ProductBlingController extends Controller{
 
         //dd($categoria);
 
-        do{
+        try {
+            do {
 
-            $categoria_integracao = DB::table('integracao_categoria_bling')
-                                    ->where('integracao_categoria_bling.id_categoria', '=', $categoria_pai)
-                                    ->get();
+                $categoria_integracao = DB::table('integracao_categoria_bling')
+                    ->where('integracao_categoria_bling.id_categoria', '=', $categoria_pai)
+                    ->get();
 
-            array_push($array_categorias, $categoria_integracao);
+                array_push($array_categorias, $categoria_integracao);
 
-            $categoria_pai = $categoria_integracao[0]->id_cat_pai;
+                $categoria_pai = $categoria_integracao[0]->id_cat_pai;
 
-        }while($categoria_pai != 0);
+            } while ($categoria_pai != 0);
+        }
+        catch (\Exception $ex){
+
+        }
 
         //dd($array_categorias);
 
