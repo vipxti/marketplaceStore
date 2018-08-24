@@ -133,10 +133,12 @@
                     <p></p>
                     <div id="botoesBling">
                         <button id="btnBuscaProd" type="button" class="btn btn-primary">Buscar Produtos</button>
+
                         <!-- <button id="btnCategoria" type="button" class="btn btn-info">Buscar Categorias</button> -->
                         {{--<button id="btnTeste" type="button" class="btn btn-info">Buscar Sku</button>--}}
 
                     </div>
+                    {{--<button id="btn_teste" type="button" class="btn btn-warning">CATEGORIAS BLING</button>--}}
                     <p></p>
 
                     <div class="row">
@@ -385,7 +387,8 @@
                                         }
 
                                         $('#btnArrayCat').removeAttr('disabled');
-                                        ajaxCategoriaLoja();
+                                        //ajaxCategoriaLoja();
+                                        consultaAssocCatSistBling();
                                     }
                                     catch(Exception){
                                         $.unblockUI();
@@ -596,12 +599,14 @@
             var arrayDesc = [];
             var descricao = [];
             var arraySku = [];
+            var tamanhoCategoria = 0;
 
             function buscaProdutos(pag){
                 //if(!deuErro){
                 var page = 'page=' + pag;
                 arrayImagens = [];
                 arrayDesc = [];
+                tamanhoCategoria = 0;
                 console.log("****************PAGINA " + proxPag + "****************");
 
                 $.ajax({
@@ -619,6 +624,8 @@
                                 var arrayBody = [];
                                 imagens = [];
                                 descricao = [];
+                                arrayCategoriasProduto = [];
+                                arrayCatAtt = [];
                                 var temCategoria = false;
                                 var trBody = "<tr id='trProd" + contador + "'></tr>";
                                 var trBodyHidden = "<tr id='trProdHidden" + contador + "'></tr>";
@@ -643,9 +650,11 @@
                                             var categoriaBling = null;
                                             var pai = 0;
                                             var paiDesc = null;
-                                            $.each(categoriaProd[categoriaProd.length - 1], function(categoria, respCat){
+
+                                            /*$.each(categoriaProd[categoriaProd.length - 1], function(categoria, respCat){
 
                                                 if(categoria == "id"){
+                                                    console.log(categoria + ": " + respCat);
                                                     categoriaBling = verificaCategoria(respCat);
                                                 } else if (categoria == "idCategoriaPai" && respCat != "0"){
                                                     pai = verificaCategoria(respCat);
@@ -662,12 +671,47 @@
 
                                                 //arrayBody.push(respCat);
                                                 temCategoria = true;
-                                            });
+                                            });*/
+
+
+                                            for(let i = tamanhoCategoria; i < categoriaProd.length; i++){
+                                                comparaCategorias(categoriaProd[i]);
+                                            }
+
+                                            tamanhoCategoria = categoriaProd.length;
+
+                                            for(let i = 0; i < arrayCategoriasSistema[0].length; i++){
+                                                console.log(arrayCategoriasSistema[0][i]);
+                                                if(arrayCategoriasProduto[(arrayCategoriasProduto.length - 1)].id == arrayCategoriasSistema[0][i].id_categoria){
+                                                    arrayCatAtt.push(arrayCategoriasSistema[0][i]);
+                                                }
+                                                temCategoria = true;
+                                            }
+
+
+
+                                            arrayHead.push("id");
+                                            arrayHead.push("descricaoCat");
+                                            arrayHead.push("idCategoriaPai");
                                             arrayHead.push("descCatPai");
-                                            arrayBody.push(categoriaBling.idVinculoLoja);
+                                            try{
+                                                arrayBody.push(arrayCatAtt[0].cd_sub_categoria);
+                                                arrayBody.push(arrayCatAtt[0].nm_sub_categoria);
+                                                arrayBody.push(arrayCatAtt[0].cd_categoria);
+                                                arrayBody.push(arrayCatAtt[0].nm_categoria);
+                                            }
+                                            catch(ex){
+
+                                                arrayBody.push("não associado");
+                                                arrayBody.push("não associado");
+                                                arrayBody.push("não associado");
+                                                arrayBody.push("não associado");
+                                            }
+
+                                            /*arrayBody.push(categoriaBling.idVinculoLoja);
                                             arrayBody.push(categoriaBling.descricaoVinculo);
                                             arrayBody.push(pai);
-                                            arrayBody.push(paiDesc);
+                                            arrayBody.push(paiDesc);*/
                                         }
                                         else if(index == "imagem"){
                                             arrayHead.push(index);
@@ -799,7 +843,8 @@
                                             (arrayHead[iB] == "descricaoCurta" && arrayBody[iB] == "null") ||
                                             (arrayHead[iB] == "descricaoCurta" && arrayBody[iB] == "") ||
                                             (arrayHead[iB] == "estoqueAtual" && arrayBody[iB] <= 2) ||
-                                            (arrayHead[iB] == "pesoBruto" && arrayBody[iB] == "0.000"))
+                                            (arrayHead[iB] == "pesoBruto" && arrayBody[iB] == "0.000") ||
+                                            (arrayHead[iB] == "descricaoCat" && arrayBody[iB] == "não associado"))
                                         {
                                             semCatPai = true;
                                             temDisabled = "disabled";
@@ -876,6 +921,89 @@
                         verificaSkuColunas(0);
                     });
                 //}
+            }
+
+            function buscaProdutos2(pag){
+                var page = 'page=' + 2;
+                console.log(arrayCategoriasSistema);
+                console.log("****************PAGINA " + proxPag + "****************");
+
+                $.ajax({
+                    url: '{{url('/admin/api/bling')}}/' + page,
+                    type: 'get',
+                    success: function(data){
+                        try{
+                            var objProd = JSON.parse(data);
+
+                            for(var i = 0; i < objProd.retorno.produtos.length; i++){
+                                var temCategoria = false;
+                                arrayCategoriasProduto = [];
+                                arrayCatAtt = [];
+                                console.log("PAGINA " + proxPag + " - PRODUTO " + i);
+                                $.each(objProd.retorno.produtos[i].produto, function(index, resultado){
+
+                                    if(index == "codigo" && resultado == ""){
+                                        return false;
+                                    }
+
+                                    if(index == "produtoLoja"){
+
+                                        var categoriaProd = objProd.retorno.produtos[i].produto.produtoLoja.categoria;
+
+                                        for(let i = tamanhoCategoria; i < categoriaProd.length; i++){
+                                            comparaCategorias(categoriaProd[i]);
+                                        }
+
+                                        tamanhoCategoria = categoriaProd.length;
+
+                                        for(let i = 0; i < arrayCategoriasSistema[0].length; i++){
+                                            console.log(arrayCategoriasSistema[0][i]);
+                                            if(arrayCategoriasProduto[(arrayCategoriasProduto.length - 1)].id == arrayCategoriasSistema[0][i].id_categoria){
+                                                arrayCatAtt.push(arrayCategoriasSistema[0][i]);
+                                            }
+                                        }
+                                        console.log(arrayCatAtt);
+
+                                    }
+
+                                });
+
+
+                                console.log("============================================");
+
+                                if(temCategoria){
+
+                                }
+                            }
+                        }catch(err){
+                            console.log(err);
+                        }
+                    }
+                })
+                    .done(function(){
+                        $.unblockUI();
+                    });
+            }
+
+            var arrayCategoriasProduto = [];
+            var arrayCatAtt = [];
+            function comparaCategorias(categoriaProd){
+                //console.log(categoriaProd);
+
+                if(arrayCategoriasProduto.length == 0) {
+                    arrayCategoriasProduto.push(categoriaProd);
+                }
+                else{
+
+                    if(categoriaProd.idCategoriaPai == arrayCategoriasProduto[(arrayCategoriasProduto.length - 1)].id){
+                        arrayCategoriasProduto.push(categoriaProd);
+                        console.log("é igual");
+                    }
+
+                }
+                console.log("arrayCategoriasProduto: ");
+                console.log(arrayCategoriasProduto);
+
             }
 
             //=====================================================================================================
@@ -1046,6 +1174,37 @@
                 }
 
             });
+
+            var arrayCategoriasSistema = [];
+            $('#btn_teste').click(function(){
+                consultaAssocCatSistBling();
+            });
+
+            function consultaAssocCatSistBling(){
+                let categoria_bling = '262508';
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                console.log('oi');
+
+                console.log(arrayCat);
+
+                try {
+                    $.ajax({
+                        url: '{{route('bling.consult.bond.categories')}}',
+                        type: 'post',
+                        data: {_token: CSRF_TOKEN, categoria: categoria_bling},
+                        success: function (data) {
+                            console.log(data);
+                            arrayCategoriasSistema.push(data.categoria_sistema);
+                        }
+                    })
+                        .done(function(){
+                            buscaProdutos(proxPag);
+                        });
+                }
+                catch(ex){
+                    swal('Erro', 'Ocorreu um erro ao tentar fazer a consulta das categorias do bling.', 'error');
+                }
+            }
 
             var arrayProduto = [];
             function AtivarBotaoSalvar(){

@@ -1,6 +1,34 @@
 @extends('layouts.admin.app')
 
 @section('content')
+    <!-- ESTILO DO BOTÃO TRANSPARENTE NA TABLE -->
+    <style type="text/css">
+        /*deixar botão transparente*/
+        button {
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+        }
+
+        /*deixar setas do input do tipo number invisivel*/
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            cursor:pointer;
+            display:block;
+            width:8px;
+            color: #333;
+            text-align:center;
+            position:relative;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+            margin: 0;
+        }
+    </style>
     <div class="content-wrapper">
         <section class="content-header">
             <h1><i class="fa fa-tags"></i>&nbsp;&nbsp;Vincular</h1>
@@ -63,7 +91,6 @@
                             <div class="form-group">
                                 <label>Escolha a categoria do Bling:</label>
                                 <select id="categorias_bling" class="form-control">
-                                    <option value=""></option>
                                 </select>
                             </div>
                         </div>
@@ -71,7 +98,6 @@
                             <div class="form-group">
                                 <label>Escolha a categoria do Bling:</label>
                                 <select id="categorias_bling_filho_1" class="form-control">
-                                    <option value=""></option>
                                 </select>
                             </div>
                         </div>
@@ -79,7 +105,6 @@
                             <div class="form-group">
                                 <label>Escolha a categoria do Bling:</label>
                                 <select id="categorias_bling_filho_2" class="form-control">
-                                    <option value=""></option>
                                 </select>
                             </div>
                         </div>
@@ -93,7 +118,6 @@
                             <div class="form-group">
                                 <label>Escolha a categoria do Bling:</label>
                                 <select id="categorias_bling_filho_3" class="form-control">
-                                    <option value=""></option>
                                 </select>
                             </div>
                         </div>
@@ -101,7 +125,6 @@
                             <div class="form-group">
                                 <label>Escolha a categoria do Bling:</label>
                                 <select id="categorias_bling_filho_4" class="form-control">
-                                    <option value=""></option>
                                 </select>
                             </div>
                         </div>
@@ -109,7 +132,6 @@
                             <div class="form-group">
                                 <label>Escolha a categoria do Bling:</label>
                                 <select id="categorias_bling_filho_5" class="form-control">
-                                    <option value=""></option>
                                 </select>
                             </div>
                         </div>
@@ -130,12 +152,50 @@
             </div>
             <!-- .box-primary -->
         </section>
+        <section class="content">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Categorias Vinculadas</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="table" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Categorias Bling</th>
+                                    <th>Categorias Sistema</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($arrayCategorias as $key=>$a)
+                                <tr>
+                                    <td>{{$a}}</td>
+                                    <td>2</td>
+                                    <td class="text-right">
+                                        <button id="btn_excluir" title="Deletar Associação" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
     <script src="{{asset('js/admin/sweetalert.min.js')}}"></script>
     <script>
         $(function(){
+            //======================================================================================================
+            //AÇÃO DE MUDANÇA DE OPTIONS DO SELECT DAS CATEGORIAS DO SISTEMA
             $('#categorias').change(function(){
                 var cdCategoria = $(this).val();
                 if(cdCategoria != '')
@@ -144,6 +204,8 @@
                     $('#subcategorias').empty();
             });
 
+            //======================================================================================================
+            //BUSCA AS SUBCATEGORIAS DA CATEGORIA QUE FOI SELECIONADA
             function buscaSubCategoria(cdCategoria){
                 $.ajax({
                     url: '{{ url('/admin/subcat') }}/' + cdCategoria,
@@ -164,31 +226,44 @@
             //======================================================================================================
             //BOTÃO PARA BUSCAR CATEGORIAS NO BLING
             $('#busca_cat_bling').click(function(){
-
                 carregarCategoriasPaiBling();
-
             });
 
             //======================================================================================================
             //SELECT PARA BUSCAR CATEGORIAS NO BLING
             $('#categorias_bling').change(function(){
                 console.log("categoria bling clicada");
+                $('#filho1').css('display', 'none');
+                $('#filho2').css('display', 'none');
+                $('#filho3').css('display', 'none');
+                $('#filho4').css('display', 'none');
+                $('#filho5').css('display', 'none');
                 carregaCategoriasSelect($('#categorias_bling'), $('#categorias_bling_filho_1'), $('#filho1'));
             });
 
             $('#categorias_bling_filho_1').change(function(){
+                $('#filho2').css('display', 'none');
+                $('#filho3').css('display', 'none');
+                $('#filho4').css('display', 'none');
+                $('#filho5').css('display', 'none');
                 carregaCategoriasSelect($('#categorias_bling_filho_1'), $('#categorias_bling_filho_2'), $('#filho2'));
             });
 
             $('#categorias_bling_filho_2').change(function(){
+                $('#filho3').css('display', 'none');
+                $('#filho4').css('display', 'none');
+                $('#filho5').css('display', 'none');
                 carregaCategoriasSelect($('#categorias_bling_filho_2'), $('#categorias_bling_filho_3'), $('#filho3'));
             });
 
             $('#categorias_bling_filho_3').change(function(){
+                $('#filho4').css('display', 'none');
+                $('#filho5').css('display', 'none');
                 carregaCategoriasSelect($('#categorias_bling_filho_3'), $('#categorias_bling_filho_4'), $('#filho4'));
             });
 
             $('#categorias_bling_filho_4').change(function(){
+                $('#filho5').css('display', 'none');
                 carregaCategoriasSelect($('#categorias_bling_filho_4'), $('#categorias_bling_filho_5'), $('#filho5'));
             });
 
@@ -214,9 +289,9 @@
                     div.css("display", "block");
                 }
                 else{
+                    console.log(select, selectpai);
                     div.css("display", "none");
                     select.val(-1).trigger("change");
-
                 }
             }
 
@@ -302,15 +377,111 @@
 
             //======================================================================================================
             //BOTÃO PARA SALVAR ASSOCIAÇÃO DAS CATEGORIAS DO SISTEMA COM AS DO BLING
+            var arrayIdCatBlingSist = [];
+            var arrayNomeCatBlingSist = [];
+            var valor_categoria;
+            var valor_sub_cat;
+            var jaExisteCat = false;
             $("#btn_salvar_ligacao").click(function(){
                 console.log("evento trigger");
+                arrayIdCatBlingSist = [];
+                arrayNomeCatBlingSist = [];
+                jaExisteCat = false;
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
                 //console.log($("#subcategorias").val());
-                if($('#subcategorias').val() != null && $('#categorias_bling').val() != -1){
+                if($('#subcategorias').val() != null && $('#categorias_bling').val() != -1 && $('#categorias_bling').val() != -1){
+                    valor_categoria = $('#categorias').val();
+                    valor_sub_cat = $('#subcategorias').val();
                     console.log($("#subcategorias").val());
                     console.log($("#categorias_bling").val());
+
+                    $('select option:selected').each(function(indice, valor){
+                        if(valor.value != valor_categoria && valor.value != valor_sub_cat && valor.value != -1) {
+                            console.log("indice: " + indice + " : valor: " + valor.value);
+                            console.log("indice: " + indice + " : valor: " + $(this).text());
+                            arrayIdCatBlingSist.push(valor.value);
+                            arrayNomeCatBlingSist.push($(this).text());
+                        }
+                    });
+
+                    $.ajax({
+                        url: '{{route('bling.verify.sist.categories')}}',
+                        type: 'post',
+                        data: {_token: CSRF_TOKEN, idCatBling: arrayIdCatBlingSist[(arrayIdCatBlingSist.length - 1)]},
+                        success: function(data){
+                            if(data.jaExiste == true){
+                                jaExisteCat = true;
+                                swal({
+                                    title: "Ops",
+                                    text: "Está categoria do Bling já está associada ao nosso sistema.\n" +
+                                    "Deseja sobrescrever categoria?",
+                                    icon: "info",
+                                    buttons: true,
+                                }).then((sobrescrever)=>{
+                                    if(sobrescrever){
+                                        ajaxUpdateAssociacao();
+                                    }
+                                })
+                            }
+                        }
+                    })
+                        .done(function(){
+                            if(!jaExisteCat)
+                                ajaxSalvaAssociacao();
+                        });
+
+                }
+                else{
+                    swal('Ops', 'Escolha as categorias antes de fazer a associação.', 'info');
                 }
             });
+
+            //======================================================================================================
+            //AJAX PARA ATUALIZAR A ASSOCIAÇÃO
+            function ajaxUpdateAssociacao(){
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: '{{route('bling.update.bond')}}',
+                    type: 'post',
+                    data: {_token: CSRF_TOKEN, itensId: arrayIdCatBlingSist, itensNome: arrayNomeCatBlingSist,
+                        idCatSist: valor_categoria, idSubCatSist: valor_sub_cat},
+                    success: function(){
+                        swal('Sucesso', 'Associação atualizada com sucesso!', 'success');
+                        $('#categorias').val(-1);
+                        $('#subcategorias').val(-1);
+                        $('#filho1').css('display', 'none');
+                        $('#filho2').css('display', 'none');
+                        $('#filho3').css('display', 'none');
+                        $('#filho4').css('display', 'none');
+                        $('#filho5').css('display', 'none');
+                        $('#categorias_bling').val(-1);
+                    }
+                });
+            }
+
+            //======================================================================================================
+            //AJAX PARA SALVAR A ASSOCIAÇÃO
+            function ajaxSalvaAssociacao(){
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: '{{route('bling.bond.sist.categories')}}',
+                    type: 'post',
+                    data: {_token: CSRF_TOKEN, itensId: arrayIdCatBlingSist, itensNome: arrayNomeCatBlingSist,
+                        idCatSist: valor_categoria, idSubCatSist: valor_sub_cat},
+                    success: function(){
+                        swal('Sucesso', 'Associação feita com sucesso!', 'success');
+                        $('#categorias').val(-1);
+                        $('#subcategorias').val(-1);
+                        $('#filho1').css('display', 'none');
+                        $('#filho2').css('display', 'none');
+                        $('#filho3').css('display', 'none');
+                        $('#filho4').css('display', 'none');
+                        $('#filho5').css('display', 'none');
+                        $('#categorias_bling').val(-1);
+                    }
+                });
+            }
 
         });
     </script>

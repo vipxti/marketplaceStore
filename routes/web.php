@@ -43,6 +43,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/product', 'ProductController@showProductAdminPage')->name('product.register')->middleware('auth:admin');
     Route::post('/blingproduct', 'ProductController@cadastrarProdutosBling')->name('bling.save.products');
     Route::post('/bling/skuproduct', 'ProductController@consultaSku')->name('bling.sku.products');
+    Route::post('/bling/bond/categories', 'ProductBlingController@integracaoSistCatBling')->name('bling.bond.sist.categories');
+    Route::post('/bling/update/bond/categories', 'ProductBlingController@updateBondBlingSist')->name('bling.update.bond');
+    Route::post('/bling/consult/bond/categories', 'ProductBlingController@consultCategoriesBlingSist')->name('bling.consult.bond.categories');
+    Route::post('/bling/verify/categories', 'ProductBlingController@verifyBlingCategory')->name('bling.verify.sist.categories');
     Route::post('/product/verify/sku', 'ProductController@getProductData')->name('verify.sku.products');
     Route::get('/product/verify/category', 'ProductController@getCategory')->name('verify.category.products');
     Route::get('/product/verify/subcategory', 'ProductController@getSubCategory')->name('verify.subcategory.products');

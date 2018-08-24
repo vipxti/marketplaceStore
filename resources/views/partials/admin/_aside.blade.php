@@ -155,7 +155,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class><a href="{{ route('product.list.bling') }}"><i class="fa fa fa-exclamation" style="color: #a1bf1a !important;"></i>Bling</a></li>
+                            {{--<li class><a href="{{ route('product.list.bling') }}"><i class="fa fa fa-exclamation" style="color: #a1bf1a !important;"></i>Bling</a></li>--}}
                         </ul>
                     </li>
                     <li class="treeview">
