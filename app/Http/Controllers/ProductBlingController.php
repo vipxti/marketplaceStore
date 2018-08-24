@@ -25,39 +25,52 @@ class ProductBlingController extends Controller{
 
         $arraySequencia = [];
         $arrayCategorias = [];
+        $arrayCategoriasSistema = [];
+        $arrayCategoriaPai = [];
+        $arrayFkCategoria = [];
         $concatenador = "";
-        //dd($categoria_sistema);
 
         foreach($categoria_sistema as $c){
 
             $categoria_pai = $c->fk_categoria_blig;
-            //dd($categoria_pai);
+            $cat_subcat = $c->fk_categoria_subcat;
+
+            array_push($arrayCategoriaPai, $categoria_pai);
+            array_push($arrayFkCategoria, $cat_subcat);
+            //dd($cat_subcat);
             do{
 
                 $cat = DB::table('integracao_categoria_bling')->where('id_categoria', '=', $categoria_pai)->get();
-                //dd($cat);
 
                 array_push($arraySequencia, $cat[0]->nome);
                 $categoria_pai = $cat[0]->id_cat_pai;
 
             }while($categoria_pai != 0);
 
-            //dd((count($arraySequencia)-1));
             for($i = (count($arraySequencia)-1); $i>=0; $i--){
                 $concatenador .= $arraySequencia[$i];
                 if($i!=0)
                     $concatenador .= " > ";
             }
 
-            //dd($concatenador);
             array_push($arrayCategorias, $concatenador);
             $arraySequencia = [];
             $concatenador = "";
+
+            $cat_subcat = DB::table('categoria_subcat')
+                        ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                        ->join('sub_categoria', 'sub_categoria.cd_sub_categoria', '=', 'categoria_subcat.cd_sub_categoria')
+                        ->where('categoria_subcat.cd_categoria_subcat', '=', $cat_subcat)
+                        ->get();
+            //dd($cat_subcat);
+            $nm_categoria = "";
+            $nm_categoria = $cat_subcat[0]->nm_categoria . " > " . $cat_subcat[0]->nm_sub_categoria;
+            array_push($arrayCategoriasSistema, $nm_categoria);
         }
 
         //dd($arrayCategorias);
 
-        return view('pages.admin.products.integration.bling.categoryBond', compact('categorias', 'arrayCategorias'));
+        return view('pages.admin.products.integration.bling.categoryBond', compact('categorias', 'arrayCategorias', 'arrayCategoriasSistema', 'arrayCategoriaPai', 'arrayFkCategoria'));
     }
 
     //======================================================================================================
@@ -250,6 +263,24 @@ class ProductBlingController extends Controller{
     }
 
     //======================================================================================================
+    //DELETA ASSOCIAÇÃO
+    public function deleteBondBlingSist(Request $request){
+        //dd($request->all());
+
+        try{
+            DB::table('integracao_sistema_cat_bling')
+                ->where('integracao_sistema_cat_bling.fk_categoria_subcat', '=', $request->id_sist)
+                ->where('integracao_sistema_cat_bling.fk_categoria_blig', '=', $request->id_bling)
+                ->delete();
+        }
+        catch (\Exception $ex){
+            return response()->json(['deuErro' => true]);
+        }
+
+        return response()->json(['deuErro' => false]);
+    }
+
+    //======================================================================================================
     //VERIFICA SE EXISTE UMA CATEGORIA DO BLING CADASTRADA
     public function verifyBlingCategory(Request $request){
         //dd($request->all());
@@ -310,24 +341,7 @@ class ProductBlingController extends Controller{
         return response()->json(['categoria_sistema' => $categoria, 'categoria_bling' => $array_categorias]);
     }
 
-    /*public function searchCatFather($idCategoria){
-        //$idCategoria = $_POST["idCategoria"];
-        $apikey = "2a51570170237bfda75036d304640a61ba9c4330bc33e3551e39e8454ea4f838ceb58337";
-        $outputType = "json";
-        $url = 'https://bling.com.br/Api/v2/categoria/' . $idCategoria . '/' . $outputType;
-        $retorno = $this->executeGetCategories($url, $apikey);
 
-        return response()->json([$retorno]);
-    }
-
-    public function executeGetCategories($url, $apikey){
-        $curl_handle = curl_init();
-        curl_setopt($curl_handle, CURLOPT_URL, $url . '&apikey=' . $apikey);
-        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
-        $response = curl_exec($curl_handle);
-        curl_close($curl_handle);
-        return $response;
-    }*/
 }
 
 

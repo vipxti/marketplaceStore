@@ -45,6 +45,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/bling/skuproduct', 'ProductController@consultaSku')->name('bling.sku.products');
     Route::post('/bling/bond/categories', 'ProductBlingController@integracaoSistCatBling')->name('bling.bond.sist.categories');
     Route::post('/bling/update/bond/categories', 'ProductBlingController@updateBondBlingSist')->name('bling.update.bond');
+    Route::post('/bling/delete/bond/categories', 'ProductBlingController@deleteBondBlingSist')->name('bling.delete.bond');
     Route::post('/bling/consult/bond/categories', 'ProductBlingController@consultCategoriesBlingSist')->name('bling.consult.bond.categories');
     Route::post('/bling/verify/categories', 'ProductBlingController@verifyBlingCategory')->name('bling.verify.sist.categories');
     Route::post('/product/verify/sku', 'ProductController@getProductData')->name('verify.sku.products');

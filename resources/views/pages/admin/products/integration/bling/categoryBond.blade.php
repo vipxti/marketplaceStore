@@ -168,20 +168,24 @@
                             <thead>
                                 <tr>
                                     <th>Categorias Bling</th>
+                                    <th hidden></th>
                                     <th>Categorias Sistema</th>
+                                    <th hidden></th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($arrayCategorias as $key=>$a)
+                            @for($i = 0; $i < count($arrayCategorias); $i++)
                                 <tr>
-                                    <td>{{$a}}</td>
-                                    <td>2</td>
+                                    <td>{{$arrayCategorias[$i]}}</td>
+                                    <td hidden>{{$arrayCategoriaPai[$i]}}</td>
+                                    <td>{{$arrayCategoriasSistema[$i]}}</td>
+                                    <td hidden>{{$arrayFkCategoria[$i]}}</td>
                                     <td class="text-right">
                                         <button id="btn_excluir" title="Deletar Associação" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endfor
                             </tbody>
                         </table>
                     </div>
@@ -483,6 +487,46 @@
                 });
             }
 
+            //======================================================================================================
+            //BOTÃO PARA EXCLUIR ASSOCIAÇÃO
+            $('button#btn_excluir').click(function(){
+                var campoTR = $(this).parent().parent();
+                var id_bling = campoTR.find('td:eq(1)').text();
+                var id_sist = campoTR.find('td:eq(3)').text();
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                console.log("id bling: " + id_bling);
+                console.log("id sist: " + id_sist);
+
+                swal({
+                    title: "Você tem certeza que deseja deletar ?",
+                    text: "Uma vez deletada, você não terá mais acesso a essa associação de categorias.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((vaiApagar) => {
+                        if(vaiApagar){
+
+                            $.ajax({
+                                url: '{{route('bling.delete.bond')}}',
+                                type: 'post',
+                                data: {_token: CSRF_TOKEN, id_bling: id_bling, id_sist: id_sist},
+                                success: function(data){
+                                    if(data.deuErro == false){
+                                        campoTR.fadeOut(500, function () {
+                                            $(this).remove();
+
+                                            swal("Associação deletada com sucesso!", {
+                                                icon: "success",
+                                            });
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+            });
         });
     </script>
 @stop
