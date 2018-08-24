@@ -11,10 +11,14 @@ use Illuminate\Support\Facades\DB;
 class LotteryController extends Controller
 {
 
+    //============================================================
+    //MOSTRA A TELA DE CADASTRO DO PARTICIPANTE
     public function showViewParticipant(){
         return view('pages.admin.cadParticipanteSorteio');
     }
 
+    //============================================================
+    //MOSTRA A TELA DO GERAR SORTEIO
     public function showViewPrize(){
 
         $cupom = Lottery::join('sorteio', 'sorteio.fk_id_cliente', '=', 'dado_cliente_sorteio.id')
@@ -52,6 +56,8 @@ class LotteryController extends Controller
         return view('pages.admin.gerarGanhador', compact('cupom', 'publico', 'participantes_sorteio'));
     }
 
+    //============================================================
+    //DEIXA O CPF SOMENTE COM NUMEROS
     public function cpfFormat($numCPF){
         $cpf_formatado = str_replace('.', '', $numCPF);
         $cpf_formatado = str_replace('-', '', $cpf_formatado);
@@ -59,6 +65,8 @@ class LotteryController extends Controller
         return $cpf_formatado;
     }
 
+    //============================================================
+    //DEIXA O CELULAR SOMENTE COM NUMEROS
     public function phoneFormat($numPhone){
         $celular_formatado = str_replace('(', '', $numPhone);
         $celular_formatado = str_replace(')', '', $celular_formatado);
@@ -68,6 +76,8 @@ class LotteryController extends Controller
         return $celular_formatado;
     }
 
+    //============================================================
+    //ADICONA PARTICIPANTE SO SORTEIO CASO ELE JÁ FOI CADASTRADO MAS NÃO ESTÁ PARTICIPANDO
     public function oldParticipantLottery(Request $request){
         //dd($request->all());
 
@@ -91,25 +101,32 @@ class LotteryController extends Controller
         }
     }
 
-    public function registerParticipantLottery($cpf_participante){
-        $cpf_achado = Lottery::where('cpf', $cpf_participante)->get();
-        //dd($cpf_achado[0]->id);
+    //============================================================
+    //CADASTRA O PARTICIPANTE NO SORTEIO
+    public function registerParticipantLottery($celular_formatado){
+
+        $cel_achado = Lottery::where('celular', $celular_formatado)->get();
+        //dd($cel_achado);
+
 
         $cupom = new CupomSorteio;
 
-        $cupom->fk_id_cliente = $cpf_achado[0]->id;
+        $cupom->fk_id_cliente = $cel_achado[0]->id;
         $cupom->save();
 
         return $cupom;
     }
 
+    //============================================================
+    //CADASTRA O PARTICIPANTE
     public function registerParticipant(LotteryRequest $request){
         //dd($request->all());
-        //$cupom = '';
-        $cpf_formatado = $this->cpfFormat($request->cpf);
-        $cpf_achado = Lottery::where('cpf', $cpf_formatado)->get();
-        //dd($cpf_achado);
-        if(count($cpf_achado) == 0) {
+
+        $celular_formatado = $this->phoneFormat($request->celular);
+
+        $wpp_achado = Lottery::where('celular', $celular_formatado)->get();
+
+        if(count($wpp_achado) == 0) {
             try {
                 $cpf_formatado = $this->cpfFormat($request->cpf);
                 $celular_formatado = $this->phoneFormat($request->celular);
@@ -127,7 +144,7 @@ class LotteryController extends Controller
                 //dd($dados_cliente);
                 $dados_cliente->save();
 
-                $cupom = $this->registerParticipantLottery($cpf_formatado);
+                $cupom = $this->registerParticipantLottery($celular_formatado);
                 //dd($cupom);
 
             } catch (\Exception $ex) {
@@ -143,6 +160,8 @@ class LotteryController extends Controller
         return response()->json(["deuErro" => false, "cupom" => $cupom, "dados_cliente" => $dados_cliente]);
     }
 
+    //============================================================
+    //ATUALIZA OS DADOS DO PARTCIPANTE
     public function updateParticipantData(LotteryRequest $request){
         //dd($request->all());
 
@@ -160,6 +179,7 @@ class LotteryController extends Controller
             $dado_atualizado->nome = $request->nome;
             $dado_atualizado->email = $request->email;
             $dado_atualizado->celular = $celular_formatado;
+            $dado_atualizado->cpf = $cpf_formatado;
             $dado_atualizado->ic_genero = $request->genero;
 
             $dado_atualizado->save();
@@ -171,6 +191,8 @@ class LotteryController extends Controller
         return response()->json(['deuErro' => false]);
     }
 
+    //============================================================
+    //VERIFICA O CPF PARA QUE NÃO POSSA CADASTRAR DOIS CPFS IGUAIS
     public function verificaCpfCnpj(Request $request)
     {
         $cpf_achado = Lottery::where('cpf', $request->cpf)->get();
@@ -180,6 +202,18 @@ class LotteryController extends Controller
         return response()->json([ 'cpf_cnpj' => $cpf_achado ]);
     }
 
+    //============================================================
+    //VERIFICA O CELULAR PARA QUE NÃO POSSA CADASTRAR DOIS CELULARES IGUAIS
+    public function verificaWpp(Request $request){
+        $wpp_achado = Lottery::where('celular', $request->wpp)->get();
+
+        //dd($wpp_achado);
+
+        return response()->json(['cpf_cnpj' => $wpp_achado]);
+    }
+
+    //============================================================
+    //SALVA O PUBLICO QUE VAI PARTICIPAR DO SORTEIO
     public function savePublic(Request $request){
         //dd($request->all());
 
@@ -203,6 +237,8 @@ class LotteryController extends Controller
 
     }
 
+    //============================================================
+    //QUANDO O USUARIO GANHAR ELE RECEBE UMA IDENTIFICAÇÃO PARA NÃO PARTICIPAR MAIS DO SORTEIO
     public function saveWinner(Request $request){
         //dd($request->all());
 
@@ -226,6 +262,8 @@ class LotteryController extends Controller
         return response()->json(['deuErro' => false]);
     }
 
+    //============================================================
+    //RETIRA A IDENTIFICAÇÃO DOS GANHADORES PARA PODEREM PARTICIPAR DO SORTEIO NOVAMENTE
     public function resetWinners(Request $request){
         try {
             DB::table('dado_cliente_sorteio')->update(['ic_ganhador' => 0]);

@@ -27,11 +27,11 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>CPF do Participante</label>
+                                <label>Whatsapp do Participante</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
                                     <input id="cpf_participante" type="text" class="form-control" required
-                                           data-inputmask='"mask": "999.999.999-99"' data-mask>
+                                           data-inputmask='"mask": "(99) 99999-9999"' data-mask>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                                     <label>CPF</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                                        <input id="cpf" type="text" class="form-control" required name="cpf"
+                                        <input id="cpf" type="text" class="form-control" name="cpf"
                                                data-inputmask='"mask": "999.999.999-99"' data-mask>
                                     </div>
                                     <i id="msg_cpf"></i>
@@ -236,94 +236,118 @@
                 let nome_participante = $('#nm_participante').val();
                 let email_participante = $('#email_participante').val();
                 let cpf_participante = $('#cpf').val();
-                let wpp_participante = $('#wpp_participante').val();
+                let wpp_participante = $('#wpp_participante').val().replace(/\D/g, '');
                 let genero_participante = $('#genero_participante').val();
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                let jaExiste = false;
 
-                if(nome_participante == "" || cpf_participante=="" ||
+                if(nome_participante == "" ||
                     wpp_participante == "" || genero_participante==""){
                     swal('Ops', 'Um dos campos obrigatórios não foi preenchido.', 'warning');
                 }
                 else {
 
                     $.ajax({
-                        url: '{{route('lottery.save.participant')}}',
+                        url: '{{route('lottery.consult.wpp.participant')}}',
                         type: 'post',
-                        data: {
-                            _token: CSRF_TOKEN, id: id_participante, nome: nome_participante, email: email_participante,
-                            cpf: cpf_participante, celular: wpp_participante, genero: genero_participante
-                        },
+                        data: {_token: CSRF_TOKEN, wpp: wpp_participante},
                         success: function (data) {
-                            console.log(data);
-                            if (data.deuErro == false) {
-                                swal({
-                                    title: "Sucesso",
-                                    text: "Dados do participante salvo com sucesso!\n" +
-                                    "Seu número do cupom é: " + data.cupom.id_sorteio,
-                                    icon: "success",
-                                    buttons: {
-                                        wpp_button: {
-                                            text: "Mensagem Whatsapp",
-                                            value: 1,
-                                            visible: true
-                                        },
-                                        ok_button: {
-                                            text: "Ok",
-                                            value: 0,
-                                            visible: true
-                                        }
-                                    }
-                                })
-                                    .then((valor) => {
-                                        switch (valor) {
-                                            case 0:
-                                                swal({
-                                                    title: "Atenção",
-                                                    text: "Seu número do cupom é: " + data.cupom.id_sorteio,
-                                                    icon: "info"
-                                                })
-                                                    .then(() => {
+                            if (data.cpf_cnpj.length > 0) {
+                                jaExiste = true;
+
+                            }
+                        }
+                    }).done(function(){
+
+                        if(jaExiste){
+                            swal('Ops', 'Já existe um cliente cadastrado com esse número de celular.', 'warning');
+                        }
+                        else {
+                            $.ajax({
+                                url: '{{route('lottery.save.participant')}}',
+                                type: 'post',
+                                data: {
+                                    _token: CSRF_TOKEN,
+                                    id: id_participante,
+                                    nome: nome_participante,
+                                    email: email_participante,
+                                    cpf: cpf_participante,
+                                    celular: wpp_participante,
+                                    genero: genero_participante
+                                },
+                                success: function (data) {
+                                    console.log(data);
+                                    if (data.deuErro == false) {
+                                        swal({
+                                            title: "Sucesso",
+                                            text: "Dados do participante salvo com sucesso!\n" +
+                                            "Seu número do cupom é: " + data.cupom.id_sorteio,
+                                            icon: "success",
+                                            buttons: {
+                                                wpp_button: {
+                                                    text: "Mensagem Whatsapp",
+                                                    value: 1,
+                                                    visible: true
+                                                },
+                                                ok_button: {
+                                                    text: "Ok",
+                                                    value: 0,
+                                                    visible: true
+                                                }
+                                            }
+                                        })
+                                            .then((valor) => {
+                                                switch (valor) {
+                                                    case 0:
+                                                        swal({
+                                                            title: "Atenção",
+                                                            text: "Seu número do cupom é: " + data.cupom.id_sorteio,
+                                                            icon: "info"
+                                                        })
+                                                            .then(() => {
+                                                                window.location.href = '{{route('lottery.participant.page')}}';
+                                                            });
+
+                                                        break;
+                                                    case 1:
+
+                                                        let mensagem = "Olá,%20%2A" + data.dados_cliente.nome + "%2A%20agora%20o%20Sr(a)%20está%20participando%20de%20nosso%20sorteio%20Shopping%20Vip-X%20" +
+                                                            "e%20o%20seu%20cupom%20de%20sorteio%20é%20o%20%2Anúmero%2A%20%2A" + data.cupom.id_sorteio + ".%2A%0A" +
+                                                            "%0A" +
+                                                            "Acompanhe%20diariamente%20os%20sorteios%20Ao%20Vivo%20no%20nosso%20Instagram%20www.instagram.com/maktubbeautycare/%20ou%20" +
+                                                            "@maktubbeautycare.%0A" +
+                                                            "%0A" +
+                                                            "Serão%20sorteios%20diários%20de%20até%205%20unhas%20por%20dia%20e%201%20sorteio%20semanal%20de%20Alongamento%20de%20Cílios,%20" +
+                                                            "Hidratação%20com%20Escova,%20Designer%20de%20Sobrancelha%20e%20Maquiagem%20Expressa.%0A" +
+                                                            "%0A" +
+                                                            "Aproveite%20e%20conheça%20nosso%20novo%20site:%20www.vipx.com.br,%20use%20o%20%2Acupom%2A%20%2AVIPX5%2A%20em%20suas%20compres%20online%20" +
+                                                            "e%20ganhe%2010%25%20de%20desconto." +
+                                                            "%0A" +
+                                                            "%0A%2AEm%2A%20%2Aapoio:%2A%20https://www.instagram.com/shoppingvipx/";
+
+                                                        let wpp = "https://api.whatsapp.com/send?phone=55" + data.dados_cliente.celular + "&text=" + mensagem;
+
+                                                        window.open(wpp, '_blank');
+
                                                         window.location.href = '{{route('lottery.participant.page')}}';
-                                                    });
 
-                                                break;
-                                            case 1:
+                                                        break;
+                                                }
 
-                                                let mensagem = "Olá,%20%2A" + data.dados_cliente.nome + "%2A%20agora%20o%20Sr(a)%20está%20participando%20de%20nosso%20sorteio%20Shopping%20Vip-X%20" +
-                                                    "e%20o%20seu%20cupom%20de%20sorteio%20é%20o%20%2Anúmero%2A%20%2A" + data.cupom.id_sorteio + ".%2A%0A" +
-                                                    "%0A" +
-                                                    "Acompanhe%20diariamente%20os%20sorteios%20Ao%20Vivo%20no%20nosso%20Instagram%20www.instagram.com/maktubbeautycare/%20ou%20" +
-                                                    "@maktubbeautycare.%0A" +
-                                                    "%0A" +
-                                                    "Serão%20sorteios%20diários%20de%20até%205%20unhas%20por%20dia%20e%201%20sorteio%20semanal%20de%20Alongamento%20de%20Cílios,%20" +
-                                                    "Hidratação%20com%20Escova,%20Designer%20de%20Sobrancelha%20e%20Maquiagem%20Expressa.%0A" +
-                                                    "%0A" +
-                                                    "Aproveite%20e%20conheça%20nosso%20novo%20site:%20www.vipx.com.br,%20use%20o%20%2Acupom%2A%20%2AVIPX5%2A%20em%20suas%20compres%20online%20" +
-                                                    "e%20ganhe%2010%25%20de%20desconto." +
-                                                    "%0A" +
-                                                    "%0A%2AEm%2A%20%2Aapoio:%2A%20https://www.instagram.com/shoppingvipx/";
-
-                                                let wpp = "https://api.whatsapp.com/send?phone=55" + data.dados_cliente.celular + "&text=" + mensagem;
-
-                                                window.open(wpp, '_blank');
-
+                                            });
+                                    }
+                                    else {
+                                        swal({
+                                            title: "Erro",
+                                            text: "Erro ao salvar dados do participante.",
+                                            icon: "error"
+                                        })
+                                            .then(() => {
                                                 window.location.href = '{{route('lottery.participant.page')}}';
-
-                                                break;
-                                        }
-
-                                    });
-                            }
-                            else {
-                                swal({
-                                    title: "Erro",
-                                    text: "Erro ao salvar dados do participante.",
-                                    icon: "error"
-                                })
-                                    .then(() => {
-                                        window.location.href = '{{route('lottery.participant.page')}}';
-                                    });
-                            }
+                                            });
+                                    }
+                                }
+                            });
                         }
                     });
                 }
@@ -333,13 +357,13 @@
             //BOTÃO PARA CONSULTAR O CLIENTE PELO CPF
             $('#btnConsultarParticipante').click(function(){
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                var cpf_participante = $('#cpf_participante').val().replace(/\D/g, '');
+                var wpp_participante = $('#cpf_participante').val().replace(/\D/g, '');
 
-                if(cpf_participante != "") {
+                if(wpp_participante != "") {
                     $.ajax({
-                        url: '{{route('lottery.consult.cpf.participant')}}',
+                        url: '{{route('lottery.consult.wpp.participant')}}',
                         type: 'post',
-                        data: {_token: CSRF_TOKEN, cpf: cpf_participante},
+                        data: {_token: CSRF_TOKEN, wpp: wpp_participante},
                         success: function (data) {
                             if (data.cpf_cnpj.length > 0) {
                                 console.log("existe cliente");
@@ -359,7 +383,7 @@
                             }
                             else {
                                 swal('Ops', 'Participante ainda não cadastrado.', 'info');
-                                $('#cpf').val(cpf_participante);
+                                $('#wpp_participante').val(wpp_participante);
                             }
                         }
                     });
@@ -393,6 +417,8 @@
                 $('#email_participante').removeAttr('readonly');
                 $('#wpp_participante').removeAttr('readonly');
                 $('#genero_participante').removeAttr('disabled');
+                if($('#cpf').val() == "")
+                    $('#cpf').removeAttr('readonly');
 
                 $('#btnAlterarParticipante').css('display', 'none');
                 $('#btnParticiparSorteio').css('display', 'none');
@@ -411,7 +437,7 @@
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
 
-                if(nome_participante == "" || cpf_participante=="" ||
+                if(nome_participante == "" ||
                     wpp_participante == "" || genero_participante==""){
                     swal('Ops', 'Um dos campos obrigatórios não foi preenchido.', 'warning');
                 }

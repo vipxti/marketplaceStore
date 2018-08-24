@@ -113,6 +113,7 @@ Route::prefix('admin')->group(function () {
     Route::get('lottery/prize', 'LotteryController@showViewPrize')->name('lottery.prize.page')->middleware('auth:admin');
     Route::post('lottery/save/participant', 'LotteryController@registerParticipant')->name('lottery.save.participant')->middleware('auth:admin');
     Route::post('lottery/consult', 'LotteryController@verificaCpfCnpj')->name('lottery.consult.cpf.participant')->middleware('auth:admin');
+    Route::post('lottery/consult/wpp', 'LotteryController@verificaWpp')->name('lottery.consult.wpp.participant')->middleware('auth:admin');
     Route::post('lottery/update/participant', 'LotteryController@updateParticipantData')->name('lottery.update.participant')->middleware('auth:admin');
     Route::post('lottery/oldparticipant/save', 'LotteryController@oldParticipantLottery')->name('old.participant.lottery')->middleware('auth:admin');
     Route::post('lottery/public/save', 'LotteryController@savePublic')->name('lottery.save.public')->middleware('auth:admin');
