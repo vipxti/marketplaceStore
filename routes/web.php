@@ -92,6 +92,27 @@ Route::prefix('admin')->group(function () {
     Route::get('api/category', 'ProductBlingController@getCategories')->name('category.api.bling')->middleware('auth:admin');
     Route::get('api/storecat', 'ProductBlingController@getStoreCategories')->name('storeCategory.api.bling')->middleware('auth:admin');
     Route::get('/product/verify/companydata', 'ProductBlingController@CompanyData')->name('verify.company.data');
+    //PEDIDOS BLING
+    Route::get('/order/bling', 'OrderBlingController@index')->name('order.bling')->middleware('auth:admin');
+    Route::get('/order/bling/manoel', 'OrderBlingController@indexManoel')->name('order.bling.manoel')->middleware('auth:admin');
+    Route::get('/order/bling/search/{pag}/{datas}', 'OrderBlingController@searchOrders')->name('search.orders.bling')->middleware('auth:admin');
+    Route::get('/order/bling/channels/{id}', 'OrderBlingController@searchChannels')->name('orders.channels.bling')->middleware('auth:admin');
+    Route::get('/order/bling/searchorders/number/{numb}', 'OrderBlingController@searchOrderByNumber')->name('search.orders.bling.number')->middleware('auth:admin');
+    //CADASTRO DE CANAIS BLING
+    Route::get('/register/bling/channel', 'OrderBlingController@indexCanais')->name('channel.bling')->middleware('auth:admin');
+    Route::post('/register/bling/channel/save', 'OrderBlingController@saveChannels')->name('channel.bling.save')->middleware('auth:admin');
+    Route::post('/register/bling/channel/save/alteration', 'OrderBlingController@saveAlteration')->name('channel.bling.save.alteration')->middleware('auth:admin');
+    Route::get('/register/bling/channel/edit/{id}', 'OrderBlingController@indexEdit')->name('channel.bling.edit')->middleware('auth:admin');
+    //ATUALIZAR PRODUTOS BLING
+    Route::get('/product/bling/idstore', 'ProductBlingController@indexCadLoja')->name('index.store.bling')->middleware('auth:admin');
+    Route::get('/product/bling/edit/idstore/{id}', 'ProductBlingController@indexEditStore')->name('index.edit.store.bling')->middleware('auth:admin');
+    Route::get('/product/bling/atualizaprod', 'ProductBlingController@indexAtualizarProd')->name('index.atualizaProd.bling')->middleware('auth:admin');
+    Route::post('/bling/register/storebling', 'ProductBlingController@saveBlingStores')->name('save.store.bling')->middleware('auth:admin');
+    Route::post('/bling/alteration/storebling', 'ProductBlingController@editBlingStores')->name('edit.store.bling')->middleware('auth:admin');
+    Route::post('/bling/delete/storebling/{id}', 'ProductBlingController@deleteBlingStores')->name('delete.store.bling')->middleware('auth:admin');
+    Route::get('/product/bling/search/prods/{page}/{loja}', 'ProductBlingController@searchProdsByStore')->name('search.prods.store.bling')->middleware('auth:admin');
+    Route::get('/product/bling/search/prods/name/{code}/{loja}', 'ProductBlingController@searchProdsByStoreByName')->name('search.prods.name.store.bling')->middleware('auth:admin');
+    Route::post('/product/bling/alter/price', 'ProductBlingController@alterPriceProducts')->name('alter.price.prods.bling')->middleware('auth:admin');
 
     Route::get('/data', 'UserController@showUserForm')->name('admin.data')->middleware('auth:admin');
 

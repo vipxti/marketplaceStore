@@ -161,7 +161,7 @@
                                                     <div class="col-12 col-md-6">
 
                                                         <input type="radio" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}" checked>
-                                                        <label class="h4" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
+                                                        <label class="h6" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
                                                         <br>
                                                         <span>CEP:&nbsp;</span><span id="{{ 'num_cep' . ($key + 1) }}">{{ $c['cd_cep'] }}</span>
                                                         <br>
@@ -290,9 +290,26 @@
                                         </div>
                                     @endif
 
+                                @else
+                                    <div class="custom-control custom-radio mb-30">
+                                        <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input">
+                                        <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                            <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-radio mb-30">
+                                        <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input" checked>
+                                        <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                            <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
+                                        </label>
+                                    </div>
                                 @endif
                                 
                             @endif
+
+                            <div class="col-md-4">
+                                <p id="pMsgErro" hidden><i style="color: red">*</i></p>
+                            </div>
 
                         </div>
 
@@ -364,6 +381,8 @@
         $(function () {
 
             let cep = $('#cepPrincipal').val();
+            let peso = parseFloat($('#pesoTotal').val());
+            peso = peso / 1000;
             
             if (cep != "") {
 
@@ -372,14 +391,24 @@
                     type: 'POST',
                     data: {
                         _token: CSRF_TOKEN,
-                        cep: $('#cep').val(),
+                        //cep: $('#cep').val(),
+                        cep: $('#num_cep1').text(),
                         width: $('#larguraTotal').val(),
                         height: $('#alturaTotal').val(),
                         length: $('#comprimentoTotal').val(),
-                        weight: $('#pesoTotal').val(),
+                        weight: peso,
                         price: $('#valorTotal').val()
                     },
                     success: function (values) {
+                        /*console.log(values);
+                        console.log($('#num_cep1').text());
+                        console.log($('#larguraTotal').val());
+                        console.log($('#alturaTotal').val());
+                        console.log($('#comprimentoTotal').val());
+                        console.log(peso);
+                        console.log($('#valorTotal').val());
+                        console.log("PAC: " +  values.fretes.pac.obs);
+                        console.log("SEDEX: " + values.fretes.sedex.obs);*/
 
                         $('#customRadio1').removeAttr('disabled')
                         $('#customRadio2').removeAttr('disabled')
@@ -387,29 +416,20 @@
                         let prazoPac = values.fretes.pac.prazo + 3;
                         let prazoSedex = values.fretes.sedex.prazo + 3;
 
-                        if (prazoPac == 1) {
-
+                        if (prazoPac == 1)
                             $('#prazoPac').html(prazoPac + ' dia útil');
-
-                        } else {
-
+                        else
                             $('#prazoPac').html(prazoPac + ' dias úteis');
 
-                        }
-
-                        $('#precoPac').html('R$ ' + values.fretes.pac.valor[0]);
-
-                        if (prazoSedex == 1) {
-
+                        if (prazoSedex == 1)
                             $('#prazoSedex').html(prazoSedex + ' dia útil');
-
-                        } else {
-
+                        else
                             $('#prazoSedex').html(prazoSedex + ' dias úteis');
 
-                        }
 
                         $('#precoSedex').html('R$ ' + values.fretes.sedex.valor[0]);
+                        $('#precoPac').html('R$ ' + values.fretes.pac.valor[0]);
+
 
                     }
                 })

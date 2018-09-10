@@ -87,34 +87,38 @@ class CartController extends Controller
         //dd($pesoCubico);
 
         $url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
-        $url .= 'nCdEmpresa=';
+        $url .= '&nCdEmpresa=';
         $url .= '&sDsSenha=';
         $url .= '&nCdServico=04510,04014'; //04510 - PAC / 04014 - Sedex
-        $url .= '&sCepOrigem=11310061';
+        $url .= '&sCepOrigem=11310060';
         $url .= '&sCepDestino=' . $request->cep;
-        $url .= '&nVlPeso=' . 10;
+        $url .= '&nVlPeso=' . $request->weight;
         $url .= '&nCdFormato=1';
         $url .= '&nVlComprimento=' . $request->length;
         $url .= '&nVlAltura=' . $request->height;
         $url .= '&nVlLargura=' . $request->width;
         $url .= '&nVlDiametro=0';
         $url .= '&sCdMaoPropria=n';
-        $url .= '&nVlValorDeclarado=' . $request->price;
+        $url .= '&nVlValorDeclarado=0';// . $request->price;
         $url .= '&sCdAvisoRecebimento=n';
         $url .= '&StrRetorno=xml';
 
+        //dd($url);
+        
         $xml = simplexml_load_file($url);
 
         //dd($xml);
 
         $fretes['pac'] = [
             'valor' => $xml->cServico[0]->Valor,
-            'prazo' => (int) $xml->cServico[0]->PrazoEntrega
+            'prazo' => (int) $xml->cServico[0]->PrazoEntrega,
+            'obs' => strval($xml->cServico[0]->obsFim)
         ];
 
         $fretes['sedex'] = [
             'valor' => $xml->cServico[1]->Valor,
-            'prazo' => (int) $xml->cServico[1]->PrazoEntrega
+            'prazo' => (int) $xml->cServico[1]->PrazoEntrega,
+            'obs' => strval($xml->cServico[1]->obsFim)
         ];
 
         $f = [

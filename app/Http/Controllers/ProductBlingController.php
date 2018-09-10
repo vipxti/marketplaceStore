@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\BlingChannels;
+use App\BlingStore;
 use App\Category;
+use App\Http\Requests\BlingStoreRequest;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -71,6 +74,21 @@ class ProductBlingController extends Controller{
         //dd($arrayCategorias);
 
         return view('pages.admin.products.integration.bling.categoryBond', compact('categorias', 'arrayCategorias', 'arrayCategoriasSistema', 'arrayCategoriaPai', 'arrayFkCategoria'));
+    }
+
+    //======================================================================================================
+    //RETORNA PÁGINA CADASTRAR LOJAS
+    public function indexCadLoja(){
+        $lojas = BlingStore::all();
+        return view('pages.admin.products.integration.bling.cadStore', compact('lojas'));
+    }
+
+    //======================================================================================================
+    //RETORNA PÁGINA PUT -> ATUALIZAR PRODUTO
+    public function indexAtualizarProd(){
+        $lojas = BlingStore::all();
+        $canais = BlingChannels::all();
+        return view('pages.admin.products.integration.bling.atualizaProdBling', compact('lojas', 'canais'));
     }
 
     //======================================================================================================
@@ -370,6 +388,149 @@ class ProductBlingController extends Controller{
         return response()->json(['categoria_sistema' => $categoria, 'categoria_bling' => $array_categorias]);
     }
 
+    //======================================================================================================
+    //SALVA LOJAS DO BLING
+    public function saveBlingStores(BlingStoreRequest $request){
+        //dd($request->all());
+        try{
+            $loja = new BlingStore;
+            $loja->id_loja = $request->id_loja;
+            $loja->nome_loja = $request->nome_loja;
+            $loja->save();
+        }
+        catch (\Exception $ex){
+            DB::rollBack();
+            return redirect()->route('index.store.bling')->with('nosuccess', 'Erro ao criar loja!');
+        }
+
+        return redirect()->route('index.store.bling')->with('success', 'Loja criada com sucesso!');
+    }
+
+    //======================================================================================================
+    //RETORNA VIEW PARA EDITAR LOJAS
+    public function indexEditStore($id){
+        //dd($id);
+        $loja = BlingStore::find($id);
+
+        return view('pages.admin.products.integration.bling.editStore', compact('loja'));
+    }
+
+    //======================================================================================================
+    //ALTERA AS LOJAS
+    public function editBlingStores(BlingStoreRequest $request){
+        //dd($request->all());
+
+        try{
+            $loja = BlingStore::find($request->id_loja);
+            $loja->id_loja = $request->id_loja;
+            $loja->nome_loja = $request->nome_loja;
+            $loja->save();
+        }
+        catch (\Exception $ex){
+            DB::rollBack();
+            return redirect()->route('index.store.bling')->with('nosuccess', 'Erro ao alterar loja!');
+        }
+
+        return redirect()->route('index.store.bling')->with('success', 'Loja alterada com sucesso!');
+    }
+
+    //======================================================================================================
+    //DELETA AS LOJAS
+    public function deleteBlingStores($id){
+        //dd($id);
+        try{
+            $loja = BlingStore::find($id);
+            $loja->delete();
+        }
+        catch (\Exception $ex){
+            DB::rollBack();
+            return response()->json(['deuErro' => true]);
+        }
+
+        return response()->json(['deuErro' => false]);
+    }
+
+    //======================================================================================================
+    //BUSCA PRODUTOS DA LOJA PARA ALTERAR PREÇOS
+    public function searchProdsByStore($pagina, $loja){
+        //dd($id, $loja);
+        $dadoUsuario = DB::table('dados_empresa')->get();
+        $apikey = $dadoUsuario[0]->cd_api_key;
+
+        $outputType = "json";
+        $url = 'https://bling.com.br/Api/v2/produtos/' . $pagina . '/' . $outputType . '&loja='. $loja;
+        $retorno = $this->executeGetProducts($url, $apikey);
+
+        return response()->json([$retorno]);
+    }
+
+    //======================================================================================================
+    //BUSCA PRODUTOS DA LOJA PARA ALTERAR PREÇOS
+    public function searchProdsByStoreByName($code, $loja){
+        //dd($id, $loja);
+        $dadoUsuario = DB::table('dados_empresa')->get();
+        $apikey = $dadoUsuario[0]->cd_api_key;
+
+        $outputType = "json";
+        $url = 'https://bling.com.br/Api/v2/produto/' . $code . '/' . $outputType . '&imagem=S&loja='. $loja .'&estoque=S';
+        $retorno = $this->executeGetProduct($url, $apikey);
+
+        return response()->json([$retorno]);
+    }
+
+    //======================================================================================================
+    //ATUALIZA O PREÇO DOS PRODUTOS NO BLING
+    public function alterPriceProducts(Request $request){
+        //dd($request->all());
+        $dadoUsuario = DB::table('dados_empresa')->get();
+        $apikey = $dadoUsuario[0]->cd_api_key;
+
+        $url = 'https://bling.com.br/Api/v2/produtoLoja/'. $request->loja . '/'. $request->sku;
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' .
+                    '<produtosLoja>' .
+                            '<produtoLoja>' .
+                                    '<idLojaVirtual>'. $request->sku .'</idLojaVirtual>' .
+                                    '<preco>' .
+                                            '<preco>'. $request->preco .'</preco>' .
+                                            '<precoPromocional>'. $request->preco .'</precoPromocional>' .
+                                    '</preco>' .
+                            '</produtoLoja>' .
+                    '</produtosLoja>';
+
+        //$xmlObj = new \SimpleXMLElement($xml);
+        //header('Content-Type: application/xml');
+        /*$xml = new \SimpleXMLElement('<xml/>');
+
+        $pedido = $xml->addChild('produtosLoja');
+        $produto = $pedido->addChild('produtoLoja');
+        $produto->addChild('idLojaVirtual', $request->loja);
+        $preco = $produto->addChild('preco');
+        $preco->addChild('precim', $request->preco);*/
+
+        //dd($xmlObj->asXML());
+
+
+        $posts = array (
+            "apikey" => $apikey,
+            "xml" => rawurlencode($xml)
+        );
+        //dd($posts);
+
+        $retorno = $this->executeUpdateProductStore($url, $posts);
+        //echo $retorno;
+        return response()->json([$retorno]);
+    }
+
+    public function executeUpdateProductStore($url, $data){
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL, $url);
+        curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        return $response;
+    }
 
 }
 
