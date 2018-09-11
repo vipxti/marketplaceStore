@@ -415,29 +415,23 @@
                                 existeNumeroPedido = false;
                                 existeFiltro = false;
 
-                                for(let j = 0; j < arrayFiltroCanal.length; j++){
-                                    if(obj.tipoIntegracao == arrayFiltroCanal[j]){
-                                        existeFiltro = true;
-                                    }
-                                    else if(loja == arrayFiltroCanal[j]){
-                                        existeFiltro = true;
-                                    }
-                                }
-
-                                if(!existeFiltro){
-                                    if(jQuery.type(obj.tipoIntegracao) == "undefined"){
-                                        arrayFiltroCanal.push(loja);
-                                    }
-                                    else
-                                        arrayFiltroCanal.push(obj.tipoIntegracao);
-                                }
-
 
                                 if (obj.situacao != "Cancelado" && obj.situacao != "Venda Agenciada") {
-                                    console.log(obj);
+                                    //console.log(obj);
+
+                                    let integracao;
+                                    if(jQuery.type(obj.tipoIntegracao) == "undefined")
+                                        integracao = loja;
+                                    else
+                                        integracao = obj.tipoIntegracao;
+
+
+                                    if(!arrayFiltroCanal.includes(integracao)){
+                                        arrayFiltroCanal.push(integracao);
+                                    }
 
                                     for (let j = 0; j < obj.itens.length; j++) {
-                                        console.log(obj.itens[j].item);
+                                        //console.log(obj.itens[j].item);
                                         let qtd = Math.trunc(obj.itens[j].item.quantidade);
                                         let custo = 0;
 
@@ -447,8 +441,6 @@
                                             custo = 0.0;
 
                                         let custoTotal = custo * qtd;
-
-
 
                                         //insere numero pedido no array
                                         arrayPedidos.push(obj.numero);
@@ -1077,9 +1069,21 @@
                 if(integracao == "MercadoLivre")
                     taxa= taxa * qtd;
 
+                console.log("comissão:" + comissao + jQuery.type(comissao));
+                console.log("taxa:" + taxa + jQuery.type(taxa));
+                console.log("imposto:" + imposto + jQuery.type(imposto));
+                console.log("custoProd:" + custoProd  + jQuery.type(custoProd));
+                console.log("pac:" + pac + jQuery.type(pac));
+                console.log("despesa_fixa:" + despesa_fixa + jQuery.type(despesa_fixa));
+                console.log("frete:" + frete + jQuery.type(frete));
+                console.log("taxa_cartao:" + taxa_cartao + jQuery.type(taxa_cartao));
+                console.log("marketing:" + marketing + jQuery.type(marketing));
+
                 let resultado = (comissao + taxa + imposto + custoProd + pac + despesa_fixa + frete + taxa_cartao + marketing);
                 let resultadoFinal = valorTotal - resultado;
 
+                console.log("resultado: " + resultado);
+                console.log("resultadoFinal: " + resultadoFinal);
                 console.log(resultadoFinal.toFixed(2));
 
 
