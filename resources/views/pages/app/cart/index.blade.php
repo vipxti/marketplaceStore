@@ -111,7 +111,7 @@
                                 
                             </div>
 
-                            <form>
+
                                 @if (Auth::check())
 
                                     @if ($cep == null)
@@ -195,14 +195,14 @@
                                     @endif
                                     
                                 @else
-
+                                <div class="row col-md-12">
                                     <input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">
                                     <input type="text" name="cep" id="cep" value="" required>
-                                    <button id="calculateShipping" type="button"><i class="fa fa-search"></i></button>
-
+                                    <button class="btn btn-template" id="calculateShipping" type="button" style="border: none; width: 86px"><i class="fa fa-search"></i></button>
+                                </div>
                                 @endif
                                 
-                            </form>
+
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
