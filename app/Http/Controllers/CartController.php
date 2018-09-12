@@ -83,8 +83,23 @@ class CartController extends Controller
         Session::put('shippingOptions', []);
 
         $pesoCubico = ($request->length * $request->height * $request->width) / 6000;
+        $peso = $request->quantity * 0.3;
 
+        $cidade = DB::table('ceps_baixada_santista')
+            ->where('cep_inicial', '<', $request->cep)
+            ->where('cep_final', '>', $request->cep)
+            ->get();
+
+        $valor = 0;
+        $prazo = 0;
+        if(count($cidade) > 0){
+            $valor = $cidade[0]->vl_frete;
+            $prazo = 48;
+        }
+
+        //dd($cidade);
         //dd($pesoCubico);
+        //dd($peso);
 
         $url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
         $url .= '&nCdEmpresa=';
@@ -92,11 +107,11 @@ class CartController extends Controller
         $url .= '&nCdServico=04510,04014'; //04510 - PAC / 04014 - Sedex
         $url .= '&sCepOrigem=11310060';
         $url .= '&sCepDestino=' . $request->cep;
-        $url .= '&nVlPeso=' . $request->weight;
+        $url .= '&nVlPeso='.$peso;// . $request->weight;
         $url .= '&nCdFormato=1';
-        $url .= '&nVlComprimento=' . $request->length;
-        $url .= '&nVlAltura=' . $request->height;
-        $url .= '&nVlLargura=' . $request->width;
+        $url .= '&nVlComprimento=30';// . $request->length;
+        $url .= '&nVlAltura=15';// . $request->height;
+        $url .= '&nVlLargura=15';// . $request->width;
         $url .= '&nVlDiametro=0';
         $url .= '&sCdMaoPropria=n';
         $url .= '&nVlValorDeclarado=0';// . $request->price;
@@ -121,11 +136,18 @@ class CartController extends Controller
             'obs' => strval($xml->cServico[1]->obsFim)
         ];
 
+        $fretes['maktub'] = [
+            'valor' => $valor,
+            'prazo' => $prazo
+        ];
+
         $f = [
             'valorPac' => strval($xml->cServico[0]->Valor),
             'prazoPac' => ((int) $xml->cServico[0]->PrazoEntrega) + 3,
             'valorSedex' => strval($xml->cServico[1]->Valor),
-            'prazoSedex' => ((int) $xml->cServico[1]->PrazoEntrega) + 3
+            'prazoSedex' => ((int) $xml->cServico[1]->PrazoEntrega) + 3,
+            'valorMaktub' => $valor,
+            'prazoMaktub' => $prazo
         ];
 
         Session::push('shippingOptions', $f);

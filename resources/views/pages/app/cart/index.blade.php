@@ -57,7 +57,7 @@
                                                     <span id="{{ $key }}" class="qty-plus">
                                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                                         </span>
-                                                    <i id="spinner_qtd" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i>
+                                                    {{--<i id="spinner_qtd" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="font-size: 22px; visibility: hidden"></i>--}}
                                                 </div>
                                             </td>
                                             <td class="total_price">
@@ -122,30 +122,18 @@
                                         <button id="calculateShipping" type="button"><i class="fa fa-search"></i></button>
 
                                         <hr>
-
                                         <div class="row">
-
                                             <div class="col-12 d-flex justify-content-center">
-
                                                 <p class="small text-danger">Não há endereço cadastrado em sua conta.<br>Para concluir a compra cadastre um endereço</p>
-                                                
-
                                             </div>
-
                                         </div>
 
                                         <div class="row">
-
                                             <div class="col-12 d-flex justify-content-center">
-
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewAddress">
-
                                                     Adicionar novo endereço
-
                                                 </button>
-
                                             </div>
-
                                         </div>
                                 
                                     @else
@@ -158,9 +146,9 @@
 
                                                     <input type="hidden" name="cepPrincipal" id="cepPrincipal" value="{{ $c['cd_cep'] }}">
 
-                                                    <div class="col-12 col-md-6">
+                                                    <div class="col-12 col-md-5">
 
-                                                        <input type="radio" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}" checked>
+                                                        <input type="radio" class="destino_cliente" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}" checked>
                                                         <label class="h6" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
                                                         <br>
                                                         <span>CEP:&nbsp;</span><span id="{{ 'num_cep' . ($key + 1) }}">{{ $c['cd_cep'] }}</span>
@@ -171,10 +159,10 @@
                                                     
                                                 @else
 
-                                                    <div class="col-12 col-md-6">
+                                                    <div class="col-12 col-md-5">
 
-                                                        <input type="radio" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}">
-                                                        <label class="h4" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
+                                                        <input type="radio" class="destino_cliente" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}">
+                                                        <label class="h6" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
                                                         <br>
                                                         <span>CEP:&nbsp;</span><span id="{{ 'num_cep' . ($key + 1) }}">{{$c['cd_cep']}}</span>
                                                         <br>
@@ -191,28 +179,17 @@
                                         <hr>
 
                                         <div class="row">
-
                                             <div class="col-12 d-flex justify-content-center">
-
                                                 <p class="small">Caso queira adicionar outro endereço clique no botão abaixo</p>
-                                                
-
                                             </div>
-
                                         </div>
 
                                         <div class="row">
-
                                             <div class="col-12 d-flex justify-content-center">
-
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewAddress">
-
                                                     Adicionar novo endereço
-
                                                 </button>
-
                                             </div>
-
                                         </div>
                                         
                                     @endif
@@ -237,15 +214,15 @@
 
                             @if ($cep == null)
                                 
-                                <div class="custom-control custom-radio mb-30">
+                                <div class="custom-control custom-radio mb-15">
                                     <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input" disabled>
-                                    <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                    <label id="labelRadio1" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
                                         <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
                                     </label>
                                 </div>
-                                <div class="custom-control custom-radio mb-30">
+                                <div class="custom-control custom-radio mb-15">
                                     <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input" disabled>
-                                    <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                    <label id="labelRadio2" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
                                         <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
                                     </label>
                                 </div>
@@ -255,60 +232,70 @@
                                 @if (Session::has('shippingData'))
 
                                     @if (Session::get('shippingData')[0]['tipo'] == 1)
-                                        <div class="custom-control custom-radio mb-30">
+                                        <div class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input" checked>
-                                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                                @if (Session::get('shippingOptions')[0]['prazoPac'] == 1)
-                                                    <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac">R$ {{ Session::get('shippingOptions')[0]['valorPac'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac">{{ Session::get('shippingOptions')[0]['prazoPac'] . ' dia útil ' }}</span>
-                                                @else
-                                                    <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac">R$ {{ Session::get('shippingOptions')[0]['valorPac'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac">{{ Session::get('shippingOptions')[0]['prazoPac'] . ' dias úteis ' }}</span>
-                                                @endif
+                                            <label id="labelRadio1" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                                <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac">R$ {{ Session::get('shippingOptions')[0]['valorPac'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac">{{ Session::get('shippingOptions')[0]['prazoPac'] . ' dias úteis ' }}</span>
                                             </label>
                                         </div>
-                                        <div class="custom-control custom-radio mb-30">
+                                        <div class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input">
-                                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
-                                                @if (Session::get('shippingOptions')[0]['prazoSedex'] == 1)
-                                                    <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dia útil ' }}</span>
-                                                @else
-                                                    <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
-                                                @endif
+                                            <label id="labelRadio2" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                                <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
+                                            </label>
+                                        </div>
+                                        <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
+                                            <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
+                                            <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
+                                                <span id="maktub">&nbsp;Entrega Maktub</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
                                             </label>
                                         </div>
                                     @else
-                                        <div class="custom-control custom-radio mb-30">
+                                        <div class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input">
-                                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                            <label id="labelRadio1" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
                                                 <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
                                             </label>
                                         </div>
-                                        <div class="custom-control custom-radio mb-30">
+                                        <div class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input" checked>
-                                            <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                            <label id="labelRadio2" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
                                                 <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
+                                            </label>
+                                        </div>
+                                        <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
+                                            <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
+                                            <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
+                                                <span id="maktub">&nbsp;Entrega Maktub</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
                                             </label>
                                         </div>
                                     @endif
 
                                 @else
-                                    <div class="custom-control custom-radio mb-30">
+                                    <div class="custom-control custom-radio mb-15">
                                         <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input">
-                                        <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                        <label id="labelRadio1" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
                                             <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
                                         </label>
                                     </div>
-                                    <div class="custom-control custom-radio mb-30">
+                                    <div class="custom-control custom-radio mb-15">
                                         <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input" checked>
-                                        <label class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                        <label id="labelRadio2" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
                                             <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
+                                        </label>
+                                    </div>
+                                    <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
+                                        <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
+                                        <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
+                                            <span id="maktub">&nbsp;Entrega Maktub</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
                                         </label>
                                     </div>
                                 @endif
                                 
                             @endif
 
-                            <div class="col-md-4">
-                                <p id="pMsgErro" hidden><i style="color: red">*</i></p>
+                            <div class="col-md-12">
+                                <p id="pMsgErro" style="font-size: 12px;" hidden></p>
                             </div>
 
                         </div>
@@ -347,13 +334,9 @@
                             </ul>
 
                             @if ($cep == null)
-
                                 <a href="{{ route('payment.checkout') }}" class="btn btn-template w-100 disabled">Concluir Compra</a>
-                                
                             @else
-
                                 <a href="{{ route('payment.checkout') }}" class="btn btn-template w-100">Concluir Compra</a>
-                                
                             @endif
                         
                         </div>
@@ -369,74 +352,123 @@
 
     <br><br><br><br>
 
-    <script src="{{asset('js/app/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('js/app/waves.js')}}"></script>
-    <script src="{{asset('js/app/input.js')}}"></script>
-    <script src="{{asset('js/app/form-validation.js')}}"></script>
+<script src="{{asset('js/app/jquery.validate.min.js')}}"></script>
+<script src="{{asset('js/app/waves.js')}}"></script>
+<script src="{{asset('js/app/input.js')}}"></script>
+<script src="{{asset('js/app/form-validation.js')}}"></script>
 
-    <script>
+<script>
 
-        let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        $(function () {
+    $(function () {
 
-            let cep = $('#cepPrincipal').val();
-            let peso = parseFloat($('#pesoTotal').val());
-            peso = peso / 1000;
-            
-            if (cep != "") {
+        let cep = $('#cepPrincipal').val();
+        let peso = parseFloat($('#pesoTotal').val());
+        peso = peso / 1000;
+        let qtd = 0;
 
-                $.ajax({
-                    url: '{{ route('shipping.calculate') }}',
-                    type: 'POST',
-                    data: {
-                        _token: CSRF_TOKEN,
-                        //cep: $('#cep').val(),
-                        cep: $('#num_cep1').text(),
-                        width: $('#larguraTotal').val(),
-                        height: $('#alturaTotal').val(),
-                        length: $('#comprimentoTotal').val(),
-                        weight: peso,
-                        price: $('#valorTotal').val()
-                    },
-                    success: function (values) {
-                        /*console.log(values);
-                        console.log($('#num_cep1').text());
-                        console.log($('#larguraTotal').val());
-                        console.log($('#alturaTotal').val());
-                        console.log($('#comprimentoTotal').val());
-                        console.log(peso);
-                        console.log($('#valorTotal').val());
-                        console.log("PAC: " +  values.fretes.pac.obs);
-                        console.log("SEDEX: " + values.fretes.sedex.obs);*/
+        if (cep != "") {
 
-                        $('#customRadio1').removeAttr('disabled')
-                        $('#customRadio2').removeAttr('disabled')
+            new Promise((resolve, reject) => {
+                $('.qty-text').each(function(){
+                    console.log($(this).val());
+                    qtd += parseInt($(this).val());
+                    console.log(qtd);
+                });
 
-                        let prazoPac = values.fretes.pac.prazo + 3;
-                        let prazoSedex = values.fretes.sedex.prazo + 3;
+                resolve();
+            })
+            .then(() => {
+                throw new Error('Não foi capaz de buscar dados do frete');
+            })
+            .catch(() => {
+                ajaxFrete($('#num_cep1').text());
+            });
 
-                        if (prazoPac == 1)
-                            $('#prazoPac').html(prazoPac + ' dia útil');
-                        else
-                            $('#prazoPac').html(prazoPac + ' dias úteis');
+        }
 
-                        if (prazoSedex == 1)
-                            $('#prazoSedex').html(prazoSedex + ' dia útil');
-                        else
-                            $('#prazoSedex').html(prazoSedex + ' dias úteis');
+        function ajaxFrete(cep){
+            $.ajax({
+                url: '{{ route('shipping.calculate') }}',
+                type: 'POST',
+                data: {
+                    _token: CSRF_TOKEN,
+                    //cep: $('#cep').val(),
+                    cep: cep,
+                    width: $('#larguraTotal').val(),
+                    height: $('#alturaTotal').val(),
+                    length: $('#comprimentoTotal').val(),
+                    weight: peso,
+                    price: $('#valorTotal').val(),
+                    quantity: qtd
+                },
+                success: function (values) {
 
+                    $('#customRadio1').removeAttr('disabled');
+                    $('#customRadio2').removeAttr('disabled');
 
-                        $('#precoSedex').html('R$ ' + values.fretes.sedex.valor[0]);
-                        $('#precoPac').html('R$ ' + values.fretes.pac.valor[0]);
+                    let prazoPac = values.fretes.pac.prazo + 3;
+                    let prazoSedex = values.fretes.sedex.prazo + 3;
 
+                    $('#prazoPac').html(prazoPac + ' dias úteis');
+                    $('#prazoSedex').html(prazoSedex + ' dias úteis');
 
+                    $('#precoSedex').html('R$ ' + values.fretes.sedex.valor[0]);
+                    $('#precoPac').html('R$ ' + values.fretes.pac.valor[0]);
+
+                    console.log(values.fretes.maktub.valor);
+
+                    if(values.fretes.maktub.valor != 0){
+                        $('#divMaktub').removeAttr('hidden');
+                        $('#precoMaktub').html('R$ ' + values.fretes.maktub.valor);
+                        $('#prazoMaktub').html(values.fretes.maktub.prazo + ' horas');
                     }
-                })
-                
-            }
+                    else{
+                        $('#divMaktub').attr('hidden', true);
+                        $('#precoMaktub').html('');
+                        $('#prazoMaktub').html('');
+                    }
 
-        })
+                    if(values.fretes.sedex.obs != ""){
+                        $('#pMsgErro').text(values.fretes.sedex.obs);
+                        $('#pMsgErro').removeAttr('hidden');
+                    }
+                    else{
+                        $('#pMsgErro').text("");
+                        $('#pMsgErro').attr('hidden', true);
+                    }
+
+
+                }
+            })
+                .done(function(){
+                    let shippingPrice = '';
+                    let days = '';
+                    let type = '';
+                    if($('#customRadio1').is(':checked')) {
+                        shippingPrice = $('#precoPac').html().replace('R$ ', '').replace(',', '.');
+                        days = $('#prazoPac').html().substring(0, 1);
+                        type = $('#customRadio1').val();
+
+                        ajaxRadioButton(shippingPrice, days, type);
+                    }
+                    else if($('#customRadio2').is(':checked')) {
+                        shippingPrice = $('#precoSedex').html().replace('R$ ', '').replace(',', '.');
+                        days = $('#prazoSedex').html().substring(0, 1);
+                        type = $('#customRadio2').val();
+
+                        ajaxRadioButton(shippingPrice, days, type);
+                    }
+                });
+        }
+
+        $('.destino_cliente').click(function(){
+            let id = $(this).attr('id');
+            id = id.substr(id.length - 1, id.length);
+            let cep = $('#num_cep'+id).text();
+            ajaxFrete(cep);
+        });
 
         //Aumenta a quantidade de cada item no carrinho
         $('.qty-plus').click(function(e){
@@ -516,7 +548,7 @@
 
         $('#calculateShipping').click(function () {
 
-            $.ajax({
+            {{--$.ajax({
                 url: '{{ route('shipping.calculate') }}',
                 type: 'POST',
                 data: {
@@ -561,21 +593,28 @@
                     $('#precoSedex').html('R$ ' + values.fretes.sedex.valor[0]);
 
                 }
-            })
+            })--}}
+            ajaxFrete();
 
-        })
+        });
 
         $('#customRadio1').click(function () {
 
             let shippingPrice = $('#precoPac').html().replace('R$ ', '').replace(',', '.');
             let days = $('#prazoPac').html().substring(0, 1);
+            let type = $(this).val();
 
+            ajaxRadioButton(shippingPrice, days, type);
+
+        });
+
+        function ajaxRadioButton(shippingPrice, days, type){
             $.ajax({
                 url: '{{ route('shipping.data') }}',
                 type: 'POST',
                 data: {
                     _token: CSRF_TOKEN,
-                    shippingType: $(this).val(),
+                    shippingType: type,
                     shippingPrice: shippingPrice,
                     shippingDays: days,
                     totalPrice: $('#valorTotal').val()
@@ -584,39 +623,23 @@
 
                     let precoTotal = parseFloat(value.shippingData.precoTotal).toFixed(2);
                     let precoFrete = parseFloat(value.shippingData.valor).toFixed(2);
+                    console.log(precoTotal);
+                    console.log(precoFrete);
 
-                    $('#precoFrete').html('R$ ' + precoFrete.replace('.', ','))
-                    $('#precoTotal').html('<strong>R$ ' + precoTotal.replace('.', ',') + '</strong>')
+                    $('#precoFrete').html('R$ ' + precoFrete.replace('.', ','));
+                    $('#precoTotal').html('<strong>R$ ' + precoTotal.replace('.', ',') + '</strong>');
 
                 }
-            })
-        });
+            });
+        }
 
         $('#customRadio2').click(function () {
 
             let shippingPrice = $('#precoSedex').html().replace('R$ ', '').replace(',', '.');
             let days = $('#prazoSedex').html().substring(0, 1);
+            let type = $(this).val();
 
-            $.ajax({
-                url: '{{ route('shipping.data') }}',
-                type: 'POST',
-                data: {
-                    _token: CSRF_TOKEN,
-                    shippingType: $(this).val(),
-                    shippingPrice: shippingPrice,
-                    shippingDays: days,
-                    totalPrice: $('#valorTotal').val()
-                },
-                success: function (value) {
-
-                    let precoTotal = parseFloat(value.shippingData.precoTotal).toFixed(2);
-                    let precoFrete = parseFloat(value.shippingData.valor).toFixed(2);
-
-                    $('#precoFrete').html('R$ ' + precoFrete.replace('.', ','))
-                    $('#precoTotal').html('<strong>R$ ' + precoTotal.replace('.', ',') + '</strong>')
-
-                }
-            })
+            ajaxRadioButton(shippingPrice, days, type);
 
         });
 
@@ -624,7 +647,7 @@
 
             let button = $(e.relatedTarget)
             let dataAddress = button.data('address')
-        
+
             let modal = $(this)
 
             $.ajax({
@@ -634,11 +657,13 @@
                     _token: CSRF_TOKEN,
                 },
                 success: function (val) {
-                    console.log(val);                    
+                    console.log(val);
                 }
             })
 
-        })
+        });
+
+    });
 
     </script>
 
