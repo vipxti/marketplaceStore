@@ -18,7 +18,7 @@
                         <a href="{{ route('products.page')}}" class="btn btn-template" style="width: 100%">Continuar Comprando</a>
                     </div>
                 @else
-                    <div class="row">
+
                         <div class="col-12">
                             <div class="cart-table table-responsive clearfix">
                                 <table class="table">
@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="coupon-code-area mt-70">
                             <div class="cart-page-heading">
