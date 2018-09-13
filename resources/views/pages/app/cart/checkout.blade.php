@@ -193,6 +193,7 @@
     
     <script src="{{asset('js/app/waves.js')}}"></script>
     <script src="{{asset('js/app/input.js')}}"></script>
+    <script src="{{asset('js/admin/sweetalert.min.js')}}"></script>
     
     <script>
 
@@ -201,12 +202,14 @@
         let cardToken = '';
     
         $(function () {
-            
+            //==============================================================================================================
+            //INICIA A SESSÃO DO PAGSEGURO
             $.ajax({
                 url: '{{ route('payment.checkout.session.id') }}',
                 type: 'POST',
                 data: {_token: CSRF_TOKEN},
                 success: function (d) {
+                    console.log(d);
                     PagSeguroDirectPayment.setSessionId(d.idSessao[0]);
 
                     $('#creditCards').empty();
@@ -234,22 +237,26 @@
 
         });
 
+        //==============================================================================================================
+        //AO CLICAR NO BOTÃO DE ESCOLHER PARCELAS, VAI SER GERADO AS PARCELAS, E CRIA O TOKEN DO CARTÃO DE CRÉDITO
         $('#generateInstallments').click(function () {
-
-            $('#installments').removeClass('d-none')
+            console.log('oi');
+            $('#installments').removeClass('d-none');
 
             PagSeguroDirectPayment.getBrand({
             cardBin: $('#cardNumber').val().substr(0, 6),
                 success: function (d) {
+                    console.log('sucesso ao gerar as parcelas.');
+                    console.log(d);
 
-                    let brandName = d.brand.name                  
+                    let brandName = d.brand.name;
 
                     PagSeguroDirectPayment.getInstallments({
                         amount: parseFloat($('#orderValue').val()),
                         maxInstallmentNoInterest: 3,
                         brand: brandName,
                         success: function (v) {
-
+                            console.log(v);
                             $('#installmentsOptions').empty();
 
                             $.each(v.installments, function (i, values) {
@@ -270,6 +277,12 @@
 
                 },
                 error: function (response) {
+                    /*console.log('erro ao pegar as parcelas.');
+                    console.log(response);*/
+
+                    swal('Ops', 'Cartão não acessível.\nEscolha outro cartão para pagamento.', 'warning');
+                    $('#installments').addClass('d-none');
+
                     binCard = ''
                 }
             });
@@ -280,8 +293,8 @@
                 expirationMonth: $('#months option:selected').text(),
                 expirationYear: $('#years option:selected').text(),
                 success: function (response) {
-                    cardToken = response.card.token
-                    $('#cardToken').val(cardToken)
+                    cardToken = response.card.token;
+                    $('#cardToken').val(cardToken);
 
                     $.ajax({
                         url: '{{ route('payment.creditcard.info') }}',
@@ -304,18 +317,20 @@
 
 
                 }
-            }
+            };
 
             PagSeguroDirectPayment.createCardToken(cardData)
 
         });
 
+        //==============================================================================================================
+        //AO CLICAR NO SELECT DAS PARCELAS, ALGO ACONTECE
         $('#installmentsOptions').on('change', function () {
 
             let installmentValues = ($('#installmentsOptions option:selected').val()).split('_');
 
-            let installmentAmount = installmentValues[0]
-            let totalAmount = installmentValues[1]
+            let installmentAmount = installmentValues[0];
+            let totalAmount = installmentValues[1];
 
             $.ajax({
                 url: '{{ route('payment.creditcard.info') }}',
@@ -333,9 +348,9 @@
                 },
                 success: function () {
                 }
-            })
+            });
             
-        })
+        });
 
     </script>
 

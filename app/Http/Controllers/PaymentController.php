@@ -214,7 +214,8 @@ class PaymentController extends Controller
         $emailPagseguro = 'vendas@vipx.com.br';
         
         $data = http_build_query($data);
-        $url = 'https://ws.pagseguro.uol.com.br/v2/sessions';
+        //dd($data);
+        $url = 'https://ws.pagseguro.uol.com.br/v2/sessions/';
         
         $curl = curl_init();
 
@@ -236,6 +237,7 @@ class PaymentController extends Controller
 
         $xml = simplexml_load_string($xml);
         $idSessao = $xml->id;
+        //dd($xml);
         
         $response = [ 'idSessao' => $idSessao];
 
