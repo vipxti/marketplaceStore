@@ -143,6 +143,11 @@ Route::prefix('admin')->group(function () {
     Route::post('lottery/winner/save', 'LotteryController@saveWinner')->name('lottery.save.winner')->middleware('auth:admin');
     Route::post('lottery/winner/reset', 'LotteryController@resetWinners')->name('lottery.reset.winner')->middleware('auth:admin');
 
+    //PAGSEGURO
+    Route::get('pagseguro', 'PagseguroController@index')->name('pagseguro.page')->middleware('auth:admin');
+    Route::post('pagseguro/pedido/transacao', 'PagseguroController@consultaPedido')->name('pagseguro.pedido.transacao')->middleware('auth:admin');
+
+
     Route::get('/productconfig', 'PageController@showConfigProductPage')->name('product.config');
 
     Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');

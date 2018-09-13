@@ -483,8 +483,11 @@ class PaymentController extends Controller
 
         if (strval($xml->shipping->type) == '1') {
             $orderData['tipoFrete'] = 'Pac';
-        } else {
+        } else if (strval($xml->shipping->type) == '2') {
             $orderData['tipoFrete'] = 'Sedex';
+        }
+        else{
+            $orderData['tipoFrete'] = 'Entrega Vip-X';
         }
 
         Session::push('orderData', $orderData);

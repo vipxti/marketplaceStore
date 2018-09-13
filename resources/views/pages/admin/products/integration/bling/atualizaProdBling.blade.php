@@ -233,6 +233,7 @@
                         <thead>
                         <tr id="indexProd">
                             <th>SKU</th>
+                            <th>ID Loja</th>
                             <th>Nome Produto</th>
                             <th>Preço</th>
                             <th>Preço Custo</th>
@@ -331,6 +332,7 @@
                                 console.log(produtoLoja);
 
                                 arrayProdutos.push(produto.codigo);
+                                arrayProdutos.push(produtoLoja.idProdutoLoja);
                                 arrayProdutos.push(produto.descricao);
                                 arrayProdutos.push(produtoLoja.preco.preco);
                                 arrayProdutos.push(produto.precoCusto);
@@ -346,7 +348,7 @@
                                 td.text(0.00);
 
                                 //td para switch de escolha
-                                if(produto.precoCusto == 0 || produtoLoja.preco.preco == 0) {
+                                if(produto.precoCusto == 0 || produtoLoja.idProdutoLoja == null) {
                                     temDisabled = "disabled";
                                     tr.css('color', '#cc0000');
                                 }
@@ -457,6 +459,7 @@
                                 //console.log(produtoLoja);
 
                                 arrayProdutos.push(produto.codigo);
+                                arrayProdutos.push(produtoLoja.idProdutoLoja);
                                 arrayProdutos.push(produto.descricao);
                                 arrayProdutos.push(produtoLoja.preco.preco);
                                 arrayProdutos.push(produto.precoCusto);
@@ -474,7 +477,7 @@
                                 td.text(0.00);
 
                                 //td para switch de escolha
-                                if(produto.precoCusto == 0 || produtoLoja.preco.preco == 0) {
+                                if(produto.precoCusto == 0 || produtoLoja.idProdutoLoja == null) {
                                     temDisabled = "disabled";
                                     tr.css('color', '#cc0000');
                                 }
@@ -568,11 +571,11 @@
                 let resultado;
 
                 for(let i=0; i<tamanhoTable; i++){
-                    $('#table tr:eq('+i+')').find('td:eq(4)').text(0).css('color', '#333');
-                    $('#table tr:eq('+i+')').find('td:eq(4)').text(0).css('font-weight', 'normal');
+                    $('#table tr:eq('+i+')').find('td:eq(5)').text(0).css('color', '#333');
+                    $('#table tr:eq('+i+')').find('td:eq(5)').text(0).css('font-weight', 'normal');
                     if($('#table tr:eq('+i+')').find('td:last').find('.switch').prop('checked')){
-                        let preco = $('#table tr:eq('+i+')').find('td:eq(2)').text();
-                        let preco_custo = parseFloat($('#table tr:eq('+i+')').find('td:eq(3)').text());
+                        let preco = $('#table tr:eq('+i+')').find('td:eq(3)').text();
+                        let preco_custo = parseFloat($('#table tr:eq('+i+')').find('td:eq(4)').text());
                         let comissaoCalc = comissao, impostoCalc = imposto, despesa_fixaCalc = despesa_fixa;
                         let taxa_cartaoCalc = taxa_cartao, marketingCalc = marketing;
 
@@ -589,16 +592,16 @@
                         let textoLucroPrejuizo;
                         if(lucroPrejuizo > 0) {
                             textoLucroPrejuizo = "Lucro: ";
-                            $('#table tr:eq('+i+')').find('td:eq(4)').css('color', '#0095ff');
+                            $('#table tr:eq('+i+')').find('td:eq(5)').css('color', '#0095ff');
                         }
                         else {
                             textoLucroPrejuizo = "Prejuizo: ";
-                            $('#table tr:eq('+i+')').find('td:eq(4)').css('color', '#cc0000');
+                            $('#table tr:eq('+i+')').find('td:eq(5)').css('color', '#cc0000');
                         }
 
                         console.log("Resultado: " + resultado.toFixed(2));
                         let texto = resultado.toFixed(2) + " " + textoLucroPrejuizo + lucroPrejuizo.toFixed(2);
-                        $('#table tr:eq('+i+')').find('td:eq(4)').text(texto).css('font-weight', 'bold');
+                        $('#table tr:eq('+i+')').find('td:eq(5)').text(texto).css('font-weight', 'bold');
                     }
                 }
             }
@@ -617,12 +620,13 @@
             let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             let loja = $('#selectLoja').val();
             let sku = $('#table tr:eq('+ tableRow +')>td:first').text();
+            let id_loja = $('#table tr:eq('+ tableRow + ')>td:eq(1)').text();
             //console.log(sku);
 
             if(tableRow <= tamanhoTable){
                 if($('#table tr:eq('+tableRow+')').find('td:last').find('.switch').prop('checked')){
                     console.log($('#table tr:eq('+tableRow+')'));
-                    let valor_atualizar = $('#table tr:eq('+tableRow+')').find('td:eq(4)').text();
+                    let valor_atualizar = $('#table tr:eq('+tableRow+')').find('td:eq(5)').text();
                     valor_atualizar = valor_atualizar.split(' ');
 
                     if(valor_atualizar[0] != 0) {
@@ -633,7 +637,7 @@
                         $.ajax({
                             url: '{{route('alter.price.prods.bling')}}',
                             type: 'post',
-                            data: {_token: CSRF_TOKEN, loja: loja, sku: sku, preco: valor_atualizar[0]},
+                            data: {_token: CSRF_TOKEN, loja: loja, sku: sku, preco: valor_atualizar[0], id_loja: id_loja},
                             success: function(data){
                                 console.log(data);
                             },
