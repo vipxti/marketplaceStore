@@ -72,6 +72,14 @@ class CartController extends Controller
         return view('pages.app.cart.index', compact('cep', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
     }
 
+    public function setCartData(){
+        if(!Session::has('cartRoute')){
+            Session(['cartRoute' => 'cart.page']);
+            Session::save();
+        }
+
+    }
+
     public function calculateShipping(Request $request)
     {
         //dd($request->all());

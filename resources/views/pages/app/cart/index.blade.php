@@ -100,107 +100,110 @@
                                 <h5>CEP</h5>
 
                                 @if ($cep == null)
-
                                     <p class="text-justify">Digite seu CEP</p>
-                                    
                                 @else
-
                                     <p class="text-justify">Escolha o CEP</p>
-                                    
                                 @endif
                                 
                             </div>
 
 
-                                @if (Auth::check())
+                            @if (Auth::check())
 
-                                    @if ($cep == null)
+                                @if ($cep == null)
 
-                                        <input type="hidden" id="cd_cep" name="cd_cep" value="">
-                                        <input type="hidden" name="cepPrincipal" id="cepPrincipal" value="">
+                                    {{--<input type="hidden" id="cd_cep" name="cd_cep" value="">
+                                    <input type="hidden" name="cepPrincipal" id="cepPrincipal" value="">
+                                    <input type="text" name="cep" id="cep" value="" required>
+                                    <button id="calculateShipping" type="button"><i class="fa fa-search"></i></button>--}}
+                                    <div class="row col-md-12 mb-15">
+                                        {{--<input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">--}}
                                         <input type="text" name="cep" id="cep" value="" required>
-                                        <button id="calculateShipping" type="button"><i class="fa fa-search"></i></button>
+                                        <button class="btn btn-template" id="calculateShipping" type="button" style="border: none; width: 86px"><i class="fa fa-search"></i></button>
+                                        <p id="msgCep" class="small text-danger"></p>
+                                    </div>
 
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <p class="small text-danger">Não há endereço cadastrado em sua conta.<br>Para concluir a compra cadastre um endereço</p>
-                                            </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <p class="small text-danger">Não há endereço cadastrado em sua conta.<br>Para concluir a compra cadastre um endereço</p>
                                         </div>
+                                    </div>
 
-                                        <div class="row">
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewAddress">
-                                                    Adicionar novo endereço
-                                                </button>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewAddress">
+                                                Adicionar novo endereço
+                                            </button>
                                         </div>
-                                
-                                    @else
+                                    </div>
 
-                                        <div class="row">
-
-                                            @foreach ($cep as $key => $c)
-
-                                                @if ($c['ic_principal'] == 1)
-
-                                                    <input type="hidden" name="cepPrincipal" id="cepPrincipal" value="{{ $c['cd_cep'] }}">
-
-                                                    <div class="col-12 col-md-5">
-
-                                                        <input type="radio" class="destino_cliente" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}" checked>
-                                                        <label class="h6" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
-                                                        <br>
-                                                        <span>CEP:&nbsp;</span><span id="{{ 'num_cep' . ($key + 1) }}">{{ $c['cd_cep'] }}</span>
-                                                        <br>
-                                                        <span class="small">{{ $c['ds_endereco'] }}, {{ $c['cd_numero_endereco'] }}</span>
-
-                                                    </div>
-                                                    
-                                                @else
-
-                                                    <div class="col-12 col-md-5">
-
-                                                        <input type="radio" class="destino_cliente" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}">
-                                                        <label class="h6" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
-                                                        <br>
-                                                        <span>CEP:&nbsp;</span><span id="{{ 'num_cep' . ($key + 1) }}">{{$c['cd_cep']}}</span>
-                                                        <br>
-                                                        <span class="small">{{ $c['ds_endereco'] }}, {{ $c['cd_numero_endereco'] }}</span>
-
-                                                    </div>
-                                                    
-                                                @endif
-                                                
-                                            @endforeach
-
-                                        </div>
-
-                                        <hr>
-
-                                        <div class="row">
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <p class="small">Caso queira adicionar outro endereço clique no botão abaixo</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewAddress">
-                                                    Adicionar novo endereço
-                                                </button>
-                                            </div>
-                                        </div>
-                                        
-                                    @endif
-                                    
                                 @else
-                                <div class="row col-md-12">
-                                    <input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">
+
+                                    <div class="row">
+
+                                        @foreach ($cep as $key => $c)
+
+                                            @if ($c['ic_principal'] == 1)
+
+                                                <input type="hidden" name="cepPrincipal" id="cepPrincipal" value="{{ $c['cd_cep'] }}">
+
+                                                <div class="col-12 col-md-5">
+
+                                                    <input type="radio" class="destino_cliente" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}" checked>
+                                                    <label class="h6" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
+                                                    <br>
+                                                    <span>CEP:&nbsp;</span><span id="{{ 'num_cep' . ($key + 1) }}">{{ $c['cd_cep'] }}</span>
+                                                    <br>
+                                                    <span class="small">{{ $c['ds_endereco'] }}, {{ $c['cd_numero_endereco'] }}</span>
+
+                                                </div>
+
+                                            @else
+
+                                                <div class="col-12 col-md-5">
+
+                                                    <input type="radio" class="destino_cliente" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}">
+                                                    <label class="h6" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
+                                                    <br>
+                                                    <span>CEP:&nbsp;</span><span id="{{ 'num_cep' . ($key + 1) }}">{{$c['cd_cep']}}</span>
+                                                    <br>
+                                                    <span class="small">{{ $c['ds_endereco'] }}, {{ $c['cd_numero_endereco'] }}</span>
+
+                                                </div>
+
+                                            @endif
+
+                                        @endforeach
+
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <p class="small">Caso queira adicionar outro endereço clique no botão abaixo</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewAddress">
+                                                Adicionar novo endereço
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                @endif
+
+                            @else
+                                <div class="row col-md-12 mb-15">
+                                    {{--<input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">--}}
                                     <input type="text" name="cep" id="cep" value="" required>
                                     <button class="btn btn-template" id="calculateShipping" type="button" style="border: none; width: 86px"><i class="fa fa-search"></i></button>
+                                    <p id="msgCep" class="small text-danger"></p>
                                 </div>
-                                @endif
+                            @endif
                                 
 
                         </div>
@@ -226,6 +229,12 @@
                                         <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
                                     </label>
                                 </div>
+                                <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
+                                    <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
+                                    <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
+                                        <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                    </label>
+                                </div>
 
                             @else
 
@@ -247,10 +256,10 @@
                                         <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                             <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
-                                                <span id="maktub">&nbsp;Entrega Maktub</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
+                                                <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub">R$ {{ Session::get('shippingOptions')[0]['valorMaktub'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
                                             </label>
                                         </div>
-                                    @else
+                                    @elseif(Session::get('shippingData')[0]['tipo'] == 2)
                                         <div class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input">
                                             <label id="labelRadio1" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
@@ -266,7 +275,26 @@
                                         <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                             <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
-                                                <span id="maktub">&nbsp;Entrega Maktub</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                                <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                            </label>
+                                        </div>
+                                    @else
+                                        <div class="custom-control custom-radio mb-15">
+                                            <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input">
+                                            <label id="labelRadio1" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                                <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-radio mb-15">
+                                            <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input">
+                                            <label id="labelRadio2" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                                <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
+                                            </label>
+                                        </div>
+                                        <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
+                                            <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input" checked>
+                                            <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
+                                                <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
                                             </label>
                                         </div>
                                     @endif
@@ -287,15 +315,16 @@
                                     <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
                                         <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                         <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
-                                            <span id="maktub">&nbsp;Entrega Maktub</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                            <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
                                         </label>
                                     </div>
                                 @endif
                                 
                             @endif
 
-                            <div class="col-md-12">
-                                <p id="pMsgErro" style="font-size: 12px;" hidden></p>
+                            <div>
+                                <p id="pMsgErro" class="text-danger small" hidden></p>
+                                <p id="pMsgErro2" class="text-danger small" hidden></p>
                             </div>
 
                         </div>
@@ -328,15 +357,23 @@
                                         <strong>Total</strong>
                                     </span>
                                     <span id="precoTotal">
-                                    <strong>R$ {{ number_format((Session::get('totalPrice')), 2, ',', '.') }}</strong>
-                                </span>
+                                        @if($cep != null)
+                                            <strong>R$ {{ number_format((Session::get('totalPrice')), 2, ',', '.') }}</strong>
+                                        @else
+                                            <strong>R$ {{ number_format((Session::get('subtotalPrice')), 2, ',', '.') }}</strong>
+                                        @endif
+                                    </span>
                                 </li>
                             </ul>
 
-                            @if ($cep == null)
-                                <a href="{{ route('payment.checkout') }}" class="btn btn-template w-100 disabled">Concluir Compra</a>
+                            @if (Auth::check())
+                                @if($cep != null)
+                                    <a id="btnConcluirCompra" href="{{ route('payment.checkout') }}" class="btn btn-template w-100">Concluir Compra</a>
+                                @else
+                                    <a id="btnConcluirCompra" href="{{ route('payment.checkout') }}" class="btn btn-template w-100 disabled">Concluir Compra</a>
+                                @endif
                             @else
-                                <a href="{{ route('payment.checkout') }}" class="btn btn-template w-100">Concluir Compra</a>
+                                <button id="btnRedirectLogin" class="btn btn-template w-100">Faça Login para finalizar compra</button>
                             @endif
                         
                         </div>
@@ -388,6 +425,8 @@
 
         }
 
+        //==============================================================================================================
+        //FUNÇÃO PARA CALCULAR FRETE
         function ajaxFrete(cep){
             $.ajax({
                 url: '{{ route('shipping.calculate') }}',
@@ -407,6 +446,7 @@
 
                     $('#customRadio1').removeAttr('disabled');
                     $('#customRadio2').removeAttr('disabled');
+                    $('#customRadio3').removeAttr('disabled');
 
                     let prazoPac = values.fretes.pac.prazo + 3;
                     let prazoSedex = values.fretes.sedex.prazo + 3;
@@ -416,6 +456,8 @@
 
                     $('#precoSedex').html('R$ ' + values.fretes.sedex.valor[0]);
                     $('#precoPac').html('R$ ' + values.fretes.pac.valor[0]);
+
+                    $('.destino_cliente').removeAttr('disabled');
 
                     console.log(values.fretes.maktub.valor);
 
@@ -432,11 +474,15 @@
 
                     if(values.fretes.sedex.obs != ""){
                         $('#pMsgErro').text(values.fretes.sedex.obs);
+                        $('#pMsgErro2').text("Obs: Regra acima só se aplica para entregas Normal e Expresso.");
                         $('#pMsgErro').removeAttr('hidden');
+                        $('#pMsgErro2').removeAttr('hidden');
                     }
                     else{
                         $('#pMsgErro').text("");
+                        $('#pMsgErro2').text("");
                         $('#pMsgErro').attr('hidden', true);
+                        $('#pMsgErro2').attr('hidden', true);
                     }
 
 
@@ -460,16 +506,74 @@
 
                         ajaxRadioButton(shippingPrice, days, type);
                     }
+                    else if($('#customRadio3').is(':checked')){
+                        if(!$('#divMaktub').is(':hidden')) {
+                            shippingPrice = $('#precoMaktub').html().replace('R$ ', '').replace(',', '.');
+                            days = 2;
+                            type = $('#customRadio3').val();
+
+                            ajaxRadioButton(shippingPrice, days, type);
+                        }
+                        else{
+                            $('#customRadio1').prop('checked', true);
+                            shippingPrice = $('#precoPac').html().replace('R$ ', '').replace(',', '.');
+                            days = $('#prazoPac').html().substring(0, 1);
+                            type = $('#customRadio1').val();
+
+                            ajaxRadioButton(shippingPrice, days, type);
+                        }
+                    }
                 });
         }
 
+        let timer;
+        //==============================================================================================================
+        //CASO O CLIENTE ESTEJA LOGADO, ELE PODERÁ ESCOLHER QUAL ENDEREÇO QUE ELE QUER QUE ENVIE, DOS ENDEREÇOS CADASTRADOS
         $('.destino_cliente').click(function(){
             let id = $(this).attr('id');
             id = id.substr(id.length - 1, id.length);
             let cep = $('#num_cep'+id).text();
+            $('.destino_cliente').attr('disabled', true);
             ajaxFrete(cep);
         });
 
+        //==============================================================================================================
+        //VERIFICA O CEP DO CLIENTE
+        $('#cep').blur(function(){
+            let retorno = verificaCEP();
+        });
+
+        //Quando o campo cep perde o foco.
+        function verificaCEP() {
+            $("#msgCep").html("");
+            let cep = $('#cep').val().replace(/\D/g, '');
+
+            if (cep != "") {
+
+                var validacep = /^[0-9]{8}$/;
+
+                if(validacep.test(cep)) {
+
+                    $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+                        if (!("erro" in dados)) {
+
+                        }
+                        else {
+                            $("#msgCep").html("CEP não encontrado.");
+                            return false;
+                        }
+                    });
+                }
+                else {
+                    $("#msgCep").html("Formato de CEP inválido.");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        //==============================================================================================================
         //Aumenta a quantidade de cada item no carrinho
         $('.qty-plus').click(function(e){
 
@@ -507,6 +611,7 @@
 
         });
 
+        //==============================================================================================================
         //Diminui a quantidade de cada item no carrinho
         $('.qty-minus').click(function (e){
 
@@ -546,58 +651,36 @@
 
         });
 
+        //==============================================================================================================
+        //CASO O CLIENTE NÃO ESTEJA LOGADO, BOTÃO CALCULA O FRETE DO CLIENTE
         $('#calculateShipping').click(function () {
+            console.log($('#cep').val().length);
 
-            {{--$.ajax({
-                url: '{{ route('shipping.calculate') }}',
-                type: 'POST',
-                data: {
-                    _token: CSRF_TOKEN,
-                    cep: $('#cep').val(),
-                    width: $('#larguraTotal').val(),
-                    height: $('#alturaTotal').val(),
-                    length: $('#comprimentoTotal').val(),
-                    weight: $('#pesoTotal').val(),
-                    price: $('#valorTotal').val()
-                },
-                success: function (values) {
+            let cepValido = verificaCEP();
+            console.log(cepValido)
 
-                    $('#customRadio1').removeAttr('disabled')
-                    $('#customRadio2').removeAttr('disabled')
+            if($('#cep').val().length == 8 && cepValido)
+                ajaxFrete($('#cep').val());
+            else{
+                $('#divMaktub').attr('hidden', true);
+                $('#precoPac').html('');
+                $('#precoSedex').html('');
+                $('#precoMaktub').html('');
+                $('#precoFrete').html('R$ ---');
+                $('#prazoPac').html('');
+                $('#prazoSedex').html('');
+                $('#prazoMaktub').html('');
+                $('#pMsgErro').html('');
+                $('#precoTotal').html('<strong>' + $('#precoSubTotal').text() + '</strong>');
+                $('#customRadio1').attr('disabled', true);
+                $('#customRadio2').attr('disabled', true);
+                $('#customRadio3').attr('disabled', true);
 
-                    let prazoPac = values.fretes.pac.prazo + 3;
-                    let prazoSedex = values.fretes.sedex.prazo + 3;
-
-                    if (prazoPac == 1) {
-
-                        $('#prazoPac').html(prazoPac + ' dia útil');
-
-                    } else {
-
-                        $('#prazoPac').html(prazoPac + ' dias úteis');
-
-                    }
-
-                    $('#precoPac').html('R$ ' + values.fretes.pac.valor[0]);
-
-                    if (prazoSedex == 1) {
-
-                        $('#prazoSedex').html(prazoSedex + ' dia útil');
-
-                    } else {
-
-                        $('#prazoSedex').html(prazoSedex + ' dias úteis');
-
-                    }
-
-                    $('#precoSedex').html('R$ ' + values.fretes.sedex.valor[0]);
-
-                }
-            })--}}
-            ajaxFrete();
-
+            }
         });
 
+        //==============================================================================================================
+        //CHAMA A FUNÇÃO ajaxRadioButton PARA ATUALIZAR OS PREÇOS
         $('#customRadio1').click(function () {
 
             let shippingPrice = $('#precoPac').html().replace('R$ ', '').replace(',', '.');
@@ -608,6 +691,18 @@
 
         });
 
+        //==============================================================================================================
+        //CHAMA A FUNÇÃO ajaxRadioButton PARA ATUALIZAR OS PREÇOS
+        $('#customRadio3').click(function(){
+            let shippingPrice = $('#precoMaktub').html().replace('R$ ', '').replace(',', '.');
+            let days = 2;
+            let type = $(this).val();
+
+            ajaxRadioButton(shippingPrice, days, type);
+        });
+
+        //==============================================================================================================
+        //FUNÇÃO PARA ATUALIZAR OS PREÇOS DOS RADIOBUTTONS
         function ajaxRadioButton(shippingPrice, days, type){
             $.ajax({
                 url: '{{ route('shipping.data') }}',
@@ -621,6 +716,7 @@
                 },
                 success: function (value) {
 
+                    //$('#btnConcluirCompra').removeClass('disabled');
                     let precoTotal = parseFloat(value.shippingData.precoTotal).toFixed(2);
                     let precoFrete = parseFloat(value.shippingData.valor).toFixed(2);
                     console.log(precoTotal);
@@ -633,6 +729,8 @@
             });
         }
 
+        //==============================================================================================================
+        //CHAMA A FUNÇÃO ajaxRadioButton PARA ATUALIZAR OS PREÇOS
         $('#customRadio2').click(function () {
 
             let shippingPrice = $('#precoSedex').html().replace('R$ ', '').replace(',', '.');
@@ -643,6 +741,21 @@
 
         });
 
+        //==============================================================================================================
+        //REDIRECT PARA P LOGIN DO CLIENTE, CASO NÃO ESTEJA LOGADO
+        $('#btnRedirectLogin').click(function(){
+            $.ajax({
+                url: '{{route('cart.data')}}',
+                type: 'post',
+                data: {_token: CSRF_TOKEN},
+                success: function(){
+                    window.location.href = '{{route('client.login')}}';
+                }
+            });
+        });
+
+        //==============================================================================================================
+        //CHAMA O MODAL PARA CADASTRAR UM ENDEREÇO NOVO
         $('#modalNewAddress').on('show.bs.modal', function (e) {
 
             let button = $(e.relatedTarget)

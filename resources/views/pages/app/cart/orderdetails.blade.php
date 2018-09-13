@@ -48,8 +48,15 @@
                                         R$ {{ number_format(($shippingData[0]['valor']), 2, ',', '.') }}
                                     </span>
                                 </td>
-                            @else
+                            @elseif($shippingData[0]['tipo'] == 2)
                                 <td class="text-right" colspan="2"><b>FRETE ESCOLHIDO:</b></b> SEDEX</td>
+                                <td class="price align-middle align-items-center">
+                                    <span id="precoFrete">
+                                        R$ {{ number_format(($shippingData[0]['valor']), 2, ',', '.') }}
+                                    </span>
+                                </td>
+                            @else
+                                <td class="text-right" colspan="2"><b>FRETE ESCOLHIDO:</b></b> ENTREGA VIP-X</td>
                                 <td class="price align-middle align-items-center">
                                     <span id="precoFrete">
                                         R$ {{ number_format(($shippingData[0]['valor']), 2, ',', '.') }}

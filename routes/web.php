@@ -175,6 +175,7 @@ Route::prefix('page')->group(function () {
     //Carrinho
     Route::prefix('cart')->group(function () {
         Route::get('/', 'CartController@showCartPage')->name('cart.page');
+        Route::post('/cartData', 'CartController@setCartData')->name('cart.data');
         Route::post('/', 'CartController@addToCart')->name('cart.buy');
         Route::post('/store', 'CartController@store')->name('cart.store');
         Route::post('/delete', 'CartController@deleteProduct')->name('cart.product.delete');
