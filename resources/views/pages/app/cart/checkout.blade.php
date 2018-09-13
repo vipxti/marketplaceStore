@@ -131,7 +131,7 @@
 
                         <p>&nbsp;</p>
 
-                        <div class="col-12 col-md-8 offset-md-2">
+                        <div class="col-12 col-md-8 d-flex justify-content-center">
 
                             <p>&nbsp;</p>
 
@@ -171,19 +171,16 @@
                     <div class="col-12 col-md-12">
                         <br>
                         <div class="text-justify" style="padding: 0 15px">
-                            <h3>IMPORTANTE</h3>
+                            <p style="font-size: 25px">IMPORTANTE</p>
                             <p>O Boleto Bancário será exibido após a confirmação da sua compra e poderá ser impresso para pagamento em qualquer agência bancária ou casas lotéricas.</p>
-                            <p>Para sua comodidade, você poderá reimprimir seu boleto acessando a página “Meus Pedidos”, Você terá 2 dias úteis para efetuar o pagamento do boleto.</p>
-                            <p>O pagamento do boleto não pode ser parcelado. O pedido só será aprovado se o pagamento for realizado no valor integral do boleto.</p>
-                            <p>Não pague outro valor. O prazo de entrega, dos pedidos com boleto, começa a contar após a confirmação do pagamento pela instituição financeira.</p>
+                            <p> Você terá 2 dias úteis para efetuar o pagamento do boleto.</p>
                             <p>Em caso de não pagamento do boleto, seu pedido será cancelado. O boleto será válido somente para este pedido.</p>
                             <p>Caso você queira repetir a compra, não pague o boleto novamente, realize um novo pedido.</p>
-                            <p><b>*Tarifa de boleto: R$ 1,00.</b></p>
+                            <p style="color: #d59431"><b>*Tarifa de boleto: R$ 1,00.</b></p>
                         </div>
                     </div>
-                    <div class="col-12 col-md-12">
-                        <p> </p>
-                        <a href="{{ route('payment.order.ticket.details')}}" class="btn btn-template col-12 col-md-6 offset-md-6" style="width: 100%">Prosseguir</a>
+                    <div class="col-md-12 text-right">
+                        <a href="{{ route('payment.order.ticket.details')}}" class="btn btn-template" style="width: 30%">Prosseguir</a>
                     </div>
                 </div>
                 <p>&nbsp;</p>

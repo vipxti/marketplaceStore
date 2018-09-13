@@ -9,7 +9,7 @@
                 <p class="h2 text-center">Resultado da compra</p>
                 @if ($orderData[0]['statusCompra'] == '1')
 
-                    <p class="text-center">Pedido realizado com sucesso!!!</p>
+                    <p class="text-center text-success" style="font-size: 20px">Pedido realizado com sucesso!!!</p>
                     <div class="d-flex justify-content-center">
                         <p style="width: 75px; height: 75px"><img src="{{asset('img/app/bg-img/correct.png')}}" alt=""></p>
                     </div>
@@ -39,7 +39,7 @@
                         </div>
                         <br>
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-template" href="{{ route('products.page')}}">Voltar as Compras</button>
+                            <a class="btn btn-template" href="{{ route('cart.page')}}">Voltar ao Carrinho</a>
                         </div>
 
                 @endif
