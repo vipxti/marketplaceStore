@@ -12,6 +12,7 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
     </style>
     <!-- Nav bar do produto -->
     <div class="breadcumb_area">
@@ -19,10 +20,10 @@
             <div class="row">
                 <div class="col-12">
                     <ol class="breadcrumb d-flex align-items-center">
-                    <li class="breadcrumb-item"><a href="{{ route('products.page') }}">Início</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('products.page') }}">Início</a></li>
 
                         <li class="breadcrumb-item active">{{ $product[0]['nm_produto'] }}</li>
-   
+
                     </ol>
                     <!-- btn -->
                     <a href="{{ route('products.page') }}" class="backToHome d-block"><i class="fa fa-angle-double-left"></i> Voltar</a>
@@ -78,7 +79,7 @@
 
                                             <div class="carousel-item">
                                                 <a class="gallery_img" href="{{ URL::asset('img/products/' . $image['im_produto']) }}">
-                                                <img id="{{ 'fotoGrande' . ($key + 1) }}" class="d-block" src="{{ URL::asset('img/products/' . $image['im_produto']) }}" alt="slide" style="width: 1000px; heigth: 1444px;">
+                                                    <img id="{{ 'fotoGrande' . ($key + 1) }}" class="d-block" src="{{ URL::asset('img/products/' . $image['im_produto']) }}" alt="slide" style="width: 1000px; heigth: 1444px;">
                                                 </a>
                                             </div>
 
@@ -102,11 +103,11 @@
                         @if ($isVariation)
 
                             <h4 id="precoProduto" class="price">R$ {{ number_format($variations[0]['vl_produto_variacao'], 2, ',', '.') }}</h4>
-                            
+
                         @else
 
                             <h4 id="precoProduto" class="price">R$ {{ number_format($product[0]['vl_produto'], 2, ',', '.') }}</h4>
-                            
+
                         @endif
 
                         @if ($isVariation)
@@ -120,7 +121,7 @@
                                 <p class="available">Disponibilidade: <span class="disponivel" class="text-muted">Não disponível</span></p>
 
                             @endif
-                            
+
                         @else
 
                             @if($product[0]['qt_produto'] > 5)
@@ -132,7 +133,7 @@
                                 <p class="available">Disponibilidade: <span class="disponivel" class="text-muted">Não disponível</span></p>
 
                             @endif
-                            
+
                         @endif
 
                         <div class="single_product_ratings mb-15">
@@ -153,13 +154,13 @@
                                     <h6 class="widget-title">Cor</h6>
 
                                     <div class="widget-desc">
-                                    
+
                                         <ul class="d-flex justify-content-between">
 
                                             @foreach ($codProds as $c)
 
                                                 <input type="hidden" name="cod[]" value="{{ $c }}">
-                                                
+
                                             @endforeach
 
                                             @foreach ($colors as $key => $color)
@@ -169,59 +170,59 @@
                                                     <a href="javascript:void(0)" id="{{ $color->cd_cor }}" name="btn_color[]" style="background-color: {{ $color->hex }};"></a>
 
                                                 </li>&nbsp;&nbsp;
-                                                        
+
                                             @endforeach
 
                                         </ul>
-                            
+
                                     </div>
 
                                 </div>
-                                
+
                             @endif
 
                             <div id="tamanhos" class="widget size mb-50">
-                            
+
                                 <h6 class="widget-title">Tamanho</h6>
 
                                 <div class="widget-desc">
-                                
-                                    <ul class="listaDeTamanhos"> 
+
+                                    <ul class="listaDeTamanhos">
 
                                         @if ($sizeType == 'N')
 
                                             @foreach ($sizes as $size)
-                                            
+
                                                 <li class="{{ $size['cd_nr_sku'] }}">
-                                                
+
                                                     <a id="{{ $size['cd_nr_sku'] }}" name="sizes[]" href="javascript:void(0);">{{ $size['nm_tamanho_num'] }}</a>
-                                                
+
                                                 </li>&nbsp;&nbsp;
-                                            
+
                                             @endforeach
-                                            
+
                                         @endif
 
                                         @if ($sizeType == 'L')
 
                                             @foreach ($sizes as $size)
-                                            
+
                                                 <li class="{{ $size['cd_nr_sku'] }}">
-                                                
+
                                                     <a id="{{ $size['cd_nr_sku'] }}" name="sizes[]" href="javascript:void(0);">{{ $size['nm_tamanho_letra'] }}</a>
-                                                
+
                                                 </li>&nbsp;&nbsp;
-                                            
+
                                             @endforeach
-                                            
+
                                         @endif
-                                
+
                                     </ul>
-                                
+
                                 </div>
-                            
+
                             </div>
-                            
+
                         @endif
 
                         <p>&nbsp;</p>
@@ -235,15 +236,15 @@
                             @else
 
                                 <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
-                                {{ csrf_field() }}
+                                    {{ csrf_field() }}
 
                                     <div class="quantity">
-                                        <span class="qty-minus" style="pointer-events: none">
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="1" name="quantity" value="1" disabled>
                                         <span class="qty-plus" style="pointer-events: none">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </span>
+                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="1" name="quantity" value="1" disabled>
+                                        <span class="qty-minus" style="pointer-events: none">
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
                                         </span>
                                     </div>
 
@@ -266,7 +267,7 @@
                                 </form>
 
                             @endif
-                            
+
                         @else
 
                             @if($product[0]['qt_produto'] <= 5)
@@ -276,16 +277,16 @@
                             @else
 
                                 <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
-                                {{ csrf_field() }}
+                                    {{ csrf_field() }}
 
-                                    
+
                                     <div class="quantity">
-                                        <span class="qty-minus">
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1" disabled>
                                         <span class="qty-plus">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </span>
+                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1" disabled>
+                                        <span class="qty-minus">
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
                                         </span>
                                     </div>
 
@@ -308,7 +309,7 @@
                                 </form>
 
                             @endif
-                            
+
                         @endif
 
                     </div>
@@ -345,7 +346,7 @@
                                     <pre class="infoProduto quebra">{{ $product[0]['ds_produto'] }}</pre>
                                 </div>
                             </div>
-                            
+
                         @endif
 
                     </div>
@@ -357,7 +358,6 @@
     </section>
 
     <script>
-
         $(document).ready(function(){
             var descricao = $('#desc_prod').val();
             $('#texto_desc').html(descricao);
@@ -383,9 +383,9 @@
             var qtdEstoque = parseInt($('#qtProdEstoque').val());
 
             if (qtd == qtdEstoque - 5) {
-              
+
                 $(this).attr('disabled');
-                $('.qty-plus').css('pointer-events', 'none');  
+                $('.qty-plus').css('pointer-events', 'none');
 
             }
             else {
@@ -395,18 +395,18 @@
                 qtd++;
 
                 $('#qty').val(qtd);
-                $('#qtdDetalhes').val(qtd);             
-                    
-            } 
+                $('#qtdDetalhes').val(qtd);
+
+            }
 
         });
 
         //Diminui a quantidade de cada item no carrinho
         $('.qty-minus').click(function (e){
-            
+
             if (qtd == 1) {
-                
-                $('.qty-minus').css('pointer-events', 'none');    
+
+                $('.qty-minus').css('pointer-events', 'none');
 
             }
             else {
@@ -442,7 +442,7 @@
 
                         $('#tamanhos').removeClass('d-none');
                         $('.listaDeTamanhos').empty();
-                        
+
                         $.each(d.data, function (i, v) {
 
                             if (d.sizeType == 'N') {
@@ -461,7 +461,7 @@
                                 $('#thumb' + (i + 1) + 'Carrossel').css('background-image','url(' + rootPath + v.im_produto + ')');
                                 $('#fotoGrande' + (i + 1)).attr('src', '' + rootPath + v.im_produto +'');
                             }
-                            
+
                         });
                     }
 
@@ -501,7 +501,7 @@
                     $('.infoProduto').html(d.variation[0].ds_produto_variacao);
 
                     $('#btnComprar').removeAttr('disabled');
-                    
+
                 }
             });
 
