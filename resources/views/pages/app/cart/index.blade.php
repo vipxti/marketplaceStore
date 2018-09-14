@@ -474,7 +474,7 @@
 
                     if(values.fretes.sedex.obs != ""){
                         $('#pMsgErro').text(values.fretes.sedex.obs);
-                        $('#pMsgErro2').text("Obs: Regra acima só se aplica para entregas Normal e Expresso.");
+                        $('#pMsgErro2').text("Obs: Regra acima não se aplica a Entrega Vip-X.");
                         $('#pMsgErro').removeAttr('hidden');
                         $('#pMsgErro2').removeAttr('hidden');
                     }

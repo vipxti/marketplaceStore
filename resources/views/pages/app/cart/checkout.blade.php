@@ -131,7 +131,7 @@
 
                         <p>&nbsp;</p>
 
-                        <div class="col-12 col-md-8 offset-md-2">
+                        <div class="col-12 col-md-8 d-flex justify-content-center">
 
                             <p>&nbsp;</p>
 
@@ -171,19 +171,16 @@
                     <div class="col-12 col-md-12">
                         <br>
                         <div class="text-justify" style="padding: 0 15px">
-                            <h3>IMPORTANTE</h3>
+                            <p style="font-size: 25px">IMPORTANTE</p>
                             <p>O Boleto Bancário será exibido após a confirmação da sua compra e poderá ser impresso para pagamento em qualquer agência bancária ou casas lotéricas.</p>
-                            <p>Para sua comodidade, você poderá reimprimir seu boleto acessando a página “Meus Pedidos”, Você terá 2 dias úteis para efetuar o pagamento do boleto.</p>
-                            <p>O pagamento do boleto não pode ser parcelado. O pedido só será aprovado se o pagamento for realizado no valor integral do boleto.</p>
-                            <p>Não pague outro valor. O prazo de entrega, dos pedidos com boleto, começa a contar após a confirmação do pagamento pela instituição financeira.</p>
+                            <p> Você terá 2 dias úteis para efetuar o pagamento do boleto.</p>
                             <p>Em caso de não pagamento do boleto, seu pedido será cancelado. O boleto será válido somente para este pedido.</p>
                             <p>Caso você queira repetir a compra, não pague o boleto novamente, realize um novo pedido.</p>
-                            <p><b>*Tarifa de boleto: R$ 1,00.</b></p>
+                            <p style="color: #d59431"><b>*Tarifa de boleto: R$ 1,00.</b></p>
                         </div>
                     </div>
-                    <div class="col-12 col-md-12">
-                        <p> </p>
-                        <a href="{{ route('payment.order.ticket.details')}}" class="btn btn-template col-12 col-md-6 offset-md-6" style="width: 100%">Prosseguir</a>
+                    <div class="col-md-12 text-right">
+                        <a href="{{ route('payment.order.ticket.details')}}" class="btn btn-template" style="width: 30%">Prosseguir</a>
                     </div>
                 </div>
                 <p>&nbsp;</p>
@@ -193,6 +190,7 @@
     
     <script src="{{asset('js/app/waves.js')}}"></script>
     <script src="{{asset('js/app/input.js')}}"></script>
+    <script src="{{asset('js/admin/sweetalert.min.js')}}"></script>
     
     <script>
 
@@ -201,12 +199,14 @@
         let cardToken = '';
     
         $(function () {
-            
+            //==============================================================================================================
+            //INICIA A SESSÃO DO PAGSEGURO
             $.ajax({
                 url: '{{ route('payment.checkout.session.id') }}',
                 type: 'POST',
                 data: {_token: CSRF_TOKEN},
                 success: function (d) {
+                    console.log(d);
                     PagSeguroDirectPayment.setSessionId(d.idSessao[0]);
 
                     $('#creditCards').empty();
@@ -234,22 +234,26 @@
 
         });
 
+        //==============================================================================================================
+        //AO CLICAR NO BOTÃO DE ESCOLHER PARCELAS, VAI SER GERADO AS PARCELAS, E CRIA O TOKEN DO CARTÃO DE CRÉDITO
         $('#generateInstallments').click(function () {
-
-            $('#installments').removeClass('d-none')
+            console.log('oi');
+            $('#installments').removeClass('d-none');
 
             PagSeguroDirectPayment.getBrand({
             cardBin: $('#cardNumber').val().substr(0, 6),
                 success: function (d) {
+                    console.log('sucesso ao gerar as parcelas.');
+                    console.log(d);
 
-                    let brandName = d.brand.name                  
+                    let brandName = d.brand.name;
 
                     PagSeguroDirectPayment.getInstallments({
                         amount: parseFloat($('#orderValue').val()),
                         maxInstallmentNoInterest: 3,
                         brand: brandName,
                         success: function (v) {
-
+                            console.log(v);
                             $('#installmentsOptions').empty();
 
                             $.each(v.installments, function (i, values) {
@@ -270,6 +274,12 @@
 
                 },
                 error: function (response) {
+                    /*console.log('erro ao pegar as parcelas.');
+                    console.log(response);*/
+
+                    swal('Ops', 'Cartão não acessível.\nEscolha outro cartão para pagamento.', 'warning');
+                    $('#installments').addClass('d-none');
+
                     binCard = ''
                 }
             });
@@ -280,8 +290,8 @@
                 expirationMonth: $('#months option:selected').text(),
                 expirationYear: $('#years option:selected').text(),
                 success: function (response) {
-                    cardToken = response.card.token
-                    $('#cardToken').val(cardToken)
+                    cardToken = response.card.token;
+                    $('#cardToken').val(cardToken);
 
                     $.ajax({
                         url: '{{ route('payment.creditcard.info') }}',
@@ -304,18 +314,20 @@
 
 
                 }
-            }
+            };
 
             PagSeguroDirectPayment.createCardToken(cardData)
 
         });
 
+        //==============================================================================================================
+        //AO CLICAR NO SELECT DAS PARCELAS, ALGO ACONTECE
         $('#installmentsOptions').on('change', function () {
 
             let installmentValues = ($('#installmentsOptions option:selected').val()).split('_');
 
-            let installmentAmount = installmentValues[0]
-            let totalAmount = installmentValues[1]
+            let installmentAmount = installmentValues[0];
+            let totalAmount = installmentValues[1];
 
             $.ajax({
                 url: '{{ route('payment.creditcard.info') }}',
@@ -333,9 +345,9 @@
                 },
                 success: function () {
                 }
-            })
+            });
             
-        })
+        });
 
     </script>
 

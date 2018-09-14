@@ -214,7 +214,8 @@ class PaymentController extends Controller
         $emailPagseguro = 'vendas@vipx.com.br';
         
         $data = http_build_query($data);
-        $url = 'https://ws.pagseguro.uol.com.br/v2/sessions';
+        //dd($data);
+        $url = 'https://ws.pagseguro.uol.com.br/v2/sessions/';
         
         $curl = curl_init();
 
@@ -236,6 +237,7 @@ class PaymentController extends Controller
 
         $xml = simplexml_load_string($xml);
         $idSessao = $xml->id;
+        //dd($xml);
         
         $response = [ 'idSessao' => $idSessao];
 
@@ -481,8 +483,11 @@ class PaymentController extends Controller
 
         if (strval($xml->shipping->type) == '1') {
             $orderData['tipoFrete'] = 'Pac';
-        } else {
+        } else if (strval($xml->shipping->type) == '2') {
             $orderData['tipoFrete'] = 'Sedex';
+        }
+        else{
+            $orderData['tipoFrete'] = 'Entrega Vip-X';
         }
 
         Session::push('orderData', $orderData);

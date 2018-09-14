@@ -307,6 +307,8 @@
                             <div class="col-md-4">
                                 <ul class="list-group ulResultadoCalculo">
                                     <li class="list-group-item active">Valor Total: <span id="spanValorTotal"></span></li>
+                                    <li class="list-group-item">Custo Protudo: -<span id="spanCustoProduto"></span></li>
+                                    <li class="list-group-item">Quantidade: <span id="spanQtdProduto"></span></li>
                                     <li class="list-group-item">Comissão: -<span id="spanComissao"></span></li>
                                     <li class="list-group-item">Taxa do Canal: -<span id="spanTaxa"></span></li>
                                     <li class="list-group-item">Imposto: -<span id="spanImposto"></span></li>
@@ -903,11 +905,29 @@
             despesa_fixa = ((despesa_fixa / 100) * valorSemFrete);
             taxa_cartao = ((taxa_cartao / 100) * valorSemFrete);
             marketing = ((marketing / 100) * valorSemFrete);
-            if($('#integracaoPedido').val() == "MercadoLivre")
+            if($('#span_integracao').text() == "MercadoLivre")
                 taxa = taxa * qtd;
+
+            console.log("integração: " + $('#span_integracao').text());
+            console.log("valorTotal: " + valorTotal + " " + jQuery.type(valorTotal));
+            console.log("valorSemFrete: " + valorSemFrete + " " + jQuery.type(valorSemFrete));
+            console.log("comissão: " + comissao + " " + jQuery.type(comissao));
+            console.log("qtd: " + qtd + " " +jQuery.type(qtd));
+            console.log("taxa: " + taxa + " " +jQuery.type(taxa));
+            console.log("imposto: " + imposto +" " + jQuery.type(imposto));
+            console.log("custoProd: " + custoProd  +" " + jQuery.type(custoProd));
+            console.log("pac: " + pac +" " + jQuery.type(pac));
+            console.log("despesa_fixa: " + despesa_fixa +" " + jQuery.type(despesa_fixa));
+            console.log("frete: " + frete + " " +jQuery.type(frete));
+            console.log("taxa_cartao: " + taxa_cartao + " " +jQuery.type(taxa_cartao));
+            console.log("marketing: " + marketing +" " + jQuery.type(marketing));
 
             let resultado = (comissao + taxa + imposto + custoProd + pac + despesa_fixa + taxa_cartao + marketing + frete);
             let resultadoFinal = valorTotal - resultado;
+
+            console.log("resultado: " + resultado);
+            console.log("resultadoFinal: " + resultadoFinal);
+            console.log(resultadoFinal.toFixed(2));
 
             //CRIAÇÃO DA DOM DOS RESULTADOS
             $('#spanResultadoFinal').text(resultadoFinal.toFixed(2));
@@ -923,6 +943,8 @@
             }
 
             //CRIA UL MOSTRANDO OS GASTOS
+            $('#spanCustoProduto').text(custoProd.toFixed(2));
+            $('#spanQtdProduto').text(qtd);
             $('#spanComissao').text(comissao.toFixed(2));
             $('#spanTaxa').text(taxa.toFixed(2));
             $('#spanImposto').text(imposto.toFixed(2));
@@ -1069,17 +1091,21 @@
                 if(integracao == "MercadoLivre")
                     taxa= taxa * qtd;
 
-                console.log("comissão:" + comissao + jQuery.type(comissao));
-                console.log("taxa:" + taxa + jQuery.type(taxa));
-                console.log("imposto:" + imposto + jQuery.type(imposto));
-                console.log("custoProd:" + custoProd  + jQuery.type(custoProd));
-                console.log("pac:" + pac + jQuery.type(pac));
-                console.log("despesa_fixa:" + despesa_fixa + jQuery.type(despesa_fixa));
-                console.log("frete:" + frete + jQuery.type(frete));
-                console.log("taxa_cartao:" + taxa_cartao + jQuery.type(taxa_cartao));
-                console.log("marketing:" + marketing + jQuery.type(marketing));
+                console.log("integração: " + integracao);
+                console.log("valorTotal: " + valorTotal + " " + jQuery.type(valorTotal));
+                console.log("valorSemFrete: " + valorSemFrete + " " + jQuery.type(valorSemFrete));
+                console.log("comissão: " + comissao + " " + jQuery.type(comissao));
+                console.log("qtd: " + qtd + " " +jQuery.type(qtd));
+                console.log("taxa: " + taxa + " " +jQuery.type(taxa));
+                console.log("imposto: " + imposto +" " + jQuery.type(imposto));
+                console.log("custoProd: " + custoProd  +" " + jQuery.type(custoProd));
+                console.log("pac: " + pac +" " + jQuery.type(pac));
+                console.log("despesa_fixa: " + despesa_fixa +" " + jQuery.type(despesa_fixa));
+                console.log("frete: " + frete + " " +jQuery.type(frete));
+                console.log("taxa_cartao: " + taxa_cartao + " " +jQuery.type(taxa_cartao));
+                console.log("marketing: " + marketing +" " + jQuery.type(marketing));
 
-                let resultado = (comissao + taxa + imposto + custoProd + pac + despesa_fixa + frete + taxa_cartao + marketing);
+                let resultado = parseFloat(comissao) + parseFloat(taxa) + parseFloat(imposto) + parseFloat(custoProd) + parseFloat(pac) + parseFloat(despesa_fixa) + parseFloat(frete) + parseFloat(taxa_cartao) + parseFloat(marketing);
                 let resultadoFinal = valorTotal - resultado;
 
                 console.log("resultado: " + resultado);

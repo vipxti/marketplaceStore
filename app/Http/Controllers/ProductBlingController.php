@@ -489,7 +489,7 @@ class ProductBlingController extends Controller{
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' .
                     '<produtosLoja>' .
                             '<produtoLoja>' .
-                                    '<idLojaVirtual>'. $request->sku .'</idLojaVirtual>' .
+                                    '<idLojaVirtual>'. $request->id_loja .'</idLojaVirtual>' .
                                     '<preco>' .
                                             '<preco>'. $request->preco .'</preco>' .
                                             '<precoPromocional>'. $request->preco .'</precoPromocional>' .

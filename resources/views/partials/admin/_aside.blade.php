@@ -218,6 +218,75 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0)" style="padding-left: 8px;">
+                                    <img src="{{asset('img/admin/pagseguro.png')}}" style="width: 18px; height: 15px;">
+                                    <span>PagSeguro</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{{route('pagseguro.page')}}">
+                                            <i class="fa fa-search"></i>
+                                            Pedidos PagSeguro
+                                        </a>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-file-text"></i>
+                                            Pedidos
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a href="{{route('channel.bling')}}">
+                                                    <i class="fa fa-key"></i>
+                                                    Cadastrar Canais
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('order.bling')}}">
+                                                    <i class="fa fa-file-text"></i>
+                                                    Buscar Pedidos
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('order.bling.manoel')}}">
+                                                    <i class="fa fa-file-text"></i>
+                                                    Buscar Pedidos Manoel
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-refresh"></i>
+                                            Atualizar Produtos
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a href="{{route('index.store.bling')}}">
+                                                    <i class="fa fa-home"></i>
+                                                    Cadastrar Lojas
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('index.atualizaProd.bling')}}">
+                                                    <i class="fa fa-refresh"></i>
+                                                    Atualizar Produtos
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
                             {{--<li class><a href="{{ route('product.list.bling') }}"><i class="fa fa fa-exclamation" style="color: #a1bf1a !important;"></i>Bling</a></li>--}}
                         </ul>
                     </li>
