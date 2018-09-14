@@ -65,7 +65,59 @@
 
                         <div class="col-12 d-flex justify-content-center">
 
-                            <p class="h3">Não há compras realizadas.</p>
+                            <!-- Tabelas dos Pedidos -->
+                            <table class="table" id="table">
+                                <thead style="border-bottom: none !important;">
+                                    <tr >
+                                        <th style="text-align: left; border-bottom: none !important;">Nº</th>
+                                        <th style="text-align: left; border-bottom: none !important;">Data</th>
+                                        <th style="text-align: left; border-bottom: none !important;">Status</th>
+                                        <th style="text-align: left; border-bottom: none !important;"></th>
+                                        <th style="text-align: left; border-bottom: none !important;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    @foreach($listOrder as $order)
+                                        <tr>
+                                            <td>{{$order->cd_pedido}}</td>
+                                            <td>{{ date( 'd/m/Y' , strtotime($order->dt_compra))}}</td>
+                                            <td class="ext-center" style="width: 1% !important;">
+                                                @switch($order->cd_status)
+                                                    @case(1)
+                                                        &nbsp;<i class="fa fa-circle-o text-warning" title="Aguardando pagamento"></i>
+                                                    @break
+                                                    @case(2)
+                                                        &nbsp;<i class="fa fa-circle-o text-info" title="Em análise"></i>
+                                                    @break
+                                                    @case(3)
+                                                        &nbsp;<i class="fa fa-circle-o text-success" title="Paga"></i>
+                                                    @break
+                                                    @case(4)
+                                                        &nbsp;<i class="fa fa-circle-o text-success" title="Disponível"></i>
+                                                    @break
+                                                    @case(5)
+                                                        &nbsp;<i class="fa fa-circle-o text-info" title="Em disputa"></i>
+                                                    @break
+                                                    @case(6)
+                                                        &nbsp;<i class="fa fa-circle-o text-info" title="Devolvida"></i>
+                                                    @break
+                                                    @case(7)
+                                                        &nbsp;<i class="fa fa-circle-o text-danger" title="Reprovado"></i>
+                                                    @break
+                                                @endswitch
+                                            </td>
+                                            <td class=" text-center">
+                                                <a href="#" class="btn btn-default mt-0 mb-0 p-0" data-toggle="modal" data-target="#modal-default">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </td>
+                                            <td class=" text-center" id="btn_atributos">
+                                                <a class="btn btn-default mt-0 mb-0 p-0" href="#"><i class="fa fa-print"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
                         </div>                 
 

@@ -28,17 +28,22 @@ class ClientController extends Controller
         $this->middleware('auth');
     }
 
+
+
     public function showClientPage()
     {
         $telCliente = null;
 
         try {
             $telCliente = Client::join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)->select('telefone.cd_celular1', 'telefone.cd_celular2')->get();
-        } catch (QueryException $e) {
+        }
+        catch (QueryException $e) {
             return redirect()->route('client.dashboard')->with('nosuccess', 'Problema ao acessar o banco');
-        } catch (ErrorException $e) {
+        }
+        catch (ErrorException $e) {
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro');
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return redirect()->route('client.dashboard')->with('nosuccess', 'Erro');
         }
 
@@ -130,7 +135,13 @@ class ClientController extends Controller
             ->get();
 
         //dd($endereco);
-        return view('pages.app.client.dashboard', compact('telCliente', 'endereco', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
+
+        $listOrder = Order::where('pedido.cd_cliente', '=', Auth::user()->cd_cliente)->get();
+
+        //$idClient = Auth::user()->cd_cliente;
+        //dd($listOrder, $idClient);
+
+        return view('pages.app.client.dashboard', compact('telCliente', 'endereco', 'menuNav', 'categoriaSubCat', 'menuNavegacao', 'listOrder'));
     }
 
     public function saveClientAddress(ClientAddressRequest $request)
@@ -352,15 +363,8 @@ class ClientController extends Controller
         }
     }
 
-    public function associateClientAddress(
-        $principal,
-        $nomeDestinatario,
-        $numero,
-        $complemento,
-        $pontoReferencia,
-        $codEndereco,
-        $codCliente
-    ) {
+    public function associateClientAddress($principal, $nomeDestinatario, $numero, $complemento, $pontoReferencia,$codEndereco, $codCliente)
+    {
         DB::table('cliente_endereco')->insert([
             'ic_principal' => $principal,
             'nm_destinatario' => $nomeDestinatario,
