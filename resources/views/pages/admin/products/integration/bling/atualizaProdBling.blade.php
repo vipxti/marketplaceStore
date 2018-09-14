@@ -224,6 +224,10 @@
                             </a>
                         </p>
                     </div>
+                    <div class='col-md-3 switch__container pull-right'>
+                        <input id="switchPrincipal" class='switch switch--shadow' value='0' type='checkbox'>
+                        <label for="switchPrincipal" class="pull-right" style="margin-right: 20px;"></label>
+                    </div>
                 </div>
 
                 <!-- Tabelas dos produtos -->
@@ -546,13 +550,51 @@
                 let id = $(this).attr('id');
                 console.log(id);
 
-                if($(this).prop('checked')){
-                    console.log("checkado");
-                    $(this).val(1);
+                if(id != "switchPrincipal") {
+                    if ($(this).prop('checked')) {
+                        console.log("checkado");
+                        $(this).val(1);
+                    }
+                    else {
+                        console.log("não checkado");
+                        $(this).val(0);
+                    }
                 }
-                else{
-                    console.log("não checkado");
-                    $(this).val(0);
+            });
+        }
+
+        //==============================================================================================================
+        //BOTÃO PARA SELECIONAR TODOS OS SWITCHES
+        $('#switchPrincipal').click(function(){
+            if ($(this).prop('checked')) {
+                console.log("checkado");
+                $(this).val(1);
+                selecionaSwitches('checked');
+            }
+            else {
+                console.log("não checkado");
+                $(this).val(0);
+                selecionaSwitches('');
+            }
+        });
+
+        //==============================================================================================================
+        //FUNÇÃO PARA SELECIONAR TODOS OS SWITCHES
+        function selecionaSwitches(checked){
+            $('.switch').each(function(){
+                if($(this).prop('id') != "switchPrincipal" && $(this).prop('disabled') == false) {
+                    console.log($(this));
+
+                    if(checked == "checked"){
+                        if(!$(this).prop('checked')){
+                            $(this).click();
+                        }
+                    }
+                    else{
+                        if($(this).prop('checked')){
+                            $(this).click();
+                        }
+                    }
                 }
             });
         }
