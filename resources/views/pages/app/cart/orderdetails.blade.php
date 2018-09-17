@@ -4,6 +4,7 @@
 
     <div class="container" STYLE="margin-bottom: 3.5%;">
         <div class="row" style="margin-top: 2.5%;">
+            @include('partials.admin._alerts')
             <div class="col-12 col-md-12">
                 <p class="h4 text-center">Detalhes da sua compra</p>
             </div>
@@ -119,7 +120,7 @@
                             {{ csrf_field() }}
                             <input type="hidden" class="senderHash" name="senderHash" value="">
                             <input type="hidden" name="cd_cliente" value="{{ Auth::user()->cd_cliente }}">
-                            <button type="submit" class="btn btn-template pull-right">Finalizar Compra</button>
+                            <button id="btn_finalizar" type="submit" class="btn btn-template pull-right" disabled>Finalizar Compra</button>
                         </form>
                     @else
                         <form action="{{ route('payment.creditcard') }}" method="post">
@@ -127,7 +128,7 @@
                             <input type="hidden" class="senderHash" name="senderHash" value="">
                             <input type="hidden" name="cardToken" value="{{ $creditCardInfo[0]['cardToken'] }}">
                             <input type="hidden" name="cd_cliente" value="{{ Auth::user()->cd_cliente }}">
-                            <button type="submit" class="btn btn-template pull-right">Finalizar Compra</button>
+                            <button id="btn_finalizar" type="submit" class="btn btn-template pull-right" disabled>Finalizar Compra</button>
                         </form>
                     @endif
                 </div>
@@ -142,7 +143,12 @@
                     return false;
                 }
                 $('.senderHash').val(response.senderHash)
-            })
+                $('#btn_finalizar').removeAttr('disabled');
+            });
+
+            $('#btn_finalizar').click(function(e){
+                //e.preventDefault();
+            });
         })
     </script>
 

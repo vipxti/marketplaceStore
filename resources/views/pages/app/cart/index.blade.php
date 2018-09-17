@@ -244,19 +244,22 @@
                                         <div class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input" checked>
                                             <label id="labelRadio1" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                                <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac">R$ {{ Session::get('shippingOptions')[0]['valorPac'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac">{{ Session::get('shippingOptions')[0]['prazoPac'] . ' dias úteis ' }}</span>
+                                                {{--<span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac">R$ {{ Session::get('shippingOptions')[0]['valorPac'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac">{{ Session::get('shippingOptions')[0]['prazoPac'] . ' dias úteis ' }}</span>--}}
+                                                <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
                                             </label>
                                         </div>
                                         <div class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input">
                                             <label id="labelRadio2" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
-                                                <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
+                                                {{--<span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>--}}
+                                                <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
                                             </label>
                                         </div>
                                         <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                             <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
-                                                <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub">R$ {{ Session::get('shippingOptions')[0]['valorMaktub'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
+                                                {{--<span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub">R$ {{ Session::get('shippingOptions')[0]['valorMaktub'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>--}}
+                                                <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
                                             </label>
                                         </div>
                                     @elseif(Session::get('shippingData')[0]['tipo'] == 2)
