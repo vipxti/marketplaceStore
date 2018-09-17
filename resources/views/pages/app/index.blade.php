@@ -3,15 +3,29 @@
 @section('content')
 
     <style>
-    
-        @font-face {
-            font-family: Jonah_DEMO;
-            src: url('{{ public_path('fonts/jonahDemo.ttf') }}');
+        .semestoque {
+            width: 100%;
+            margin: 0;
+            font-size: 13px;
+            font-weight: 700;
+            color: #3a3a3a;
+            background-color: #f5f5f5;
+            text-decoration: none
         }
-    
+
+        .btncomprar {
+            width:100%;
+            margin: 0;
+            font-size: 13px;
+            font-weight: 700;
+            color:#3a3a3a;
+            background-color:#f5f5f5;
+            text-decoration: none;
+            border: none !important
+        }
+
     </style>
 
-    <link rel="stylesheet" href="{{asset('css/app/estiloInstagram.css')}}">
     <link rel="stylesheet" href="{{asset('css/app/magnific.css')}}">
 
     <!-- Banner Principal-->
@@ -70,9 +84,8 @@
         </div>
     </section>
 
-    <!-- ****** New Arrivals Area Start ****** -->
+
     <section class="new_arrivals_area section_padding_100_0 clearfix">
-        <p>&nbsp;</p>
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -85,20 +98,70 @@
         <div class="container">
             <div class="row karl-new-arrivals text-center">
                 @foreach($produtos as $key => $produto)
-                    <!-- Single gallery Item Start -->
-                    <div class="col-12 col-sm-4 col-md-3 single_gallery_item" style="margin-bottom: 13% !important;">
-                        <!-- Product Image -->
-                        <div class="product-img" style="width: 275px !important; height: 375px !important;">
+                    <div class="col-12 col-sm-4 col-md-3 single_gallery_item shoes wow fadeInUpBig">
+                        <div class="product-img">
                             <img src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
                             <div class="product-quicview">
                                 <a href="{{ route('products.details', $produto->nm_slug)}}"><i class="fa fa-plus"></i></a>
                             </div>
                         </div>
-                        <!-- Product Description -->
+
+                        <div class="product-description">
+                            <h4 style="color: #d59431" class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
+                            <p style="max-height: 20px; text-overflow: ellipsis">{{ $produto->nm_produto }}</p>
+                            <p>&nbsp;</p>
+                            <p>&nbsp;</p>
+
+
+                            <form action="{{ route('cart.buy') }}" method="post">
+                                {{ csrf_field() }}
+
+                                <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
+                                <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
+                                <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
+                                <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
+                                <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
+                                <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
+                                <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
+                                <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
+                                <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
+                                <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
+                                <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
+                                <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
+                                @if($produto->qt_produto < 5)
+                                    <div>
+                                        <p class="btn semestoque">SEM ESTOQUE</p>
+                                    </div>
+                                @else
+                                    <div>
+                                        <button type="submit" class="btn btncomprar" style="overflow: hidden"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;COMPRAR</button>
+                                    </div>
+                                @endif
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+       {{-- <div class="container">
+            <div class="row text-center">
+                @foreach($produtos as $key => $produto)
+
+                    <div class="col-12 col-md-3 single_gallery_item">
+
+                        <div class="product-img" style="width: 245px !important; height: 265px !important;">
+                            <img src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
+                            <div class="product-quicview">
+                                <a href="{{ route('products.details', $produto->nm_slug)}}"><i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+
+
                         <div class="product-description">
                             <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
-                            <p style="min-height: 66px !important;">{{ $produto->nm_produto }}</p>
-                            <!-- Add to Cart -->
+                            <p>{{ $produto->nm_produto }}</p>
+
+
                             <form action="{{ route('cart.buy') }}" method="post">
                                 {{ csrf_field() }}
                                 
@@ -115,20 +178,24 @@
                                 <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
                                 <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
                                 @if($produto->qt_produto < 5)
-                                    <p class="btn" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none;">SEM ESTOQUE</p>
+                                    <div>
+                                        <p class="btn semestoque">SEM ESTOQUE</p>
+                                    </div>
                                 @else
-                                    <button type="submit" class="btn" style=" width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none; border: none !important;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                    <div>
+                                        <button type="submit" class="btn btncomprar"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;COMPRAR</button>
+                                    </div>
                                 @endif
                             </form> 
                         </div>
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div>--}}
     </section>
-    <!-- ****** New Arrivals Area End ****** -->
 
-    <!-- ****** Offer Area Start ****** -->
+
+
     <section class="offer_area height-700 section_padding_100 bg-img" style="background-image: url({{asset('img/app/bg-img/bg-5.png')}});">
         <div class="container h-100">
             <div class="row h-100 align-items-end justify-content-end">
