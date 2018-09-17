@@ -23,6 +23,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/dadosCadastrais/update', 'CompanyController@updateCompany')->name('company.update.data')->middleware('auth:admin');
     //Pedido
     Route::get('/pedido', 'OrderController@listOrder')->name('order.list')->middleware('auth:admin');
+    //Route::get('/pedido/modal/{idPedido}', 'OrderController@modalPedido')->name('order.modal.list')->middleware('auth:admin');
 
     //Cadastro e login de usuário
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');

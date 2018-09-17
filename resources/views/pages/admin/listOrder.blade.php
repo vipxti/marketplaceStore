@@ -150,11 +150,11 @@
                                                 DE
                                                 <address>
                                                     <strong>{{$dadosEmpresa[0]->nm_fantasia}}</strong><br>
-                                                    Cnpj: &nbsp;{{$cnpj}}<br>
+                                                    Cnpj: &nbsp;{{$eCnpj}}<br>
                                                     {{$dadosEmpresa[0]->ds_endereco}},&nbsp;Nº&nbsp;{{$dadosEmpresa[0]->cd_numero_endereco}}&nbsp;-&nbsp;{{$dadosEmpresa[0]->ds_complemento}}<br>
                                                     {{$dadosEmpresa[0]->nm_bairro}},&nbsp;{{$dadosEmpresa[0]->nm_cidade}}&nbsp;-&nbsp;{{$dadosEmpresa[0]->sg_uf}}<br>
-                                                    Cep: &nbsp;{{$cep}}<br>
-                                                    Telefone:&nbsp;{{$phone}}<br>
+                                                    Cep: &nbsp;{{$eCep}}<br>
+                                                    Telefone:&nbsp;{{$ePhone}}<br>
 
                                                 </address>
                                             </div>
@@ -300,6 +300,7 @@
 
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
     <script>
+        $()
         //Campo pesquisa de produtos
         $(function () {
             $( '#table' ).searchable({

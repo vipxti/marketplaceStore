@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function listOrder()
-    {
+    public function listOrder(){
+        $listOrder = Order::paginate(15);
+        return view('pages.admin.listOrder', compact('listOrder'));
+    }
+
+    public function modalPedido(){
 
         $dadosEmpresa = DB::table('dados_empresa')
             ->join('telefone', 'dados_empresa.fk_cd_telefone', '=', 'telefone.cd_telefone')
@@ -39,8 +43,9 @@ class OrderController extends Controller
         $ePhone = $this->mask($phone,'(##) ####-####');
         $eCep = $this->mask($cep,'#####-###');
 
-        /*$dadosCliente = DB::table('cliente')
-            ->where('cliente.cd_cliente', '=', $codNum)
+        $dadosCliente = DB::table('pedido')
+            ->where('pedido.cd_pedido', '=', 1)
+            ->join('cliente', 'pedido.cd_cliente', '=', 'cliente.cd_cliente')
             ->join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')
             ->join('cliente_endereco', 'cliente.cd_cliente', '=', 'cliente_endereco.cd_cliente')
             ->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')
@@ -48,8 +53,12 @@ class OrderController extends Controller
             ->join('cidade', 'bairro.cd_cidade', '=', 'cidade.cd_cidade')
             ->join('uf', 'cidade.cd_uf', '=', 'uf.cd_uf')
             ->select(
-                'nm_cliente',
+                'cd_pedido',
+                'vl_total',
+                'dt_compra',
+                'vl_frete',
                 'cd_cpf_cnpj',
+                'nm_cliente',
                 'email',
                 'cd_celular1',
                 'cd_celular2',
@@ -60,16 +69,14 @@ class OrderController extends Controller
                 'cd_cep',
                 'ds_endereco',
                 'nm_bairro',
-                'nm_bairro',
+                'nm_cidade',
                 'sg_uf'
             )
             ->get();
-        dd($dadosCliente);*/
+        //dd($idPedido);
+        //dd($dadosCliente);
 
-
-        $listOrder = Order::paginate(15);
-
-        return view('pages.admin.listOrder', compact('listOrder', 'dadosEmpresa', 'eCnpj', 'ePhone', 'cep'));
+        return view('pages.admin.listOrder', compact('dadosEmpresa', 'eCnpj', 'ePhone', 'eCep'));
     }
 
     function mask($val, $mask){

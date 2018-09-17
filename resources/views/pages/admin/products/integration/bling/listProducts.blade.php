@@ -725,12 +725,16 @@
 
                                             tamanhoCategoria = categoriaProd.length;
 
+                                            //console.log(arrayCategoriasSistema);
+                                            //console.log(arrayCategoriasProduto);
                                             for(let i = 0; i < arrayCategoriasSistema[0].length; i++){
                                                 console.log(arrayCategoriasSistema[0][i]);
-                                                if(arrayCategoriasProduto[(arrayCategoriasProduto.length - 1)].id == arrayCategoriasSistema[0][i].id_categoria){
-                                                    arrayCatAtt.push(arrayCategoriasSistema[0][i]);
+                                                if(arrayCategoriasProduto.length != 0) {
+                                                    if (arrayCategoriasProduto[(arrayCategoriasProduto.length - 1)].id == arrayCategoriasSistema[0][i].id_categoria) {
+                                                        arrayCatAtt.push(arrayCategoriasSistema[0][i]);
+                                                    }
+                                                    temCategoria = true;
                                                 }
-                                                temCategoria = true;
                                             }
 
 
