@@ -90,6 +90,12 @@ class CartController extends Controller
 
         Session::put('shippingOptions', []);
 
+        if (Session::has('cepPrincipal')) {
+            Session::forget('cepPrincipal');
+        }
+
+        Session::push('cepPrincipal', $request->cep);
+
         $pesoCubico = ($request->length * $request->height * $request->width) / 6000;
         $peso = $request->quantity * 0.3;
 

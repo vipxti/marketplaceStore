@@ -4,6 +4,57 @@
 
     <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
 
+    <style>
+
+        .custom-radios div {
+            display: inline-block;
+        }
+        .custom-radios input[type="radio"] {
+            display: none;
+        }
+        .custom-radios input[type="radio"] + label {
+            color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 5px;
+        }
+        .custom-radios input[type="radio"] + label span {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            margin: -1px 4px 0 0;
+            vertical-align: middle;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid #f1c40f;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+            background-repeat: no-repeat;
+            background-position: center;
+            text-align: center;
+            line-height:22px;
+        }
+        .custom-radios input[type="radio"] + label span img {
+            opacity: 0;
+            transition: all .3s ease;
+        }
+        .custom-radios input[type="radio"]#color-3 + label span {
+            background-color: #f1c40f;
+        }
+        .custom-radios input[type="radio"]:checked + label span {
+
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E");
+            position: absolute;
+            top: .25rem;
+            left: 0;
+            display: block;
+            width: 1rem;
+            height: 1rem;
+            content: "";
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 70% 70%;
+        }
+    </style>
+
     <!-- ****** Cart Area Start ****** -->
     <br><br><br>
     <div class="cart_area clearfix">
@@ -119,19 +170,19 @@
                                     <div class="row col-md-12 mb-15">
                                         {{--<input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">--}}
                                         <input type="text" name="cep" id="cep" value="" required>
-                                        <button class="btn btn-template" id="calculateShipping" type="button" style="border: none; width: 86px"><i class="fa fa-search"></i></button>
+                                        <button class="btn btn-template" id="calculateShipping" type="button" style="border: none; width: 61px"><i class="fa fa-search"></i></button>
                                         <p id="msgCep" class="small text-danger"></p>
                                     </div>
 
                                     <hr>
                                     <div class="row">
-                                        <div class="col-12 d-flex justify-content-center">
+                                        <div class="col-12">
                                             <p class="small text-danger">Não há endereço cadastrado em sua conta.<br>Para concluir a compra cadastre um endereço</p>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-12 d-flex justify-content-center">
+                                        <div class="col-12">
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewAddress">
                                                 Adicionar novo endereço
                                             </button>
@@ -148,28 +199,26 @@
 
                                                 <input type="hidden" name="cepPrincipal" id="cepPrincipal" value="{{ $c['cd_cep'] }}">
 
-                                                <div class="col-12 col-md-5">
-
+                                                <div class="col-md-12">
                                                     <input type="radio" class="destino_cliente" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}" checked>
                                                     <label class="h6" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
                                                     <br>
                                                     <span>CEP:&nbsp;</span><span id="{{ 'num_cep' . ($key + 1) }}">{{ $c['cd_cep'] }}</span>
                                                     <br>
                                                     <span class="small">{{ $c['ds_endereco'] }}, {{ $c['cd_numero_endereco'] }}</span>
-
+                                                    <p></p>
                                                 </div>
 
                                             @else
 
-                                                <div class="col-12 col-md-5">
-
+                                                <div class="col-md-12">
                                                     <input type="radio" class="destino_cliente" name="nm_dest" id="{{ 'nm_dest' . ($key + 1) }}">
                                                     <label class="h6" for="{{ 'nm_dest' . ($key + 1) }}">{{ $c['nm_destinatario'] }}</label>
                                                     <br>
                                                     <span>CEP:&nbsp;</span><span id="{{ 'num_cep' . ($key + 1) }}">{{$c['cd_cep']}}</span>
                                                     <br>
                                                     <span class="small">{{ $c['ds_endereco'] }}, {{ $c['cd_numero_endereco'] }}</span>
-
+                                                    <p></p>
                                                 </div>
 
                                             @endif
@@ -179,7 +228,6 @@
                                     </div>
 
                                     <hr>
-
                                     <div class="row">
                                         <div class="col-12 d-flex justify-content-center">
                                             <p class="small">Caso queira adicionar outro endereço clique no botão abaixo</p>
@@ -187,7 +235,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-12 d-flex justify-content-center">
+                                        <div class="col-12">
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewAddress">
                                                 Adicionar novo endereço
                                             </button>
@@ -200,7 +248,7 @@
                                 <div class="row col-md-12 mb-15">
                                     {{--<input type="hidden" id="cd_cep" name="cd_cep" value="{{ $cep[0]['cd_cep'] }}">--}}
                                     <input type="text" name="cep" id="cep" value="" required>
-                                    <button class="btn btn-template" id="calculateShipping" type="button" style="border: none; width: 86px"><i class="fa fa-search"></i></button>
+                                    <button class="btn btn-template" id="calculateShipping" type="button" style="border: none; width: 61px"><i class="fa fa-search"></i></button>
                                     <p id="msgCep" class="small text-danger"></p>
                                 </div>
                             @endif
@@ -244,19 +292,22 @@
                                         <div class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input" checked>
                                             <label id="labelRadio1" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
-                                                <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac">R$ {{ Session::get('shippingOptions')[0]['valorPac'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac">{{ Session::get('shippingOptions')[0]['prazoPac'] . ' dias úteis ' }}</span>
+                                                {{--<span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac">R$ {{ Session::get('shippingOptions')[0]['valorPac'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac">{{ Session::get('shippingOptions')[0]['prazoPac'] . ' dias úteis ' }}</span>--}}
+                                                <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
                                             </label>
                                         </div>
                                         <div class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input">
                                             <label id="labelRadio2" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
-                                                <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
+                                                {{--<span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex">R$ {{ Session::get('shippingOptions')[0]['valorSedex'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>--}}
+                                                <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
                                             </label>
                                         </div>
                                         <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
                                             <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                             <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
-                                                <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub">R$ {{ Session::get('shippingOptions')[0]['valorMaktub'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>
+                                                {{--<span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub">R$ {{ Session::get('shippingOptions')[0]['valorMaktub'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>--}}
+                                                <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
                                             </label>
                                         </div>
                                     @elseif(Session::get('shippingData')[0]['tipo'] == 2)
@@ -335,7 +386,7 @@
                         <div class="cart-total-area mt-70">
                             <div class="cart-page-heading">
                                 <h5>Valor do Carrinho</h5>
-                                <p>Informaçoes Finais</p>
+                                <p>Informações Finais</p>
                             </div>
 
                             <ul class="cart-total-chart">
