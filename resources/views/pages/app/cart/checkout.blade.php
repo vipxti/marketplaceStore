@@ -171,7 +171,8 @@
                     <div class="col-12 col-md-12">
                         <br>
                         <div class="text-justify" style="padding: 0 15px">
-                            <p style="font-size: 25px">IMPORTANTE</p>
+                            <h5>IMPORTANTE</h5>
+                            <p>&nbsp;</p>
                             <p>O Boleto Bancário será exibido após a confirmação da sua compra e poderá ser impresso para pagamento em qualquer agência bancária ou casas lotéricas.</p>
                             <p> Você terá 2 dias úteis para efetuar o pagamento do boleto.</p>
                             <p>Em caso de não pagamento do boleto, seu pedido será cancelado. O boleto será válido somente para este pedido.</p>
