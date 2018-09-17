@@ -66,7 +66,7 @@
                         <div class="col-12 d-flex justify-content-center">
 
                             <!-- Tabelas dos Pedidos -->
-                            <table class="table" id="table">
+                            <table class="table table-striped" id="table">
                                 <thead style="border-bottom: none !important;">
                                     <tr >
                                         <th style="text-align: left; border-bottom: none !important;">Nº</th>

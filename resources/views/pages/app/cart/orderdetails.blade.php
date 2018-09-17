@@ -89,7 +89,8 @@
                                 <td class="text-right" colspan="2"><strong>TOTAL</strong></td>
                                 <td class="total_price align-middle">
                                     <span id="valorTotal">
-                                        <strong>R$ {{ number_format( ($produto['valorTotalProduto'] + $shippingData[0]['valor']), 2, ',', '.') }}</strong>
+                                        {{--<strong>R$ {{ number_format( ($produto['valorTotalProduto'] + $shippingData[0]['valor']), 2, ',', '.') }}</strong>--}}
+                                        <strong>R$ {{number_format(\Illuminate\Support\Facades\Session::get('totalPrice'), 2, ',', '.')}}</strong>
                                     </span>
                                 </td>
                             </tr>
@@ -149,6 +150,11 @@
             $('#btn_finalizar').click(function(e){
                 //e.preventDefault();
             });
+
+            {{--console.log({{ number_format( ($produto['valorTotalProduto'] + $shippingData[0]['valor']), 2, ',', '.') }});
+            console.log({{number_format($produto['valorTotalProduto'])}});
+            console.log({{number_format($shippingData[0]['valor'])}});
+            console.log({{\Illuminate\Support\Facades\Session::get('totalPrice')}});--}}
         })
     </script>
 

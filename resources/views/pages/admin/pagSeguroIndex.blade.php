@@ -30,6 +30,24 @@
                             <button id="btn_busca_pedidos" class="btn btn-primary">Buscar Pedidos</button>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table id="pagseguro_table" class="table-striped">
+                                <thead>
+                                    <tr>
+                                       <th>Referência</th>
+                                       <th>Status</th>
+                                       <th>Método de pagamento</th>
+                                       <th>Valor compra</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

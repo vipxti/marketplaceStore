@@ -207,7 +207,7 @@ class PaymentController extends Controller
             }
         }
 
-        $this->clearShippingData();
+        $this->clearCart();
 
         return view('pages.app.cart.result', compact('orderData', 'menuNav', 'menuNavegacao', 'categoriaSubCat'));
     }
@@ -646,5 +646,23 @@ class PaymentController extends Controller
         Session::forget('cart');
         Session::forget('qtCart');
         Session::forget('shippingData');
+    }
+
+    public function clearCart()
+    {
+        Session::forget('cart');
+        Session::forget('qtCart');
+        Session::forget('qtCartItens');
+
+        Session::forget('totalHeight');
+        Session::forget('totalWidth');
+        Session::forget('totalLength');
+        Session::forget('totalWeight');
+
+        Session::forget('orderData');
+        Session::forget('creditCardInfo');
+
+        Session::forget('subtotalPrice');
+        Session::forget('totalPrice');
     }
 }
