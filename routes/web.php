@@ -147,6 +147,8 @@ Route::prefix('admin')->group(function () {
     //PAGSEGURO
     Route::get('pagseguro', 'PagseguroController@index')->name('pagseguro.page')->middleware('auth:admin');
     Route::post('pagseguro/pedido/transacao', 'PagseguroController@consultaPedido')->name('pagseguro.pedido.transacao')->middleware('auth:admin');
+    Route::post('pagseguro/pedido/codigo/transacao', 'PagseguroController@consultaPedidoTransacao')->name('pagseguro.pedido.codigo.transacao')->middleware('auth:admin');
+    Route::post('pagseguro/atualiza/situacao', 'PagseguroController@atualizaPedidos')->name('pagseguro.atualiza.situacao')->middleware('auth:admin');
     Route::post('pagseguro/url/retorno', 'PagseguroController@urlRetorno')->name('pagseguro.url.retorno');
 
 
