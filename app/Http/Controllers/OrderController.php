@@ -14,8 +14,7 @@ class OrderController extends Controller
         return view('pages.admin.listOrder', compact('listOrder'));
     }
 
-    public function modalPedido(){
-
+    public function modalPedido(Request $request){
         $dadosEmpresa = DB::table('dados_empresa')
             ->join('telefone', 'dados_empresa.fk_cd_telefone', '=', 'telefone.cd_telefone')
             ->join('endereco', 'dados_empresa.fk_cd_endereco', '=', 'endereco.cd_endereco')
@@ -44,7 +43,7 @@ class OrderController extends Controller
         $eCep = $this->mask($cep,'#####-###');
 
         $dadosCliente = DB::table('pedido')
-            ->where('pedido.cd_pedido', '=', 1)
+            ->where('pedido.cd_pedido', '=', $request->idOder)
             ->join('cliente', 'pedido.cd_cliente', '=', 'cliente.cd_cliente')
             ->join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')
             ->join('cliente_endereco', 'cliente.cd_cliente', '=', 'cliente_endereco.cd_cliente')
@@ -54,9 +53,6 @@ class OrderController extends Controller
             ->join('uf', 'cidade.cd_uf', '=', 'uf.cd_uf')
             ->select(
                 'cd_pedido',
-                'vl_total',
-                'dt_compra',
-                'vl_frete',
                 'cd_cpf_cnpj',
                 'nm_cliente',
                 'email',
@@ -70,13 +66,45 @@ class OrderController extends Controller
                 'ds_endereco',
                 'nm_bairro',
                 'nm_cidade',
-                'sg_uf'
+                'sg_uf',
+                'vl_total',
+                'dt_compra',
+                'vl_frete',
+                'pedido.cd_pagseguro',
+                'pedido.cd_referencia'
             )
             ->get();
-        //dd($idPedido);
-        //dd($dadosCliente);
+        $phone = (string) $dadosCliente[0]->cd_celular1;
+        $cep = (string) $dadosCliente[0]->cd_cep;
+        $cPhone = $this->mask($phone,'(##) ####-####');
+        $cCep = $this->mask($cep,'#####-###');
 
-        return view('pages.admin.listOrder', compact('dadosEmpresa', 'eCnpj', 'ePhone', 'eCep'));
+        $prductsOders = DB::table('produto')
+            ->where('pedido.cd_pedido', '=', $request->idOder)
+            ->join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('pedido_produto', 'produto.cd_produto', '=', 'pedido_produto.cd_produto')
+            ->join('pedido', 'pedido_produto.cd_pedido', '=', 'pedido.cd_pedido')
+            ->select(
+                'produto.cd_produto',
+                'produto.cd_ean',
+                'sku.cd_nr_sku',
+                'produto.nm_produto',
+                'produto.ds_produto',
+                'produto.vl_produto',
+                'pedido_produto.qt_produto'
+            )
+            ->get();
+
+        return response()->json([
+            'dadosEmpresa' => $dadosEmpresa[0],
+            'eCnpj' => $eCnpj,
+            'ePhone' => $ePhone,
+            'eCep' => $eCep,
+            'dadosCliente' => $dadosCliente[0],
+            'cPhone' =>$cPhone,
+            'cCep' => $cCep,
+            'prductsOders' => $prductsOders
+        ]);
     }
 
     function mask($val, $mask){
