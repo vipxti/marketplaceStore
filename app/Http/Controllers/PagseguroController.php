@@ -70,7 +70,12 @@ class PagseguroController extends Controller
             if (count($pedido) > 0) {
                 if ($pedido[0]->cd_status != $request->status) {
                     Order::where('cd_referencia', '=', $request->referencia)
-                        ->update(['cd_status' => $request->status]);
+                        ->update(['cd_status' => $request->status,
+                                'dt_alteracao' => $request->data]);
+
+                    //if($request->status == 3){
+                        //$this->inserePedidoBling($request->referencia);
+                    //}
 
                     return response()->json(['deuErro' => false, 'statusAtualizado' => true]);
                 }
@@ -84,8 +89,60 @@ class PagseguroController extends Controller
 
     }
 
-    public function urlRetorno(Request $request){
-        dd($request->all());
+    public function inserePedidoBling($referencia)
+    {
+        $pedido = Order::join('cliente', 'pedido.cd_cliente', '=', 'cliente.cd_cliente')
+                        ->join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')
+                        ->join('cliente_endereco', 'pedido.fk_end_entrega_id', '=', 'cliente_endereco.id_cliente_endereco')
+                        ->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')
+                        ->join('pedido_produto', 'pedido.cd_pedido', '=', 'pedido_produto.cd_pedido')
+                        ->where('pedido.cd_referencia', '=', $referencia)
+                        ->get();
+
+        dd($pedido);
+
+        $data = date('Y-m-d', strtotime($pedido[0]->dt_compra));
+        //dd($pedido);
+
+        $url = 'https://bling.com.br/Api/v2/pedido/json/';
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>'.
+                    '<pedido>'.
+                            '<data>'. $data .'</data>'.
+                            '<cliente>'.
+                                    '<nome></nome>'.
+                            '</cliente>'.
+                    '</pedido>';
+        $posts = array (
+            "apikey" => "{apikey}",
+            "xml" => rawurlencode($xml)
+        );
+        $retorno = $this->executeSendOrder($url, $posts);
+        //echo $retorno;
+    }
+
+    public function executeSendOrder($url, $data){
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL, $url);
+        curl_setopt($curl_handle, CURLOPT_POST, count($data));
+        curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        return $response;
+    }
+
+    public function urlRetorno(){
+
+        Order::create([
+            'vl_total' => 11.45,
+            'cd_status' => 3,
+            'cd_referencia' => 'maktub5b70edb216cb68.56229481',
+            'cd_pagseguro' => '3D3AE9A8-D3F9-429E-A27E-D9AC5EF4B141',
+            'dt_compra' => '2018-09-19',
+            'vl_frete' => 0,
+            'cd_cliente' => 2,
+            'fk_end_entrega_id' => 2
+        ]);
 
     }
 }

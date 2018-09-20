@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BlingChannels;
+use App\BlingStore;
 use App\Http\Requests\BlingChannelsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,11 @@ class OrderBlingController extends Controller
         $canais = BlingChannels::all();
 
         return view('pages.admin.products.integration.bling.order', compact('canais'));
+    }
+
+    public function indexRelatorioPrecos(){
+        $lojas = BlingStore::all();
+        return view('pages.admin.products.integration.bling.relatorioPrecos', compact('lojas'));
     }
 
     public function indexManoel(){

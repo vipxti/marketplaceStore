@@ -63,6 +63,7 @@
                                        <th>Status</th>
                                        <th>Método de pagamento</th>
                                        <th>Valor compra</th>
+                                       <th>Data de Alteração</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
@@ -194,6 +195,12 @@
                 let tdValor = $('<td></td>');
                 tdValor.text(objPedido.grossAmount).appendTo(tr);
 
+                let tdDataAlteracao = $('<td></td>');
+                let dataAlt = objPedido.lastEventDate;
+                dataAlt = dataAlt.split('T');
+                let horaAlt = dataAlt[1].split('.');
+                tdDataAlteracao.text(dataAlt[0] + " " + horaAlt[0]).appendTo(tr);
+
                 tr.appendTo($('#tbody'));
             }
 
@@ -318,12 +325,16 @@
                 let cd_referencia = $('#table tr:eq(' + tableRow + ')').find('td:first').text();
                 let status = $('#table tr:eq(' + tableRow + ')').find('td:eq(1)').text();
                 status = status.replace(/\s/g, '').split('-');
+                let data = $('#table tr:eq(' + tableRow + ')').find('td:last').text();
+                data = data.split(' ');
+                console.log(data[0]);
+                console.log(status[0]);
 
                 if(tableRow < tamanhoTable) {
                     $.ajax({
                         url: '{{route('pagseguro.atualiza.situacao')}}',
                         type: 'post',
-                        data: {_token: CSRF_TOKEN, referencia: cd_referencia, status: status[0]},
+                        data: {_token: CSRF_TOKEN, referencia: cd_referencia, status: status[0], data: data[0]},
                         success: function (data) {
                             if(data.deuErro == true){
                                 swal('Ops', 'Ocorreu um erro ao tentar atualizar o status de um dos produtos.', 'error');
