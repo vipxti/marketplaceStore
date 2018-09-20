@@ -32,7 +32,7 @@ class UserLoginController extends Controller
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'))) {
 
             //Redireciona o usuário caso consiga logar
-            return redirect()->intended()->with('success', 'Bem vindo ' . Auth::guard('admin')->user()->nm_usuario);
+            return redirect('admin')->with('success', 'Bem vindo ' . Auth::guard('admin')->user()->nm_usuario);
         }
         
         //Retorna para a tela de login com o campo email preenchido

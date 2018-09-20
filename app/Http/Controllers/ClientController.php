@@ -136,7 +136,7 @@ class ClientController extends Controller
 
         //dd($endereco);
 
-        $listOrder = Order::where('pedido.cd_cliente', '=', Auth::user()->cd_cliente)->get();
+        $listOrder = Order::orderBy('cd_pedido', 'desc')->where('pedido.cd_cliente', '=', Auth::user()->cd_cliente)->get();
 
         //$idClient = Auth::user()->cd_cliente;
         //dd($listOrder, $idClient);

@@ -30,15 +30,6 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="dataTables_length" style="padding-left: 90%" id="example1_length">
-                        <select name="example1_length" aria-controls="example1" class="form-control form-control-sm">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </div>
-
                     <!-- Tabelas dos Pedidos -->
                     <table class="table" id="table">
                         <thead style="border-bottom: none !important;">
@@ -47,8 +38,7 @@
                             <th style="text-align: left; border-bottom: none !important;">Data</th>
                             <th style="text-align: left; border-bottom: none !important;">Código de Referência</th>
                             <th style="text-align: left; border-bottom: none !important;">Status</th>
-                            <th style="text-align: left; border-bottom: none !important;"></th>
-                            <th style="text-align: left; border-bottom: none !important;"></th>
+                            <th style="text-align: left; border-bottom: none !important;">Ação</th>
                         </tr>
                         </thead>
                         <tbody >
@@ -82,13 +72,11 @@
                                         @break
                                     @endswitch
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     <button id="btnOrder" class="btn btn-default mt-0 mb-0 p-0" onclick="vIdBtn({{$order->cd_pedido}})" data-toggle="modal" data-target="#modal-default">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                </td>
-                                <td class=" text-center" id="btn_atributos">
-                                    <a class="btn btn-default mt-0 mb-0 p-0" href="#"><i class="fa fa-print"></i></a>
+                                    <button class="btnPrintList btn btn-default mt-0 mb-0 p-0" value="{{$order->cd_pedido}}"><i class="fa fa-print"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -107,7 +95,8 @@
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Pedido&nbsp;<small>Nº#</small>1</h4>
+                                    <h4 class="modal-title">Pedido&nbsp;<small id="nPedido"></small></h4>
+
                                 </div>
 
                                 <div class="modal-body" style="padding: 25px !important;">
@@ -123,11 +112,15 @@
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <h2 class="page-header">
-                                                    <img id="imLogo" style="width:112px; height:112px;" src="" alt="">
-                                                    <small class="pull-right">Data de Emissão:&nbsp;{{ date( 'd/m/Y' , strtotime($order->dt_compra))}}</small>
+                                                    <img id="imLogo" style="margin-left:1.5%; width:112px; height:112px;" src="" alt="">
+                                                    <small class="pull-right">
+                                                        <div id="dtCompra"></div>
+                                                        <br>
+                                                        <h5 id="statusPedido" class="pull-right"></h5>
+                                                    </small>
                                                     <p id="nmLogoFantasia"></p>
-
                                                 </h2>
+
                                             </div>
                                             <!-- /.col -->
                                         </div>
@@ -146,7 +139,7 @@
                                             </div>
                                             <!-- /.col -->
                                             <div class="col-sm-4 invoice-col">
-                                                Para
+                                                PARA
                                                 <address>
                                                     <strong><b id="cNmDestinatario"></b></strong><br>
                                                     <small id="cDsEndereco"></small>,&nbsp;nº<small id="cNumeroEndereco"></small><br><small id="cComplemento"></small>&nbsp;-&nbsp;<small id="cDsPontoReferencia"></small><br>
@@ -158,11 +151,11 @@
                                             </div>
                                             <!-- /.col -->
                                             <div class="col-sm-4 invoice-col">
-                                                <div><b>Cód. Loja:</b>&nbsp;<small id="cdReferencia" ></small></div>
-                                                <div><b>Cód. Trasação:</b>&nbsp;<small id="cdPagseguro" ></small></div>
+                                                <div><b>Cód. PagSeguro:</b>&nbsp;<small id="cdPagseguro" ></small></div>
+                                                <div><b>Cód. Trasação:</b>&nbsp;<small id="cdReferencia" ></small></div>
                                                 <div><b>Nº Pedido:</b>&nbsp;<small id="cPedido" ></small></div>
-                                                <b>Data de Pagamento:</b> {{ date( 'd/m/Y' , strtotime($order->dt_compra))}}<br>
-                                                <b>Usuario:</b>&nbsp;<small id="cNmCliente"></small>
+                                                <b>Data de Pagamento:</b>&nbsp;<small id="dtAlteracao"></small><br>
+                                                <b>Usuário:</b>&nbsp;<small id="cNmCliente"></small>
                                             </div>
                                             <!-- /.col -->
                                         </div>
@@ -171,18 +164,18 @@
                                         <!-- Table row -->
                                         <div class="row">
                                             <div class="col-xs-12 table-responsive">
+                                                <p class="lead">Itens da Venda</p>
                                                 <table id="project-table" class="table table-striped">
                                                     <thead>
-                                                    <tr>
-                                                        <th>Código</th>
-                                                        <th>Ean</th>
-                                                        <th>Sku</th>
-                                                        <th>Qtd</th>
-                                                        <th>Nome do Produto</th>
-                                                        <th>Un</th>
-                                                        <th>Total</th>
-
-                                                    </tr>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Ean</th>
+                                                            <th>Sku</th>
+                                                            <th>Qtd</th>
+                                                            <th>Nome do Produto</th>
+                                                            <th>Un</th>
+                                                            <th>Total</th>
+                                                        </tr>
                                                     </thead>
                                                     <tbody></tbody>
                                                 </table>
@@ -193,7 +186,7 @@
 
                                         <div class="row">
                                             <!-- accepted payments column -->
-                                            <div class="col-xs-12">
+                                            {{--<div class="col-xs-12">
                                                 <p class="lead">Payment Methods:</p>
                                                 <img src="{{ asset('img/admin/credit/visa.png') }}" alt="Visa">
                                                 <img src="{{ asset('img/admin/credit/mastercard.png') }}" alt="Mastercard">
@@ -203,9 +196,10 @@
                                                 <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                                                     Observação...
                                                 </p>
-                                            </div>
+                                            </div>--}}
                                             <!-- /.col -->
                                             <div class="col-xs-12">
+                                                <p class="lead">Resumo dos Valores:</p>
                                                 <div class="table-responsive">
                                                     <table class="table">
                                                         <tr>
@@ -230,17 +224,9 @@
                                         <!-- this row will not appear when printing -->
                                         <div class="row no-print">
                                             <div class="col-xs-12">
-                                                <a href="invoice-print.html" target="_blank" class="btn btn-default">
-                                                    <i class="fa fa-print"></i>&nbsp;
-                                                    Imprimir</a>
-
-                                                <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-                                                    <i class="fa fa-download"></i>&nbsp;
-                                                    Gerar PDF
-                                                </button>
+                                                <button id="btnPrint" class="btn btn-default" value=""><i class="fa fa-print"></i>&nbsp;Imprimir</button>
                                             </div>
                                         </div>
-
                                 </div>
                             </div>
                             <!-- /.modal-content -->
@@ -255,60 +241,125 @@
 
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
     <script>
+        const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        function print(id) {
+            window.open('{{ url('admin/pedido/print/') }}' + '/' + id, '_blank');
+
+        }
+
+        $('#btnPrint').click(function(){
+            print($(this).val());
+        });
+        $('button.btnPrintList').click(function(){
+            print($(this).val());
+        });
 
         function vIdBtn(id){
             let idOder = id;
-            console.log(idOder);
-
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
             $.ajax({
                 url: '{{ route('order.modal.list') }}',
                 type: 'post',
                 data: {_token: CSRF_TOKEN, idOder: idOder},
                 success: function(data){
                     // DADDOS DA EMPRESA
-                    $("#nmLogoFantasia").html(data.dadosEmpresa.nm_fantasia);
-                    $("#nmFantasia").html(data.dadosEmpresa.nm_fantasia);
-                    $("#eCep").html(data.eCep);
-                    $("#eCnpj").html(data.eCnpj);
-                    $("#ePhone").html(data.ePhone);
-                    $("#nEnd").html(data.dadosEmpresa.cd_numero_endereco);
-                    $("#dsComplemento").html(data.dadosEmpresa.ds_complemento);
-                    $("#dsEndereco").html(data.dadosEmpresa.ds_endereco);
-                    $("#nmBairro").html(data.dadosEmpresa.nm_bairro);
-                    $("#nmCidade").html(data.dadosEmpresa.nm_cidade);
-                    $("#sgUf").html(data.dadosEmpresa.sg_uf,);
-                    $("#imLogo").attr("src", '/img/company/' + data.dadosEmpresa.im_logo);
+                    $("#nmLogoFantasia").html(data.dadosPedido.original.dadosEmpresa.nm_fantasia);
+                    $("#nmFantasia").html(data.dadosPedido.original.dadosEmpresa.nm_fantasia);
+                    $("#eCep").html(data.dadosPedido.original.eCep);
+                    $("#eCnpj").html(data.dadosPedido.original.eCnpj);
+                    $("#ePhone").html(data.dadosPedido.original.ePhone);
+                    $("#nEnd").html(data.dadosPedido.original.dadosEmpresa.cd_numero_endereco);
+                    $("#dsComplemento").html(data.dadosPedido.original.dadosEmpresa.ds_complemento);
+                    $("#dsEndereco").html(data.dadosPedido.original.dadosEmpresa.ds_endereco);
+                    $("#nmBairro").html(data.dadosPedido.original.dadosEmpresa.nm_bairro);
+                    $("#nmCidade").html(data.dadosPedido.original.dadosEmpresa.nm_cidade);
+                    $("#sgUf").html(data.dadosPedido.original.dadosEmpresa.sg_uf,);
+                    $("#imLogo").attr("src", '/img/company/' + data.dadosPedido.original.dadosEmpresa.im_logo);
+
 
                     // DADDOS Do CLIENTE
-                    $("#cNmDestinatario").html(data.dadosCliente.nm_destinatario);
-                    $("#cNmCliente").html(data.dadosCliente.nm_cliente);
-                    $("#cCelular1").html(data.dadosCliente.cd_celular1);
-                    $("#cCep").html(data.dadosCliente.cd_cep);
-                    $("#cCpfCnpj").html(data.dadosCliente.cd_cpf_cnpj);
-                    $("#cNumeroEndereco").html(data.dadosCliente.cd_numero_endereco);
-                    $("#cComplemento").html(data.dadosCliente.ds_complemento);
-                    $("#cDsEndereco").html(data.dadosCliente.ds_endereco);
-                    $("#cDsPontoReferencia").html(data.dadosCliente.ds_ponto_referencia);
-                    $("#cEmail").html(data.dadosCliente.email);
-                    $("#cNmBairro").html(data.dadosCliente.nm_bairro);
-                    $("#cNmCidade").html(data.dadosCliente.nm_cidade);
-                    $("#cSgUf").html(data.dadosCliente.sg_uf);
+                    $("#cNmDestinatario").html(data.dadosPedido.original.dadosCliente.nm_destinatario);
+                    $("#cNmCliente").html(data.dadosPedido.original.dadosCliente.nm_cliente);
+                    $("#cCelular1").html(data.dadosPedido.original.dadosCliente.cd_celular1);
+                    $("#cCep").html(data.dadosPedido.original.dadosCliente.cd_cep);
+                    $("#cCpfCnpj").html(data.dadosPedido.original.dadosCliente.cd_cpf_cnpj);
+                    $("#cNumeroEndereco").html(data.dadosPedido.original.dadosCliente.cd_numero_endereco);
+                    $("#cComplemento").html(data.dadosPedido.original.dadosCliente.ds_complemento);
+                    $("#cDsEndereco").html(data.dadosPedido.original.dadosCliente.ds_endereco);
+                    $("#cDsPontoReferencia").html(data.dadosPedido.original.dadosCliente.ds_ponto_referencia);
+                    $("#cEmail").html(data.dadosPedido.original.dadosCliente.email);
+                    $("#cNmBairro").html(data.dadosPedido.original.dadosCliente.nm_bairro);
+                    $("#cNmCidade").html(data.dadosPedido.original.dadosCliente.nm_cidade);
+                    $("#cSgUf").html(data.dadosPedido.original.dadosCliente.sg_uf);
 
                     //DADOS DO PEDIDO
-                    let subTotal = (data.dadosCliente.vl_total - data.dadosCliente.vl_frete);
-                    $("#cPedido").html('#' + data.dadosCliente.cd_pedido);
-                    $("#cdReferencia").html(data.dadosCliente.cd_referencia);
-                    $("#cdPagseguro").html(data.dadosCliente.cd_pagseguro);
+                    let stPedido = data.dadosPedido.original.dadosCliente.cd_status;
+                    let strPedido = "";
+                    let subTotal = (data.dadosPedido.original.dadosCliente.vl_total - data.dadosPedido.original.dadosCliente.vl_frete);
 
-                    $("#vlSTotal").html('R$ ' + subTotal.toFixed(2));
-                    $("#vlFrete").html('R$ ' + data.dadosCliente.vl_frete);
-                    $("#vlTotal").html('R$ ' + data.dadosCliente.vl_total);
+                    switch(stPedido) {
+                        case 1:
+                            strPedido = ('Aguardando pagamento');
+                            $("#statusPedido").html(strPedido);
+                            break;
+                        case 2:
+                            strPedido =('Em análise');
+                            $("#statusPedido").html(strPedido);
+                            break;
+                        case 3:
+                            strPedido =('Paga');
+                            $("#statusPedido").html(strPedido);
+                            break;
+                        case 4:
+                            strPedido =('Disponível');
+                            $("#statusPedido").html(strPedido);
+                            break;
+                        case 5:
+                            strPedido =('Em disputa');
+                            $("#statusPedido").html(strPedido);
+                            break;
+                        case 6:
+                            strPedido =('Devolvida');
+                            $("#statusPedido").html(strPedido);
+                            break;
+                        case 7:
+                            strPedido =('Reprovado');
+                            $("#statusPedido").html(strPedido);
+                            break;
+                        default:
+                            strPedido =("ERRO!!");
+                            $("#statusPedido").html(strPedido);
+                    }
 
-                    let pedProd = data.prductsOders;
+                    $("#nPedido").html('Nº#' + data.dadosPedido.original.dadosCliente.cd_pedido);
+                    $("#cPedido").html('#' + data.dadosPedido.original.dadosCliente.cd_pedido);
+                    $("#cdReferencia").html(data.dadosPedido.original.dadosCliente.cd_referencia);
+                    $("#cdPagseguro").html(data.dadosPedido.original.dadosCliente.cd_pagseguro);
+                    //
+
+                    let dt_compra = data.dadosPedido.original.dadosCliente.dt_compra;
+                    let dateComprar = dt_compra.split('-');
+                    let novaDatacompra = dateComprar[2] + '/' + dateComprar[1] + '/' + dateComprar[0];
+
+                    $("#dtCompra").html('Data de Emissão ' + novaDatacompra);
+
+
+                    let dt_alteracao = data.dadosPedido.original.dadosCliente.dt_alteracao;
+                    let dateAr = dt_alteracao.split('-');
+                    let novaData = dateAr[2] + '/' + dateAr[1] + '/' + dateAr[0];
+
+                    $("#dtAlteracao").html(novaData);
+
+                    $("#vlSTotal").html('R$ ' + subTotal.toFixed(2).replace('.',","));
+                    $("#vlFrete").html('R$ ' + data.dadosPedido.original.dadosCliente.vl_frete.replace('.',","));
+                    $("#vlTotal").html('R$ ' + data.dadosPedido.original.dadosCliente.vl_total.replace('.',","));
+
+                    //IMPRESSAO DO PEDIDO
+                    $("#btnPrint").val(data.dadosPedido.original.dadosCliente.cd_pedido);
+
+
+                    let pedProd = data.dadosPedido.original.prductsOders;
                     $.each( pedProd, function( key, value ) {
-                        let sbToal = (data.prductsOders[key].qt_produto * data.prductsOders[key].vl_produto);
+                        let sbToal = (data.dadosPedido.original.prductsOders[key].qt_produto * data.dadosPedido.original.prductsOders[key].vl_produto);
                         $('#project-table>tbody').append(
                             $("<tr>").append(
                                 $("<td>").append(value.cd_produto),
@@ -316,17 +367,15 @@
                                 $("<td>").append(value.cd_nr_sku),
                                 $("<td>").append(value.qt_produto),
                                 $("<td>").append(value.nm_produto),
-                                $("<td>").append(value.vl_produto),
-                                $("<td>").append('R$ ' + sbToal),
+                                $("<td>").append(value.vl_produto.replace('.',",")),
+                                $("<td>").append(sbToal.toString().replace('.',",")),
                             )
                         )
                     });
 
-
-
                 }
             });
-        };
+        }
     </script>
     <!-- SlimScroll -->
     <script src="{{asset('js/admin/jquery.slimscroll.min.js')}}"></script>
