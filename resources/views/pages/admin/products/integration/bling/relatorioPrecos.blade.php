@@ -40,7 +40,7 @@
             </ol>
         </section>
 
-        <!--SESSÃO DO SORTEIO KKK-->
+        <!--SESSÃO DO SORTEIO-->
         <section class="content">
             @include('partials.admin._alerts')
             <div class="box box-primary">
