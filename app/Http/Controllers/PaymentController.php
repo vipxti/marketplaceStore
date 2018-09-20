@@ -326,6 +326,7 @@ class PaymentController extends Controller
 
         curl_close($curl);
 
+        //dd($xml);
         $xml = simplexml_load_string($xml);
 
         //dd($xml);
@@ -618,7 +619,7 @@ class PaymentController extends Controller
 
     public function saveOrder($valorTotal, $codStatus, $codReferencia, $codPagSeguro, $dataCompra, $valorFrete, $codCliente, $fk_endereco)
     {
-        //dd($valorTotal, $codStatus, $codReferencia, $codPagSeguro, $dataCompra, $valorFrete, $codCliente);
+        //dd($valorTotal, $codStatus, $codReferencia, $codPagSeguro, $dataCompra, $valorFrete, $codCliente, $fk_endereco);
         return Order::create([
             'vl_total' => floatval($valorTotal),
             'cd_status' => $codStatus,
@@ -627,7 +628,8 @@ class PaymentController extends Controller
             'dt_compra' => $dataCompra,
             'vl_frete' => floatval($valorFrete),
             'cd_cliente' => $codCliente,
-            'fk_end_entrega_id' => $fk_endereco
+            'fk_end_entrega_id' => $fk_endereco,
+            'dt_alteracao' => $dataCompra
         ]);
     }
 

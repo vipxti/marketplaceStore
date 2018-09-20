@@ -115,6 +115,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/product/bling/search/prods/{page}/{loja}', 'ProductBlingController@searchProdsByStore')->name('search.prods.store.bling')->middleware('auth:admin');
     Route::get('/product/bling/search/prods/name/{code}/{loja}', 'ProductBlingController@searchProdsByStoreByName')->name('search.prods.name.store.bling')->middleware('auth:admin');
     Route::post('/product/bling/alter/price', 'ProductBlingController@alterPriceProducts')->name('alter.price.prods.bling')->middleware('auth:admin');
+    //RELATORIO PREÇOS BLING
+    Route::get('/relatorio/precos', 'OrderBlingController@indexRelatorioPrecos')->name('relatorio.precos.bling')->middleware('auth:admin');
 
     Route::get('/data', 'UserController@showUserForm')->name('admin.data')->middleware('auth:admin');
 

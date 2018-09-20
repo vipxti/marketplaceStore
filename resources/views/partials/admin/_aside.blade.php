@@ -143,6 +143,29 @@
                                 <ul class="treeview-menu">
                                     <li class="treeview">
                                         <a href="javascript:void(0)">
+                                            <i class="fa fa-share-square-o"></i>
+                                            Cadastros
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a href="{{route('channel.bling')}}">
+                                                    <i class="fa fa-key"></i>
+                                                    Cadastrar Canais
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('index.store.bling')}}">
+                                                    <i class="fa fa-home"></i>
+                                                    Cadastrar Lojas
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href="javascript:void(0)">
                                             <i class="fa fa-search"></i>
                                             Busca de Produtos
                                             <span class="pull-right-container">
@@ -164,57 +187,23 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="treeview">
-                                        <a href="javascript:void(0)">
+                                    <li>
+                                        <a href="{{route('order.bling')}}">
                                             <i class="fa fa-file-text"></i>
-                                            Pedidos
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
+                                            Buscar Pedidos
                                         </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                <a href="{{route('channel.bling')}}">
-                                                    <i class="fa fa-key"></i>
-                                                    Cadastrar Canais
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('order.bling')}}">
-                                                    <i class="fa fa-file-text"></i>
-                                                    Buscar Pedidos
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('order.bling.manoel')}}">
-                                                    <i class="fa fa-file-text"></i>
-                                                    Buscar Pedidos Manoel
-                                                </a>
-                                            </li>
-                                        </ul>
                                     </li>
-                                    <li class="treeview">
-                                        <a href="javascript:void(0)">
+                                    <li>
+                                        <a href="{{route('index.atualizaProd.bling')}}">
                                             <i class="fa fa-refresh"></i>
                                             Atualizar Produtos
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
                                         </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                <a href="{{route('index.store.bling')}}">
-                                                    <i class="fa fa-home"></i>
-                                                    Cadastrar Lojas
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('index.atualizaProd.bling')}}">
-                                                    <i class="fa fa-refresh"></i>
-                                                    Atualizar Produtos
-                                                </a>
-                                            </li>
-                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('relatorio.precos.bling')}}">
+                                            <i class="fa fa-pencil"></i>
+                                            Relatorio de Preços
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -232,58 +221,6 @@
                                             <i class="fa fa-search"></i>
                                             Pedidos PagSeguro
                                         </a>
-                                    </li>
-                                    <li class="treeview">
-                                        <a href="javascript:void(0)">
-                                            <i class="fa fa-file-text"></i>
-                                            Pedidos
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                <a href="{{route('channel.bling')}}">
-                                                    <i class="fa fa-key"></i>
-                                                    Cadastrar Canais
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('order.bling')}}">
-                                                    <i class="fa fa-file-text"></i>
-                                                    Buscar Pedidos
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('order.bling.manoel')}}">
-                                                    <i class="fa fa-file-text"></i>
-                                                    Buscar Pedidos Manoel
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="treeview">
-                                        <a href="javascript:void(0)">
-                                            <i class="fa fa-refresh"></i>
-                                            Atualizar Produtos
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                <a href="{{route('index.store.bling')}}">
-                                                    <i class="fa fa-home"></i>
-                                                    Cadastrar Lojas
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('index.atualizaProd.bling')}}">
-                                                    <i class="fa fa-refresh"></i>
-                                                    Atualizar Produtos
-                                                </a>
-                                            </li>
-                                        </ul>
                                     </li>
                                 </ul>
                             </li>
