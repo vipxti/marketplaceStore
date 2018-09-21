@@ -628,7 +628,7 @@
                         taxa_cartaoCalc = (taxa_cartao / 100) * resultado;
                         marketingCalc = (marketing / 100) * resultado;
 
-                        let lucroPrejuizo = (comissaoCalc + taxa + impostoCalc + preco_custo + pac + despesa_fixaCalc + taxa_cartaoCalc + marketingCalc);
+                        let lucroPrejuizo = (parseFloat(comissaoCalc) + parseFloat(taxa) + parseFloat(impostoCalc) + parseFloat(preco_custo) + parseFloat(pac) + parseFloat(despesa_fixaCalc) + parseFloat(taxa_cartaoCalc) + parseFloat(marketingCalc));
                         lucroPrejuizo = resultado - lucroPrejuizo;
 
                         let textoLucroPrejuizo;

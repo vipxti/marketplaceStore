@@ -113,8 +113,8 @@
                                                 <div class="col-xl-3 col-lg-6 d-flex">
                                                     <div class="item d-flex align-items-center">
                                                         <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                        <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
-                                                            <small>Entrega via Correio</small>
+                                                        <div class="text"><span class="text-uppercase">Entregamos todo Brasil</span>
+                                                            <small>Entregas via Correio</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,7 +147,7 @@
                                             </h6>
                                             <ul class="rate list-inline"></ul>
                                             <strong class="price text-primary">R$ 106,00</strong>
-                                            {{--<a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
+                                            <a href="http://maktubbeauty.com.br/page/product/catharine-hill-paleta-de-sombras-variadas-30-cores" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>
                                         </div>
                                     </div>
                                 </div>
@@ -239,8 +239,8 @@
                                             <div class="col-xl-3 col-lg-6 d-flex">
                                                 <div class="item d-flex align-items-center">
                                                     <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                    <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
-                                                        <small>Entrega via Correio</small>
+                                                    <div class="text"><span class="text-uppercase">Entregamos Brasil</span>
+                                                        <small>Entregas via Correio</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -310,8 +310,8 @@
                                         <div class="col-xl-3 col-lg-6 d-flex">
                                             <div class="item d-flex align-items-center">
                                                 <div class="icon"><i class="icon-truck text-primary"></i></div>
-                                                <div class="text"><span class="text-uppercase">Entregamos em todo Pais</span>
-                                                    <small>Entrega via Correio</small>
+                                                <div class="text"><span class="text-uppercase">Entregamos todo Brasil</span>
+                                                    <small>Entregas via Correio</small>
                                                 </div>
                                             </div>
                                         </div>

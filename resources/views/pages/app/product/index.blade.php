@@ -8,8 +8,7 @@
             margin: 0;
             font-size: 13px;
             font-weight: 700;
-            color: #3a3a3a;
-            background-color: #f5f5f5;
+            color: #d59431;
             text-decoration: none
         }
 
@@ -18,10 +17,20 @@
             margin: 0;
             font-size: 13px;
             font-weight: 700;
-            color:#3a3a3a;
-            background-color:#f5f5f5;
+            color:#fff;
+            background-color:#3a3a3a;
             text-decoration: none;
             border: none !important
+        }
+        .tamanhoimg {
+
+            width: 255px;
+            height: 255px;
+            background-size: 100% 100%;
+            -webkit-background-size: 100% 100%;
+            -o-background-size: 100% 100%;
+            -khtml-background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
         }
 
     </style>
@@ -37,7 +46,7 @@
                             @foreach($produtos as $key => $produto)
                                 <div class="col-12 col-sm-4 col-md-3 single_gallery_item shoes wow fadeInUpBig">
                                     <div class="product-img">
-                                        <img src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
+                                        <img class="tamanhoimg" src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
                                         <div class="product-quicview">
                                             <a href="{{ route('products.details', $produto->nm_slug)}}"><i class="fa fa-plus"></i></a>
                                         </div>

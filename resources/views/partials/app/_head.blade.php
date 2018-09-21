@@ -3,6 +3,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="google-site-verification" content="GsYKinmM1kOsk287kAVoF8RNhPLYlUogA0TgG_e_ycU" />
 
 <title>Maktub Beauty</title>
 

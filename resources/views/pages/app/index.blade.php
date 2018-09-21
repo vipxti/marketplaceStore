@@ -8,8 +8,7 @@
             margin: 0;
             font-size: 13px;
             font-weight: 700;
-            color: #3a3a3a;
-            background-color: #f5f5f5;
+            color: #d59431;
             text-decoration: none
         }
 
@@ -18,10 +17,21 @@
             margin: 0;
             font-size: 13px;
             font-weight: 700;
-            color:#3a3a3a;
-            background-color:#f5f5f5;
+            color:#fff;
+            background-color:#3a3a3a;
             text-decoration: none;
             border: none !important
+        }
+
+        .tamanhoimg {
+
+            width: 255px;
+            height: 255px;
+            background-size: 100% 100%;
+            -webkit-background-size: 100% 100%;
+            -o-background-size: 100% 100%;
+            -khtml-background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
         }
 
     </style>
@@ -32,51 +42,54 @@
     <section class="hero hero-home no-padding">
         <div class="owl-carousel owl-theme hero-slider">
             <!-- Banner 1 -->
-            <div style="background: url({{asset('img/app/bg-img/hero-bg.png')}});" class="item d-flex align-items-center has-pattern">
+            <div style="background: url({{asset('img/app/bg-img/hero-bg.png')}}); max-height: 535px !important;" class="item has-pattern">
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
-                            <h1 style="color: #d59431;font-size: 2.0rem">Make Up</h1>
+                            <h1 style="color: #d59431;font-size: 2.0rem"></h1>
                             <ul class="lead">
-                                <li><strong>Vult</strong></li>
-                                <li><strong>Pó</strong> Compacto</li>
-                                <li><strong>R$ 21,99</strong> Imperdível</li>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
                             </ul>
-                            <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
+                            <p>&nbsp;</p>
+                            {{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Banner 2 -->
-            <div style="background: url({{asset('img/app/bg-img/hero-bg-2.png')}});" class="item d-flex align-items-center has-pattern">
+            <div style="background: url({{asset('img/app/bg-img/hero-bg-2.png')}}); max-height: 535px !important;" class="item has-pattern">
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
-                            <h1 style="color: #d59431; font-size: 2.0rem">Feminices</h1>
+                            <h1 style="color: #d59431; font-size: 2.0rem"></h1>
                             <ul class="lead">
-                                <li><strong>Bruna</strong> Tavares</li>
-                                <li><strong>Base</strong> Cremosa</li>
-                                <li><strong>R$ 34,99</strong> Imperdível</li>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
                             </ul>
-                            <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
+                            <p>&nbsp;</p>
+                            {{--href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Banner 3 -->
-            <div style="background: url({{asset('img/app/bg-img/hero-bg-3.png')}});" class="item d-flex align-items-center has-pattern">
+            <div style="background: url({{asset('img/app/bg-img/hero-bg-3.png')}}); max-height: 535px !important;" class="item has-pattern">
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
-                            <h1 style="color: #d59431; font-size: 2.0rem">Inspiration</h1>
+                            <h1 style="color: #d59431; font-size: 2.0rem"></h1>
                             <ul class="lead">
-                                <li><strong>Ruby</strong> Rose</li>
-                                <li><strong>Paleta de</strong> Sombra</li>
-                                <li><strong>R$ 109,99</strong> Imperdível</li>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
                             </ul>
-                            <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>
+                            <p>&nbsp;</p>
+                            {{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
                         </div>
                     </div>
                 </div>
@@ -90,7 +103,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section_heading text-center">
-                        <h2>NOVOS PRODUTOS</h2>
+                        <img src="{{asset('img/app/bg-img/novosprodutos.png')}}">
                     </div>
                 </div>
             </div>
@@ -100,7 +113,7 @@
                 @foreach($produtos as $key => $produto)
                     <div class="col-12 col-sm-4 col-md-3 single_gallery_item shoes wow fadeInUpBig">
                         <div class="product-img">
-                            <img src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
+                            <img class="tamanhoimg" src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
                             <div class="product-quicview">
                                 <a href="{{ route('products.details', $produto->nm_slug)}}"><i class="fa fa-plus"></i></a>
                             </div>

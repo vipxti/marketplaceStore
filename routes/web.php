@@ -228,5 +228,9 @@ Route::prefix('page')->group(function () {
     //Terms
     Route::prefix('terms')->group(function () {
         Route::get('/', 'TermsController@companyTerms')->name('company.terms');
+        Route::get('/contato', 'TermsController@TermsContato')->name('terms.contato');
+        Route::get('/envios', 'TermsController@TermsEnvios')->name('terms.envios');
+        Route::get('/loja', 'TermsController@TermsLojasegura')->name('terms.lojasegura');
+        Route::get('/troca', 'TermsController@TermsTroca')->name('terms.troca');
     });
 });

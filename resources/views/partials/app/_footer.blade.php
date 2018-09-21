@@ -9,7 +9,7 @@
                     <div class="item d-flex align-items-center">
                         <div class="icon"><i class="icon-truck"></i></div>
                         <div class="text">
-                            <h6 class="no-margin text-uppercase">Entregamos em todo Pais</h6><span>Entrega via Correio</span>
+                            <h6 class="no-margin text-uppercase">Entregamos todo Brasil</h6><span>Entregas via Correio</span>
                         </div>
                     </div>
                 </div>
@@ -46,23 +46,22 @@
                     </a>
                     <p></p>
                     <ul class="social-menu list-inline">
-                        <li class="list-inline-item"><a href="https://www.facebook.com/MaktubBeauty/?ref=br_rs" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                        <li class="list-inline-item" ><a href="https://www.instagram.com/maktubbeauty/" target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                        <li class="list-inline-item" style="font-size: 20px"><a href="https://www.facebook.com/MaktubBeauty/?ref=br_rs" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li class="list-inline-item" style="font-size: 20px"><a href="https://www.instagram.com/maktubbeauty/" target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
                     </ul>
                 </div>
                 <div class="site-links col-lg-2 col-md-6">
                     <h5 class="text-uppercase">Dúvidas</h5>
                     <ul class="list-unstyled">
-                        <li> <a href="{{url('/page/terms#swapDevices')}}">Trocas e Devoluções</a></li>
-                        <li> <a href="{{url('/page/terms#deliveryTime')}}">Prazos e Envios</a></li>
-                        <li><a href="{{url('/page/terms#policies')}}">Loja Segura</a></li>
-                        <li><a href="{{url('/page/terms#contactForm')}}">Contato</a></li>
+                        <li> <a href="{{route('terms.troca')}}">Trocas e Devoluções</a></li>
+                        <li> <a href="{{route('terms.envios')}}">Prazos e Envios</a></li>
+                        <li><a href="{{route('terms.lojasegura')}}">Loja Segura</a></li>
+                        <li><a href="{{route('terms.contato')}}">Contato</a></li>
                     </ul>
                 </div>
                 <div class="site-links col-lg-2 col-md-6">
                     <h5 class="text-uppercase">Empresa</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{{route('company.terms')}}">Quem Somos</a></li>
                         @if(Auth::check())
                             <li>
                                 <a href="{{ route('client.dashboard') }}">Minha Conta</a>
@@ -81,9 +80,9 @@
                     </ul>
                 </div>
                 <div class="newsletter col-md-4">
-                    <h5 class="text-uppercase">Nossa Loaja Fisica</h5>
-                    <div style="color: inherit;">CNPJ: 28.947.354/0001-67</div>
-                    <div style="color: inherit;">R. Frei Gaspar, 535a<br>Centro, São Vicente - SP, 11310-010</div>
+                    <h5 class="text-uppercase">Nossa Loja Física</h5>
+                    <div style="color: inherit;">Maktub Beauty a maior loja de maquiagem da baixada santista.</div>
+                    <div style="color: inherit;">Localizada no centro de São Vicente.</div>
                 </div>
             </div>
         </div>

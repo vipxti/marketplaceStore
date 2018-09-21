@@ -1093,7 +1093,7 @@ img {
 }
 
 .product-img > img {
-    width: 100%;
+    /*width: 100%;*/
     -webkit-transition-duration: 500ms;
     transition-duration: 500ms;
 }
