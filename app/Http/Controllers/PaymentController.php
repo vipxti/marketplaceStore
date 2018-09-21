@@ -360,7 +360,9 @@ class PaymentController extends Controller
         DB::beginTransaction();
 
         try {
-            $order = $this->saveOrder($orderData['valorTotal'], $orderData['statusCompra'], $orderData['referencia'], $orderData['codigo'], $orderData['dataCompra'], $orderData['valorFrete'], $request->cd_cliente, $fk_endereco);
+            $order = $this->saveOrder($orderData['valorTotal'], $orderData['statusCompra'], $orderData['referencia'],
+                $orderData['codigo'], $orderData['dataCompra'], $orderData['valorFrete'], $request->cd_cliente,
+                $fk_endereco, strval($xml->shipping->type), 1, $orderData['valorTotal']);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Houve um problema ao processar sua compra - Order');
@@ -521,7 +523,10 @@ class PaymentController extends Controller
         DB::beginTransaction();
 
         try {
-            $order = $this->saveOrder($orderData['valorTotal'], $orderData['statusCompra'], $orderData['referencia'], $orderData['codigo'], $orderData['dataCompra'], $orderData['valorFrete'], $request->cd_cliente, $fk_endereco);
+            $order = $this->saveOrder($orderData['valorTotal'], $orderData['statusCompra'], $orderData['referencia'],
+                $orderData['codigo'], $orderData['dataCompra'], $orderData['valorFrete'], $request->cd_cliente,
+                $fk_endereco, strval($xml->shipping->type), strval($cardInfo[0]['installmentQuantity']),
+                strval(number_format($cardInfo[0]['installmentAmount'], 2, '.', '')));
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Houve um problema ao processar sua compra - Order');
@@ -617,7 +622,8 @@ class PaymentController extends Controller
         return $company;
     }
 
-    public function saveOrder($valorTotal, $codStatus, $codReferencia, $codPagSeguro, $dataCompra, $valorFrete, $codCliente, $fk_endereco)
+    public function saveOrder($valorTotal, $codStatus, $codReferencia, $codPagSeguro,
+                              $dataCompra, $valorFrete, $codCliente, $fk_endereco, $fk_frete, $qt_parcelas, $vl_parcelas)
     {
         //dd($valorTotal, $codStatus, $codReferencia, $codPagSeguro, $dataCompra, $valorFrete, $codCliente, $fk_endereco);
         return Order::create([
@@ -629,7 +635,10 @@ class PaymentController extends Controller
             'vl_frete' => floatval($valorFrete),
             'cd_cliente' => $codCliente,
             'fk_end_entrega_id' => $fk_endereco,
-            'dt_alteracao' => $dataCompra
+            'dt_alteracao' => $dataCompra,
+            'fk_tipo_frete_id' => $fk_frete,
+            'qt_parcelas' => $qt_parcelas,
+            'vl_parcelas' => $vl_parcelas
         ]);
     }
 

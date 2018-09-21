@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PagseguroController extends Controller
 {
@@ -73,11 +74,11 @@ class PagseguroController extends Controller
                         ->update(['cd_status' => $request->status,
                                 'dt_alteracao' => $request->data]);
 
-                    //if($request->status == 3){
-                        //$this->inserePedidoBling($request->referencia);
-                    //}
+                    if($request->status == 3){
+                        $retorno = $this->inserePedidoBling($request->referencia);
+                    }
 
-                    return response()->json(['deuErro' => false, 'statusAtualizado' => true]);
+                    return response()->json(['deuErro' => false, 'statusAtualizado' => true, 'retorno' => $retorno]);
                 }
             }
         }
@@ -96,28 +97,99 @@ class PagseguroController extends Controller
                         ->join('cliente_endereco', 'pedido.fk_end_entrega_id', '=', 'cliente_endereco.id_cliente_endereco')
                         ->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')
                         ->join('pedido_produto', 'pedido.cd_pedido', '=', 'pedido_produto.cd_pedido')
+                        ->join('bairro', 'endereco.cd_bairro', '=', 'bairro.cd_bairro')
+                        ->join('cidade', 'bairro.cd_cidade', '=', 'cidade.cd_cidade')
+                        ->join('uf', 'cidade.cd_uf', '=', 'uf.cd_uf')
+                        ->join('tipo_frete', 'pedido.fk_tipo_frete_id', '=', 'tipo_frete.id_tipo_frete')
                         ->where('pedido.cd_referencia', '=', $referencia)
                         ->get();
 
-        dd($pedido);
+        $produtos = Order::join('pedido_produto', 'pedido.cd_pedido', '=', 'pedido_produto.cd_pedido')
+                        ->join('produto', 'pedido_produto.cd_produto', '=', 'produto.cd_produto')
+                        ->join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+                        ->select('sku.cd_nr_sku', 'produto.nm_produto', 'pedido_produto.qt_produto', 'produto.vl_produto')
+                        ->where('pedido.cd_referencia', '=', $referencia)
+                        ->get();
 
-        $data = date('Y-m-d', strtotime($pedido[0]->dt_compra));
+        $dadoUsuario = DB::table('dados_empresa')->get();
+        $apikey = $dadoUsuario[0]->cd_api_key;
+        $loja = $dadoUsuario[0]->cd_api_bling;
         //dd($pedido);
+        //dd($produtos);
+
+        $data = date('d-m-Y', strtotime($pedido[0]->dt_compra));
+        //dd($data);
+
+        $tipoPessoa = '';
+
+        if(strlen($pedido[0]->cd_cpf_cnpj) == 11){
+            $tipoPessoa = 'F';
+        }
+        else{
+            $tipoPessoa = 'J';
+        }
+
+        $cep = substr($pedido[0]->cd_cep, 0, 2) . ".";
+        $cep.=substr($pedido[0]->cd_cep, 2, 3) . "-";
+        $cep.=substr($pedido[0]->cd_cep, 5);
+
+        //dd($cep);
 
         $url = 'https://bling.com.br/Api/v2/pedido/json/';
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'.
                     '<pedido>'.
                             '<data>'. $data .'</data>'.
+                            '<loja>'. $loja .'</loja>'.
                             '<cliente>'.
-                                    '<nome></nome>'.
+                                    '<nome>'. $pedido[0]->nm_destinatario.'</nome>'.
+                                    '<tipoPessoa>'. $tipoPessoa .'</tipoPessoa>'.
+                                    '<cpf_cnpj>'. $pedido[0]->cd_cpf_cnpj .'</cpf_cnpj>'.
+                                    '<endereco>'. $pedido[0]->ds_endereco .'</endereco>'.
+                                    '<numero>'. $pedido[0]->cd_numero_endereco .'</numero>'.
+                                    '<complemento>'. $pedido[0]->ds_complemento .'</complemento>'.
+                                    '<bairro>'. $pedido[0]->nm_bairro .'</bairro>'.
+                                    '<cep>'. $cep .'</cep>'.
+                                    '<cidade>'. $pedido[0]->nm_cidade .'</cidade>'.
+                                    '<uf>'. $pedido[0]->sg_uf .'</uf>'.
+                                    '<celular>'. $pedido[0]->cd_celular1 .'</celular>'.
                             '</cliente>'.
-                    '</pedido>';
+                            '<transporte>'.
+                                    '<transportadora>'. $pedido[0]->tipo_frete .'</transportadora>'.
+                                    '<tipo_frete>R</tipo_frete>'.
+                                    '<servico_correios>'. $pedido[0]->tipo_frete .'</servico_correios>'.
+                            '</transporte>'.
+                            '<itens>';
+
+                            foreach ($produtos as $produto){
+                                $xml.= '<item>'.
+                                            '<codigo>'. $produto->cd_nr_sku .'</codigo>'.
+                                            '<descricao>'. $produto->nm_produto .'</descricao>'.
+                                            '<qtde>'. $produto->qt_produto .'</qtde>'.
+                                            '<vlr_unit>'. $produto->vl_produto .'</vlr_unit>'.
+                                        '</item>';
+                            }
+
+                    $xml.= '</itens>'.
+                            '<parcelas>'.
+                                    '<parcela>'.
+                                            '<dias>14</dias>'.
+                                            '<vlr>'. $pedido[0]->vl_total .'</vlr>'.
+                                            '<obs>PagSeguro</obs>'.
+                                    '</parcela>'.
+                            '</parcelas>'.
+                            '<vlr_frete>'. $pedido[0]->vl_frete .'</vlr_frete>'.
+                        '</pedido>';
+
+
+                    //'</pedido>';
+
         $posts = array (
-            "apikey" => "{apikey}",
+            "apikey" => $apikey,
             "xml" => rawurlencode($xml)
         );
+
         $retorno = $this->executeSendOrder($url, $posts);
-        //echo $retorno;
+        return $retorno;
     }
 
     public function executeSendOrder($url, $data){
