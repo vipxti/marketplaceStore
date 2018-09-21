@@ -71,7 +71,7 @@
                 <b>Cód.&nbsp;Trasação:&nbsp;</b>{{$dadosCliente[0]->cd_referencia}}<br>
 
                 <b>Pedido&nbsp;ID:</b>&nbsp;{{$dadosCliente[0]->cd_pedido}}<br>
-                <b>Data de Pagamento:</b>&nbsp;{{ date( 'd/m/Y' , strtotime($dadosCliente[0]->dt_alteracao))}}<br>
+                <b>Data de Pag.:</b>&nbsp;{{ date( 'd/m/Y' , strtotime($dadosCliente[0]->dt_alteracao))}}<br>
                 <b>Usuário:</b>&nbsp;{{$dadosCliente[0]->nm_cliente}}
             </div>
             <!-- /.col -->

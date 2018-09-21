@@ -86,9 +86,7 @@
                         {{ $listOrder->links() }}
                     </div>
 
-                    <!-- Moda Variações -->
-                    <!--modal -->
-
+                    <!--modal Pedido-->
                         <div class="modal fade bd-example-modal-lg" id="modal-default">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -244,7 +242,6 @@
         const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         function print(id) {
             window.open('{{ url('admin/pedido/print/') }}' + '/' + id, '_blank');
-
         }
 
         $('#btnPrint').click(function(){

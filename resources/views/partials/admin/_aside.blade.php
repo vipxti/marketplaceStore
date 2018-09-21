@@ -251,7 +251,6 @@
                 let reprovado = 0;
                 let pendente = 0;
                 $.each( stTotalPedido, function( key, value ) {
-
                     switch(value.cd_status) {
                         case 1:
                             pendente+=1;
