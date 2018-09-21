@@ -337,7 +337,12 @@
                         data: {_token: CSRF_TOKEN, referencia: cd_referencia, status: status[0], data: data[0]},
                         success: function (data) {
                             if(data.deuErro == true){
-                                swal('Ops', 'Ocorreu um erro ao tentar atualizar o status de um dos produtos.', 'error');
+                                //swal('Ops', 'Ocorreu um erro ao tentar atualizar o status de um dos produtos.', 'error');
+                                console.log("ERRO" + cd_referencia);
+                                console.log("ERRO STATUS" + status[0]);
+                            }
+                            else{
+                                console.log(data);
                             }
                         }
                     })

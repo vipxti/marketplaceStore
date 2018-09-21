@@ -2,9 +2,14 @@
 
 namespace App\Exceptions;
 
+use App\Category;
+use App\Menu;
+use App\NavigationMenu;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -49,7 +54,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //check if exception is an instance of ModelNotFoundException.
+        //or NotFoundHttpException
+
+        if ($exception instanceof ModelNotFoundException or $exception instanceof NotFoundHttpException) {
+            // ajax 404 json feedback
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Não Encontrado'], 404);
+            }
+
+            // normal 404 view page feedback
+            //return response()->view('errors.404', [], 404, compact('menuNav', 'menuNavegacao', 'categoriaSubCat'));
+            return redirect()->route('index');
+        }
+
         return parent::render($request, $exception);
+        //return parent::render($request, $exception);
     }
 
     protected function unauthenticated($request, AuthenticationException $exception)
