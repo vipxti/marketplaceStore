@@ -213,6 +213,13 @@ class OrderController extends Controller
         ]);
     }
 
+    public function statusPedido(){
+        $stPedidos = Order::all('cd_status');
+
+        return response()->json(['stPedido' => $stPedidos]);
+        //return view('partials.admin._aside', compact('stPedidos'));
+    }
+
     function mask($val, $mask){
         $maskared = '';
         $k = 0;
