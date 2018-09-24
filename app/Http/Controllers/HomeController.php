@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Menu;
+use App\MenuItensVitrine;
 use App\NavigationMenu;
 use App\Product;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
-class HomeController extends Controller
-{
-    public function showIndexPage()
-    {
+class HomeController extends Controller{
+    public function showIndexPage(){
         $menus = Menu::get();
 
         $menuNav =  Menu::all();
@@ -57,12 +56,23 @@ class HomeController extends Controller
 
         //dd($categoriaSubCat);
 
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto', 'DESC')->limit(20); //Por que 20? Pq o Felipe quiz
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto', 'DESC'); //Por que 20? Pq o Felipe quiz
 
         //dd($produtos->get());
 
-        if (count($produtos->get()->toArray()) > 8) {
-            $produtos = $produtos->get()->random(8);
+        $nItensVitrine = MenuItensVitrine::where('menu_itens_vitrine_ativo', '=', 1)->get();
+        //dd($nItensVitrine[0]);
+        if($nItensVitrine[0]->menu_itens_vitrine == 'Todos'){
+            $nItens = Product::all()->count();
+            //dd("if " . $nItens);
+        }
+        else{
+            $nItens = $nItensVitrine[0]->menu_itens_vitrine;
+            //dd("Else " . $nItens);
+        }
+
+        if (count($produtos->get()->toArray()) > 1) {
+            $produtos = $produtos->get()->random($nItens);
         } else {
             $produtos = $produtos->get();
         }
@@ -77,7 +87,7 @@ class HomeController extends Controller
         } else {
             $nome = null;
         }
-
+        //dd($produtos);
         return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome', 'categoriaSubCat', 'menuNav', 'menuNavegacao'));
     }
 

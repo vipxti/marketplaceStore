@@ -14,11 +14,7 @@
             </ol>
         </section>
 
-
-
-
         <!-- ALTERAÇÃO DOS PRODUTOS HOME -->
-
         <section class="content">
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -30,32 +26,39 @@
                 </div>
 
                 <div class="box-body">
-                    <form action="{{ route('product.save') }}" method="post">
+                    <form action="{{ route('vitrine.itens.page') }}" method="post">
                         {{ csrf_field() }}
 
-                    <div class="col-md-12">
-                        <div class="col-md-4">
-                            <label>Produtos (Linhas)</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-th-large"></i></span>
-                                <select class="form-control select2" style="width: 100%;" name="cd_tamanho">
-                                   <option value="3">3</option>
-                                   <option value="6">6</option>
-                                   <option value="9">9</option>
-                                   <option value="12">12</option>
-                                   <option value="15">15</option>
-                                   <option value="#">Todos</option>
-                                </select>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <label>Produtos (Linhas)</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-th-large"></i></span>
+                                    <select id="vitrineItens" class="form-control select2" style="width: 100%;" name="nItens">
+                                        @foreach($nItensVitrine as $nItenVitrine)
+                                            <option value="{{$nItenVitrine->id_menu_itens_vitrine}}" class="ativo{{$nItenVitrine->menu_itens_vitrine_ativo}}">{{$nItenVitrine->menu_itens_vitrine}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                       <div class="col-md-12 text-right">
+                        <div class="col-md-12 text-right">
                             <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
-                       </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </section>
     </div>
+
+    <script>
+        $(function(){
+            function selecionaAtivo(){
+                $('#vitrineItens').val($('.ativo1').val());
+            }
+            selecionaAtivo();
+
+        });
+    </script>
 @stop

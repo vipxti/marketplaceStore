@@ -123,6 +123,8 @@ Route::prefix('admin')->group(function () {
 
     //Edição do site
     Route::get('/hotpost', 'PageController@showHotPostPage')->name('hotpost.edit')->middleware('auth:admin');
+    Route::get('/vitrine', 'PageController@showVitrinePage')->name('vitrine.page')->middleware('auth:admin');
+    Route::post('/vitrine', 'PageController@updateItensVitrine')->name('vitrine.itens.page')->middleware('auth:admin');
     Route::get('/banner', 'PageController@showBannerPage')->name('banner.edit')->middleware('auth:admin');
 
     //Editar menus
@@ -155,8 +157,6 @@ Route::prefix('admin')->group(function () {
     Route::post('pagseguro/atualiza/situacao', 'PagseguroController@atualizaPedidos')->name('pagseguro.atualiza.situacao')->middleware('auth:admin');
     Route::post('pagseguro/url/retorno', 'PagseguroController@urlRetorno')->name('pagseguro.url.retorno');
 
-
-    Route::get('/productconfig', 'PageController@showConfigProductPage')->name('product.config');
 
     Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
     Route::get('/products/list', 'ProductController@listaProduto')->name('products.list')->middleware('auth:admin');

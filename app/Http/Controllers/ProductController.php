@@ -22,11 +22,10 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
-{
+class ProductController extends Controller {
+
     //mostar produto por cat/subcat
-    public function showShopProductsCatSubcat(Request $request)
-    {
+    public function showShopProductsCatSubcat(Request $request){
         //dd($request->all());
         $dVerificador = $request->id;
         //$dVerificador = 'c';
@@ -41,8 +40,6 @@ class ProductController extends Controller
         } else {
             $nome = null;
         }
-
-
 
         $menuNav =  Menu::all();
 
@@ -270,7 +267,6 @@ class ProductController extends Controller
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto', 'desc')->paginate(25);
 
         $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('produto_variacao.cd_produto', 'produto.nm_slug')->paginate(25);
-
         return view('pages.app.product.index', compact('produtos', 'variation', 'nome', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
     }
 
@@ -1613,8 +1609,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function getSubCategory()
-    {
+    public function getSubCategory(){
     }
 //    public function generateSKU($ean, $cat, $color, $price) {
 //
