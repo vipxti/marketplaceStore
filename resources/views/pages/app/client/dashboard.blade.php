@@ -325,7 +325,7 @@
                                         <th>Total</th>
                                     </tr>
                                     </thead>
-                                    <tbody></tbody>
+                                    <tbody id="tbodyPedidos"></tbody>
                                 </table>
                             </div>
                             <!-- /.col -->
@@ -436,6 +436,7 @@
 
             function vIdBtn(id){
                 let idOder = id;
+                $('#tbodyPedidos').empty();
                 $.ajax({
                     url: '{{ route('order.modal.list') }}',
                     type: 'post',

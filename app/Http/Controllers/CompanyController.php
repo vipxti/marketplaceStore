@@ -26,8 +26,7 @@ class CompanyController extends Controller
         return view('pages.admin.cadDadosEmpresa', compact('dadosEmpresa'));
     }
 
-    public function CompanyData()
-    {
+    public function CompanyData()    {
         $dadosEmpresa = DB::table('dados_empresa')
             ->join('endereco', 'dados_empresa.fk_cd_endereco', '=', 'endereco.cd_endereco')
             ->join('bairro', 'endereco.cd_bairro', '=', 'bairro.cd_bairro')

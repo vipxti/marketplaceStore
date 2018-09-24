@@ -7,10 +7,14 @@ use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class OrderController extends Controller
-{
+class OrderController extends Controller{
     public function listOrder(){
-        $listOrder = Order::orderBy('cd_pedido', 'desc')->paginate(15);
+
+        $listOrder = DB::table('pedido')
+            ->join('cliente_endereco', 'pedido.fk_end_entrega_id', '=', 'cliente_endereco.id_cliente_endereco')
+            ->orderBy('pedido.cd_pedido', 'desc')
+            ->paginate(15);
+        //$listOrder = Order::orderBy('cd_pedido', 'desc')->paginate(15);
         return view('pages.admin.listOrder', compact('listOrder'));
     }
 

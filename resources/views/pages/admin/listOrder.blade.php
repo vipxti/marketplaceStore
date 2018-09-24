@@ -36,6 +36,7 @@
                         <tr >
                             <th style="text-align: left; border-bottom: none !important;">Nº Pedido</th>
                             <th style="text-align: left; border-bottom: none !important;">Data</th>
+                            <th style="text-align: left; border-bottom: none !important;">Destinatario</th>
                             <th style="text-align: left; border-bottom: none !important;">Código de Referência</th>
                             <th style="text-align: left; border-bottom: none !important;">Status</th>
                             <th style="text-align: left; border-bottom: none !important;">Ação</th>
@@ -46,6 +47,7 @@
                             <tr>
                                 <td>{{$order->cd_pedido}}</td>
                                 <td>{{ date( 'd/m/Y' , strtotime($order->dt_compra))}}</td>
+                                <td>{{strtoupper($order->nm_destinatario)}}</td>
                                 <td>{{strtoupper($order->cd_referencia)}}</td>
                                 <td class="ext-center" style="width: 1% !important;">
                                     @switch($order->cd_status)
@@ -92,7 +94,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
+                                        <span id="closeModal" aria-hidden="true">&times;</span></button>
                                     <h4 class="modal-title">Pedido&nbsp;<small id="nPedido"></small></h4>
 
                                 </div>
@@ -175,7 +177,7 @@
                                                             <th>Total</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody></tbody>
+                                                    <tbody id="tbodyPedidos"></tbody>
                                                 </table>
                                             </div>
                                             <!-- /.col -->
@@ -239,6 +241,7 @@
 
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
     <script>
+
         const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         function print(id) {
             window.open('{{ url('admin/pedido/print/') }}' + '/' + id, '_blank');
@@ -252,7 +255,9 @@
         });
 
         function vIdBtn(id){
+            $('#tbodyPedidos').empty();
             let idOder = id;
+
             $.ajax({
                 url: '{{ route('order.modal.list') }}',
                 type: 'post',
@@ -356,7 +361,9 @@
 
                     let pedProd = data.dadosPedido.original.prductsOders;
                     $.each( pedProd, function( key, value ) {
-                        let sbToal = (data.dadosPedido.original.prductsOders[key].qt_produto * data.dadosPedido.original.prductsOders[key].vl_produto);
+                        let precoQTD = (data.dadosPedido.original.prductsOders[key].qt_produto * data.dadosPedido.original.prductsOders[key].vl_produto);
+                        console.log(data.dadosPedido.original.prductsOders[key].qt_produto );
+                        console.log(data.dadosPedido.original.prductsOders[key].vl_produto);
                         $('#project-table>tbody').append(
                             $("<tr>").append(
                                 $("<td>").append(value.cd_produto),
@@ -365,7 +372,7 @@
                                 $("<td>").append(value.qt_produto),
                                 $("<td>").append(value.nm_produto),
                                 $("<td>").append(value.vl_produto.replace('.',",")),
-                                $("<td>").append(sbToal.toString().replace('.',",")),
+                                $("<td>").append(precoQTD.toString().replace('.',",")),
                             )
                         )
                     });
