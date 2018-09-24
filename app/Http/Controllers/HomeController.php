@@ -62,13 +62,16 @@ class HomeController extends Controller{
 
         $nItensVitrine = MenuItensVitrine::where('menu_itens_vitrine_ativo', '=', 1)->get();
         //dd($nItensVitrine[0]);
+        $todos = Product::all()->count();
         if($nItensVitrine[0]->menu_itens_vitrine == 'Todos'){
-            $nItens = Product::all()->count();
+            $nItens = $todos;
             //dd("if " . $nItens);
         }
         else{
-            $nItens = $nItensVitrine[0]->menu_itens_vitrine;
-            //dd("Else " . $nItens);
+            if($todos > $nItensVitrine[0]->menu_itens_vitrine)
+                $nItens = $nItensVitrine[0]->menu_itens_vitrine;
+            else
+                $nItens = $todos;
         }
 
         if (count($produtos->get()->toArray()) > 1) {
