@@ -156,9 +156,9 @@
 
         <section class="content">
 
-            @include('partials.admin._alerts')
+        @include('partials.admin._alerts')
 
-            <!-- Default box -->
+        <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div class="box-tools pull-right">
@@ -169,9 +169,14 @@
                 </div>
                 <div class="box-body">
 
-                        <!-- Botão pesquisar -->
+                    <!-- Botão pesquisar -->
 
                     <div class="row">
+
+                        <div class="col-md-4">
+                            <h4><b>Produto Pai:</b> {{$produtoPai[0]->nm_produto}}</h4>
+                            <h4><b>SKU:</b> {{$produtoPai[0]->cd_nr_sku}}</h4>
+                        </div>
 
                         <div class="col-md-4 pull-right">
 
@@ -192,24 +197,24 @@
 
                     </div>
 
-                    {{--<div style="padding-left: 70%">
-                        <div>
-                            <input type="search" id="search" value="" class="form-control">
-                        </div>
+                {{--<div style="padding-left: 70%">
+                    <div>
+                        <input type="search" id="search" value="" class="form-control">
                     </div>
-                    <div>&nbsp;</div>--}}
+                </div>
+                <div>&nbsp;</div>--}}
 
 
-                    {{--<div class="dataTables_length" style="padding-left: 90%" id="example1_length">
-                        <select name="example1_length" aria-controls="example1" class="form-control form-control-sm">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </div>--}}
+                {{--<div class="dataTables_length" style="padding-left: 90%" id="example1_length">
+                    <select name="example1_length" aria-controls="example1" class="form-control form-control-sm">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>--}}
 
-                    <!-- Tabelas dos produtos -->
+                <!-- Tabelas dos produtos -->
 
                     <div class="table-responsive">
                         <table class="table table-striped" id="table">
@@ -225,21 +230,15 @@
 
                             <tbody>
                             @foreach($produtos as $produto)
-                                    {{--{{dd($produto)}}--}}
+                                {{--{{dd($produto)}}--}}
                                 <tr>
-                                    <td>{{ $produto->cd_produto }} </td>
+                                    <td>{{ $produto->cd_produto_variacao }} </td>
                                     <td>{{ $produto->cd_nr_sku }} </td>
-                                    <td>{{ $produto->nm_produto }} </td>
-                                    <td>R$ {{ str_replace('.', ',', $produto->vl_produto) }} </td>
-                                    <td id="qt_produto">{{ str_replace('.', ',', $produto->qt_produto) }} </td>
+                                    <td>{{ $produto->nm_produto_variacao }} </td>
+                                    <td>R$ {{ str_replace('.', ',', $produto->vl_produto_variacao) }} </td>
+                                    <td id="qt_produto">{{ str_replace('.', ',', $produto->qt_produto_variacao) }} </td>
                                     <td id="colBotoes" class="text-right">
                                         <button id="btn_editar" title="Atualizar Produto" class="fa fa-pencil btn btn-outline-warning" data-toggle="modal" data-target="#modal-default" style="color: #367fa9"></button>
-                                        <button type="submit" title="Adicionar Variação" id="btn_atributos" class="fa fa-plus btn btn-outline-success" onclick="pagVariacao({{$produto->cd_produto}});" style="color: #008d4c;">
-                                            {{--<a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}">
-                                                <i class="fa fa-plus"></i>
-                                            </a>--}}
-                                        </button>
-                                        <button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" style="color: #f39c12"></button>
                                         <button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                     </td>
                                     {{--<td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>--}}
@@ -252,8 +251,6 @@
                         </table>
                     </div>
 
-
-
                     <br>
                     <div class="text-center">
 
@@ -263,19 +260,19 @@
 
                     <!-- Moda Variações -->
                     <form action="{{route('product.update')}}" method="post" enctype="multipart/form-data">
-                    <!-- MODAL ATUALIZA DADOS -->
-                    <div class="modal fade" id="modal-default">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Atualizar Dados do Produto</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
+                        <!-- MODAL ATUALIZA DADOS -->
+                        <div class="modal fade" id="modal-default">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Atualizar Dados do Produto</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
 
-                                        <div class="col-md-12">
+                                            <div class="col-md-12">
 
 
                                             {{ csrf_field() }}
@@ -517,26 +514,26 @@
 
 
 
-                                        </div>
+                                            </div>
 
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="btnSairModal" type="button" class="btn btn-default pull-left" data-dismiss="modal">Sair</button>
+                                        <button id="btnUpdateProd" type="submit" class="btn btn-primary">Salvar Alterações</button>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button id="btnSairModal" type="button" class="btn btn-default pull-left" data-dismiss="modal">Sair</button>
-                                    <button id="btnUpdateProd" type="submit" class="btn btn-primary">Salvar Alterações</button>
-                                </div>
+                                <!-- /.modal-content -->
                             </div>
-                            <!-- /.modal-content -->
+                            <!-- /.modal-dialog -->
                         </div>
-                        <!-- /.modal-dialog -->
-                    </div>
-                    <!-- /.modal -->
+                        <!-- /.modal -->
                     </form>
 
-                        </div>
-                      </div>
-                </section>
+                </div>
             </div>
+        </section>
+    </div>
 
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
     <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
@@ -596,7 +593,7 @@
                     msgAguarde();
 
                     $.ajax({
-                        url: '{{route('verify.sku.products')}}',
+                        url: '{{route('verify.sku.variation.products')}}',
                         type: 'POST',
                         data: {_token: CSRF_TOKEN, sku: sku},
                         success: function (data) {
@@ -604,20 +601,20 @@
                             /*console.log(data[0][0].nm_produto);
                             console.log(data[1]);*/
 
-                            $('.campo_nome').val(data[0][0].nm_produto);
+                            $('.campo_nome').val(data[0][0].nm_produto_variacao);
                             $('#campo_sku').val(data[0][0].cd_nr_sku);
-                            $('#campo_ean').val(data[0][0].cd_ean);
+                            $('#campo_ean').val(data[0][0].cd_ean_variacao);
                             categoriaProd = data[0][0].nm_categoria;
                             cdCategoriaProd = data[0][0].cd_categoria;
                             subCategoriaProd = data[0][0].nm_sub_categoria;
-                            $('.campo_preco').val(data[0][0].vl_produto);
-                            $('.campo_qtd').val(data[0][0].qt_produto);
+                            $('.campo_preco').val(data[0][0].vl_produto_variacao);
+                            $('.campo_qtd').val(data[0][0].qt_produto_variacao);
                             $('.campo_largura').val(data[0][0].ds_largura);
                             $('.campo_altura').val(data[0][0].ds_altura);
                             $('.campo_comprimento').val(data[0][0].ds_comprimento);
                             $('.campo_peso').val(data[0][0].ds_peso);
 
-                            if (data[0][0].cd_status_produto == 1) {
+                            if (data[0][0].cd_status_produto_variacao == 1) {
                                 console.log("Produto Ativado");
                                 $('#switch-shadow').attr('checked', 'checked');
                                 $('.mHswitch').text("Produto Ativado");
@@ -631,7 +628,7 @@
                             }
 
                             $('.campo_desc').text("");
-                            $('.campo_desc').text(data[0][0].ds_produto);
+                            $('.campo_desc').text(data[0][0].ds_produto_variacao);
                             contarPalavras();
 
                             $.each(data[1], function (i, v) {
@@ -749,12 +746,8 @@
                 });
             }
 
-            $('button#btn_lista_variacao').click(function(){
-                let cd_prod = $(this).parent().parent().find('td:first').text();
-                console.log(cd_prod);
-                window.location.href = '{{ url('/admin/product/list/variation/') }}' + '/' + cd_prod;
-            });
         });
+
 
         $('button#btn_excluir').click(function(){
 
@@ -880,10 +873,6 @@
                 clicou = false;
             }
         });
-
-        function pagVariacao(cd_prod){
-            window.location.href = '{{ url('/admin/product/variation/') }}' + '/' + cd_prod;
-        }
 
         $('#btnUpdateProd').click(function(){
             $.blockUI({
