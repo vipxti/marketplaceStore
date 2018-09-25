@@ -6,6 +6,7 @@ use App\Client;
 use App\MenuItensVitrine;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use function PhpParser\filesInDir;
 
 class PageController extends Controller
@@ -41,13 +42,22 @@ class PageController extends Controller
     }
 
     public function showVitrinePage(){
+        $produtos = DB::table('produto')->paginate(15);
         $nItensVitrine = MenuItensVitrine::all();
-        return view('pages.admin.vitrineMenu',compact('nItensVitrine') );
+        return view('pages.admin.vitrineMenu',compact('nItensVitrine', 'produtos') );
     }
     public function updateItensVitrine(Request $request){
 
         MenuItensVitrine::where('menu_itens_vitrine_ativo', '=', 1)->update(array('menu_itens_vitrine_ativo' => 0));
         MenuItensVitrine::where('id_menu_itens_vitrine', '=',$request->nItens)->update(array('menu_itens_vitrine_ativo' => 1));
         return $this->showVitrinePage();
+    }
+
+    public function produtosVitrine(){
+        $produtos = Product::paginate(15);;;
+
+        return response()->json([
+            'produtos' => $produtos,
+        ]);
     }
 }

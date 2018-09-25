@@ -168,13 +168,9 @@
                     </div>
                 </div>
                 <div class="box-body">
-
-                        <!-- Botão pesquisar -->
-
+                    <!-- Botão pesquisar -->
                     <div class="row">
-
                         <div class="col-md-4 pull-right">
-
                             <label>Consulte o produto:</label>
                             <div class="form-group">
                                 <div class="input-group">
@@ -187,9 +183,7 @@
                                     </span>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
 
                     {{--<div style="padding-left: 70%">
@@ -198,7 +192,6 @@
                         </div>
                     </div>
                     <div>&nbsp;</div>--}}
-
 
                     {{--<div class="dataTables_length" style="padding-left: 90%" id="example1_length">
                         <select name="example1_length" aria-controls="example1" class="form-control form-control-sm">
@@ -210,7 +203,6 @@
                     </div>--}}
 
                     <!-- Tabelas dos produtos -->
-
                     <div class="table-responsive">
                         <table class="table table-striped" id="table">
                             <thead>
@@ -252,13 +244,9 @@
                         </table>
                     </div>
 
-
-
                     <br>
                     <div class="text-center">
-
                         {{ $produtos->links() }}
-
                     </div>
 
                     <!-- Moda Variações -->
@@ -532,11 +520,10 @@
                     </div>
                     <!-- /.modal -->
                     </form>
-
-                        </div>
-                      </div>
-                </section>
+                </div>
             </div>
+        </section>
+    </div>
 
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
     <script src="{{asset('js/admin/jquery.blockUI.js')}}"></script>
