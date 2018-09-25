@@ -35,13 +35,13 @@
         }
 
         .parcelas{
-            color: #ce1312;
+            color: #d59431 ;
         }
     </style>
 
     <link rel="stylesheet" href="{{asset('css/app/magnific.css')}}">
 
-    {{--<section class="hero hero-home no-padding">
+    <section class="hero hero-home no-padding">
         <div class="owl-carousel owl-theme hero-slider">
             <!-- Banner 1 -->
             <div style="background: url({{asset('img/app/bg-img/hero-bg.png')}}); max-height: 535px !important;" class="item has-pattern">
@@ -55,7 +55,7 @@
                                 <p>&nbsp;</p>
                             </ul>
                             <p>&nbsp;</p>
-                            --}}{{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}{{--
+                           {{-- <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                                 <p>&nbsp;</p>
                             </ul>
                             <p>&nbsp;</p>
-                            --}}{{--href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}{{--
+                            {{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
                         </div>
                     </div>
                 </div>
@@ -91,13 +91,13 @@
                                 <p>&nbsp;</p>
                             </ul>
                             <p>&nbsp;</p>
-                            --}}{{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}{{--
+                            {{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>--}}
+    </section>
 
     <section class="new_arrivals_area section_padding_100_0 clearfix">
         <div class="container">

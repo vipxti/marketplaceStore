@@ -1639,8 +1639,8 @@ img {
     width: 37px;
     text-align: center;
     font-weight: 700;
-    color: #d59431;
-    border: 2px solid #d59431;
+    color: #171717;
+    border: 2px solid #171717;
     margin-right: 5px;
     background-color: transparent;
 }
@@ -1799,7 +1799,7 @@ img {
     background-color: #fff;
     border: 1px solid #ddd;
     display: block;
-    height: 20px;
+    height: 40px;
     position: absolute;
     right: 0;
     text-align: center;
@@ -1809,7 +1809,7 @@ img {
     cursor: pointer;
     font-size: 10px;
     line-height: 20px;
-    color: #888;
+    color: #171717;
 }
 
 .single_product_desc .cart .qty-plus {
@@ -8441,13 +8441,13 @@ STYLE SWITCHER FOR DEMO
 
 .btn-primary:hover, .btn-template:hover {
   color: color-yiq(#3a3a3a);
-  background-color: #3a3a3a;
-  border-color: #3a3a3a;
+  background-color: #171717;
+  border-color: #171717;
 }
 
 .btn-primary:focus, .btn-template:focus, .btn-primary.focus, .focus.btn-template {
-  -webkit-box-shadow: 0 0 0 0.2rem rgba(144, 85, 162, 0.5);
-  box-shadow: 0 0 0 0.2rem rgba(144, 85, 162, 0.5);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(199, 146, 24, 0.52);
+  box-shadow: 0 0 0 0.2rem rgba(199, 146, 24, 0.52);
 }
 
 .btn-primary.disabled, .disabled.btn-template, .btn-primary:disabled, .btn-template:disabled {

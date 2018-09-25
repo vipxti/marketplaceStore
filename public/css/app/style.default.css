@@ -3204,13 +3204,13 @@ STYLE SWITCHER FOR DEMO
 
 .btn-primary:hover, .btn-template:hover {
   color: color-yiq(#3a3a3a);
-  background-color: #3a3a3a;
-  border-color: #3a3a3a;
+  background-color: #171717;
+  border-color: #171717;
 }
 
 .btn-primary:focus, .btn-template:focus, .btn-primary.focus, .focus.btn-template {
-  -webkit-box-shadow: 0 0 0 0.2rem rgba(144, 85, 162, 0.5);
-  box-shadow: 0 0 0 0.2rem rgba(144, 85, 162, 0.5);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(199, 146, 24, 0.52);
+  box-shadow: 0 0 0 0.2rem rgba(199, 146, 24, 0.52);
 }
 
 .btn-primary.disabled, .disabled.btn-template, .btn-primary:disabled, .btn-template:disabled {

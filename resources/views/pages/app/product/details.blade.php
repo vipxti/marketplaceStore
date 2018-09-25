@@ -13,6 +13,12 @@
             word-wrap: break-word;
         }
 
+        .btnmaisemenos{
+            border: none;
+            width: 100px;
+            padding: 0px 0px 0px 30px;
+        }
+
     </style>
     <!-- Nav bar do produto -->
     <div class="breadcumb_area">
@@ -238,13 +244,18 @@
                                 <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
                                     {{ csrf_field() }}
 
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <div class="quantity">
-                                        <span class="qty-plus" style="pointer-events: none">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="1" name="quantity" value="1" disabled>
-                                        <span class="qty-minus" style="pointer-events: none">
+                                        <span class="qty-minus" style="pointer-events: none; padding-top: 10px">
                                             <i class="fa fa-minus" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+
+                                    <input type="number" class="btnmaisemenos" id="qty" step="1" min="1" max="1" name="quantity" value="1" disabled>
+
+                                    <div class="quantity">
+                                        <span class="qty-plus " style="pointer-events: none; padding-top: 10px">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
                                         </span>
                                     </div>
 
@@ -262,7 +273,7 @@
                                     <input type="hidden" name="ds_peso" value="">
                                     <input type="hidden" name="im_produto" value="">
 
-                                    <button type="submit" id="btnComprar" class="btn cart-submit d-block" disabled>Comprar</button>
+                                    <button type="submit" id="btnComprar" class="btn btn-template d-block" style="width: 125px; height: 40px" disabled>Comprar</button>
 
                                 </form>
 
@@ -280,13 +291,17 @@
                                     {{ csrf_field() }}
 
 
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <div class="quantity">
-                                        <span class="qty-plus">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1" disabled>
-                                        <span class="qty-minus">
+                                        <span class="qty-minus" style="padding-top: 10px">
                                             <i class="fa fa-minus" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+
+                                    <input type="number" class="btnmaisemenos" id="qty" step="1" min="1" max="12" name="quantity" value="1" disabled>
+                                    <div class="quantity">
+                                        <span class="qty-plus" style="padding-top: 10px">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
                                         </span>
                                     </div>
 
@@ -304,7 +319,7 @@
                                     <input type="hidden" name="ds_peso" value="{{ $product[0]['ds_peso'] }}">
                                     <input type="hidden" name="im_produto" value="{{ $images[0]['im_produto'] }}">
 
-                                    <button type="submit" id="btnComprar" class="btn cart-submit d-block">Comprar</button>
+                                    <button type="submit" id="btnComprar" class="btn btn-template d-block" style="width: 125px; height: 40px">Comprar</button>
 
                                 </form>
 

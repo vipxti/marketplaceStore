@@ -8,7 +8,7 @@
             margin: 0;
             font-size: 13px;
             font-weight: 700;
-            color: #d59431;
+            color: #171717;
             text-decoration: none
         }
 
@@ -18,7 +18,7 @@
             font-size: 13px;
             font-weight: 700;
             color:#fff;
-            background-color:#3a3a3a;
+            background-color:#171717;
             text-decoration: none;
             border: none !important
         }
@@ -34,7 +34,7 @@
         }
 
         .parcelas{
-            color: #ce1312;
+            color: #d59431;
         }
 
     </style>
@@ -57,7 +57,7 @@
                                     </div>
 
                                         <div class="product-description">
-                                            <h4 style="color: #000000" class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
+                                            <h4 style="color: #171717" class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
                                             <p><b class="parcelas">3x</b> de <b class="parcelas">R$ {{number_format(($produto->vl_produto/3), 2)}}</b> sem juros </p>
                                             <p style="max-height: 20px; text-overflow: ellipsis">{{ $produto->nm_produto }}</p>
                                             <p>&nbsp;</p>
@@ -65,10 +65,10 @@
                                             @if ($variation[$key]->nm_produto_variacao != null && $variation[$key]->cd_produto == $produto->cd_produto)
                                                 {{--dd($variation)--}}
                                                 @if($produto->qt_produto < 5)
-                                                    <p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>
+                                                    <p class="semestoque">SEM ESTOQUE</p>
                                                 @else
                                                     <div class="col-12 col-md-12">
-                                                        <a class="btn" href="{{ route('products.details', $produto->nm_slug) }}" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a>
+                                                        <a class="btn" href="{{ route('products.details', $produto->nm_slug)}}" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#fff; background-color:#171717; text-decoration: none; border: none !important"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a>
                                                     </div>
                                                 @endif
                                             @else
