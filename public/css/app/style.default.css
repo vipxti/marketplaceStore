@@ -491,7 +491,7 @@ label.form-label {
 }
 
 .dropdown-menu a:hover {
-  background: #3a3a3a;
+  background: #171717;
   color: #fff;
 }
 
@@ -3224,8 +3224,8 @@ STYLE SWITCHER FOR DEMO
   color: color-yiq(#d59431);
   background-color: #d59431;
   border-color: #d59431;
-  -webkit-box-shadow: 0 0 0 0.2rem rgba(144, 85, 162, 0.5);
-  box-shadow: 0 0 0 0.2rem rgba(144, 85, 162, 0.5);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(199, 146, 24, 0.52);
+  box-shadow: 0 0 0 0.2rem rgba(199, 146, 24, 0.52);
 }
 
 .btn-secondary {

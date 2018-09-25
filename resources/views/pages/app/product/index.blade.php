@@ -33,6 +33,10 @@
             -moz-background-size: 100% 100%;
         }
 
+        .parcelas{
+            color: #ce1312;
+        }
+
     </style>
 
     <section class="section_padding_100">
@@ -53,7 +57,8 @@
                                     </div>
 
                                         <div class="product-description">
-                                            <h4 style="color: #d59431" class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
+                                            <h4 style="color: #000000" class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
+                                            <p><b class="parcelas">3x</b> de <b class="parcelas">R$ {{number_format(($produto->vl_produto/3), 2)}}</b> sem juros </p>
                                             <p style="max-height: 20px; text-overflow: ellipsis">{{ $produto->nm_produto }}</p>
                                             <p>&nbsp;</p>
                                             <p>&nbsp;</p>
