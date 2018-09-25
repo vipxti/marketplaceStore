@@ -1,6 +1,13 @@
 @extends('layouts.app.app')
 
 @section('content')
+
+    <style>
+        .parcelas{
+            color: #ce1312;
+        }
+    </style>
+
         <section class="shop_grid_area section_padding_100">
         <div class="container">
             <div class="row">
@@ -23,7 +30,8 @@
 
                                         <div class="product-description" style="padding: 0 5%">
                                             <h4 class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
-                                            <p style="min-height: 66px !important;">{{ $produto->nm_produto }}</p>
+                                            <p><b class="parcelas">3x</b> de <b class="parcelas">R$ {{number_format(($produto->vl_produto/3), 2)}}</b> sem juros </p>
+                                            <p>{{ $produto->nm_produto }}</p>
                                             <!-- Botão comprar -->
                                             <form action="{{ route('cart.buy') }}" method="post">
                                                 {{ csrf_field() }}

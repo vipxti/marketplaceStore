@@ -7,7 +7,7 @@
                 <!-- frete Grátis -->
                 <div class="col-lg-4 d-flex justify-content-center justify-content-lg-start">
                     <div class="item d-flex align-items-center">
-                        <div class="icon"><i class="icon-truck"></i></div>
+                        <div class="icon" style="color:#d59431"><i class="icon-truck"></i></div>
                         <div class="text">
                             <h6 class="no-margin text-uppercase">Entregamos todo Brasil</h6><span>Entregas via Correio</span>
                         </div>
@@ -17,7 +17,7 @@
                 <!-- Pagamento Seguro -->
                 <div class="col-lg-4 d-flex justify-content-center">
                     <div class="item d-flex align-items-center">
-                        <div class="icon"><i class="icon-secure-shield"></i></div>
+                        <div class="icon" style="color:#d59431"><i class="icon-secure-shield"></i></div>
                         <div class="text">
                             <h6 class="no-margin text-uppercase">Pagamento Seguro</h6><span>PagSeguro</span>
                         </div>
@@ -27,7 +27,7 @@
                 <!-- Suporte -->
                 <div class="col-lg-4 d-flex justify-content-center">
                     <div class="item d-flex align-items-center">
-                        <div class="icon"><i class="icon-headphones"></i></div>
+                        <div class="icon" style="color:#d59431"><i class="icon-headphones"></i></div>
                         <div class="text">
                             <h6 class="no-margin text-uppercase">13 97424-8882</h6><span>Suporte de Segunda à Sábado</span>
                         </div>
@@ -91,7 +91,7 @@
         <div class="container">
             <div class="row d-flex align-items-center">
                 <div class="text col-md-6">
-                    <p>&copy; 2018  <a href="https://maktubbeauty.com.br/" target="_blank" style="color: #d59431; text-decoration: none">Maktub Beauty - Ecommerce</a> Todos os direitos reservados.</p>
+                    <p style="color:#999">&copy; 2018  <a href="https://maktubbeauty.com.br/" target="_blank" style="color: #d59431; text-decoration: none">Maktub Beauty - Ecommerce</a> Todos os direitos reservados.</p>
                 </div>
                 <div class="payment col-md-6 clearfix">
                     <ul class="payment-list list-inline-item pull-right">

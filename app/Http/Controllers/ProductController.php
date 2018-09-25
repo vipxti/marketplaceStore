@@ -266,7 +266,11 @@ class ProductController extends Controller {
 
         $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto', 'desc')->paginate(25);
 
-        $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->select('produto_variacao.cd_produto', 'produto.nm_slug')->paginate(25);
+        $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
+            ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+            ->orderBy('produto.cd_produto', 'desc')
+            ->distinct('produto_variacao.cd_produto')->paginate(25);
+
         return view('pages.app.product.index', compact('produtos', 'variation', 'nome', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
     }
 
@@ -424,10 +428,11 @@ class ProductController extends Controller {
         $tamanhosLetras = LetterSize::all();
         $tamanhosNumeros = NumberSize::all();
         $cores = Color::all();
+        $produtosVariacao = ProductVariation::join('produto', 'produto.cd_produto', '=', 'produto_variacao.cd_produto')->get();
 
         //dd($produtos);
 
-        return view('pages.admin.products.list', compact('produtos', 'tamanhosLetras', 'tamanhosNumeros', 'cores'));
+        return view('pages.admin.products.list', compact('produtos', 'tamanhosLetras', 'tamanhosNumeros', 'cores', 'produtosVariacao'));
     }
 
     public function listaProdutoVariacao($id){
