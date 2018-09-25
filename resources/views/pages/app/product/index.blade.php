@@ -62,7 +62,8 @@
                                             <p style="max-height: 20px; text-overflow: ellipsis">{{ $produto->nm_produto }}</p>
                                             <p>&nbsp;</p>
                                             <p>&nbsp;</p>
-                                            @if ($variation[$key]->cd_produto != null)
+                                            @if ($variation[$key]->nm_produto_variacao != null && $variation[$key]->cd_produto == $produto->cd_produto)
+                                                {{--dd($variation)--}}
                                                 @if($produto->qt_produto < 5)
                                                     <p style="font-weight: 600; color: #d59431; padding-top: 10px">SEM ESTOQUE</p>
                                                 @else

@@ -231,7 +231,16 @@
                                                 <i class="fa fa-plus"></i>
                                             </a>--}}
                                         </button>
-                                        <button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" style="color: #f39c12"></button>
+                                        @foreach($produtosVariacao as $p)
+                                            @if($p->cd_produto == $produto->cd_produto)
+                                                <button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" style="color: #f39c12"></button>
+                                                @break
+                                            @else
+                                                <button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" disabled style="color: #5a6268"></button>
+                                                @break
+                                            @endif
+                                        @endforeach
+
                                         <button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                     </td>
                                     {{--<td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>--}}
