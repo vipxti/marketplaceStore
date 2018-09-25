@@ -1,6 +1,103 @@
 @extends('layouts.admin.app')
 
 @section('content')
+    <!-- ESTILO DO CHECKBOX DA APPLE -->
+    <style>
+        /* Estilo iOS */
+
+        .switch {
+            visibility: hidden;
+            position: absolute;
+            margin-left: -9999px;
+
+        }
+
+        .switch + label {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+            user-select: none;
+        }
+
+        .switch--shadow + label {
+            padding: 2px;
+            width: 45px;
+            height: 20px;
+            background-color: #dddddd;
+            border-radius: 60px;
+        }
+        .switch--shadow + label:before,
+        .switch--shadow + label:after {
+            display: block;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            bottom: 1px;
+            content: "";
+        }
+        .switch--shadow + label:before {
+            right: 1px;
+            background-color: #f1f1f1;
+            border-radius: 60px;
+            transition: background 0.4s;
+        }
+        .switch--shadow + label:after {
+            width: 18px;
+            background-color: #fff;
+            border-radius: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s;
+        }
+        .switch--shadow:checked + label:before {
+            background-color: #8ce196;
+        }
+        .switch--shadow:checked + label:after {
+            transform: translateX(26px);
+        }
+
+        /* Estilo Flat */
+        .switch--flat + label {
+            padding: 2px;
+            width: 120px;
+            height: 60px;
+            background-color: #dddddd;
+            border-radius: 60px;
+            transition: background 0.4s;
+        }
+        .switch--flat + label:before,
+        .switch--flat + label:after {
+            display: block;
+            position: absolute;
+            content: "";
+        }
+        .switch--flat + label:before {
+            top: 2px;
+            left: 2px;
+            bottom: 2px;
+            right: 2px;
+            background-color: #fff;
+            border-radius: 60px;
+            transition: background 0.4s;
+        }
+        .switch--flat + label:after {
+            top: 4px;
+            left: 4px;
+            bottom: 4px;
+            width: 56px;
+            background-color: #dddddd;
+            border-radius: 52px;
+            transition: margin 0.4s, background 0.4s;
+        }
+        .switch--flat:checked + label {
+            background-color: #8ce196;
+        }
+        .switch--flat:checked + label:after {
+            margin-left: 60px;
+            background-color: #8ce196;
+        }
+    </style>
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -28,24 +125,38 @@
                         </div>
                         <div class="box-body">
                             <div class="table-responsive">
-                                <table class="table table-striped" id="table">
-                                    <thead>
-                                    <tr>
-                                        <th style="text-align: left">Nº</th>
-                                        <th style="text-align: left">Nome</th>
-                                        <th style="text-align: left">Ação</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($produtos as $produto)
+                                <form action="{{ route('produtos.vitrine.page') }}" method="post">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar Vitrine</button>
+                                    <table class="table table-striped" id="table">
+                                        <thead>
                                         <tr>
-                                            <td>{{ $produto->cd_produto }} </td></td>
-                                            <td>{{ $produto->nm_produto }} </td>
-                                            <td class="text-right"></td>
+                                            <th style="text-align: left">Nº</th>
+                                            <th style="text-align: left">Nome</th>
+                                            <th>
+                                                <input id="btnPrincipal" class='switch switch--shadow' value='0' name="bntPrincipal" type='checkbox'>
+                                                <label for="btnPrincipal" style="margin-bottom:0 !important;"></label>
+                                            </th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($produtos as $produto)
+                                                <tr>
+                                                    <td>{{ $produto->cd_produto }} </td>
+                                                    <td>{{ $produto->nm_produto }} </td>
+                                                    <td class="text-right">
+                                                        <input id="" class='' value='{{ $produto->cd_produto }}' name="codProd[]" type='text' hidden>
+                                                        <div class='switch__container'>
+                                                            <input id="{{ $produto->cd_produto }}" class='switch switch--shadow' value='0,{{ $produto->cd_produto }}' name="bntForm[]" type='checkbox'>
+                                                            <label for="{{ $produto->cd_produto }}" style="margin-bottom:0 !important;"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+
+                                </form>
                                 <div align="center">
                                     {{ $produtos->links() }}
                                 </div>
@@ -91,26 +202,58 @@
     <script>
         const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        $( document ).ready(function() {
-
-            {{--$.ajax({
-                url: '{{ route('produtos.vitrine.page') }}',
-                type: 'post',
-                data: {_token: CSRF_TOKEN},
-                success: function(data){
-                    console.log("Carregar todos os Produtos!!!");
-                    console.log(data.produtos);
-                }
-
-            });--}}
-
-        });
         $(function(){
             function selecionaAtivo(){
                 $('#vitrineItens').val($('.ativo1').val());
             }
             selecionaAtivo();
+        });
 
+        $('.switch').click(function(){
+            //console.log($(this));
+            if($(this).prop('checked'))
+                $(this).val('1,' + $(this).attr('id'));
+            else
+                $(this).val('0,' + $(this).attr('id'));
+        });
+
+        //FUNÇÃO PARA ATIVAR AS FUNÇÕES DO SWITCH
+        $('#btnPrincipal').click(function() {
+            var isChecked = $(this).prop("checked");
+            if(isChecked ==  true){
+                //console.log($(this).val()+ ',' + 1);
+                //console.log(isChecked);
+                $('.switch').each(function(){
+                   if(!$(this).prop('checked'))
+                       $(this).click();
+                });
+            }else {
+                //console.log($(this).val()+ ',' + 0);
+                //console.log(isChecked);
+                $('.switch').each(function(){
+                    if($(this).prop('checked'))
+                        $(this).click();
+                });
+            }
+            $('#table tr:has(td)').find('input[type="checkbox"]').prop('checked', isChecked);
+        });
+
+        $('#table tr:has(td)').find('input[type="checkbox"]').click(function() {
+            var isChecked = $(this).prop("checked");
+            var isHeaderChecked = $("#btnPrincipal").prop("checked");
+
+            if (isChecked == false && isHeaderChecked){
+                $("#btnPrincipal").prop('checked', isChecked);
+            }
+            else {
+                $('#table tr:has(td)').find('input[type="checkbox"]').each(function() {
+                    if ($(this).prop("checked") == false){
+                        isChecked = false;
+                    }
+                });
+                $("#btnPrincipal").prop('checked', isChecked);
+                //console.log($(this).val()+ ',' + $(this).attr('id'));
+            }
         });
     </script>
 @stop
