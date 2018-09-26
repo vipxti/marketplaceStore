@@ -187,7 +187,11 @@
 
                             @endif
 
-                            <div id="tamanhos" class="widget size mb-50">
+                            @if($sizeType == 'N' || $sizeType == 'L')
+                                <div id="tamanhos" class="widget size mb-50">
+                            @else
+                                <div id="tamanhos" hidden class="widget size mb-50">
+                            @endif
 
                                 <h6 class="widget-title">Tamanho</h6>
 
@@ -237,47 +241,51 @@
 
                             @if($variations[0]['qt_produto_variacao'] <= 5)
 
-                                <p>SEM ESTOQUE</p>
+                                <p id="pSemEstoque">SEM ESTOQUE</p>
+                                <div id="divFormProduto" hidden>
 
                             @else
-
-                                <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
-                                    {{ csrf_field() }}
-
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <div class="quantity">
-                                        <span class="qty-minus" style="pointer-events: none; padding-top: 10px">
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-
-                                    <input type="number" class="btnmaisemenos" id="qty" step="1" min="1" max="1" name="quantity" value="1" disabled>
-
-                                    <div class="quantity">
-                                        <span class="qty-plus " style="pointer-events: none; padding-top: 10px">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-
-                                    <input type="hidden" name="cd_produto" value="">
-                                    <input type="hidden" name="nm_produto" value="">
-                                    <input type="hidden" name="ds_produto" value="">
-                                    <input type="hidden" name="vl_produto" value="">
-                                    <input type="hidden" id="qtdDetalhes" name="qt_produto_detalhes" value="">
-                                    <input type="hidden" name="qt_produto" value="">
-                                    <input type="hidden" name="sku_produto" value="">
-                                    <input type="hidden" name="slug_produto" value="">
-                                    <input type="hidden" name="ds_altura" value="">
-                                    <input type="hidden" name="ds_largura" value="">
-                                    <input type="hidden" name="ds_comprimento" value="">
-                                    <input type="hidden" name="ds_peso" value="">
-                                    <input type="hidden" name="im_produto" value="">
-
-                                    <button type="submit" id="btnComprar" class="btn btn-template d-block" style="width: 125px; height: 40px" disabled>Comprar</button>
-
-                                </form>
-
+                                <p id="pSemEstoque" hidden>SEM ESTOQUE</p>
+                                <div id="divFormProduto">
                             @endif
+                                    <form action="{{ route('cart.buy') }}" class="cart clearfix mb-50 d-flex" method="post">
+                                        {{ csrf_field() }}
+
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div class="quantity">
+                                            <span class="qty-minus" style="pointer-events: none; padding-top: 10px">
+                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+
+                                        <input type="number" class="btnmaisemenos" id="qty" step="1" min="1" max="1" name="quantity" value="1" disabled>
+
+                                        <div class="quantity">
+                                            <span class="qty-plus " style="pointer-events: none; padding-top: 10px">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+
+                                        <input type="hidden" name="cd_produto" value="">
+                                        <input type="hidden" name="nm_produto" value="">
+                                        <input type="hidden" name="ds_produto" value="">
+                                        <input type="hidden" name="vl_produto" value="">
+                                        <input type="hidden" id="qtdDetalhes" name="qt_produto_detalhes" value="">
+                                        <input type="hidden" name="qt_produto" value="">
+                                        <input type="hidden" name="sku_produto" value="">
+                                        <input type="hidden" name="slug_produto" value="">
+                                        <input type="hidden" name="ds_altura" value="">
+                                        <input type="hidden" name="ds_largura" value="">
+                                        <input type="hidden" name="ds_comprimento" value="">
+                                        <input type="hidden" name="ds_peso" value="">
+                                        <input type="hidden" name="im_produto" value="">
+
+                                        <button type="submit" id="btnComprar" class="btn btn-template d-block" style="width: 125px; height: 40px" disabled>Comprar</button>
+
+                                    </form>
+                                </div>
+
+
 
                         @else
 
@@ -369,7 +377,8 @@
 
             </div>
         </div>
-
+            </div>
+        </div>
     </section>
 
     <script>
@@ -395,9 +404,10 @@
 
         $('.qty-plus').click(function(e){
 
-            var qtdEstoque = parseInt($('#qtProdEstoque').val());
+            //var qtdEstoque = parseInt($('#qtProdEstoque').val());
+            let qtdEstoque = parseInt($('input[name="qt_produto"]').val());
 
-            if (qtd == qtdEstoque - 5) {
+            if (qtd >= qtdEstoque - 5) {
 
                 $(this).attr('disabled');
                 $('.qty-plus').css('pointer-events', 'none');
@@ -437,7 +447,52 @@
 
         });
 
+        function carroselAdicionaImagem(d){
+            let rootPath = '{{ asset('img/products') }}' + '/';
+
+            $('.carousel-inner').find('div').remove();
+            $('.carousel-indicators').find('li').remove();
+
+            $('.carousel-indicators').append(
+                `<li class="active" id="thumb1Carrossel" data-target="#product_details_slider" data-slide-to="0"
+                style="background-image: url(` + rootPath + d.images[0].im_produto + `);">
+                </li>`);
+
+            $('.carousel-inner').append(
+                `<div class="carousel-item active">
+                    <img id="fotoGrande1" class="d-block w-100" src="` + rootPath + d.images[0].im_produto +`"
+                    alt="First slide" style="width: 1000px; heigth: 1444px;">
+                </div>`);
+
+            //$('#thumb1Carrossel').css('background-image','url(' + rootPath + d.images[0].im_produto + ')');
+            //$('#fotoGrande1').attr('src', '' + rootPath + d.images[0].im_produto +'');
+
+            $.each(d.images, function (i, v) {
+                if (i > 0) {
+                    console.log('entrou if');
+                    //$('#thumb' + (i + 1) + 'Carrossel').css('background-image','url(' + rootPath + v.im_produto + ')');
+                    $('.carousel-indicators').append(
+                        `<li id="thumb` + (i + 1) + `Carrossel"
+                        data-target="#product_details_slider" data-slide-to="` + i + `"
+                        style="background-image: url(` + rootPath + v.im_produto + `);">
+                        </li>`);
+
+                    $('.carousel-inner').append(
+                        `<div class="carousel-item">
+                            <a class="gallery_img" href="">
+                                <img id="fotoGrande` + (i + 1) + `" class="d-block" src="` + rootPath + v.im_produto + `" alt="slide"
+                                style="width: 1000px; heigth: 1444px;">
+                            </a>
+                        </div>`);
+
+                    //$('#fotoGrande' + (i + 1)).attr('src', '' + rootPath + v.im_produto +'');
+                }
+
+            });
+        }
+
         $('a[name="btn_color[]"]').click(function (){
+            $('#btnComprar').attr('disabled', true);
 
             $.ajax({
 
@@ -447,13 +502,19 @@
                 success: function (d) {
 
                     console.log(d);
+                    if(d.cor[0].qt_produto_variacao <= 5){
+                        $('#pSemEstoque').removeAttr('hidden');
+                        $('#divFormProduto').attr('hidden', true);
+                    }
+                    else{
+                        $('#divFormProduto').removeAttr('hidden');
+                        $('#pSemEstoque').attr('hidden', true);
+                    }
 
                     if (d.data.length > 0) {
 
-                        let rootPath = '{{ asset('img/products') }}' + '/'
-
-                        $('#thumb1Carrossel').css('background-image','url(' + rootPath + d.images[0].im_produto + ')');
-                        $('#fotoGrande1').attr('src', '' + rootPath + d.images[0].im_produto +'');
+                        $('.qty-plus').css('pointer-events', 'none');
+                        $('.qty-minus').css('pointer-events', 'none');
 
                         $('#tamanhos').removeClass('d-none');
                         $('.listaDeTamanhos').empty();
@@ -468,16 +529,20 @@
                                 $('.listaDeTamanhos').append('<li class="' + v.cd_nr_sku + '"><a id="' + v.cd_nr_sku + '" name="sizes[]" href="javascript:void(0);">' + v.nm_tamanho_letra + '</a></li>&nbsp;&nbsp;');
                             }
 
-                        })
-
-                        $.each(d.images, function (i, v) {
-
-                            if (i > 0) {
-                                $('#thumb' + (i + 1) + 'Carrossel').css('background-image','url(' + rootPath + v.im_produto + ')');
-                                $('#fotoGrande' + (i + 1)).attr('src', '' + rootPath + v.im_produto +'');
-                            }
-
                         });
+
+                        carroselAdicionaImagem(d);
+
+                    }
+                    else{
+                        //console.log(d);
+
+                        ajaxPreencheDadosProduto(d.cor[0].cd_nr_sku);
+
+                        $('#btnComprar').removeAttr('disabled');
+                        $('#tamanhos').addClass('d-none');
+
+                        carroselAdicionaImagem(d);
                     }
 
                 }
@@ -485,17 +550,24 @@
 
         });
 
-        $('.listaDeTamanhos').on('click', 'li a', function () {
-
-            let selectedProductSku = this.id;
-
-            $('.qty-plus').css('pointer-events', 'auto');
-
+        function ajaxPreencheDadosProduto(selectedProductSku, ehLi = false){
             $.ajax({
                 url: '{{ route('product.variation.data') }}',
                 type: 'POST',
                 data: {_token: CSRF_TOKEN, sku: selectedProductSku},
                 success: function (d) {
+                    //console.log(d);
+
+                    if(d.variation[0].qt_produto_variacao <= 5)
+                        $('.disponivel').html('Não disponível');
+                    else
+                        $('.disponivel').html('Em Estoque');
+
+                    if(ehLi)
+                        carroselAdicionaImagem(d);
+
+                    qtd = 1;
+                    $('#qty').val(1);
 
                     $('input[name="cd_produto"]').val(d.variation[0].cd_produto);
                     $('input[name="nm_produto"]').val(d.variation[0].nm_produto_variacao);
@@ -516,10 +588,20 @@
                     $('.infoProduto').html(d.variation[0].ds_produto_variacao);
 
                     $('#btnComprar').removeAttr('disabled');
+                    $('.qty-minus').css('pointer-events', 'auto');
+                    $('.qty-plus').css('pointer-events', 'auto');
 
                 }
             });
+        }
 
+        $('.listaDeTamanhos').on('click', 'li a', function () {
+
+            let selectedProductSku = this.id;
+
+            $('.qty-plus').css('pointer-events', 'auto');
+
+            ajaxPreencheDadosProduto(selectedProductSku, true);
 
         })
 
