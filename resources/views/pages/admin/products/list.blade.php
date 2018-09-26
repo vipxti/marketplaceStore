@@ -216,7 +216,7 @@
                             </thead>
 
                             <tbody>
-                            @foreach($produtos as $produto)
+                            @foreach($produtos as $key => $produto)
                                     {{--{{dd($produto)}}--}}
                                 <tr>
                                     <td>{{ $produto->cd_produto }} </td>
@@ -231,15 +231,12 @@
                                                 <i class="fa fa-plus"></i>
                                             </a>--}}
                                         </button>
-                                        @foreach($produtosVariacao as $p)
-                                            @if($p->cd_produto == $produto->cd_produto)
-                                                <button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" style="color: #f39c12"></button>
-                                                @break
-                                            @else
-                                                <button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" disabled style="color: #5a6268"></button>
-                                                @break
-                                            @endif
-                                        @endforeach
+                                        @if ($produtosVariacao[$key]->nm_produto_variacao != null && $produtosVariacao[$key]->cd_produto == $produto->cd_produto)
+                                            {{--dd($produtosVariacao)--}}
+                                            <button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" style="color: #f39c12"></button>
+                                        @else
+                                            <button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" disabled style="color: #5a6268"></button>
+                                        @endif
 
                                         <button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
                                     </td>

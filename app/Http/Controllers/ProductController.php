@@ -264,12 +264,25 @@ class ProductController extends Controller {
             }
         }
 
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto', 'desc')->paginate(25);
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')
+            ->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')
+            ->where('produto.cd_status_produto', '=', 1)
+            ->where('img_produto.ic_img_principal', '=', 1)
+            ->groupBy('produto.cd_produto')
+            ->orderBy('produto.cd_produto', 'desc')
+            ->paginate(25);
 
         $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
             ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+            ->groupBy('produto.cd_produto')
             ->orderBy('produto.cd_produto', 'desc')
-            ->distinct('produto_variacao.cd_produto')->paginate(25);
+            ->paginate(25);/*ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
+            ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+            ->orderBy('produto.cd_produto', 'desc')
+            ->distinct('produto_variacao.cd_produto')
+            ->paginate(25);*/
 
         return view('pages.app.product.index', compact('produtos', 'variation', 'nome', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
     }
@@ -375,9 +388,34 @@ class ProductController extends Controller {
 
     public function getSizes(Request $request)
     {
-        $numbers = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->join('produto_tamanho_num', 'produto_tamanho_num.cd_sku', 'sku.cd_sku')->join('tamanho_num', 'tamanho_num.cd_tamanho_num', 'produto_tamanho_num.cd_tamanho_num')->select('tamanho_num.nm_tamanho_num', 'sku.cd_nr_sku')->where('cor.cd_cor', '=', $request->cd_cor)->whereIn('produto_variacao.cd_produto_variacao', $request->cds_produto)->get();
+        $numbers = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
+            ->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')
+            ->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')
+            ->join('produto_tamanho_num', 'produto_tamanho_num.cd_sku', 'sku.cd_sku')
+            ->join('tamanho_num', 'tamanho_num.cd_tamanho_num', 'produto_tamanho_num.cd_tamanho_num')
+            ->select('tamanho_num.nm_tamanho_num', 'sku.cd_nr_sku')
+            ->where('cor.cd_cor', '=', $request->cd_cor)
+            ->whereIn('produto_variacao.cd_produto_variacao', $request->cds_produto)
+            ->get();
 
-        $letters = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')->join('produto_tamanho_letra', 'produto_tamanho_letra.cd_sku', 'sku.cd_sku')->join('tamanho_letra', 'tamanho_letra.cd_tamanho_letra', 'produto_tamanho_letra.cd_tamanho_letra')->select('tamanho_letra.nm_tamanho_letra', 'sku.cd_nr_sku')->where('cor.cd_cor', '=', $request->cd_cor)->whereIn('produto_variacao.cd_produto_variacao', $request->cds_produto)->get();
+        $letters = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
+            ->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')
+            ->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')
+            ->join('produto_tamanho_letra', 'produto_tamanho_letra.cd_sku', 'sku.cd_sku')
+            ->join('tamanho_letra', 'tamanho_letra.cd_tamanho_letra', 'produto_tamanho_letra.cd_tamanho_letra')
+            ->select('tamanho_letra.nm_tamanho_letra', 'sku.cd_nr_sku')
+            ->where('cor.cd_cor', '=', $request->cd_cor)
+            ->whereIn('produto_variacao.cd_produto_variacao', $request->cds_produto)
+            ->get();
+
+        $color = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
+            ->join('produto_cor', 'sku.cd_sku', '=', 'produto_cor.cd_sku')
+            ->join('cor', 'cor.cd_cor', '=', 'produto_cor.cd_cor')
+            ->where('cor.cd_cor', '=', $request->cd_cor)
+            ->whereIn('produto_variacao.cd_produto_variacao', $request->cds_produto)
+            ->get();
+        $sizes = "";
+        $sizeType = "";
 
         if (count($letters) > 0) {
             $sizes = $letters;
@@ -399,10 +437,19 @@ class ProductController extends Controller {
             $sizeType = 'N';
         }
 
+        foreach($color as $key => $c){
+            $images = Sku::join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')
+                ->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')
+                ->select('img_produto.ic_img_principal', 'img_produto.im_produto')
+                ->where('sku.cd_nr_sku', '=', $c->cd_nr_sku)
+                ->get();
+        }
+
         $response = [
             'data' => $sizes,
             'images' => $images,
-            'sizeType' => $sizeType
+            'sizeType' => $sizeType,
+            'cor' => $color
         ];
 
         return response()->json($response);
@@ -414,8 +461,17 @@ class ProductController extends Controller {
 
         $variation = ProductVariation::join('sku', 'produto_variacao.cd_sku', 'sku.cd_sku')->join('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')->join('dimensao', 'sku.cd_dimensao', 'dimensao.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')->select('produto_variacao.cd_produto', 'produto_variacao.nm_produto_variacao', 'produto_variacao.ds_produto_variacao', 'produto_variacao.vl_produto_variacao', 'produto_variacao.qt_produto_variacao', 'sku.cd_nr_sku', 'produto.nm_slug', 'img_produto.im_produto', 'dimensao.ds_peso', 'dimensao.ds_comprimento', 'dimensao.ds_altura', 'dimensao.ds_largura')->where('sku.cd_nr_sku', '=', $request->sku)->where('img_produto.ic_img_principal', '=', 1)->get()->toArray();
 
+        $images = Sku::join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')
+            ->select('img_produto.ic_img_principal', 'img_produto.im_produto')
+            ->where('sku.cd_nr_sku', '=', $request->sku)
+            ->get();
+
+        //dd($images);
+
         $response = [
-            'variation' => $variation
+            'variation' => $variation,
+            'images' => $images
         ];
 
         return response()->json($response);
@@ -424,11 +480,16 @@ class ProductController extends Controller {
     public function listaProduto()
     {
         //$produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->where('produto.cd_status_produto', '=', 1)->paginate(25);
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->paginate(25);
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->orderBy('produto.cd_produto', 'desc')->paginate(25);
         $tamanhosLetras = LetterSize::all();
         $tamanhosNumeros = NumberSize::all();
         $cores = Color::all();
-        $produtosVariacao = ProductVariation::join('produto', 'produto.cd_produto', '=', 'produto_variacao.cd_produto')->get();
+        //$produtosVariacao = ProductVariation::join('produto', 'produto.cd_produto', '=', 'produto_variacao.cd_produto')->paginate(25);
+        $produtosVariacao = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
+            ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+            ->groupBy('produto.cd_produto')
+            ->orderBy('produto.cd_produto', 'desc')
+            ->paginate(25);
 
         //dd($produtos);
 
@@ -1330,26 +1391,36 @@ class ProductController extends Controller {
     }
 
     public function updateProductNumberSize($sku, $cd_num){
-        if($cd_num != 0) {
+        //dd($sku, $cd_num);
+        if($cd_num != "0") {
             $qt = DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku)->get();
 
             if (count($qt) > 0)
                 DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku)->update(['cd_tamanho_num' => $cd_num]);
-            else
-                DB::table('produto_tamanho_num')->insert(['cd_sku' => $sku], ['cd_tamanho_num' => $cd_num]);
+            else {
+                DB::table('produto_tamanho_num')->insert([
+                    'cd_sku' => $sku,
+                    'cd_tamanho_num' => $cd_num
+                ]);
+            }
         }
         else
             DB::table('produto_tamanho_num')->where('cd_sku', '=', $sku)->delete();
     }
 
     public function updateProductLetterSize($sku, $cd_letra){
-        if($cd_letra != 0) {
+        //dd($sku, $cd_letra);
+        if($cd_letra != "0") {
             $qt = DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku)->get();
 
             if (count($qt) > 0)
                 DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku)->update(['cd_tamanho_letra' => $cd_letra]);
-            else
-                DB::table('produto_tamanho_letra')->insert(['cd_sku' => $sku], ['cd_tamanho_letra' => $cd_letra]);
+            else {
+                DB::table('produto_tamanho_letra')->insert([
+                    'cd_sku' => $sku,
+                    'cd_tamanho_letra' => $cd_letra
+                ]);
+            }
         }
         else
             DB::table('produto_tamanho_letra')->where('cd_sku', '=', $sku)->delete();
@@ -1631,47 +1702,48 @@ class ProductController extends Controller {
             throw $e;
         }
 
-        if (!($request->cd_tamanho_letra_variacao == null && $request->cd_tamanho_num_variacao == null)) {
-            if ($request->cd_tamanho_letra_variacao == null) {
-                $letra = false;
-                $numero = true;
 
-                try {
-                    $this->updateProductNumberSize($codSku[0]->cd_sku, $request->cd_tamanho_num_variacao);
-                } catch (ValidationException $e) {
-                    DB::rollBack();
-                    return redirect()->back()->with('nosuccess', 'Erro ao associar a variação com seu tamanho por número');
-                } catch (QueryException $e) {
-                    DB::rollBack();
-                    return redirect()->back()->with('nosuccess', 'Erro ao associar a variação com seu tamanho por número');
-                } catch (\PDOException $e) {
-                    DB::rollBack();
-                    return redirect()->back()->with('nosuccess', 'Erro ao conectar com o banco de dados');
-                } catch (\Exception $e) {
-                    DB::rollBack();
-                    throw $e;
-                }
-            } else {
-                $letra = true;
-                $numero = false;
+        if ($request->cd_tamanho_letra_variacao == "0" && $request->cd_tamanho_num_variacao != "0") {
+            $letra = false;
+            $numero = true;
 
-                try {
-                    $this->updateProductLetterSize($codSku[0]->cd_sku, $request->cd_tamanho_letra_variacao);
-                } catch (ValidationException $e) {
-                    DB::rollBack();
-                    return redirect()->back()->with('nosuccess', 'Erro ao associar a variação com seu tamanho por letra');
-                } catch (QueryException $e) {
-                    DB::rollBack();
-                    return redirect()->back()->with('nosuccess', 'Erro ao associar a variação com seu tamanho por letra');
-                } catch (\PDOException $e) {
-                    DB::rollBack();
-                    return redirect()->back()->with('nosuccess', 'Erro ao conectar com o banco de dados');
-                } catch (\Exception $e) {
-                    DB::rollBack();
-                    throw $e;
-                }
+            try {
+                $this->updateProductNumberSize($codSku[0]->cd_sku, $request->cd_tamanho_num_variacao);
+            } catch (ValidationException $e) {
+                DB::rollBack();
+                return redirect()->back()->with('nosuccess', 'Erro ao associar a variação com seu tamanho por número');
+            } catch (QueryException $e) {
+                DB::rollBack();
+                return redirect()->back()->with('nosuccess', 'Erro ao associar a variação com seu tamanho por número');
+            } catch (\PDOException $e) {
+                DB::rollBack();
+                return redirect()->back()->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
             }
+        } else if ($request->cd_tamanho_letra_variacao != "0" && $request->cd_tamanho_num_variacao == "0") {
+            $letra = true;
+            $numero = false;
+
+            try {
+                $this->updateProductLetterSize($codSku[0]->cd_sku, $request->cd_tamanho_letra_variacao);
+            } catch (ValidationException $e) {
+                DB::rollBack();
+                return redirect()->back()->with('nosuccess', 'Erro ao associar a variação com seu tamanho por letra');
+            } catch (QueryException $e) {
+                DB::rollBack();
+                return redirect()->back()->with('nosuccess', 'Erro ao associar a variação com seu tamanho por letra');
+            } catch (\PDOException $e) {
+                DB::rollBack();
+                return redirect()->back()->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
+
         }
+
 
         //=============================================================================================
         //SALVA NOVAS IMAGENS AO PRODUTO
@@ -1795,7 +1867,6 @@ class ProductController extends Controller {
         //return redirect()->route('products.list')->with('success', 'Produto Atualizado com Sucesso');
         return redirect()->back()->with('success', 'Produto Atualizado com Sucesso');
     }
-
 
     public function consultaProduto(Request $request){
         //dd($request->all());

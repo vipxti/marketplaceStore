@@ -180,18 +180,7 @@
 
                         <div class="col-md-4 pull-right">
 
-                            <label>Consulte o produto:</label>
-                            <div class="form-group">
-                                <div class="input-group">
-
-                                    <input id="search_input" type="text" class="form-control" maxlength="50">
-                                    <span class="input-group-addon" title="Pesquisar Produto">
-                                        <a id="search_button" href="javascript:void(0)">
-                                            <i class="fa fa-search"></i>
-                                        </a>
-                                    </span>
-                                </div>
-                            </div>
+                            <a></a>
 
                         </div>
 

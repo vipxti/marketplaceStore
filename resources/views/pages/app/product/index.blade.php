@@ -62,13 +62,15 @@
                                             <p style="max-height: 20px; text-overflow: ellipsis">{{ $produto->nm_produto }}</p>
                                             <p>&nbsp;</p>
                                             <p>&nbsp;</p>
+                                            {{--dd($variation[$key]->nm_produto_variacao)--}}
+                                            {{--@if ($variation[$key]->nm_produto_variacao != null && $variation[$key]->cd_produto == $produto->cd_produto)--}}
                                             @if ($variation[$key]->nm_produto_variacao != null && $variation[$key]->cd_produto == $produto->cd_produto)
-                                                {{--dd($variation)--}}
+                                                {{--dd($variation, $produtos)--}}
                                                 @if($produto->qt_produto < 5)
                                                     <p class="semestoque">SEM ESTOQUE</p>
                                                 @else
                                                     <div class="col-12 col-md-12">
-                                                        <a class="btn" href="{{ route('products.details', $produto->nm_slug)}}" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#fff; background-color:#171717; text-decoration: none; border: none !important"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a>
+                                                        <a class="" href="{{ route('products.details', $produto->nm_slug)}}" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#fff; background-color:#171717; text-decoration: none; border: none !important"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a>
                                                     </div>
                                                 @endif
                                             @else
