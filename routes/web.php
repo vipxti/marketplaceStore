@@ -128,7 +128,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/hotpost', 'PageController@showHotPostPage')->name('hotpost.edit')->middleware('auth:admin');
     Route::get('/vitrine', 'PageController@showVitrinePage')->name('vitrine.page')->middleware('auth:admin');
     Route::post('/vitrine/nItens', 'PageController@updateQtdItensVitrine')->name('numemro.itens.vitrine.page')->middleware('auth:admin');
-    Route::post('/vitrine/produtos', 'PageController@updateProdutosVitrine')->name('produtos.vitrine.page')->middleware('auth:admin');
+    Route::post('/vitrine/produtos', 'PageController@insertOrUpdateProdVitrine')->name('produtos.vitrine.page')->middleware('auth:admin');
     Route::get('/banner', 'PageController@showBannerPage')->name('banner.edit')->middleware('auth:admin');
 
     //Editar menus

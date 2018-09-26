@@ -1,6 +1,7 @@
 @extends('layouts.admin.app')
 
 @section('content')
+
     <!-- ESTILO DO CHECKBOX DA APPLE -->
     <style>
         /* Estilo iOS */
@@ -110,6 +111,7 @@
             </ol>
         </section>
         <div class="row">
+            @include('partials.admin._alerts')
             <div class="col-md-7">
                 <!-- ALTERAÇÃO DOS PRODUTOS HOME -->
                 <!-- Tabelas dos produtos -->
@@ -145,11 +147,19 @@
                                                     <td>{{ $produto->cd_produto }} </td>
                                                     <td>{{ $produto->nm_produto }} </td>
                                                     <td class="text-right">
-                                                        <input id="" class='' value='{{ $produto->cd_produto }}' name="codProd[]" type='text' hidden>
-                                                        <div class='switch__container'>
-                                                            <input id="{{ $produto->cd_produto }}" class='switch switch--shadow' value='0,{{ $produto->cd_produto }}' name="bntForm[]" type='checkbox'>
-                                                            <label for="{{ $produto->cd_produto }}" style="margin-bottom:0 !important;"></label>
-                                                        </div>
+                                                        @if($produto->ativo_vitrine == 0)
+                                                            <input id="" class='' value='{{ $produto->cd_produto }}' name="codProd[]" type='text' hidden>
+                                                            <div class='switch__container'>
+                                                                <input id="{{ $produto->cd_produto }}" class='switch switch--shadow' value='0,{{ $produto->cd_produto }}' name="bntForm[]" type='checkbox'>
+                                                                <label for="{{ $produto->cd_produto }}" style="margin-bottom:0 !important;"></label>
+                                                            </div>
+                                                        @else
+                                                            <input id="" class='' value='{{ $produto->cd_produto }}' name="codProd[]" type='text' hidden>
+                                                            <div class='switch__container'>
+                                                                <input id="{{ $produto->cd_produto }}" class='switch switch--shadow' value='1,{{ $produto->cd_produto }}' name="bntForm[]" checked type='checkbox'>
+                                                                <label for="{{ $produto->cd_produto }}" style="margin-bottom:0 !important;"></label>
+                                                            </div>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -200,7 +210,7 @@
         </div>
     </div>
     <script>
-        const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        /*const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');*/
 
         $(function(){
             function selecionaAtivo(){
