@@ -16,10 +16,8 @@ class HomeController extends Controller{
         $menus = Menu::get();
 
         $menuNav =  Menu::all();
-
         $menuNavegacao = NavigationMenu::all();
-        //dd($menuNavegacao[0]->menu_ativo);
-        //dd(count($menuNavegacao));
+
 
         if(count($menuNavegacao) > 0) {
             if ($menuNavegacao[0]->menu_ativo == 1) {
@@ -54,25 +52,34 @@ class HomeController extends Controller{
             }
         }
 
-        //dd($categoriaSubCat);
-
-        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')->where('produto.cd_status_produto', '=', 1)->where('img_produto.ic_img_principal', '=', 1)->orderBy('produto.cd_produto', 'DESC'); //Por que 20? Pq o Felipe quiz
-
-        //dd($produtos->get());
-
         $nItensVitrine = MenuItensVitrine::where('menu_itens_vitrine_ativo', '=', 1)->get();
-        //dd($nItensVitrine[0]);
-        $todos = Product::all()->count();
+        $todos = Product::join('vitrine', 'vitrine.fk_produto_id', '=', 'produto.cd_produto')
+            ->where('vitrine.ativo_vitrine', '=', 1)
+            ->count();
+
+
         if($nItensVitrine[0]->menu_itens_vitrine == 'Todos'){
             $nItens = $todos;
-            //dd("if " . $nItens);
         }
         else{
-            if($todos > $nItensVitrine[0]->menu_itens_vitrine)
+            if($todos > $nItensVitrine[0]->menu_itens_vitrine){
                 $nItens = $nItensVitrine[0]->menu_itens_vitrine;
-            else
+            }
+            else{
                 $nItens = $todos;
+            }
         }
+
+
+        $produtos = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('dimensao', 'dimensao.cd_dimensao', '=', 'sku.cd_dimensao')
+            ->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')
+            ->join('vitrine', 'vitrine.fk_produto_id', '=', 'produto.cd_produto')
+            ->where('vitrine.ativo_vitrine', '=', 1)
+            ->where('img_produto.ic_img_principal', '=', 1)
+            ->orderBy('produto.cd_produto', 'DESC'); //Por que 20? Pq o Felipe quiz
+
 
         if (count($produtos->get()->toArray()) > 1) {
             $produtos = $produtos->get()->random($nItens);

@@ -43,7 +43,9 @@ class PageController extends Controller
     }
 
     public function showVitrinePage(){
-        $produtos = DB::table('produto')->leftJoin('vitrine', 'produto.cd_produto', '=', 'vitrine.fk_produto_id')->paginate(15);
+        $produtos = DB::table('produto')->leftJoin('vitrine', 'produto.cd_produto', '=', 'vitrine.fk_produto_id')
+            ->where('produto.cd_status_produto', '=', 1)
+            ->paginate(15);
         $nItensVitrine = MenuItensVitrine::all();
         return view('pages.admin.vitrineMenu',compact('nItensVitrine', 'produtos') );
     }
@@ -55,43 +57,56 @@ class PageController extends Controller
     }
 
     public function insertOrUpdateProdVitrine(Request $request){
-        //dd($request->all());
-        //dd($request->codProd);
-        //dd($request->bntForm);
-
-
-
-        //dd($request->bntForm);
-
+        $todosProd = $request->codProd;
         if( !isset($request->bntForm) ){
-            for ($i = 0; $i < count($request->codProd); $i++){
-                echo $request->codProd[$i];
+
+            for ($i = 0; $i < count($todosProd); $i++){
+                echo $todosProd[$i];
                 DB::table('vitrine')
                     ->where('fk_produto_id', '=', $request->codProd[$i])
                     ->update(['ativo_vitrine' => 0]);
             }
-            return redirect()->route('vitrine.page')->with('success', 'Vitrine Atualizada com Sucesso');
+            //return redirect()->route('vitrine.page')->with('success', 'Vitrine Atualizada com Sucesso');
         }
         else{
             for ($i = 0; $i < count($request->bntForm); $i++) {
-                list($status, $idProd)= explode(",", $request->bntForm[$i]);
-                $dadosDB = DB::table('vitrine')->where('fk_produto_id','=', $idProd)->count();
+                list($status, $idProd[])= explode(",", $request->bntForm[$i]);
+                $dadosDB = DB::table('vitrine')->where('fk_produto_id','=', $idProd[$i])->count();
 
-                if($dadosDB == 1){//faz nada
+                if($dadosDB == 1){//Atualiza Status
+
+                    if(in_array($idProd[$i], $todosProd)){
+                        $valor = array_search($idProd[$i], $todosProd);
+                        unset($todosProd[$valor]);
+                    }
+
                     DB::table('vitrine')
-                        ->where('fk_produto_id', $idProd)
+                        ->where('fk_produto_id', $idProd[$i])
                         ->update(['ativo_vitrine' => $status]);
-                    return redirect()->route('vitrine.page')->with('success', 'Vitrine Atualizada com Sucesso');
+                    //return redirect()->route('vitrine.page')->with('success', 'Vitrine Atualizada com Sucesso');
                 }
                 else{//cadastrar
                     DB::table('vitrine')->insert([
-                        'fk_produto_id' => $idProd,
+                        'fk_produto_id' => $idProd[$i],
                         'ativo_vitrine' => $status
                     ]);
-                    return redirect()->route('vitrine.page')->with('success', 'Produtos inseridos na vitrine com Sucesso');
+
+                    if(in_array($idProd[$i], $todosProd)){
+                        $valor = array_search($idProd[$i], $todosProd);
+                        unset($todosProd[$valor]);
+                    }
                 }
             }
-        }
 
+            foreach ($todosProd as $key => $values){
+                try {
+                    DB::table('vitrine')
+                        ->where('fk_produto_id', $values)
+                        ->update(['ativo_vitrine' => 0]);
+                }
+                catch (\Exception $e){}
+            }
+        }
+        return redirect()->route('vitrine.page')->with('success', 'Vitrine Atualizada com Sucesso');
     }
 }
