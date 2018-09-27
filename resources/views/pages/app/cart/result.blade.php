@@ -24,7 +24,7 @@
                         <p class="d-flex justify-content-center">O código de sua compra no valor de R$ {{ number_format($orderData[0]['valorTotal'], 2, ',', '.') }} é &nbsp;<strong>{{ $orderData[0]['codigo'] }}</strong>.</p>
                         <p class="d-flex justify-content-center">Para realizar o pagamento, basta clicar no botão abaixo "Gerar boleto" e imprimir o boleto que será em outra aba de seu navegador.</p>
                         <p>&nbsp;</p>
-                        <a href="{{ $orderData[0]['linkBoleto'] }}" class="btn btn-template d-flex justify-content-center" target="_blank">Gerar boleto</a>
+                        <a href="{{ $orderData[0]['linkBoleto'] }}" class="btn btn-template d-flex justify-content-center" target="_blank">Imprimir boleto</a>
                     @endif
                 @else
 

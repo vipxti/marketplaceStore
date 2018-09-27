@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Menu;
 use App\NavigationMenu;
+use App\Sku;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -255,6 +256,7 @@ class PaymentController extends Controller
 
         $pagSeguroData = [];
         $cartProducts = Session::get('cart');
+        //dd($cartProducts);
         $shippingData = Session::get('shippingData');
 
         if (Session::has('orderData')) {
@@ -379,7 +381,8 @@ class PaymentController extends Controller
 
         try {
             foreach ($cartProducts as $key => $product) {
-                $this->saveOrderItem($order->cd_pedido, $product['codProduto'], 1, $product['qtdIndividual']);
+                $sku = Sku::where('cd_nr_sku', '=', $product['skuProduto'])->get();
+                $this->saveOrderItem($order->cd_pedido, $sku[0]->cd_sku, 1, $product['qtdIndividual']);
             }
         } catch (ValidationException $e) {
             DB::rollBack();
@@ -543,7 +546,8 @@ class PaymentController extends Controller
 
         try {
             foreach ($cartProducts as $key => $product) {
-                $this->saveOrderItem($order->cd_pedido, $product['codProduto'], 2, $product['qtdIndividual']);
+                $sku = Sku::where('cd_nr_sku', '=', $product['skuProduto'])->get();
+                $this->saveOrderItem($order->cd_pedido, $sku->cd_sku, 2, $product['qtdIndividual']);
             }
         } catch (ValidationException $e) {
             DB::rollBack();
@@ -642,11 +646,11 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function saveOrderItem($codPedido, $codProduto, $codTipoPagamento, $qtdProduto)
+    public function saveOrderItem($codPedido, $codSKU, $codTipoPagamento, $qtdProduto)
     {
         DB::table('pedido_produto')->insert([
             'cd_pedido' => intval($codPedido),
-            'cd_produto' => intval($codProduto),
+            'cd_sku' => intval($codSKU),
             'cd_tipo_pagto' => $codTipoPagamento,
             'qt_produto' => intval($qtdProduto)
         ]);

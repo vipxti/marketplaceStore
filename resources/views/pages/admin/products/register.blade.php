@@ -145,7 +145,7 @@
                                         <label>Nome do Produto</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                            <input type="text" class="form-control campo_nome" name="nm_produto" required maxlength="50">
+                                            <input type="text" class="form-control campo_nome" name="nm_produto" required maxlength="70">
                                         </div>
                                         <i class="msg_nome_prod"></i>
                                     </div>

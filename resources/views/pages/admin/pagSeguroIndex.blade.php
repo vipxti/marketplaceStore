@@ -264,6 +264,7 @@
 
                 let transacao = $('#inputEscolhaPedido').val();
                 $('#tbody').empty();
+                $('#table_pedido').removeAttr('hidden');
                 buscaPedidoTransacao(transacao);
             });
 

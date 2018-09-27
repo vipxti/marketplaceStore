@@ -105,6 +105,17 @@
                                 <td>{{str_replace(".", ",", ($prductOder->qt_produto * $prductOder->vl_produto))}}</td>
                             </tr>
                         @endforeach
+                        @foreach($productsOdersVariation as $key => $prductOder)
+                            <tr>
+                                <td>{{$prductOder->cd_produto_variacao}}</td>
+                                <td>{{$prductOder->cd_ean_variacao}}</td>
+                                <td>{{$prductOder->cd_nr_sku}}</td>
+                                <td>{{$prductOder->qt_produto}}</td>
+                                <td>{{$prductOder->nm_produto_variacao}}</td>
+                                <td>{{str_replace(".", ",", ($prductOder->vl_produto_variacao))}}</td>
+                                <td>{{str_replace(".", ",", ($prductOder->qt_produto * $prductOder->vl_produto_variacao))}}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

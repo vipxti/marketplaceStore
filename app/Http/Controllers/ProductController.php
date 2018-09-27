@@ -119,9 +119,22 @@ class ProductController extends Controller {
                 ->where('produto.cd_status_produto', '=', 1)
                 ->where('img_produto.ic_img_principal', '=', 1)
                 ->where('categoria.cd_categoria', '=', $catSubCat)
+                ->groupBy('produto.cd_produto')
                 ->orderBy('produto.cd_produto')
                 //->paginate(28);
                 ->get();
+
+            $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
+                ->join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+                ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
+                ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                ->where('produto.cd_status_produto', '=', 1)
+                ->where('categoria.cd_categoria', '=', $catSubCat)
+                ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+                ->groupBy('produto.cd_produto')
+                ->orderBy('produto.cd_produto')
+                ->get();
+
         } elseif ($dVerificador=="s") {
             $produtoCatSubCat = Product::
             join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
@@ -162,8 +175,22 @@ class ProductController extends Controller {
                 ->where('sub_categoria.cd_sub_categoria', '=', $catSubCat)
                 ->where('produto.cd_status_produto', '=', 1)
                 ->where('img_produto.ic_img_principal', '=', 1)
+                ->groupBy('produto.cd_produto')
                 ->orderBy('produto.cd_produto')
                 ->get();
+
+                $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
+                    ->join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+                    ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
+                    ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->join('sub_categoria', 'categoria_subcat.cd_sub_categoria', '=', 'sub_categoria.cd_sub_categoria')
+                    ->where('produto.cd_status_produto', '=', 1)
+                    ->where('sub_categoria.cd_sub_categoria', '=', $catSubCat)
+                    ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+                    ->groupBy('produto.cd_produto')
+                    ->orderBy('produto.cd_produto')
+                    ->get();
+
                 //->paginate(28);
         } elseif ($dVerificador == "pesquisa") {
             //dd($dVerificador);
@@ -206,14 +233,27 @@ class ProductController extends Controller {
                 ->where('produto.nm_produto', 'like', '%'.$catSubCat.'%')
                 ->where('produto.cd_status_produto', '=', 1)
                 ->where('img_produto.ic_img_principal', '=', 1)
+                ->groupBy('produto.cd_produto')
                 ->orderBy('produto.cd_produto')
                 ->get();
+
+                $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
+                    ->join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+                    ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
+                    ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->join('sub_categoria', 'categoria_subcat.cd_sub_categoria', '=', 'sub_categoria.cd_sub_categoria')
+                    ->where('produto.cd_status_produto', '=', 1)
+                    ->where('produto.nm_produto', 'like', '%'.$catSubCat.'%')
+                    ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+                    ->groupBy('produto.cd_produto')
+                    ->orderBy('produto.cd_produto')
+                    ->get();
                 //->paginate(28);
         }
 
         //dd($produtoCatSubCat);
 
-        return view('pages.app.product.filter', compact('produtoCatSubCat', 'nome', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
+        return view('pages.app.product.filter', compact('produtoCatSubCat', 'nome', 'menuNav', 'categoriaSubCat', 'menuNavegacao', 'variation'));
         //return response()->json($produtoCatSubCat);
     }
 

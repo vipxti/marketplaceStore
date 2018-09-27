@@ -74,18 +74,21 @@ class CategoryController extends Controller
             }
         }
     }
+
     public function novaCat($nomeCategoria)
     {
         Category::create([
             'nm_categoria' => $nomeCategoria
         ]);
     }
+
     public function atualizarCat($codigoCategoria, $nomeCategoria)
     {
         $categoria = Category::find($codigoCategoria);
         $categoria-> nm_categoria = $nomeCategoria;
         $categoria->save();
     }
+
     public function delCat($cdCategoria)
     {
         $resultado = DB::table('categoria')->select('cd_categoria')-> where('cd_categoria', '=', $cdCategoria)->get();
@@ -145,18 +148,21 @@ class CategoryController extends Controller
             }
         }
     }
+
     public function novaSubCat($nomeSubCategoria)
     {
         SubCategory::create([
             'nm_sub_categoria' => $nomeSubCategoria
         ]);
     }
+
     public function atualizaSubCat($codigoSubCategoria, $nomeSubCategoria)
     {
         $subCategoria = SubCategory::find($codigoSubCategoria);
         $subCategoria-> nm_sub_categoria=$nomeSubCategoria;
         $subCategoria->save();
     }
+
     public function delSubCat($cdSubCategoria)
     {
         //dd($cdSubCategoria);
@@ -183,6 +189,22 @@ class CategoryController extends Controller
             }
         }
         return redirect()->route('category.register')->with('success', 'Associações realizadas com sucesso');
+    }
+
+    public function removerAssociacao(CategorySubcategoryRequest $request){
+        //dd($request->all());
+
+        try {
+            DB::table('categoria_subcat')
+                ->where('cd_categoria', '=', $request->cd_categoria)
+                ->where('cd_sub_categoria', '=', $request->cd_sub_categoria)
+                ->delete();
+        }
+        catch (\Exception $e){
+            return redirect()->route('category.register')->with('nosuccess', 'Erro ao remover a associação, verifique se não tem produtos ligados a essa associação.');
+        }
+
+        return redirect()->route('category.register')->with('success', 'Associação removida com sucesso');
     }
 
     public function verificaCatBling(CategoryRequest $request){

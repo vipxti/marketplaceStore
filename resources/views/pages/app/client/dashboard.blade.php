@@ -123,7 +123,7 @@
 
                     <div class="row d-flex justify-content-center">
                         <div class="col-12 col-md-2 text-center">
-                            <a href="{{route('products.page')}}" class="btn btn-template">Continuar Comprando</a>
+                            <a href="{{route('cart.page')}}" class="btn btn-template">Ir para carrinho</a>
                         </div>
                     </div>
                 </div>
@@ -548,8 +548,24 @@
                                     $("<td>").append(value.cd_nr_sku),
                                     $("<td>").append(value.qt_produto),
                                     $("<td>").append(value.nm_produto),
-                                    $("<td>").append(value.vl_produto.replace('.',",")),
-                                    $("<td>").append(sbToal.toString().replace('.',",")),
+                                    $("<td>").append(value.vl_produto.replace('.', ",")),
+                                    $("<td>").append(sbToal.toString().replace('.', ","))
+                                )
+                            )
+                        });
+
+                        let pedProdVariacao = data.dadosPedido.original.prductsOdersVariacao;
+                        $.each( pedProdVariacao, function( key, value ) {
+                            let sbToal = (data.dadosPedido.original.prductsOdersVariacao[key].qt_produto * data.dadosPedido.original.prductsOdersVariacao[key].vl_produto_variacao);
+                            $('#project-table>tbody').append(
+                                $("<tr>").append(
+                                    $("<td>").append(value.cd_produto_variacao),
+                                    $("<td>").append(value.cd_ean_variacao),
+                                    $("<td>").append(value.cd_nr_sku),
+                                    $("<td>").append(value.qt_produto),
+                                    $("<td>").append(value.nm_produto_variacao),
+                                    $("<td>").append(value.vl_produto_variacao.replace('.', ",")),
+                                    $("<td>").append(sbToal.toString().replace('.', ","))
                                 )
                             )
                         });
