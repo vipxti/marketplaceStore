@@ -89,7 +89,7 @@ class OrderController extends Controller{
         $productsOders = DB::table('produto')
             ->where('pedido.cd_pedido', '=', $id)
             ->join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
-            ->join('pedido_produto', 'produto.cd_produto', '=', 'pedido_produto.cd_produto')
+            ->join('pedido_produto', 'sku.cd_sku', '=', 'pedido_produto.cd_sku')
             ->join('pedido', 'pedido_produto.cd_pedido', '=', 'pedido.cd_pedido')
             ->select(
                 'produto.cd_produto',
@@ -102,6 +102,22 @@ class OrderController extends Controller{
             )
             ->get();
 
+        $productsOdersVariation = DB::table('produto_variacao')
+            ->where('pedido.cd_pedido', '=', $id)
+            ->join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
+            ->join('pedido_produto', 'sku.cd_sku', '=', 'pedido_produto.cd_sku')
+            ->join('pedido', 'pedido_produto.cd_pedido', '=', 'pedido.cd_pedido')
+            ->select(
+                'produto_variacao.cd_produto_variacao',
+                'produto_variacao.cd_ean_variacao',
+                'sku.cd_nr_sku',
+                'produto_variacao.nm_produto_variacao',
+                'produto_variacao.ds_produto_variacao',
+                'produto_variacao.vl_produto_variacao',
+                'pedido_produto.qt_produto'
+            )
+            ->get();
+
         return view('partials.admin._printOrder', compact(
             'dadosEmpresa',
             'eCnpj',
@@ -110,7 +126,8 @@ class OrderController extends Controller{
             'dadosCliente',
             'cPhone',
             'cCep',
-            'productsOders'
+            'productsOders',
+            'productsOdersVariation'
         ));
     }
 

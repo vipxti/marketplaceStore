@@ -74,6 +74,7 @@ Route::prefix('admin')->group(function () {
 
     //Associa categoria/subcategoria
     Route::post('/catsubcat', 'CategoryController@associarCategoriaSubCategoria')->name('catsubcat.associate');
+    Route::post('/catsubcat/remove', 'CategoryController@removerAssociacao')->name('catsubcat.remove.assoc');
 
     //Form tamanho e cadastro
     Route::get('/size', 'SizeController@showSizeForm')->name('size.register')->middleware('auth:admin');
