@@ -51,7 +51,7 @@
                                         <label>Nome do Produto</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                            <input type="text" class="form-control campo_nome_modal" name="nm_produto_variacao" value="{{ $ultimoProduto[0]->nm_produto }}" maxlength="50">
+                                            <input type="text" class="form-control campo_nome_modal" name="nm_produto_variacao" value="{{ $ultimoProduto[0]->nm_produto }}" maxlength="70">
                                         </div>
                                         <i class="msg_nome_prod"></i>
                                     </div>

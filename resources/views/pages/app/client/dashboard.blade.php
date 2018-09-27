@@ -123,7 +123,7 @@
 
                     <div class="row d-flex justify-content-center">
                         <div class="col-12 col-md-2 text-center">
-                            <a href="{{route('products.page')}}" class="btn btn-template">Continuar Comprando</a>
+                            <a href="{{route('cart.page')}}" class="btn btn-template">Ir para carrinho</a>
                         </div>
                     </div>
                 </div>

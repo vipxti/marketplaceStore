@@ -65,7 +65,7 @@ class PagseguroController extends Controller
     }
 
     public function atualizaPedidos(Request $request){
-        try {
+        //try {
             $pedido = Order::where('cd_referencia', '=', $request->referencia)->get();
 
             if (count($pedido) > 0) {
@@ -74,6 +74,7 @@ class PagseguroController extends Controller
                         ->update(['cd_status' => $request->status,
                                 'dt_alteracao' => $request->data]);
 
+                    $retorno = '';
                     if($request->status == 3){
                         $retorno = $this->inserePedidoBling($request->referencia);
                     }
@@ -81,10 +82,10 @@ class PagseguroController extends Controller
                     return response()->json(['deuErro' => false, 'statusAtualizado' => true, 'retorno' => $retorno]);
                 }
             }
-        }
+        /*}
         catch (\Exception $ex){
             return response()->json(['deuErro' => true]);
-        }
+        }*/
 
         return response()->json(['deuErro' => false, 'statusAtualizado' => false]);
 
@@ -92,6 +93,7 @@ class PagseguroController extends Controller
 
     public function inserePedidoBling($referencia)
     {
+        $variacao = false;
         $pedido = Order::join('cliente', 'pedido.cd_cliente', '=', 'cliente.cd_cliente')
                         ->join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')
                         ->join('cliente_endereco', 'pedido.fk_end_entrega_id', '=', 'cliente_endereco.id_cliente_endereco')
@@ -104,21 +106,32 @@ class PagseguroController extends Controller
                         ->where('pedido.cd_referencia', '=', $referencia)
                         ->get();
 
+        //->join('produto', 'pedido_produto.cd_produto', '=', 'produto.cd_produto')
+        //->join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
         $produtos = Order::join('pedido_produto', 'pedido.cd_pedido', '=', 'pedido_produto.cd_pedido')
-                        ->join('produto', 'pedido_produto.cd_produto', '=', 'produto.cd_produto')
-                        ->join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
-                        ->select('sku.cd_nr_sku', 'produto.nm_produto', 'pedido_produto.qt_produto', 'produto.vl_produto')
-                        ->where('pedido.cd_referencia', '=', $referencia)
-                        ->get();
+            ->join('sku', 'pedido_produto.cd_sku', '=', 'sku.cd_sku')
+            ->join('produto', 'sku.cd_sku', '=', 'produto.cd_sku')
+            ->select('sku.cd_nr_sku', 'produto.nm_produto', 'pedido_produto.qt_produto', 'produto.vl_produto')
+            ->where('pedido.cd_referencia', '=', $referencia)
+            ->get();
+
+        if(count($produtos) == 0){
+            $variacao = true;
+            $produtos = Order::join('pedido_produto', 'pedido.cd_pedido', '=', 'pedido_produto.cd_pedido')
+                ->join('sku', 'pedido_produto.cd_sku', '=', 'sku.cd_sku')
+                ->join('produto_variacao', 'sku.cd_sku', '=', 'produto_variacao.cd_sku')
+                ->select('sku.cd_nr_sku', 'produto_variacao.nm_produto_variacao', 'pedido_produto.qt_produto', 'produto_variacao.vl_produto_variacao')
+                ->where('pedido.cd_referencia', '=', $referencia)
+                ->get();
+        }
+
+
 
         $dadoUsuario = DB::table('dados_empresa')->get();
         $apikey = $dadoUsuario[0]->cd_api_key;
         $loja = $dadoUsuario[0]->cd_api_bling;
-        //dd($pedido);
-        //dd($produtos);
 
         $data = date('d-m-Y', strtotime($pedido[0]->dt_compra));
-        //dd($data);
 
         $tipoPessoa = '';
 
@@ -133,55 +146,13 @@ class PagseguroController extends Controller
         $cep.=substr($pedido[0]->cd_cep, 2, 3) . "-";
         $cep.=substr($pedido[0]->cd_cep, 5);
 
-        //dd($cep);
-
         $url = 'https://bling.com.br/Api/v2/pedido/json/';
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>'.
-                    '<pedido>'.
-                            '<data>'. $data .'</data>'.
-                            '<loja>'. $loja .'</loja>'.
-                            '<cliente>'.
-                                    '<nome>'. $pedido[0]->nm_destinatario.'</nome>'.
-                                    '<tipoPessoa>'. $tipoPessoa .'</tipoPessoa>'.
-                                    '<cpf_cnpj>'. $pedido[0]->cd_cpf_cnpj .'</cpf_cnpj>'.
-                                    '<endereco>'. $pedido[0]->ds_endereco .'</endereco>'.
-                                    '<numero>'. $pedido[0]->cd_numero_endereco .'</numero>'.
-                                    '<complemento>'. $pedido[0]->ds_complemento .'</complemento>'.
-                                    '<bairro>'. $pedido[0]->nm_bairro .'</bairro>'.
-                                    '<cep>'. $cep .'</cep>'.
-                                    '<cidade>'. $pedido[0]->nm_cidade .'</cidade>'.
-                                    '<uf>'. $pedido[0]->sg_uf .'</uf>'.
-                                    '<celular>'. $pedido[0]->cd_celular1 .'</celular>'.
-                            '</cliente>'.
-                            '<transporte>'.
-                                    '<transportadora>'. $pedido[0]->tipo_frete .'</transportadora>'.
-                                    '<tipo_frete>R</tipo_frete>'.
-                                    '<servico_correios>'. $pedido[0]->tipo_frete .'</servico_correios>'.
-                            '</transporte>'.
-                            '<itens>';
 
-                            foreach ($produtos as $produto){
-                                $xml.= '<item>'.
-                                            '<codigo>'. $produto->cd_nr_sku .'</codigo>'.
-                                            '<descricao>'. $produto->nm_produto .'</descricao>'.
-                                            '<qtde>'. $produto->qt_produto .'</qtde>'.
-                                            '<vlr_unit>'. $produto->vl_produto .'</vlr_unit>'.
-                                        '</item>';
-                            }
+        if(!$variacao)
+            $xml = $this->geraXml($data, $loja, $pedido, $tipoPessoa, $cep, $produtos);
+        else
+            $xml = $this->geraXmlVariacao($data, $loja, $pedido, $tipoPessoa, $cep, $produtos);
 
-                    $xml.= '</itens>'.
-                            '<parcelas>'.
-                                    '<parcela>'.
-                                            '<dias>14</dias>'.
-                                            '<vlr>'. $pedido[0]->vl_total .'</vlr>'.
-                                            '<obs>PagSeguro</obs>'.
-                                    '</parcela>'.
-                            '</parcelas>'.
-                            '<vlr_frete>'. $pedido[0]->vl_frete .'</vlr_frete>'.
-                        '</pedido>';
-
-
-                    //'</pedido>';
 
         $posts = array (
             "apikey" => $apikey,
@@ -201,6 +172,102 @@ class PagseguroController extends Controller
         $response = curl_exec($curl_handle);
         curl_close($curl_handle);
         return $response;
+    }
+
+    public function geraXml($data, $loja, $pedido, $tipoPessoa, $cep, $produtos){
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>'.
+        '<pedido>'.
+        '<data>'. $data .'</data>'.
+        '<loja>'. $loja .'</loja>'.
+        '<cliente>'.
+        '<nome>'. $pedido[0]->nm_destinatario.'</nome>'.
+        '<tipoPessoa>'. $tipoPessoa .'</tipoPessoa>'.
+        '<cpf_cnpj>'. $pedido[0]->cd_cpf_cnpj .'</cpf_cnpj>'.
+        '<endereco>'. $pedido[0]->ds_endereco .'</endereco>'.
+        '<numero>'. $pedido[0]->cd_numero_endereco .'</numero>'.
+        '<complemento>'. $pedido[0]->ds_complemento .'</complemento>'.
+        '<bairro>'. $pedido[0]->nm_bairro .'</bairro>'.
+        '<cep>'. $cep .'</cep>'.
+        '<cidade>'. $pedido[0]->nm_cidade .'</cidade>'.
+        '<uf>'. $pedido[0]->sg_uf .'</uf>'.
+        '<celular>'. $pedido[0]->cd_celular1 .'</celular>'.
+        '</cliente>'.
+        '<transporte>'.
+        '<transportadora>'. $pedido[0]->tipo_frete .'</transportadora>'.
+        '<tipo_frete>R</tipo_frete>'.
+        '<servico_correios>'. $pedido[0]->tipo_frete .'</servico_correios>'.
+        '</transporte>'.
+        '<itens>';
+
+        foreach ($produtos as $produto){
+            $xml.= '<item>'.
+                '<codigo>'. $produto->cd_nr_sku .'</codigo>'.
+                '<descricao>'. $produto->nm_produto .'</descricao>'.
+                '<qtde>'. $produto->qt_produto .'</qtde>'.
+                '<vlr_unit>'. $produto->vl_produto .'</vlr_unit>'.
+                '</item>';
+        }
+
+        $xml.= '</itens>'.
+            '<parcelas>'.
+            '<parcela>'.
+            '<dias>14</dias>'.
+            '<vlr>'. $pedido[0]->vl_total .'</vlr>'.
+            '<obs>PagSeguro</obs>'.
+            '</parcela>'.
+            '</parcelas>'.
+            '<vlr_frete>'. $pedido[0]->vl_frete .'</vlr_frete>'.
+            '</pedido>';
+
+        return $xml;
+    }
+
+    public function geraXmlVariacao($data, $loja, $pedido, $tipoPessoa, $cep, $produtos){
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>'.
+            '<pedido>'.
+            '<data>'. $data .'</data>'.
+            '<loja>'. $loja .'</loja>'.
+            '<cliente>'.
+            '<nome>'. $pedido[0]->nm_destinatario.'</nome>'.
+            '<tipoPessoa>'. $tipoPessoa .'</tipoPessoa>'.
+            '<cpf_cnpj>'. $pedido[0]->cd_cpf_cnpj .'</cpf_cnpj>'.
+            '<endereco>'. $pedido[0]->ds_endereco .'</endereco>'.
+            '<numero>'. $pedido[0]->cd_numero_endereco .'</numero>'.
+            '<complemento>'. $pedido[0]->ds_complemento .'</complemento>'.
+            '<bairro>'. $pedido[0]->nm_bairro .'</bairro>'.
+            '<cep>'. $cep .'</cep>'.
+            '<cidade>'. $pedido[0]->nm_cidade .'</cidade>'.
+            '<uf>'. $pedido[0]->sg_uf .'</uf>'.
+            '<celular>'. $pedido[0]->cd_celular1 .'</celular>'.
+            '</cliente>'.
+            '<transporte>'.
+            '<transportadora>'. $pedido[0]->tipo_frete .'</transportadora>'.
+            '<tipo_frete>R</tipo_frete>'.
+            '<servico_correios>'. $pedido[0]->tipo_frete .'</servico_correios>'.
+            '</transporte>'.
+            '<itens>';
+
+        foreach ($produtos as $produto){
+            $xml.= '<item>'.
+                '<codigo>'. $produto->cd_nr_sku .'</codigo>'.
+                '<descricao>'. $produto->nm_produto_variacao .'</descricao>'.
+                '<qtde>'. $produto->qt_produto.'</qtde>'.
+                '<vlr_unit>'. $produto->vl_produto_variacao .'</vlr_unit>'.
+                '</item>';
+        }
+
+        $xml.= '</itens>'.
+            '<parcelas>'.
+            '<parcela>'.
+            '<dias>14</dias>'.
+            '<vlr>'. $pedido[0]->vl_total .'</vlr>'.
+            '<obs>PagSeguro</obs>'.
+            '</parcela>'.
+            '</parcelas>'.
+            '<vlr_frete>'. $pedido[0]->vl_frete .'</vlr_frete>'.
+            '</pedido>';
+
+        return $xml;
     }
 
     public function urlRetorno(){

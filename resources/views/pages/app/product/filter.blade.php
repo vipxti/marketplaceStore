@@ -50,7 +50,14 @@
                                                 @if($produto->qt_produto < 5)
                                                     <p class="btn" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none;">SEM ESTOQUE</p>
                                                 @else
-                                                    <button type="submit" class="btn" style=" width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none; border: none !important;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                                    @if ($variation[$key]->nm_produto_variacao != null && $variation[$key]->cd_produto == $produto->cd_produto)
+
+                                                        <a class="" href="{{ route('products.details', $produto->nm_slug)}}" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#fff; background-color:#171717; text-decoration: none; border: none !important"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a>
+
+                                                    @else
+                                                        <button type="submit" class="btn" style=" width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#3a3a3a; background-color:#f5f5f5; text-decoration: none; border: none !important;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</button>
+                                                    @endif
+
                                                 @endif
                                             </form>
                                         </div>
