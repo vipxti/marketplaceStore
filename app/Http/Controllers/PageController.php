@@ -51,9 +51,27 @@ class PageController extends Controller
     }
 
     public function updateQtdItensVitrine(Request $request){
-        MenuItensVitrine::where('menu_itens_vitrine_ativo', '=', 1)->update(array('menu_itens_vitrine_ativo' => 0));
-        MenuItensVitrine::where('id_menu_itens_vitrine', '=',$request->nItens)->update(array('menu_itens_vitrine_ativo' => 1));
-        return $this->showVitrinePage();
+        $itenVitriniAtivo = DB::table('vitrine')->where('ativo_vitrine', '=', 1)->count();
+        $qtItenVitriniAtivo = DB::table('menu_itens_vitrine')->where('id_menu_itens_vitrine', '=', $request->nItens)->get();
+        if($itenVitriniAtivo > 0){
+            $menuItensVitrine = MenuItensVitrine::all();
+            if (($itenVitriniAtivo < $qtItenVitriniAtivo[0]->menu_itens_vitrine)or ($itenVitriniAtivo < $request->nItens)){
+                foreach ($menuItensVitrine as $key =>$value){
+                    if($itenVitriniAtivo >= $value->menu_itens_vitrine){
+                        $aDados = $value->id_menu_itens_vitrine;
+                    }
+                }
+                MenuItensVitrine::where('menu_itens_vitrine_ativo', '=', 1)->update(array('menu_itens_vitrine_ativo' => 0));
+                MenuItensVitrine::where('id_menu_itens_vitrine', '=',$aDados)->update(array('menu_itens_vitrine_ativo' => 1));
+                return redirect()->route('vitrine.page')->with('nosuccess', 'Quantidade de Produtos Ativos é MENOR que Quantidade de Linhas Informada');
+            }
+            else{
+                MenuItensVitrine::where('menu_itens_vitrine_ativo', '=', 1)->update(array('menu_itens_vitrine_ativo' => 0));
+                MenuItensVitrine::where('id_menu_itens_vitrine', '=',$request->nItens)->update(array('menu_itens_vitrine_ativo' => 1));
+                return redirect()->route('vitrine.page')->with('warning', 'Quantidade de Produtos Ativos é MENOR que Quantidade de Linhas Informada');
+            }
+        }
+        else{return redirect()->route('vitrine.page')->with('nosuccess', 'Não existe produto ativo');}
     }
 
     public function insertOrUpdateProdVitrine(Request $request){
@@ -61,7 +79,6 @@ class PageController extends Controller
         if( !isset($request->bntForm) ){
 
             for ($i = 0; $i < count($todosProd); $i++){
-                echo $todosProd[$i];
                 DB::table('vitrine')
                     ->where('fk_produto_id', '=', $request->codProd[$i])
                     ->update(['ativo_vitrine' => 0]);
