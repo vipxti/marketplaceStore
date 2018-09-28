@@ -180,7 +180,10 @@
 
                         <div class="col-md-4 pull-right">
 
-                            <a></a>
+                            <a class="btn btn-primary pull-right" style="margin-top: 15px;"
+                               href="{{url('/admin/product/variation/' . $produtoPai[0]->cd_produto)}}">
+                                Adicionar Variação
+                            </a>
 
                         </div>
 

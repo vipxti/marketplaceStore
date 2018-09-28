@@ -128,32 +128,41 @@
                             <p>&nbsp;</p>
                             <p>&nbsp;</p>
 
-
-                            <form action="{{ route('cart.buy') }}" method="post">
-                                {{ csrf_field() }}
-
-                                <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
-                                <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
-                                <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
-                                <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
-                                <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
-                                <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
-                                <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
-                                <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
-                                <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
-                                <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
-                                <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
-                                <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
+                            @if(array_key_exists($key, $arrayVariation))
                                 @if($produto->qt_produto < 5)
-                                    <div>
-                                        <p class="btn semestoque">SEM ESTOQUE</p>
-                                    </div>
+                                    <p class="semestoque">SEM ESTOQUE</p>
                                 @else
-                                    <div>
-                                        <button type="submit" class="btn btncomprar" style="overflow: hidden"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;COMPRAR</button>
+                                    <div class="col-12 col-md-12">
+                                        <a class="" href="{{ route('products.details', $produto->nm_slug)}}" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#fff; background-color:#171717; text-decoration: none; border: none !important"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a>
                                     </div>
                                 @endif
-                            </form>
+                            @else
+                                <form action="{{ route('cart.buy') }}" method="post">
+                                    {{ csrf_field() }}
+
+                                    <input type="hidden" name="cd_produto" value="{{ $produto->cd_produto }}">
+                                    <input type="hidden" name="nm_produto" value="{{ $produto->nm_produto }}">
+                                    <input type="hidden" name="ds_produto" value="{{ $produto->ds_produto }}">
+                                    <input type="hidden" name="vl_produto" value="{{ $produto->vl_produto }}">
+                                    <input type="hidden" name="qt_produto" value="{{ $produto->qt_produto }}">
+                                    <input type="hidden" name="sku_produto" value="{{ $produto->cd_nr_sku }}">
+                                    <input type="hidden" name="slug_produto" value="{{ $produto->nm_slug }}">
+                                    <input type="hidden" name="ds_altura" value="{{ $produto->ds_altura }}">
+                                    <input type="hidden" name="ds_largura" value="{{ $produto->ds_largura }}">
+                                    <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
+                                    <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
+                                    <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
+                                    @if($produto->qt_produto < 5)
+                                        <div>
+                                            <p class="btn semestoque">SEM ESTOQUE</p>
+                                        </div>
+                                    @else
+                                        <div>
+                                            <button type="submit" class="btn btncomprar" style="overflow: hidden"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;COMPRAR</button>
+                                        </div>
+                                    @endif
+                                </form>
+                            @endif
                         </div>
                     </div>
                 @endforeach
