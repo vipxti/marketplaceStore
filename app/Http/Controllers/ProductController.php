@@ -915,13 +915,13 @@ class ProductController extends Controller {
             $dimensao = $this->createDimension($request->ds_largura_variacao, $request->ds_altura_variacao, $request->ds_comprimento_variacao, $request->ds_peso_variacao);
         } catch (ValidationException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao cadastrar o tamanho da variação');
+            return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar o tamanho da variação');
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao cadastrar tamanho do produto');
+            return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar tamanho do produto');
         } catch (\PDOException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            return redirect('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -931,13 +931,13 @@ class ProductController extends Controller {
             $sku = $this->createSku($request->cd_sku_variacao, $dimensao->cd_dimensao);
         } catch (ValidationException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao cadastrar o SKU da variação');
+            return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar o SKU da variação');
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao cadastrar SKU do produto');
+            return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar SKU do produto');
         } catch (\PDOException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            return redirect('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -948,13 +948,13 @@ class ProductController extends Controller {
             $produtoVariacao = $this->createProductVariation($request->cd_ean_variacao, $request->nm_produto_variacao, $request->ds_produto_variacao, $val, $request->qt_produto_variacao, $status, $sku->cd_sku, $request->cd_produto_principal, $slugnameVariation);
         } catch (ValidationException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao cadastrar a variação do produto');
+            return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar a variação do produto');
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao cadastrar variação do produto');
+            return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar variação do produto');
         } catch (\PDOException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            return redirect('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -964,13 +964,13 @@ class ProductController extends Controller {
             $this->associateProductColor($sku->cd_sku, $request->cd_cor_variacao);
         } catch (ValidationException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao associar a variação com a cor do produto');
+            return redirect('product.register')->with('nosuccess', 'Erro ao associar a variação com a cor do produto');
         } catch (QueryException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao associar a variação com a cor do produto');
+            return redirect('product.register')->with('nosuccess', 'Erro ao associar a variação com a cor do produto');
         } catch (\PDOException $e) {
             DB::rollBack();
-            return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            return redirect('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -985,13 +985,13 @@ class ProductController extends Controller {
                     $this->associateProductNumberSize($sku->cd_sku, $request->cd_tamanho_num_variacao);
                 } catch (ValidationException $e) {
                     DB::rollBack();
-                    return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao associar a variação com seu tamanho por número');
+                    return redirect('product.register')->with('nosuccess', 'Erro ao associar a variação com seu tamanho por número');
                 } catch (QueryException $e) {
                     DB::rollBack();
-                    return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao associar a variação com seu tamanho por número');
+                    return redirect('product.register')->with('nosuccess', 'Erro ao associar a variação com seu tamanho por número');
                 } catch (\PDOException $e) {
                     DB::rollBack();
-                    return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao conectar com o banco de dados');
+                    return redirect('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
                 } catch (\Exception $e) {
                     DB::rollBack();
                     throw $e;
@@ -1004,13 +1004,13 @@ class ProductController extends Controller {
                     $this->associateProductLetterSize($sku->cd_sku, $request->cd_tamanho_letra_variacao);
                 } catch (ValidationException $e) {
                     DB::rollBack();
-                    return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao associar a variação com seu tamanho por letra');
+                    return redirect('product.register')->with('nosuccess', 'Erro ao associar a variação com seu tamanho por letra');
                 } catch (QueryException $e) {
                     DB::rollBack();
-                    return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao associar a variação com seu tamanho por letra');
+                    return redirect('product.register')->with('nosuccess', 'Erro ao associar a variação com seu tamanho por letra');
                 } catch (\PDOException $e) {
                     DB::rollBack();
-                    return redirect('admin/product/variation/' . $request->cd_produto_principal)->with('nosuccess', 'Erro ao conectar com o banco de dados');
+                    return redirect('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
                 } catch (\Exception $e) {
                     DB::rollBack();
                     throw $e;
@@ -1085,7 +1085,7 @@ class ProductController extends Controller {
 
         DB::commit();
 
-        return redirect()->route('products.list')->with('success', 'Variação do produto cadastrada com sucesso');
+        return redirect()->route('lista.variacao', $request->cd_produto_principal)->with('success', 'Variação do produto cadastrada com sucesso');
     }
 
     public function saveImageFile($imagePath, $imageName, $realPath)

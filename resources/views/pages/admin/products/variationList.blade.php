@@ -180,7 +180,10 @@
 
                         <div class="col-md-4 pull-right">
 
-                            <a></a>
+                            <a class="btn btn-primary pull-right" style="margin-top: 15px;"
+                               href="{{url('/admin/product/variation/' . $produtoPai[0]->cd_produto)}}">
+                                Adicionar Variação
+                            </a>
 
                         </div>
 
@@ -261,7 +264,7 @@
                                                             <label>Nome do Produto</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                                                                <input type="text" class="form-control campo_nome" name="nm_produto_variacao" required maxlength="50">
+                                                                <input type="text" class="form-control campo_nome" name="nm_produto_variacao" required maxlength="70">
                                                             </div>
                                                             <i class="msg_nome_prod"></i>
                                                         </div>

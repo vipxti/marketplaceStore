@@ -7,6 +7,7 @@ use App\Menu;
 use App\MenuItensVitrine;
 use App\NavigationMenu;
 use App\Product;
+use App\ProductVariation;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -86,6 +87,20 @@ class HomeController extends Controller{
         } else {
             $produtos = $produtos->get();
         }
+
+        $arrayVariation = [];
+        foreach ($produtos as $key => $produto){
+            $variation = ProductVariation::join('sku', 'sku.cd_sku', '=', 'produto_variacao.cd_sku')
+                        ->join('produto', 'produto.cd_produto', '=', 'produto_variacao.cd_produto')
+                        ->where('produto.cd_produto', '=', $produto->cd_produto)
+                        ->get();
+
+            if(count($variation) > 0){
+                $arrayVariation[$key] = $variation[0];
+            }
+        }
+
+        //dd($arrayVariation[15]);
         
         if (!Session::has('qtCart')) {
             Session::put('qtCart', 0);
@@ -98,7 +113,7 @@ class HomeController extends Controller{
             $nome = null;
         }
         //dd($produtos);
-        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome', 'categoriaSubCat', 'menuNav', 'menuNavegacao'));
+        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome', 'categoriaSubCat', 'menuNav', 'menuNavegacao', 'arrayVariation'));
     }
 
     public function showIndexAdminPage()

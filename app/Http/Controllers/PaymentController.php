@@ -547,7 +547,7 @@ class PaymentController extends Controller
         try {
             foreach ($cartProducts as $key => $product) {
                 $sku = Sku::where('cd_nr_sku', '=', $product['skuProduto'])->get();
-                $this->saveOrderItem($order->cd_pedido, $sku->cd_sku, 2, $product['qtdIndividual']);
+                $this->saveOrderItem($order->cd_pedido, $sku[0]->cd_sku, 2, $product['qtdIndividual']);
             }
         } catch (ValidationException $e) {
             DB::rollBack();
