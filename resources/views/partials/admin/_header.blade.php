@@ -2,9 +2,9 @@
     <!-- Logo -->
   <a href="{{route('admin.dashboard')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>C</b>ME</span>
+      <span class="logo-mini"><b>Mak</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>CME</b>Admin</span>
+      <span class="logo-lg"><b>Maktub</b>Admin</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -48,7 +48,7 @@
                   <li class="user-header">
                     <img src="" class="user-image" alt="User Image">
                     <p>
-                      <small>Member since Nov. 2012</small>
+                      <small>Membro desde Out 2018</small>
                     </p>
                   </li>
                   <!-- Menu Footer-->

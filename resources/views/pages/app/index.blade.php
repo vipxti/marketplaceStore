@@ -8,17 +8,29 @@
             margin: 0;
             font-size: 13px;
             font-weight: 700;
-            color: #171717;
+            color: #d59431;
             text-decoration: none
         }
 
         .btncomprar {
-            width:100%;
+            width: 100%;
             margin: 0;
             font-size: 13px;
             font-weight: 700;
             color:#fff;
-            background-color:#171717;
+            background-color:#3a3a3a;
+            text-decoration: none;
+            border: none !important
+        }
+
+        .btnvariacao {
+            width: 100% !important;
+            height: 35px;
+            padding-top: 7px;
+            font-size: 13px;
+            font-weight: 700 !important;
+            color:#fff !important;
+            background-color:#3a3a3a;
             text-decoration: none;
             border: none !important
         }
@@ -35,8 +47,16 @@
         }
 
         .parcelas{
-            color: #d59431 ;
+            color: #d59431;
         }
+
+        .box span {
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+        }
+
     </style>
 
     <link rel="stylesheet" href="{{asset('css/app/magnific.css')}}">
@@ -55,7 +75,7 @@
                                 <p>&nbsp;</p>
                             </ul>
                             <p>&nbsp;</p>
-                           {{-- <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
+                            {{-- <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
                         </div>
                     </div>
                 </div>
@@ -113,7 +133,7 @@
         <div class="container">
             <div class="row karl-new-arrivals text-center">
                 @foreach($produtos as $key => $produto)
-                    <div class="col-12 col-sm-4 col-md-3 single_gallery_item shoes wow fadeInUpBig">
+                    <div class="col-12 col-sm-4 col-md-3 single_gallery_item shoes">
                         <div class="product-img">
                             <img class="tamanhoimg" src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
                             <div class="product-quicview">
@@ -122,7 +142,7 @@
                         </div>
 
                         <div class="product-description">
-                            <h4 style="color: #171717" class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
+                            <h4 style="color: #dc3545" class="product-price">R$ {{ str_replace(".", ",", $produto->vl_produto) }}</h4>
                             <p><b class="parcelas">3x</b> de <b class="parcelas">R$ {{number_format(($produto->vl_produto/3), 2)}}</b> sem juros </p>
                             <p style="max-height: 20px; text-overflow: ellipsis">{{ $produto->nm_produto }}</p>
                             <p>&nbsp;</p>
@@ -132,8 +152,8 @@
                                 @if($produto->qt_produto < 5)
                                     <p class="semestoque">SEM ESTOQUE</p>
                                 @else
-                                    <div class="col-12 col-md-12">
-                                        <a class="" href="{{ route('products.details', $produto->nm_slug)}}" style="width:100%; margin: 0; font-size: 13px; font-weight: 700; color:#fff; background-color:#171717; text-decoration: none; border: none !important"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; COMPRAR</a>
+                                    <div>
+                                        <a class="btnvariacao box" href="{{ route('products.details', $produto->nm_slug)}}"><i class="icon-bag" aria-hidden="true"></i>&nbsp; COMPRAR</a>
                                     </div>
                                 @endif
                             @else
@@ -158,7 +178,7 @@
                                         </div>
                                     @else
                                         <div>
-                                            <button type="submit" class="btn btncomprar" style="overflow: hidden"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;COMPRAR</button>
+                                            <button type="submit" class="btn btncomprar box" style="overflow: hidden"><i class="icon-bag" aria-hidden="true"></i>&nbsp;COMPRAR</button>
                                         </div>
                                     @endif
                                 </form>
@@ -166,6 +186,40 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="container">
+            <header class="text-center">
+                <h2 class="text-uppercase"><small>Produtos e Serviços</small></h2>
+            </header>
+            <div class="row text-left">
+                <div class="col-lg-4"><a href="http://maktubbeauty.com.br/page/product/filter?search=Base+Liquida&id=pesquisa&catSubCat=Base+Liquida">
+                        <div style="background-image: url(img/banner-1.png);" class="item d-flex align-items-end">
+                            <div class="content">
+                                <h3 class="h5">Base</h3><span>Coleções</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4"><a href="http://maktubbeauty.com.br/page/product/filter?id=s&catSubCat=53">
+                        <div style="background-image: url(img/banner-2.png);" class="item d-flex align-items-end">
+                            <div class="content">
+                                <h3 class="h5">Paletas</h3><span>Novidades</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4"><a href="">
+                        <div style="background-image: url(img/banner-3.png);" class="item d-flex align-items-end">
+                            <div class="content">
+                                <h3 class="h5">Queridinhos</h3><span>Parceiros</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>

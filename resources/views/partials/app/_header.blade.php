@@ -176,7 +176,7 @@
         </div>
         <div class="container-fluid">
             <a href="{{ route('index')}}" class="navbar-brand">
-                <img src="{{asset('img/app/core-img/logo.png')}}">
+                <img src="{{asset('img/app/core-img/logo1.png')}}">
             </a>
             <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
                     aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">
@@ -291,7 +291,7 @@
                                             <h6 class="text-uppercase product-heading"><a href="">Catharine Hill Sombras 30 cores</a>
                                             </h6>
                                             <ul class="rate list-inline"></ul>
-                                            <strong class="price text-primary">R$ 106,00</strong>
+                                            <strong class="price" style="color: #dc3545">R$ 106,00</strong>
                                             <a href="http://maktubbeauty.com.br/page/product/catharine-hill-paleta-de-sombras-variadas-30-cores" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>
                                         </div>
                                     </div>
@@ -417,7 +417,7 @@
                                         <h6 class="text-uppercase product-heading"><a href="">Catharine Hill Sombras 30 cores</a>
                                         </h6>
                                         <ul class="rate list-inline"></ul>
-                                        <strong class="price text-primary">R$ 106,00</strong>
+                                        <strong class="price" style="color: #dc3545">R$ 106,00</strong>
                                         {{--<a href="https://produto.mercadolivre.com.br/MLB-1023655655-catharine-hill-sombras-variadas-1017-paleta-de-sombras-_JM" class="btn btn-template wide" target="_blank">Adicionar ao Carrinho</a>--}}
                                     </div>
                                 </div>

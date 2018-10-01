@@ -177,7 +177,7 @@
                             <section class="content">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Quantidade de Linhas</h3>
+                                        <h3 class="box-title">Qtn Colunas</h3>
                                         <div class="box-tools pull-right">
                                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                         </div>
@@ -186,15 +186,15 @@
                                         <form action="{{ route('numemro.itens.vitrine.page') }}" method="post">
                                             {{ csrf_field() }}
                                             <div class="col-md-12" >
-                                                <div class="input-group" style="margin-bottom: 15px;">
+                                                <div class="input-group" style="width: 100%">
                                                     <span class="input-group-addon"><i class="fa fa-th-large"></i></span>
-                                                    <select id="vitrineItens" class="form-control select2" style="width: 100%;" name="nItens">
+                                                    <select id="vitrineItens" class="form-control select2" style="width: 100%" name="nItens">
                                                         @foreach($nItensVitrine as $nItenVitrine)
                                                             <option value="{{$nItenVitrine->id_menu_itens_vitrine}}" class="ativo{{$nItenVitrine->menu_itens_vitrine_ativo}}">{{$nItenVitrine->menu_itens_vitrine}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <button type="submit" class="btn btn-success  pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                                <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 15px; margin-bottom: 15px"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
                                             </div>
                                         </form>
                                     </div>
