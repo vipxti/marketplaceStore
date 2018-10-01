@@ -34,7 +34,6 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('product.register') }}"><i class="fa fa-plus-square"></i>Cadastrar</a></li>
-                    <li><a href="#"><i class="fa fa-edit"></i>Alterar</a></li>
                     <li><a href="{{ route('products.list') }}"><i class="fa fa-list-alt"></i>Lista de Produtos</a></li>
                     <li class="treeview">
                         <a href="#"><i class="fa fa-diamond">
@@ -73,18 +72,6 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-credit-card"></i> <span>Formas de Pagamento</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-plus-square"></i>Cadastrar</a></li>
-                            <li><a href="#"><i class="fa fa-edit"></i>Alterar</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
                             <i class="fa fa-book"></i>
                             <span>Pedidos</span>
                             <span class="pull-right-container">
@@ -99,17 +86,6 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-users"></i> <span>Clientes</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>#</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
                             <i class="fa fa-home"></i><span>Configuração Home</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
@@ -118,7 +94,7 @@
                         <ul class="treeview-menu">
                             <li><a href="{{ route('menu.edit') }}"><i class="fa fa-th-list"></i>Menu</a></li>
                             <li><a href="{{ route('banner.edit') }}"><i class="fa fa-picture-o"></i>Banner</a></li>
-                            <li><a href="{{ route('hotpost.edit') }}"><i class="fa fa-newspaper-o"></i>Hot Post</a></li>
+                            {{--<li><a href="{{ route('hotpost.edit') }}"><i class="fa fa-newspaper-o"></i>Hot Post</a></li>--}}
                             <li><a href="{{route('vitrine.page')}}"><i class="fa fa-th"></i>Vitrine</a></li>
                         </ul>
                     </li>
