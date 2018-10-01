@@ -913,36 +913,48 @@ class ProductController extends Controller {
 
         try {
             $dimensao = $this->createDimension($request->ds_largura_variacao, $request->ds_altura_variacao, $request->ds_comprimento_variacao, $request->ds_peso_variacao);
-        } catch (ValidationException $e) {
+        }
+        catch (ValidationException $e) {
             DB::rollBack();
             return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar o tamanho da variação');
-        } catch (QueryException $e) {
+        }
+        catch (QueryException $e) {
             DB::rollBack();
             return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar tamanho do produto');
-        } catch (\PDOException $e) {
+        }
+        catch (\PDOException $e) {
             DB::rollBack();
             return redirect('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
 
-        try {
-            $sku = $this->createSku($request->cd_sku_variacao, $dimensao->cd_dimensao);
-        } catch (ValidationException $e) {
-            DB::rollBack();
-            return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar o SKU da variação');
-        } catch (QueryException $e) {
-            DB::rollBack();
-            return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar SKU do produto');
-        } catch (\PDOException $e) {
-            DB::rollBack();
-            return redirect('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
+        //VERIFICA SE O SKU JA EXISTE
+        $findSku = Sku::where('cd_nr_sku', $request->cd_sku_variacao)->count();
+        if ($findSku != 1){
+            try {
+                $sku = $this->createSku($request->cd_sku_variacao, $dimensao->cd_dimensao);
+            } catch (ValidationException $e) {
+                DB::rollBack();
+                return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar o SKU da variação');
+            } catch (QueryException $e) {
+                DB::rollBack();
+                return redirect('product.register')->with('nosuccess', 'Erro ao cadastrar SKU do produto');
+            } catch (\PDOException $e) {
+                DB::rollBack();
+                return redirect('product.register')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
         }
-
+        else{
+            return redirect()->route('product.variacao', ['cd_produto' => $request->cd_produto_principal])->with('nosuccess', 'Erro ao cadastrar a variação do produto, SKU ja Cadastrado');
+            DB::rollBack();
+        }
+        
         //Tenta cadastrar o produto no banco e captura o erro caso ocorra
         try {
             $produtoVariacao = $this->createProductVariation($request->cd_ean_variacao, $request->nm_produto_variacao, $request->ds_produto_variacao, $val, $request->qt_produto_variacao, $status, $sku->cd_sku, $request->cd_produto_principal, $slugnameVariation);

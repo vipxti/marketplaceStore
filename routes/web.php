@@ -58,7 +58,7 @@ Route::prefix('admin')->group(function () {
 
     //Variação do produto
     Route::post('/product/variation', 'ProductController@cadastrarVariacaoProduto')->name('product.variation.save')->middleware('auth:admin');
-    Route::get('/product/variation/{cd_produto}', 'ProductController@showProductPageVariation')->middleware('auth:admin');
+    Route::get('/product/variation/{cd_produto}', 'ProductController@showProductPageVariation')->name('product.variacao')->middleware('auth:admin');
     Route::get('/product/list/variation/{cd_produto}', 'ProductController@listaProdutoVariacao')->name('lista.variacao')->middleware('auth:admin');
     Route::post('/product/variation/verify/sku', 'ProductController@getVariationProductData')->name('verify.sku.variation.products');
     Route::post('/product/variation/update', 'ProductController@updateVariationProduct')->name('product.variation.update');
