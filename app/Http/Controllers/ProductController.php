@@ -316,6 +316,7 @@ class ProductController extends Controller {
 
         $variation = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
             ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+            ->where('produto.cd_status_produto', '=', 1)
             ->groupBy('produto.cd_produto')
             ->orderBy('produto.cd_produto', 'desc')
             ->paginate(25);/*ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
