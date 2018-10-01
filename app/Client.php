@@ -15,7 +15,7 @@ class Client extends Authenticatable
     public $timestamps = false;
 
     protected $fillable = [
-        'cd_cpf_cnpj', 'nm_cliente', 'email', 'password', 'dt_nascimento', 'im_cliente', 'cd_telefone'
+        'cd_cpf_cnpj', 'nm_cliente', 'sobrenome_cliente', 'email', 'password', 'dt_nascimento', 'im_cliente', 'cd_telefone'
     ];
 
     /**

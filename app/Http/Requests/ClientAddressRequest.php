@@ -27,6 +27,7 @@ class ClientAddressRequest extends FormRequest
 
         return [
             'nm_destinatario' => 'required|string',
+            'sobrenome_destinatario' => 'required|string',
             'cd_cep' => 'required',
             'nm_pais' => 'required',
             'cd_ibge' => 'required',

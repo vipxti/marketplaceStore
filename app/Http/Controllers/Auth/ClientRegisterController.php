@@ -129,7 +129,7 @@ class ClientRegisterController extends Controller
 
             try {
                 $cliente = $this->
-                createClient($request->cd_cpf_cnpj, $request->nm_cliente, $request->email, $request->password, $dtNascimento->
+                createClient($request->cd_cpf_cnpj, $request->nm_cliente, $request->sobrenome_cliente, $request->email, $request->password, $dtNascimento->
                 toDateString(), $imageName, $telefone->cd_telefone);
             }
             catch (\Exception $e) {
@@ -158,11 +158,12 @@ class ClientRegisterController extends Controller
         ]);
     }
 
-    public function createClient($cpfCnpj, $nomeCliente, $email, $senha, $dataNascimento, $imagemCliente, $codTelefone)
+    public function createClient($cpfCnpj, $nomeCliente, $sobrenomeCliente, $email, $senha, $dataNascimento, $imagemCliente, $codTelefone)
     {
         return Client::create([
             'cd_cpf_cnpj' => $cpfCnpj,
             'nm_cliente' => $nomeCliente,
+            'sobrenome_cliente' => $sobrenomeCliente,
             'email' => $email,
             'password' => Hash::make($senha),
             'dt_nascimento' => $dataNascimento,

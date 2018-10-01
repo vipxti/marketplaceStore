@@ -26,6 +26,7 @@ class ClientRequest extends FormRequest
         return [
             'cd_cpf_cnpj' => 'required',
             'nm_cliente' => 'required|string',
+            'sobrenome_cliente' => 'required|string',
             'dt_nascimento' => 'required|date_format:d/m/Y',
             'email' => 'required|string',
             'password' => 'required|string',

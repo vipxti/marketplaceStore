@@ -221,7 +221,12 @@
                                 <tr>
                                     <td>{{ $produto->cd_produto }} </td>
                                     <td>{{ $produto->cd_nr_sku }} </td>
-                                    <td>{{ $produto->nm_produto }} </td>
+                                    @if($produto->cd_status_produto == 1)
+                                        <td>{{ $produto->nm_produto }} <small>&nbsp;&nbsp;&nbsp;(Produto Ativo)</small></td>
+                                    @else
+                                        <td>{{ $produto->nm_produto }} <small style="color: #cc0000;">&nbsp;&nbsp;&nbsp;(Produto Desativado)</small></td>
+                                    @endif
+
                                     <td>R$ {{ str_replace('.', ',', $produto->vl_produto) }} </td>
                                     <td id="qt_produto">{{ str_replace('.', ',', $produto->qt_produto) }} </td>
                                     <td id="colBotoes" class="text-right">
@@ -238,7 +243,7 @@
                                             <button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" disabled style="color: #5a6268"></button>
                                         @endif
 
-                                        <button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>
+                                        {{--<button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>--}}
                                     </td>
                                     {{--<td type="submit" id="btn_atributos" class="btn btn-outline-success" style="color: #008d4c;"><a href="{{ url('/admin/product/variation/' . $produto->cd_produto) }}"><i class="fa fa-plus"></i></a></td>--}}
 

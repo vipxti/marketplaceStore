@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Menu;
 use App\NavigationMenu;
+use App\Product;
+use App\ProductVariation;
 use App\Sku;
+use Egulias\EmailValidator\Validation\Exception\EmptyValidationList;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -291,7 +294,7 @@ class PaymentController extends Controller
         $fk_endereco = $clientData[0]['id_cliente_endereco'];
         //dd($clientData);
 
-        $pagSeguroData['senderName'] = $clientData[0]['nm_cliente'];
+        $pagSeguroData['senderName'] = $clientData[0]['nm_cliente'] . ' ' . $clientData[0]['sobrenome_cliente'];
         $pagSeguroData['senderCPF'] = $clientData[0]['cd_cpf_cnpj'];
 
         $senderAreaCode = substr($clientData[0]['cd_celular1'], 0, 2);
@@ -398,6 +401,17 @@ class PaymentController extends Controller
             throw $e;
         }
 
+        try{
+            foreach ($cartProducts as $key => $product) {
+                $sku = Sku::where('cd_nr_sku', '=', $product['skuProduto'])->get();
+                $this->updateEstoqueProduto($sku, strval($product['qtdIndividual']));
+            }
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Houve um problema na baixa do estoque');
+        }
+
         DB::commit();
 
         return redirect()->route('payment.result');
@@ -439,7 +453,7 @@ class PaymentController extends Controller
 
         //dd($fk_endereco);
 
-        $pagSeguroData['senderName'] = $clientData[0]['nm_cliente'];
+        $pagSeguroData['senderName'] = $clientData[0]['nm_cliente'] . ' ' . $clientData[0]['sobrenome_cliente'];
         $pagSeguroData['senderCPF'] = $clientData[0]['cd_cpf_cnpj'];
 
         $senderAreaCode = substr($clientData[0]['cd_celular1'], 0, 2);
@@ -563,6 +577,17 @@ class PaymentController extends Controller
             throw $e;
         }
 
+        try{
+            foreach ($cartProducts as $key => $product) {
+                $sku = Sku::where('cd_nr_sku', '=', $product['skuProduto'])->get();
+                $this->updateEstoqueProduto($sku, strval($product['qtdIndividual']));
+            }
+        }
+        catch (\Exception $e){
+            DB::rollBack();
+            return redirect()->route('payment.order.ticket.details')->with('nosuccess', 'Houve um problema na baixa do estoque');
+        }
+
         DB::commit();
 
         return redirect()->route('payment.result');
@@ -610,7 +635,7 @@ class PaymentController extends Controller
             ->join('bairro', 'endereco.cd_bairro', 'bairro.cd_bairro')
             ->join('cidade', 'bairro.cd_cidade', 'cidade.cd_cidade')
             ->join('uf', 'cidade.cd_uf', 'uf.cd_uf')
-            ->select('cliente.nm_cliente', 'cliente.cd_cpf_cnpj', 'endereco.ds_endereco',
+            ->select('cliente.nm_cliente', 'cliente.sobrenome_cliente', 'cliente.cd_cpf_cnpj', 'endereco.ds_endereco',
                 'cliente_endereco.id_cliente_endereco', 'cliente_endereco.cd_numero_endereco', 'cliente_endereco.ds_complemento',
                 'endereco.cd_cep', 'bairro.nm_bairro', 'cidade.nm_cidade', 'uf.sg_uf',
                 'cliente.email', 'telefone.cd_celular1')
@@ -654,6 +679,20 @@ class PaymentController extends Controller
             'cd_tipo_pagto' => $codTipoPagamento,
             'qt_produto' => intval($qtdProduto)
         ]);
+    }
+
+    public function updateEstoqueProduto($sku, $qtd_individual){
+        $produto = Product::join('sku', 'sku.cd_sku', '=', 'produto.cd_sku')->where('sku.cd_sku', '=', $sku[0]->cd_sku)->get();
+
+        if(count($produto) > 0 ){
+            $qtd = $produto[0]->qt_produto - $qtd_individual;
+            $produto[0]->update(['qt_produto' => $qtd]);
+        }
+        else{
+            $produto = ProductVariation::join('sku', 'sku.cd_sku', '=', 'produto_variacao.cd_sku')->where('sku.cd_sku', '=', $sku[0]->cd_sku)->get();
+            $qtd = $produto[0]->qt_produto_variacao - $qtd_individual;
+            $produto[0]->update(['qt_produto_variacao' => $qtd]);
+        }
     }
 
     public function clearShippingData()
