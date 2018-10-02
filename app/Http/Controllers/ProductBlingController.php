@@ -532,6 +532,15 @@ class ProductBlingController extends Controller{
         return $response;
     }
 
+    //======================================================================================================
+    //URL CALLBACK CONTROLE ESTOQUE BLING
+    public function controleEstoque($request){
+        $arquivo = fopen("estoque.txt", "a");
+        $texto = $request;
+        fwrite($arquivo, $texto);
+        fclose($arquivo);
+    }
+
 }
 
 
