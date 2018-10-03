@@ -133,6 +133,7 @@
                     <p></p>
                     <div id="botoesBling">
                         <button id="btnBuscaProd" type="button" class="btn btn-primary">Buscar Produtos</button>
+                        {{--<button id="btnEstoque" type="button" class="btn btn-primary">ESTOQUE</button>--}}
 
                         <!-- <button id="btnCategoria" type="button" class="btn btn-info">Buscar Categorias</button> -->
                         {{--<button id="btnTeste" type="button" class="btn btn-info">Buscar Sku</button>--}}
@@ -243,6 +244,23 @@
         $(document).ready(function(){
             var arrayCat = [];
             var arrayCatLoja = [];
+
+            $('#btnEstoque').click(function(){
+                console.log('oi');
+                let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                let retorno = "{\"retorno\":{\"estoques\":[{\"estoque\":{\"codigo\":\"\",\"nome\":\"MASCARA PARA CILIOS DAILUS MAXXI VOLUME DEFINICAO\",\"estoqueAtual\":17,\"depositos\":[{\"deposito\":{\"id\":2075676542,\"nome\":\"Geral - Central Antigo\",\"saldo\":\"5.0000\",\"desconsiderar\":\"N\"}},{\"deposito\":{\"id\":2669259478,\"nome\":\"Dep\u00f3sito - Seguran\u00e7a - Online\",\"saldo\":\"5.0000\",\"desconsiderar\":\"N\"}},{\"deposito\":{\"id\":2825607178,\"nome\":\"Dep\u00f3sito - Loja F\u00edsica\",\"saldo\":\"7.0000\",\"desconsiderar\":\"N\"}},{\"deposito\":{\"id\":2961874450,\"nome\":\"Dep\u00f3sito - Estrat\u00e9gico\",\"saldo\":0,\"desconsiderar\":\"N\"}},{\"deposito\":{\"id\":3035110690,\"nome\":\"Dep\u00f3sito - Sal\u00e3o\",\"saldo\":0,\"desconsiderar\":\"N\"}},{\"deposito\":{\"id\":3140489452,\"nome\":\"Dep\u00f3sito - Alessandra\",\"saldo\":0,\"desconsiderar\":\"N\"}},{\"deposito\":{\"id\":3418509655,\"nome\":\"Dep\u00f3sito - Cuecas\",\"saldo\":0,\"desconsiderar\":\"N\"}}]}}]}}";
+
+                //retorno = JSON.stringify(retorno);
+
+                $.ajax({
+                    url: '{{route("bling.estoque")}}',
+                    type: 'post',
+                    data: {_token: CSRF_TOKEN, retorno: retorno},
+                    success: function(data){
+                        console.log(data.deuErro);
+                    }
+                });
+            });
 
             //=====================================================================================================
             //BOTÃO PARA BUSCAR TODAS AS CATEGORIAS CADASTRADAS NO BLING
