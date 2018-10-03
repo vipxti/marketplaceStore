@@ -7,6 +7,9 @@ use App\BlingStore;
 use App\Category;
 use App\Http\Requests\BlingStoreRequest;
 use App\Http\Requests\ProductRequest;
+use App\Product;
+use App\ProductVariation;
+use App\Sku;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -534,11 +537,30 @@ class ProductBlingController extends Controller{
 
     //======================================================================================================
     //URL CALLBACK CONTROLE ESTOQUE BLING
-    public function controleEstoque($request){
-        $arquivo = fopen("estoque.txt", "a");
-        $texto = $request;
-        fwrite($arquivo, $texto);
-        fclose($arquivo);
+    public function controleEstoque(Request $request){
+
+        $estoque = json_decode($request->data, true);
+
+        $produto = \App\Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+            ->where('sku.cd_nr_sku', '=', $estoque['retorno']['estoques'][0]['estoque']['codigo'])
+            ->get();
+
+        if(count($produto) > 0){
+            \App\Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+                ->where('sku.cd_nr_sku', '=', $estoque['retorno']['estoques'][0]['estoque']['codigo'])
+                ->update(['qt_produto' => $estoque['retorno']['estoques'][0]['estoque']['estoqueAtual']]);
+        }
+        else{
+            $produtoVariacao = \App\ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
+                ->where('sku.cd_nr_sku', '=', $estoque['retorno']['estoques'][0]['estoque']['codigo'])
+                ->get();
+
+            if(count($produtoVariacao) > 0){
+                \App\ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
+                    ->where('sku.cd_nr_sku', '=', $estoque['retorno']['estoques'][0]['estoque']['codigo'])
+                    ->update(['qt_produto_variacao' => $estoque['retorno']['estoques'][0]['estoque']['estoqueAtual']]);
+            }
+        }
     }
 
 }

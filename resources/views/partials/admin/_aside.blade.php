@@ -70,6 +70,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="{{ route('listar.clientes') }}">
+                            <i class="fa fa-users"></i>
+                            <span>Clientes</span>
+                        </a>
+                    </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-book"></i>

@@ -28,6 +28,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/pedido/status', 'OrderController@statusPedido')->name('order.modal.status')->middleware('auth:admin');
     Route::get('/pedido/dynamic_pdf/pdf/{request}', 'DynamicPDFController@pdf')->name('page.print.pdf')->middleware('auth:admin');
 
+    //CLIENTES
+    Route::get('/lista/clientes', 'ClientController@listClientAdmin')->name('listar.clientes')->middleware('auth:admin');
+
     //Cadastro e login de usuário
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');
@@ -124,7 +127,7 @@ Route::prefix('admin')->group(function () {
     //RELATORIO PREÇOS BLING
     Route::get('/relatorio/precos', 'OrderBlingController@indexRelatorioPrecos')->name('relatorio.precos.bling')->middleware('auth:admin');
     //CONTROLE DE ESTOQUE BLING
-    Route::post('/bling/estoque', 'ProductBlingController@controleEstoque')->name('bling.estoque')->middleware('auth:admin');
+    Route::post('/bling/estoque', 'ProductBlingController@controleEstoque')->name('bling.estoque');
 
     Route::get('/data', 'UserController@showUserForm')->name('admin.data')->middleware('auth:admin');
 
