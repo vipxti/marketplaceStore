@@ -26,9 +26,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/pedido/modal', 'OrderController@modalPedido')->name('order.modal.list')->middleware('auth:admin');
     Route::get('/pedido/print/{id}', 'OrderController@printOrder')->name('order.modal.print')->middleware('auth:admin');
     Route::get('/pedido/status', 'OrderController@statusPedido')->name('order.modal.status')->middleware('auth:admin');
-    Route::post('/pedido/dynamic_pdf/pdf', 'DynamicPDFController@pdf')->name('page.print.pdf')->middleware('auth:admin');
-    Route::get('/page/dynamic_pdf', 'DynamicPDFController@index')->name('page.dynamic_pdf')->middleware('auth:admin');
-
+    Route::get('/pedido/dynamic_pdf/pdf/{request}', 'DynamicPDFController@pdf')->name('page.print.pdf')->middleware('auth:admin');
 
     //Cadastro e login de usuário
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');

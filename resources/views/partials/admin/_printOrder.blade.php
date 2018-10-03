@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body onload="window.print();">
-<div class="wrapper p-2">
+    <div class="wrapper p-2">
     <!-- Main content -->
     <section class="invoice">
         <!-- title row -->
@@ -150,7 +150,7 @@
     </section>
     <!-- /.content -->
 </div>
-<!-- ./wrapper -->
+    <!-- ./wrapper -->
 </body>
 
 </html>

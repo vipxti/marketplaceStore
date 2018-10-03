@@ -29,9 +29,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                   {{-- <a href="{{route('page.print.pdf')}}" class="btn pull-right"><i class="fa fa-file-pdf-o"></i>&nbsp;GERAR PDF</a>--}}
-                    <button id="mostraPdf" href="" class="btn btn-danger pull-right"><i class="fa fa-file-pdf-o"></i>&nbsp;GERAR PDF</button>
-                    {{--<a href="{{route('page.dynamic_pdf')}}" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>&nbsp;Page</a>--}}
+                   <a id="rotaPdf" href="" class="btn btn-danger pull-right"><i class="fa fa-file-pdf-o"></i>&nbsp;GERAR PDF</a>
                     <!-- Tabelas dos Pedidos -->
                     <table class="table" id="table">
                         <thead style="border-bottom: none !important;">
@@ -48,7 +46,9 @@
                         <tbody id="tbodyTable">
                         @foreach($listOrder as $order)
                             <tr>
-                                <td><input type="checkbox" class="radionPDF" ></td>
+                                <td>
+                                    <input type="checkbox" class="radionPDF" >
+                                </td>
                                 <td>{{$order->cd_pedido}}</td>
                                 <td>{{ date( 'd/m/Y' , strtotime($order->dt_compra))}}</td>
                                 <td>{{strtoupper($order->nm_destinatario)}}</td>
@@ -100,9 +100,7 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span id="closeModal" aria-hidden="true">&times;</span></button>
                                     <h4 class="modal-title">Pedido&nbsp;<small id="nPedido"></small></h4>
-
                                 </div>
-
                                 <div class="modal-body" style="padding: 25px !important;">
                                     {{--<div class="pad margin no-print">
                                         <div class="callout callout-info" style="margin-bottom: 0!important;">
@@ -112,125 +110,125 @@
                                     </div>--}}
 
                                     <!-- Main content -->
-                                        <!-- title row -->
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <h2 class="page-header">
-                                                    <img id="imLogo" style="margin-left:1.5%; width:112px; height:112px;" src="" alt="">
-                                                    <small class="pull-right">
-                                                        <div id="dtCompra"></div>
-                                                        <br>
-                                                        <h5 id="statusPedido" class="pull-right"></h5>
-                                                    </small>
-                                                    <p id="nmLogoFantasia"></p>
-                                                </h2>
+                                    <!-- title row -->
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <h2 class="page-header">
+                                                <img id="imLogo" style="margin-left:1.5%; width:112px; height:112px;" src="" alt="">
+                                                <small class="pull-right">
+                                                    <div id="dtCompra"></div>
+                                                    <br>
+                                                    <h5 id="statusPedido" class="pull-right"></h5>
+                                                </small>
+                                                <p id="nmLogoFantasia"></p>
+                                            </h2>
 
-                                            </div>
-                                            <!-- /.col -->
                                         </div>
-                                        <!-- info row -->
-                                        <div class="row invoice-info">
-                                            <div class="col-sm-4 invoice-col">
-                                                DE
-                                                <address>
-                                                    <strong ><b id="nmFantasia"></b></strong>
-                                                    <div>Cnpj:&nbsp;<small id="eCnpj"></small></div>
-                                                    <small id="dsEndereco"></small>,&nbsp;nº<small id="nEnd"></small>&nbsp;-&nbsp;<small id="dsComplemento"></small>
-                                                    <small id="nmBairro"></small>,<br><small id="nmCidade"></small>&nbsp;-&nbsp;<small id="sgUf"></small>
-                                                    &nbsp;/&nbsp;Cep:&nbsp;<small id="eCep"></small>
-                                                    <div>Telefone:&nbsp;<small id="ePhone"></small></div>
-                                                </address>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-4 invoice-col">
-                                                PARA
-                                                <address>
-                                                    <strong><b id="cNmDestinatario"></b></strong><br>
-                                                    <small id="cDsEndereco"></small>,&nbsp;nº<small id="cNumeroEndereco"></small><br><small id="cComplemento"></small>&nbsp;-&nbsp;<small id="cDsPontoReferencia"></small><br>
-                                                    <small id="cNmBairro"></small>,&nbsp;<small id="cNmCidade"></small>&nbsp;-&nbsp;<small id="cSgUf"></small>
-                                                    &nbsp;/&nbsp;Cep:&nbsp;<small id="cCep"></small>
-                                                    <div>Telefone:&nbsp;<small id="cCelular1"></small></div>
-                                                    E-Mail:&nbsp;<small id="cEmail"></small>
-                                                </address>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-4 invoice-col">
-                                                <div><b>Cód. PagSeguro:</b>&nbsp;<small id="cdPagseguro" ></small></div>
-                                                <div><b>Cód. Trasação:</b>&nbsp;<small id="cdReferencia" ></small></div>
-                                                <div><b>Nº Pedido:</b>&nbsp;<small id="cPedido" ></small></div>
-                                                <b>Data de Pagamento:</b>&nbsp;<small id="dtAlteracao"></small><br>
-                                                <b>Usuário:</b>&nbsp;<small id="cNmCliente"></small>
-                                            </div>
-                                            <!-- /.col -->
+                                        <!-- /.col -->
+                                    </div>
+                                    <!-- info row -->
+                                    <div class="row invoice-info">
+                                        <div class="col-sm-4 invoice-col">
+                                            DE
+                                            <address>
+                                                <strong ><b id="nmFantasia"></b></strong>
+                                                <div>Cnpj:&nbsp;<small id="eCnpj"></small></div>
+                                                <small id="dsEndereco"></small>,&nbsp;nº<small id="nEnd"></small>&nbsp;-&nbsp;<small id="dsComplemento"></small>
+                                                <small id="nmBairro"></small>,<br><small id="nmCidade"></small>&nbsp;-&nbsp;<small id="sgUf"></small>
+                                                &nbsp;/&nbsp;Cep:&nbsp;<small id="eCep"></small>
+                                                <div>Telefone:&nbsp;<small id="ePhone"></small></div>
+                                            </address>
                                         </div>
-                                        <!-- /.row -->
+                                        <!-- /.col -->
+                                        <div class="col-sm-4 invoice-col">
+                                            PARA
+                                            <address>
+                                                <strong><b id="cNmDestinatario"></b></strong><br>
+                                                <small id="cDsEndereco"></small>,&nbsp;nº<small id="cNumeroEndereco"></small><br><small id="cComplemento"></small>&nbsp;-&nbsp;<small id="cDsPontoReferencia"></small><br>
+                                                <small id="cNmBairro"></small>,&nbsp;<small id="cNmCidade"></small>&nbsp;-&nbsp;<small id="cSgUf"></small>
+                                                &nbsp;/&nbsp;Cep:&nbsp;<small id="cCep"></small>
+                                                <div>Telefone:&nbsp;<small id="cCelular1"></small></div>
+                                                E-Mail:&nbsp;<small id="cEmail"></small>
+                                            </address>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-4 invoice-col">
+                                            <div><b>Cód. PagSeguro:</b>&nbsp;<small id="cdPagseguro" ></small></div>
+                                            <div><b>Cód. Trasação:</b>&nbsp;<small id="cdReferencia" ></small></div>
+                                            <div><b>Nº Pedido:</b>&nbsp;<small id="cPedido" ></small></div>
+                                            <b>Data de Pagamento:</b>&nbsp;<small id="dtAlteracao"></small><br>
+                                            <b>Usuário:</b>&nbsp;<small id="cNmCliente"></small>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                                    <!-- /.row -->
 
-                                        <!-- Table row -->
-                                        <div class="row">
-                                            <div class="col-xs-12 table-responsive">
-                                                <p class="lead">Itens da Venda</p>
-                                                <table id="project-table" class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Código</th>
-                                                            <th>Ean</th>
-                                                            <th>Sku</th>
-                                                            <th>Qtd</th>
-                                                            <th>Nome do Produto</th>
-                                                            <th>Un</th>
-                                                            <th>Total</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="tbodyPedidos"></tbody>
+                                    <!-- Table row -->
+                                    <div class="row">
+                                        <div class="col-xs-12 table-responsive">
+                                            <p class="lead">Itens da Venda</p>
+                                            <table id="project-table" class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Ean</th>
+                                                        <th>Sku</th>
+                                                        <th>Qtd</th>
+                                                        <th>Nome do Produto</th>
+                                                        <th>Un</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbodyPedidos"></tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                                    <!-- /.row -->
+
+                                    <div class="row">
+                                        <!-- accepted payments column -->
+                                        {{--<div class="col-xs-12">
+                                            <p class="lead">Payment Methods:</p>
+                                            <img src="{{ asset('img/admin/credit/visa.png') }}" alt="Visa">
+                                            <img src="{{ asset('img/admin/credit/mastercard.png') }}" alt="Mastercard">
+                                            <img src="{{ asset('img/admin/credit/american-express.png') }}" alt="American Express">
+                                            <img src="{{ asset('img/admin/credit/paypal2.png') }}" alt="Paypal">
+
+                                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                                Observação...
+                                            </p>
+                                        </div>--}}
+                                        <!-- /.col -->
+                                        <div class="col-xs-12">
+                                            <p class="lead">Resumo dos Valores:</p>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th style="width:50%">Sub Total:</th>
+                                                        <td id="vlSTotal"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Frete:</th>
+                                                        <td id="vlFrete"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Total:</th>
+                                                        <td id="vlTotal"></td>
+                                                    </tr>
                                                 </table>
                                             </div>
-                                            <!-- /.col -->
                                         </div>
-                                        <!-- /.row -->
+                                        <!-- /.col -->
+                                    </div>
+                                    <!-- /.row -->
 
-                                        <div class="row">
-                                            <!-- accepted payments column -->
-                                            {{--<div class="col-xs-12">
-                                                <p class="lead">Payment Methods:</p>
-                                                <img src="{{ asset('img/admin/credit/visa.png') }}" alt="Visa">
-                                                <img src="{{ asset('img/admin/credit/mastercard.png') }}" alt="Mastercard">
-                                                <img src="{{ asset('img/admin/credit/american-express.png') }}" alt="American Express">
-                                                <img src="{{ asset('img/admin/credit/paypal2.png') }}" alt="Paypal">
-
-                                                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                                    Observação...
-                                                </p>
-                                            </div>--}}
-                                            <!-- /.col -->
-                                            <div class="col-xs-12">
-                                                <p class="lead">Resumo dos Valores:</p>
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <tr>
-                                                            <th style="width:50%">Sub Total:</th>
-                                                            <td id="vlSTotal"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Frete:</th>
-                                                            <td id="vlFrete"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Total:</th>
-                                                            <td id="vlTotal"></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <!-- /.col -->
+                                    <!-- this row will not appear when printing -->
+                                    <div class="row no-print">
+                                        <div class="col-xs-12">
+                                            <button id="btnPrint" class="btn btn-default" value=""><i class="fa fa-print"></i>&nbsp;Imprimir</button>
                                         </div>
-                                        <!-- /.row -->
-
-                                        <!-- this row will not appear when printing -->
-                                        <div class="row no-print">
-                                            <div class="col-xs-12">
-                                                <button id="btnPrint" class="btn btn-default" value=""><i class="fa fa-print"></i>&nbsp;Imprimir</button>
-                                            </div>
-                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.modal-content -->
@@ -258,19 +256,25 @@
                 ajaxCountTable(++tableRow);
             }
             else{
-                console.log(arrayPedidos);
-                $.ajax({
-                    url: '{{ route('page.print.pdf') }}',
-                    type: 'post',
-                    data: {_token: CSRF_TOKEN, idOders: arrayPedidos},
-                });
-
+                $('#rotaPdf').prop('href', '{{url('admin/pedido/dynamic_pdf/pdf/')}}' + '/' + arrayPedidos);
             }
-
         }
 
         $('#mostraPdf').click(function(){
             ajaxCountTable(0);
+        });
+
+        $('.radionPDF').click(function(){
+           if($(this).is(':checked')){
+               arrayPedidos.push($(this).parent().parent().find('td:eq(1)').text());
+           }
+           else{
+               if(arrayPedidos.includes($(this).parent().parent().find('td:eq(1)').text())){
+                   let itemtoRemove = $(this).parent().parent().find('td:eq(1)').text();
+                   arrayPedidos.splice($.inArray(itemtoRemove, arrayPedidos),1);
+               }
+           }
+            $('#rotaPdf').prop('href', '{{url('admin/pedido/dynamic_pdf/pdf/')}}' + '/' + arrayPedidos);
         });
 
         function print(id) {
