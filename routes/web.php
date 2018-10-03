@@ -27,6 +27,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/pedido/print/{id}', 'OrderController@printOrder')->name('order.modal.print')->middleware('auth:admin');
     Route::get('/pedido/status', 'OrderController@statusPedido')->name('order.modal.status')->middleware('auth:admin');
 
+    //CLIENTES
+    Route::get('/lista/clientes', 'ClientController@listClientAdmin')->name('listar.clientes')->middleware('auth:admin');
+
     //Cadastro e login de usuário
     Route::get('/login', 'Auth\UserLoginController@showAdminLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\UserLoginController@login')->name('admin.login.submit');

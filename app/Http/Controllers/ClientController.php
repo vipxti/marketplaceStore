@@ -28,8 +28,6 @@ class ClientController extends Controller
         $this->middleware('auth');
     }
 
-
-
     public function showClientPage()
     {
         $telCliente = null;
@@ -142,6 +140,13 @@ class ClientController extends Controller
         //dd($listOrder, $idClient);
 
         return view('pages.app.client.dashboard', compact('telCliente', 'endereco', 'menuNav', 'categoriaSubCat', 'menuNavegacao', 'listOrder'));
+    }
+
+    //MOSTRA OS CLIENTES CADASTRADOS NO PAINEL DO ADMIN
+    public function listClientAdmin(){
+        $clientes = Client::join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')->get();
+
+        return view('pages.admin.indexListClient', compact('clientes'));
     }
 
     public function saveClientAddress(ClientAddressRequest $request)
