@@ -7,15 +7,22 @@
     <!-- Nome do destinatário -->
     <div class="row">
 
-        <div class="col-md-12">
-
+        <div class="col-md-6">
             <div class="form-group form-float">
                 <div class="form-line">
                     <input type="text" class="form-control" name="nm_destinatario" required maxlength="50">
                     <label class="form-label">Nome do destinatário</label>
                 </div>
             </div>
+        </div>
 
+        <div class="col-md-6">
+            <div class="form-group form-float">
+                <div class="form-line">
+                    <input type="text" class="form-control" name="sobrenome_destinatario" required maxlength="50">
+                    <label class="form-label">Sobrenome do destinatário</label>
+                </div>
+            </div>
         </div>
 
     </div>

@@ -180,7 +180,7 @@ class PagseguroController extends Controller
         '<data>'. $data .'</data>'.
         '<loja>'. $loja .'</loja>'.
         '<cliente>'.
-        '<nome>'. $pedido[0]->nm_destinatario.'</nome>'.
+        '<nome>'. $pedido[0]->nm_destinatario. ' ' . $pedido[0]->sobrenome_destinatario .'</nome>'.
         '<tipoPessoa>'. $tipoPessoa .'</tipoPessoa>'.
         '<cpf_cnpj>'. $pedido[0]->cd_cpf_cnpj .'</cpf_cnpj>'.
         '<endereco>'. $pedido[0]->ds_endereco .'</endereco>'.
@@ -228,7 +228,7 @@ class PagseguroController extends Controller
             '<data>'. $data .'</data>'.
             '<loja>'. $loja .'</loja>'.
             '<cliente>'.
-            '<nome>'. $pedido[0]->nm_destinatario.'</nome>'.
+            '<nome>'. $pedido[0]->nm_destinatario. ' ' . $pedido[0]->sobrenome_destinatario .'</nome>'.
             '<tipoPessoa>'. $tipoPessoa .'</tipoPessoa>'.
             '<cpf_cnpj>'. $pedido[0]->cd_cpf_cnpj .'</cpf_cnpj>'.
             '<endereco>'. $pedido[0]->ds_endereco .'</endereco>'.

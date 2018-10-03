@@ -257,6 +257,7 @@ class ClientController extends Controller
             $this->associateClientAddress(
                 $endPrincipal,
                 $request->nm_destinatario,
+                $request->sobrenome_destinatario,
                 $request->cd_numero_endereco,
                 $request->ds_complemento,
                 $request->ds_ponto_referencia,
@@ -363,11 +364,14 @@ class ClientController extends Controller
         }
     }
 
-    public function associateClientAddress($principal, $nomeDestinatario, $numero, $complemento, $pontoReferencia,$codEndereco, $codCliente)
+    public function associateClientAddress($principal, $nomeDestinatario, $sobrenomeDestinatario, $numero, $complemento, $pontoReferencia,$codEndereco, $codCliente)
     {
+        //dd($principal, $nomeDestinatario, $sobrenomeDestinatario, $numero, $complemento, $pontoReferencia, $codEndereco, $codCliente);
+
         DB::table('cliente_endereco')->insert([
             'ic_principal' => $principal,
             'nm_destinatario' => $nomeDestinatario,
+            'sobrenome_destinatario' => $sobrenomeDestinatario,
             'cd_numero_endereco' => $numero,
             'ds_complemento' => $complemento,
             'ds_ponto_referencia' => $pontoReferencia,

@@ -585,6 +585,7 @@
             id = id.substr(id.length - 1, id.length);
             let cep = $('#num_cep'+id).text();
             $('.destino_cliente').attr('disabled', true);
+            $('#telaLoading').removeAttr('hidden');
             ajaxFrete(cep);
         });
 
@@ -639,7 +640,7 @@
 
             }
             else {
-
+                $('#telaLoading').removeAttr('hidden');
                 qtd += 1;
 
                 $.ajax({
@@ -676,7 +677,7 @@
 
             }
             else {
-
+                $('#telaLoading').removeAttr('hidden');
                 qtd -= 1;
 
                 $('.qty-minus').attr('disabled');
@@ -775,6 +776,7 @@
 
                     $('#precoFrete').html('R$ ' + precoFrete.replace('.', ','));
                     $('#precoTotal').html('<strong>R$ ' + precoTotal.replace('.', ',') + '</strong>');
+                    $('#telaLoading').attr('hidden', true);
 
                 }
             });

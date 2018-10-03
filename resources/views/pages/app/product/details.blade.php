@@ -19,6 +19,10 @@
             padding: 0px 0px 0px 30px;
         }
 
+        .preco{
+            color: #dc3545;
+        }
+
     </style>
     <!-- Nav bar do produto -->
     <div class="breadcumb_area">
@@ -108,11 +112,11 @@
 
                         @if ($isVariation)
 
-                            <h4 id="precoProduto" class="price">R$ {{ number_format($variations[0]['vl_produto_variacao'], 2, ',', '.') }}</h4>
+                            <h4 id="precoProduto" class="price preco">R$ {{ number_format($variations[0]['vl_produto_variacao'], 2, ',', '.') }}</h4>
 
                         @else
 
-                            <h4 id="precoProduto" class="price">R$ {{ number_format($product[0]['vl_produto'], 2, ',', '.') }}</h4>
+                            <h4 id="precoProduto" class="price preco">R$ {{ number_format($product[0]['vl_produto'], 2, ',', '.') }}</h4>
 
                         @endif
 
@@ -382,6 +386,7 @@
     </section>
 
     <script>
+
         $(document).ready(function(){
             var descricao = $('#desc_prod').val();
             $('#texto_desc').html(descricao);

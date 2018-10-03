@@ -7,7 +7,7 @@
                 <!-- frete Grátis -->
                 <div class="col-lg-4 d-flex justify-content-center justify-content-lg-start">
                     <div class="item d-flex align-items-center">
-                        <div class="icon" style="color:#d59431"><i class="icon-truck"></i></div>
+                        <div class="icon"><i class="icon-truck"></i></div>
                         <div class="text">
                             <h6 class="no-margin text-uppercase">Entregamos todo Brasil</h6><span>Entregas via Correio</span>
                         </div>
@@ -17,7 +17,7 @@
                 <!-- Pagamento Seguro -->
                 <div class="col-lg-4 d-flex justify-content-center">
                     <div class="item d-flex align-items-center">
-                        <div class="icon" style="color:#d59431"><i class="icon-secure-shield"></i></div>
+                        <div class="icon"><i class="icon-secure-shield"></i></div>
                         <div class="text">
                             <h6 class="no-margin text-uppercase">Pagamento Seguro</h6><span>PagSeguro</span>
                         </div>
@@ -27,7 +27,7 @@
                 <!-- Suporte -->
                 <div class="col-lg-4 d-flex justify-content-center">
                     <div class="item d-flex align-items-center">
-                        <div class="icon" style="color:#d59431"><i class="icon-headphones"></i></div>
+                        <div class="icon"><i class="icon-headphones"></i></div>
                         <div class="text">
                             <h6 class="no-margin text-uppercase">13 97424-8882</h6><span>Suporte de Segunda à Sábado</span>
                         </div>
@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="info col-lg-4">
                     <a href="{{ route('index')}}" class="navbar-brand">
-                        <img src="{{asset('img/app/core-img/logo.png')}}">
+                        <img src="{{asset('img/app/core-img/logo1.png')}}">
                     </a>
                     <p></p>
                     <ul class="social-menu list-inline">

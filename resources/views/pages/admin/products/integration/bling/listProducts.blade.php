@@ -283,7 +283,7 @@
                                 //type: 'post',
                                 success: function(data){
                                     objCategoria = JSON.parse(data);
-                                    console.log(objCategoria);
+                                    //console.log(objCategoria);
                                 }
                             })
                                 .done(function(){
@@ -323,15 +323,15 @@
             $('#buscaCategorias').click(function(){
 
                 for(let i = 0; i<arrayCat.length; i++){
-                    console.log("CATEGORIA BLING: " + arrayCat[i].categoria.id);
-                    console.log("DESCRIÇÃO CATEGORIA BLING: " + arrayCat[i].categoria.descricao);
+                    //console.log("CATEGORIA BLING: " + arrayCat[i].categoria.id);
+                    //console.log("DESCRIÇÃO CATEGORIA BLING: " + arrayCat[i].categoria.descricao);
                 }
 
-                console.log('=============================================================');
+                //console.log('=============================================================');
 
                 for(var i=0; i<arrayCatLoja.length; i++){
-                    console.log("CATEGORIA LOJA: " + arrayCatLoja[i].categoria.idCategoria);
-                    console.log("DESCRIÇÃO CATEGORIA LOJA: " + arrayCatLoja[i].categoria.descricaoVinculo);
+                    //console.log("CATEGORIA LOJA: " + arrayCatLoja[i].categoria.idCategoria);
+                    //console.log("DESCRIÇÃO CATEGORIA LOJA: " + arrayCatLoja[i].categoria.descricaoVinculo);
                 }
 
             });
@@ -519,7 +519,7 @@
             //=====================================================================================================
             //BOTÃO BUSCAR PRODUTO POR SKU
             $('#btnPesqSku').click(function(){
-                console.log($('#inputPesqSku').val());
+                //console.log($('#inputPesqSku').val());
                 if($('#inputPesqSku').val().length > 0) {
                     entrouEach = false;
                     $('#resultProd tr').remove();
@@ -593,7 +593,7 @@
             });
 
             $('#btnSalvarProds').click(function(){
-                console.log("oi");
+                //console.log("oi");
 
                 $.blockUI({
                     message: 'Carregando...',
@@ -718,15 +718,16 @@
                                                 temCategoria = true;
                                             });*/
 
-
+                                            console.log("categoria do produto: ");
+                                            console.log(categoriaProd);
                                             for(let i = tamanhoCategoria; i < categoriaProd.length; i++){
                                                 comparaCategorias(categoriaProd[i]);
                                             }
 
-                                            tamanhoCategoria = categoriaProd.length;
+                                            //tamanhoCategoria = categoriaProd.length;
 
-                                            //console.log(arrayCategoriasSistema);
-                                            //console.log(arrayCategoriasProduto);
+                                            console.log(arrayCategoriasSistema);
+                                            console.log(arrayCategoriasProduto);
                                             for(let i = 0; i < arrayCategoriasSistema[0].length; i++){
                                                 console.log(arrayCategoriasSistema[0][i]);
                                                 if(arrayCategoriasProduto.length != 0) {
@@ -1314,8 +1315,8 @@
                     }
 
                 }
-                console.log("arrayCategoriasProduto: ");
-                console.log(arrayCategoriasProduto);
+                //console.log("arrayCategoriasProduto: ");
+                //console.log(arrayCategoriasProduto);
 
             }
 
@@ -1336,14 +1337,14 @@
                             data: {_token: CSRF_TOKEN, cd_sku: skuProduto},
                             dataType: 'JSON',
                             success: function(data){
-                                console.log(skuProduto + ": " + data.message);
+                                //console.log(skuProduto + ": " + data.message);
                                 var temSKU = data.message;
                                 if(temSKU == true){
                                     $('#resultProd').find('tr:eq(' + posColuna + ')').css('color', 'rgb(101, 189, 20)');
                                     $('#resultProd').find('tr:eq('+ posColuna + ')').find('td:eq(7)').find('div').find('input').removeClass('novos_produtos');
-                                    console.log($('#resultProd').find('tr:eq(' + posColuna + ')'));
-                                    console.log('existe sku: ' + skuProduto);
-                                    console.log($('#switch' + posColuna).is(':disabled'));
+                                    //console.log($('#resultProd').find('tr:eq(' + posColuna + ')'));
+                                    //console.log('existe sku: ' + skuProduto);
+                                    //console.log($('#switch' + posColuna).is(':disabled'));
                                 }
                             },
                             error: function(){
@@ -1360,9 +1361,9 @@
                     }
                 }
                 else{
-                    console.log("fim colunas");
-                    console.log($('.btnPaginacao'));
-                    console.log(arrayImagens);
+                    //console.log("fim colunas");
+                    //console.log($('.btnPaginacao'));
+                    //console.log(arrayImagens);
                     $('.btnPaginacao').css('display', 'block');
                     $('#inputEscolhaPag').css('display', 'block');
                     $('.paragrafoPag').removeAttr('hidden');
@@ -1404,7 +1405,7 @@
                 $('.switch').click(function(e){
                     var id=e.target.id;
                     if($(this).parent().find('input#' + id).prop("checked")){
-                        console.log("checked");
+                        //console.log("checked");
                         $(this).val("1");
                         $('input#' + id + "hidden").val("1");
                         $(this).parent().find('input#' + id).attr("checked", "checked");
@@ -1416,7 +1417,7 @@
                     else{
                         $(this).val("0");
                         $('input#' + id + "hidden").val("0");
-                        console.log("unchecked");
+                        //console.log("unchecked");
                         $(this).parent().find('input#' + id).removeAttr("checked");
                         $('input#' + id + "hidden").removeAttr("checked");
                         $(this).parent().parent().parent().removeClass('checkado');
@@ -1480,9 +1481,9 @@
 
             $('#btnTeste').click(function(){
                 for(var i = 0; i < $('#resultProdHidden').children().length; i++){
-                    console.log($('#resultProdHidden').find('tr:eq(' + i + ')'));
+                    //console.log($('#resultProdHidden').find('tr:eq(' + i + ')'));
                     if($('#resultProdHidden').find('tr:eq(' + i + ')').find('td:eq(15)').find('div').find('input').val() == 1) {
-                        console.log($('#resultProdHidden').find('tr:eq(' + i + ')').find('td:eq(15)').find('div').find('input').val());
+                        //console.log($('#resultProdHidden').find('tr:eq(' + i + ')').find('td:eq(15)').find('div').find('input').val());
                     }
                 }
 
@@ -1496,9 +1497,9 @@
             function consultaAssocCatSistBling(){
                 let categoria_bling = '262508';
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                console.log('oi');
+                //console.log('oi');
 
-                console.log(arrayCat);
+                //console.log(arrayCat);
 
                 try {
                     $.ajax({
@@ -1506,8 +1507,9 @@
                         type: 'post',
                         data: {_token: CSRF_TOKEN, categoria: categoria_bling},
                         success: function (data) {
-                            console.log(data);
+                            //console.log(data);
                             arrayCategoriasSistema.push(data.categoria_sistema);
+                            console.log(arrayCategoriasSistema);
                         }
                     })
                         .done(function(){
@@ -1522,7 +1524,7 @@
             var arrayProduto = [];
             function AtivarBotaoSalvar(){
                 $('#btnSalvarProds').click(function(){
-                    console.log("oi");
+                    //console.log("oi");
 
                     $.blockUI({
                         message: 'Carregando...',
@@ -1586,7 +1588,7 @@
                     arrayProduto = [];
                     //if($('#resultProdHidden').find('tr:eq(' + i + ')').hasClass('checkado')){
                     if($('#resultProdHidden').find('tr:eq(' + posProd + ')').find('td:eq(15)').find('div').find('input').val() == 1){
-                        console.log('=============================================');
+                        //console.log('=============================================');
                         for(var j = 0; j<arrayNames.length; j++){
                             if( j == 9 ){
                                 arrayProduto.push(arrayImagens[posProd]);
@@ -1594,11 +1596,11 @@
                             }
                             else if( j == 3){
                                 arrayProduto.push(arrayDesc[posProd]);
-                                console.log("Array Desc: " + arrayDesc[posProd]);
+                                //console.log("Array Desc: " + arrayDesc[posProd]);
                             }
                             else{
                                 arrayProduto.push($('#resultProdHidden').find('tr:eq(' + posProd + ')').find('td:eq(' + j + ')').html());
-                                console.log($('#resultProdHidden').find('tr:eq(' + posProd + ')').find('td:eq(' + j + ')').html());
+                                //console.log($('#resultProdHidden').find('tr:eq(' + posProd + ')').find('td:eq(' + j + ')').html());
                             }
 
                         }
@@ -1610,7 +1612,7 @@
                         colunaProdutos(++posProd);
                     }
                 }else{
-                    console.log("fechou coluna produtos");
+                    //console.log("fechou coluna produtos");
                     $.unblockUI();
                 }
 
@@ -1632,16 +1634,16 @@
                     },
                     error: function(){
                         $.unblockUI();
-                        console.log("ERRO NA COSULTA DO SKU")
+                        //console.log("ERRO NA COSULTA DO SKU")
                         swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){
                     if(!existeSku){
-                        console.log("nao existe sku");
+                        //console.log("nao existe sku");
                         salvarCategoria(array, posProd);
                     }
                     else{
-                        console.log("já existe sku");
+                        //console.log("já existe sku");
                         //colunaProdutos(++posProd);
                         atualizaProduto(array, posProd);
                     }
@@ -1654,8 +1656,8 @@
             //FUNÇÃO PARA ATUALIZAR OS PRODUTOS
 
             function atualizaProduto(array, posProd){
-                console.log("entrou atualiza produto");
-                console.log(array);
+                //console.log("entrou atualiza produto");
+                //console.log(array);
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
@@ -1672,7 +1674,7 @@
                         swal("Erro", "Ocorreu um erro ao atualizar o produto "+ array[1] +", tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){
-                    console.log("atualizou o produto: " + array[1]);
+                    //console.log("atualizou o produto: " + array[1]);
                     colunaProdutos(++posProd);
                 });
             }
@@ -1681,8 +1683,8 @@
             //FUNÇÃO PARA SALVAR AS CATEGORIAS
 
             function salvarCategoria(array, posProd){
-                console.log('/*/*/*/*/*/*/*/*');
-                console.log(array[12]);
+                //console.log('/*/*/*/*/*/*/*/*');
+                //console.log(array[12]);
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                 var cd_categoria = null;
 
@@ -1693,11 +1695,11 @@
                     data: {_token: CSRF_TOKEN, nm_categoria: array[13]},
                     dataType: 'JSON',
                     success: function(data){
-                        console.log(data[0][0].cd_categoria);
+                        //console.log(data[0][0].cd_categoria);
                         cd_categoria = data[0][0].cd_categoria;
                     },
                     error: function(){
-                        console.log("ERRO AO SALVAR A CATEGORIA");
+                        //console.log("ERRO AO SALVAR A CATEGORIA");
                         $.unblockUI();
                         swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
@@ -1705,7 +1707,7 @@
                     salvarSubCat(CSRF_TOKEN, array[11], cd_categoria, array, posProd);
                 });
 
-                console.log('/*/*/*/*/*/*/*/*');
+                //console.log('/*/*/*/*/*/*/*/*');
             }
 
 
@@ -1720,12 +1722,12 @@
                     data: {_token: CSRF_TOKEN, nm_sub_categoria: nm_sub_cat},
                     dataType: 'JSON',
                     success: function (data) {
-                        console.log(data[0][0].cd_sub_categoria);
+                        //console.log(data[0][0].cd_sub_categoria);
                         cd_sub_categoria = data[0][0].cd_sub_categoria;
                     },
                     error: function(){
                         $.unblockUI();
-                        console.log("ERRO AO SALVAR A SUB-CATEGORIA");
+                        //console.log("ERRO AO SALVAR A SUB-CATEGORIA");
                         swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){
@@ -1743,11 +1745,11 @@
                     dataType: 'JSON',
                     data: {_token: CSRF_TOKEN, cd_categoria: cd_categoria, cd_sub_categoria: cd_sub_categoria},
                     success: function(data){
-                        console.log(data.message);
+                        //console.log(data.message);
                     },
                     error: function(){
                         $.unblockUI();
-                        console.log("ERRO AO SALVAR A ASSOCIAÇÃO");
+                        //console.log("ERRO AO SALVAR A ASSOCIAÇÃO");
                         swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){
@@ -1764,15 +1766,15 @@
             //FUNÇÃO PARA SALVAR OS PRODUTOS
 
             function salvarProd(CSRF_TOKEN, cd_categoria, cd_sub_categoria, array, qt_prod, posProd){
-                console.log(array.length);
+                //console.log(array.length);
 
                 for(var i=0; i<array.length; i++){
-                    console.log(array[i]);
+                    //console.log(array[i]);
                 }
 
                 var regInicio = new RegExp("^\\s+");
                 var urls = "";
-                console.log(array[9] + " : " + array[9].length);
+                //console.log(array[9] + " : " + array[9].length);
                 if(array[9].length > 0){
                     urls = array[9].replace(regInicio, '');
                     urls = urls.split(' ');
@@ -1803,7 +1805,7 @@
                     },
                     error: function(){
                         $.unblockUI();
-                        console.log("ERRO AO SALVAR O PRODUTO");
+                        //console.log("ERRO AO SALVAR O PRODUTO");
                         swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){

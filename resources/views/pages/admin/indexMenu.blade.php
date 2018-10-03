@@ -153,7 +153,7 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
 
-                                        @if(count($menuNavegacao) == 0)
+                                        @if($menuNavegacao == 0)
                                             <input type="radio" id="radioMenu" name="radioNav" val="1">
                                             <label for="radioMenu">Menu</label><br>
                                             <input type="radio" id="radioCat" name="radioNav" val="0">

@@ -167,6 +167,7 @@
                             <label>Marketing: <span id="marketingTotal"></span></label>
                         </div>
                         <div class="col-md-2">
+                            <label>Taxa Total: <span id="taxaTotal"></span></label>
                             <label>Resultado Total: <span id="vendaTotalResultado"></span></label>
                         </div>
                     </div>
@@ -366,7 +367,7 @@
         //BOTÃO QUE BUSCA TODOS OS PEDIDOS DO BLING
         var pag = 1;
         $('#btn_busca_pedidos').click(function(){
-            console.log('oi');
+            //console.log('oi');
             $('#btn_calculo').css('display', 'none');
             $('#resultPedido').empty();
             //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -408,8 +409,8 @@
                         let objPedido = JSON.parse(data);
                         objPedido = objPedido.retorno.pedidos;
                         let obj;
-                        console.log(objPedido);
-                        console.log("Tamanho array filtro: " + arrayFiltroCanal.length);
+                        // console.log(objPedido);
+                        // console.log("Tamanho array filtro: " + arrayFiltroCanal.length);
 
                         try {
                             for (let i = 0; i < objPedido.length; i++) {
@@ -522,7 +523,7 @@
                         catch (e) {
                             deuErro = true;
                             pag = 1;
-                            console.log(pag);
+                            // console.log(pag);
                         }
                     },
                     error: function(data){
@@ -556,11 +557,22 @@
             let custoTotal = 0;
             let qtdTotal = 0;
             let freteTotal = 0;
+            taxa_total_canal = 0;
+
             $('#resultPedido').find('tr').each(function(){
                 if(!$(this).hasClass('trDesativa')) {
                     let custo = parseFloat($(this).find('td:eq(5)').text());
                     let qtd = parseFloat($(this).find('td:eq(4)').text());
                     let frete = parseFloat($(this).find('td:eq(7)').text());
+                    let valor_unidade = parseFloat($(this).find('td:eq(3)').text());
+                    valor_unidade = valor_unidade.toFixed(2);
+                    let calc = 0;
+
+                    if(valor_unidade <= 120)
+                        calc = taxa_select * qtd;
+
+                    taxa_total_canal+= calc;
+                    console.log("taxa total " + calc);
                     custoTotal += custo;
                     qtdTotal += qtd;
                     freteTotal += frete;
@@ -570,9 +582,11 @@
             $('#spanCustoTotal').text(custoTotal.toFixed(2));
             $('#spanQtdTotal').text(qtdTotal);
             $('#spanFreteTotal').text(freteTotal.toFixed(2));
+            $('#taxaTotal').text(taxa_total_canal.toFixed(2));
 
         }
 
+        let taxa_total_canal = 0;
         function geraVendaTotal(){
             let vendaTotal = 0;
             let arrayPedido = [];
@@ -588,7 +602,7 @@
                     }
 
                     if (!existeNumero) {
-                        console.log($(this));
+                        //console.log($(this));
                         arrayPedido.push(pedido);
                         let venda = parseFloat($(this).find('td:eq(6)').text());
                         vendaTotal += venda;
@@ -608,7 +622,7 @@
                 option.text(arrayFiltroCanal[i]);
                 option.val(arrayFiltroCanal[i]);
                 $('#filtroCanal').append(option);
-                console.log(jQuery.type(arrayFiltroCanal[i]));
+                //console.log(jQuery.type(arrayFiltroCanal[i]));
                 //console.log(arrayFiltroCanal[i]);
             }
 
@@ -630,7 +644,7 @@
         var arrayPedidos = [];
         $('#btnEscolhaPedido').click(function(){
             $('#btn_calculo').css('display', 'block');
-            console.log('oi');
+            //console.log('oi');
             let numeroPedido = $('#inputEscolhaPedido').val();
             let frete = 0;
             let integracao = "";
@@ -661,14 +675,14 @@
                         let existeNumeroPedido = false;
 
                         if(obj.situacao != "Cancelado"){
-                            console.log(obj);
+                            //console.log(obj);
                             //insere frete do produto no input da frete
                             frete = parseFloat(obj.valorfrete);
                             //insere a integração do produto no input da integração
                             integracao = obj.tipoIntegracao;
 
                             for(let j=0; j<obj.itens.length; j++){
-                                console.log(obj.itens[j].item);
+                                //console.log(obj.itens[j].item);
 
                                 let qtd = Math.trunc(obj.itens[j].item.quantidade);
                                 let custo = parseFloat(obj.itens[j].item.precocusto);
@@ -791,7 +805,7 @@
         //=====================================================================================================
         //BOTÃO DE CALCULAR QUE PASSA VALORES DA TABELA PARA MODAL
         $('#btn_calculo').click(function(){
-            console.log('oi');
+            //console.log('oi');
 
             $('.ulProdutos').remove();
             $('.divForm').remove();
@@ -821,7 +835,7 @@
                 //vai percorrer todas as tds pertencentes a tr
                 $(this).find("td").each(function(){
                     if(contador == 1||contador == 2||contador == 3||contador == 4||contador == 6){
-                        console.log($(this).text());
+                        //console.log($(this).text());
 
                         let li = $("<li></li>");
                         li.addClass("list-group-item");
@@ -987,7 +1001,7 @@
                 $('#resultPedido').find('tr').each(function(){
                     if($(this).find('td:eq(0)').text() == numeroPedido){
                         //$(this).addClass('trBotao');
-                        console.log($(this));
+                        //console.log($(this));
                         let div = $("<div></div>");
                         div.addClass("col-md-6 ulProdutos");
                         let contador = 0;
@@ -1065,7 +1079,7 @@
 
                 $('#resultPedido').find('tr').each(function(){
                     if($(this).find('td:eq(0)').text() == numeroPedido){
-                        console.log($(this));
+                        //console.log($(this));
 
                         valorTotal = parseFloat($(this).find('td:eq(6)').text());
                         arrayCusto.push(parseFloat($(this).find('td:eq(2)').text()));
@@ -1129,7 +1143,7 @@
         //SELECT PARA FAZER O FILTRO DOS DADOS DA TABELA
         $('#filtroCanal').change(function(){
             let valor = $(this).val();
-            console.log(valor);
+            // console.log(valor);
 
             if(valor != "") {
                 if(valor == loja)
@@ -1137,7 +1151,7 @@
 
                 $('#resultPedido').find('tr').each(function () {
                     if ($(this).find('td:eq(9)').text() != valor) {
-                        console.log($(this));
+                        // console.log($(this));
                         $(this).attr('hidden', true).addClass('trDesativa');
                     }
                     else {
@@ -1170,14 +1184,16 @@
                     let pac = pac_select * qtd;
                     let despesa = (despesa_fixa_select / 100) * custoSemFrete;
                     let taxa_cartao = (taxa_cartao_select / 100) * custoSemFrete;
+                    // let taxa = taxa_select * qtd;
                     let marketing = (marketing_select / 100) * custoSemFrete;
-                    let vendaTotal = (custoSemFrete - custoProd - comissao - imposto - pac - despesa - taxa_cartao - marketing);
+                    let vendaTotal = (custoSemFrete - custoProd - comissao - imposto - pac - despesa - taxa_total_canal - taxa_cartao - marketing);
                     $('#comissaoTotal').text(comissao.toFixed(2));
                     $('#impostoTotal').text(imposto.toFixed(2));
                     $('#pacTotal').text(pac.toFixed(2));
                     $('#despesaTotal').text(despesa.toFixed(2));
                     $('#taxaCartaoTotal').text(taxa_cartao.toFixed(2));
                     $('#marketingTotal').text(marketing.toFixed(2));
+                    $('#taxaTotal').text(taxa_total_canal.toFixed(2));
                     $('#vendaTotalResultado').text(vendaTotal.toFixed(2));
                     $('#gerarPDFTabela').css('display', 'block');
                 }
@@ -1189,7 +1205,7 @@
         let comissao_select, taxa_select, imposto_select, pac_select, despesa_fixa_select, taxa_cartao_select, marketing_select;
         $('#taxasCanal').change(function(){
             let id_canal = $(this).val();
-            console.log(id_canal);
+            //console.log(id_canal);
             if(id_canal != "") {
                 $.ajax({
                     url: '{{url('/admin/order/bling/channels')}}/' + id_canal,
@@ -1207,6 +1223,8 @@
                     }
                 }).done(function () {
                     if($('#filtroCanal').val() != "") {
+                        geraCustoTotal();
+                        geraVendaTotal();
                         let custoTotal = parseFloat($('#spanVendaTotal').text());
                         let frete = parseFloat($('#spanFreteTotal').text());
                         let qtd = parseInt($('#spanQtdTotal').text());
@@ -1218,7 +1236,7 @@
                         let despesa = (despesa_fixa_select / 100) * custoSemFrete;
                         let taxa_cartao = (taxa_cartao_select / 100) * custoSemFrete;
                         let marketing = (marketing_select / 100) * custoSemFrete;
-                        let vendaTotal = (custoSemFrete - custoProd - comissao - imposto - pac - despesa - taxa_cartao - marketing);
+                        let vendaTotal = (custoSemFrete - custoProd - comissao - imposto - pac - despesa - taxa_total_canal - taxa_cartao - marketing);
                         $('#comissaoTotal').text(comissao.toFixed(2));
                         $('#impostoTotal').text(imposto.toFixed(2));
                         $('#pacTotal').text(pac.toFixed(2));
@@ -1261,7 +1279,7 @@
                 doc.text('Despesas: R$ ' + $('#spanResultado').text(), 10, 60);
                 doc.setFontSize(12);
                 doc.text('Comissão: ' + $('#input_comissao').val() + '% /R$ ' + $('#spanComissao').text(), 10, 70);
-                doc.text('Tx. Canal: ' + $('#input_taxa').val(), 68, 70);
+                doc.text('Tx. Canal: R$ ' + $('#spanTaxa').text(), 68, 70);
                 doc.text('Imposto: ' + $('#input_imposto').val() + '% /R$ ' + $('#spanImposto').text(), 122, 70);
                 doc.text('PAC: R$ ' + $('#input_pac').val(), 172, 70);
 
@@ -1316,7 +1334,7 @@
         //=====================================================================================================
         //BOTÃO PARA GERAR O PDF COM OS DADOS DAS TAXAS DE TODOS OS PEDIDOS DA TABELA
         $('#gerarPDFTabela').click(function(){
-            console.log('oi');
+            //console.log('oi');
             let data = $('#reservation').val().replace(/\s/g, '').split('-');
             let canal = $('#filtroCanal').val();
             let doc = new jsPDF();
@@ -1334,6 +1352,7 @@
             doc.text("Desp. Fixa: R$ " + $('#despesaTotal').text(), 150, 50);
             doc.text("Tx. Cartão: R$ " + $('#taxaCartaoTotal').text(), 10, 60);
             doc.text("Marketing: R$ " + $('#marketingTotal').text(), 60, 60);
+            doc.text("Taxa: R$ " + $('#taxaTotal').text(), 110, 60);
             doc.text("Resultado Final: R$ " + $('#vendaTotalResultado').text(), 10, 70);
             doc.text('___________________________________________________________________________________', 10, 80);
 

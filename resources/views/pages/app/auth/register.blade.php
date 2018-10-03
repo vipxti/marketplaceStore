@@ -35,6 +35,17 @@
                     <div class="col-md-4">
                         <div class="form-group form-float">
                             <div class="form-line">
+                                <input id="sobrenomeCliente" type="text" class="form-control" name="sobrenome_cliente" required maxlength="50">
+                                <label class="form-label">Sobrenome</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="offset-md-2 col-md-8">
+                        <div class="form-group form-float">
+                            <div class="form-line">
                                 <input id="emailCliente" type="email" class="form-control" name="email" required maxlength="50">
                                 <label class="form-label">Email</label>
                             </div>
