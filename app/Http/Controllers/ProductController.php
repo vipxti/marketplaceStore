@@ -954,7 +954,7 @@ class ProductController extends Controller {
             return redirect()->route('product.variacao', ['cd_produto' => $request->cd_produto_principal])->with('nosuccess', 'Erro ao cadastrar a variação do produto, SKU ja Cadastrado');
             DB::rollBack();
         }
-        
+
         //Tenta cadastrar o produto no banco e captura o erro caso ocorra
         try {
             $produtoVariacao = $this->createProductVariation($request->cd_ean_variacao, $request->nm_produto_variacao, $request->ds_produto_variacao, $val, $request->qt_produto_variacao, $status, $sku->cd_sku, $request->cd_produto_principal, $slugnameVariation);

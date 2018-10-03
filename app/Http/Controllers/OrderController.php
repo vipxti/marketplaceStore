@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Order;
+use Illuminate\Support\Facades\App;
+use PDF ;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller{
+    //Listas os Pedidos na Tela
     public function listOrder(){
 
         $listOrder = DB::table('pedido')
@@ -18,6 +21,7 @@ class OrderController extends Controller{
         return view('pages.admin.listOrder', compact('listOrder'));
     }
 
+    //Impressão dos Pedidos na lista
     public function printOrder($id){
 
         $dadosEmpresa = DB::table('dados_empresa')
@@ -131,6 +135,7 @@ class OrderController extends Controller{
         ));
     }
 
+    //Detalhes do pedito
     public function modalPedido(Request $request){
         $modalPedido = $this->pedido($request->idOder);
 
@@ -139,6 +144,7 @@ class OrderController extends Controller{
         ]);
     }
 
+    //Busca Pedido No banco de Dados
     public function pedido($id){
         $dadosEmpresa = DB::table('dados_empresa')
             ->join('telefone', 'dados_empresa.fk_cd_telefone', '=', 'telefone.cd_telefone')
@@ -253,6 +259,7 @@ class OrderController extends Controller{
         ]);
     }
 
+    //Mostra Status do Pedido No menuAside
     public function statusPedido(){
         $stPedidos = Order::all('cd_status');
 
@@ -260,6 +267,7 @@ class OrderController extends Controller{
         //return view('partials.admin._aside', compact('stPedidos'));
     }
 
+    //Mascaras de TEL/CNPJ/CPF
     function mask($val, $mask){
         $maskared = '';
         $k = 0;

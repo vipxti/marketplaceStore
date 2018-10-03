@@ -16,7 +16,6 @@
 
         <section class="content">
             @include('partials.admin._alerts')
-
             <!-- Default box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -30,21 +29,26 @@
                     </div>
                 </div>
                 <div class="box-body">
+                   {{-- <a href="{{route('page.print.pdf')}}" class="btn pull-right"><i class="fa fa-file-pdf-o"></i>&nbsp;GERAR PDF</a>--}}
+                    <button id="mostraPdf" href="" class="btn btn-danger pull-right"><i class="fa fa-file-pdf-o"></i>&nbsp;GERAR PDF</button>
+                    {{--<a href="{{route('page.dynamic_pdf')}}" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>&nbsp;Page</a>--}}
                     <!-- Tabelas dos Pedidos -->
                     <table class="table" id="table">
                         <thead style="border-bottom: none !important;">
-                        <tr >
-                            <th style="text-align: left; border-bottom: none !important;">Nº Pedido</th>
-                            <th style="text-align: left; border-bottom: none !important;">Data</th>
-                            <th style="text-align: left; border-bottom: none !important;">Destinatario</th>
-                            <th style="text-align: left; border-bottom: none !important;">Código de Referência</th>
-                            <th style="text-align: left; border-bottom: none !important;">Status</th>
-                            <th style="text-align: left; border-bottom: none !important;">Ação</th>
-                        </tr>
+                            <tr>
+                                <th style="text-align: left; border-bottom: none !important;"></th>
+                                <th style="text-align: left; border-bottom: none !important;">Nº Pedido</th>
+                                <th style="text-align: left; border-bottom: none !important;">Data</th>
+                                <th style="text-align: left; border-bottom: none !important;">Destinatario</th>
+                                <th style="text-align: left; border-bottom: none !important;">Código de Referência</th>
+                                <th style="text-align: left; border-bottom: none !important;">Status</th>
+                                <th style="text-align: left; border-bottom: none !important;">Ação</th>
+                            </tr>
                         </thead>
-                        <tbody >
+                        <tbody id="tbodyTable">
                         @foreach($listOrder as $order)
                             <tr>
+                                <td><input type="checkbox" class="radionPDF" ></td>
                                 <td>{{$order->cd_pedido}}</td>
                                 <td>{{ date( 'd/m/Y' , strtotime($order->dt_compra))}}</td>
                                 <td>{{strtoupper($order->nm_destinatario)}}</td>
@@ -241,8 +245,34 @@
 
     <script src="{{asset('js/admin/jquery.cookie.js')}}"></script>
     <script>
-
         const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        //ENVIA ARRAY CO ID PRA IMPRESSÃO
+        let arrayPedidos = [];
+        function ajaxCountTable(tableRow){
+            let tamanhoTable = $('#table tr').length;
+            if(tableRow <= tamanhoTable) {
+                if($('#tbodyTable tr:eq(' + tableRow + ')>td:first').find('.radionPDF').is(':checked')){
+                    arrayPedidos.push($('#tbodyTable tr:eq(' + tableRow + ')>td:eq(1)').text());
+                }
+                ajaxCountTable(++tableRow);
+            }
+            else{
+                console.log(arrayPedidos);
+                $.ajax({
+                    url: '{{ route('page.print.pdf') }}',
+                    type: 'post',
+                    data: {_token: CSRF_TOKEN, idOders: arrayPedidos},
+                });
+
+            }
+
+        }
+
+        $('#mostraPdf').click(function(){
+            ajaxCountTable(0);
+        });
+
         function print(id) {
             window.open('{{ url('admin/pedido/print/') }}' + '/' + id, '_blank');
         }
@@ -392,7 +422,6 @@
                             )
                         )
                     });
-
                 }
             });
         }
