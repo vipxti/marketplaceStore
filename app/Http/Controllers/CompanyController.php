@@ -386,7 +386,9 @@ class CompanyController extends Controller
 
         //$dadosEmpresa = $this->CompanyData();
 
-        return view('pages.admin.cadDadosEmpresa');
+        //return view('pages.admin.cadDadosEmpresa');
+
+        return redirect()->route('admin.dashboard')->with('success', 'Dados da Empresa Cadastrados com Sucesso');
 
     }
 

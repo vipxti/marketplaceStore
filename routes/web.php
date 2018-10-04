@@ -168,6 +168,10 @@ Route::prefix('admin')->group(function () {
     Route::post('pagseguro/atualiza/situacao', 'PagseguroController@atualizaPedidos')->name('pagseguro.atualiza.situacao')->middleware('auth:admin');
     Route::post('pagseguro/url/retorno', 'PagseguroController@urlRetorno')->name('pagseguro.url.retorno');
 
+    //GOOGLE SHOP
+    Route::get('googleshop', 'GoogleShopController@index')->name('googleshop.page')->middleware('auth:admin');
+    Route::get('googleshop/xml', 'GoogleShopController@indexXml')->name('googleshop.page.xml')->middleware('auth:admin');
+    Route::get('googleshop/xml/document', 'GoogleShopController@gerarXML')->name('googleshop.xml')->middleware('auth:admin');
 
     Route::get('/', 'HomeController@showIndexAdminPage')->name('admin.dashboard')->middleware('auth:admin');
     Route::get('/products/list', 'ProductController@listaProduto')->name('products.list')->middleware('auth:admin');

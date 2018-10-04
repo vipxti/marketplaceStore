@@ -189,7 +189,7 @@
                             <li class="treeview">
                                 <a href="javascript:void(0)" style="padding-left: 8px;">
                                     <img src="{{asset('img/admin/pagseguro.png')}}" style="width: 18px; height: 15px;">
-                                    <span>PagSeguro</span>
+                                    <span>&nbsp;&nbsp;PagSeguro</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -197,8 +197,25 @@
                                 <ul class="treeview-menu">
                                     <li>
                                         <a href="{{route('pagseguro.page')}}">
-                                            <i class="fa fa-search"></i>
+                                            <i class="fa fa-file-text"></i>
                                             Pedidos PagSeguro
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="javascript:void(0)" style="padding-left: 8px;">
+                                    <img src="{{asset('img/admin/google shop.png')}}" style="width: 18px; height: 15px;">
+                                    <span>&nbsp;&nbsp;Google Shop</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{{route('googleshop.page')}}">
+                                            <i class="fa fa-file-code-o"></i>
+                                            Gerar XML
                                         </a>
                                     </li>
                                 </ul>
