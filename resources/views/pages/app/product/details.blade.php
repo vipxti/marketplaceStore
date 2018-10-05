@@ -528,10 +528,12 @@
 
                             if (d.sizeType == 'N') {
                                 $('.listaDeTamanhos').append('<li class="' + v.cd_nr_sku + '"><a id="' + v.cd_nr_sku + '" name="sizes[]" href="javascript:void(0);">' + v.nm_tamanho_num + '</a></li>&nbsp;&nbsp;');
+                                $("#tamanhos").removeAttr('hidden');
                             }
 
                             if (d.sizeType == 'L') {
                                 $('.listaDeTamanhos').append('<li class="' + v.cd_nr_sku + '"><a id="' + v.cd_nr_sku + '" name="sizes[]" href="javascript:void(0);">' + v.nm_tamanho_letra + '</a></li>&nbsp;&nbsp;');
+                                $("#tamanhos").removeAttr('hidden');
                             }
 
                         });

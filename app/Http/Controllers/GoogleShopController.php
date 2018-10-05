@@ -24,8 +24,50 @@ class GoogleShopController extends Controller
                     ->where('produto.nm_marca', '<>', null)
                     ->get();
 
-        return response()->view('pages.admin.products.integration.googleShop.xmlPage', compact('produtos'))
-            ->header('Content-Type', 'text/xml');
+        $xml = '<?xml version="1.0" encoding="utf-8"?>';
+        $xml .= '<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">';
+        $xml .= '<channel>';
+        $xml .= '<title>Maktub Beauty</title>';
+        $xml .= '<link>https://www.maktubbeauty.com.br</link>';
+        $xml .= '<description>Teste</description>';
+
+        foreach($produtos as $p){
+            $xml .= '<item>
+                <g:id>'. $p->cd_nr_sku .'</g:id>
+                <g:title>'. $p->nm_produto .'</g:title>
+                <g:description>'. $p->ds_produto .'</g:description>
+                <g:link>https://www.maktubbeauty.com.br/page/product/'. $p->nm_slug.'</g:link>
+                <g:image_link>http://maktubbeauty.com.br/img/products/'. $p->im_produto .'</g:image_link>
+                <g:condition>new</g:condition>
+                <g:price>R$'. $p->vl_produto .'</g:price>';
+
+                if($p->qt_produto > 5)
+                    $xml .= '<g:availability>in stock</g:availability>';
+                else
+                    $xml .= '<g:availability>preorder</g:availability>';
+
+                $xml .= '<g:shipping>
+                            <g:country>BR</g:country>
+                            <g:service>Standard</g:service>
+                        </g:shipping>
+                        <g:gtin>'. $p->cd_ean .'</g:gtin>
+                        <g:brand>'.$p->nm_marca .'</g:brand>
+                        <g:google_product_category>'. $p->nm_categoria . ' > ' . $p->nm_sub_categoria . '</g:google_product_category>
+                    </item>';
+        }
+
+        $xml .= '</channel>
+                </rss>';
+
+        $arquivo = fopen('produtos.xml', 'w+');
+        fwrite($arquivo, $xml);
+        fclose($arquivo);
+
+//        return response()->view('pages.admin.products.integration.googleShop.xmlPage', compact('produtos'))
+//            ->header('Content-Type', 'text/xml');
+        return response(file_get_contents('produtos.xml'), 200, [
+            'Content-Type' => 'application/xml'
+        ]);
     }
 
     public function gerarXML(){
