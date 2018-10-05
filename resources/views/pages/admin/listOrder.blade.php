@@ -311,7 +311,6 @@
                     $("#sgUf").html(data.dadosPedido.original.dadosEmpresa.sg_uf,);
                     $("#imLogo").attr("src", '/img/company/' + data.dadosPedido.original.dadosEmpresa.im_logo);
 
-
                     // DADDOS Do CLIENTE
                     $("#cNmDestinatario").html(data.dadosPedido.original.dadosCliente.nm_destinatario);
                     $("#cNmCliente").html(data.dadosPedido.original.dadosCliente.nm_cliente);

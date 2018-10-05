@@ -60,7 +60,7 @@
                     {{$dadosCliente[0]->cd_numero_endereco}}
                     &nbsp;-&nbsp;
                     {{$dadosCliente[0]->ds_complemento}}<br>
-                    {{$dadosCliente[0]->nm_bairro}},&nbsp;{{$dadosCliente[0]->nm_cidade}}&nbsp;-&nbsp;{{$dadosCliente[0]->sg_uf}}&nbsp;/&nbsp;Cep:&nbsp;{{$eCep}}<br>
+                    {{$dadosCliente[0]->nm_bairro}},&nbsp;{{$dadosCliente[0]->nm_cidade}}&nbsp;-&nbsp;{{$dadosCliente[0]->sg_uf}}&nbsp;/&nbsp;Cep:&nbsp;{{$cCep}}<br>
                     Cel:&nbsp;{{$cPhone}}<br>
                     Email:&nbsp;{{$dadosCliente[0]->email}}
                 </address>
