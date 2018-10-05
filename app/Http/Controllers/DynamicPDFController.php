@@ -54,7 +54,9 @@ class DynamicPDFController extends Controller{
         $arrayPedidos = [];
         $dataCustomer ='';
         $output = '';
+        $teste = 0;
         foreach ($ids as $id) {
+
             //echo $id;
             $dataCustomer = DB::table('pedido')
                 ->where('pedido.cd_pedido', '=', $id)
@@ -78,8 +80,8 @@ class DynamicPDFController extends Controller{
                     'pedido.dt_compra',
                     'pedido.cd_pagseguro',
                     'pedido.cd_referencia',
-                    'produto.cd_produto',
-                    'produto.cd_ean',
+                    'produto.cd_produto as cdProduto',
+                    'produto.cd_ean as cdEanProduto',
                     'sku.cd_nr_sku',
                     'produto.nm_produto',
                     'produto.ds_produto',
@@ -116,39 +118,44 @@ class DynamicPDFController extends Controller{
         }
         //dd($arrayPedidos);
 
-        foreach ($arrayPedidos as $dataClient){
+
             //dd($dataClient[0]->cd_pedido);
             //$output .= '<h5>Nº Pedido:'.$dataClient[0]->cd_pedido.'</h5><br>'.$dataClient[0]->cd_produto.'<br>'.$dataClient[1]->cdProdutoVariacao;
-            $output = '
+            $output .= '
                 <html>
-                <head>
-                    <meta charset="utf-8">
-                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                    <title>'.$dataCompany[0]->nm_fantasia.'&nbsp;|&nbsp;Pedido:&nbsp;'.$dataClient[0]->cd_pedido.'</title>
-                       <!-- Tell the browser to be responsive to screen width -->
-                    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-                    <!-- Bootstrap 3.3.7 -->
-                    <link rel="stylesheet" href="../../../public/css/app/bootstrap.min.css">
-                    <!-- Font Awesome -->
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                    <!-- Ionicons -->
-                    <link rel="stylesheet" href="../../../public/css/app/ionicons.min.css">
-                    <!-- Theme style -->
-                    <link rel="stylesheet" href="../../../public/css/app/AdminLTE.min.css">
-                
-                    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-                    <!-- WARNING: Respond.js doesn\'t work if you view the page via file:// -->
-                    <!--[if lt IE 9]>
-                        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-                        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-                    <![endif]-->
-                
-                    <!-- Google Font -->
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-                </head>
-                    <style>.page-break {page-break-after:always;}</style>
-                </head>
+                    <head>
+                        <meta charset="utf-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <title>'.$dataCompany[0]->nm_fantasia.'</title>
+                           <!-- Tell the browser to be responsive to screen width -->
+                        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+                        <!-- Bootstrap 3.3.7 -->
+                        <link rel="stylesheet" href="../../../public/css/app/bootstrap.min.css">
+                        <!-- Font Awesome -->
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                        <!-- Ionicons -->
+                        <link rel="stylesheet" href="../../../public/css/app/ionicons.min.css">
+                        <!-- Theme style -->
+                        <link rel="stylesheet" href="../../../public/css/app/AdminLTE.min.css">
+                    
+                        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                        <!-- WARNING: Respond.js doesn\'t work if you view the page via file:// -->
+                        <!--[if lt IE 9]>
+                            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+                            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+                        <![endif]-->
+                    
+                        <!-- Google Font -->
+                        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+                        <style>.page-break {page-break-after:always;}</style>
+                    </head>
                 <body>
+                ';
+
+            foreach ($arrayPedidos as $dataClient){
+                $output .= '<h1>'.$teste.'</h1>';
+                $teste = $teste+1;
+                $output .= '
                     <div class="wrapper">
                         <section class="invoice">
                             <div class="row">
@@ -157,8 +164,9 @@ class DynamicPDFController extends Controller{
                                 </div>
                             </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-4">
+
+                            <div class="row" style="font-size: 10px !important;">
+                                <div class="col-md-4" >
                                     DE
                                     <address>
                                         <strong>'.$dataCompany[0]->nm_fantasia.'</strong><br>
@@ -172,7 +180,7 @@ class DynamicPDFController extends Controller{
                                     </address>
                                 </div>
                                 <p></p>
-                                <div class="col-xs-4">
+                                <div class="col-md-4">
                                     PARA
                                     <address>
                                         <strong>'.$dataClient[0]->nm_destinatario.'</strong><br>
@@ -186,7 +194,7 @@ class DynamicPDFController extends Controller{
                                     </address>
                                 </div>
                                 <p></p>
-                                <div class="col-xs-4">
+                                <div class="col-md-4">
                                     <b>Cód.&nbsp;PagSeguro:&nbsp;</b>'.$dataClient[0]->cd_pagseguro.'<br>
                                     <b>Cód.&nbsp;Trasação:&nbsp;</b>'.$dataClient[0]->cd_referencia.'<br>
                                     <b>Pedido&nbsp;ID:</b>&nbsp;'.$dataClient[0]->cd_pedido.'<br>
@@ -210,43 +218,66 @@ class DynamicPDFController extends Controller{
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                ';
-                                                if(){}
-                                    $output .='
-                                            </tr>
+                ';
+                                            foreach ($dataClient as $produtos){
+                                                if($produtos->nm_produto_variacao == null) {
+                                                    $output .= '<tr>
+                                                        <td>' . $produtos->cdProduto . '</td>
+                                                        <td>' . $produtos->cdEanProduto . '</td>
+                                                        <td>' . $produtos->cd_nr_sku . '</td>
+                                                        <td>' . $produtos->nm_produto . '</td>
+                                                        <td>' . $produtos->qt_produto . '</td>
+                                                        <td>' . str_replace(".", ",", ($produtos->vl_produto)) . '</td>
+                                                        <td>' . str_replace(".", ",", ($produtos->qt_produto * $produtos->vl_produto)) . '</td>
+                                                    </tr>';
+                                                }
+                                                else {
+                                                    $output .= '<tr>
+                                                        <td>' . $produtos->cdProdutoVariacao . '</td>
+                                                        <td>' . $produtos->cd_ean_variacao . '</td>
+                                                        <td>' . $produtos->cd_nr_sku . '</td>
+                                                        <td>' . $produtos->nm_produto_variacao . '</td>
+                                                        <td>' . $produtos->qt_produto . '</td>
+                                                        <td>' . str_replace(".", ",", ($produtos->vl_produto_variacao)) . '</td>
+                                                        <td>' . str_replace(".", ",", ($produtos->qt_produto * $produtos->vl_produto_variacao)) . '</td>
+                                                    </tr>';
+                                                }
+                                            }
+                                $output .='
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                            <p></p>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <div class="table-responsive">
                                         <table class="table">
                                             <tr>
                                                 <th style="width:50%">Sub Total:</th>
-                                                <td>'.($dataClient[0]->vl_total - $dataClient[0]->vl_frete).'</td>
+                                                <td>&nbsp;R$&nbsp;'.str_replace(".", ",", ($dataClient[0]->vl_total - $dataClient[0]->vl_frete)).'</td>
                                             </tr>
                                             <tr>
                                                 <th>Frete:</th>
-                                                <td>'.$dataClient[0]->vl_frete.'</td>
+                                                <td>&nbsp;R$&nbsp;'.str_replace(".", ",", $dataClient[0]->vl_frete).'</td>
                                             </tr>
                                             <tr>
                                                 <th>Total:</th>
-                                                <td>'.$dataClient[0]->vl_total.'</td>
+                                                <td>&nbsp;R$&nbsp;'.str_replace(".", ",", $dataClient[0]->vl_total).'</td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="page-break"></div>
-                            <h1>Page 2</h1>
                         </div>
                     </div>
+                    <div class="page-break"></div>
+                    ';
+            }
+        $output .= '
                 </body>
             </html>
             ';
-        }
 
         return $output;
     }
