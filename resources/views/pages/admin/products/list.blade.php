@@ -436,16 +436,20 @@
                                                     </div>
 
                                                     <div class="col-md-6">
-
                                                         <div class="form-group">
                                                             <label>Marca</label>
                                                             <div class="input-group">
-                                                                <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
-                                                                <input type="text" class="form-control campo_marca" required name="nm_marca">
-                                                            </div>
-                                                            <i class="msg_peso"></i>
-                                                        </div>
+                                                                <span class="input-group-addon"><i class="fa fa-puzzle-piece"></i></span>
+                                                                <select id="marca" class="form-control select2" style="width: 100%;" required name="marca_id_fk">
+                                                                    <option value=""></option>
 
+                                                                    @foreach($marcas as $marca)
+                                                                        <option value="{{ $marca->id_marca }}">{{ $marca->nome_marca}}</option>
+                                                                    @endforeach
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
 
                                                     <div class="col-md-6">
@@ -627,7 +631,7 @@
                             $('.campo_altura').val(data[0][0].ds_altura);
                             $('.campo_comprimento').val(data[0][0].ds_comprimento);
                             $('.campo_peso').val(data[0][0].ds_peso);
-                            $('.campo_marca').val(data[0][0].nm_marca);
+                            $('#marca').val(data[0][0].marca_id_fk);
 
                             if (data[0][0].cd_status_produto == 1) {
                                 console.log("Produto Ativado");

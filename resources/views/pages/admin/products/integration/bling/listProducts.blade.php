@@ -913,7 +913,8 @@
                                             (arrayHead[iB] == "descricaoCurta" && arrayBody[iB] == "") ||
                                             (arrayHead[iB] == "estoqueAtual" && arrayBody[iB] <= 2) ||
                                             (arrayHead[iB] == "pesoBruto" && arrayBody[iB] == "0.000") ||
-                                            (arrayHead[iB] == "descricaoCat" && arrayBody[iB] == "não associado"))
+                                            (arrayHead[iB] == "descricaoCat" && arrayBody[iB] == "não associado") ||
+                                            (arrayHead[iB] == "marca" && arrayBody[iB] == ""))
                                         {
                                             semCatPai = true;
                                             temDisabled = "disabled";
@@ -1235,7 +1236,8 @@
                                             (arrayHead[iB] == "descricaoCurta" && arrayBody[iB] == "") ||
                                             (arrayHead[iB] == "estoqueAtual" && arrayBody[iB] <= 2) ||
                                             (arrayHead[iB] == "pesoBruto" && arrayBody[iB] == "0.000") ||
-                                            (arrayHead[iB] == "descricaoCat" && arrayBody[iB] == "não associado"))
+                                            (arrayHead[iB] == "descricaoCat" && arrayBody[iB] == "não associado") ||
+                                            (arrayHead[iB] == "marca" && arrayBody[iB] == ""))
                                         {
                                             semCatPai = true;
                                             temDisabled = "disabled";
