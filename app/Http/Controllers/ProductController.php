@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Marca;
 use App\Menu;
 use App\Color;
 use App\Dimension;
@@ -525,6 +526,7 @@ class ProductController extends Controller {
         $tamanhosLetras = LetterSize::all();
         $tamanhosNumeros = NumberSize::all();
         $cores = Color::all();
+        $marcas = Marca::all();
         //$produtosVariacao = ProductVariation::join('produto', 'produto.cd_produto', '=', 'produto_variacao.cd_produto')->paginate(25);
         $produtosVariacao = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
             ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
@@ -534,7 +536,7 @@ class ProductController extends Controller {
 
         //dd($produtos);
 
-        return view('pages.admin.products.list', compact('produtos', 'tamanhosLetras', 'tamanhosNumeros', 'cores', 'produtosVariacao'));
+        return view('pages.admin.products.list', compact('produtos', 'tamanhosLetras', 'tamanhosNumeros', 'cores', 'produtosVariacao', 'marcas'));
     }
 
     public function listaProdutoVariacao($id){
@@ -565,8 +567,9 @@ class ProductController extends Controller {
         $tamanhosLetras = LetterSize::all();
         $tamanhosNumeros = NumberSize::all();
         $dimensoes = Dimension::all();
+        $marcas = Marca::all();
 
-        return view('pages.admin.products.register', compact('categorias', 'cores', 'tamanhosLetras', 'tamanhosNumeros', 'dimensoes'));
+        return view('pages.admin.products.register', compact('categorias', 'cores', 'tamanhosLetras', 'tamanhosNumeros', 'dimensoes', 'marcas'));
     }
 
     public function showProductPageVariation($cd_produto)
@@ -681,7 +684,7 @@ class ProductController extends Controller {
         }
 
         try {
-            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname, $request->nm_marca);
+            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname, $request->marca_id_fk);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('product.register')->with('nosuccess', 'Erro ao cadastrar o produto');
@@ -768,6 +771,20 @@ class ProductController extends Controller {
         return redirect()->route('products.list')->with('success', 'Produto principal cadastrado com sucesso');
     }
 
+    public function consultaMarcaProdutoBling($nm_marca){
+        $marca = Marca::where('nome_marca', 'like', $nm_marca)->get();
+        //dd($marca);
+        if(count($marca) == 0){
+            $marca = new Marca;
+            $marca->nome_marca = $nm_marca;
+            $marca->save();
+
+            return $marca->id_marca;
+        }
+
+        return $marca[0]->id_marca;
+    }
+
     public function cadastrarProdutosBling(Request $request)
     {
 
@@ -812,7 +829,8 @@ class ProductController extends Controller {
         }
 
         try {
-            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname, $request->nm_marca);
+            $marca_id_fk = $this->consultaMarcaProdutoBling($request->nm_marca);
+            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname, $marca_id_fk);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -1262,7 +1280,7 @@ class ProductController extends Controller {
         ]);
     }
 
-    public function createProduct($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $codSkuProd, $slugname, $nm_marca)
+    public function createProduct($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $codSkuProd, $slugname, $marca_id_fk)
     {
         return Product::firstOrCreate([
             'cd_ean' => $eanProd,
@@ -1273,7 +1291,7 @@ class ProductController extends Controller {
             'qt_produto' => $qtProd,
             'cd_status_produto' => $statusProd,
             'cd_sku' => $codSkuProd,
-            'nm_marca' => $nm_marca
+            'marca_id_fk' => $marca_id_fk
         ]);
     }
 
@@ -1377,7 +1395,7 @@ class ProductController extends Controller {
 
     //=============================================================================================
     //FUNÇÃO QUE ATUALIZA OS DADOS DOS PRODUTOS
-    public function productUpdate($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $sku, $slugname, $nm_marca)
+    public function productUpdate($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $sku, $slugname, $marca_id_fk)
     {
         $codSku = Sku::where('cd_nr_sku', '=', $sku)->get();
 
@@ -1391,7 +1409,7 @@ class ProductController extends Controller {
         $produto[0]->vl_produto = $valorProd;
         $produto[0]->qt_produto = $qtProd;
         $produto[0]->cd_status_produto = $statusProd;
-        $produto[0]->nm_marca = $nm_marca;
+        $produto[0]->marca_id_fk = $marca_id_fk;
 
         $produto[0]->save();
 
@@ -1539,7 +1557,7 @@ class ProductController extends Controller {
         //=============================================================================================
         //ATUALIZA OS DADOS DO PRODUTO
         try {
-            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname, $request->nm_marca);
+            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname, $request->marca_id_fk);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar o produto');
@@ -1996,7 +2014,8 @@ class ProductController extends Controller {
         //=============================================================================================
         //ATUALIZA OS DADOS DO PRODUTO
         try {
-            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname, $request->nm_marca);
+            $marca_id_fk = $this->consultaMarcaProdutoBling($request->nm_marca);
+            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname, $marca_id_fk);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar o produto');
@@ -2030,7 +2049,7 @@ class ProductController extends Controller {
                     'produto.ds_produto',
                     'produto.vl_produto',
                     'produto.qt_produto',
-                    'produto.nm_marca',
+                    'produto.marca_id_fk',
                     'produto.cd_status_produto',
                     'sku.cd_nr_sku',
                     'dimensao.ds_altura',

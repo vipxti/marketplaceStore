@@ -12,6 +12,6 @@ class Product extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'cd_ean', 'nm_produto', 'ds_produto', 'vl_produto', 'nm_slug', 'qt_produto', 'cd_status_produto', 'cd_sku', 'nm_marca'
+        'cd_ean', 'nm_produto', 'ds_produto', 'vl_produto', 'nm_slug', 'qt_produto', 'cd_status_produto', 'cd_sku', 'marca_id_fk'
     ];
 }

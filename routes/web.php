@@ -93,6 +93,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/color', 'ColorController@showColorForm')->name('color.page')->middleware('auth:admin');
     Route::post('/color/update', 'ColorController@updateColor')->name('color.update');
 
+    //Form marca e cadastro
+    Route::get('/marca', 'MarcaController@index')->name('marca.page')->middleware('auth:admin');
+    Route::post('/marca/save', 'MarcaController@saveMarca')->name('marca.save')->middleware('auth:admin');
+    Route::post('/marca/update', 'MarcaController@updateMarca')->name('marca.update')->middleware('auth:admin');
+    Route::post('/marca/delete', 'MarcaController@deleteMarca')->name('marca.delete')->middleware('auth:admin');
+
     //Integração
     //Bling
     Route::get('/product/bling', 'ProductBlingController@importFromBling')->name('product.list.bling')->middleware('auth:admin');

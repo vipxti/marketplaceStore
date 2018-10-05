@@ -299,9 +299,15 @@
                                         <label>Marca</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-puzzle-piece"></i></span>
-                                            <input type="text" class="form-control campo_marca" required name="nm_marca" min="0">
+                                            <select id="marca" class="form-control select2" style="width: 100%;" required name="marca_id_fk">
+                                                <option value=""></option>
+
+                                                @foreach($marcas as $marca)
+                                                    <option value="{{ $marca->id_marca }}">{{ $marca->nome_marca}}</option>
+                                                @endforeach
+
+                                            </select>
                                         </div>
-                                        <i class="msg_peso"></i>
                                     </div>
 
                                 </div>
