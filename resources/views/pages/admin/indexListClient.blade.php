@@ -26,7 +26,10 @@
                 </div>
                 <div class="box-body">
                     <div class="row col-md-12">
+                        <button id="btnExcel" type="button" class="btn btn-success"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Exportar Para Excel</button>
+
                         <div class="table-responsive">
+                            <br/>
                             <table id="table" class="table table-striped">
                                 <thead>
                                     <tr>
@@ -55,5 +58,19 @@
             </div>
         </section>
     </div>
+
+    <script src="{{asset('js/admin/jquery.base64.js')}}"></script>
+    <script src="{{asset('js/admin/jquery.btechco.excelexport.js')}}"></script>
+    <script>
+        $(function(){
+            $('#btnExcel').click(function(){
+                $("#table").btechco_excelexport({
+                    containerid: "table",
+                    datatype: $datatype.Table,
+                    filename: 'Lista de Clientes'
+                });
+            });
+        });
+    </script>
 
 @stop

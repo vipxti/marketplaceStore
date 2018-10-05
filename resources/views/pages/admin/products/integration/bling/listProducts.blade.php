@@ -646,6 +646,7 @@
                 'nm_produto',
                 'vl_produto',
                 'ds_produto',
+                'marca',
                 'ds_peso',
                 'cd_ean',
                 'ds_largura',
@@ -706,7 +707,7 @@
                                         index == "preco" || index == "descricaoCurta" || index == "pesoBruto" ||
                                         index == "gtin" || index == "larguraProduto" || index == "alturaProduto" ||
                                         index == "profundidadeProduto" || index == "imagem" || index == "estoqueAtual" ||
-                                        index == "produtoLoja"){
+                                        index == "produtoLoja" || index == "marca"){
 
                                         if(index == "produtoLoja"){
                                             var categoriaProd = objProd.retorno.produtos[i].produto.produtoLoja.categoria;
@@ -1033,7 +1034,7 @@
                                         index == "preco" || index == "descricaoCurta" || index == "pesoBruto" ||
                                         index == "gtin" || index == "larguraProduto" || index == "alturaProduto" ||
                                         index == "profundidadeProduto" || index == "imagem" || index == "estoqueAtual" ||
-                                        index == "produtoLoja"){
+                                        index == "produtoLoja" || index == "marca"){
 
                                         if(index == "produtoLoja"){
                                             var categoriaProd = objProd.retorno.produtos[i].produto.produtoLoja.categoria;
@@ -1605,7 +1606,7 @@
                 if(posProd < $('#resultProdHidden').children().length){
                     arrayProduto = [];
                     //if($('#resultProdHidden').find('tr:eq(' + i + ')').hasClass('checkado')){
-                    if($('#resultProdHidden').find('tr:eq(' + posProd + ')').find('td:eq(15)').find('div').find('input').val() == 1){
+                    if($('#resultProdHidden').find('tr:eq(' + posProd + ')').find('td:eq(16)').find('div').find('input').val() == 1){
                         //console.log('=============================================');
                         for(var j = 0; j<arrayNames.length; j++){
                             if( j == 9 ){
@@ -1681,9 +1682,9 @@
                 $.ajax({
                     url: '{{route('bling.product.update')}}',
                     type: 'POST',
-                    data: {_token: CSRF_TOKEN, nm_produto: array[1], cd_sku: array[0], cd_ean: array[5], vl_produto: array[2],
-                        qt_produto: array[14], ds_largura: array[6], ds_altura: array[7], ds_comprimento: array[8],
-                        ds_peso: array[4], ds_produto: array[3]},
+                    data: {_token: CSRF_TOKEN, nm_produto: array[1], cd_sku: array[0], cd_ean: array[6], vl_produto: array[2],
+                        qt_produto: array[15], ds_largura: array[7], ds_altura: array[8], ds_comprimento: array[9],
+                        ds_peso: array[5], ds_produto: array[3], nm_marca: array[4]},
                     success: function(data){
                         //console.log("sucesso: " + data);
                     },
@@ -1710,7 +1711,7 @@
                 $.ajax({
                     url: '{{route('category.bling.save')}}',
                     type: 'POST',
-                    data: {_token: CSRF_TOKEN, nm_categoria: array[13]},
+                    data: {_token: CSRF_TOKEN, nm_categoria: array[14]},
                     dataType: 'JSON',
                     success: function(data){
                         //console.log(data[0][0].cd_categoria);
@@ -1722,7 +1723,7 @@
                         swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function () {
-                    salvarSubCat(CSRF_TOKEN, array[11], cd_categoria, array, posProd);
+                    salvarSubCat(CSRF_TOKEN, array[12], cd_categoria, array, posProd);
                 });
 
                 //console.log('/*/*/*/*/*/*/*/*');
@@ -1771,7 +1772,7 @@
                         swal("Erro", "Ocorreu um erro no processo de salvamento, tente novamente mais tarde.", "warning");
                     }
                 }).done(function(){
-                    var qt_prod = array[14];
+                    var qt_prod = array[15];
 
                     if(qt_prod < 0 )
                         qt_prod = 0;
@@ -1792,7 +1793,7 @@
 
                 var regInicio = new RegExp("^\\s+");
                 var urls = "";
-                //console.log(array[9] + " : " + array[9].length);
+                console.log(array[10] + " : " + array[10].length);
                 if(array[9].length > 0){
                     urls = array[9].replace(regInicio, '');
                     urls = urls.split(' ');
@@ -1814,8 +1815,8 @@
                     type: 'POST',
                     dataType: 'JSON',
                     data: {_token: CSRF_TOKEN, cd_sku: array[0], nm_produto: array[1],
-                        vl_produto: array[2], ds_produto: array[3], ds_peso: array[4],
-                        cd_ean: array[5], ds_largura: array[6], ds_altura: array[7], ds_comprimento: array[8],
+                        vl_produto: array[2], ds_produto: array[3], nm_marca: array[4], ds_peso: array[5],
+                        cd_ean: array[6], ds_largura: array[7], ds_altura: array[8], ds_comprimento: array[9],
                         cd_categoria: cd_categoria, cd_sub_categoria: cd_sub_categoria,
                         qt_produto: qt_prod, status: 'on', images: urls},
                     success: function(data){

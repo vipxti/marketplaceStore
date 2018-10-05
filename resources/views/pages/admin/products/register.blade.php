@@ -254,7 +254,7 @@
                             <!-- Largura, Altura, Comprimento e Peso -->
                             <div class="row">
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
 
                                     <div class="form-group">
                                         <label>Largura</label>
@@ -267,7 +267,7 @@
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
 
                                     <div class="form-group">
                                         <label>Altura</label>
@@ -280,7 +280,7 @@
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
 
                                     <div class="form-group">
                                         <label>Comprimento</label>
@@ -293,7 +293,20 @@
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label>Marca</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-puzzle-piece"></i></span>
+                                            <input type="text" class="form-control campo_marca" required name="nm_marca" min="0">
+                                        </div>
+                                        <i class="msg_peso"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label>Peso (g)</label>

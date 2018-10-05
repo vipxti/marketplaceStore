@@ -681,7 +681,7 @@ class ProductController extends Controller {
         }
 
         try {
-            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname);
+            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname, $request->nm_marca);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('product.register')->with('nosuccess', 'Erro ao cadastrar o produto');
@@ -772,7 +772,7 @@ class ProductController extends Controller {
     {
 
         //dd($request->images);
-
+        //dd($request->all());
         $v = strpos($request->vl_produto, ',');
 
         $slugname = str_slug($request->nm_produto, '-');
@@ -795,6 +795,9 @@ class ProductController extends Controller {
             $dimensao = $this->createDimension($request->ds_largura, $request->ds_altura, $request->ds_comprimento, $request->ds_peso);
         } catch (\Exception $e) {
             DB::rollBack();
+            return response()->json([
+                'message' => 'criar dimensao'
+            ]);
             throw $e;
         }
 
@@ -802,13 +805,19 @@ class ProductController extends Controller {
             $sku = $this->createSku($request->cd_sku, $dimensao->cd_dimensao);
         } catch (\Exception $e) {
             DB::rollBack();
+            return response()->json([
+                'message' => 'criar sku'
+            ]);
             throw $e;
         }
 
         try {
-            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname);
+            $produto = $this->createProduct($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $sku->cd_sku, $slugname, $request->nm_marca);
         } catch (\Exception $e) {
             DB::rollBack();
+            return response()->json([
+                'message' => 'criar produto'
+            ]);
             throw $e;
         }
 
@@ -816,6 +825,9 @@ class ProductController extends Controller {
             $this->associateProductCategorySubcategory($produto->cd_produto, $this->getCategorySubcategoryId($request->cd_categoria, $request->cd_sub_categoria));
         } catch (\Exception $e) {
             DB::rollBack();
+            return response()->json([
+                'message' => 'associar categoria'
+            ]);
             throw $e;
         }
 
@@ -860,6 +872,9 @@ class ProductController extends Controller {
             }
         } catch (\Exception $e) {
             DB::rollBack();
+            return response()->json([
+                'message' => 'Erro imagem'
+            ]);
             //$this->deleteImageFile($imgsPath);
         }
 
@@ -1247,7 +1262,7 @@ class ProductController extends Controller {
         ]);
     }
 
-    public function createProduct($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $codSkuProd, $slugname)
+    public function createProduct($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $codSkuProd, $slugname, $nm_marca)
     {
         return Product::firstOrCreate([
             'cd_ean' => $eanProd,
@@ -1257,7 +1272,8 @@ class ProductController extends Controller {
             'nm_slug' => $slugname,
             'qt_produto' => $qtProd,
             'cd_status_produto' => $statusProd,
-            'cd_sku' => $codSkuProd
+            'cd_sku' => $codSkuProd,
+            'nm_marca' => $nm_marca
         ]);
     }
 
@@ -1361,7 +1377,7 @@ class ProductController extends Controller {
 
     //=============================================================================================
     //FUNÇÃO QUE ATUALIZA OS DADOS DOS PRODUTOS
-    public function productUpdate($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $sku, $slugname)
+    public function productUpdate($eanProd, $nomeProd, $descProd, $valorProd, $qtProd, $statusProd, $sku, $slugname, $nm_marca)
     {
         $codSku = Sku::where('cd_nr_sku', '=', $sku)->get();
 
@@ -1375,6 +1391,7 @@ class ProductController extends Controller {
         $produto[0]->vl_produto = $valorProd;
         $produto[0]->qt_produto = $qtProd;
         $produto[0]->cd_status_produto = $statusProd;
+        $produto[0]->nm_marca = $nm_marca;
 
         $produto[0]->save();
 
@@ -1522,7 +1539,7 @@ class ProductController extends Controller {
         //=============================================================================================
         //ATUALIZA OS DADOS DO PRODUTO
         try {
-            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname);
+            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname, $request->nm_marca);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar o produto');
@@ -1979,7 +1996,7 @@ class ProductController extends Controller {
         //=============================================================================================
         //ATUALIZA OS DADOS DO PRODUTO
         try {
-            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname);
+            $produto = $this->productUpdate($request->cd_ean, $request->nm_produto, $request->ds_produto, $val, $request->qt_produto, $status, $request->cd_sku, $slugname, $request->nm_marca);
         } catch (ValidationException $e) {
             DB::rollBack();
             return redirect()->route('products.list')->with('nosuccess', 'Erro ao atualizar o produto');
@@ -2013,6 +2030,7 @@ class ProductController extends Controller {
                     'produto.ds_produto',
                     'produto.vl_produto',
                     'produto.qt_produto',
+                    'produto.nm_marca',
                     'produto.cd_status_produto',
                     'sku.cd_nr_sku',
                     'dimensao.ds_altura',
