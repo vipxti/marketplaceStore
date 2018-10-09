@@ -254,4 +254,6 @@ Route::prefix('page')->group(function () {
         Route::get('/loja', 'TermsController@TermsLojasegura')->name('terms.lojasegura');
         Route::get('/troca', 'TermsController@TermsTroca')->name('terms.troca');
     });
+
+    Route::post('/enviar/email', 'ContatoController@enviaEmail')->name('enviar.email');
 });

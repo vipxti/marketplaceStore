@@ -14,25 +14,28 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form name="sentMessage" id="contactForm" >
+
+                        <form action="{{ route('enviar.email') }}" method="post" enctype="multipart/form-data">
+                        {{--<form name="sentMessage" id="contactForm" >--}}
+                            {{ csrf_field() }}
                             <div class="row d-flex justify-content-center">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Seu Nome *" id="name" required data-validation-required-message="Digite seu Name.">
+                                        <input type="text" class="form-control" name="nm_cliente" placeholder="Seu Nome *" id="name" required data-validation-required-message="Digite seu Name.">
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Seu E-Mail *" id="email" required data-validation-required-message="Digite seu E-Mail.">
+                                        <input type="email" class="form-control" name="email_cliente" placeholder="Seu E-Mail *" id="email" required data-validation-required-message="Digite seu E-Mail.">
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="form-group">
-                                        <input type="tel" class="form-control" placeholder="Seu Telefone *" id="phone" required data-validation-required-message="Digite seu Número de Telefone.">
+                                        <input type="tel" class="form-control" name="tel_cliente" placeholder="Seu Telefone *" id="phone" required data-validation-required-message="Digite seu Número de Telefone.">
                                         <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                    <textarea class="form-control" placeholder="Sua Mensagem *" id="message" required data-validation-required-message="Digite sua Mensagem." rows="6" maxlength="1500"></textarea>
+                                    <textarea class="form-control" name="msg_cliente" placeholder="Sua Mensagem *" id="message" required data-validation-required-message="Digite sua Mensagem." rows="6" maxlength="1500" style="resize: none;"></textarea>
                                         <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
@@ -67,6 +70,10 @@
             </div>
         </section>
 
+<script>
+    $(function(){
 
+    });
+</script>
 
 @stop
