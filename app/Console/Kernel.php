@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\XmlFeed',
+        'App\Console\Commands\PedidosBling',
     ];
 
     /**
@@ -26,6 +27,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('xml:feed')->everyMinute();
+
+        $schedule->command('pedidos:bling')->everyMinute();
     }
 
     /**

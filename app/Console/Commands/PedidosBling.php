@@ -1,55 +1,76 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Console\Commands;
 
 use App\Order;
-use Illuminate\Http\Request;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class PagseguroController extends Controller
+class PedidosBling extends Command
 {
-    //
-    public function index(){
-        return view('pages.admin.pagSeguroIndex');
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'pedidos:bling';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Busca pedidos do pagseguro e manda para o bling';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
     }
 
-    public function consultaPedido(Request $request){
-        //dd($request->datas);
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
         $token ='4D97A178277542CAAB150D1096002DF1';
         $emailPagseguro = 'vendas@vipx.com.br';
-        $dataInicial = date('Y-m-d', strtotime($request->datas[0]));
-        $dataFinal= date('Y-m-d', strtotime($request->datas[1]));
-
-        //$cod_transacao = '3A448AD1-3381-4153-B28C-64D305074395';
+        $dataInicial = date("Y-m-d", strtotime("-29 day"));
+        $dataFinal= date("Y-m-d");
 
         $url = 'https://ws.pagseguro.uol.com.br/v2/transactions?email='. $emailPagseguro .
+            '&initialDate=' . $dataInicial . 'T00:00'.
+            '&finalDate=' . $dataFinal . 'T00:00'.
+            '&page=1'.
+            '&maxPageResults=100';
+
+        $xml = $this->executeGetTransaction($url, $token);
+        $dados = simplexml_load_string($xml);
+
+        foreach ($dados->transactions->transaction as $dado){
+            $this->atualizaPedidos($dado);
+        }
+
+        for ($i = 2; $i <= $dados->totalPages; $i++){
+            $url = 'https://ws.pagseguro.uol.com.br/v2/transactions?email='. $emailPagseguro .
                 '&initialDate=' . $dataInicial . 'T00:00'.
                 '&finalDate=' . $dataFinal . 'T00:00'.
-                '&page='. $request->pagina.
+                '&page='. $i .
                 '&maxPageResults=100';
 
-        //dd($url);
+            $xml = $this->executeGetTransaction($url, $token);
+            $dados = simplexml_load_string($xml);
 
-        $xml = $this->executeGetTransaction($url, $token);
-        $dados = simplexml_load_string($xml);
-        //dd(count($dados->transactions));
-
-        return response()->json([$dados]);
-    }
-
-    public function consultaPedidoTransacao(Request $request){
-        $token ='4D97A178277542CAAB150D1096002DF1';
-        $emailPagseguro = 'vendas@vipx.com.br';
-
-        $cod_transacao = $request->transacao;
-
-        $url = 'https://ws.pagseguro.uol.com.br/v3/transactions/' . $cod_transacao . '?email=' . $emailPagseguro;
-
-        $xml = $this->executeGetTransaction($url, $token);
-        $dados = simplexml_load_string($xml);
-        //dd($xml);
-
-        return response()->json([$dados]);
+            foreach ($dados->transactions->transaction as $dado){
+                $this->atualizaPedidos($dado);
+            }
+        }
     }
 
     public function executeGetTransaction($url,$token){
@@ -64,50 +85,39 @@ class PagseguroController extends Controller
         return $response;
     }
 
-    public function atualizaPedidos(Request $request){
-        //try {
-            $pedido = Order::where('cd_referencia', '=', $request->referencia)->get();
+    public function atualizaPedidos($dado){
+        $pedido = Order::where('cd_referencia', '=', $dado->reference)->get();
 
-            if (count($pedido) > 0) {
-                if ($pedido[0]->cd_status != $request->status) {
-                    Order::where('cd_referencia', '=', $request->referencia)
-                        ->update(['cd_status' => $request->status,
-                                'dt_alteracao' => $request->data]);
+        if (count($pedido) > 0) {
 
-                    $retorno = '';
-                    if($request->status == 3){
-                        $retorno = $this->inserePedidoBling($request->referencia);
-                    }
+            if ($pedido[0]->cd_status != $dado->status) {
+                $data = explode('T', $dado->lastEventDate);
+                Order::where('cd_referencia', '=', $dado->reference)
+                    ->update(['cd_status' => $dado->status,
+                        'dt_alteracao' => $data[0]]);
 
-                    return response()->json(['deuErro' => false, 'statusAtualizado' => true, 'retorno' => $retorno]);
+                if($dado->status == 3){
+                    $this->inserePedidoBling($dado->reference);
                 }
             }
-        /*}
-        catch (\Exception $ex){
-            return response()->json(['deuErro' => true]);
-        }*/
-
-        return response()->json(['deuErro' => false, 'statusAtualizado' => false]);
-
+        }
     }
 
     public function inserePedidoBling($referencia)
     {
         $variacao = false;
         $pedido = Order::join('cliente', 'pedido.cd_cliente', '=', 'cliente.cd_cliente')
-                        ->join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')
-                        ->join('cliente_endereco', 'pedido.fk_end_entrega_id', '=', 'cliente_endereco.id_cliente_endereco')
-                        ->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')
-                        ->join('pedido_produto', 'pedido.cd_pedido', '=', 'pedido_produto.cd_pedido')
-                        ->join('bairro', 'endereco.cd_bairro', '=', 'bairro.cd_bairro')
-                        ->join('cidade', 'bairro.cd_cidade', '=', 'cidade.cd_cidade')
-                        ->join('uf', 'cidade.cd_uf', '=', 'uf.cd_uf')
-                        ->join('tipo_frete', 'pedido.fk_tipo_frete_id', '=', 'tipo_frete.id_tipo_frete')
-                        ->where('pedido.cd_referencia', '=', $referencia)
-                        ->get();
+            ->join('telefone', 'cliente.cd_telefone', '=', 'telefone.cd_telefone')
+            ->join('cliente_endereco', 'pedido.fk_end_entrega_id', '=', 'cliente_endereco.id_cliente_endereco')
+            ->join('endereco', 'cliente_endereco.cd_endereco', '=', 'endereco.cd_endereco')
+            ->join('pedido_produto', 'pedido.cd_pedido', '=', 'pedido_produto.cd_pedido')
+            ->join('bairro', 'endereco.cd_bairro', '=', 'bairro.cd_bairro')
+            ->join('cidade', 'bairro.cd_cidade', '=', 'cidade.cd_cidade')
+            ->join('uf', 'cidade.cd_uf', '=', 'uf.cd_uf')
+            ->join('tipo_frete', 'pedido.fk_tipo_frete_id', '=', 'tipo_frete.id_tipo_frete')
+            ->where('pedido.cd_referencia', '=', $referencia)
+            ->get();
 
-        //->join('produto', 'pedido_produto.cd_produto', '=', 'produto.cd_produto')
-        //->join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
         $produtos = Order::join('pedido_produto', 'pedido.cd_pedido', '=', 'pedido_produto.cd_pedido')
             ->join('sku', 'pedido_produto.cd_sku', '=', 'sku.cd_sku')
             ->join('produto', 'sku.cd_sku', '=', 'produto.cd_sku')
@@ -124,8 +134,6 @@ class PagseguroController extends Controller
                 ->where('pedido.cd_referencia', '=', $referencia)
                 ->get();
         }
-
-
 
         $dadoUsuario = DB::table('dados_empresa')->get();
         $apikey = $dadoUsuario[0]->cd_api_key;
@@ -153,14 +161,12 @@ class PagseguroController extends Controller
         else
             $xml = $this->geraXmlVariacao($data, $loja, $pedido, $tipoPessoa, $cep, $produtos);
 
-
         $posts = array (
             "apikey" => $apikey,
             "xml" => rawurlencode($xml)
         );
 
-        $retorno = $this->executeSendOrder($url, $posts);
-        return $retorno;
+        $this->executeSendOrder($url, $posts);
     }
 
     public function executeSendOrder($url, $data){
@@ -176,28 +182,28 @@ class PagseguroController extends Controller
 
     public function geraXml($data, $loja, $pedido, $tipoPessoa, $cep, $produtos){
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'.
-        '<pedido>'.
-        '<data>'. $data .'</data>'.
-        '<loja>'. $loja .'</loja>'.
-        '<cliente>'.
-        '<nome>'. $pedido[0]->nm_destinatario. ' ' . $pedido[0]->sobrenome_destinatario .'</nome>'.
-        '<tipoPessoa>'. $tipoPessoa .'</tipoPessoa>'.
-        '<cpf_cnpj>'. $pedido[0]->cd_cpf_cnpj .'</cpf_cnpj>'.
-        '<endereco>'. $pedido[0]->ds_endereco .'</endereco>'.
-        '<numero>'. $pedido[0]->cd_numero_endereco .'</numero>'.
-        '<complemento>'. $pedido[0]->ds_complemento .'</complemento>'.
-        '<bairro>'. $pedido[0]->nm_bairro .'</bairro>'.
-        '<cep>'. $cep .'</cep>'.
-        '<cidade>'. $pedido[0]->nm_cidade .'</cidade>'.
-        '<uf>'. $pedido[0]->sg_uf .'</uf>'.
-        '<celular>'. $pedido[0]->cd_celular1 .'</celular>'.
-        '</cliente>'.
-        '<transporte>'.
-        '<transportadora>'. $pedido[0]->tipo_frete .'</transportadora>'.
-        '<tipo_frete>R</tipo_frete>'.
-        '<servico_correios>'. $pedido[0]->tipo_frete .'</servico_correios>'.
-        '</transporte>'.
-        '<itens>';
+            '<pedido>'.
+            '<data>'. $data .'</data>'.
+            '<loja>'. $loja .'</loja>'.
+            '<cliente>'.
+            '<nome>'. $pedido[0]->nm_destinatario. ' ' . $pedido[0]->sobrenome_destinatario .'</nome>'.
+            '<tipoPessoa>'. $tipoPessoa .'</tipoPessoa>'.
+            '<cpf_cnpj>'. $pedido[0]->cd_cpf_cnpj .'</cpf_cnpj>'.
+            '<endereco>'. $pedido[0]->ds_endereco .'</endereco>'.
+            '<numero>'. $pedido[0]->cd_numero_endereco .'</numero>'.
+            '<complemento>'. $pedido[0]->ds_complemento .'</complemento>'.
+            '<bairro>'. $pedido[0]->nm_bairro .'</bairro>'.
+            '<cep>'. $cep .'</cep>'.
+            '<cidade>'. $pedido[0]->nm_cidade .'</cidade>'.
+            '<uf>'. $pedido[0]->sg_uf .'</uf>'.
+            '<celular>'. $pedido[0]->cd_celular1 .'</celular>'.
+            '</cliente>'.
+            '<transporte>'.
+            '<transportadora>'. $pedido[0]->tipo_frete .'</transportadora>'.
+            '<tipo_frete>R</tipo_frete>'.
+            '<servico_correios>'. $pedido[0]->tipo_frete .'</servico_correios>'.
+            '</transporte>'.
+            '<itens>';
 
         foreach ($produtos as $produto){
             $xml.= '<item>'.
@@ -268,20 +274,5 @@ class PagseguroController extends Controller
             '</pedido>';
 
         return $xml;
-    }
-
-    public function urlRetorno(){
-
-        Order::create([
-            'vl_total' => 11.45,
-            'cd_status' => 3,
-            'cd_referencia' => 'maktub5b70edb216cb68.56229481',
-            'cd_pagseguro' => '3D3AE9A8-D3F9-429E-A27E-D9AC5EF4B141',
-            'dt_compra' => '2018-09-19',
-            'vl_frete' => 0,
-            'cd_cliente' => 2,
-            'fk_end_entrega_id' => 2
-        ]);
-
     }
 }

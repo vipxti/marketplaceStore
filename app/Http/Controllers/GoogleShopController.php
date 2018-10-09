@@ -18,10 +18,10 @@ class GoogleShopController extends Controller
                     ->join('categoria', 'categoria_subcat.cd_categoria', '=', 'categoria.cd_categoria')
                     ->join('sub_categoria', 'categoria_subcat.cd_sub_categoria', '=', 'sub_categoria.cd_sub_categoria')
                     ->join('sku_produto_img', 'sku.cd_sku', '=', 'sku_produto_img.cd_sku')
+                    ->join('marca', 'produto.marca_id_fk', '=', 'marca.id_marca')
                     ->join('img_produto', 'sku_produto_img.cd_img', '=', 'img_produto.cd_img')
                     ->where('produto.cd_status_produto', '=', 1)
                     ->where('img_produto.ic_img_principal', '=', 1)
-                    ->where('produto.nm_marca', '<>', null)
                     ->get();
 
         $xml = '<?xml version="1.0" encoding="utf-8"?>';
