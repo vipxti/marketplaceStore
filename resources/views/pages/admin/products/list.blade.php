@@ -711,6 +711,12 @@
 
                     });
                 });
+
+                $('button#btn_lista_variacao').click(function(){
+                    let cd_prod = $(this).parent().parent().find('td:first').text();
+                    console.log(cd_prod);
+                    window.location.href = '{{ url('/admin/product/list/variation/') }}' + '/' + cd_prod;
+                });
             }
 
             $('#search_button').click(function(){
@@ -737,19 +743,33 @@
                     success: function(data){
                         console.log(data);
 
-                        for(let i = 0; i<data.length; i++){
-                            console.log(data[i]);
+                        for(let i = 0; i<data[0].length; i++){
+                            console.log(data[0][i]);
                             let tr = $('<tr></tr>');
-                            let tdCdProd = $('<td></td>').text(data[i].cd_produto);
-                            let tdSku = $('<td></td>').text(data[i].cd_nr_sku);
-                            let tdNmProd = $('<td></td>').text(data[i].nm_produto);
-                            let tdVlProd = $('<td></td>').text(data[i].vl_produto);
-                            let tdQtdProd = $('<td></td>').text(data[i].qt_produto);
-                            let tdBotoes = '<td id="colBotoes" class="text-right">' +
-                                '<button id="btn_editar" title="Atualizar Produto" class="fa fa-pencil btn btn-outline-warning" data-toggle="modal" data-target="#modal-default" style="color: #367fa9"></button>' +
-                                '<button type="submit" title="Adicionar Variação" id="btn_atributos" class="fa fa-plus btn btn-outline-success" onclick="pagVariacao('+data[i].cd_produto+');" style="color: #008d4c;"></button>' +
-                                '<button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>' +
-                                '</td>';
+                            let tdCdProd = $('<td></td>').text(data[0][i].cd_produto);
+                            let tdSku = $('<td></td>').text(data[0][i].cd_nr_sku);
+                            let tdNmProd = $('<td></td>').text(data[0][i].nm_produto);
+                            let tdVlProd = $('<td></td>').text(data[0][i].vl_produto);
+                            let tdQtdProd = $('<td></td>').text(data[0][i].qt_produto);
+                            let tdBotoes;
+
+                            if(data[1][i].nm_produto_variacao != null && data[1][i].cd_produto == data[0][i].cd_produto)
+                            {
+                                tdBotoes = '<td id="colBotoes" class="text-right">' +
+                                    '<button id="btn_editar" title="Atualizar Produto" class="fa fa-pencil btn btn-outline-warning" data-toggle="modal" data-target="#modal-default" style="color: #367fa9"></button>' +
+                                    '<button type="submit" title="Adicionar Variação" id="btn_atributos" class="fa fa-plus btn btn-outline-success" onclick="pagVariacao(' + data[0][i].cd_produto + ');" style="color: #008d4c;"></button>' +
+                                    //'<button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>' +
+                                    '<button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" style="color: #f39c12"></button>' +
+                                    '</td>';
+                            }
+                            else{
+                                tdBotoes = '<td id="colBotoes" class="text-right">' +
+                                    '<button id="btn_editar" title="Atualizar Produto" class="fa fa-pencil btn btn-outline-warning" data-toggle="modal" data-target="#modal-default" style="color: #367fa9"></button>' +
+                                    '<button type="submit" title="Adicionar Variação" id="btn_atributos" class="fa fa-plus btn btn-outline-success" onclick="pagVariacao(' + data[0][i].cd_produto + ');" style="color: #008d4c;"></button>' +
+                                    //'<button id="btn_excluir" title="Deletar Produto" class="fa fa-trash btn btn-outline-warning" style="color: #cc0000"></button>' +
+                                    '<button id="btn_lista_variacao" title="Listar Variações" class="fa fa-magic btn btn-outline-warning" disabled style="color: #5a6268"></button>' +
+                                    '</td>';
+                            }
 
                             tr.append(tdCdProd, tdSku, tdNmProd, tdVlProd, tdQtdProd, tdBotoes);
                             $('table>tbody').append(tr);
@@ -765,11 +785,6 @@
                 });
             }
 
-            $('button#btn_lista_variacao').click(function(){
-                let cd_prod = $(this).parent().parent().find('td:first').text();
-                console.log(cd_prod);
-                window.location.href = '{{ url('/admin/product/list/variation/') }}' + '/' + cd_prod;
-            });
         });
 
         $('button#btn_excluir').click(function(){

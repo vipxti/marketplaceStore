@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Menu;
 use App\NavigationMenu;
+use App\Phone;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Client;
@@ -120,11 +122,13 @@ class ClientController extends Controller
             ->select(
                 'endereco.ds_endereco',
                 'endereco.cd_cep',
+                'cliente_endereco.id_cliente_endereco',
                 'cliente_endereco.cd_numero_endereco',
                 'cliente_endereco.ic_principal',
                 'cliente_endereco.ds_complemento',
                 'cliente_endereco.ds_ponto_referencia',
                 'cliente_endereco.nm_destinatario',
+                'cliente_endereco.sobrenome_destinatario',
                 'bairro.nm_bairro',
                 'cidade.nm_cidade',
                 'uf.sg_uf'
@@ -290,6 +294,144 @@ class ClientController extends Controller
         return redirect()->route($route)->with('success', 'Endereço cadastrado com sucesso');
     }
 
+    public function updateClientAddress(Request $request)
+    {
+        //dd($request->all());
+
+        /*$route = 'client.dashboard';
+
+        if (Session::has('cartRoute')) {
+            $route = Session::get('cartRoute');
+        }*/
+
+        $replaceCep = str_replace('-', '', $request->cd_cep);
+
+        DB::beginTransaction();
+
+        //PAIS
+        try {
+            $pais = $this->createCountry('Brasil');
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar o país');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar o país');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados pais');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        //UF
+        try {
+            $estado = $this->createState($request->sg_uf, $pais->toArray()[0]['cd_pais']);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar o estado');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar o estado');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados Uf');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        //CIDADE
+        try {
+            $cidade = $this->createCity($request->nm_cidade, $request->cd_ibge, $estado->toArray()[0]['cd_uf']);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar a cidade');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar a cidade');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados Cidade');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        //BAIRRO
+        try {
+            $bairro = $this->createNeighbour($request->nm_bairro, $cidade->toArray()[0]['cd_cidade']);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar o bairro');
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar o bairro');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados Bairro');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        //ENDEREÇO
+        try {
+            $endereco = $this->createAddress($replaceCep, $request->ds_endereco, $bairro->toArray()[0]['cd_bairro']);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar o endereço');
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar o endereço');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados Endereço');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        //ASSOCIA CLIENTE COM ENDERECO
+        try {
+
+            $this->associateClientAddressUpdate(
+                $request->nm_destinatario,
+                $request->sobrenome_destinatario,
+                $request->cd_numero_endereco,
+                $request->ds_complemento,
+                $request->ds_ponto_referencia,
+                $endereco->toArray()[0]['cd_endereco'],
+                Auth::user()->cd_cliente
+            );
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao associar o endereço ao cliente');
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao associar o endereço ao cliente');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        DB::commit();
+
+        return redirect()->route('client.dashboard')->with('success', 'Endereço atualizado com sucesso');
+    }
+
     //INSERT ENDERECO
     public function createCountry($nomePais)
     {
@@ -383,5 +525,91 @@ class ClientController extends Controller
             'cd_endereco' => $codEndereco,
             'cd_cliente' => $codCliente,
         ]);
+    }
+
+    public function associateClientAddressUpdate($nomeDestinatario, $sobrenomeDestinatario, $numero, $complemento, $pontoReferencia,$codEndereco, $codCliente)
+    {
+        //dd($nomeDestinatario, $sobrenomeDestinatario, $numero, $complemento, $pontoReferencia, $codEndereco, $codCliente);
+
+        DB::table('cliente_endereco')
+            ->where('cd_cliente', '=', $codCliente)
+            ->update([
+            'nm_destinatario' => $nomeDestinatario,
+            'sobrenome_destinatario' => $sobrenomeDestinatario,
+            'cd_numero_endereco' => $numero,
+            'ds_complemento' => $complemento,
+            'ds_ponto_referencia' => $pontoReferencia,
+            'cd_endereco' => $codEndereco
+        ]);
+    }
+
+    public function updateClient(Request $request){
+        //dd($request->all());
+        $telefone = $this->formataTelefone($request->cd_celular1);
+        $dtNascimento = $this->formataData($request->dt_nascimento);
+
+        DB::beginTransaction();
+
+        try {
+            $telefone = $this->createPhone($telefone);
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar o telefone do cliente');
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        try {
+            $cliente = Client::where('cd_cpf_cnpj', '=', $request->cd_cpf_cnpj)->get();
+            $cliente = Client::find($cliente[0]->cd_cliente);
+            //dd($cliente);
+            $cliente->nm_cliente = $request->nm_cliente;
+            $cliente->sobrenome_cliente = $request->sobrenome_cliente;
+            $cliente->dt_nascimento = $dtNascimento;
+            $cliente->cd_telefone = $telefone->cd_telefone;
+            $cliente->save();
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao atualizar os dados do cliente');
+        }
+        catch (\PDOException $e) {
+            DB::rollBack();
+            return redirect()->route('client.dashboard')->with('nosuccess', 'Erro ao conectar com o banco de dados');
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        DB::commit();
+        Auth::login($cliente);
+        return redirect()->route('client.dashboard')->with('success', 'Dados atualizados com sucesso');
+    }
+
+    public function createPhone($numTelefone)
+    {
+        return Phone::firstOrCreate([
+            'cd_celular1' => $numTelefone
+        ]);
+    }
+
+    public function formataTelefone($numeroTelefone)
+    {
+        $telFormatado = str_replace('(', '', $numeroTelefone);
+        $telFormatado = str_replace(')', '', $telFormatado);
+        $telFormatado = str_replace('-', '', $telFormatado);
+        $telFormatado = str_replace(' ', '', $telFormatado);
+
+        return $telFormatado;
+    }
+
+    public function formataData($date)
+    {
+        return Carbon::createFromFormat('d/m/Y', $date);
     }
 }

@@ -226,4 +226,5 @@ class ClientRegisterController extends Controller
     {
         return public_path('img/app/clients');
     }
+
 }

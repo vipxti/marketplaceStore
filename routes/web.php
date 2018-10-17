@@ -99,6 +99,11 @@ Route::prefix('admin')->group(function () {
     Route::post('/marca/update', 'MarcaController@updateMarca')->name('marca.update')->middleware('auth:admin');
     Route::post('/marca/delete', 'MarcaController@deleteMarca')->name('marca.delete')->middleware('auth:admin');
 
+    //Form cadastro banner
+    Route::post('/save/banner', 'BannerController@saveBanner')->name('save.banner')->middleware('auth:admin');
+    Route::post('/update/banner', 'BannerController@updateBanner')->name('update.banner')->middleware('auth:admin');
+    Route::post('/delete/banner/{id}', 'BannerController@deleteBanner')->middleware('auth:admin');
+
     //Integração
     //Bling
     Route::get('/product/bling', 'ProductBlingController@importFromBling')->name('product.list.bling')->middleware('auth:admin');
@@ -243,6 +248,8 @@ Route::prefix('page')->group(function () {
         Route::get('/logout', 'Auth\ClientLoginController@clientLogout')->name('client.logout');
         Route::get('/register/{cpf_cnpj}', 'Auth\ClientRegisterController@verificaCpfCnpj');
         Route::post('/address', 'ClientController@saveClientAddress')->name('client.address.save');
+        Route::post('/address/update', 'ClientController@updateClientAddress')->name('client.address.update');
+        Route::post('/update/data', 'ClientController@updateClient')->name('client.update');
         Route::post('/register/verify/email', 'Auth\ClientRegisterController@verificaEmail')->name('client.verify.email');
     });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Banner;
 use App\Client;
 use App\MenuItensVitrine;
 use App\Product;
@@ -19,7 +20,9 @@ class PageController extends Controller
 
     public function showBannerPage()
     {
-        return view('pages.admin.indexBanner');
+        $banner = Banner::all();
+
+        return view('pages.admin.indexBanner', compact('banner'));
     }
 
     public function showCheckout()

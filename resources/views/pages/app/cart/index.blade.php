@@ -574,6 +574,9 @@
                             ajaxRadioButton(shippingPrice, days, type);
                         }
                     }
+                    else{
+                        $('#telaLoading').attr('hidden', true);
+                    }
                 });
         }
 
@@ -709,10 +712,13 @@
             console.log($('#cep').val().length);
 
             let cepValido = verificaCEP();
-            console.log(cepValido)
+            console.log(cepValido);
 
-            if($('#cep').val().length == 8 && cepValido)
+
+            if($('#cep').val().length == 8 && cepValido) {
+                $('#telaLoading').removeAttr('hidden');
                 ajaxFrete($('#cep').val());
+            }
             else{
                 $('#divMaktub').attr('hidden', true);
                 $('#precoPac').html('');

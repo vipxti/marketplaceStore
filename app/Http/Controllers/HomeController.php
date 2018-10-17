@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Banner;
 use App\Category;
 use App\Menu;
 use App\MenuItensVitrine;
@@ -18,6 +19,7 @@ class HomeController extends Controller{
 
         $menuNav =  Menu::all();
         $menuNavegacao = NavigationMenu::all();
+        $banner = Banner::all();
 
 
         if(count($menuNavegacao) > 0) {
@@ -113,7 +115,7 @@ class HomeController extends Controller{
             $nome = null;
         }
         //dd($produtos);
-        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome', 'categoriaSubCat', 'menuNav', 'menuNavegacao', 'arrayVariation'));
+        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome', 'categoriaSubCat', 'menuNav', 'menuNavegacao', 'arrayVariation', 'banner'));
     }
 
     public function showIndexAdminPage()

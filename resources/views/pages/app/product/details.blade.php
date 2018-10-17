@@ -508,10 +508,12 @@
 
                     console.log(d);
                     if(d.cor[0].qt_produto_variacao <= 5){
+                        console.log('menor que 5');
                         $('#pSemEstoque').removeAttr('hidden');
                         $('#divFormProduto').attr('hidden', true);
                     }
                     else{
+                        console.log('maior que 5');
                         $('#divFormProduto').removeAttr('hidden');
                         $('#pSemEstoque').attr('hidden', true);
                     }
@@ -565,10 +567,16 @@
                 success: function (d) {
                     //console.log(d);
 
-                    if(d.variation[0].qt_produto_variacao <= 5)
+                    if(d.variation[0].qt_produto_variacao <= 5) {
                         $('.disponivel').html('Não disponível');
-                    else
+                        $('#pSemEstoque').removeAttr('hidden');
+                        $('#divFormProduto').attr('hidden', true);
+                    }
+                    else {
                         $('.disponivel').html('Em Estoque');
+                        $('#divFormProduto').removeAttr('hidden');
+                        $('#pSemEstoque').attr('hidden', true);
+                    }
 
                     if(ehLi)
                         carroselAdicionaImagem(d);

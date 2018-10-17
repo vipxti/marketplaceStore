@@ -133,7 +133,7 @@
                     <p>&nbsp;</p><p>&nbsp;</p>
                     <div class="row d-flex justify-content-center">
                         <div class="col-12 col-md-3">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUpdateClientData">Atualizar</button>
+                            <button id="btn_dados_pessoais" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUpdateClientData">Atualizar</button>
                         </div>
                     </div>
                 </div>
@@ -382,13 +382,12 @@
             <!-- /.modal-dialog -->
         </div>
 
-
         <!-- Modal novo endereço -->
         @component('pages.app.components.modals.newaddress')                                                
         @endcomponent
 
         <!-- Modal aualizar endereço -->
-        @component('pages.app.components.modals.updateaddress')                                                
+        @component('pages.app.components.modals.updateaddress')
         @endcomponent
 
         <!-- Modal aualizar dados cliente -->
@@ -401,40 +400,50 @@
     <script src="{{asset('js/app/waves.js')}}"></script>
     <script src="{{asset('js/app/input.js')}}"></script>
     <script src="{{asset('js/app/form-validation.js')}}"></script>
+    <script src="{{ asset('js/app/select2.full.min.js') }}"></script>
 
     <script>
-            $('#modalUpdateAddress').on('show.bs.modal', function (e) {
 
-            let button = $(e.relatedTarget)
-            let dataAddress = button.data('address')
-        
-            let modal = $(this)
+        $(function() {
+            //Money Euro
+            $('[data-mask]').inputmask()
+        });
 
-            modal.find('.nm_destinatario').val(dataAddress.nm_destinatario)
-            modal.find('.cd_cep').val(dataAddress.cd_cep)
-            modal.find('.nm_cidade').val(dataAddress.nm_cidade)
-            modal.find('.sg_uf').val(dataAddress.sg_uf)
-            modal.find('.ds_endereco').val(dataAddress.ds_endereco)
-            modal.find('.cd_numero_endereco').val(dataAddress.cd_numero_endereco)
-            modal.find('.ds_complemento').val(dataAddress.ds_complemento)
-            modal.find('.ds_ponto_referencia').val(dataAddress.ds_ponto_referencia)
-            modal.find('.nm_bairro').val(dataAddress.nm_bairro)
+        $('#modalUpdateAddress').on('show.bs.modal', function (e) {
 
-        })
+            let button = $(e.relatedTarget);
+            let dataAddress = button.data('address');
 
-            const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            function print(id) {
-                window.open('{{ url('admin/pedido/print/') }}' + '/' + id, '_blank');
-            }
+            let modal = $(this);
 
-            $('#btnPrint').click(function(){
-                print($(this).val());
-            });
-            $('button.btnPrintList').click(function(){
-                print($(this).val());
-            });
+            modal.find('.nm_destinatario').val(dataAddress.nm_destinatario);
+            modal.find('.sobrenome_destinatario').val(dataAddress.sobrenome_destinatario);
+            modal.find('.id_cliente_endereco').val(dataAddress.id_cliente_endereco);
+            modal.find('.cd_cep').val(dataAddress.cd_cep);
+            modal.find('.nm_cidade').val(dataAddress.nm_cidade);
+            modal.find('.sg_uf').val(dataAddress.sg_uf);
+            modal.find('.ds_endereco').val(dataAddress.ds_endereco);
+            modal.find('.cd_numero_endereco').val(dataAddress.cd_numero_endereco);
+            modal.find('.ds_complemento').val(dataAddress.ds_complemento);
+            modal.find('.ds_ponto_referencia').val(dataAddress.ds_ponto_referencia);
+            modal.find('.nm_bairro').val(dataAddress.nm_bairro);
 
-            function vIdBtn(id){
+        });
+
+        const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        function print(id) {
+            window.open('{{ url('admin/pedido/print/') }}' + '/' + id, '_blank');
+        }
+
+        $('#btnPrint').click(function(){
+            print($(this).val());
+        });
+
+        $('button.btnPrintList').click(function(){
+            print($(this).val());
+        });
+
+        function vIdBtn(id){
                 let idOder = id;
                 $('#tbodyPedidos').empty();
                 $.ajax({

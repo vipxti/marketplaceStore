@@ -480,7 +480,7 @@ class PaymentController extends Controller
         $pagSeguroData['installmentValue'] = strval(number_format($cardInfo[0]['installmentAmount'], 2, '.', ''));
         $pagSeguroData['noInterestInstallmentQuantity'] = 3;
 
-        $pagSeguroData['creditCardHolderName'] = $clientData[0]['nm_cliente'];
+        $pagSeguroData['creditCardHolderName'] = $clientData[0]['nm_cliente'] . ' ' . $clientData[0]['sobrenome_cliente'];
         $pagSeguroData['creditCardHolderCPF'] = $clientData[0]['cd_cpf_cnpj'];
         $pagSeguroData['creditCardHolderBirthDate'] = '15/04/1984';
         $pagSeguroData['creditCardHolderAreaCode'] = $senderAreaCode;

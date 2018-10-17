@@ -64,7 +64,8 @@
     <section class="hero hero-home no-padding">
         <div class="owl-carousel owl-theme hero-slider">
             <!-- Banner 1 -->
-            <div style="background: url({{asset('img/app/bg-img/hero-bg.png')}}); max-height: 535px !important;" class="item has-pattern">
+
+            {{--<div style="background: url({{asset('img/app/bg-img/hero-bg.png')}}); max-height: 535px !important;" class="item has-pattern">
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
@@ -75,14 +76,38 @@
                                 <p>&nbsp;</p>
                             </ul>
                             <p>&nbsp;</p>
-                            {{-- <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
+                            --}}{{--<a target="_blank" class="btn btn-template wide shop-now" href="http://localhost/marketplaceStore/public/page/product/ruby-rose-agua-micelar-ultra-200ml">Saiba Mais</a>--}}{{--
+                            --}}{{-- <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}{{--
                         </div>
                     </div>
                 </div>
             </div>
+--}}
+            @foreach($banner as $b)
+                <div style="background: url({{asset('img/app/banner/' . $b->img_banner)}}); max-height: 535px !important;" class="item has-pattern" title="{{$b->titulo_banner}}">
+                    <div class="container">
+                        <div class="row" style="color: #fff">
+                            <div class="col-lg-6">
+                                <h1 style="color: #d59431;font-size: 2.0rem"></h1>
+                                <ul class="lead">
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
+                                </ul>
+                                <p>&nbsp;</p>
+                                @if($b->url_banner != null)
+                                    <a href="{{$b->url_banner}}" class="btn btn-template wide shop-now">Saiba Mais</a>
+                                @endif
+                                {{-- <a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
 
             <!-- Banner 2 -->
-            <div style="background: url({{asset('img/app/bg-img/hero-bg-2.png')}}); max-height: 535px !important;" class="item has-pattern">
+            {{--<div style="background: url({{asset('img/app/bg-img/hero-bg-2.png')}}); max-height: 535px !important;" class="item has-pattern">
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
@@ -93,14 +118,14 @@
                                 <p>&nbsp;</p>
                             </ul>
                             <p>&nbsp;</p>
-                            {{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
+                            --}}{{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}{{--
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
 
             <!-- Banner 3 -->
-            <div style="background: url({{asset('img/app/bg-img/hero-bg-3.png')}}); max-height: 535px !important;" class="item has-pattern">
+            {{--<div style="background: url({{asset('img/app/bg-img/hero-bg-3.png')}}); max-height: 535px !important;" class="item has-pattern">
                 <div class="container">
                     <div class="row" style="color: #fff">
                         <div class="col-lg-6">
@@ -111,11 +136,11 @@
                                 <p>&nbsp;</p>
                             </ul>
                             <p>&nbsp;</p>
-                            {{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}
+                            --}}{{--<a href="#" class="btn btn-template wide shop-now">Saiba Mais</a>--}}{{--
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
         </div>
     </section>
 

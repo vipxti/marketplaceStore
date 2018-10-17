@@ -1,1 +1,0 @@
-{"estoques":{"estoque":{"codigo":"5678","nome":"Produto 2","estoqueAtual":100}}}{"estoques":{"estoque":{"codigo":"1234","nome":"Produto 1","estoqueAtual":50},"estoque2":{"codigo":"5678","nome":"Produto 2","estoqueAtual":100}}}

@@ -1964,14 +1964,35 @@ class ProductController extends Controller {
                     'produto.qt_produto', 'sku.cd_nr_sku')
                 ->where('produto.nm_produto', 'like', '%'. $request->searchData .'%')
                 ->orWhere('sku.cd_nr_sku', '=', $request->searchData)
-                ->orderBy('produto.cd_produto')
+                ->orderBy('produto.cd_produto', 'desc')
                 ->get();
+
+        $produtosVariacao = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
+            ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+            ->where('produto.nm_produto', 'like', '%'. $request->searchData .'%')
+            ->groupBy('produto.cd_produto')
+            ->orderBy('produto.cd_produto', 'desc')
+            ->get();
+
+        if(count($produto) == 1){
+            $produtosVariacao = ProductVariation::rightJoin('produto', 'produto.cd_produto', 'produto_variacao.cd_produto')
+                ->select('produto.cd_produto', 'produto.nm_slug', 'produto_variacao.nm_produto_variacao')
+                ->where('produto.cd_produto', '=', $produto[0]->cd_produto)
+                ->groupBy('produto.cd_produto')
+                ->orderBy('produto.cd_produto', 'desc')
+                ->get();
+        }
+
+
         //dd($produto);
 
-        if($request->searchData == null)
+        if($request->searchData == null){
             $produto = $produto->take(25);
+            $produtosVariacao = $produtosVariacao->take(25);
+        }
 
-        return $produto;
+        $retorno = ['0' => $produto, '1' => $produtosVariacao];
+        return $retorno;
     }
 
     public function updateBlingProduct(Request $request){
