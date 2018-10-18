@@ -74,6 +74,7 @@
                     <div class="offset-md-4 col-md-4 offset-md-2 text-left" style="text-decoration: none">
                         <div class="checkbox icheck">
                             <a href="{{ route('client.register') }}">Registrar uma nova conta</a>
+                            <a href="{{ route('client.password.request') }}">Esqueci a minha senha</a><br>
                         </div>
                     </div>
                 </div>

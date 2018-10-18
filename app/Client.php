@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\ClientResetPassordNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -9,6 +10,7 @@ class Client extends Authenticatable
 {
     use Notifiable;
 
+    protected $guard = 'user';
     protected $table = 'cliente';
     protected $primaryKey = 'cd_cliente';
 
@@ -26,4 +28,10 @@ class Client extends Authenticatable
     protected $hidden = [
         'password', 'remember_token'
     ];
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new  ClientResetPassordNotification($token));
+    }
+
 }

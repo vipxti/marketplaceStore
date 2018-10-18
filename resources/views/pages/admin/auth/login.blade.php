@@ -42,8 +42,8 @@
             </div>--}}
 
             <br>
-            {{--<a href="{{ route('admin.password.request') }}">Esqueci a minha senha</a><br>
-            <a href="{{ route('admin.register' )}}" class="text-center">Registre uma nova conta</a>--}}
+            <a href="{{ route('admin.password.request') }}">Esqueci a minha senha</a><br>
+            {{--<a href="{{ route('admin.register' )}}" class="text-center">Registre uma nova conta</a>--}}
 
         </div>
     </div>
