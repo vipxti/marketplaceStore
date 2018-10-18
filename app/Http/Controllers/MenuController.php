@@ -354,4 +354,31 @@ class MenuController extends Controller
 
     }
 
+    public function selectCategory($cd_menu)
+    {
+        $categorias = Menu::join('menu_categoria', 'menu_categoria.fk_cd_menu', '=', 'menu.cd_menu')
+                    ->join('categoria', 'menu_categoria.fk_cd_categoria', '=', 'categoria.cd_categoria')
+                    ->select('categoria.cd_categoria', 'categoria.nm_categoria')
+                    ->where('menu.cd_menu', '=', $cd_menu)
+                    ->get();
+
+        return response()->json([ 'cat' => $categorias ]);
+    }
+
+    public function removerAssociacao(Request $request){
+        //dd($request->all());
+
+        try {
+            DB::table('menu_categoria')
+                ->where('fk_cd_menu', '=', $request->cd_menu)
+                ->where('fk_cd_categoria', '=', $request->cd_categoria)
+                ->delete();
+        }
+        catch (\Exception $e){
+            return redirect()->route('menu.edit')->with('nosuccess', 'Erro ao remover a associação.');
+        }
+
+        return redirect()->route('menu.edit')->with('success', 'Associação removida com sucesso');
+    }
+
 }

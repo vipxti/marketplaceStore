@@ -18,7 +18,7 @@
             </ol>
         </section>
 
-        <!-- Cadastrar Categorias -->
+        <!-- Cadastrar Menus -->
         <section class="content">
             @include('partials.admin._alerts')
 
@@ -126,6 +126,7 @@
                                         </div>
                                     </div>
                                     <button id="btnSalvarAssoc" type="submit" class="btn btn-success pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar</button>
+                                    <button id="btnModalRemoverAssoc" type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#modal-default" style="margin-right: 10px"><i class="fa fa-trash"></i>&nbsp;&nbsp;Remover</button>
                                 </div>
                             </form>
                         </div>
@@ -134,6 +135,71 @@
 
             </div>
 
+            <!-- Modal Remover Associação -->
+            <form action="{{route('menucat.remove.assoc')}}" method="post" enctype="multipart/form-data">
+                <!-- MODAL ATUALIZA DADOS -->
+                <div class="modal fade" id="modal-default">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Remover Associação Menu > Categoria</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+
+                                    <div class="col-md-12">
+
+                                        {{ csrf_field() }}
+
+                                        <div class="row">
+
+                                            <!-- Códigos SKU e Ean  -->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Menu</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                                                        <select id="menusModal" class="form-control select2-selection select2-selection--single" name="cd_menu" >
+                                                            <option selected value="0"></option>
+                                                            @foreach($menus as $menu)
+                                                                <option value="{{ $menu->cd_menu }}">{{ $menu->nm_menu }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Categoria</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-tags"></i></span>
+                                                        <select id="categoriasModal" class="form-control form-control select2-selection select2-selection--single" style="width: 100%;" name="cd_categoria" >
+                                                            <option value=""></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnSairModal" type="button" class="btn btn-default pull-left" data-dismiss="modal">Sair</button>
+                                <button id="btnRemoverAssoc" type="submit" class="btn btn-danger">Remover Associação</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+            </form>
 
             <div class="row">
                 <!-- FORMA DE APRESENTAÇÃO -->
@@ -590,5 +656,28 @@
         $(function(){
             $('.select2').select2();
         })
+
+        //==============================================================================================================
+        //AO MUDAR UM MENU DO MODAL ELE PESQUISA AS CATEGORIAS ASSOCIADAS AO MENU
+        $('#menusModal').change(function(){
+            buscaCategoria($(this).val());
+        });
+
+        function buscaCategoria(cdMenu){
+            $.ajax({
+                url: '{{ url('/admin/menu/categoria/') }}/' + cdMenu,
+                type: 'GET',
+                success: function (data) {
+
+                    $('#categoriasModal').empty();
+
+                    $.each(data.cat, function(index, categoria) {
+
+                        $('#categoriasModal').append(`<option value="` + categoria.cd_categoria + `">` + categoria.nm_categoria + `</option>`);
+                    })
+
+                }
+            });
+        }
     </script>
 @stop

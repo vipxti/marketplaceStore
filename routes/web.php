@@ -156,6 +156,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/menu/save/categoryorder', 'MenuController@salvarOrdemCategoria')->name('menu.save.category.order');
     Route::get('/menu/consult/categoryorder', 'MenuController@consultarOrdemCategorias')->name('menu.consult.category.order');
     Route::post('/menu/controlenav', 'MenuController@controleMenuNav')->name('menu.control.nav');
+    Route::get('/menu/categoria/{id}', 'MenuController@selectCategory')->name('menu.categoria.assoc');
+    Route::post('/menucat/remove', 'MenuController@removerAssociacao')->name('menucat.remove.assoc');
 
     //Associa menu/categoria
     Route::post('/menucat/associate', 'MenuController@associarMenuCategoria')->name('menucat.associate');
