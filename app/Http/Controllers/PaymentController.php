@@ -262,6 +262,14 @@ class PaymentController extends Controller
         //dd($cartProducts);
         $shippingData = Session::get('shippingData');
 
+        //dd($shippingData[0]['valor']);
+
+        /*if($shippingData[0]['tipo'] == 4)
+            $shippingData[0]['tipo'] = 3;
+
+        if($shippingData[0]['valor'] == 0)
+            $shippingData[0]['valor'] = 0.1;*/
+
         if (Session::has('orderData')) {
             Session::forget('orderData');
         }
@@ -290,7 +298,7 @@ class PaymentController extends Controller
         $pagSeguroData['reference'] = uniqid($this->showSalesman(), true);
 
         $clientData = $this->getClientData($request->cd_cliente);
-
+        //dd(Session::get('cepPrincipal'));
         $fk_endereco = $clientData[0]['id_cliente_endereco'];
         //dd($clientData);
 
@@ -313,8 +321,11 @@ class PaymentController extends Controller
         $pagSeguroData['shippingAddressCity'] = $clientData[0]['nm_cidade'];
         $pagSeguroData['shippingAddressState'] = $clientData[0]['sg_uf'];
         $pagSeguroData['shippingAddressCountry'] = 'BRA';
-        $pagSeguroData['shippingType'] = $shippingData[0]['tipo'];
-        $pagSeguroData['shippingCost'] = $shippingData[0]['valor'];
+
+        if($shippingData[0]['tipo'] != 4) {
+            $pagSeguroData['shippingType'] = $shippingData[0]['tipo'];
+            $pagSeguroData['shippingCost'] = $shippingData[0]['valor'];
+        }
 
         $url = 'https://ws.pagseguro.uol.com.br/v2/transactions/';
 
@@ -354,8 +365,11 @@ class PaymentController extends Controller
         else if (strval($xml->shipping->type) == '2') {
             $orderData['tipoFrete'] = 'Sedex';
         }
-        else{
+        else if (strval($xml->shipping->type) == '3') {
             $orderData['tipoFrete'] = 'Entrega Vip-X';
+        }
+        else {
+            $orderData['tipoFrete'] = 'Retirada na Loja';
         }
 
         Session::push('orderData', $orderData);
@@ -472,8 +486,12 @@ class PaymentController extends Controller
         $pagSeguroData['shippingAddressCity'] = $clientData[0]['nm_cidade'];
         $pagSeguroData['shippingAddressState'] = $clientData[0]['sg_uf'];
         $pagSeguroData['shippingAddressCountry'] = 'BRA';
-        $pagSeguroData['shippingType'] = $shippingData[0]['tipo'];
-        $pagSeguroData['shippingCost'] = $shippingData[0]['valor'];
+       /* $pagSeguroData['shippingType'] = $shippingData[0]['tipo'];
+        $pagSeguroData['shippingCost'] = $shippingData[0]['valor'];*/
+        if($shippingData[0]['tipo'] != 4) {
+            $pagSeguroData['shippingType'] = $shippingData[0]['tipo'];
+            $pagSeguroData['shippingCost'] = $shippingData[0]['valor'];
+        }
 
         $pagSeguroData['creditCardToken'] = strval($request->cardToken);
         $pagSeguroData['installmentQuantity'] = strval($cardInfo[0]['installmentQuantity']);
@@ -529,8 +547,11 @@ class PaymentController extends Controller
         } else if (strval($xml->shipping->type) == '2') {
             $orderData['tipoFrete'] = 'Sedex';
         }
-        else{
+        else if (strval($xml->shipping->type) == '3') {
             $orderData['tipoFrete'] = 'Entrega Vip-X';
+        }
+        else {
+            $orderData['tipoFrete'] = 'Retirada na Loja';
         }
 
         Session::push('orderData', $orderData);

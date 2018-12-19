@@ -2,6 +2,11 @@
 
 @section('content')
 
+    <script>
+        fbq('track', 'AddPaymentInfo');
+    </script>
+
+
     <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
 
     <div class="container">

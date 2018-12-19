@@ -167,6 +167,20 @@ class OrderBlingController extends Controller
         return redirect()->route('channel.bling')->with('success', 'Canal alterado com sucesso!');
     }
 
+    //==================================================================================================================
+    //DELETA OS CANAIS
+    public function deleteChannel($id){
+        try{
+            $c = BlingChannels::find($id);
+            $c->delete();
+        }
+        catch (\Exception $ex){
+            return response()->json(['deuErro' => true]);
+        }
+
+        return response()->json(['deuErro' => false]);
+    }
+
     public function searchChannels($id){
         //dd($id);
 

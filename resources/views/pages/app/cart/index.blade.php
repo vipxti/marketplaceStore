@@ -277,10 +277,16 @@
                                         <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
                                     </label>
                                 </div>
-                                <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
+                                <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
                                     <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                     <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
                                         <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                    </label>
+                                </div>
+                                <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
+                                    <input type="radio" id="customRadio4" name="customRadio" value="4" class="custom-control-input">
+                                    <label id="labelRadio4" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio4">
+                                        <span id="retirada">&nbsp;Retirada na Loja</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">R$ 0,00</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">Após 24 horas</span>
                                     </label>
                                 </div>
 
@@ -303,11 +309,17 @@
                                                 <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
                                             </label>
                                         </div>
-                                        <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
+                                        <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
                                             <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                             <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
                                                 {{--<span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub">R$ {{ Session::get('shippingOptions')[0]['valorMaktub'] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub">{{ Session::get('shippingOptions')[0]['prazoSedex'] . ' dias úteis ' }}</span>--}}
                                                 <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                            </label>
+                                        </div>
+                                        <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
+                                            <input type="radio" id="customRadio4" name="customRadio" value="4" class="custom-control-input">
+                                            <label id="labelRadio4" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio4">
+                                                <span id="retirada">&nbsp;Retirada na Loja</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">R$ 0,00</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">Após 24 horas</span>
                                             </label>
                                         </div>
                                     @elseif(Session::get('shippingData')[0]['tipo'] == 2)
@@ -323,10 +335,41 @@
                                                 <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
                                             </label>
                                         </div>
-                                        <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
+                                        <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
                                             <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                             <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
                                                 <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                            </label>
+                                        </div>
+                                        <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
+                                            <input type="radio" id="customRadio4" name="customRadio" value="4" class="custom-control-input">
+                                            <label id="labelRadio4" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio4">
+                                                <span id="retirada">&nbsp;Retirada na Loja</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">R$ 0,00</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">Após 24 horas</span>
+                                            </label>
+                                        </div>
+                                    @elseif(Session::get('shippingData')[0]['tipo'] == 3)
+                                        <div class="custom-control custom-radio mb-15">
+                                            <input type="radio" id="customRadio1" name="customRadio" value="1" class="custom-control-input">
+                                            <label id="labelRadio1" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio1">
+                                                <span id="pac">&nbsp;Normal</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoPac"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoPac"></span>
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-radio mb-15">
+                                            <input type="radio" id="customRadio2" name="customRadio" value="2" class="custom-control-input">
+                                            <label id="labelRadio2" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio2">
+                                                <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
+                                            </label>
+                                        </div>
+                                        <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
+                                            <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input" checked>
+                                            <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
+                                                <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                            </label>
+                                        </div>
+                                        <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
+                                            <input type="radio" id="customRadio4" name="customRadio" value="4" class="custom-control-input">
+                                            <label id="labelRadio4" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio4">
+                                                <span id="retirada">&nbsp;Retirada na Loja</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">R$ 0,00</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">Após 24 horas</span>
                                             </label>
                                         </div>
                                     @else
@@ -342,10 +385,16 @@
                                                 <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
                                             </label>
                                         </div>
-                                        <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
-                                            <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input" checked>
+                                        <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
+                                            <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                             <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
                                                 <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                            </label>
+                                        </div>
+                                        <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
+                                            <input type="radio" id="customRadio4" name="customRadio" value="4" class="custom-control-input" checked>
+                                            <label id="labelRadio4" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio4">
+                                                <span id="retirada">&nbsp;Retirada na Loja</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">R$ 0,00</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">Após 24 horas</span>
                                             </label>
                                         </div>
                                     @endif
@@ -363,10 +412,16 @@
                                             <span id="sedex">&nbsp;Expresso</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoSedex"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoSedex"></span>
                                         </label>
                                     </div>
-                                    <div id="divMaktub" hidden class="custom-control custom-radio mb-15">
+                                    <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
                                         <input type="radio" id="customRadio3" name="customRadio" value="3" class="custom-control-input">
                                         <label id="labelRadio3" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio3">
                                             <span id="maktub">&nbsp;Entrega Vip-X</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="precoMaktub"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="prazoMaktub"></span>
+                                        </label>
+                                    </div>
+                                    <div id="" hidden class="custom-control custom-radio mb-15 divMaktub">
+                                        <input type="radio" id="customRadio4" name="customRadio" value="4" class="custom-control-input">
+                                        <label id="labelRadio4" class="custom-control-label d-flex align-items-center justify-content-between" for="customRadio4">
+                                            <span id="retirada">&nbsp;Retirada na Loja</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">R$ 0,00</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="">Após 24 horas</span>
                                         </label>
                                     </div>
                                 @endif
@@ -513,12 +568,12 @@
                     console.log(values.fretes.maktub.valor);
 
                     if(values.fretes.maktub.valor != 0){
-                        $('#divMaktub').removeAttr('hidden');
+                        $('.divMaktub').removeAttr('hidden');
                         $('#precoMaktub').html('R$ ' + values.fretes.maktub.valor);
                         $('#prazoMaktub').html(values.fretes.maktub.prazo + ' horas');
                     }
                     else{
-                        $('#divMaktub').attr('hidden', true);
+                        $('.divMaktub').attr('hidden', true);
                         $('#precoMaktub').html('');
                         $('#prazoMaktub').html('');
                     }
@@ -558,7 +613,7 @@
                         ajaxRadioButton(shippingPrice, days, type);
                     }
                     else if($('#customRadio3').is(':checked')){
-                        if(!$('#divMaktub').is(':hidden')) {
+                        if(!$('.divMaktub').is(':hidden')) {
                             shippingPrice = $('#precoMaktub').html().replace('R$ ', '').replace(',', '.');
                             days = 2;
                             type = $('#customRadio3').val();
@@ -720,7 +775,7 @@
                 ajaxFrete($('#cep').val());
             }
             else{
-                $('#divMaktub').attr('hidden', true);
+                $('.divMaktub').attr('hidden', true);
                 $('#precoPac').html('');
                 $('#precoSedex').html('');
                 $('#precoMaktub').html('');
@@ -754,6 +809,16 @@
         $('#customRadio3').click(function(){
             let shippingPrice = $('#precoMaktub').html().replace('R$ ', '').replace(',', '.');
             let days = 2;
+            let type = $(this).val();
+
+            ajaxRadioButton(shippingPrice, days, type);
+        });
+
+        //==============================================================================================================
+        //CHAMA A FUNÇÃO ajaxRadioButton PARA ATUALIZAR OS PREÇOS
+        $('#customRadio4').click(function(){
+            let shippingPrice = 0.00;
+            let days = 1;
             let type = $(this).val();
 
             ajaxRadioButton(shippingPrice, days, type);

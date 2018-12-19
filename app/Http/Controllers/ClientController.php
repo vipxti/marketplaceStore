@@ -7,6 +7,7 @@ use App\Menu;
 use App\NavigationMenu;
 use App\Phone;
 use App\User;
+use App\Wishlist;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -140,10 +141,23 @@ class ClientController extends Controller
 
         $listOrder = Order::orderBy('cd_pedido', 'desc')->where('pedido.cd_cliente', '=', Auth::user()->cd_cliente)->paginate(10);
 
+        $wishlist = Wishlist::join('sku', 'wishlist.fk_id_sku', '=', 'sku.cd_sku')
+            ->join('cliente', 'wishlist.fk_id_cliente', '=', 'cliente.cd_cliente')
+            ->join('produto', 'sku.cd_sku', '=', 'produto.cd_sku')
+            ->join('sku_produto_img', 'sku.cd_sku', 'sku_produto_img.cd_sku')
+            ->join('img_produto', 'sku_produto_img.cd_img', 'img_produto.cd_img')
+            ->where('produto.cd_status_produto', '=', 1)
+            ->where('img_produto.ic_img_principal', '=', 1)
+            ->where('cliente.cd_cliente', '=', Auth::user()->cd_cliente)
+            ->get();
+
+        //dd($wishlist);
+
         //$idClient = Auth::user()->cd_cliente;
         //dd($listOrder, $idClient);
 
-        return view('pages.app.client.dashboard', compact('telCliente', 'endereco', 'menuNav', 'categoriaSubCat', 'menuNavegacao', 'listOrder'));
+        return view('pages.app.client.dashboard', compact('telCliente', 'endereco', 'menuNav', 'categoriaSubCat',
+            'menuNavegacao', 'listOrder', 'wishlist'));
     }
 
     //MOSTRA OS CLIENTES CADASTRADOS NO PAINEL DO ADMIN

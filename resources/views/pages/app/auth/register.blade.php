@@ -2,6 +2,9 @@
 
 @section('content')
     <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
+    <script>
+        fbq('track', 'Lead');
+    </script>
 
     <!-- ****** Area do cadastro  ****** -->
     <section class="new_arrivals_area section_padding_100_0 clearfix">
@@ -158,6 +161,10 @@
         $(function() {
             //Money Euro
             $('[data-mask]').inputmask()
+        });
+
+        $('#btn_salvar').click(function(){
+            fbq('track', 'CompleteRegistration');
         });
 
         $('#data_nasc').blur(function(){

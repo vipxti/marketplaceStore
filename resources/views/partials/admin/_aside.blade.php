@@ -101,6 +101,7 @@
                         <ul class="treeview-menu">
                             <li><a href="{{ route('menu.edit') }}"><i class="fa fa-th-list"></i>Menu</a></li>
                             <li><a href="{{ route('banner.edit') }}"><i class="fa fa-picture-o"></i>Banner</a></li>
+                            <li><a href="{{ route('video.edit') }}"><i class="fa fa-picture-o"></i>Video</a></li>
                             {{--<li><a href="{{ route('hotpost.edit') }}"><i class="fa fa-newspaper-o"></i>Hot Post</a></li>--}}
                             <li><a href="{{route('vitrine.page')}}"><i class="fa fa-th"></i>Vitrine</a></li>
                         </ul>

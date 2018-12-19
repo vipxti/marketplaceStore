@@ -1,6 +1,34 @@
 @extends('layouts.admin.app')
 
 @section('content')
+<!-- ESTILO DO BOTÃO TRANSPARENTE NA TABLE -->
+<style type="text/css">
+    /*deixar botão transparente*/
+    button {
+        background-color: Transparent;
+        background-repeat:no-repeat;
+        border: none;
+        cursor:pointer;
+        overflow: hidden;
+        outline:none;
+    }
+
+    /*deixar setas do input do tipo number invisivel*/
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        cursor:pointer;
+        display:block;
+        width:8px;
+        color: #333;
+        text-align:center;
+        position:relative;
+    }
+    input[type=number] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+        margin: 0;
+    }
+</style>
 <div class="content-wrapper">
     <section class="content-header">
         <h1><i class="fa fa-tags"></i>&nbsp;&nbsp;Vincular</h1>
@@ -151,11 +179,17 @@
                                 <td>{{$c->despesa_fixa}}</td>
                                 <td>{{$c->taxa_cartao}}</td>
                                 <td>{{$c->marketing}}</td>
-                                <td>
-                                    <a href="{{route('channel.bling.edit', $c->id_canais)}}" class="btn btn-primary">
+                                <td class="pull-right">
+                                    <a href="{{route('channel.bling.edit', $c->id_canais)}}" title="Editar Canal" class="btn btn-outline-warning">
                                         <i class="fa fa-pencil"></i>
-                                        &nbsp;&nbsp;Editar
                                     </a>
+                                    <button id="btn_excluir"
+                                            value="{{$c->id_canais}}"
+                                            title="Deletar Canal"
+                                            class="btn btn-outline-warning"
+                                            style="color: #cc0000">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -168,8 +202,50 @@
     <!--  FIM SESSÃO DA LISTA -->
 </div>
 
+<script src="{{asset('js/admin/sweetalert.min.js')}}"></script>
 <script>
+    $(function(){
+        $('button#btn_excluir').click(function(){
+            let id_loja = $(this).val();
+            let campoTR = $(this).parent().parent();
+            const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
+
+            swal({
+                title: "Você tem certeza que deseja deletar ?",
+                text: "Uma vez deletada, você não terá mais acesso a esse canal.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((vaiApagar) => {
+                    if(vaiApagar){
+
+                        $.ajax({
+                            url: '{{url('admin/register/bling/channel/delete/')}}/' + id_loja,
+                            type: 'post',
+                            data: {_token: CSRF_TOKEN},
+                            success: function(data){
+                                if(data.deuErro == false){
+                                    campoTR.fadeOut(500, function () {
+                                        $(this).remove();
+
+                                        swal("Canal deletado com sucesso!", {
+                                            icon: "success",
+                                        });
+                                    });
+                                }
+                                else{
+                                    swal("Erro ao deletar o canal.", {
+                                        icon: "error",
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+        });
+    });
 </script>
 
 @stop

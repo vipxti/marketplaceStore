@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comentarios;
 use App\Marca;
 use App\Menu;
 use App\Color;
@@ -15,6 +16,7 @@ use App\Product;
 use App\NumberSize;
 use App\ProductVariation;
 use App\Sku;
+use App\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Image;
@@ -136,6 +138,18 @@ class ProductController extends Controller {
                 ->orderBy('produto.cd_produto')
                 ->get();
 
+            $wish = Wishlist::join('sku', 'wishlist.fk_id_sku', '=', 'sku.cd_sku')
+                ->join('cliente', 'wishlist.fk_id_cliente', '=', 'cliente.cd_cliente')
+                ->rightJoin('produto', 'sku.cd_sku', '=', 'produto.cd_sku')
+                ->join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+                ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
+                ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                ->where('produto.cd_status_produto', '=', 1)
+                ->where('categoria.cd_categoria', '=', $catSubCat)
+                ->groupBy('produto.cd_produto')
+                ->orderBy('produto.cd_produto')
+                ->get();
+
         } elseif ($dVerificador=="s") {
             $produtoCatSubCat = Product::
             join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
@@ -192,7 +206,21 @@ class ProductController extends Controller {
                     ->orderBy('produto.cd_produto')
                     ->get();
 
-                //->paginate(28);
+                $wish = Wishlist::join('sku', 'wishlist.fk_id_sku', '=', 'sku.cd_sku')
+                    ->join('cliente', 'wishlist.fk_id_cliente', '=', 'cliente.cd_cliente')
+                    ->rightJoin('produto', 'sku.cd_sku', '=', 'produto.cd_sku')
+                    ->join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+                    ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
+                    ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->join('sub_categoria', 'categoria_subcat.cd_sub_categoria', '=', 'sub_categoria.cd_sub_categoria')
+                    ->where('produto.cd_status_produto', '=', 1)
+                    ->where('sub_categoria.cd_sub_categoria', '=', $catSubCat)
+                    ->groupBy('produto.cd_produto')
+                    ->orderBy('produto.cd_produto')
+                    ->get();
+
+
+            //->paginate(28);
         } elseif ($dVerificador == "pesquisa") {
             //dd($dVerificador);
             $produtoCatSubCat = Product::
@@ -250,11 +278,25 @@ class ProductController extends Controller {
                     ->orderBy('produto.cd_produto')
                     ->get();
                 //->paginate(28);
+
+                $wish = Wishlist::join('sku', 'wishlist.fk_id_sku', '=', 'sku.cd_sku')
+                    ->join('cliente', 'wishlist.fk_id_cliente', '=', 'cliente.cd_cliente')
+                    ->rightJoin('produto', 'sku.cd_sku', '=', 'produto.cd_sku')
+                    ->join('produto_categoria_subcat', 'produto_categoria_subcat.cd_produto', '=', 'produto.cd_produto')
+                    ->join('categoria_subcat', 'categoria_subcat.cd_categoria_subcat', '=', 'produto_categoria_subcat.cd_categoria_subcat')
+                    ->join('categoria', 'categoria.cd_categoria', '=', 'categoria_subcat.cd_categoria')
+                    ->join('sub_categoria', 'categoria_subcat.cd_sub_categoria', '=', 'sub_categoria.cd_sub_categoria')
+                    ->where('produto.cd_status_produto', '=', 1)
+                    ->where('produto.nm_produto', 'like', '%'.$catSubCat.'%')
+                    ->groupBy('produto.cd_produto')
+                    ->orderBy('produto.cd_produto')
+                    ->get();
         }
 
         //dd($produtoCatSubCat);
 
-        return view('pages.app.product.filter', compact('produtoCatSubCat', 'nome', 'menuNav', 'categoriaSubCat', 'menuNavegacao', 'variation'));
+        return view('pages.app.product.filter', compact('produtoCatSubCat', 'nome', 'menuNav', 'categoriaSubCat',
+            'menuNavegacao', 'variation', 'wish'));
         //return response()->json($produtoCatSubCat);
     }
 
@@ -326,7 +368,16 @@ class ProductController extends Controller {
             ->distinct('produto_variacao.cd_produto')
             ->paginate(25);*/
 
-        return view('pages.app.product.index', compact('produtos', 'variation', 'nome', 'menuNav', 'categoriaSubCat', 'menuNavegacao'));
+        $wishlist = Wishlist::join('sku', 'wishlist.fk_id_sku', '=', 'sku.cd_sku')
+            ->join('cliente', 'wishlist.fk_id_cliente', '=', 'cliente.cd_cliente')
+            ->rightJoin('produto', 'sku.cd_sku', '=', 'produto.cd_sku')
+            ->where('produto.cd_status_produto', '=', 1)
+            ->groupBy('produto.cd_produto')
+            ->orderBy('produto.cd_produto', 'desc')
+            ->paginate(25);
+
+        return view('pages.app.product.index', compact('produtos', 'variation', 'nome', 'menuNav',
+            'categoriaSubCat', 'menuNavegacao', 'wishlist'));
     }
 
     public function showProductDetails($slug)
@@ -423,9 +474,66 @@ class ProductController extends Controller {
             }
         }
 
+
+        $vendas = 0;
+        if(count($variations) > 0) {
+            $vendas = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
+                ->join('pedido_produto', 'sku.cd_sku', '=', 'pedido_produto.cd_sku')
+                ->join('pedido', 'pedido_produto.cd_pedido', '=', 'pedido.cd_pedido')
+                ->where('sku.cd_nr_sku', '=', $variations[0]['cd_nr_sku'])
+                ->where('pedido.cd_status', '=', 3)
+                ->count();
+        }else{
+            $vendas = Product::join('sku', 'produto.cd_sku', '=', 'sku.cd_sku')
+                ->join('pedido_produto', 'sku.cd_sku', '=', 'pedido_produto.cd_sku')
+                ->join('pedido', 'pedido_produto.cd_pedido', '=', 'pedido.cd_pedido')
+                ->where('sku.cd_nr_sku', '=', $product[0]['cd_nr_sku'])
+                ->where('pedido.cd_status', '=', 3)
+                ->count();
+        }
+
+        $comentarios = Comentarios::join('cliente', 'comentarios.fk_id_cliente', '=', 'cliente.cd_cliente')
+            ->join('stars', 'comentarios.fk_id_star', '=', 'stars.id_star')
+            ->where('comentarios.fk_id_sku', '=', $product[0]['cd_sku'])
+            ->groupBy('comentarios.id_comentario')
+            ->orderBy('comentarios.id_comentario', 'desc')
+            ->get();
+
+        $media = 0;
+        $recomendacao = 0;
+        $contador = 0;
+        $nao_recomenda = 0;
+
+        if(count($comentarios) > 0) {
+            foreach ($comentarios as $c) {
+                $media += $c->aval_star;
+                $contador++;
+
+                if ($c->recomenda == 1)
+                    $recomendacao++;
+                else
+                    $nao_recomenda++;
+            }
+
+            $recomendacao = ($recomendacao / $contador) * 100;
+            $recomendacao = number_format($recomendacao, 2);
+            $nao_recomenda = ($nao_recomenda / $contador) * 100;
+            $nao_recomenda = number_format($nao_recomenda, 2);
+
+            $media = $media / count($comentarios);
+        }
+        else{
+            $media = 0;
+            $recomendacao = 0;
+            $nao_recomenda = 100;
+        }
+
+        //dd($comentarios);
         //dd($sizeType);
 
-        return view('pages.app.product.details', compact('product', 'images', 'sizes', 'sizeType', 'variations', 'totalCores', 'totalImagens', 'colors', 'codProds', 'nome', 'menuNav', 'categoriaSubCat', 'hasVariation', 'isVariation', 'menuNavegacao'));
+        return view('pages.app.product.details', compact('product', 'images', 'sizes', 'sizeType',
+            'variations', 'totalCores', 'totalImagens', 'colors', 'codProds', 'nome', 'menuNav', 'categoriaSubCat',
+            'hasVariation', 'isVariation', 'menuNavegacao', 'vendas', 'comentarios', 'media', 'recomendacao', 'nao_recomenda'));
     }
 
     public function getSizes(Request $request)
@@ -509,11 +617,18 @@ class ProductController extends Controller {
             ->where('sku.cd_nr_sku', '=', $request->sku)
             ->get();
 
+        $vendas = ProductVariation::join('sku', 'produto_variacao.cd_sku', '=', 'sku.cd_sku')
+            ->join('pedido_produto', 'sku.cd_sku', '=', 'pedido_produto.cd_sku')
+            ->join('pedido', 'pedido_produto.cd_pedido', '=', 'pedido.cd_pedido')
+            ->where('sku.cd_nr_sku', '=', $request->sku)
+            ->where('pedido.cd_status', '=', 3)
+            ->count();
         //dd($images);
 
         $response = [
             'variation' => $variation,
-            'images' => $images
+            'images' => $images,
+            'vendas' => $vendas,
         ];
 
         return response()->json($response);

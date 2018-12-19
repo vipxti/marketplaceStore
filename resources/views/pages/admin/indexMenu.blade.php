@@ -220,19 +220,19 @@
                                     <div class="col-md-12">
 
                                         @if($menuNavegacao == 0)
-                                            <input type="radio" id="radioMenu" name="radioNav" val="1">
+                                            <input type="radio" id="radioMenu" name="radioNav" value="1">
                                             <label for="radioMenu">Menu</label><br>
-                                            <input type="radio" id="radioCat" name="radioNav" val="0">
+                                            <input type="radio" id="radioCat" name="radioNav" value="0">
                                             <label for="radioCat">Categoria</label>
                                         @elseif($menuNavegacao == 1)
-                                            <input type="radio" id="radioMenu" name="radioNav" val="1" checked>
+                                            <input type="radio" id="radioMenu" name="radioNav" value="1" checked>
                                             <label for="radioMenu">Menu</label><br>
-                                            <input type="radio" id="radioCat" name="radioNav" val="0">
+                                            <input type="radio" id="radioCat" name="radioNav" value="0">
                                             <label for="radioCat">Categoria</label>
                                         @else
-                                            <input type="radio" id="radioMenu" name="radioNav" val="1">
+                                            <input type="radio" id="radioMenu" name="radioNav" value="1">
                                             <label for="radioMenu">Menu</label><br>
-                                            <input type="radio" id="radioCat" name="radioNav" val="0" checked>
+                                            <input type="radio" id="radioCat" name="radioNav" value="0" checked>
                                             <label for="radioCat">Categoria</label>
                                         @endif
                                     </div>

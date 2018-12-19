@@ -3,6 +3,47 @@
 @section('content')
 
     <link rel="stylesheet" href="{{asset('css/app/input.css')}}">
+    <style>
+        .wishItem{
+            padding: 2rem 1rem;
+            margin-bottom: 15px;
+            background-color: #e9ecef;
+            border-radius: .3rem;
+            /*height: 210px;*/
+            width: 100%;
+        }
+
+        .semestoque {
+            width: 100%;
+            margin: 0;
+            font-size: 13px;
+            font-weight: 700;
+            color: #d59431;
+            text-decoration: none
+        }
+
+        .tamanhoimg {
+
+            width: 150px;
+            height: 150px;
+            background-size: 100% 100%;
+            -webkit-background-size: 100% 100%;
+            -o-background-size: 100% 100%;
+            -khtml-background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+        }
+
+        .btncomprar {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 700;
+            color:#fff;
+            background-color:#3a3a3a;
+            text-decoration: none;
+            border: none !important;
+        }
+
+    </style>
 
     <section class="new_arrivals_area section_padding_100_0 clearfix">
 
@@ -49,7 +90,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="flex-sm-fill text-sm-center nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Atendimento</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Lista de Desejos</a>
                 </li>
 
             </ul>
@@ -211,21 +252,66 @@
 
                 </div>
 
-                {{-- Aba atendimento --}}
+                {{-- Aba Lista de Desejos --}}
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
                     <p>&nbsp;</p>
 
                     <div class="row d-flex justify-content-center">
 
-                        <div class="col-12">
+                        @if(count($wishlist) > 0)
+                            <div class="col-md-12 mb-3">
+                                <h4 class="text-center">
+                                    <i class="fa fa-heart" style="color: #d59431;"></i>&nbsp;
+                                    {{$wishlist[0]->nm_cliente}}
+                                    <span style="font-size: 20px;"> - Você tem <span id="span_qtd_produto">{{count($wishlist)}}</span> produto(s) na sua lista</span>
+                                </h4>
+                            </div>
 
-                            <p>Atendimento</p>
+                            @foreach($wishlist as $w)
+                                <div class="wishItem row">
+                                    <div class="col-md-2">
+                                        <figure class="figure">
+                                            <img class="tamanhoimg rounded"
+                                                 src="{{ URL::asset('img/products/' . $w->im_produto) }}"
+                                                 alt="{{ $w->nm_produto }}">
+                                            <a href="{{route('products.details', $w->nm_slug)}}"></a>
+                                        </figure>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="{{route('products.details', $w->nm_slug)}}" style="padding-left: 15px; width: 100%; max-width: 450px;">
+                                            <h5>{{$w->nm_produto}}</h5>
+                                            <small>SKU: {{$w->cd_nr_sku}}</small>
+                                            <p>R$ {{str_replace('.', ',', $w->vl_produto)}}</p>
 
-                        </div>
+                                            <p><b>3x</b> de <b>R$ {{number_format(($w->vl_produto/3), 2)}} sem juros</b></p>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @if($w->qt_produto <= 0)
+                                            <div class="text-md-center">
+                                                <p class="btn semestoque">SEM ESTOQUE</p>
+                                            </div>
+                                        @else
+                                            <div class="text-md-center">
+                                                <button href="{{route('products.details', $w->nm_slug)}}" class="btn btncomprar"><i class="icon-bag"></i>&nbsp;COMPRAR</button>
+                                                <input class="sku_wish" type="hidden" value="{{$w->cd_nr_sku}}">
+                                                <button id="btn_exluir_wish" type="button" class="btn btncomprar"><i class="fa fa-trash-o"></i>&nbsp;EXCLUIR</button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                            @endforeach
+                        @else
+
+                            <div class="col-md-12">
+                                <h5 class="text-center">Você ainda não tem favoritos!</h5>
+                            </div>
+
+                        @endif
 
                     </div>
-
                 </div>
 
             </div>
@@ -406,7 +492,28 @@
 
         $(function() {
             //Money Euro
-            $('[data-mask]').inputmask()
+            $('[data-mask]').inputmask();
+
+            $('button#btn_exluir_wish').click(function(){
+                let sku = $(this).parent().find('.sku_wish').val();
+                let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                let container = $(this).parent().parent().parent();
+
+                $.ajax({
+                    url: '{{route('delete.wish')}}',
+                    type: 'post',
+                    data: {_token: CSRF_TOKEN, fk_id_sku: sku},
+                    success: function (data) {
+                        if(data.deuErro == false){
+                            container.fadeOut(500, function(){
+                                $(this).remove();
+                            });
+
+                            $('#span_qtd_produto').html(data.wish.length);
+                        }
+                    }
+                });
+            });
         });
 
         $('#modalUpdateAddress').on('show.bs.modal', function (e) {

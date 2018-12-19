@@ -23,7 +23,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/dadosCadastrais/update', 'CompanyController@updateCompany')->name('company.update.data')->middleware('auth:admin');
     //Pedido
     Route::get('/pedido', 'OrderController@listOrder')->name('order.list')->middleware('auth:admin');
-    Route::post('/pedido/modal', 'OrderController@modalPedido')->name('order.modal.list')->middleware('auth:admin');
+    Route::post('/pedido/modal', 'OrderController@modalPedido')->name('order.modal.list');
     Route::get('/pedido/print/{id}', 'OrderController@printOrder')->name('order.modal.print')->middleware('auth:admin');
     Route::get('/pedido/status', 'OrderController@statusPedido')->name('order.modal.status')->middleware('auth:admin');
     Route::get('/pedido/dynamic_pdf/pdf/{request}', 'DynamicPDFController@pdf')->name('page.print.pdf')->middleware('auth:admin');
@@ -104,6 +104,11 @@ Route::prefix('admin')->group(function () {
     Route::post('/update/banner', 'BannerController@updateBanner')->name('update.banner')->middleware('auth:admin');
     Route::post('/delete/banner/{id}', 'BannerController@deleteBanner')->middleware('auth:admin');
 
+    //Form cadastro vídeo
+    Route::post('/save/video', 'VideoController@createVideo')->name('save.video')->middleware('auth:admin');
+    Route::post('/update/video', 'VideoController@updateVideo')->name('update.video')->middleware('auth:admin');
+    Route::post('/delete/video/{id}', 'VideoController@deleteVideo')->middleware('auth:admin');
+
     //Integração
     //Bling
     Route::get('/product/bling', 'ProductBlingController@importFromBling')->name('product.list.bling')->middleware('auth:admin');
@@ -124,6 +129,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/register/bling/channel', 'OrderBlingController@indexCanais')->name('channel.bling')->middleware('auth:admin');
     Route::post('/register/bling/channel/save', 'OrderBlingController@saveChannels')->name('channel.bling.save')->middleware('auth:admin');
     Route::post('/register/bling/channel/save/alteration', 'OrderBlingController@saveAlteration')->name('channel.bling.save.alteration')->middleware('auth:admin');
+    Route::post('/register/bling/channel/delete/{id}', 'OrderBlingController@deleteChannel')->name('channel.bling.delete')->middleware('auth:admin');
     Route::get('/register/bling/channel/edit/{id}', 'OrderBlingController@indexEdit')->name('channel.bling.edit')->middleware('auth:admin');
     //ATUALIZAR PRODUTOS BLING
     Route::get('/product/bling/idstore', 'ProductBlingController@indexCadLoja')->name('index.store.bling')->middleware('auth:admin');
@@ -148,6 +154,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/vitrine/nItens', 'PageController@updateQtdItensVitrine')->name('numemro.itens.vitrine.page')->middleware('auth:admin');
     Route::post('/vitrine/produtos', 'PageController@insertOrUpdateProdVitrine')->name('produtos.vitrine.page')->middleware('auth:admin');
     Route::get('/banner', 'PageController@showBannerPage')->name('banner.edit')->middleware('auth:admin');
+    Route::get('/video', 'VideoController@index')->name('video.edit')->middleware('auth:admin');
 
     //Editar menus
     Route::get('/menu', 'MenuController@showEditMenuPage')->name('menu.edit')->middleware('auth:admin');
@@ -211,6 +218,9 @@ Route::prefix('page')->group(function () {
         Route::get('/{slug}', 'ProductController@showProductDetails')->name('products.details');
         Route::post('/sizes', 'ProductController@getSizes')->name('product.sizes');
         Route::post('/getvariationdata', 'ProductController@getVariationData')->name('product.variation.data');
+        Route::post('/avaliation', 'ComentariosController@saveComentario')->name('save.product.avaliation');
+        Route::post('/wishlist', 'WishlistController@saveWishlist')->name('save.product.wishlist');
+        Route::post('/wishlist/delete', 'WishlistController@deleteWish')->name('delete.wish');
     });
 
     //Carrinho

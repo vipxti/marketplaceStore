@@ -8,6 +8,20 @@
 
                 <p class="h2 text-center">Resultado da compra</p>
                 @if ($orderData[0]['statusCompra'] == '1')
+                    <script>
+                        fbq('track', 'Purchase', {
+                            value: '{{$orderData[0]['valorTotal']}}',
+                            currency: 'BRL',
+                        });
+
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-941348125/uvC4CJX6hmAQnarvwAM',
+                            'value': '{{$orderData[0]['valorTotal']}}',
+                            'currency': 'BRL',
+                            'transaction_id': '{{ $orderData[0]['codigo'] }}'
+                        });
+                    </script>
+
 
                     <p class="text-center text-success" style="font-size: 20px">Pedido realizado com sucesso!!!</p>
                     <div class="d-flex justify-content-center">

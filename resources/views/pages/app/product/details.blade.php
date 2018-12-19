@@ -23,7 +23,57 @@
             color: #dc3545;
         }
 
+        .estrela {
+            color: #ff9800;
+            border-color: #ff9d21;
+        }
+
+        .fonte {
+            font-size: 30px;
+        }
+
+        .fundo-comentario {
+            background-color: #f5f5f5;
+            border: 1px solid #e3e3e3;
+            border-radius: 6px;
+            padding-top: 5px;
+            margin: 10px;
+        }
+
+        .cartao {
+            border: 1px solid rgba(0,0,0,.125);
+        }
+
+        .cabecalho {
+            border-bottom: 1px solid rgba(0,0,0,.125);
+            background-color: #a9a9a9;
+        }
+
+        .titulo {
+            color: #fff;
+            width: 100%;
+        }
+
+        .corpo {
+            background-color: rgba(0,0,0,.03);
+        }
+
     </style>
+    <script>
+        fbq('track', 'ViewContent', {
+            value: '{{$product[0]['vl_produto']}}',
+            currency: 'BRL',
+            content_ids: '{{$product[0]['cd_nr_sku']}}',
+        });
+    </script>
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="http://cdn-na.infragistics.com/igniteui/2018.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="http://cdn-na.infragistics.com/igniteui/2018.2/latest/css/structure/infragistics.css" rel="stylesheet" />
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="http://cdn-na.infragistics.com/igniteui/2018.2/latest/js/infragistics.core.js"></script>
+    <script src="http://cdn-na.infragistics.com/igniteui/2018.2/latest/js/infragistics.dv.js"></script>
+
+
     <!-- Nav bar do produto -->
     <div class="breadcumb_area">
         <div class="container">
@@ -122,7 +172,7 @@
 
                         @if ($isVariation)
 
-                            @if($variations[0]['qt_produto_variacao'] > 5)
+                            @if($variations[0]['qt_produto_variacao'] > 0)
 
                                 <p class="available">Disponibilidade: <span class="disponivel" class="text-muted">Em estoque</span></p>
 
@@ -134,7 +184,7 @@
 
                         @else
 
-                            @if($product[0]['qt_produto'] > 5)
+                            @if($product[0]['qt_produto'] > 0)
 
                                 <p class="available">Disponibilidade: <span class="disponivel" class="text-muted">Em estoque</span></p>
 
@@ -146,12 +196,64 @@
 
                         @endif
 
-                        <div class="single_product_ratings mb-15">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star-o" aria-hidden="true"></i>
+
+                        <div>
+                            <p class="available"><span id="qtd_vendas_prod">{{$vendas}}</span>&nbsp;vendas</p>
+                        </div>
+
+                        <div id="div_estrela_avaliacao" class="single_product_ratings mb-15">
+                            <a id="estrela_avaliacao"
+                               href="javascript:void(0)"
+                               title="Avaliar Produto"
+                               data-toggle="modal"
+                               data-target="#modal-default">
+                                @switch(round($media))
+                                    @case(0)
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @break
+                                    @case(1)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @break
+                                    @case(2)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @break
+                                    @case(3)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @break
+                                    @case(4)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    @break
+                                    @case(5)
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    @break
+                                @endswitch
+                                <strong style="font-size: 12px;">{{'('. count($comentarios) . ' AVALIAÇÕES)'}}</strong>
+                            </a>
+
                         </div>
 
                         <p>&nbsp;</p>
@@ -243,7 +345,7 @@
 
                         @if ($isVariation)
 
-                            @if($variations[0]['qt_produto_variacao'] <= 5)
+                            @if($variations[0]['qt_produto_variacao'] <= 0)
 
                                 <p id="pSemEstoque">SEM ESTOQUE</p>
                                 <div id="divFormProduto" hidden>
@@ -293,7 +395,7 @@
 
                         @else
 
-                            @if($product[0]['qt_produto'] <= 5)
+                            @if($product[0]['qt_produto'] <= 0)
 
                                 <p>SEM ESTOQUE</p>
 
@@ -349,19 +451,19 @@
 
             <!--Informações do produto -->
             <div class="row">
-
-                <form id="accordion" role="tablist">
-                    <div class="card">
-                        <div class="card-header" role="tab" id="headingOne">
+                <div class="col-md-12">
+                <div id="accordion" role="tablist">
+                    <div class="card cartao">
+                        <div class="card-header cabecalho" role="tab" id="headingOne">
                             <h6>
-                                <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Informação do produto</a>
+                                <a class="titulo" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Informação do produto</a>
                             </h6>
                         </div>
 
                         @if ($isVariation)
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-body">
+                                <div class="card-body corpo">
                                     <pre class="infoProduto quebra">{{ $variations[0]['ds_produto_variacao'] }}</pre>
                                 </div>
                             </div>
@@ -369,7 +471,7 @@
                         @else
 
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-body">
+                                <div class="card-body corpo">
                                     <pre class="infoProduto quebra">{{ $product[0]['ds_produto'] }}</pre>
                                 </div>
                             </div>
@@ -377,20 +479,468 @@
                         @endif
 
                     </div>
-                </form>
 
+                    <div class="card cartao">
+                        <div id="headingComentarios" class="card-header cabecalho" role="tab">
+                            <h6>
+                                <a class="titulo" data-toggle="collapse" href="#collapseComentarios" aria-expanded="true" aria-controls="collapseComentarios">
+                                    Comentários
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseComentarios" class="collapse" role="tabpanel" aria-labelledby="headingComentarios" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="row">
+
+                                    <!-- Target element for the igDoughnutChart -->
+                                    <div class="col-md-1">
+                                        <div id="chart2"></div>
+                                    </div>
+                                    <div class="col-md-4 align-self-center" style="padding-left: 45px;">
+                                        <p>{{$recomendacao}}% das pessoas recomendam esse produto</p>
+                                    </div>
+                                    <div class="col-md-4 single_product_ratings justify-content-center" style="padding-left: 25px; padding-top: 20px;">
+                                        <strong style="font-size: 30px;">{{number_format($media, 1)}}</strong>
+                                        @switch(round($media))
+                                            @case(0)
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            @break
+                                            @case(1)
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            @break
+                                            @case(2)
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            @break
+                                            @case(3)
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            @break
+                                            @case(4)
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                            @break
+                                            @case(5)
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                            @break
+                                        @endswitch
+                                        <small>{{'(' . count($comentarios) . ')'}}</small>
+                                    </div>
+                                    <div class="col-md-3 justify-content-center" style="padding-left: 60px; padding-top: 23px;">
+                                        <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal"
+                                                data-toggle="modal"
+                                                data-target="#modal-comentario">Avaliar</button>
+                                    </div>
+
+                                </div>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col mb-15">
+                                        <h5 class="title"><small class="pull-right">{{count($comentarios)}} Comentários</small>Comentários</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    @foreach($comentarios as $c)
+                                        <div class="col-md-12">
+                                            <div class="fundo-comentario">
+                                                <div class="col-md-12 mt-2">
+                                                    <p><b>{{$c->nm_cliente . ' - ' . $c->titulo_comentario}}</b>
+                                                        <small class="pull-right" style="color: #b5b5b5;">{{date_create($c->dt_comentario)->format('d-m-Y')}}</small> -
+                                                        {{--<div class="mb-3">--}}
+                                                        @switch($c->aval_star)
+                                                            @case(1)
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            @break
+                                                            @case(2)
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            @break
+                                                            @case(3)
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            @break
+                                                            @case(4)
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                            @break
+                                                            @case(5)
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                            @break
+                                                        @endswitch
+                                                    </p>
+                                                    {{--</div>--}}
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <p style="font-size: 14px;">{{$c->desc_comentario}}</p>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
             </div>
         </div>
     </section>
 
+    <!--MODAL DE LISTA DE COMENTARIOS-->
+    <div class="modal" tabindex="-1" role="dialog" id="modal-default">
+        <div class="" role="document" style="max-width: 900px; margin: 1.75rem auto;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Avaliação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <!-- Target element for the igDoughnutChart -->
+                        <div class="col-md-1">
+                            <div id="chart"></div>
+                        </div>
+                        <div class="col-md-4 align-self-center" style="padding-left: 45px;">
+                            <p>{{$recomendacao}}% das pessoas recomendam esse produto</p>
+                        </div>
+                        <div class="col-md-4 single_product_ratings justify-content-center" style="padding-left: 25px; padding-top: 20px;">
+                            <strong style="font-size: 30px;">{{number_format($media, 1)}}</strong>
+                            @switch(round($media))
+                                @case(0)
+                                <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                @break
+                                @case(1)
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    @break
+                                @case(2)
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    @break
+                                @case(3)
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    @break
+                                @case(4)
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o fonte estrela" aria-hidden="true"></i>
+                                    @break
+                                @case(5)
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    <i class="fa fa-star fonte estrela" aria-hidden="true"></i>
+                                    @break
+                            @endswitch
+                            <small>{{'(' . count($comentarios) . ')'}}</small>
+                        </div>
+                        <div class="col-md-3 justify-content-center" style="padding-left: 60px; padding-top: 23px;">
+                            <button type="button" class="btn btn-primary"
+                                    data-dismiss="modal"
+                                    data-toggle="modal"
+                                    data-target="#modal-comentario">Avaliar</button>
+                        </div>
+
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col mb-15">
+                            <h5 class="title"><small class="pull-right">{{count($comentarios)}} Comentários</small>Comentários</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        @foreach($comentarios as $c)
+                            <div class="col-md-12">
+                                <div class="fundo-comentario">
+                                    <div class="col-md-12 mt-2">
+                                        <p><b>{{$c->nm_cliente . ' - ' . $c->titulo_comentario}}</b>
+                                            <small class="pull-right" style="color: #b5b5b5;">{{date_create($c->dt_comentario)->format('d-m-Y')}}</small> -
+                                        {{--<div class="mb-3">--}}
+                                            @switch($c->aval_star)
+                                                @case(1)
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    @break
+                                                @case(2)
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    @break
+                                                @case(3)
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    @break
+                                                @case(4)
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o estrela" aria-hidden="true"></i>
+                                                    @break
+                                                @case(5)
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    <i class="fa fa-star estrela" aria-hidden="true"></i>
+                                                    @break
+                                            @endswitch
+                                        </p>
+                                        {{--</div>--}}
+                                    </div>
+                                    <div class="col-md-10">
+                                        <pre style="font-size: 14px;">{{$c->desc_comentario}}</pre>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+    <!--MODAL PARA FAZER O COMENTARIO-->
+    <form action="{{route('save.product.avaliation')}}" method="post" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        <div class="modal" tabindex="-1" role="dialog" id="modal-comentario">
+            <div class="" role="document" style="max-width: 900px; margin: 1.75rem auto;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Avalie este produto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input id="fk_id_sku" type="hidden" name="fk_id_sku" value="{{$product[0]['cd_sku']}}">
+                            <input id="slug" type="hidden" name="slug" value="{{$product[0]['nm_slug']}}">
+                            @if(\Illuminate\Support\Facades\Auth::check())
+                                <input id="fk_id_cliente" type="hidden" name="fk_id_cliente" value="{{\Illuminate\Support\Facades\Auth::user()->cd_cliente}}">
+                            @endif
+                            <div class="col-md-12">
+                                <label for="star1">Sua avaliação para este produto: *</label>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-check form-check-inline">
+                                    <input id="star1" type="radio" class="form-check-input" name="fk_id_star" value="1" required>
+                                    <label class="form-check-label" for="star1">Ruim</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input id="star2" type="radio" class="form-check-input" name="fk_id_star" value="2" required>
+                                    <label class="form-check-label" for="star2">Regular</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input id="star3" type="radio" class="form-check-input" name="fk_id_star" value="3" required>
+                                    <label class="form-check-label" for="star3">Bom</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input id="star4" type="radio" class="form-check-input" name="fk_id_star" value="4" required>
+                                    <label class="form-check-label" for="star4">Ótimo</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input id="star5" type="radio" class="form-check-input" name="fk_id_star" value="5" required>
+                                    <label class="form-check-label" for="star5">Excelente</label>
+                                </div>
+                            </div>
+
+                            <p>&nbsp;</p>
+
+                            <div class="col-md-12">
+                                <label>Você recomenda esse produto ? *</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check form-check-inline">
+                                    <input id="recomenda1" type="radio" class="form-check-input" value="1" name="recomenda" required>
+                                    <label class="form-check-label" for="recomenda1">Sim</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input id="recomenda2" type="radio" class="form-check-input" value="0" name="recomenda" required>
+                                    <label class="form-check-label" for="recomenda2">Não</label>
+                                </div>
+                            </div>
+
+                            <p>&nbsp;</p>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="titulo">Titulo do comentário: *</label>
+                                    <div class="input-group">
+                                        <input id="titulo" class="form-control" name="titulo_comentario" required>
+                                    </div>
+                                    <small class="form-text text-muted">
+                                        Ex: Gostei muito do produto!
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="descricao">Opnião sobre o produto: *</label>
+                                    <textarea id="descricao" class="form-control" rows="5" maxlength="250" style="resize: none;" name="desc_comentario" required></textarea>
+                                    <small class="form-text text-muted">
+                                        Limite de 250 caracteres.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn_cancelar" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        @if(\Illuminate\Support\Facades\Auth::check())
+                            <button id="btn_comentar" type="submit" class="btn btn-primary">Comentar</button>
+                        @else
+                            <a class="btn btn-primary" href="{{route('client.login')}}">Faça login para comentar</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+    </form>
+
+    <script>
+        $(function () {
+
+            let data = [
+                { "Avaliacao": "", "aval": {{$recomendacao}} },
+                { "Avaliacao": "", "aval": {{$nao_recomenda}} }
+            ];
+
+            $("#chart").igDoughnutChart({
+                width: "100px",
+                height: "100px",
+                innerExtent: 75,
+                series:
+                    [{
+                        name: "aval",
+                        labelMemberPath: "Avaliacao",
+                        valueMemberPath: "aval",
+                        dataSource: data,
+                        labelsPosition: "bestFit",
+                        formatLabel: function (context) {
+                            //return context.itemLabel + " (" + context.item.aval + ")";
+                            return context.itemLabel + "";
+                        }
+                    }]
+            });
+
+            $("#chart2").igDoughnutChart({
+                width: "100px",
+                height: "100px",
+                innerExtent: 75,
+                series:
+                    [{
+                        name: "aval",
+                        labelMemberPath: "Avaliacao",
+                        valueMemberPath: "aval",
+                        dataSource: data,
+                        labelsPosition: "bestFit",
+                        formatLabel: function (context) {
+                            //return context.itemLabel + " (" + context.item.aval + ")";
+                            return context.itemLabel + "";
+                        }
+                    }]
+            });
+        });
+    </script>
     <script>
 
         $(document).ready(function(){
             var descricao = $('#desc_prod').val();
             $('#texto_desc').html(descricao);
 
+        });
+
+        $(function() {
+            $('button#btnComprar').click(function () {
+                let id = $(this).parent().parent().find("input[name='sku_produto']").val();
+                let preco = $(this).parent().parent().find("input[name='vl_produto']").val();
+
+                fbq('track', 'AddToCart', {
+                    value: preco,
+                    currency: 'BRL',
+                    content_ids: id,
+                });
+
+            });
         });
 
         let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -606,6 +1156,8 @@
                     $('.qty-minus').css('pointer-events', 'auto');
                     $('.qty-plus').css('pointer-events', 'auto');
 
+                    $('#qtd_vendas_prod').html(d.vendas);
+
                 }
             });
         }
@@ -618,7 +1170,7 @@
 
             ajaxPreencheDadosProduto(selectedProductSku, true);
 
-        })
+        });
 
     </script>
 

@@ -880,8 +880,25 @@
                                             else if(arrayHead[iB] == "descricaoCurta"){
 
                                                 if(descricao[0] != null){
-                                                    var novaDesc = descricao[0].replace(/<p>/gi, "");
-                                                    novaDesc = novaDesc.replace(/<\/p>/gi, "\n");
+                                                    /*var novaDesc = descricao[0].replace(/<p>/gi, "");
+                                                    novaDesc = novaDesc.replace(/<\/p>/gi, "\n");*/
+                                                    /*novaDesc = novaDesc.replace(/<strong>/gi, "");
+                                                    novaDesc = novaDesc.replace(/<\/strong>/gi, "");*/
+
+                                                    let novaDesc = "";
+                                                    let descAntiga = descricao[0];
+                                                    let tag = false;
+                                                    for(let sbs = 0; sbs < descAntiga.length; sbs++){
+                                                        if(!tag){
+                                                            if(descAntiga.substr(sbs, 1) == "<")
+                                                                tag = true;
+                                                            else
+                                                                novaDesc = novaDesc + descAntiga.substr(sbs,1);
+                                                        }
+                                                        else if(descAntiga.substr(sbs, 1) == ">")
+                                                            tag = false;
+                                                    }
+
                                                     arrayDesc.push(novaDesc);
                                                     console.log("DESCRIÇÃO: " + novaDesc);
                                                     //arrayDesc.push(descricao[0]);
@@ -911,7 +928,7 @@
                                             (arrayHead[iB] == "imagem" && arrayBody[iB] == "") ||
                                             (arrayHead[iB] == "descricaoCurta" && arrayBody[iB] == "null") ||
                                             (arrayHead[iB] == "descricaoCurta" && arrayBody[iB] == "") ||
-                                            (arrayHead[iB] == "estoqueAtual" && arrayBody[iB] <= 2) ||
+                                            (arrayHead[iB] == "estoqueAtual" && arrayBody[iB] <= 0) ||
                                             (arrayHead[iB] == "pesoBruto" && arrayBody[iB] == "0.000") ||
                                             (arrayHead[iB] == "descricaoCat" && arrayBody[iB] == "não associado") ||
                                             (arrayHead[iB] == "marca" && arrayBody[iB] == ""))
@@ -1203,8 +1220,23 @@
                                             else if(arrayHead[iB] == "descricaoCurta"){
 
                                                 if(descricao[0] != null){
-                                                    var novaDesc = descricao[0].replace(/<p>/gi, "");
-                                                    novaDesc = novaDesc.replace(/<\/p>/gi, "\n");
+                                                    /*var novaDesc = descricao[0].replace(/<p>/gi, "");
+                                                    novaDesc = novaDesc.replace(/<\/p>/gi, "\n");*/
+
+                                                    let novaDesc = "";
+                                                    let descAntiga = descricao[0];
+                                                    let tag = false;
+                                                    for(let sbs = 0; sbs < descAntiga.length; sbs++){
+                                                        if(!tag){
+                                                            if(descAntiga.substr(sbs, 1) == "<")
+                                                                tag = true;
+                                                            else
+                                                                novaDesc = novaDesc + descAntiga.substr(sbs,1);
+                                                        }
+                                                        else if(descAntiga.substr(sbs, 1) == ">")
+                                                            tag = false;
+                                                    }
+
                                                     arrayDesc.push(novaDesc);
                                                     console.log("DESCRIÇÃO: " + novaDesc);
                                                     //arrayDesc.push(descricao[0]);

@@ -1,6 +1,9 @@
 @extends('layouts.app.app')
 
 @section('content')
+    <script>
+        fbq('track', 'Contact');
+    </script>
 
         <!-- Contact Section -->
         <section id="contact" class="contact-section">

@@ -67,7 +67,7 @@
                                 <button id="btn_busca_pedidos" type="button" class="btn btn-primary">Buscar Pedidos</button>
 
                         </div>
-                        <div id="divFiltroCanal" class="col-md-3" hidden>
+                        <div id="divFiltroCanal" class="col-md-2" hidden>
                             <label>Filtre por canal:</label>
                             <div class="form-group">
                                 <div class="input-group">
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="divTaxasCanal" class="col-md-3" hidden>
+                        <div id="divTaxasCanal" class="col-md-2" hidden>
                             <label>Escolha canal para aplicar valores:</label>
                             <div class="form-group">
                                 <div class="input-group">
@@ -86,6 +86,17 @@
                                         @foreach($canais as $c)
                                             <option value="{{$c->id_canais}}">{{$c->nome_canal}}</option>
                                         @endforeach
+                                    </select>
+                                    <span class="input-group-addon"><i class="fa fa-filter"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divFiltroPgto" class="col-md-2" hidden>
+                            <label>Filtre por forma de pgto.</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select id="filtroPgto" class="form-control">
+                                        <option value=""></option>
                                     </select>
                                     <span class="input-group-addon"><i class="fa fa-filter"></i></span>
                                 </div>
@@ -124,6 +135,7 @@
                                     <th>Frete</th>
                                     <th>Situação</th>
                                     <th>Integração</th>
+                                    <th>Forma Pgto</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -394,10 +406,11 @@
         //FUNÇÃO QUE BUSCA TODOS OS PEDIDOS COM OS PARAMETROS PASSADOS
         let arrayNumeroPedido = [];
         let arrayFiltroCanal = [''];
+        let arrayFiltroPgto = [''];
         let existeNumeroPedido = false;
         let loja = 'Loja Física';
         function buscarPedidos(pagina, datas){
-            let deuErro = false;
+            let deuErro = true;
             let existeFiltro = false;
 
             pagina = "page=" + pagina;
@@ -407,21 +420,34 @@
                     type: 'get',
                     success: function (data) {
                         let objPedido = JSON.parse(data);
+
+                        try{
+                            let erro = objPedido.retorno.erros[0];
+                            deuErro = true;
+                            return;
+                        }
+                        catch(e){
+                            deuErro = false;
+                        }
+
                         objPedido = objPedido.retorno.pedidos;
                         let obj;
-                        // console.log(objPedido);
+                        console.log(objPedido);
                         // console.log("Tamanho array filtro: " + arrayFiltroCanal.length);
 
-                        try {
+
+                        //try {
                             for (let i = 0; i < objPedido.length; i++) {
                                 obj = objPedido[i].pedido;
                                 existeNumeroPedido = false;
                                 existeFiltro = false;
 
 
+
                                 if (obj.situacao != "Cancelado" && obj.situacao != "Venda Agenciada") {
                                     //console.log(obj);
-
+                                    //console.log(obj.parcelas[0].parcela.forma_pagamento.descricao);
+                                    console.log(obj.numero);
                                     let integracao;
                                     if(jQuery.type(obj.tipoIntegracao) == "undefined")
                                         integracao = loja;
@@ -431,6 +457,15 @@
 
                                     if(!arrayFiltroCanal.includes(integracao)){
                                         arrayFiltroCanal.push(integracao);
+                                    }
+
+                                    try {
+                                        if (!arrayFiltroPgto.includes(obj.parcelas[0].parcela.forma_pagamento.descricao)) {
+                                            arrayFiltroPgto.push(obj.parcelas[0].parcela.forma_pagamento.descricao);
+                                        }
+                                    }
+                                    catch(e){
+                                        console.log("erro pagamento");
                                     }
 
                                     for (let j = 0; j < obj.itens.length; j++) {
@@ -466,6 +501,13 @@
                                         arrayPedidos.push(obj.situacao);
                                         //insere tipo integração do produto no array
                                         arrayPedidos.push(obj.tipoIntegracao);
+                                        //insere a forma de pgto do produto no array
+                                        try{
+                                            arrayPedidos.push(obj.parcelas[0].parcela.forma_pagamento.descricao);
+                                        }
+                                        catch(e){
+                                            arrayPedidos.push("");
+                                        }
 
                                         let tr = $('<tr></tr>');
                                         for (let k = 0; k < arrayPedidos.length; k++) {
@@ -516,15 +558,16 @@
                                 }
                             }
                             $('#divTaxasCanal').removeAttr('hidden');
+                            $('#divFiltroPgto').removeAttr('hidden');
                             $('#divFiltroCanal').removeAttr('hidden');
                             $('.removerHidden').removeAttr('hidden');
                             //$('#gerarPDFTabela').css('display', 'block');
-                        }
+                       /* }
                         catch (e) {
                             deuErro = true;
                             pag = 1;
                             // console.log(pag);
-                        }
+                        }*/
                     },
                     error: function(data){
                         swal('Ops', 'Ocorreu um erro ao buscar os dados.' +
@@ -560,7 +603,7 @@
             taxa_total_canal = 0;
 
             $('#resultPedido').find('tr').each(function(){
-                if(!$(this).hasClass('trDesativa')) {
+                if(!$(this).hasClass('trDesativa') && !$(this).hasClass('trDesativaPagto')) {
                     let custo = parseFloat($(this).find('td:eq(5)').text());
                     let qtd = parseFloat($(this).find('td:eq(4)').text());
                     let frete = parseFloat($(this).find('td:eq(7)').text());
@@ -572,7 +615,7 @@
                         calc = taxa_select * qtd;
 
                     taxa_total_canal+= calc;
-                    console.log("taxa total " + calc);
+                    //console.log("taxa total " + calc);
                     custoTotal += custo;
                     qtdTotal += qtd;
                     freteTotal += frete;
@@ -592,7 +635,7 @@
             let arrayPedido = [];
             let existeNumero = false;
             $('#resultPedido').find('tr').each(function(){
-                if(!$(this).hasClass('trDesativa')) {
+                if(!$(this).hasClass('trDesativa') && !$(this).hasClass('trDesativaPagto')) {
                     existeNumero = false;
                     let pedido = $(this).find('td:first').text();
 
@@ -617,6 +660,7 @@
         //FUNÇÃO QUE ADICIONA O NOME DOS CANAIS NO SELECT DO FILTRO
         function filtroSelect(){
             $('#filtroCanal').empty();
+            $('#filtroPgto').empty();
             for(let i = 0; i < arrayFiltroCanal.length; i++){
                 let option = $('<option></option>');
                 option.text(arrayFiltroCanal[i]);
@@ -626,8 +670,18 @@
                 //console.log(arrayFiltroCanal[i]);
             }
 
+            for(let i = 0; i < arrayFiltroPgto.length; i++){
+                let option = $('<option></option>');
+                option.text(arrayFiltroPgto[i]);
+                option.val(arrayFiltroPgto[i]);
+                $('#filtroPgto').append(option);
+                //console.log(jQuery.type(arrayFiltroCanal[i]));
+                //console.log(arrayFiltroCanal[i]);
+            }
+
             $('#divFiltroCanal').removeAttr('hidden');
             $('#divTaxasCanal').removeAttr('hidden');
+            $('#divFiltroPgto').removeAttr('hidden');
         }
 
         //=====================================================================================================
@@ -922,7 +976,7 @@
             if($('#span_integracao').text() == "MercadoLivre")
                 taxa = taxa * qtd;
 
-            console.log("integração: " + $('#span_integracao').text());
+            /*console.log("integração: " + $('#span_integracao').text());
             console.log("valorTotal: " + valorTotal + " " + jQuery.type(valorTotal));
             console.log("valorSemFrete: " + valorSemFrete + " " + jQuery.type(valorSemFrete));
             console.log("comissão: " + comissao + " " + jQuery.type(comissao));
@@ -934,14 +988,14 @@
             console.log("despesa_fixa: " + despesa_fixa +" " + jQuery.type(despesa_fixa));
             console.log("frete: " + frete + " " +jQuery.type(frete));
             console.log("taxa_cartao: " + taxa_cartao + " " +jQuery.type(taxa_cartao));
-            console.log("marketing: " + marketing +" " + jQuery.type(marketing));
+            console.log("marketing: " + marketing +" " + jQuery.type(marketing));*/
 
             let resultado = (comissao + taxa + imposto + custoProd + pac + despesa_fixa + taxa_cartao + marketing + frete);
             let resultadoFinal = valorTotal - resultado;
 
-            console.log("resultado: " + resultado);
+            /*console.log("resultado: " + resultado);
             console.log("resultadoFinal: " + resultadoFinal);
-            console.log(resultadoFinal.toFixed(2));
+            console.log(resultadoFinal.toFixed(2));*/
 
             //CRIAÇÃO DA DOM DOS RESULTADOS
             $('#spanResultadoFinal').text(resultadoFinal.toFixed(2));
@@ -1105,7 +1159,7 @@
                 if(integracao == "MercadoLivre")
                     taxa= taxa * qtd;
 
-                console.log("integração: " + integracao);
+                /*console.log("integração: " + integracao);
                 console.log("valorTotal: " + valorTotal + " " + jQuery.type(valorTotal));
                 console.log("valorSemFrete: " + valorSemFrete + " " + jQuery.type(valorSemFrete));
                 console.log("comissão: " + comissao + " " + jQuery.type(comissao));
@@ -1117,14 +1171,14 @@
                 console.log("despesa_fixa: " + despesa_fixa +" " + jQuery.type(despesa_fixa));
                 console.log("frete: " + frete + " " +jQuery.type(frete));
                 console.log("taxa_cartao: " + taxa_cartao + " " +jQuery.type(taxa_cartao));
-                console.log("marketing: " + marketing +" " + jQuery.type(marketing));
+                console.log("marketing: " + marketing +" " + jQuery.type(marketing));*/
 
                 let resultado = parseFloat(comissao) + parseFloat(taxa) + parseFloat(imposto) + parseFloat(custoProd) + parseFloat(pac) + parseFloat(despesa_fixa) + parseFloat(frete) + parseFloat(taxa_cartao) + parseFloat(marketing);
                 let resultadoFinal = valorTotal - resultado;
 
-                console.log("resultado: " + resultado);
+                /*console.log("resultado: " + resultado);
                 console.log("resultadoFinal: " + resultadoFinal);
-                console.log(resultadoFinal.toFixed(2));
+                console.log(resultadoFinal.toFixed(2));*/
 
 
                 //$('p.paragrafAviso').css('display', 'none');
@@ -1155,7 +1209,10 @@
                         $(this).attr('hidden', true).addClass('trDesativa');
                     }
                     else {
-                        $(this).removeAttr('hidden').removeClass('trDesativa');
+                        $(this).removeClass('trDesativa');
+
+                        if(!$(this).hasClass('trDesativaPagto'))
+                            $(this).removeAttr('hidden');
                     }
 
                 });
@@ -1163,7 +1220,71 @@
                 $('#divComissao').removeAttr('hidden');
             }else{
                 $('#resultPedido').find('tr').each(function () {
-                        $(this).removeAttr('hidden').removeClass('trDesativa');
+                    $(this).removeClass('trDesativa');
+
+                    if(!$(this).hasClass('trDesativaPagto'))
+                        $(this).removeAttr('hidden');
+                });
+                $('#divComissao').attr('hidden', true);
+                $('#gerarPDFTabela').css('display', 'none');
+            }
+
+            geraCustoTotal();
+            geraVendaTotal();
+
+            if($('#taxasCanal').val() != ""){
+                if($('#filtroCanal').val() != "") {
+                    let custoTotal = parseFloat($('#spanVendaTotal').text());
+                    let frete = parseFloat($('#spanFreteTotal').text());
+                    let qtd = parseInt($('#spanQtdTotal').text());
+                    let custoProd = parseFloat($('#spanCustoTotal').text());
+                    let custoSemFrete = custoTotal - frete;
+                    let comissao = (comissao_select / 100) * custoTotal;
+                    let imposto = (imposto_select / 100) * custoSemFrete;
+                    let pac = pac_select * qtd;
+                    let despesa = (despesa_fixa_select / 100) * custoSemFrete;
+                    let taxa_cartao = (taxa_cartao_select / 100) * custoSemFrete;
+                    // let taxa = taxa_select * qtd;
+                    let marketing = (marketing_select / 100) * custoSemFrete;
+                    let vendaTotal = (custoSemFrete - custoProd - comissao - imposto - pac - despesa - taxa_total_canal - taxa_cartao - marketing);
+                    $('#comissaoTotal').text(comissao.toFixed(2));
+                    $('#impostoTotal').text(imposto.toFixed(2));
+                    $('#pacTotal').text(pac.toFixed(2));
+                    $('#despesaTotal').text(despesa.toFixed(2));
+                    $('#taxaCartaoTotal').text(taxa_cartao.toFixed(2));
+                    $('#marketingTotal').text(marketing.toFixed(2));
+                    $('#taxaTotal').text(taxa_total_canal.toFixed(2));
+                    $('#vendaTotalResultado').text(vendaTotal.toFixed(2));
+                    $('#gerarPDFTabela').css('display', 'block');
+                }
+            }
+        });
+
+        $('#filtroPgto').change(function(){
+            let valor = $(this).val();
+
+            if(valor!=""){
+                $('#resultPedido').find('tr').each(function () {
+                    if ($(this).find('td:eq(10)').text() != valor) {
+                        // console.log($(this));
+                        $(this).attr('hidden', true).addClass('trDesativaPagto');
+                    }
+                    else {
+                        $(this).removeClass('trDesativaPagto');
+
+                        if(!$(this).hasClass('trDesativa'))
+                            $(this).removeAttr('hidden');
+                    }
+
+                });
+
+                $('#divComissao').removeAttr('hidden');
+            }else{
+                $('#resultPedido').find('tr').each(function () {
+                    $(this).removeClass('trDesativaPagto');
+
+                    if(!$(this).hasClass('trDesativa'))
+                        $(this).removeAttr('hidden');
                 });
                 $('#divComissao').attr('hidden', true);
                 $('#gerarPDFTabela').css('display', 'none');
@@ -1341,6 +1462,8 @@
 
             doc.setFontSize(12);
             doc.text("Canal: " + canal, 10, 20);
+            if($('#filtroPgto').val() != "")
+                doc.text("Forma Pagto: " + $('#filtroPgto').val(), 50, 20);
             doc.text("Data: " + data[0] + " até " + data[1], 140, 20);
             doc.text('___________________________________________________________________________________', 10, 30);
             doc.text("Total das vendas: R$ " + $('#spanVendaTotal').text(), 10, 40);
@@ -1356,15 +1479,17 @@
             doc.text("Resultado Final: R$ " + $('#vendaTotalResultado').text(), 10, 70);
             doc.text('___________________________________________________________________________________', 10, 80);
 
+            let qtdPedido = 0;
             let linha = 90;
             $('#resultPedido').find('tr').each(function(){
-                if(!$(this).hasClass('trDesativa')){
+                if(!$(this).hasClass('trDesativa') && !$(this).hasClass('trDesativaPagto')){
                     doc.text("Pedido: " + $(this).find('td:eq(0)').text(), 10, linha);
                     doc.text("Custo: R$ " + $(this).find('td:eq(5)').text(), 40, linha);
                     doc.text("Qtd: " + $(this).find('td:eq(4)').text(), 80, linha);
                     doc.text("Venda: R$ " + $(this).find('td:eq(6)').text(), 100, linha);
                     doc.text("Frete: R$ " + $(this).find('td:eq(7)').text(), 140, linha);
 
+                    qtdPedido += 1;
                     linha+=10;
                     if(linha == 300){
                         linha = 20;
@@ -1373,7 +1498,12 @@
                 }
             });
 
-            doc.save("Relatorio " + canal + ".pdf");
+            doc.text("Quantidade de pedidos: " + qtdPedido, 10, linha);
+
+            if($('#filtroPgto').val() == "")
+                doc.save("Relatorio " + canal + ".pdf");
+            else
+                doc.save("Relatorio " + canal + " " + $('#filtroPgto').val() + ".pdf");
         });
     });
 </script>

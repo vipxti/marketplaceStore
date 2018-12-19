@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         'App\Console\Commands\XmlFeed',
         'App\Console\Commands\PedidosBling',
+        'App\Console\Commands\CahOlliver',
     ];
 
     /**
@@ -30,6 +31,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('xml:feed')->everyMinute();
 
         $schedule->command('pedidos:bling')->everyMinute();
+
+        $schedule->command('cah:olliver')->everyMinute();
     }
 
     /**

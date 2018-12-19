@@ -9,6 +9,7 @@ use App\MenuItensVitrine;
 use App\NavigationMenu;
 use App\Product;
 use App\ProductVariation;
+use App\Wishlist;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -91,14 +92,24 @@ class HomeController extends Controller{
         }
 
         $arrayVariation = [];
+        $arrayWish = [];
         foreach ($produtos as $key => $produto){
             $variation = ProductVariation::join('sku', 'sku.cd_sku', '=', 'produto_variacao.cd_sku')
                         ->join('produto', 'produto.cd_produto', '=', 'produto_variacao.cd_produto')
                         ->where('produto.cd_produto', '=', $produto->cd_produto)
                         ->get();
 
+            $wish = Wishlist::join('sku', 'wishlist.fk_id_sku', '=', 'sku.cd_sku')
+                ->join('produto', 'sku.cd_sku', '=', 'produto.cd_sku')
+                ->where('produto.cd_produto', '=', $produto->cd_produto)
+                ->get();
+
             if(count($variation) > 0){
                 $arrayVariation[$key] = $variation[0];
+            }
+
+            if(count($wish) > 0) {
+                $arrayWish[$key] = $wish[0];
             }
         }
 
@@ -115,7 +126,8 @@ class HomeController extends Controller{
             $nome = null;
         }
         //dd($produtos);
-        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome', 'categoriaSubCat', 'menuNav', 'menuNavegacao', 'arrayVariation', 'banner'));
+        return view('pages.app.index', compact('produtos', 'imagemPrincipal', 'qtdCarrinho', 'nome',
+            'categoriaSubCat', 'menuNav', 'menuNavegacao', 'arrayVariation', 'banner', 'arrayWish'));
     }
 
     public function showIndexAdminPage()

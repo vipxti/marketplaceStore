@@ -57,13 +57,21 @@
             transform: translate(-50%, -50%) !important;
         }
 
+        #noty-holder{
+            width: 100%;
+            top: 0;
+            font-weight: bold;
+            z-index: 1031; /* Max Z-Index in Fixed Nav Menu is 1030*/
+            text-align: center;
+            position: fixed;
+        }
+
     </style>
 
     <section class="section_padding_100">
         <div class="container">
             <div class="row">
                 <!-- Produtos e Contador páginas -->
-
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="container">
                         <div class="row karl-new-arrivals text-center">
@@ -73,6 +81,16 @@
                                         <img class="tamanhoimg" src="{{ URL::asset('img/products/' . $produto->im_produto) }}" alt="{{ $produto->nm_slug }}">
                                         <div class="product-quicview">
                                             <a href="{{ route('products.details', $produto->nm_slug)}}"><i class="fa fa-plus"></i></a>
+                                            <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                            @if(\Illuminate\Support\Facades\Auth::check())
+                                                @if($wishlist[$key]->cd_cliente != Auth::user()->cd_cliente)
+                                                    <a id="wishlist" href="javascript:void(0)" class="{{$produto->cd_nr_sku}}"><i class="fa fa-heart-o"></i></a>
+                                                @else
+                                                    <a id="wishlist" href="javascript:void(0)" class="{{$produto->cd_nr_sku}}"><i class="fa fa-heart"></i></a>
+                                                @endif
+                                            @else
+                                                <a id="wishlist" href="javascript:void(0)" class="{{$produto->cd_nr_sku}}"><i class="fa fa-heart-o"></i></a>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -85,7 +103,7 @@
 
                                         @if ($variation[$key]->nm_produto_variacao != null && $variation[$key]->cd_produto == $produto->cd_produto)
 
-                                            @if($produto->qt_produto < 5)
+                                            @if($produto->qt_produto <= 0)
                                                 <p class="semestoque">SEM ESTOQUE</p>
                                             @else
                                                 <div>
@@ -108,13 +126,13 @@
                                                 <input type="hidden" name="ds_comprimento" value="{{ $produto->ds_comprimento }}">
                                                 <input type="hidden" name="ds_peso" value="{{ $produto->ds_peso }}">
                                                 <input type="hidden" name="im_produto" value="{{ $produto->im_produto }}">
-                                                @if($produto->qt_produto < 5)
+                                                @if($produto->qt_produto <= 0)
                                                     <div>
                                                         <p class="btn semestoque">SEM ESTOQUE</p>
                                                     </div>
                                                 @else
                                                     <div class="text-center">
-                                                        <button type="submit" class="btn btncomprar box" style="overflow: hidden"><i class="icon-bag" aria-hidden="true"></i>&nbsp;COMPRAR</button>
+                                                        <button id="btn_comprar_produto" type="submit" class="btn btncomprar box" style="overflow: hidden"><i class="icon-bag" aria-hidden="true"></i>&nbsp;COMPRAR</button>
                                                     </div>
                                                 @endif
                                             </form>
@@ -142,5 +160,84 @@
             </div>
         </div>
     </section>
+
+    <script>
+        $(function(){
+           $('button#btn_comprar_produto').click(function(){
+               let id = $(this).parent().parent().find("input[name='sku_produto']").val();
+               let preco = $(this).parent().parent().find("input[name='vl_produto']").val();
+
+               fbq('track', 'AddToCart', {
+                   value: preco,
+                   currency: 'BRL',
+                   content_ids: id,
+               });
+
+           });
+
+            function createNoty(message, type) {
+                var html = '<div class="aleatorio alert alert-' + type + ' alert-dismissable page-alert col-md-3 offset-md-9">';
+                html += '<button type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>';
+                html += message;
+                html += '</div>';
+                $(html).hide().prependTo('#noty-holder').slideDown();
+            };
+
+           let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+           $('a#wishlist').click(function(){
+                let sku = $(this).prop('class');
+                let a = $(this);
+
+                @if(Auth::check())
+                    $.ajax({
+                        url: '{{route('save.product.wishlist')}}',
+                        type: 'post',
+                        data: {_token: CSRF_TOKEN, fk_id_sku: sku},
+                        success: function(data){
+                            if(data.deuErro == false){
+
+                                if(a.find('i').hasClass('fa-heart-o')) {
+                                    a.find('i').removeClass('fa-heart-o').addClass('fa-heart');
+
+                                    createNoty('Adicionado na Lista de Desejos!', 'success');
+
+                                    $('.aleatorio').fadeOut(2000, function(){
+                                        $(this).remove();
+                                    });
+                                }
+                                else {
+                                    a.find('i').removeClass('fa-heart').addClass('fa-heart-o');
+
+                                    createNoty('Removido da Lista de Desejos!', 'warning');
+
+                                    $('.aleatorio').fadeOut(2000, function(){
+                                        $(this).remove();
+                                    });
+                                }
+
+                            }
+                            else{
+                                createNoty('Erro ao adicionar na Lista de Desejos.', 'danger');
+
+                                $('.aleatorio').fadeOut(2000, function(){
+                                    $(this).remove();
+                                });
+
+                            }
+                        }
+                    });
+                @else
+                   createNoty('Usuário precisa estar logado.', 'warning');
+
+                   $('.aleatorio').fadeOut(2000, function(){
+                       $(this).remove();
+                   });
+                @endif
+
+
+
+           });
+        });
+    </script>
 
 @stop
