@@ -72,13 +72,17 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <select id="filtroCanal" class="form-control">
+                                        <option value=""></option>
+                                        @foreach($lojas as $l)
+                                            <option value="{{$l->id_loja}}">{{$l->nome_loja}}</option>
+                                        @endforeach
                                     </select>
                                     <span class="input-group-addon"><i class="fa fa-filter"></i></span>
                                 </div>
                             </div>
                         </div>
                         <div id="divTaxasCanal" class="col-md-2" hidden>
-                            <label>Escolha canal para aplicar valores:</label>
+                            <label>Valores por canal:</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <select id="taxasCanal" class="form-control">
@@ -136,6 +140,7 @@
                                     <th>Situação</th>
                                     <th>Integração</th>
                                     <th>Forma Pgto</th>
+                                    <th>Cliente</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -375,6 +380,18 @@
             format: 'DD/MM/YYYY'
         });
 
+        let objFiltroLojas = [];
+
+        @foreach($lojas as $l)
+            {{--objFiltroLojas['{{$l->id_loja}}'] = '{{$l->nome_loja}}';--}}
+            objFiltroLojas.push({
+               id: '{{$l->id_loja}}',
+               nome: '{{$l->nome_loja}}'
+            });
+        @endforeach
+
+        console.log(objFiltroLojas);
+
         //=====================================================================================================
         //BOTÃO QUE BUSCA TODOS OS PEDIDOS DO BLING
         var pag = 1;
@@ -405,7 +422,6 @@
         //=====================================================================================================
         //FUNÇÃO QUE BUSCA TODOS OS PEDIDOS COM OS PARAMETROS PASSADOS
         let arrayNumeroPedido = [];
-        let arrayFiltroCanal = [''];
         let arrayFiltroPgto = [''];
         let existeNumeroPedido = false;
         let loja = 'Loja Física';
@@ -414,184 +430,160 @@
             let existeFiltro = false;
 
             pagina = "page=" + pagina;
-            //try {
-                $.ajax({
-                    url: '{{url('/admin/order/bling/search')}}/' + pagina + '/' + datas,
-                    type: 'get',
-                    success: function (data) {
-                        let objPedido = JSON.parse(data);
 
-                        try{
-                            let erro = objPedido.retorno.erros[0];
-                            deuErro = true;
-                            return;
-                        }
-                        catch(e){
-                            deuErro = false;
-                        }
+            $.ajax({
+                url: '{{url('/admin/order/bling/search')}}/' + pagina + '/' + datas,
+                type: 'get',
+                success: function (data) {
+                    let objPedido = JSON.parse(data);
 
-                        objPedido = objPedido.retorno.pedidos;
-                        let obj;
-                        console.log(objPedido);
-                        // console.log("Tamanho array filtro: " + arrayFiltroCanal.length);
+                    try{
+                        let erro = objPedido.retorno.erros[0];
+                        deuErro = true;
+                        return;
+                    }
+                    catch(e){
+                        deuErro = false;
+                    }
 
+                    objPedido = objPedido.retorno.pedidos;
+                    let obj;
+                    console.log(objPedido);
 
-                        //try {
-                            for (let i = 0; i < objPedido.length; i++) {
-                                obj = objPedido[i].pedido;
-                                existeNumeroPedido = false;
-                                existeFiltro = false;
+                    for (let i = 0; i < objPedido.length; i++) {
+                        obj = objPedido[i].pedido;
+                        existeNumeroPedido = false;
+                        existeFiltro = false;
 
+                        if (obj.situacao != "Cancelado" && obj.situacao != "Venda Agenciada") {
 
+                            console.log(obj.numero);
 
-                                if (obj.situacao != "Cancelado" && obj.situacao != "Venda Agenciada") {
-                                    //console.log(obj);
-                                    //console.log(obj.parcelas[0].parcela.forma_pagamento.descricao);
-                                    console.log(obj.numero);
-                                    let integracao;
-                                    if(jQuery.type(obj.tipoIntegracao) == "undefined")
-                                        integracao = loja;
-                                    else
-                                        integracao = obj.tipoIntegracao;
-
-
-                                    if(!arrayFiltroCanal.includes(integracao)){
-                                        arrayFiltroCanal.push(integracao);
-                                    }
-
-                                    try {
-                                        if (!arrayFiltroPgto.includes(obj.parcelas[0].parcela.forma_pagamento.descricao)) {
-                                            arrayFiltroPgto.push(obj.parcelas[0].parcela.forma_pagamento.descricao);
-                                        }
-                                    }
-                                    catch(e){
-                                        console.log("erro pagamento");
-                                    }
-
-                                    for (let j = 0; j < obj.itens.length; j++) {
-                                        //console.log(obj.itens[j].item);
-                                        let qtd = Math.trunc(obj.itens[j].item.quantidade);
-                                        let custo = 0;
-
-                                        if(obj.itens[j].item.precocusto != null)
-                                            custo = parseFloat(obj.itens[j].item.precocusto);
-                                        else
-                                            custo = 0.0;
-
-                                        let custoTotal = custo * qtd;
-
-                                        //insere numero pedido no array
-                                        arrayPedidos.push(obj.numero);
-                                        arrayNumeroPedido.push(obj.numero);
-                                        //insere sku do produto no array
-                                        arrayPedidos.push(obj.itens[j].item.codigo);
-                                        //insere preço custo do produto no array
-                                        arrayPedidos.push(custo.toFixed(2));
-                                        //insere valor unidade do produto no array
-                                        arrayPedidos.push(obj.itens[j].item.valorunidade);
-                                        //insere quantidade do produto no array
-                                        arrayPedidos.push(Math.trunc(obj.itens[j].item.quantidade));
-                                        //insere custo total do produto no array
-                                        arrayPedidos.push(custoTotal.toFixed(2));
-                                        //insere total venda do produto no array
-                                        arrayPedidos.push(obj.totalvenda);
-                                        //insere frete do produto no array
-                                        arrayPedidos.push(obj.valorfrete);
-                                        //insere situação do produto no array
-                                        arrayPedidos.push(obj.situacao);
-                                        //insere tipo integração do produto no array
-                                        arrayPedidos.push(obj.tipoIntegracao);
-                                        //insere a forma de pgto do produto no array
-                                        try{
-                                            arrayPedidos.push(obj.parcelas[0].parcela.forma_pagamento.descricao);
-                                        }
-                                        catch(e){
-                                            arrayPedidos.push("");
-                                        }
-
-                                        let tr = $('<tr></tr>');
-                                        for (let k = 0; k < arrayPedidos.length; k++) {
-                                            let td = $('<td></td>');
-
-                                            td.text(arrayPedidos[k]);
-                                            tr.append(td);
-                                        }
-
-                                        if (!existeNumeroPedido) {
-                                            let td = $('<td></td>');
-                                            let button = $('<button></button>');
-                                            let button2 = $('<button></button>');
-                                            let p = $('<p></p>');
-                                            button.addClass('btn btn-outline-warning fa fa-pencil-square-o');
-                                            button.attr('id', 'btn_tr_calcular');
-                                            button.attr('data-toggle', 'modal');
-                                            button.attr('data-target', '#modal-default');
-                                            button.css('color', '#3c8dbc');
-                                            button2.addClass('btn btn-outline-warning fa fa-pencil-square-o');
-                                            button2.attr('id', 'btn_tr_calculo_rapido');
-                                            button2.css('color', '#00a65a');
-                                            p.css('display', 'none');
-                                            p.addClass('paragrafAviso');
-                                            td.css('text-align', 'center');
-                                            td.append(button);
-                                            td.append(button2);
-                                            td.append(p);
-                                            tr.append(td);
-                                            existeNumeroPedido = true;
-                                        }
-                                        else {
-                                            let td = $('<td></td>');
-
-                                            td.text("");
-                                            tr.append(td);
-                                        }
-                                        if(custo == 0)
-                                            tr.css('color', 'red');
-
-                                        $('#resultPedido').append(tr);
-
-
-                                        arrayPedidos = [];
-                                    }
-
-
+                            try {
+                                if (!arrayFiltroPgto.includes(obj.parcelas[0].parcela.forma_pagamento.descricao)) {
+                                    arrayFiltroPgto.push(obj.parcelas[0].parcela.forma_pagamento.descricao);
                                 }
                             }
-                            $('#divTaxasCanal').removeAttr('hidden');
-                            $('#divFiltroPgto').removeAttr('hidden');
-                            $('#divFiltroCanal').removeAttr('hidden');
-                            $('.removerHidden').removeAttr('hidden');
-                            //$('#gerarPDFTabela').css('display', 'block');
-                       /* }
-                        catch (e) {
-                            deuErro = true;
-                            pag = 1;
-                            // console.log(pag);
-                        }*/
-                    },
-                    error: function(data){
-                        swal('Ops', 'Ocorreu um erro ao buscar os dados.' +
-                            'Tente novamente mais tarde.', 'error');
+                            catch(e){
+                                console.log("erro pagamento");
+                            }
+
+                            for (let j = 0; j < obj.itens.length; j++) {
+                                //console.log(obj.itens[j].item);
+                                let qtd = Math.trunc(obj.itens[j].item.quantidade);
+                                let custo = 0;
+
+                                if(obj.itens[j].item.precocusto != null)
+                                    custo = parseFloat(obj.itens[j].item.precocusto);
+                                else
+                                    custo = 0.0;
+
+                                let custoTotal = custo * qtd;
+
+                                //insere numero pedido no array
+                                arrayPedidos.push(obj.numero);
+                                arrayNumeroPedido.push(obj.numero);
+                                //insere sku do produto no array
+                                arrayPedidos.push(obj.itens[j].item.codigo);
+                                //insere preço custo do produto no array
+                                arrayPedidos.push(custo.toFixed(2));
+                                //insere valor unidade do produto no array
+                                arrayPedidos.push(obj.itens[j].item.valorunidade);
+                                //insere quantidade do produto no array
+                                arrayPedidos.push(Math.trunc(obj.itens[j].item.quantidade));
+                                //insere custo total do produto no array
+                                arrayPedidos.push(custoTotal.toFixed(2));
+                                //insere total venda do produto no array
+                                arrayPedidos.push(obj.totalvenda);
+                                //insere frete do produto no array
+                                arrayPedidos.push(obj.valorfrete);
+                                //insere situação do produto no array
+                                arrayPedidos.push(obj.situacao);
+                                //insere tipo integração do produto no array
+                                let loja = obj.loja;
+                                $.each(objFiltroLojas, function(idx, result){
+                                    if(result.id == loja)
+                                        loja = result.nome;
+                                });
+                                arrayPedidos.push(loja);
+                                //insere a forma de pgto do produto no array
+                                try{
+                                    arrayPedidos.push(obj.parcelas[0].parcela.forma_pagamento.descricao);
+                                }
+                                catch(e){
+                                    arrayPedidos.push("");
+                                }
+                                arrayPedidos.push(obj.cliente.nome);
+
+                                let tr = $('<tr></tr>');
+                                for (let k = 0; k < arrayPedidos.length; k++) {
+                                    let td = $('<td></td>');
+
+                                    td.text(arrayPedidos[k]);
+                                    tr.append(td);
+                                }
+
+                                if (!existeNumeroPedido) {
+                                    let td = $('<td></td>');
+                                    let button = $('<button></button>');
+                                    let button2 = $('<button></button>');
+                                    let p = $('<p></p>');
+                                    button.addClass('btn btn-outline-warning fa fa-pencil-square-o');
+                                    button.attr('id', 'btn_tr_calcular');
+                                    button.attr('data-toggle', 'modal');
+                                    button.attr('data-target', '#modal-default');
+                                    button.css('color', '#3c8dbc');
+                                    button2.addClass('btn btn-outline-warning fa fa-pencil-square-o');
+                                    button2.attr('id', 'btn_tr_calculo_rapido');
+                                    button2.css('color', '#00a65a');
+                                    p.css('display', 'none');
+                                    p.addClass('paragrafAviso');
+                                    td.css('text-align', 'center');
+                                    td.append(button);
+                                    td.append(button2);
+                                    td.append(p);
+                                    tr.append(td);
+                                    existeNumeroPedido = true;
+                                }
+                                else {
+                                    let td = $('<td></td>');
+
+                                    td.text("");
+                                    tr.append(td);
+                                }
+                                if(custo == 0)
+                                    tr.css('color', 'red');
+
+                                $('#resultPedido').append(tr);
+
+
+                                arrayPedidos = [];
+                            }
+
+                        }
+                    }
+                    $('#divTaxasCanal').removeAttr('hidden');
+                    $('#divFiltroPgto').removeAttr('hidden');
+                    $('#divFiltroCanal').removeAttr('hidden');
+                    $('.removerHidden').removeAttr('hidden');
+                },
+                error: function(data){
+                    swal('Ops', 'Ocorreu um erro ao buscar os dados.' +
+                        'Tente novamente mais tarde.', 'error');
+                    $.unblockUI();
+                }
+            })
+                .done(function () {
+                    if (!deuErro)
+                        buscarPedidos(++pag, datas);
+                    else {
+                        geraCustoTotal();
+                        geraVendaTotal();
+                        ativaBotao();
+                        filtroSelect();
                         $.unblockUI();
                     }
-                })
-                    .done(function () {
-                        if (!deuErro)
-                            buscarPedidos(++pag, datas);
-                        else {
-                            geraCustoTotal();
-                            geraVendaTotal();
-                            ativaBotao();
-                            filtroSelect();
-                            $.unblockUI();
-                        }
-                    });
-            /*}
-            catch(e){
-                swal('Ops', 'Ocorreu um erro ao buscar os dados.' +
-                            'Tente novamente mais tarde.', 'error');
-                $.unblockUI();
-            }*/
+                });
         }
 
         //=====================================================================================================
@@ -659,16 +651,16 @@
         //=====================================================================================================
         //FUNÇÃO QUE ADICIONA O NOME DOS CANAIS NO SELECT DO FILTRO
         function filtroSelect(){
-            $('#filtroCanal').empty();
+            //$('#filtroCanal').empty();
             $('#filtroPgto').empty();
-            for(let i = 0; i < arrayFiltroCanal.length; i++){
+            /*for(let i = 0; i < arrayFiltroCanal.length; i++){
                 let option = $('<option></option>');
                 option.text(arrayFiltroCanal[i]);
                 option.val(arrayFiltroCanal[i]);
                 $('#filtroCanal').append(option);
                 //console.log(jQuery.type(arrayFiltroCanal[i]));
                 //console.log(arrayFiltroCanal[i]);
-            }
+            }*/
 
             for(let i = 0; i < arrayFiltroPgto.length; i++){
                 let option = $('<option></option>');
@@ -1196,12 +1188,13 @@
         //=====================================================================================================
         //SELECT PARA FAZER O FILTRO DOS DADOS DA TABELA
         $('#filtroCanal').change(function(){
-            let valor = $(this).val();
-            // console.log(valor);
+            //let valor = $(this).val();
+            let valor = $("#filtroCanal option:selected").html();;
+            console.log(valor);
 
             if(valor != "") {
-                if(valor == loja)
-                    valor = "";
+                /*if(valor == loja)
+                    valor = "";*/
 
                 $('#resultPedido').find('tr').each(function () {
                     if ($(this).find('td:eq(9)').text() != valor) {

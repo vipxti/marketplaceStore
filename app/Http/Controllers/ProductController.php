@@ -488,7 +488,7 @@ class ProductController extends Controller {
                 ->join('pedido_produto', 'sku.cd_sku', '=', 'pedido_produto.cd_sku')
                 ->join('pedido', 'pedido_produto.cd_pedido', '=', 'pedido.cd_pedido')
                 ->where('sku.cd_nr_sku', '=', $product[0]['cd_nr_sku'])
-                ->where('pedido.cd_status', '=', 3)
+                //->where('pedido.cd_status', '=', 3)
                 ->count();
         }
 

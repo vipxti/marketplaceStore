@@ -146,6 +146,15 @@ Route::prefix('admin')->group(function () {
     //CONTROLE DE ESTOQUE BLING
     Route::post('/bling/estoque', 'ProductBlingController@controleEstoque')->name('bling.estoque');
 
+    //RELATORIO PROMOÇÃO
+    Route::get('/bling/relatorio/promocao', 'RelatoriosController@indexPromocao')->name('relatorio.promocao.marcas')->middleware('auth:admin');
+    Route::get('/bling/relatorio/cliente', 'RelatoriosController@indexClientesPromocao')->name('relatorio.promocao.clientes')->middleware('auth:admin');
+    Route::get('/bling/relatorio/sugestao', 'RelatoriosController@indexSugestaoVendas')->name('relatorio.sugestao.vendas')->middleware('auth:admin');
+    Route::get('/bling/relatorio/tabela', 'RelatoriosController@indexTabela')->name('relatorio.tabela')->middleware('auth:admin');
+    Route::get('/bling/relatorio/inventario', 'RelatoriosController@indexInventario')->name('relatorio.inventario')->middleware('auth:admin');
+    Route::get('/bling/relatorio/getdepositos', 'RelatoriosController@getDepositos')->name('get.depositos')->middleware('auth:admin');
+    Route::post('/bling/attestoque/deposito', 'RelatoriosController@udpateEstoque')->name('att.estoque.deposito');
+
     Route::get('/data', 'UserController@showUserForm')->name('admin.data')->middleware('auth:admin');
 
     //Edição do site

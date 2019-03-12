@@ -14,8 +14,11 @@ class OrderBlingController extends Controller
     //RETORNA A VIEW DOS PEDIDOS
     public function index(){
         $canais = BlingChannels::all();
+        $lojas = BlingStore::all();
 
-        return view('pages.admin.products.integration.bling.order', compact('canais'));
+        //dd($lojas);
+
+        return view('pages.admin.products.integration.bling.order', compact('canais', 'lojas'));
     }
 
     public function indexRelatorioPrecos(){

@@ -145,6 +145,49 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <!-- ======================================================== -->
+                                    <li class="treeview">
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-paperclip"></i>
+                                            Relatórios
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a href="{{route('relatorio.promocao.marcas')}}">
+                                                    <i class="fa fa-trophy"></i>
+                                                    Relatório Promoção
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('relatorio.promocao.clientes')}}">
+                                                    <i class="fa fa-users"></i>
+                                                    Relatório de Clientes
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('relatorio.precos.bling')}}">
+                                                    <i class="fa fa-pencil"></i>
+                                                    Relatório de Preços
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('relatorio.sugestao.vendas')}}">
+                                                    <i class="fa fa-file-text-o"></i>
+                                                    Sugestão de Compra
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('relatorio.inventario')}}">
+                                                    <i class="fa fa-cubes"></i>
+                                                    Inventario
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- ======================================================== -->
                                     <li class="treeview">
                                         <a href="javascript:void(0)">
                                             <i class="fa fa-search"></i>
@@ -180,12 +223,7 @@
                                             Atualizar Produtos
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="{{route('relatorio.precos.bling')}}">
-                                            <i class="fa fa-pencil"></i>
-                                            Relatorio de Preços
-                                        </a>
-                                    </li>
+
                                 </ul>
                             </li>
                             <li class="treeview">
